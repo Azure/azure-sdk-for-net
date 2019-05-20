@@ -22,6 +22,36 @@ namespace Microsoft.Azure.Management.CostManagement
     public static partial class ViewsOperationsExtensions
     {
             /// <summary>
+            /// Lists all views by tenant and object.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<View> List(this IViewsOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all views by tenant and object.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<View>> ListAsync(this IViewsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all views at the given scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
@@ -46,9 +76,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
             /// Management Group scope.
             /// </param>
-            public static IPage<View> List(this IViewsOperations operations, string scope)
+            public static IPage<View> ListByScope(this IViewsOperations operations, string scope)
             {
-                return operations.ListAsync(scope).GetAwaiter().GetResult();
+                return operations.ListByScopeAsync(scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,9 +109,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<View>> ListAsync(this IViewsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<View>> ListByScopeAsync(this IViewsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByScopeWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -160,6 +190,121 @@ namespace Microsoft.Azure.Management.CostManagement
             }
 
             /// <summary>
+            /// Gets the view by view name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            public static View Get(this IViewsOperations operations, string viewName)
+            {
+                return operations.GetAsync(viewName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the view by view name.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<View> GetAsync(this IViewsOperations operations, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(viewName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to create or update a view. Update operation requires latest
+            /// eTag to be set in the request. You may obtain the latest eTag by performing
+            /// a get operation. Create operation does not require eTag.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CreateOrUpdate View operation.
+            /// </param>
+            public static View CreateOrUpdate(this IViewsOperations operations, string viewName, View parameters)
+            {
+                return operations.CreateOrUpdateAsync(viewName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to create or update a view. Update operation requires latest
+            /// eTag to be set in the request. You may obtain the latest eTag by performing
+            /// a get operation. Create operation does not require eTag.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CreateOrUpdate View operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<View> CreateOrUpdateAsync(this IViewsOperations operations, string viewName, View parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(viewName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to delete a view.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            public static void Delete(this IViewsOperations operations, string viewName)
+            {
+                operations.DeleteAsync(viewName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to delete a view.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='viewName'>
+            /// View name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IViewsOperations operations, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets the view for the defined scope by view name.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
@@ -187,9 +332,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='viewName'>
             /// View name
             /// </param>
-            public static View Get(this IViewsOperations operations, string scope, string viewName)
+            public static View GetByScope(this IViewsOperations operations, string scope, string viewName)
             {
-                return operations.GetAsync(scope, viewName).GetAwaiter().GetResult();
+                return operations.GetByScopeAsync(scope, viewName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,9 +368,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<View> GetAsync(this IViewsOperations operations, string scope, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<View> GetByScopeAsync(this IViewsOperations operations, string scope, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, viewName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByScopeWithHttpMessagesAsync(scope, viewName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -264,9 +409,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate View operation.
             /// </param>
-            public static View CreateOrUpdate(this IViewsOperations operations, string scope, string viewName, View parameters)
+            public static View CreateOrUpdateByScope(this IViewsOperations operations, string scope, string viewName, View parameters)
             {
-                return operations.CreateOrUpdateAsync(scope, viewName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateByScopeAsync(scope, viewName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -305,9 +450,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<View> CreateOrUpdateAsync(this IViewsOperations operations, string scope, string viewName, View parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<View> CreateOrUpdateByScopeAsync(this IViewsOperations operations, string scope, string viewName, View parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, viewName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateByScopeWithHttpMessagesAsync(scope, viewName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -341,9 +486,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='viewName'>
             /// View name
             /// </param>
-            public static void Delete(this IViewsOperations operations, string scope, string viewName)
+            public static void DeleteByScope(this IViewsOperations operations, string scope, string viewName)
             {
-                operations.DeleteAsync(scope, viewName).GetAwaiter().GetResult();
+                operations.DeleteByScopeAsync(scope, viewName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -377,9 +522,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IViewsOperations operations, string scope, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteByScopeAsync(this IViewsOperations operations, string scope, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(scope, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteByScopeWithHttpMessagesAsync(scope, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -653,7 +798,7 @@ namespace Microsoft.Azure.Management.CostManagement
             }
 
             /// <summary>
-            /// Lists all views at the given scope.
+            /// Lists all views by tenant and object.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
             /// <param name='operations'>
@@ -665,6 +810,42 @@ namespace Microsoft.Azure.Management.CostManagement
             public static IPage<View> ListNext(this IViewsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all views by tenant and object.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<View>> ListNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all views at the given scope.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<View> ListByScopeNext(this IViewsOperations operations, string nextPageLink)
+            {
+                return operations.ListByScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -680,9 +861,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<View>> ListNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<View>> ListByScopeNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

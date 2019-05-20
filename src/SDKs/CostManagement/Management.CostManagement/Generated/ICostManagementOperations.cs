@@ -29,6 +29,31 @@ namespace Microsoft.Azure.Management.CostManagement
         /// the same name, type and scope.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
         /// </summary>
+        /// <param name='input'>
+        /// Parameters about Resource type and Resource name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequestBody input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to check resource name availability by scope under
+        /// cost management. A name is available if no other resource exists
+        /// with the same name, type and scope.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+        /// </summary>
         /// <param name='scope'>
         /// The scope associated with view operations. This includes
         /// 'subscriptions/{subscriptionId}' for subscription scope,
@@ -65,7 +90,7 @@ namespace Microsoft.Azure.Management.CostManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string scope, CheckNameAvailabilityRequestBody input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityByScopeWithHttpMessagesAsync(string scope, CheckNameAvailabilityRequestBody input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to check resource name availability by external
         /// billing account under cost management. A name is available if no

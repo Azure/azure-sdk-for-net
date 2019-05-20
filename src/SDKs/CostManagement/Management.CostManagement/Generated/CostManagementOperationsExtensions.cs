@@ -30,6 +30,46 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='input'>
+            /// Parameters about Resource type and Resource name.
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailability(this ICostManagementOperations operations, CheckNameAvailabilityRequestBody input)
+            {
+                return operations.CheckNameAvailabilityAsync(input).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to check resource name availability under cost management. A
+            /// name is available if no other resource exists with the same name, type and
+            /// scope.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='input'>
+            /// Parameters about Resource type and Resource name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this ICostManagementOperations operations, CheckNameAvailabilityRequestBody input, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to check resource name availability by scope under cost
+            /// management. A name is available if no other resource exists with the same
+            /// name, type and scope.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='scope'>
             /// The scope associated with view operations. This includes
             /// 'subscriptions/{subscriptionId}' for subscription scope,
@@ -51,15 +91,15 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='input'>
             /// Parameters about Resource type and Resource name.
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailability(this ICostManagementOperations operations, string scope, CheckNameAvailabilityRequestBody input)
+            public static CheckNameAvailabilityResult CheckNameAvailabilityByScope(this ICostManagementOperations operations, string scope, CheckNameAvailabilityRequestBody input)
             {
-                return operations.CheckNameAvailabilityAsync(scope, input).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityByScopeAsync(scope, input).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to check resource name availability under cost management. A
-            /// name is available if no other resource exists with the same name, type and
-            /// scope.
+            /// The operation to check resource name availability by scope under cost
+            /// management. A name is available if no other resource exists with the same
+            /// name, type and scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
             /// <param name='operations'>
@@ -89,9 +129,9 @@ namespace Microsoft.Azure.Management.CostManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this ICostManagementOperations operations, string scope, CheckNameAvailabilityRequestBody input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityByScopeAsync(this ICostManagementOperations operations, string scope, CheckNameAvailabilityRequestBody input, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(scope, input, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityByScopeWithHttpMessagesAsync(scope, input, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

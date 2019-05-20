@@ -49,8 +49,26 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         /// <param name="queryVersion">Query API version to use.</param>
         /// <param name="displayName">User input name of the view.
         /// Required.</param>
-        /// <param name="scope">Cost Management scope to save the view
-        /// on.</param>
+        /// <param name="scope">Cost Management scope to save the view on. This
+        /// includes 'subscriptions/{subscriptionId}' for subscription scope,
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+        /// for Department scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for BillingProfile scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+        /// for InvoiceSection scope,
+        /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope,
+        /// '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+        /// for ExternalBillingAccount scope, and
+        /// '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+        /// for ExternalSubscription scope.</param>
         /// <param name="createdOn">Date the user created this view.</param>
         /// <param name="modifiedOn">Date when the user last modified this
         /// view.</param>
@@ -61,14 +79,15 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         /// <param name="chart">Chart type of the main view in Cost Analysis.
         /// Required. Possible values include: 'Area', 'Line', 'StackedColumn',
         /// 'GroupedColumn', 'Table'</param>
-        /// <param name="accumulated">Show costs accumulated over time.</param>
+        /// <param name="accumulated">Show costs accumulated over time.
+        /// Possible values include: 'true', 'false'</param>
         /// <param name="metric">Metric to use when displaying costs. Possible
         /// values include: 'ActualCost', 'AmortizedCost', 'AHUB'</param>
         /// <param name="kpis">List of KPIs to show in Cost Analysis
         /// UI.</param>
         /// <param name="pivots">Configuration of 3 sub-views in the Cost
         /// Analysis UI.</param>
-        public View(string timeframe, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string version = default(string), string queryVersion = default(string), string displayName = default(string), string scope = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), ReportConfigTimePeriod timePeriod = default(ReportConfigTimePeriod), ReportConfigDataset dataset = default(ReportConfigDataset), string chart = default(string), bool? accumulated = default(bool?), string metric = default(string), IList<KpiProperties> kpis = default(IList<KpiProperties>), IList<PivotProperties> pivots = default(IList<PivotProperties>))
+        public View(string timeframe, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string version = default(string), string queryVersion = default(string), string displayName = default(string), string scope = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), ReportConfigTimePeriod timePeriod = default(ReportConfigTimePeriod), ReportConfigDataset dataset = default(ReportConfigDataset), string chart = default(string), string accumulated = default(string), string metric = default(string), IList<KpiProperties> kpis = default(IList<KpiProperties>), IList<PivotProperties> pivots = default(IList<PivotProperties>))
             : base(id, name, type, eTag)
         {
             Version = version;
@@ -119,22 +138,41 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets cost Management scope to save the view on.
+        /// Gets or sets cost Management scope to save the view on. This
+        /// includes 'subscriptions/{subscriptionId}' for subscription scope,
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+        /// for Department scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for BillingProfile scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+        /// for InvoiceSection scope,
+        /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope,
+        /// '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+        /// for ExternalBillingAccount scope, and
+        /// '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+        /// for ExternalSubscription scope.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
         public string Scope { get; set; }
 
         /// <summary>
-        /// Gets or sets date the user created this view.
+        /// Gets date the user created this view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdOn")]
-        public System.DateTime? CreatedOn { get; set; }
+        public System.DateTime? CreatedOn { get; private set; }
 
         /// <summary>
-        /// Gets or sets date when the user last modified this view.
+        /// Gets date when the user last modified this view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.modifiedOn")]
-        public System.DateTime? ModifiedOn { get; set; }
+        public System.DateTime? ModifiedOn { get; private set; }
 
         /// <summary>
         /// Gets or sets the time frame for pulling data for the report. If
@@ -165,10 +203,11 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         public string Chart { get; set; }
 
         /// <summary>
-        /// Gets or sets show costs accumulated over time.
+        /// Gets or sets show costs accumulated over time. Possible values
+        /// include: 'true', 'false'
         /// </summary>
         [JsonProperty(PropertyName = "properties.accumulated")]
-        public bool? Accumulated { get; set; }
+        public string Accumulated { get; set; }
 
         /// <summary>
         /// Gets or sets metric to use when displaying costs. Possible values
