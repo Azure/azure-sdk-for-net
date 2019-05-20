@@ -31,7 +31,7 @@ namespace Azure.Core.Testing
             {
                 string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 
-                RecordedTestMode mode = RecordedTestMode.None;
+                RecordedTestMode mode = RecordedTestMode.Playback;
                 if (!string.IsNullOrEmpty(modeString))
                 {
                     mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);

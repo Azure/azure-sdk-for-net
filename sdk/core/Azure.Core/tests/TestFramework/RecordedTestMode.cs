@@ -5,7 +5,7 @@ namespace Azure.Core.Testing
 {
     public enum RecordedTestMode
     {
-        None,
+        Live,
         Record,
         Playback
     }
