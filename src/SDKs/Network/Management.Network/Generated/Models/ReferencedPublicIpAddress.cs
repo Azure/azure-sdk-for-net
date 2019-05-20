@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Reference to a public IP address.
+    /// </summary>
     public partial class ReferencedPublicIpAddress
     {
         /// <summary>

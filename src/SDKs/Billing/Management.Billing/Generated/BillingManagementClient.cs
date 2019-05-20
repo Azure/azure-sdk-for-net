@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2018-03-01-preview.
+        /// is 2018-11-01-preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -59,21 +59,52 @@ namespace Microsoft.Azure.Management.Billing
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountsOperations.
+        /// </summary>
+        public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableBalancesOperations.
+        /// </summary>
+        public virtual IAvailableBalancesOperations AvailableBalances { get; private set; }
+
+        /// <summary>
+        /// Gets the IPaymentMethodsOperations.
+        /// </summary>
+        public virtual IPaymentMethodsOperations PaymentMethods { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilesOperations.
+        /// </summary>
+        public virtual IBillingProfilesOperations BillingProfiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsOperations InvoiceSections { get; private set; }
+
+        /// <summary>
+        /// Gets the IDepartmentsOperations.
+        /// </summary>
+        public virtual IDepartmentsOperations Departments { get; private set; }
 
         /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
@@ -81,19 +112,87 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IEnrollmentAccountsOperations EnrollmentAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingPeriodsOperations.
-        /// </summary>
-        public virtual IBillingPeriodsOperations BillingPeriods { get; private set; }
-
-        /// <summary>
         /// Gets the IInvoicesOperations.
         /// </summary>
         public virtual IInvoicesOperations Invoices { get; private set; }
 
         /// <summary>
+        /// Gets the IPriceSheetOperations.
+        /// </summary>
+        public virtual IPriceSheetOperations PriceSheet { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionsOperations.
+        /// </summary>
+        public virtual IBillingSubscriptionsOperations BillingSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductsOperations.
+        /// </summary>
+        public virtual IProductsOperations Products { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransactionsOperations.
+        /// </summary>
+        public virtual ITransactionsOperations Transactions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPoliciesOperations.
+        /// </summary>
+        public virtual IPoliciesOperations Policies { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingPropertyOperations.
+        /// </summary>
+        public virtual IBillingPropertyOperations BillingProperty { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransfersOperations.
+        /// </summary>
+        public virtual ITransfersOperations Transfers { get; private set; }
+
+        /// <summary>
+        /// Gets the IRecipientTransfersOperations.
+        /// </summary>
+        public virtual IRecipientTransfersOperations RecipientTransfers { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingPermissionsOperations.
+        /// </summary>
+        public virtual IBillingPermissionsOperations BillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingRoleDefinitionsOperations.
+        /// </summary>
+        public virtual IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingRoleAssignmentsOperations.
+        /// </summary>
+        public virtual IBillingRoleAssignmentsOperations BillingRoleAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAgreementsOperations.
+        /// </summary>
+        public virtual IAgreementsOperations Agreements { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the BillingManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling BillingManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected BillingManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -178,6 +277,33 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         public BillingManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the BillingManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling BillingManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public BillingManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -296,12 +422,29 @@ namespace Microsoft.Azure.Management.Billing
         /// </summary>
         private void Initialize()
         {
+            BillingAccounts = new BillingAccountsOperations(this);
+            AvailableBalances = new AvailableBalancesOperations(this);
+            PaymentMethods = new PaymentMethodsOperations(this);
+            BillingProfiles = new BillingProfilesOperations(this);
+            InvoiceSections = new InvoiceSectionsOperations(this);
+            Departments = new DepartmentsOperations(this);
             EnrollmentAccounts = new EnrollmentAccountsOperations(this);
-            BillingPeriods = new BillingPeriodsOperations(this);
             Invoices = new InvoicesOperations(this);
+            PriceSheet = new PriceSheetOperations(this);
+            BillingSubscriptions = new BillingSubscriptionsOperations(this);
+            Products = new ProductsOperations(this);
+            Transactions = new TransactionsOperations(this);
+            Policies = new PoliciesOperations(this);
+            BillingProperty = new BillingPropertyOperations(this);
+            Transfers = new TransfersOperations(this);
+            RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
+            BillingPermissions = new BillingPermissionsOperations(this);
+            BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
+            BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
+            Agreements = new AgreementsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01-preview";
+            ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

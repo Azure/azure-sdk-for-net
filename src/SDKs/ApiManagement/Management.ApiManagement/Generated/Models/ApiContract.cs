@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// API details.
+    /// Api details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApiContract : Resource
@@ -65,12 +65,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
-        /// <param name="displayName">API name.</param>
+        /// <param name="subscriptionRequired">Specifies whether an API or
+        /// Product subscription is required for accessing the API.</param>
+        /// <param name="sourceApiId">API identifier of the source API.</param>
+        /// <param name="displayName">API name. Must be 1 to 300 characters
+        /// long.</param>
         /// <param name="serviceUrl">Absolute URL of the backend service
-        /// implementing this API.</param>
+        /// implementing this API. Cannot be more than 2000 characters
+        /// long.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        public ApiContract(string path, string id = default(string), string name = default(string), string type = default(string), string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails))
+        /// <param name="apiVersionSet">Version set details</param>
+        public ApiContract(string path, string id = default(string), string name = default(string), string type = default(string), string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails))
             : base(id, name, type)
         {
             Description = description;
@@ -84,6 +90,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
+            SubscriptionRequired = subscriptionRequired;
+            SourceApiId = sourceApiId;
             DisplayName = displayName;
             ServiceUrl = serviceUrl;
             Path = path;
@@ -138,10 +146,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ApiVersion { get; set; }
 
         /// <summary>
-        /// Gets indicates if API revision is current api revision.
+        /// Gets or sets indicates if API revision is current api revision.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCurrent")]
-        public bool? IsCurrent { get; private set; }
+        public bool? IsCurrent { get; set; }
 
         /// <summary>
         /// Gets indicates if API revision is accessible via the gateway.
@@ -168,14 +176,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ApiVersionSetId { get; set; }
 
         /// <summary>
-        /// Gets or sets API name.
+        /// Gets or sets specifies whether an API or Product subscription is
+        /// required for accessing the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subscriptionRequired")]
+        public bool? SubscriptionRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets API identifier of the source API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceApiId")]
+        public string SourceApiId { get; set; }
+
+        /// <summary>
+        /// Gets or sets API name. Must be 1 to 300 characters long.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets absolute URL of the backend service implementing this
-        /// API.
+        /// API. Cannot be more than 2000 characters long.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceUrl")]
         public string ServiceUrl { get; set; }
@@ -197,6 +218,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<Protocol?> Protocols { get; set; }
 
         /// <summary>
+        /// Gets or sets version set details
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }

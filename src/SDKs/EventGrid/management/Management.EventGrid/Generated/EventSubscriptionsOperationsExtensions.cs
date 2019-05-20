@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -371,9 +369,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<EventSubscription> ListGlobalBySubscription(this IEventSubscriptionsOperations operations)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalBySubscription(this IEventSubscriptionsOperations operations, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListGlobalBySubscriptionAsync().GetAwaiter().GetResult();
+                return operations.ListGlobalBySubscriptionAsync(filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -387,12 +394,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListGlobalBySubscriptionAsync(this IEventSubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListGlobalBySubscriptionAsync(this IEventSubscriptionsOperations operations, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListGlobalBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListGlobalBySubscriptionWithHttpMessagesAsync(filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -411,9 +427,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
-            public static IEnumerable<EventSubscription> ListGlobalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string topicTypeName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListGlobalBySubscriptionForTopicTypeAsync(topicTypeName).GetAwaiter().GetResult();
+                return operations.ListGlobalBySubscriptionForTopicTypeAsync(topicTypeName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -429,12 +454,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListGlobalBySubscriptionForTopicTypeAsync(this IEventSubscriptionsOperations operations, string topicTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListGlobalBySubscriptionForTopicTypeAsync(this IEventSubscriptionsOperations operations, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(topicTypeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(topicTypeName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -454,9 +488,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            public static IEnumerable<EventSubscription> ListGlobalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListGlobalByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListGlobalByResourceGroupAsync(resourceGroupName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -473,12 +516,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListGlobalByResourceGroupAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListGlobalByResourceGroupAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListGlobalByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListGlobalByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -500,9 +552,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
-            public static IEnumerable<EventSubscription> ListGlobalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string topicTypeName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListGlobalByResourceGroupForTopicTypeAsync(resourceGroupName, topicTypeName).GetAwaiter().GetResult();
+                return operations.ListGlobalByResourceGroupForTopicTypeAsync(resourceGroupName, topicTypeName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -521,12 +582,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListGlobalByResourceGroupForTopicTypeAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string topicTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListGlobalByResourceGroupForTopicTypeAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(resourceGroupName, topicTypeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(resourceGroupName, topicTypeName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -545,9 +615,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='location'>
             /// Name of the location
             /// </param>
-            public static IEnumerable<EventSubscription> ListRegionalBySubscription(this IEventSubscriptionsOperations operations, string location)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalBySubscription(this IEventSubscriptionsOperations operations, string location, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListRegionalBySubscriptionAsync(location).GetAwaiter().GetResult();
+                return operations.ListRegionalBySubscriptionAsync(location, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -563,12 +642,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='location'>
             /// Name of the location
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListRegionalBySubscriptionAsync(this IEventSubscriptionsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListRegionalBySubscriptionAsync(this IEventSubscriptionsOperations operations, string location, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRegionalBySubscriptionWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegionalBySubscriptionWithHttpMessagesAsync(location, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -591,9 +679,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='location'>
             /// Name of the location
             /// </param>
-            public static IEnumerable<EventSubscription> ListRegionalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName, string location)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListRegionalByResourceGroupAsync(resourceGroupName, location).GetAwaiter().GetResult();
+                return operations.ListRegionalByResourceGroupAsync(resourceGroupName, location, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -613,12 +710,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='location'>
             /// Name of the location
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListRegionalByResourceGroupAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListRegionalByResourceGroupAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRegionalByResourceGroupWithHttpMessagesAsync(resourceGroupName, location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegionalByResourceGroupWithHttpMessagesAsync(resourceGroupName, location, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -641,9 +747,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
-            public static IEnumerable<EventSubscription> ListRegionalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string location, string topicTypeName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListRegionalBySubscriptionForTopicTypeAsync(location, topicTypeName).GetAwaiter().GetResult();
+                return operations.ListRegionalBySubscriptionForTopicTypeAsync(location, topicTypeName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -663,12 +778,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListRegionalBySubscriptionForTopicTypeAsync(this IEventSubscriptionsOperations operations, string location, string topicTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListRegionalBySubscriptionForTopicTypeAsync(this IEventSubscriptionsOperations operations, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(location, topicTypeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(location, topicTypeName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -694,9 +818,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
-            public static IEnumerable<EventSubscription> ListRegionalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string topicTypeName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListRegionalByResourceGroupForTopicTypeAsync(resourceGroupName, location, topicTypeName).GetAwaiter().GetResult();
+                return operations.ListRegionalByResourceGroupForTopicTypeAsync(resourceGroupName, location, topicTypeName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -719,12 +852,21 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicTypeName'>
             /// Name of the topic type
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListRegionalByResourceGroupForTopicTypeAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string topicTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListRegionalByResourceGroupForTopicTypeAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(resourceGroupName, location, topicTypeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(resourceGroupName, location, topicTypeName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -751,9 +893,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceName'>
             /// Name of the resource
             /// </param>
-            public static IEnumerable<EventSubscription> ListByResource(this IEventSubscriptionsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListByResource(this IEventSubscriptionsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?), string label = default(string))
             {
-                return operations.ListByResourceAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName).GetAwaiter().GetResult();
+                return operations.ListByResourceAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName, filter, top, label).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -777,12 +928,93 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceName'>
             /// Name of the resource
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListByResourceAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListByResourceAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceWithHttpMessagesAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceWithHttpMessagesAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the top level domain
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the domain topic
+            /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            public static IPage<EventSubscription> ListByDomainTopic(this IEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), string label = default(string))
+            {
+                return operations.ListByDomainTopicAsync(resourceGroupName, domainName, topicName, filter, top, label).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of the top level domain
+            /// </param>
+            /// <param name='topicName'>
+            /// Name of the domain topic
+            /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='label'>
+            /// The label used to filter the results for event subscriptions list.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListByDomainTopicAsync(this IEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), string label = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDomainTopicWithHttpMessagesAsync(resourceGroupName, domainName, topicName, filter, top, label, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -992,6 +1224,434 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<EventSubscription> BeginUpdateAsync(this IEventSubscriptionsOperations operations, string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get an aggregated list of all global event subscriptions under an Azure
+            /// subscription
+            /// </summary>
+            /// <remarks>
+            /// List all aggregated global event subscriptions under a specific Azure
+            /// subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalBySubscriptionNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListGlobalBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get an aggregated list of all global event subscriptions under an Azure
+            /// subscription
+            /// </summary>
+            /// <remarks>
+            /// List all aggregated global event subscriptions under a specific Azure
+            /// subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListGlobalBySubscriptionNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListGlobalBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all global event subscriptions for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under an Azure subscription for a topic
+            /// type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalBySubscriptionForTopicTypeNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListGlobalBySubscriptionForTopicTypeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all global event subscriptions for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under an Azure subscription for a topic
+            /// type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListGlobalBySubscriptionForTopicTypeNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListGlobalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all global event subscriptions under an Azure subscription and
+            /// resource group
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under a specific Azure subscription and
+            /// resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalByResourceGroupNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListGlobalByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all global event subscriptions under an Azure subscription and
+            /// resource group
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under a specific Azure subscription and
+            /// resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListGlobalByResourceGroupNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListGlobalByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all global event subscriptions under a resource group for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under a resource group for a specific
+            /// topic type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListGlobalByResourceGroupForTopicTypeNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListGlobalByResourceGroupForTopicTypeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all global event subscriptions under a resource group for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all global event subscriptions under a resource group for a specific
+            /// topic type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListGlobalByResourceGroupForTopicTypeNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListGlobalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalBySubscriptionNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListRegionalBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListRegionalBySubscriptionNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRegionalBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription and
+            /// resource group
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalByResourceGroupNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListRegionalByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription and
+            /// resource group
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListRegionalByResourceGroupNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRegionalByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription for a
+            /// topic type
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and topic type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalBySubscriptionForTopicTypeNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListRegionalBySubscriptionForTopicTypeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription for a
+            /// topic type
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and topic type.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListRegionalBySubscriptionForTopicTypeNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRegionalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription and
+            /// resource group for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and resource group and topic type
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListRegionalByResourceGroupForTopicTypeNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListRegionalByResourceGroupForTopicTypeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all regional event subscriptions under an Azure subscription and
+            /// resource group for a topic type
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions from the given location under a specific Azure
+            /// subscription and resource group and topic type
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListRegionalByResourceGroupForTopicTypeNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRegionalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListByResourceNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListByResourceNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListByDomainTopicNext(this IEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByDomainTopicNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all event subscriptions for a specific domain topic
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListByDomainTopicNextAsync(this IEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDomainTopicNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

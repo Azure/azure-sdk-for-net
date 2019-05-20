@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.EventGrid;
 using Microsoft.Azure.Management.EventGrid.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using EventGrid.Tests.TestHelper;
 using Xunit;
@@ -68,17 +69,69 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(getTopicResponse.Tags, tag => tag.Key == "originalTag1");
 
                 // Get all topics created within a resourceGroup
-                var getAllTopicsResponse = this.EventGridManagementClient.Topics.ListByResourceGroupAsync(resourceGroup).Result;
-                Assert.NotNull(getAllTopicsResponse);
-                Assert.True(getAllTopicsResponse.Count() >= 1);
-                Assert.Contains(getAllTopicsResponse, t => t.Name == topicName);
-                Assert.True(getAllTopicsResponse.All(ns => ns.Id.Contains(resourceGroup)));
+                IPage<Topic> topicsInResourceGroupPage = this.EventGridManagementClient.Topics.ListByResourceGroupAsync(resourceGroup).Result;
+                var topicsInResourceGroupList = new List<Topic>();
+                if (topicsInResourceGroupPage.Any())
+                {
+                    topicsInResourceGroupList.AddRange(topicsInResourceGroupPage);
+                    var nextLink = topicsInResourceGroupPage.NextPageLink;
+                    while (nextLink != null)
+                    {
+                        topicsInResourceGroupPage = this.EventGridManagementClient.Topics.ListByResourceGroupNextAsync(nextLink).Result;
+                        topicsInResourceGroupList.AddRange(topicsInResourceGroupPage);
+                        nextLink = topicsInResourceGroupPage.NextPageLink;
+                    }
+                }
+
+                Assert.NotNull(topicsInResourceGroupList);
+                Assert.True(topicsInResourceGroupList.Count() >= 1);
+                Assert.Contains(topicsInResourceGroupList, t => t.Name == topicName);
+                Assert.True(topicsInResourceGroupList.All(ns => ns.Id.Contains(resourceGroup)));
+
+                IPage<Topic> topicsInResourceGroupPageWithTop = this.EventGridManagementClient.Topics.ListByResourceGroupAsync(resourceGroup, null, 5).Result;
+                var topicsInResourceGroupListWithTop = new List<Topic>();
+                if (topicsInResourceGroupPageWithTop.Any())
+                {
+                    topicsInResourceGroupListWithTop.AddRange(topicsInResourceGroupPageWithTop);
+                    var nextLink = topicsInResourceGroupPageWithTop.NextPageLink;
+                    while (nextLink != null)
+                    {
+                        topicsInResourceGroupPageWithTop = this.EventGridManagementClient.Topics.ListByResourceGroupNextAsync(nextLink).Result;
+                        topicsInResourceGroupListWithTop.AddRange(topicsInResourceGroupPageWithTop);
+                        nextLink = topicsInResourceGroupPageWithTop.NextPageLink;
+                    }
+                }
+
+                Assert.NotNull(topicsInResourceGroupListWithTop);
+                Assert.True(topicsInResourceGroupListWithTop.Count() >= 1);
+                Assert.Contains(topicsInResourceGroupListWithTop, t => t.Name == topicName);
+                Assert.True(topicsInResourceGroupListWithTop.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all topics created within the subscription irrespective of the resourceGroup
-                getAllTopicsResponse = this.EventGridManagementClient.Topics.ListBySubscriptionAsync().Result;
-                Assert.NotNull(getAllTopicsResponse);
-                Assert.True(getAllTopicsResponse.Count() >= 1);
-                Assert.Contains(getAllTopicsResponse, t => t.Name == topicName);
+                IPage<Topic> topicsInAzureSubscription = this.EventGridManagementClient.Topics.ListBySubscriptionAsync(null, 100).Result;
+                var topicsInAzureSubscriptionList = new List<Topic>();
+                if (topicsInAzureSubscription.Any())
+                {
+                    topicsInAzureSubscriptionList.AddRange(topicsInAzureSubscription);
+                    var nextLink = topicsInAzureSubscription.NextPageLink;
+                    while (nextLink != null)
+                    {
+                        try
+                        {
+                            topicsInAzureSubscription = this.EventGridManagementClient.Topics.ListBySubscriptionNextAsync(nextLink).Result;
+                            topicsInAzureSubscriptionList.AddRange(topicsInAzureSubscription);
+                            nextLink = topicsInAzureSubscription.NextPageLink;
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+                    }
+                }
+
+                Assert.NotNull(topicsInAzureSubscriptionList);
+                Assert.True(topicsInAzureSubscriptionList.Count() >= 1);
+                Assert.Contains(topicsInAzureSubscriptionList, t => t.Name == topicName);
 
                 var replaceTopicTagsDictionary = new Dictionary<string, string>()
                 {

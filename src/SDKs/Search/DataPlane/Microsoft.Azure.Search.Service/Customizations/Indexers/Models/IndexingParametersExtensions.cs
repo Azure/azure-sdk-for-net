@@ -94,6 +94,19 @@ namespace Microsoft.Azure.Search.Models
             Configure(parameters, ParsingModeKey, "json");
 
         /// <summary>
+        /// Tells the indexer to assume that all blobs contain new-line separated JSON, which it will then parse such that individual JSON entities in each blob
+        /// will map to a single document in the Azure Search index.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// </remarks>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseJsonLines(this IndexingParameters parameters) =>
+            Configure(parameters, ParsingModeKey, "jsonLines");
+
+        /// <summary>
         /// Tells the indexer to assume that all blobs contain JSON arrays, which it will then parse such that each JSON object in each array will
         /// map to a single document in the Azure Search index.
         /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs" /> for details.

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
     /// An Application Insights web test definition.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class WebTest : Resource
+    public partial class WebTest : WebtestsResource
     {
         /// <summary>
         /// Initializes a new instance of the WebTest class.

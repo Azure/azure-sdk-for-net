@@ -134,6 +134,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IPeerExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        public virtual IPeerExpressRouteCircuitConnectionsOperations PeerExpressRouteCircuitConnections { get; private set; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
@@ -222,6 +227,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILoadBalancerProbesOperations.
         /// </summary>
         public virtual ILoadBalancerProbesOperations LoadBalancerProbes { get; private set; }
+
+        /// <summary>
+        /// Gets the INatGatewaysOperations.
+        /// </summary>
+        public virtual INatGatewaysOperations NatGateways { get; private set; }
 
         /// <summary>
         /// Gets the INetworkInterfacesOperations.
@@ -412,6 +422,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
         public virtual IP2sVpnGatewaysOperations P2sVpnGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IWebApplicationFirewallPoliciesOperations.
+        /// </summary>
+        public virtual IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -666,6 +681,7 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuitConnections = new ExpressRouteCircuitConnectionsOperations(this);
+            PeerExpressRouteCircuitConnections = new PeerExpressRouteCircuitConnectionsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
             ExpressRouteCrossConnections = new ExpressRouteCrossConnectionsOperations(this);
@@ -684,6 +700,7 @@ namespace Microsoft.Azure.Management.Network
             LoadBalancerOutboundRules = new LoadBalancerOutboundRulesOperations(this);
             LoadBalancerNetworkInterfaces = new LoadBalancerNetworkInterfacesOperations(this);
             LoadBalancerProbes = new LoadBalancerProbesOperations(this);
+            NatGateways = new NatGatewaysOperations(this);
             NetworkInterfaces = new NetworkInterfacesOperations(this);
             NetworkInterfaceIPConfigurations = new NetworkInterfaceIPConfigurationsOperations(this);
             NetworkInterfaceLoadBalancers = new NetworkInterfaceLoadBalancersOperations(this);
@@ -722,6 +739,7 @@ namespace Microsoft.Azure.Management.Network
             VpnConnections = new VpnConnectionsOperations(this);
             P2sVpnServerConfigurations = new P2sVpnServerConfigurationsOperations(this);
             P2sVpnGateways = new P2sVpnGatewaysOperations(this);
+            WebApplicationFirewallPolicies = new WebApplicationFirewallPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -802,7 +820,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1000,7 +1018,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

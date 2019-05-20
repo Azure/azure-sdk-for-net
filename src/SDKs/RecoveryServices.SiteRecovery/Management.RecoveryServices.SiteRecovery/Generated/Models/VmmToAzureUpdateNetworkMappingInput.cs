@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Update network mappings input properties/behaviour specific to vmm to
+    /// Update network mappings input properties/behavior specific to vmm to
     /// azure.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VmmToAzure")]

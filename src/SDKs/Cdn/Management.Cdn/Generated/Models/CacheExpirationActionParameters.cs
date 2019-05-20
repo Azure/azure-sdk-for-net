@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the CacheExpirationActionParameters
         /// class.
         /// </summary>
-        /// <param name="cacheBehavior">Caching behavior for the requests that
-        /// include query strings. Possible values include: 'BypassCache',
-        /// 'Override', 'SetIfMissing'</param>
-        /// <param name="cacheDuration">The duration for which the the content
+        /// <param name="cacheBehavior">Caching behavior for the requests.
+        /// Possible values include: 'BypassCache', 'Override',
+        /// 'SetIfMissing'</param>
+        /// <param name="cacheDuration">The duration for which the content
         /// needs to be cached. Allowed format is [d.]hh:mm:ss</param>
         public CacheExpirationActionParameters(string cacheBehavior, string cacheDuration = default(string))
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static CacheExpirationActionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
             CacheType = "All";
         }
 
@@ -58,16 +58,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets caching behavior for the requests that include query
-        /// strings. Possible values include: 'BypassCache', 'Override',
-        /// 'SetIfMissing'
+        /// Gets or sets caching behavior for the requests. Possible values
+        /// include: 'BypassCache', 'Override', 'SetIfMissing'
         /// </summary>
         [JsonProperty(PropertyName = "cacheBehavior")]
         public string CacheBehavior { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration for which the the content needs to be
-        /// cached. Allowed format is [d.]hh:mm:ss
+        /// Gets or sets the duration for which the content needs to be cached.
+        /// Allowed format is [d.]hh:mm:ss
         /// </summary>
         [JsonProperty(PropertyName = "cacheDuration")]
         public string CacheDuration { get; set; }

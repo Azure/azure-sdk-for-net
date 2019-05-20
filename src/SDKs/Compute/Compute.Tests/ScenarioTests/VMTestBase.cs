@@ -214,7 +214,8 @@ namespace Compute.Tests
             string osDiskStorageAccountType = "Standard_LRS",
             string dataDiskStorageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
-            IList<string> zones = null)
+            IList<string> zones = null,
+            string ppgName = null)
         {
             try
             {
@@ -241,7 +242,9 @@ namespace Compute.Tests
                     subnetResponse,
                     getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
-                string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks);
+                string ppgId = ((ppgName != null) ? CreateProximityPlacementGroup(rgName, ppgName): null);
+
+                string asetId = CreateAvailabilitySet(rgName, asName, hasManagedDisks, ppgId: ppgId);
 
                 inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId, nicResponse.Id, hasManagedDisks, vmSize, osDiskStorageAccountType, 
                     dataDiskStorageAccountType, writeAcceleratorEnabled);
@@ -300,7 +303,7 @@ namespace Compute.Tests
 
                 // The intent here is to validate that the GET response is as expected.
                 var getResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
-                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: zones == null);
+                ValidateVM(inputVM, getResponse, expectedVMReferenceId, hasManagedDisks, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks, hasUserDefinedAS: zones == null, expectedPpgReferenceId: ppgId);
 
                 return getResponse;
             }
@@ -733,7 +736,7 @@ namespace Compute.Tests
             return getLBResponse;
         }
 
-        protected string CreateAvailabilitySet(string rgName, string asName, bool hasManagedDisks = false)
+        protected string CreateAvailabilitySet(string rgName, string asName, bool hasManagedDisks = false, string ppgId = null)
         {
             // Setup availability set
             var inputAvailabilitySet = new AvailabilitySet
@@ -752,6 +755,11 @@ namespace Compute.Tests
                 }
             };
 
+            if(ppgId != null)
+            {
+                inputAvailabilitySet.ProximityPlacementGroup = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = ppgId };
+            }
+
             // Create an Availability Set and then create a VM inside this availability set
             var asCreateOrUpdateResponse = m_CrpClient.AvailabilitySets.CreateOrUpdate(
                 rgName,
@@ -762,6 +770,35 @@ namespace Compute.Tests
             return asetId;
         }
 
+        static string CreateProximityPlacementGroup(string subId, string rgName, string ppgName, ComputeManagementClient client, string location)
+        {
+            // Setup ProximityPlacementGroup
+            var inputProximityPlacementGroup = new ProximityPlacementGroup
+            {
+                Location = location,
+                Tags = new Dictionary<string, string>()
+                {
+                    {"RG", "rg"},
+                    {"testTag", "1"},
+                },
+                ProximityPlacementGroupType = ProximityPlacementGroupType.Standard
+            };
+
+            // Create a ProximityPlacementGroup and then create a VM inside this ProximityPlacementGroup
+            ProximityPlacementGroup ppgCreateOrUpdateResponse = client.ProximityPlacementGroups.CreateOrUpdate(
+                rgName,
+                ppgName,
+                inputProximityPlacementGroup
+            );
+
+            return Helpers.GetProximityPlacementGroupRef(subId, rgName, ppgCreateOrUpdateResponse.Name);
+        }
+
+        protected string CreateProximityPlacementGroup(string rgName, string ppgName)
+        {
+            return CreateProximityPlacementGroup(m_subId, rgName, ppgName, m_CrpClient, m_location);
+        }
+        
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
             string vmSize = "Standard_A0", string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
         {
@@ -852,7 +889,7 @@ namespace Compute.Tests
         }
 
         protected void ValidateVM(VirtualMachine vm, VirtualMachine vmOut, string expectedVMReferenceId, bool hasManagedDisks = false, bool hasUserDefinedAS = true,
-            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null)
+            bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false, string expectedLocation = null, string expectedPpgReferenceId = null)
         {
             Assert.True(vmOut.LicenseType == vm.LicenseType);
 
@@ -1026,6 +1063,16 @@ namespace Compute.Tests
 
             ValidatePlan(vm.Plan, vmOut.Plan);
             Assert.NotNull(vmOut.VmId);
+
+            if(expectedPpgReferenceId != null)
+            {
+                Assert.NotNull(vmOut.ProximityPlacementGroup);
+                Assert.Equal(expectedPpgReferenceId, vmOut.ProximityPlacementGroup.Id, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                Assert.Null(vmOut.ProximityPlacementGroup);
+            }
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut, bool hasManagedDisks = false,

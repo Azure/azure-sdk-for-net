@@ -41,8 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The public IP prefix SKU.</param>
         /// <param name="publicIPAddressVersion">The public IP address version.
-        /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
-        /// 'IPv4', 'IPv6'</param>
+        /// Possible values include: 'IPv4', 'IPv6'</param>
         /// <param name="ipTags">The list of tags associated with the public IP
         /// prefix.</param>
         /// <param name="prefixLength">The Length of the Public IP
@@ -87,8 +86,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public PublicIPPrefixSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the public IP address version. Possible values are:
-        /// 'IPv4' and 'IPv6'. Possible values include: 'IPv4', 'IPv6'
+        /// Gets or sets the public IP address version. Possible values
+        /// include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
         public string PublicIPAddressVersion { get; set; }

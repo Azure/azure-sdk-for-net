@@ -86,7 +86,7 @@
         [Fact]
         public void Test_DevicePasswordUpdate()
         {
-            var asymmetricEncryptedSecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password3", TestConstants.GatewayActivationKey);
+            var asymmetricEncryptedSecret = Client.Devices.GetAsymmetricEncryptedSecretUsingActivationKey(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password3", TestConstants.GatewayActivationKey);
             // Update the device admin password
             Client.Devices.CreateOrUpdateSecuritySettings(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, asymmetricEncryptedSecret);
         }

@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// backend server.</param>
         /// <param name="health">Health of backend server. Possible values
         /// include: 'Unknown', 'Up', 'Down', 'Partial', 'Draining'</param>
-        public ApplicationGatewayBackendHealthServer(string address = default(string), NetworkInterfaceIPConfiguration ipConfiguration = default(NetworkInterfaceIPConfiguration), string health = default(string))
+        /// <param name="healthProbeLog">Health Probe Log.</param>
+        public ApplicationGatewayBackendHealthServer(string address = default(string), NetworkInterfaceIPConfiguration ipConfiguration = default(NetworkInterfaceIPConfiguration), string health = default(string), string healthProbeLog = default(string))
         {
             Address = address;
             IpConfiguration = ipConfiguration;
             Health = health;
+            HealthProbeLog = healthProbeLog;
             CustomInit();
         }
 
@@ -67,6 +69,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "health")]
         public string Health { get; set; }
+
+        /// <summary>
+        /// Gets or sets health Probe Log.
+        /// </summary>
+        [JsonProperty(PropertyName = "healthProbeLog")]
+        public string HealthProbeLog { get; set; }
 
     }
 }

@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// start date must be first of the month and should be less than the
         /// end date. Budget start date must be on or after June 1, 2017.
         /// Future start date should not be more than three months. Past start
-        /// date should  be selected within the timegrain preiod. There are no
+        /// date should  be selected within the timegrain period. There are no
         /// restrictions on the end date.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="eTag">eTag of the resource. To handle concurrent
-        /// update scenarion, this field will be used to determine whether the
+        /// update scenario, this field will be used to determine whether the
         /// user is updating the latest version or not.</param>
         /// <param name="filters">May be used to filter budgets by resource
         /// group, resource, or meter.</param>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// must be first of the month and should be less than the end date.
         /// Budget start date must be on or after June 1, 2017. Future start
         /// date should not be more than three months. Past start date should
-        /// be selected within the timegrain preiod. There are no restrictions
+        /// be selected within the timegrain period. There are no restrictions
         /// on the end date.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timePeriod")]

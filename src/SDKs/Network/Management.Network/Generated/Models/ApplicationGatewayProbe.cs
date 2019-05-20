@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="protocol">The protocol used for the probe. Possible
-        /// values are 'Http' and 'Https'. Possible values include: 'Http',
-        /// 'Https'</param>
+        /// values include: 'Http', 'Https'</param>
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
@@ -43,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="interval">The probing interval in seconds. This is the
         /// time interval between two consecutive probes. Acceptable values are
         /// from 1 second to 86400 seconds.</param>
-        /// <param name="timeout">the probe timeout in seconds. Probe marked as
+        /// <param name="timeout">The probe timeout in seconds. Probe marked as
         /// failed if valid response is not received with this timeout period.
         /// Acceptable values are from 1 second to 86400 seconds.</param>
         /// <param name="unhealthyThreshold">The probe retry count. Backend
@@ -90,8 +89,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the protocol used for the probe. Possible values are
-        /// 'Http' and 'Https'. Possible values include: 'Http', 'Https'
+        /// Gets or sets the protocol used for the probe. Possible values
+        /// include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

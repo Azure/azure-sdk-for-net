@@ -18,5 +18,8 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     {
         public const string NineFullStopFive = "9.5";
         public const string NineFullStopSix = "9.6";
+        public const string OneZero = "10";
+        public const string OneZeroFullStopZero = "10.0";
+        public const string OneZeroFullStopTwo = "10.2";
     }
 }

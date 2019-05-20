@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         public static bool IsTestTenant = false;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "west central us";
+        public static string DefaultLocation = IsTestTenant ? null : "central us euap";
         public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
@@ -233,8 +233,8 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         {
             return new CloudEndpointCreateParameters
             {
-                StorageAccountResourceId = "/subscriptions/1d16f9b3-bbe3-48d4-930a-27a74dca003b/resourcegroups/sasdkwestcentralus/providers/Microsoft.Storage/storageAccounts/sasdkwestcentralus",
-                StorageAccountShareName = "afsfileshare1",
+                StorageAccountResourceId = "/subscriptions/1d16f9b3-bbe3-48d4-930a-27a74dca003b/resourcegroups/sasdkcentraluseuap/providers/Microsoft.Storage/storageAccounts/sasdkcentraluseuap",
+                AzureFileShareName = "afsfileshare1",
                 StorageAccountTenantId = "\"72f988bf-86f1-41af-91ab-2d7cd011db47\""
             };
         }
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         {
             return new ServerEndpointCreateParameters
             {
-                ServerLocalPath = "D:\\test2",
+                ServerLocalPath = "E:\\test2",
                 CloudTiering = "Off",
                 VolumeFreeSpacePercent = 0,
                 ServerResourceId = serverResourceId,

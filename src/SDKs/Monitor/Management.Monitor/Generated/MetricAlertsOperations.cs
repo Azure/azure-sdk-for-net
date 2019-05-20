@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Monitor
         }
 
         /// <summary>
-        /// Retrieve alert rule defintions in a resource group.
+        /// Retrieve alert rule definitions in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Management.Monitor
         }
 
         /// <summary>
-        /// Retrieve an alert rule definiton.
+        /// Retrieve an alert rule definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1001,7 +1001,7 @@ namespace Microsoft.Azure.Management.Monitor
         }
 
         /// <summary>
-        /// Delete an alert rule defitiniton.
+        /// Delete an alert rule definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -24,8 +24,16 @@ namespace NetApp.Tests.ResourceTests
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                // create the account
-                ResourceUtils.CreateAccount(netAppMgmtClient);
+                // create the account with only the one required property
+                var netAppAccount = new NetAppAccount()
+                {
+                    Location = ResourceUtils.location
+                };
+
+                var resource = netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, ResourceUtils.resourceGroup, ResourceUtils.accountName1);
+                Assert.Equal(resource.Name, ResourceUtils.accountName1);
+                Assert.Null(resource.Tags);
+                Assert.Null(resource.ActiveDirectories);
 
                 // get all accounts and check
                 var accountsBefore = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
@@ -37,6 +45,52 @@ namespace NetApp.Tests.ResourceTests
                 // get all accounts and check
                 var accountsAfter = netAppMgmtClient.Accounts.List(ResourceUtils.resourceGroup);
                 Assert.Empty(accountsAfter);
+            }
+        }
+
+        [Fact]
+        public void CreateAccountWithProperties()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var dict = new Dictionary<string, string>();
+                dict.Add("Tag1", "Value1");
+
+                // create the account
+                var resource = ResourceUtils.CreateAccount(netAppMgmtClient, tags: dict, activeDirectory: ResourceUtils.activeDirectory);
+                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
+                // cannot apply active directory due to current limitations (one per subscription)
+                // test omitted
+                //Assert.NotNull(resource.ActiveDirectories);
+
+                // remove the account
+                netAppMgmtClient.Accounts.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
+            }
+        }
+
+        [Fact]
+        public void UpdateAccount()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // create the account
+                ResourceUtils.CreateAccount(netAppMgmtClient);
+
+                // perform create/update operation again for same account
+                // this should be treated as an update and accepted
+                // could equally do this with some property fields added
+
+                var dict = new Dictionary<string, string>();
+                dict.Add("Tag1", "Value1");
+
+                var resource = ResourceUtils.CreateAccount(netAppMgmtClient, tags: dict);
+                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
             }
         }
 
@@ -85,40 +139,6 @@ namespace NetApp.Tests.ResourceTests
         }
 
         [Fact]
-        public void UpdateAccountNotPermitted()
-        {
-            // a put update is not a valid operation
-
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-
-                // create the account
-                ResourceUtils.CreateAccount(netAppMgmtClient);
-
-                // Now try and modify it
-                var netAppAccount = new NetAppAccount()
-                {
-                    Location = ResourceUtils.location,
-                };
-
-                try
-                {
-                    netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, ResourceUtils.resourceGroup, ResourceUtils.accountName1);
-                    Assert.True(false);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Contains("MethodNotAllowed", ex.Message);
-                }
-
-                // cleanup - remove the account
-                ResourceUtils.DeleteAccount(netAppMgmtClient);
-            }
-        }
-
-        [Fact]
         public void GetAccountByNameNotFound()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -132,9 +152,10 @@ namespace NetApp.Tests.ResourceTests
                     var account = netAppMgmtClient.Accounts.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                     Assert.True(false); // expecting exception
                 }
+
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Equal("The Resource 'Microsoft.NetApp/netAppAccounts/" + ResourceUtils.accountName1 + "' under resource group '" + ResourceUtils.resourceGroup + "' was not found.", ex.Message);
                 }
             }
         }

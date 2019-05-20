@@ -52,12 +52,5 @@ namespace Microsoft.Azure.Management.Blueprint
             public const string Deleting = "Deleting";
 
         }
-
-        public static class AssignmentLockMode
-        {
-            public const string None = "none";
-            public const string AllResourcesReadOnly = "allResourcesReadOnly";
-            public const string AllResourcesDoNotDelete = "allResourcesDoNotDelete";
-        }
     }
 }

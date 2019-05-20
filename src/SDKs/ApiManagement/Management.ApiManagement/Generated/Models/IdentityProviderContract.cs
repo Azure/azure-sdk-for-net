@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// 'microsoft', 'twitter', 'aad', 'aadB2C'</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
+        /// <param name="authority">OpenID Connect discovery endpoint hostname
+        /// for AAD or AAD B2C.</param>
         /// <param name="signupPolicyName">Signup Policy Name. Only applies to
         /// AAD B2C Identity Provider.</param>
         /// <param name="signinPolicyName">Signin Policy Name. Only applies to
@@ -58,11 +60,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
-        public IdentityProviderContract(string clientId, string clientSecret, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), IList<string> allowedTenants = default(IList<string>), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
+        public IdentityProviderContract(string clientId, string clientSecret, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
             : base(id, name, type)
         {
             IdentityProviderContractType = identityProviderContractType;
             AllowedTenants = allowedTenants;
+            Authority = authority;
             SignupPolicyName = signupPolicyName;
             SigninPolicyName = signinPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
@@ -91,6 +94,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowedTenants")]
         public IList<string> AllowedTenants { get; set; }
+
+        /// <summary>
+        /// Gets or sets openID Connect discovery endpoint hostname for AAD or
+        /// AAD B2C.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authority")]
+        public string Authority { get; set; }
 
         /// <summary>
         /// Gets or sets signup Policy Name. Only applies to AAD B2C Identity

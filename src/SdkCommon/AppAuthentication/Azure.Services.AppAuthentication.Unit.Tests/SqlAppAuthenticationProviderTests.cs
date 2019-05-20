@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async void InvalidAuthority()
         {
             // Provide authority parameter value that will not parse properly
-            var parameters = new SqlAppAuthenticationParameters("http://badauthority", Constants.KeyVaultResourceId);
+            var parameters = new SqlAppAuthenticationParameters("http://badauthority", Constants.KeyVaultResourceId, default(string));
 
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<ArgumentException>(() => (new SqlAppAuthenticationProvider()).AcquireTokenAsync(parameters));
@@ -26,12 +26,28 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async void MissingResource()
         {
             // Do not provide any resource parameter value
-            var parameters = new SqlAppAuthenticationParameters($"{Constants.AzureAdInstance}{Constants.TenantId}", string.Empty);
+            var parameters = new SqlAppAuthenticationParameters($"{Constants.AzureAdInstance}{Constants.TenantId}", string.Empty, default(string));
 
             // Ensure exception is thrown when getting the token
             var exception = await Assert.ThrowsAsync<ArgumentException>(() => (new SqlAppAuthenticationProvider()).AcquireTokenAsync(parameters));
 
             Assert.Contains(Constants.SqlAppAuthProviderInvalidResource, exception.ToString());
+        }
+
+        [Fact]
+        public void InvalidUserId()
+        {
+            string returnValue = SqlAppAuthenticationProvider.GetConnectionStringByUserId("NotAGuid");
+
+            Assert.Equal(default(string), returnValue);
+        }
+
+        [Fact]
+        public void ValidUserId()
+        {
+            string returnValue = SqlAppAuthenticationProvider.GetConnectionStringByUserId(Constants.TestUserAssignedManagedIdentityId);
+
+            Assert.Equal(Constants.ManagedUserAssignedIdentityConnectionString, returnValue);
         }
     }
 }

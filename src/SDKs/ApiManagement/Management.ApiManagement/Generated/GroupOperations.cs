@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -210,14 +210,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -227,10 +226,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -338,17 +333,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -564,17 +559,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -784,7 +779,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GroupContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, GroupCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GroupContract,GroupCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, GroupCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -815,17 +810,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -973,7 +968,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<GroupContract>();
+            var _result = new AzureOperationResponse<GroupContract,GroupCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1015,6 +1010,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GroupCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1093,17 +1101,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1332,17 +1340,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
@@ -1506,7 +1514,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1602,14 +1610,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1619,10 +1626,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

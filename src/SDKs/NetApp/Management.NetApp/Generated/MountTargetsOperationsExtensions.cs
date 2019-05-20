@@ -24,12 +24,15 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class MountTargetsOperationsExtensions
     {
             /// <summary>
-            /// List mount targets
+            /// Describe all mount targets
             /// </summary>
+            /// <remarks>
+            /// List all mount targets associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -41,18 +44,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static IEnumerable<MountTarget> List(this IMountTargetsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static IEnumerable<MountTarget> List(this IMountTargetsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                return operations.ListAsync(resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List mount targets
+            /// Describe all mount targets
             /// </summary>
+            /// <remarks>
+            /// List all mount targets associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -67,9 +73,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<MountTarget>> ListAsync(this IMountTargetsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<MountTarget>> ListAsync(this IMountTargetsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

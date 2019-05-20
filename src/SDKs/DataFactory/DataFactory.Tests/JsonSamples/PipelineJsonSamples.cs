@@ -3496,5 +3496,57 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "WebhookActivity")]
+        public const string Webhook = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""name"": ""Webhook1"",
+                ""type"": ""WebHook"",
+                ""typeProperties"": {
+                    ""url"": ""http://samplesample.azurewebsites.net/api/execute/webhook"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json""
+                    },
+                    ""body"": {
+                        ""key"": ""value""
+                    },
+                    ""timeout"": ""00:03:00""
+                }
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "ValidationActivity")]
+        public const string Validation = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""type"": ""Validation"",
+                ""name"": ""ValidationActivity"",
+                ""description"": ""Test activity description"",
+                ""typeProperties"": {
+                    ""timeout"": ""00:03:00"",
+                    ""sleep"": 10,
+                    ""minimumSize"": {
+                        ""type"": ""Expression"",
+                        ""value"": ""@add(0,1)""
+                    },
+                    ""dataset"": {
+                        ""referenceName"": ""FileDataset"",
+                        ""type"": ""DatasetReference""
+                    }
+                }
+            }
+        ]
+    }
+}";
     }
 }

@@ -25,7 +25,8 @@ namespace NetApp.Tests.ResourceTests
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // create the account
-                ResourceUtils.CreateAccount(netAppMgmtClient);
+                var resource = ResourceUtils.CreateAccount(netAppMgmtClient);
+                Assert.Null(resource.Tags);
 
                 // create the pool, get all pools and check
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName1, ResourceUtils.accountName1, poolOnly: true);
@@ -51,7 +52,12 @@ namespace NetApp.Tests.ResourceTests
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // create two pools under same account
-                ResourceUtils.CreatePool(netAppMgmtClient);
+                // throw in a quick check on tags on the first
+                var dict = new Dictionary<string, string>();
+                dict.Add("Tag2", "Value2");
+                var resource = ResourceUtils.CreatePool(netAppMgmtClient, tags: dict);
+                Assert.True(resource.Tags.ToString().Contains("Tag2") && resource.Tags.ToString().Contains("Value2"));
+
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName2, poolOnly: true);
 
                 // get the account list and check
@@ -107,7 +113,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("was not found", ex.Message);
                 }
 
                 // cleanup - remove the account
@@ -134,7 +140,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("was not found", ex.Message);
                 }
 
                 // cleanup - remove pool and account
@@ -165,7 +171,8 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("Conflict", ex.Message);
+                    // Conflict
+                    Assert.Equal("Can not delete resource before nested resources are deleted.", ex.Message);
                 }
 
                 // clean up
@@ -185,11 +192,20 @@ namespace NetApp.Tests.ResourceTests
                 // create the pool
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
                 Assert.Equal("Premium", pool.ServiceLevel);
+                Assert.Null(pool.Tags);
 
-                // update
+                // update. Add tags and change service level
+                // size is already present in the object
+                // and must also be provided otherwise Bad Request
+                var dict = new Dictionary<string, string>();
+                dict.Add("Tag3", "Value3");
+                pool.Tags = dict;
                 pool.ServiceLevel = "Standard";
+
                 var updatedPool = netAppMgmtClient.Pools.CreateOrUpdate(pool, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 Assert.Equal("Standard", updatedPool.ServiceLevel);
+                Assert.Equal(4398046511104, updatedPool.Size); // unchanged
+                Assert.True(updatedPool.Tags.ToString().Contains("Tag3") && updatedPool.Tags.ToString().Contains("Value3"));
 
                 // cleanup
                 ResourceUtils.DeletePool(netAppMgmtClient);
@@ -207,18 +223,24 @@ namespace NetApp.Tests.ResourceTests
                 
                 // create the pool
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
+                Assert.Equal("Premium", pool.ServiceLevel);
                 Assert.Null(pool.Tags);
                 
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag1", "Value1");
 
                 // Now try and modify it
+                // set only two of the three possibles
+                // size should remain unchanged
                 var poolPatch = new CapacityPoolPatch()
                 {
-                    Tags = dict
+                    Tags = dict,
+                    ServiceLevel = "Standard"
                 };
 
                 var resource = netAppMgmtClient.Pools.Update(poolPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                Assert.Equal("Standard", resource.ServiceLevel);
+                Assert.Equal(4398046511104, resource.Size); // unchanged
                 Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
                 
                 // cleanup
@@ -226,7 +248,7 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
-
+        
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.PoolTests).GetTypeInfo().Assembly.Location;

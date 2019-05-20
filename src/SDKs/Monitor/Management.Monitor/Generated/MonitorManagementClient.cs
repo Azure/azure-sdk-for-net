@@ -145,6 +145,11 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IMetricBaselineOperations MetricBaseline { get; private set; }
 
         /// <summary>
+        /// Gets the IBaselinesOperations.
+        /// </summary>
+        public virtual IBaselinesOperations Baselines { get; private set; }
+
+        /// <summary>
         /// Gets the IMetricAlertsOperations.
         /// </summary>
         public virtual IMetricAlertsOperations MetricAlerts { get; private set; }
@@ -158,6 +163,16 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets the IScheduledQueryRulesOperations.
         /// </summary>
         public virtual IScheduledQueryRulesOperations ScheduledQueryRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IMetricNamespacesOperations.
+        /// </summary>
+        public virtual IMetricNamespacesOperations MetricNamespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IVMInsightsOperations.
+        /// </summary>
+        public virtual IVMInsightsOperations VMInsights { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MonitorManagementClient class.
@@ -415,9 +430,12 @@ namespace Microsoft.Azure.Management.Monitor
             MetricDefinitions = new MetricDefinitionsOperations(this);
             Metrics = new MetricsOperations(this);
             MetricBaseline = new MetricBaselineOperations(this);
+            Baselines = new BaselinesOperations(this);
             MetricAlerts = new MetricAlertsOperations(this);
             MetricAlertsStatus = new MetricAlertsStatusOperations(this);
             ScheduledQueryRules = new ScheduledQueryRulesOperations(this);
+            MetricNamespaces = new MetricNamespacesOperations(this);
+            VMInsights = new VMInsightsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -456,6 +474,8 @@ namespace Microsoft.Azure.Management.Monitor
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RuleAction>("odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MetricAlertCriteria>("odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MetricAlertCriteria>("odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MultiMetricCriteria>("criterionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MultiMetricCriteria>("criterionType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Action>("odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Action>("odata.type"));
             CustomInitialize();

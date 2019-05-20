@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Security.Models
     public static class SettingKind
     {
         public const string DataExportSetting = "DataExportSetting";
+        public const string AlertSuppressionSetting = "AlertSuppressionSetting";
     }
 }

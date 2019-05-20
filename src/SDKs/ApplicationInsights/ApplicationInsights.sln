@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.ApplicationInsights.Tests", "DataPlane\Data.ApplicationInsights.Tests\Data.ApplicationInsights.Tests.csproj", "{FA06A27D-4D07-4157-9C61-36BEBD67970D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationInsights.Tests", "Management\ApplicationInsights.Tests\ApplicationInsights.Tests.csproj", "{6ECF131B-7B54-48EC-BC33-100AA82C4206}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights", "Management\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj", "{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights.Query", "DataPlane\ApplicationInsights\Microsoft.Azure.ApplicationInsights.Query.csproj", "{69672630-2C7C-401F-B923-1D507BD63383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA06A27D-4D07-4157-9C61-36BEBD67970D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA06A27D-4D07-4157-9C61-36BEBD67970D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA06A27D-4D07-4157-9C61-36BEBD67970D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA06A27D-4D07-4157-9C61-36BEBD67970D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6ECF131B-7B54-48EC-BC33-100AA82C4206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ECF131B-7B54-48EC-BC33-100AA82C4206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ECF131B-7B54-48EC-BC33-100AA82C4206}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,10 +21,6 @@ Global
 		{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69672630-2C7C-401F-B923-1D507BD63383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69672630-2C7C-401F-B923-1D507BD63383}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69672630-2C7C-401F-B923-1D507BD63383}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69672630-2C7C-401F-B923-1D507BD63383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

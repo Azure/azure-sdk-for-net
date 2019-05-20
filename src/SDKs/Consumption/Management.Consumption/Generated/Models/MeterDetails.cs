@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="totalIncludedQuantity">The total included quantity
         /// associated with the offer.</param>
         /// <param name="pretaxStandardRate">The pretax listing price.</param>
-        public MeterDetails(string meterName = default(string), string meterCategory = default(string), string meterSubCategory = default(string), string unit = default(string), string meterLocation = default(string), decimal? totalIncludedQuantity = default(decimal?), decimal? pretaxStandardRate = default(decimal?))
+        /// <param name="serviceName">The name of the service.</param>
+        /// <param name="serviceTier">The service tier.</param>
+        public MeterDetails(string meterName = default(string), string meterCategory = default(string), string meterSubCategory = default(string), string unit = default(string), string meterLocation = default(string), decimal? totalIncludedQuantity = default(decimal?), decimal? pretaxStandardRate = default(decimal?), string serviceName = default(string), string serviceTier = default(string))
         {
             MeterName = meterName;
             MeterCategory = meterCategory;
@@ -51,6 +53,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
             MeterLocation = meterLocation;
             TotalIncludedQuantity = totalIncludedQuantity;
             PretaxStandardRate = pretaxStandardRate;
+            ServiceName = serviceName;
+            ServiceTier = serviceTier;
             CustomInit();
         }
 
@@ -103,6 +107,18 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "pretaxStandardRate")]
         public decimal? PretaxStandardRate { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the service.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceName")]
+        public string ServiceName { get; private set; }
+
+        /// <summary>
+        /// Gets the service tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceTier")]
+        public string ServiceTier { get; private set; }
 
     }
 }

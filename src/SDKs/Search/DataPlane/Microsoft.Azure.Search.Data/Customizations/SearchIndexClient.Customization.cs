@@ -12,6 +12,11 @@ namespace Microsoft.Azure.Search
     public partial class SearchIndexClient
     {
         /// <summary>
+        /// Gets the IDocumentsOperations.
+        /// </summary>
+        public virtual IDocumentsOperations Documents { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
         /// </summary>
         /// <param name='searchServiceName'>Required. The name of the Azure Search service.</param>
@@ -60,7 +65,7 @@ namespace Microsoft.Azure.Search
         public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 
         /// <summary>
-        /// Indicates whether the index client should use HTTP GET for making Search and Suggest requests to the
+        /// Indicates whether the index client should use HTTP GET for making Search, Suggest, and Autocomplete requests to the
         /// Azure Search REST API. The default is <c>false</c>, which indicates that HTTP POST will be used.
         /// </summary>
         public bool UseHttpGetForQueries { get; set; }
@@ -77,11 +82,9 @@ namespace Microsoft.Azure.Search
             IndexName = newIndexName;
         }
 
-        internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
-
         partial void CustomInitialize()
         {
-            DocumentsProxy = new DocumentsProxyOperations(this);
+            Documents = new DocumentsOperations(this);
         }
 
         private static void ValidateSearchServiceAndIndexNames(string searchServiceName, string indexName)

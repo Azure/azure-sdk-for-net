@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// class.
         /// </summary>
         /// <param name="name">Name of the Sku. Possible values include:
-        /// 'Developer', 'Standard', 'Premium', 'Basic'</param>
+        /// 'Developer', 'Standard', 'Premium', 'Basic', 'Consumption'</param>
         /// <param name="capacity">Capacity of the SKU (number of deployed
-        /// units of the SKU). The default value is 1.</param>
+        /// units of the SKU).</param>
         public ApiManagementServiceSkuProperties(string name, int? capacity = default(int?))
         {
             Name = name;
@@ -50,14 +50,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets name of the Sku. Possible values include: 'Developer',
-        /// 'Standard', 'Premium', 'Basic'
+        /// 'Standard', 'Premium', 'Basic', 'Consumption'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets capacity of the SKU (number of deployed units of the
-        /// SKU). The default value is 1.
+        /// SKU).
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

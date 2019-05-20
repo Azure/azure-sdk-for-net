@@ -287,8 +287,8 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets a list of supported orchestrators in the specified subscription. The
-            /// operation returns properties of each orchestrator including version and
-            /// available upgrades.
+            /// operation returns properties of each orchestrator including version,
+            /// available upgrades and whether that version or upgrades are in preview.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -309,8 +309,8 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets a list of supported orchestrators in the specified subscription. The
-            /// operation returns properties of each orchestrator including version and
-            /// available upgrades.
+            /// operation returns properties of each orchestrator including version,
+            /// available upgrades and whether that version or upgrades are in preview.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="remoteVpnSite">Id of the connected vpn site.</param>
-        /// <param name="routingWeight">routing weight for vpn
+        /// <param name="routingWeight">Routing weight for vpn
         /// connection.</param>
         /// <param name="connectionStatus">The connection status. Possible
         /// values include: 'Unknown', 'Connecting', 'Connected',
@@ -57,6 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enableRateLimiting">EnableBgp flag</param>
         /// <param name="enableInternetSecurity">Enable internet
         /// security</param>
+        /// <param name="useLocalAzureIpAddress">Use local azure ip to initiate
+        /// connection</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
@@ -80,6 +82,7 @@ namespace Microsoft.Azure.Management.Network.Models
             IpsecPolicies = ipsecPolicies;
             EnableRateLimiting = enableRateLimiting;
             EnableInternetSecurity = enableInternetSecurity;
+            UseLocalAzureIpAddress = useLocalAzureIpAddress;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -165,6 +168,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
+
+        /// <summary>
+        /// Gets or sets use local azure ip to initiate connection
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useLocalAzureIpAddress")]
+        public bool? UseLocalAzureIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of the resource. Possible

@@ -70,14 +70,19 @@ namespace Microsoft.Azure.Graph.RBAC
 
 
         /// <summary>
-        /// Gets the IObjectsOperations.
+        /// Gets the ISignedInUserOperations.
         /// </summary>
-        IObjectsOperations Objects { get; }
+        ISignedInUserOperations SignedInUser { get; }
 
         /// <summary>
         /// Gets the IApplicationsOperations.
         /// </summary>
         IApplicationsOperations Applications { get; }
+
+        /// <summary>
+        /// Gets the IDeletedApplicationsOperations.
+        /// </summary>
+        IDeletedApplicationsOperations DeletedApplications { get; }
 
         /// <summary>
         /// Gets the IGroupsOperations.
@@ -95,14 +100,19 @@ namespace Microsoft.Azure.Graph.RBAC
         IUsersOperations Users { get; }
 
         /// <summary>
+        /// Gets the IObjectsOperations.
+        /// </summary>
+        IObjectsOperations Objects { get; }
+
+        /// <summary>
         /// Gets the IDomainsOperations.
         /// </summary>
         IDomainsOperations Domains { get; }
 
         /// <summary>
-        /// Gets the IOAuth2Operations.
+        /// Gets the IOAuth2PermissionGrantOperations.
         /// </summary>
-        IOAuth2Operations OAuth2 { get; }
+        IOAuth2PermissionGrantOperations OAuth2PermissionGrant { get; }
 
     }
 }

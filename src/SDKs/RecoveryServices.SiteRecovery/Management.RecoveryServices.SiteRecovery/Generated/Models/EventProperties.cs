@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// source of the event on which it is raised (for example, VM, VMM
         /// etc).</param>
         /// <param name="severity">The severity of the event.</param>
-        /// <param name="timeOfOccurrence">The time of occurence of the
+        /// <param name="timeOfOccurrence">The time of occurrence of the
         /// event.</param>
         /// <param name="fabricId">The ARM ID of the fabric.</param>
         /// <param name="providerSpecificDetails">The provider specific
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string Severity { get; set; }
 
         /// <summary>
-        /// Gets or sets the time of occurence of the event.
+        /// Gets or sets the time of occurrence of the event.
         /// </summary>
         [JsonProperty(PropertyName = "timeOfOccurrence")]
         public System.DateTime? TimeOfOccurrence { get; set; }

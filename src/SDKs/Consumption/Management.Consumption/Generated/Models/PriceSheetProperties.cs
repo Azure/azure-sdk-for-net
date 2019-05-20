@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         /// <param name="billingPeriodId">The id of the billing period resource
         /// that the usage belongs to.</param>
-        /// <param name="meterId">The meter id</param>
+        /// <param name="meterId">The meter id (GUID)</param>
         /// <param name="meterDetails">The details about the meter. By default
         /// this is not populated, unless it's specified in $expand.</param>
         /// <param name="unitOfMeasure">Unit of measure</param>
@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="partNumber">Part Number</param>
         /// <param name="unitPrice">Unit Price</param>
         /// <param name="currencyCode">Currency Code</param>
-        public PriceSheetProperties(string billingPeriodId = default(string), string meterId = default(string), MeterDetails meterDetails = default(MeterDetails), string unitOfMeasure = default(string), decimal? includedQuantity = default(decimal?), string partNumber = default(string), decimal? unitPrice = default(decimal?), string currencyCode = default(string))
+        /// <param name="offerId">Offer Id</param>
+        public PriceSheetProperties(string billingPeriodId = default(string), System.Guid? meterId = default(System.Guid?), MeterDetails meterDetails = default(MeterDetails), string unitOfMeasure = default(string), decimal? includedQuantity = default(decimal?), string partNumber = default(string), decimal? unitPrice = default(decimal?), string currencyCode = default(string), string offerId = default(string))
         {
             BillingPeriodId = billingPeriodId;
             MeterId = meterId;
@@ -50,6 +51,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
             PartNumber = partNumber;
             UnitPrice = unitPrice;
             CurrencyCode = currencyCode;
+            OfferId = offerId;
             CustomInit();
         }
 
@@ -66,10 +68,10 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public string BillingPeriodId { get; private set; }
 
         /// <summary>
-        /// Gets the meter id
+        /// Gets the meter id (GUID)
         /// </summary>
         [JsonProperty(PropertyName = "meterId")]
-        public string MeterId { get; private set; }
+        public System.Guid? MeterId { get; private set; }
 
         /// <summary>
         /// Gets the details about the meter. By default this is not populated,
@@ -107,6 +109,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "currencyCode")]
         public string CurrencyCode { get; private set; }
+
+        /// <summary>
+        /// Gets offer Id
+        /// </summary>
+        [JsonProperty(PropertyName = "offerId")]
+        public string OfferId { get; private set; }
 
     }
 }

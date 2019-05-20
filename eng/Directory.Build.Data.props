@@ -5,9 +5,19 @@
     <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
     <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
     <LangVersion>latest</LangVersion>
-    <SignAssembly>true</SignAssembly>
+    <!--
+      Disable NuGet Pack warning that the version is SemVer 2.0.
+      SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
+    -->
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
+    <EnableClientSdkAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true'">true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->
@@ -18,6 +28,16 @@
 
     <RequiredTargetFrameworks>net452;netstandard1.4</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net461;netstandard2.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
     <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
@@ -59,4 +79,29 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
+
+  <!-- Signing properties -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+
+    <!--
+      In order to be able to run our tests on .NET Framework we should use public signing by default so
+      we don't have to disable strong name validation for things that are delay signed.
+    -->
+    <PublicSign Condition="'$(PublicSign)' == ''">true</PublicSign>
+    <DelaySign Condition="'$(PublicSign)' == 'true'">false</DelaySign>
+    <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
+
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(IsClientLibrary)' == 'true'">$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <!-- Always fully sign test assemblies since we have a full public/private key -->
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <Import Project="Versioning.props" />
 </Project>

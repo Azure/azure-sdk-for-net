@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicyCollection,ApiPolicyListByApiHeaders>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyCollection>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the entity state (Etag) version of the API policy specified by
         /// its identifier.
@@ -95,6 +95,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance. Non-current revision has ;rev=n as a
         /// suffix where n is the revision number.
         /// </param>
+        /// <param name='format'>
+        /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -110,7 +113,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicyContract,ApiPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyContract,ApiPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates policy configuration for the API.
         /// </summary>
@@ -147,7 +150,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicyContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, PolicyContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyContract,ApiPolicyCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, PolicyContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the policy configuration at the Api.
         /// </summary>

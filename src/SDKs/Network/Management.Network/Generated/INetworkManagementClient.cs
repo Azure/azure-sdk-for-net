@@ -131,6 +131,11 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; }
 
         /// <summary>
+        /// Gets the IPeerExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        IPeerExpressRouteCircuitConnectionsOperations PeerExpressRouteCircuitConnections { get; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
         /// </summary>
         IExpressRouteCircuitsOperations ExpressRouteCircuits { get; }
@@ -219,6 +224,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILoadBalancerProbesOperations.
         /// </summary>
         ILoadBalancerProbesOperations LoadBalancerProbes { get; }
+
+        /// <summary>
+        /// Gets the INatGatewaysOperations.
+        /// </summary>
+        INatGatewaysOperations NatGateways { get; }
 
         /// <summary>
         /// Gets the INetworkInterfacesOperations.
@@ -409,6 +419,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
         IP2sVpnGatewaysOperations P2sVpnGateways { get; }
+
+        /// <summary>
+        /// Gets the IWebApplicationFirewallPoliciesOperations.
+        /// </summary>
+        IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// API Export result Blob Uri.
+    /// API Export result.
     /// </summary>
     public partial class ApiExportResult
     {
@@ -29,12 +29,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the ApiExportResult class.
         /// </summary>
-        /// <param name="link">Link to the Storage Blob containing the result
-        /// of the export operation. The Blob Uri is only valid for 5
-        /// minutes.</param>
-        public ApiExportResult(string link = default(string))
+        /// <param name="id">ResourceId of the API which was exported.</param>
+        /// <param name="exportResultFormat">Format in which the Api Details
+        /// are exported to the Storage Blob with Sas Key valid for 5 minutes.
+        /// Possible values include: 'Swagger', 'Wsdl', 'Wadl',
+        /// 'OpenApi'</param>
+        /// <param name="value">The object defining the schema of the exported
+        /// Api Detail</param>
+        public ApiExportResult(string id = default(string), string exportResultFormat = default(string), ApiExportResultValue value = default(ApiExportResultValue))
         {
-            Link = link;
+            Id = id;
+            ExportResultFormat = exportResultFormat;
+            Value = value;
             CustomInit();
         }
 
@@ -44,11 +50,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets link to the Storage Blob containing the result of the
-        /// export operation. The Blob Uri is only valid for 5 minutes.
+        /// Gets or sets resourceId of the API which was exported.
         /// </summary>
-        [JsonProperty(PropertyName = "link")]
-        public string Link { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets format in which the Api Details are exported to the
+        /// Storage Blob with Sas Key valid for 5 minutes. Possible values
+        /// include: 'Swagger', 'Wsdl', 'Wadl', 'OpenApi'
+        /// </summary>
+        [JsonProperty(PropertyName = "format")]
+        public string ExportResultFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object defining the schema of the exported Api
+        /// Detail
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public ApiExportResultValue Value { get; set; }
 
     }
 }

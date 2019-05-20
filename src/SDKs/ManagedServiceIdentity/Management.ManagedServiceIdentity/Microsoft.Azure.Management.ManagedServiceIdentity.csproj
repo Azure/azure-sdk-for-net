@@ -5,11 +5,10 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ManagedServiceIdentity</PackageId>
-    <Description>Provides developers with libraries for ManagedSericeIdentity under Azure Resource manager to perform CRUD operations on identities.</Description>
-    <Version>0.10.0-preview</Version>
+    <PackageReleaseNotes>Provides developers with libraries for ManagedServiceIdentity under Azure Resource manager to perform CRUD operations on identities. Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <Version>0.11.0</Version>
     <AssemblyName>Microsoft.Azure.Management.ManagedServiceIdentity</AssemblyName>
     <PackageTags>Microsoft Azure resource management;msi;managedserviceidentity;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

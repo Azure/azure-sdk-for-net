@@ -5,47 +5,53 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using Newtonsoft.Json;
 
-    internal class CustomBook
+    internal class CustomAuthor
+    {
+        public string FullName { get; set; }
+
+        public override int GetHashCode() => FullName?.GetHashCode() ?? 0;
+
+        public override bool Equals(object obj) => obj is CustomAuthor other && FullName == other.FullName;
+
+        public override string ToString() => FullName?.ToString() ?? string.Empty;
+    }
+
+    internal abstract class CustomBookBase<T> where T : CustomAuthor
     {
         public string InternationalStandardBookNumber { get; set; }
 
         public string Name { get; set; }
 
-        public string AuthorName { get; set; }
+        public T AuthorName { get; set; }
 
         public DateTime? PublishDateTime { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            CustomBook other = obj as CustomBook;
+        public override bool Equals(object obj) =>
+            obj is CustomBookBase<T> other &&
+            InternationalStandardBookNumber == other.InternationalStandardBookNumber &&
+            Name == other.Name &&
+            AuthorName.EqualsNullSafe(other.AuthorName) &&
+            PublishDateTime == other.PublishDateTime;
 
-            if (other == null)
-            {
-                return false;
-            }
+        public override int GetHashCode() => InternationalStandardBookNumber?.GetHashCode() ?? 0;
 
-            return
-                this.InternationalStandardBookNumber == other.InternationalStandardBookNumber &&
-                this.Name == other.Name &&
-                this.AuthorName == other.AuthorName &&
-                this.PublishDateTime == other.PublishDateTime;
-        }
+        public override string ToString() =>
+            $"ISBN: {InternationalStandardBookNumber}; Title: {Name}; Author: {AuthorName}; PublishDate: {PublishDateTime}";
+    }
 
-        public override int GetHashCode()
-        {
-            return (this.InternationalStandardBookNumber != null) ? 
-                this.InternationalStandardBookNumber.GetHashCode() : 0;
-        }
+    internal class CustomBook : CustomBookBase<CustomAuthor>
+    {
+    }
 
-        public override string ToString()
-        {
-            return string.Format(
-                "ISBN: {0}; Title: {1}; Author: {2}; PublishDate: {3}",
-                this.InternationalStandardBookNumber,
-                this.Name,
-                this.AuthorName,
-                this.PublishDateTime);
-        }
+    [JsonConverter(typeof(CustomAuthorConverter<CustomAuthorWithConverter>))]
+    internal class CustomAuthorWithConverter : CustomAuthor
+    {
+    }
+
+    [JsonConverter(typeof(CustomBookConverter<CustomBookWithConverter, CustomAuthorWithConverter>))]
+    internal class CustomBookWithConverter : CustomBookBase<CustomAuthorWithConverter>
+    {
     }
 }

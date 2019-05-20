@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -52,6 +54,42 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task<CapabilityInformation> GetCapabilityAsync(this ILocationsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCapabilityWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the current usage count and the limit for the resources of the
+            /// location under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The resource location without whitespace.
+            /// </param>
+            public static IEnumerable<Usage> GetUsage(this ILocationsOperations operations, string location)
+            {
+                return operations.GetUsageAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the current usage count and the limit for the resources of the
+            /// location under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The resource location without whitespace.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<Usage>> GetUsageAsync(this ILocationsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUsageWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

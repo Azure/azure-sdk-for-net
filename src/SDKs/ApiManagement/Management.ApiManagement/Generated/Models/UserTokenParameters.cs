@@ -10,12 +10,15 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Get User Token operation.
+    /// Get User Token parameters.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class UserTokenParameters
     {
         /// <summary>
@@ -52,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets the Key to be used to generate token for user.
         /// Possible values include: 'primary', 'secondary'
         /// </summary>
-        [JsonProperty(PropertyName = "keyType")]
+        [JsonProperty(PropertyName = "properties.keyType")]
         public KeyType KeyType { get; set; }
 
         /// <summary>
@@ -61,13 +64,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "expiry")]
+        [JsonProperty(PropertyName = "properties.expiry")]
         public System.DateTime Expiry { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

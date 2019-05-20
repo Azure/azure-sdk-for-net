@@ -24,7 +24,48 @@ namespace Microsoft.Azure.Management.HDInsight
     public static partial class ConfigurationsOperationsExtensions
     {
             /// <summary>
-            /// Configures the configuration on the specified cluster.
+            /// Gets all configuration information for an HDI cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            public static ClusterConfigurations List(this IConfigurationsOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all configuration information for an HDI cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClusterConfigurations> ListAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Configures the HTTP settings on the specified cluster. This API is
+            /// deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,13 +82,15 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The cluster configurations.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void Update(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
                 operations.UpdateAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Configures the configuration on the specified cluster.
+            /// Configures the HTTP settings on the specified cluster. This API is
+            /// deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -67,13 +110,16 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task UpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// The configuration object for the specified cluster.
+            /// The configuration object for the specified cluster. This API is not
+            /// recommended and might be removed in the future. Please consider using List
+            /// configurations API instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +139,9 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// The configuration object for the specified cluster.
+            /// The configuration object for the specified cluster. This API is not
+            /// recommended and might be removed in the future. Please consider using List
+            /// configurations API instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,7 +167,8 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
-            /// Configures the configuration on the specified cluster.
+            /// Configures the HTTP settings on the specified cluster. This API is
+            /// deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,13 +185,15 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='parameters'>
             /// The cluster configurations.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void BeginUpdate(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters)
             {
                 operations.BeginUpdateAsync(resourceGroupName, clusterName, configurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Configures the configuration on the specified cluster.
+            /// Configures the HTTP settings on the specified cluster. This API is
+            /// deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,6 +213,7 @@ namespace Microsoft.Azure.Management.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task BeginUpdateAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();

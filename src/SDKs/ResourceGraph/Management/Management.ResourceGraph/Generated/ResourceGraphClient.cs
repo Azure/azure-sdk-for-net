@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.ResourceGraph
         {
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-09-01-preview";
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

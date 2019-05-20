@@ -27,8 +27,8 @@ namespace EdgeGateway.Tests
         [Fact]
         public void Test_IoTRoles()
         {
-            AsymmetricEncryptedSecret iotDevicesecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
-            AsymmetricEncryptedSecret iotEdgeDevicesecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotEdgeDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
+            AsymmetricEncryptedSecret iotDevicesecret = Client.Devices.GetAsymmetricEncryptedSecretUsingActivationKey(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
+            AsymmetricEncryptedSecret iotEdgeDevicesecret = Client.Devices.GetAsymmetricEncryptedSecretUsingActivationKey(TestConstants.EdgeResourceName, TestConstants.DefaultResourceGroupName, "IotEdgeDeviceConnectionString", TestConstants.EdgeDeviceActivationKey);
 
             var iotRole = TestUtilities.GetIoTRoleObject(iotDevicesecret, iotEdgeDevicesecret);
 

@@ -33,6 +33,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
+        /// <param name='countType'>
+        /// The type of counts to retrieve. Possible values include: 'status',
+        /// 'nodeconfiguration'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -48,6 +52,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NodeCounts>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NodeCounts>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string countType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -124,13 +124,16 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='tags'>
         /// Tags for the Azure Dev Spaces Controller.
         /// </param>
+        /// <param name='targetContainerHostCredentialsBase64'>
+        /// Credentials of the target container host (base64).
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -139,7 +142,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Controller>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Controller>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), string targetContainerHostCredentialsBase64 = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Azure Dev Spaces Controllers in a resource group.
         /// </summary>
@@ -156,7 +159,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -179,7 +182,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -202,13 +205,17 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='name'>
         /// Name of the resource.
         /// </param>
+        /// <param name='targetContainerHostResourceId'>
+        /// Resource ID of the target container host mapped to the Azure Dev
+        /// Spaces Controller.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -217,7 +224,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, string targetContainerHostResourceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an Azure Dev Spaces Controller.
         /// </summary>
@@ -240,7 +247,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -268,7 +275,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -291,7 +298,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -317,7 +324,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

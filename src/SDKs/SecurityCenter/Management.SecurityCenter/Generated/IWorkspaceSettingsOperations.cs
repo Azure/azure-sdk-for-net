@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.Security
     public partial interface IWorkspaceSettingsOperations
     {
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs.
+        /// If the result is empty, it means that no custom-workspace
+        /// configuration was set
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +45,9 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<IPage<WorkspaceSetting>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs.
+        /// If the result is empty, it means that no custom-workspace
+        /// configuration was set
         /// </summary>
         /// <param name='workspaceSettingName'>
         /// Name of the security setting
@@ -146,7 +150,9 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string workspaceSettingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Settings about where we should store your security data and logs
+        /// Settings about where we should store your security data and logs.
+        /// If the result is empty, it means that no custom-workspace
+        /// configuration was set
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -233,6 +233,11 @@ namespace Microsoft.Azure.Management.Sql
         ISubscriptionUsagesOperations SubscriptionUsages { get; }
 
         /// <summary>
+        /// Gets the IVirtualClustersOperations.
+        /// </summary>
+        IVirtualClustersOperations VirtualClusters { get; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }

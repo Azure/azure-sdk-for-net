@@ -24,26 +24,9 @@ namespace Microsoft.Azure.Graph.RBAC
     public partial interface IObjectsOperations
     {
         /// <summary>
-        /// Gets the details for the currently logged-in user.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="GraphErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AADObject>> GetCurrentUserWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
+        /// Gets the directory objects specified in a list of object IDs. You
+        /// can also specify which resource collections (users, groups, etc.)
+        /// should be searched by specifying the optional types parameter.
         /// </summary>
         /// <param name='parameters'>
         /// Objects filtering parameters.
@@ -63,7 +46,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObject>>> GetObjectsByObjectIdsWithHttpMessagesAsync(GetObjectsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DirectoryObject>>> GetObjectsByObjectIdsWithHttpMessagesAsync(GetObjectsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets AD group membership for the specified AD object IDs.
         /// </summary>
@@ -85,6 +68,6 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObject>>> GetObjectsByObjectIdsNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DirectoryObject>>> GetObjectsByObjectIdsNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

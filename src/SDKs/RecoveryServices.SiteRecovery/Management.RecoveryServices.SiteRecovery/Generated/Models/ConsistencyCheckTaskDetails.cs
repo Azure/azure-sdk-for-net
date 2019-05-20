@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
     /// <summary>
     /// This class contains monitoring details of all the inconsistent
-    /// Protected Entites in Vmm.
+    /// Protected Entities in Vmm.
     /// </summary>
     public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
     {

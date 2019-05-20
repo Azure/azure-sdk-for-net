@@ -10,11 +10,12 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Fabric provider specific settings.
+    /// VMwareV2 fabric provider specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareV2")]
     public partial class VMwareV2FabricCreationInput : FabricSpecificCreationInput
@@ -32,12 +33,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMwareV2FabricCreationInput
         /// class.
         /// </summary>
-        /// <param name="keyVaultUrl">The Key Vault URL.</param>
-        /// <param name="keyVaultResourceArmId">The Key Vault ARM Id.</param>
-        public VMwareV2FabricCreationInput(string keyVaultUrl = default(string), string keyVaultResourceArmId = default(string))
+        /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
+        /// <param name="migrationSolutionId">The ARM Id of the migration
+        /// solution.</param>
+        public VMwareV2FabricCreationInput(string vmwareSiteId, string migrationSolutionId)
         {
-            KeyVaultUrl = keyVaultUrl;
-            KeyVaultResourceArmId = keyVaultResourceArmId;
+            VmwareSiteId = vmwareSiteId;
+            MigrationSolutionId = migrationSolutionId;
             CustomInit();
         }
 
@@ -47,16 +49,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Key Vault URL.
+        /// Gets or sets the ARM Id of the VMware site.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultUrl")]
-        public string KeyVaultUrl { get; set; }
+        [JsonProperty(PropertyName = "vmwareSiteId")]
+        public string VmwareSiteId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Key Vault ARM Id.
+        /// Gets or sets the ARM Id of the migration solution.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultResourceArmId")]
-        public string KeyVaultResourceArmId { get; set; }
+        [JsonProperty(PropertyName = "migrationSolutionId")]
+        public string MigrationSolutionId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VmwareSiteId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmwareSiteId");
+            }
+            if (MigrationSolutionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MigrationSolutionId");
+            }
+        }
     }
 }

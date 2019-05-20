@@ -81,13 +81,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
-            public static BackendGetEntityTagHeaders GetEntityTag(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid)
+            public static BackendGetEntityTagHeaders GetEntityTag(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId)
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName, backendid).GetAwaiter().GetResult();
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, backendId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,16 +103,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackendGetEntityTagHeaders> GetEntityTagAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackendGetEntityTagHeaders> GetEntityTagAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -130,13 +130,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
-            public static BackendContract Get(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid)
+            public static BackendContract Get(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId)
             {
-                return operations.GetAsync(resourceGroupName, serviceName, backendid).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, backendId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -151,16 +151,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackendContract> GetAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackendContract> GetAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -189,9 +189,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static BackendContract CreateOrUpdate(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendContract parameters, string ifMatch = default(string))
+            public static BackendContract CreateOrUpdate(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, backendid, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -220,9 +220,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackendContract> CreateOrUpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackendContract> CreateOrUpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -252,9 +252,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendUpdateParameters parameters, string ifMatch)
+            public static void Update(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, backendid, parameters, ifMatch).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -284,9 +284,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -310,9 +310,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Delete(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, string ifMatch)
+            public static void Delete(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, string ifMatch)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, backendid, ifMatch).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, backendId, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -339,9 +339,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -358,16 +358,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
             /// <param name='parameters'>
             /// Reconnect request parameters.
             /// </param>
-            public static void Reconnect(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendReconnectContract parameters = default(BackendReconnectContract))
+            public static void Reconnect(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendReconnectContract parameters = default(BackendReconnectContract))
             {
-                operations.ReconnectAsync(resourceGroupName, serviceName, backendid, parameters).GetAwaiter().GetResult();
+                operations.ReconnectAsync(resourceGroupName, serviceName, backendId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='backendid'>
+            /// <param name='backendId'>
             /// Identifier of the Backend entity. Must be unique in the current API
             /// Management service instance.
             /// </param>
@@ -394,9 +394,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReconnectAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendid, BackendReconnectContract parameters = default(BackendReconnectContract), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReconnectAsync(this IBackendOperations operations, string resourceGroupName, string serviceName, string backendId, BackendReconnectContract parameters = default(BackendReconnectContract), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReconnectWithHttpMessagesAsync(resourceGroupName, serviceName, backendid, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReconnectWithHttpMessagesAsync(resourceGroupName, serviceName, backendId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

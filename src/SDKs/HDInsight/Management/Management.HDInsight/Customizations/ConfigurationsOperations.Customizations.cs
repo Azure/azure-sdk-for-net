@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse> EnableHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken)
         {
@@ -76,6 +77,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse> BeginEnablingHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken)
         {
@@ -104,7 +106,8 @@ namespace Microsoft.Azure.Management.HDInsight
         /// </param>
         /// <returns>
         /// The cluster long running operation response.
-        /// </returns>
+        /// </returns
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try
@@ -133,6 +136,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse> BeginDisablingHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try

@@ -22,10 +22,10 @@ namespace CR.Azure.NetCore.Tests.MemoryTest
 
             fakeClient.DoStuffSync();
             Assert.Equal(0, retryDelHandler.EventCallbackCount);
-            Assert.Equal(1, retryDelHandler.RetryPolicy.EventCallbackCount);
+            Assert.Equal(0, retryDelHandler.RetryPolicy.EventCallbackCount);
 
             fakeClient.DoStuffSync();
-            Assert.Equal(1, retryDelHandler.RetryPolicy.EventCallbackCount);
+            Assert.Equal(0, retryDelHandler.RetryPolicy.EventCallbackCount);
         }
     }
 }

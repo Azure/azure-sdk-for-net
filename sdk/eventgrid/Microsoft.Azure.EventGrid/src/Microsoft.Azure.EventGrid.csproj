@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure EventGrid Library</AssemblyTitle>
+    <Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services. </Description>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
+    <PackageReleaseNotes>Added support for the new Azure Media Services event types for tracking state changes of Media Jobs and Media JobOutputs.  The existing MediaJobStateChangeEvent can be used to get all state change events for a Job but there are now separate events for each state like MediaJobScheduledEvent, MediaJobFinishedEvent, etc.  These allow subscribing for just the desired events.  Likewise a MediaJobOutputStateChangeEvent was added to get events for all MediaJobOutput state changes along with individual events for each JobOutput state.  MediaJobOutputProgressEvent was added to get events for Job output progress value, label and correlation data. This change also adds support for events related to Media LiveEvents to get notifications related to the ingestion of live streams (encoder connected, encoder disconnected, discontinuity, chunk dropped, etc).  Note JobState was renamed to MediaJobState to follow the Media prefix that all of the other Media Services Event classes use.  This is a breaking change, albeit a small one.</PackageReleaseNotes>
+    <AzureApiTag>EventGrid_2019-02-01-preview;</AzureApiTag>
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+</Project>

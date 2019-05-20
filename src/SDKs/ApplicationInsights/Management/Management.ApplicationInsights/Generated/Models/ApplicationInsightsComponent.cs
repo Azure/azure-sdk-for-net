@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
     /// An Application Insights component definition.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ApplicationInsightsComponent : Resource
+    public partial class ApplicationInsightsComponent : ComponentsResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationInsightsComponent

@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.EdgeGateway.Models
         /// Initializes a new instance of the PeriodicTimerSourceInfo class.
         /// </summary>
         /// <param name="startTime">The time of the day that results in a valid
-        /// trigger. Schedule is computed with reference to the time
-        /// specified.</param>
+        /// trigger. Schedule is computed with reference to the time specified
+        /// upto seconds. If timezone is not specified the time will considered
+        /// to be in device timezone. The value will always be returned as UTC
+        /// time.</param>
         /// <param name="schedule">Periodic frequency at which timer event
         /// needs to be raised. Supports daily, hourly, minutes, and
         /// seconds.</param>
@@ -53,7 +55,10 @@ namespace Microsoft.Azure.Management.EdgeGateway.Models
 
         /// <summary>
         /// Gets or sets the time of the day that results in a valid trigger.
-        /// Schedule is computed with reference to the time specified.
+        /// Schedule is computed with reference to the time specified upto
+        /// seconds. If timezone is not specified the time will considered to
+        /// be in device timezone. The value will always be returned as UTC
+        /// time.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }

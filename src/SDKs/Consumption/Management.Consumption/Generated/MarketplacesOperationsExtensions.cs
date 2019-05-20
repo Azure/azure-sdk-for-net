@@ -23,12 +23,31 @@ namespace Microsoft.Azure.Management.Consumption
     public static partial class MarketplacesOperationsExtensions
     {
             /// <summary>
-            /// Lists the marketplaces for a scope by subscriptionId. Marketplaces are
+            /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope associated with marketplace operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
+            /// scope,
+            /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for
+            /// EnrollmentAccount scope and
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope. For subscription, billing account, department,
+            /// enrollment account and ManagementGroup, you can also add billing period to
+            /// the scope using
+            /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
+            /// to specify billing period at department scope use
+            /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -39,18 +58,37 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static IPage<Marketplace> List(this IMarketplacesOperations operations, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string))
+            public static IPage<Marketplace> List(this IMarketplacesOperations operations, string scope, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string))
             {
-                return operations.ListAsync(odataQuery, skiptoken).GetAwaiter().GetResult();
+                return operations.ListAsync(scope, odataQuery, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the marketplaces for a scope by subscriptionId. Marketplaces are
+            /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope associated with marketplace operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
+            /// scope,
+            /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for
+            /// EnrollmentAccount scope and
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope. For subscription, billing account, department,
+            /// enrollment account and ManagementGroup, you can also add billing period to
+            /// the scope using
+            /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
+            /// to specify billing period at department scope use
+            /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -64,72 +102,16 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Marketplace>> ListAsync(this IMarketplacesOperations operations, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Marketplace>> ListAsync(this IMarketplacesOperations operations, string scope, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the marketplaces for a scope by billing period and subscripotionId.
-            /// Marketplaces are available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingPeriodName'>
-            /// Billing Period Name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='skiptoken'>
-            /// Skiptoken is only used if a previous operation returned a partial result.
-            /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls.
-            /// </param>
-            public static IPage<Marketplace> ListByBillingPeriod(this IMarketplacesOperations operations, string billingPeriodName, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string))
-            {
-                return operations.ListByBillingPeriodAsync(billingPeriodName, odataQuery, skiptoken).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the marketplaces for a scope by billing period and subscripotionId.
-            /// Marketplaces are available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='billingPeriodName'>
-            /// Billing Period Name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='skiptoken'>
-            /// Skiptoken is only used if a previous operation returned a partial result.
-            /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Marketplace>> ListByBillingPeriodAsync(this IMarketplacesOperations operations, string billingPeriodName, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByBillingPeriodWithHttpMessagesAsync(billingPeriodName, odataQuery, skiptoken, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the marketplaces for a scope by subscriptionId. Marketplaces are
+            /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -145,7 +127,7 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// Lists the marketplaces for a scope by subscriptionId. Marketplaces are
+            /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
             /// available via this API only for May 1, 2014 or later.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -161,44 +143,6 @@ namespace Microsoft.Azure.Management.Consumption
             public static async Task<IPage<Marketplace>> ListNextAsync(this IMarketplacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the marketplaces for a scope by billing period and subscripotionId.
-            /// Marketplaces are available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Marketplace> ListByBillingPeriodNext(this IMarketplacesOperations operations, string nextPageLink)
-            {
-                return operations.ListByBillingPeriodNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the marketplaces for a scope by billing period and subscripotionId.
-            /// Marketplaces are available via this API only for May 1, 2014 or later.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Marketplace>> ListByBillingPeriodNextAsync(this IMarketplacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByBillingPeriodNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

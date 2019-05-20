@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<MetricAlertResource>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve alert rule defintions in a resource group.
+        /// Retrieve alert rule definitions in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<MetricAlertResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve an alert rule definiton.
+        /// Retrieve an alert rule definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// </exception>
         Task<AzureOperationResponse<MetricAlertResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string ruleName, MetricAlertResourcePatch parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an alert rule defitiniton.
+        /// Delete an alert rule definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

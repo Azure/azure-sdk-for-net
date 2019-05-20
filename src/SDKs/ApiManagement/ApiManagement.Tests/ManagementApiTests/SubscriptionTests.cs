@@ -27,13 +27,13 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 // list subscriptions: there should be two by default
                 var listResponse = testBase.client.Subscription.List(
-                testBase.rgName,
-                testBase.serviceName,
-                null);
+                    testBase.rgName,
+                    testBase.serviceName,
+                    null);
 
                 Assert.NotNull(listResponse);
-                Assert.True(listResponse.Count() >= 2);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.True(listResponse.Count() >= 3);
+                Assert.Null(listResponse.NextPageLink);
 
                 // list paged
                 listResponse = testBase.client.Subscription.List(
@@ -57,12 +57,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.Equal(firstSubscription.Name, getResponse.Name);
                 Assert.Equal(firstSubscription.NotificationDate, getResponse.NotificationDate);
                 Assert.Equal(firstSubscription.PrimaryKey, getResponse.PrimaryKey);
-                Assert.Equal(firstSubscription.ProductId, getResponse.ProductId);
+                Assert.Equal(firstSubscription.Scope, getResponse.Scope);
                 Assert.Equal(firstSubscription.SecondaryKey, getResponse.SecondaryKey);
                 Assert.Equal(firstSubscription.StartDate, getResponse.StartDate);
                 Assert.Equal(firstSubscription.State, getResponse.State);
                 Assert.Equal(firstSubscription.StateComment, getResponse.StateComment);
-                Assert.Equal(firstSubscription.UserId, getResponse.UserId);
+                Assert.Equal(firstSubscription.OwnerId, getResponse.OwnerId);
                 Assert.Equal(firstSubscription.CreatedDate, getResponse.CreatedDate);
                 Assert.Equal(firstSubscription.EndDate, getResponse.EndDate);
                 Assert.Equal(firstSubscription.ExpirationDate, getResponse.ExpirationDate);
@@ -71,7 +71,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 testBase.client.Product.Update(
                     testBase.rgName,
                     testBase.serviceName,
-                    firstSubscription.ProductIdentifier,
+                    firstSubscription.ScopeIdentifier,
                     new ProductUpdateParameters
                     {
                         SubscriptionsLimit = int.MaxValue
@@ -80,6 +80,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 // add new subscription
                 string newSubscriptionId = TestUtilities.GenerateName("newSubscriptionId");
+                string globalSubscriptionId = TestUtilities.GenerateName("globalSubscriptionId");
 
                 try
                 {
@@ -89,9 +90,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var newSubscriptionState = SubscriptionState.Active;
 
                     var newSubscriptionCreate = new SubscriptionCreateParameters(
-                        firstSubscription.UserId,
-                        firstSubscription.ProductId,
-                        newSubscriptionName)
+                        firstSubscription.Scope,
+                        newSubscriptionName,
+                        firstSubscription.OwnerId)
                     {
                         PrimaryKey = newSubscriptionPk,
                         SecondaryKey = newSubscriptionSk,
@@ -105,8 +106,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newSubscriptionCreate);
 
                     Assert.NotNull(subscriptionContract);
-                    Assert.Equal(firstSubscription.ProductId, subscriptionContract.ProductId);
-                    Assert.Equal(firstSubscription.UserId, subscriptionContract.UserId);
+                    Assert.Equal(firstSubscription.ScopeIdentifier, subscriptionContract.ScopeIdentifier);
+                    Assert.Equal(firstSubscription.OwnerId, subscriptionContract.OwnerId);
                     Assert.Equal(newSubscriptionState, subscriptionContract.State);
                     Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
                     Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
@@ -119,6 +120,14 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(subscriptionResponse);
                     Assert.NotNull(subscriptionResponse.Headers.ETag);
+
+                    // list product subscriptions 
+                    var productSubscriptions = await testBase.client.ProductSubscriptions.ListAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        firstSubscription.ScopeIdentifier);
+                    Assert.NotNull(productSubscriptions);
+                    Assert.Equal(2, productSubscriptions.Count());
 
                     // patch the subscription
                     string patchedName = TestUtilities.GenerateName("patchedName");
@@ -203,6 +212,39 @@ namespace ApiManagement.Tests.ManagementApiTests
                     {
                         Assert.Equal((int)HttpStatusCode.NotFound, (int)ex.Response.StatusCode);
                     }
+
+                    // create a subscription with global scope on all apis
+                    var globalSubscriptionDisplayName = TestUtilities.GenerateName("global");
+                    var globalSubscriptionCreateResponse = await testBase.client.Subscription.CreateOrUpdateAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        globalSubscriptionId,
+                        new SubscriptionCreateParameters("/apis", globalSubscriptionDisplayName));
+                    Assert.NotNull(globalSubscriptionCreateResponse);
+                    Assert.Equal("apis", globalSubscriptionCreateResponse.ScopeIdentifier);
+                    Assert.Null(globalSubscriptionCreateResponse.OwnerId);
+                    Assert.Equal(SubscriptionState.Active, globalSubscriptionCreateResponse.State);
+                    Assert.NotNull(globalSubscriptionCreateResponse.SecondaryKey);
+                    Assert.NotNull(globalSubscriptionCreateResponse.PrimaryKey);
+                    Assert.Equal(globalSubscriptionDisplayName, globalSubscriptionCreateResponse.DisplayName);
+
+                    // delete the global subscription
+                    await testBase.client.Subscription.DeleteAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        globalSubscriptionId,
+                        "*");
+
+                    // get the deleted subscription to make sure it was deleted
+                    try
+                    {
+                        testBase.client.Subscription.Get(testBase.rgName, testBase.serviceName, globalSubscriptionId);
+                        throw new Exception("This code should not have been executed.");
+                    }
+                    catch (ErrorResponseException ex)
+                    {
+                        Assert.Equal((int)HttpStatusCode.NotFound, (int)ex.Response.StatusCode);
+                    }
                 }
                 finally
                 {
@@ -210,6 +252,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         newSubscriptionId,
+                        "*");
+
+                    testBase.client.Subscription.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        globalSubscriptionId,
                         "*");
                 }
             }

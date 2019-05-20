@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Blueprint
     public static partial class BlueprintsOperationsExtensions
     {
             /// <summary>
-            /// Create or update Blueprint definition.
+            /// Create or update a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,10 +30,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='blueprint'>
             /// Blueprint definition.
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update Blueprint definition.
+            /// Create or update a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,10 +53,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='blueprint'>
             /// Blueprint definition.
@@ -80,10 +82,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             public static BlueprintModel Get(this IBlueprintsOperations operations, string scope, string blueprintName)
             {
@@ -99,10 +102,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,10 +128,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             public static BlueprintModel Delete(this IBlueprintsOperations operations, string scope, string blueprintName)
             {
@@ -143,10 +148,11 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,7 +166,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update blueprint definition.
+            /// List blueprint definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,7 +174,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             public static IPage<BlueprintModel> List(this IBlueprintsOperations operations, string scope)
             {
@@ -176,7 +183,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update blueprint definition.
+            /// List blueprint definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -184,7 +191,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -198,7 +206,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update blueprint definition.
+            /// List blueprint definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -212,7 +220,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update blueprint definition.
+            /// List blueprint definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

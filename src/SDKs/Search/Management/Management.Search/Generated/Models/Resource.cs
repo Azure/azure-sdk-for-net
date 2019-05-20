@@ -43,13 +43,15 @@ namespace Microsoft.Azure.Management.Search.Models
         /// property is required when creating a new resource.</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">The identity of the resource.</param>
+        public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -93,5 +95,24 @@ namespace Microsoft.Azure.Management.Search.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
+        }
     }
 }

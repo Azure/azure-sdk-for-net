@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ParameterValueBase class.
         /// </summary>
-        /// <param name="description">Optional property, just to establish
+        /// <param name="description">Optional property. Establishes
         /// ParameterValueBase as a BaseClass.</param>
         public ParameterValueBase(string description = default(string))
         {
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets optional property, just to establish
-        /// ParameterValueBase as a BaseClass.
+        /// Gets or sets optional property. Establishes ParameterValueBase as a
+        /// BaseClass.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

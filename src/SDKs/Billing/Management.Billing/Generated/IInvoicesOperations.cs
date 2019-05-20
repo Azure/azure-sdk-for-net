@@ -24,35 +24,16 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IInvoicesOperations
     {
         /// <summary>
-        /// Lists the available invoices for a subscription in reverse
-        /// chronological order beginning with the most recent invoice. In
-        /// preview, invoices are available via this API only for invoice
-        /// periods which end December 1, 2016 or later.  This is only
-        /// supported for Azure Web-Direct subscriptions. Other subscription
-        /// types which were not purchased directly through the Azure web
-        /// portal are not supported through this preview API.
-        /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
+        /// List of invoices for a billing account.
         /// </summary>
-        /// <param name='expand'>
-        /// May be used to expand the downloadUrl property within a list of
-        /// invoices. This enables download links to be generated for multiple
-        /// invoices at once. By default, downloadURLs are not included when
-        /// listing invoices.
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
         /// </param>
-        /// <param name='filter'>
-        /// May be used to filter invoices by invoicePeriodEndDate. The filter
-        /// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'.
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
         /// </param>
-        /// <param name='skiptoken'>
-        /// Skiptoken is only used if a previous operation returned a partial
-        /// result. If a previous response contains a nextLink element, the
-        /// value of the nextLink element will include a skiptoken parameter
-        /// that specifies a starting point to use for subsequent calls.
-        /// </param>
-        /// <param name='top'>
-        /// May be used to limit the number of results to the most recent N
-        /// invoices.
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -69,16 +50,49 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Invoice>>> ListWithHttpMessagesAsync(string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a named invoice resource. When getting a single invoice, the
-        /// downloadUrl property is expanded automatically.  This is only
-        /// supported for Azure Web-Direct subscriptions. Other subscription
-        /// types which were not purchased directly through the Azure web
-        /// portal are not supported through this preview API.
+        /// List of invoices for a billing profile.
         /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
+        /// </param>
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get the invoice by name.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
         /// <param name='invoiceName'>
-        /// The name of an invoice resource.
+        /// Invoice Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,58 +109,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Invoice>> GetWithHttpMessagesAsync(string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the most recent invoice. When getting a single invoice, the
-        /// downloadUrl property is expanded automatically.  This is only
-        /// supported for Azure Web-Direct subscriptions. Other subscription
-        /// types which were not purchased directly through the Azure web
-        /// portal are not supported through this preview API.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Invoice>> GetLatestWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the available invoices for a subscription in reverse
-        /// chronological order beginning with the most recent invoice. In
-        /// preview, invoices are available via this API only for invoice
-        /// periods which end December 1, 2016 or later.  This is only
-        /// supported for Azure Web-Direct subscriptions. Other subscription
-        /// types which were not purchased directly through the Azure web
-        /// portal are not supported through this preview API.
-        /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Invoice>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceSummary>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

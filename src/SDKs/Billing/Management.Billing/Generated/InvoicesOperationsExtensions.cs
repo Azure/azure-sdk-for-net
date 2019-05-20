@@ -22,202 +22,144 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class InvoicesOperationsExtensions
     {
             /// <summary>
-            /// Lists the available invoices for a subscription in reverse chronological
-            /// order beginning with the most recent invoice. In preview, invoices are
-            /// available via this API only for invoice periods which end December 1, 2016
-            /// or later.  This is only supported for Azure Web-Direct subscriptions. Other
-            /// subscription types which were not purchased directly through the Azure web
-            /// portal are not supported through this preview API.
-            /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
+            /// List of invoices for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='expand'>
-            /// May be used to expand the downloadUrl property within a list of invoices.
-            /// This enables download links to be generated for multiple invoices at once.
-            /// By default, downloadURLs are not included when listing invoices.
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
             /// </param>
-            /// <param name='filter'>
-            /// May be used to filter invoices by invoicePeriodEndDate. The filter supports
-            /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
-            /// 'ne', 'or', or 'not'.
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
             /// </param>
-            /// <param name='skiptoken'>
-            /// Skiptoken is only used if a previous operation returned a partial result.
-            /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls.
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
             /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N invoices.
-            /// </param>
-            public static IPage<Invoice> List(this IInvoicesOperations operations, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?))
+            public static InvoiceListResult ListByBillingAccountName(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate)
             {
-                return operations.ListAsync(expand, filter, skiptoken, top).GetAwaiter().GetResult();
+                return operations.ListByBillingAccountNameAsync(billingAccountName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the available invoices for a subscription in reverse chronological
-            /// order beginning with the most recent invoice. In preview, invoices are
-            /// available via this API only for invoice periods which end December 1, 2016
-            /// or later.  This is only supported for Azure Web-Direct subscriptions. Other
-            /// subscription types which were not purchased directly through the Azure web
-            /// portal are not supported through this preview API.
-            /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
+            /// List of invoices for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='expand'>
-            /// May be used to expand the downloadUrl property within a list of invoices.
-            /// This enables download links to be generated for multiple invoices at once.
-            /// By default, downloadURLs are not included when listing invoices.
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
             /// </param>
-            /// <param name='filter'>
-            /// May be used to filter invoices by invoicePeriodEndDate. The filter supports
-            /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
-            /// 'ne', 'or', or 'not'.
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
             /// </param>
-            /// <param name='skiptoken'>
-            /// Skiptoken is only used if a previous operation returned a partial result.
-            /// If a previous response contains a nextLink element, the value of the
-            /// nextLink element will include a skiptoken parameter that specifies a
-            /// starting point to use for subsequent calls.
-            /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N invoices.
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Invoice>> ListAsync(this IInvoicesOperations operations, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<InvoiceListResult> ListByBillingAccountNameAsync(this IInvoicesOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(expand, filter, skiptoken, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets a named invoice resource. When getting a single invoice, the
-            /// downloadUrl property is expanded automatically.  This is only supported for
-            /// Azure Web-Direct subscriptions. Other subscription types which were not
-            /// purchased directly through the Azure web portal are not supported through
-            /// this preview API.
+            /// List of invoices for a billing profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
+            /// </param>
+            public static InvoiceListResult ListByBillingProfile(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate)
+            {
+                return operations.ListByBillingProfileAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of invoices for a billing profile.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='periodStartDate'>
+            /// Invoice period start date.
+            /// </param>
+            /// <param name='periodEndDate'>
+            /// Invoice period end date.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<InvoiceListResult> ListByBillingProfileAsync(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the invoice by name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
-            public static Invoice Get(this IInvoicesOperations operations, string invoiceName)
+            public static InvoiceSummary Get(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
-                return operations.GetAsync(invoiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a named invoice resource. When getting a single invoice, the
-            /// downloadUrl property is expanded automatically.  This is only supported for
-            /// Azure Web-Direct subscriptions. Other subscription types which were not
-            /// purchased directly through the Azure web portal are not supported through
-            /// this preview API.
+            /// Get the invoice by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// The name of an invoice resource.
+            /// Invoice Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Invoice> GetAsync(this IInvoicesOperations operations, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<InvoiceSummary> GetAsync(this IInvoicesOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(invoiceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the most recent invoice. When getting a single invoice, the
-            /// downloadUrl property is expanded automatically.  This is only supported for
-            /// Azure Web-Direct subscriptions. Other subscription types which were not
-            /// purchased directly through the Azure web portal are not supported through
-            /// this preview API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static Invoice GetLatest(this IInvoicesOperations operations)
-            {
-                return operations.GetLatestAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the most recent invoice. When getting a single invoice, the
-            /// downloadUrl property is expanded automatically.  This is only supported for
-            /// Azure Web-Direct subscriptions. Other subscription types which were not
-            /// purchased directly through the Azure web portal are not supported through
-            /// this preview API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Invoice> GetLatestAsync(this IInvoicesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetLatestWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the available invoices for a subscription in reverse chronological
-            /// order beginning with the most recent invoice. In preview, invoices are
-            /// available via this API only for invoice periods which end December 1, 2016
-            /// or later.  This is only supported for Azure Web-Direct subscriptions. Other
-            /// subscription types which were not purchased directly through the Azure web
-            /// portal are not supported through this preview API.
-            /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Invoice> ListNext(this IInvoicesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the available invoices for a subscription in reverse chronological
-            /// order beginning with the most recent invoice. In preview, invoices are
-            /// available via this API only for invoice periods which end December 1, 2016
-            /// or later.  This is only supported for Azure Web-Direct subscriptions. Other
-            /// subscription types which were not purchased directly through the Azure web
-            /// portal are not supported through this preview API.
-            /// <see href="https://go.microsoft.com/fwlink/?linkid=842057" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Invoice>> ListNextAsync(this IInvoicesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

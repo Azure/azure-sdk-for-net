@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a Blueprint artifact.
+    /// Represents a blueprint artifact.
     /// </summary>
     public partial class Artifact : AzureResourceBase
     {

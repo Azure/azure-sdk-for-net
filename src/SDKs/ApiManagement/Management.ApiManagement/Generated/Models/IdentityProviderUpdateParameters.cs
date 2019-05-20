@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// 'aad', 'aadB2C'</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
+        /// <param name="authority">OpenID Connect discovery endpoint hostname
+        /// for AAD or AAD B2C.</param>
         /// <param name="signupPolicyName">Signup Policy Name. Only applies to
         /// AAD B2C Identity Provider.</param>
         /// <param name="signinPolicyName">Signin Policy Name. Only applies to
@@ -56,10 +58,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// external Identity Provider, used to authenticate login request. For
         /// example, it is App Secret for Facebook login, API Key for Google
         /// login, Public Key for Microsoft.</param>
-        public IdentityProviderUpdateParameters(string type = default(string), IList<string> allowedTenants = default(IList<string>), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientId = default(string), string clientSecret = default(string))
+        public IdentityProviderUpdateParameters(string type = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientId = default(string), string clientSecret = default(string))
         {
             Type = type;
             AllowedTenants = allowedTenants;
+            Authority = authority;
             SignupPolicyName = signupPolicyName;
             SigninPolicyName = signinPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
@@ -88,6 +91,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowedTenants")]
         public IList<string> AllowedTenants { get; set; }
+
+        /// <summary>
+        /// Gets or sets openID Connect discovery endpoint hostname for AAD or
+        /// AAD B2C.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authority")]
+        public string Authority { get; set; }
 
         /// <summary>
         /// Gets or sets signup Policy Name. Only applies to AAD B2C Identity

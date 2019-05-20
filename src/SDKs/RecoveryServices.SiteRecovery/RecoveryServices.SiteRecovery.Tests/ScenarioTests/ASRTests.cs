@@ -34,11 +34,445 @@ namespace RecoveryServices.SiteRecovery.Tests
         private const string alertSettingName = "defaultAlertSetting";
         private const string vmNetworkName = "c41eda86-96d5-4541-a6f8-c47d4b75a24a";
 
+        private const string a2aPrimaryLocation = "westeurope";
+        private const string a2aRecoveryLocation = "northeurope";
+        private const string a2aPrimaryFabricName = "primaryFabric";
+        private const string a2aRecoveryFabricName = "recoveryFabric";
+        private const string a2aPrimaryContainerName = "primaryContainer";
+        private const string a2aRecoveryContainerName = "recoveryContainer";
+        private const string a2aPolicyName = "a2aPolicy";
+        private const string a2aPrimaryRecoveryContainerMappingName = "primaryToRecovery";
+        private const string a2aRecoveryPrimaryContainerMappingName = "recoveryToPrimary";
+        private const string a2aVirtualMachineToProtect =
+            "/subscriptions/a7d8f9d0-930c-4dc8-9c14-1526ba255c20/resourceGroups/sdkTestVmRG/providers/Microsoft.Compute/virtualMachines/sdkTestVm1";
+        private const string a2aVirtualMachineDiskToProtect =
+            "/subscriptions/a7d8f9d0-930c-4dc8-9c14-1526ba255c20/resourceGroups/SDKTESTVMRG/providers/Microsoft.Compute/disks/sdkTestVm1_OsDisk_1_3b1dd430d52044f18fb996d34617f609";
+        private const string a2aStagingStorageAccount =
+            "/subscriptions/a7d8f9d0-930c-4dc8-9c14-1526ba255c20/resourceGroups/siterecoveryprod1/providers/Microsoft.Storage/storageAccounts/do00nssdkvaultasrcache";
+        private const string a2aRecoveryResourceGroup =
+            "/subscriptions/a7d8f9d0-930c-4dc8-9c14-1526ba255c20/resourceGroups/sdkTestVmRG-asr";
+        private const string a2aReplicationProtectedItemName = "sdkTestVm1";
+
         TestHelper testHelper { get; set; }
 
         public ASRTests()
         {
             testHelper = new TestHelper();
+        }
+
+        [Fact]
+        public void CreateA2APolicy()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var a2aPolicyCreationInput = new A2APolicyCreationInput
+                {
+                    AppConsistentFrequencyInMinutes = 60,
+                    RecoveryPointHistory = 720,
+                    MultiVmSyncStatus = "Enable"
+                };
+
+                var createPolicyInput =
+                    new CreatePolicyInput
+                    {
+                        Properties = new CreatePolicyInputProperties()
+                    };
+                createPolicyInput.Properties.ProviderSpecificInput = a2aPolicyCreationInput;
+
+                var policy =
+                    client.ReplicationPolicies.Create(a2aPolicyName, createPolicyInput);
+                Assert.True(
+                    policy.Name == a2aPolicyName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void CreateA2AFabrics()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var fabricCreationInput = new FabricCreationInput();
+                fabricCreationInput.Properties = new FabricCreationInputProperties();
+                var azureFabricCreationInput = new AzureFabricCreationInput();
+
+                // Create primary fabric.
+                azureFabricCreationInput.Location = a2aPrimaryLocation;
+                fabricCreationInput.Properties.CustomDetails = azureFabricCreationInput;
+
+                var primaryFabric =
+                    client.ReplicationFabrics.Create(a2aPrimaryFabricName, fabricCreationInput);
+                // var response = client.ReplicationFabrics.Get(a2aPrimaryFabricName);
+                Assert.True(
+                    primaryFabric.Name == a2aPrimaryFabricName,
+                    "Resource name can not be different.");
+
+                // Create recovery fabric.
+                azureFabricCreationInput.Location = a2aRecoveryLocation;
+                fabricCreationInput.Properties.CustomDetails = azureFabricCreationInput;
+
+                var recoveryFabric =
+                    client.ReplicationFabrics.Create(a2aRecoveryFabricName, fabricCreationInput);
+                // response = client.ReplicationFabrics.Get(a2aRecoveryFabricName);
+                Assert.True(
+                    recoveryFabric.Name == a2aRecoveryFabricName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void CreateA2AContainers()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var createProtectionContainerInput =
+                    new CreateProtectionContainerInput
+                    {
+                        Properties = new CreateProtectionContainerInputProperties()
+                    };
+
+                var primaryContainer =
+                    client.ReplicationProtectionContainers.Create(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName,
+                        createProtectionContainerInput);
+                Assert.True(
+                    primaryContainer.Name == a2aPrimaryContainerName,
+                    "Resource name can not be different.");
+
+                var recoveryContainer =
+                    client.ReplicationProtectionContainers.Create(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName,
+                        createProtectionContainerInput);
+                Assert.True(
+                    recoveryContainer.Name == a2aRecoveryContainerName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void CreateA2AContainerMappings()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var createProtectionContainerMappingInput =
+                    new CreateProtectionContainerMappingInput
+                    {
+                        Properties = new CreateProtectionContainerMappingInputProperties()
+                    };
+
+                var policy = client.ReplicationPolicies.Get(a2aPolicyName);
+                var primaryContainer =
+                    client.ReplicationProtectionContainers.Get(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName);
+                var recoveryContainer =
+                    client.ReplicationProtectionContainers.Get(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName);
+
+                // Create primary to recovery container mapping
+                createProtectionContainerMappingInput.Properties.PolicyId = policy.Id;
+                createProtectionContainerMappingInput.Properties.TargetProtectionContainerId =
+                    recoveryContainer.Id;
+                createProtectionContainerMappingInput.Properties.ProviderSpecificInput =
+                    new ReplicationProviderSpecificContainerMappingInput();
+
+                var primaryRecoveryContainerMapping =
+                    client.ReplicationProtectionContainerMappings.Create(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName,
+                        a2aPrimaryRecoveryContainerMappingName,
+                        createProtectionContainerMappingInput);
+                Assert.True(
+                    primaryRecoveryContainerMapping.Name == a2aPrimaryRecoveryContainerMappingName,
+                    "Resource name can not be different.");
+
+                // Create primary to recovery container mapping
+                createProtectionContainerMappingInput.Properties.TargetProtectionContainerId =
+                    primaryContainer.Id;
+                var recoveryPrimaryContainerMapping =
+                    client.ReplicationProtectionContainerMappings.Create(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName,
+                        a2aRecoveryPrimaryContainerMappingName,
+                        createProtectionContainerMappingInput);
+                Assert.True(
+                    recoveryPrimaryContainerMapping.Name == a2aRecoveryPrimaryContainerMappingName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void CreateA2AReplicationProtectedItem()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var policy = client.ReplicationPolicies.Get(a2aPolicyName);
+                var recoveryContainer =
+                    client.ReplicationProtectionContainers.Get(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName);
+
+                var a2aEnableProtectionInput = new A2AEnableProtectionInput();
+                a2aEnableProtectionInput.FabricObjectId = a2aVirtualMachineToProtect;
+                a2aEnableProtectionInput.RecoveryContainerId = recoveryContainer.Id;
+                a2aEnableProtectionInput.RecoveryResourceGroupId = a2aRecoveryResourceGroup;
+                a2aEnableProtectionInput.VmManagedDisks = new List<A2AVmManagedDiskInputDetails>();
+                var a2aVmManagedDiskInputDetails = new A2AVmManagedDiskInputDetails
+                {
+                    DiskId = a2aVirtualMachineDiskToProtect,
+                    PrimaryStagingAzureStorageAccountId = a2aStagingStorageAccount,
+                    RecoveryResourceGroupId = a2aRecoveryResourceGroup,
+                    RecoveryTargetDiskAccountType = "Standard_LRS",
+                    RecoveryReplicaDiskAccountType = "Standard_LRS"
+                };
+                a2aEnableProtectionInput.VmManagedDisks.Add(a2aVmManagedDiskInputDetails);
+
+                var enableProtectionInput = new EnableProtectionInput
+                {
+                    Properties = new EnableProtectionInputProperties()
+                };
+                enableProtectionInput.Properties.PolicyId = policy.Id;
+                enableProtectionInput.Properties.ProviderSpecificDetails = a2aEnableProtectionInput;
+
+                var replicationProtectedItem =
+                    client.ReplicationProtectedItems.Create(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName,
+                        a2aReplicationProtectedItemName,
+                        enableProtectionInput);
+                Assert.True(
+                    replicationProtectedItem.Name == a2aReplicationProtectedItemName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void GetA2AResources()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var policy = client.ReplicationPolicies.Get(a2aPolicyName);
+                Assert.True(policy.Name == a2aPolicyName, "Resource name can not be different.");
+
+                var primaryFabric = client.ReplicationFabrics.Get(a2aPrimaryFabricName);
+                Assert.True(
+                    primaryFabric.Name == a2aPrimaryFabricName,
+                    "Resource name can not be different.");
+
+                var recoveryFabric = client.ReplicationFabrics.Get(a2aRecoveryFabricName);
+                Assert.True(
+                    recoveryFabric.Name == a2aRecoveryFabricName,
+                    "Resource name can not be different.");
+
+                var primaryContainer =
+                    client.ReplicationProtectionContainers.Get(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName);
+                Assert.True(
+                    primaryContainer.Name == a2aPrimaryContainerName,
+                    "Resource name can not be different.");
+
+                var recoveryContainer =
+                    client.ReplicationProtectionContainers.Get(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName);
+                Assert.True(
+                    recoveryContainer.Name == a2aRecoveryContainerName,
+                    "Resource name can not be different.");
+
+                var primaryRecoveryContainerMapping =
+                    client.ReplicationProtectionContainerMappings.Get(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName,
+                        a2aPrimaryRecoveryContainerMappingName);
+                Assert.True(
+                    primaryRecoveryContainerMapping.Name == a2aPrimaryRecoveryContainerMappingName,
+                    "Resource name can not be different.");
+
+                var recoveryPrimaryContainerMapping =
+                    client.ReplicationProtectionContainerMappings.Get(
+                        a2aRecoveryFabricName,
+                        a2aRecoveryContainerName,
+                        a2aRecoveryPrimaryContainerMappingName);
+                Assert.True(
+                    recoveryPrimaryContainerMapping.Name == a2aRecoveryPrimaryContainerMappingName,
+                    "Resource name can not be different.");
+
+                var replicationProtectedItem =
+                    client.ReplicationProtectedItems.Get(
+                        a2aPrimaryFabricName,
+                        a2aPrimaryContainerName,
+                        a2aReplicationProtectedItemName);
+                Assert.True(
+                    replicationProtectedItem.Name == a2aReplicationProtectedItemName,
+                    "Resource name can not be different.");
+            }
+        }
+
+        [Fact]
+        public void ListA2AResources()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var policies= client.ReplicationPolicies.List();
+                Assert.True(policies.Count() == 1, "Only 1 policy got created via test.");
+
+                var fabrics = client.ReplicationFabrics.List();
+                Assert.True(fabrics.Count() == 2, "Only 2 fabrics got created via test.");
+
+                var containers = client.ReplicationProtectionContainers.List();
+                Assert.True(containers.Count() == 2, "Only 2 containers got created via test.");
+
+                var containerMappings =
+                    client.ReplicationProtectionContainerMappings.List();
+                Assert.True(
+                    containerMappings.Count() == 2,
+                    "Only 2 container mappings got created via test.");
+
+                var replicationProtectedItems = client.ReplicationProtectedItems.List();
+                Assert.True(
+                    replicationProtectedItems.Count() == 1,
+                    "Only 1 replicationProtectedItem got created via test.");
+            }
+        }
+
+        [Fact]
+        public void DeleteA2AReplicationProtectedItem()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var disableProtectionInput = new DisableProtectionInput
+                {
+                    Properties = new DisableProtectionInputProperties()
+                };
+                disableProtectionInput.Properties.ReplicationProviderInput =
+                    new DisableProtectionProviderSpecificInput();
+
+                client.ReplicationProtectedItems.Delete(
+                    a2aPrimaryFabricName,
+                    a2aPrimaryContainerName,
+                    a2aReplicationProtectedItemName,
+                    disableProtectionInput);
+
+                var replicationProtectedItems = client.ReplicationProtectedItems.List();
+                Assert.True(
+                    replicationProtectedItems.Count() == 0,
+                    "Delted the replicationProtectedItem that got created via test.");
+            }
+        }
+
+        [Fact]
+        public void DeleteA2AContainerMappings()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                var removeProtectionContainerMappingInput =
+                    new RemoveProtectionContainerMappingInput
+                    {
+                        Properties = new RemoveProtectionContainerMappingInputProperties()
+                    };
+                removeProtectionContainerMappingInput.Properties.ProviderSpecificInput =
+                    new ReplicationProviderContainerUnmappingInput();
+
+                client.ReplicationProtectionContainerMappings.Delete(
+                    a2aPrimaryFabricName,
+                    a2aPrimaryContainerName,
+                    a2aPrimaryRecoveryContainerMappingName,
+                    removeProtectionContainerMappingInput);
+                client.ReplicationProtectionContainerMappings.Delete(
+                    a2aRecoveryFabricName,
+                    a2aRecoveryContainerName,
+                    a2aRecoveryPrimaryContainerMappingName,
+                    removeProtectionContainerMappingInput);
+
+                var containerMappings = client.ReplicationProtectionContainerMappings.List();
+                Assert.True(
+                    containerMappings.Count() == 0,
+                    "Delted 2 container mappings that got created via test.");
+            }
+        }
+
+        [Fact]
+        public void DeleteA2AContainers()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                client.ReplicationProtectionContainers.Delete(
+                    a2aPrimaryFabricName,
+                    a2aPrimaryContainerName);
+                client.ReplicationProtectionContainers.Delete(
+                    a2aRecoveryFabricName,
+                    a2aRecoveryContainerName);
+
+                var containers = client.ReplicationProtectionContainers.List();
+                Assert.True(
+                    containers.Count() == 0,
+                    "Delted 2 containers that got created via test.");
+            }
+        }
+
+        [Fact]
+        public void DeleteA2AFabrics()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                client.ReplicationFabrics.Delete(a2aPrimaryFabricName);
+                client.ReplicationFabrics.Delete(a2aRecoveryFabricName);
+
+                var fabrics = client.ReplicationFabrics.List();
+                Assert.True(fabrics.Count() == 0, "Delted 2 fabrics that got created via test.");
+            }
+        }
+
+        [Fact]
+        public void DeleteA2APolicy()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                testHelper.Initialize(context);
+                var client = testHelper.SiteRecoveryClient;
+
+                client.ReplicationPolicies.Delete(a2aPolicyName);
+
+                var policies = client.ReplicationPolicies.List();
+                Assert.True(policies.Count() == 0, "Delted the policy that got created via test.");
+            }
         }
 
         [Fact]
@@ -283,7 +717,7 @@ namespace RecoveryServices.SiteRecovery.Tests
 
                 var fabricResponse = client.ReplicationFabrics.Get(siteName);
 
-                var protectionContainerList =
+                var protectionContainerList = 
                     client.ReplicationProtectionContainers.List().ToList();
 
                 Assert.True(protectionContainerList.Count > 0, "Atleast one container should be present.");

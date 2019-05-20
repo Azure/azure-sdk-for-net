@@ -238,6 +238,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISubscriptionUsagesOperations SubscriptionUsages { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualClustersOperations.
+        /// </summary>
+        public virtual IVirtualClustersOperations VirtualClusters { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
@@ -741,6 +746,7 @@ namespace Microsoft.Azure.Management.Sql
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
+            VirtualClusters = new VirtualClustersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);

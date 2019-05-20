@@ -42,9 +42,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<TagResourceContract> ListByTags(this IOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>))
+            /// <param name='includeNotTaggedOperations'>
+            /// Include not tagged Operations.
+            /// </param>
+            public static IPage<TagResourceContract> ListByTags(this IOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedOperations = default(bool?))
             {
-                return operations.ListByTagsAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByTagsAsync(resourceGroupName, serviceName, apiId, odataQuery, includeNotTaggedOperations).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,12 +70,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='includeNotTaggedOperations'>
+            /// Include not tagged Operations.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TagResourceContract>> ListByTagsAsync(this IOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TagResourceContract>> ListByTagsAsync(this IOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedOperations = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByTagsWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTagsWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, includeNotTaggedOperations, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

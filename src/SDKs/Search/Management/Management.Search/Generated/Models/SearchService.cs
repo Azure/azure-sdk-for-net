@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// property is required when creating a new resource.</param>
         /// <param name="tags">Tags to help categorize the resource in the
         /// Azure portal.</param>
+        /// <param name="identity">The identity of the resource.</param>
         /// <param name="replicaCount">The number of replicas in the Search
         /// service. If specified, it must be a value between 1 and 12
         /// inclusive for standard SKUs or between 1 and 3 inclusive for basic
@@ -93,8 +94,8 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <param name="sku">The SKU of the Search Service, which determines
         /// price tier and capacity limits. This property is required when
         /// creating a new Search Service.</param>
-        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), Sku sku = default(Sku))
-            : base(id, name, type, location, tags)
+        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), Sku sku = default(Sku))
+            : base(id, name, type, location, tags, identity)
         {
             ReplicaCount = replicaCount;
             PartitionCount = partitionCount;
@@ -198,8 +199,9 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (ReplicaCount > 12)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "ReplicaCount", 12);

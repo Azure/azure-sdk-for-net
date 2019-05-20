@@ -31,6 +31,25 @@ namespace Microsoft.Azure.Search.Common
         }
 
         /// <summary>
+        /// Throws ArgumentOutOfRangeException with the given parameter name and optional message if the given Boolean
+        /// value is true.
+        /// </summary>
+        /// <param name="isInvalid">The flag to test. This method throws if it's true and does nothing if
+        /// it's false.</param>
+        /// <param name="paramName">The name of the parameter being validated. This is passed to the
+        /// ArgumentOutOfRangeException constructor.</param>
+        /// <param name="message">An optional error message to include in the ArgumentOutOfRangeException. The default
+        /// message is "Argument out of range."</param>
+        public static void IfArgumentOutOfRange(bool isInvalid, string paramName, string message = null)
+        {
+            if (isInvalid)
+            {
+                message = message ?? "Argument out of range.";
+                throw new ArgumentOutOfRangeException(paramName, message);
+            }
+        }
+
+        /// <summary>
         /// Throws ArgumentNullException with the given parameter name and optional message if the given
         /// reference is null.
         /// </summary>

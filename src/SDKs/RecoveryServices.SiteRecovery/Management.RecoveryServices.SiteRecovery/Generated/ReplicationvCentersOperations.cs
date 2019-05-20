@@ -523,7 +523,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Fabric name.
         /// </param>
         /// <param name='vCenterName'>
-        /// vCeneter name
+        /// vCenter name
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.
@@ -1154,7 +1154,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Fabric name.
         /// </param>
         /// <param name='vCenterName'>
-        /// vCeneter name
+        /// vCenter name
         /// </param>
         /// <param name='updateVCenterRequest'>
         /// The input to the update vCenter operation.

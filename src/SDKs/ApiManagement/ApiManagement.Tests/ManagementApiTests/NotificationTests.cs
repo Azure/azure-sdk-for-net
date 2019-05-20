@@ -51,12 +51,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(userEmail, recipientEmailContract.Email);
 
                     // check the recipient exists
-                    var entityStatus = await testBase.client.NotificationRecipientEmail.CheckEntityExistsAsync(
+                    await testBase.client.NotificationRecipientEmail.CheckEntityExistsAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         firstNotification.Name,
                         userEmail);
-                    Assert.True(entityStatus);
 
                     // get the notification details
                     var notificationContract = await testBase.client.Notification.GetAsync(
@@ -75,12 +74,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                         firstNotification.Name,
                         userEmail);
 
-                    entityStatus = await testBase.client.NotificationRecipientEmail.CheckEntityExistsAsync(
+                    await testBase.client.NotificationRecipientEmail.CheckEntityExistsAsync(
                             testBase.rgName,
                             testBase.serviceName,
                             firstNotification.Name,
-                            userEmail);
-                    Assert.False(entityStatus);
+                            userEmail);                    
                 }
                 finally
                 {
@@ -133,12 +131,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(listUsersResponse.First().Id, recipientUserContract.UserId);
 
                     // check the recipient exists
-                    var entityStatus = await testBase.client.NotificationRecipientUser.CheckEntityExistsAsync(
+                    await testBase.client.NotificationRecipientUser.CheckEntityExistsAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         firstNotification.Name,
                         listUsersResponse.First().Name);
-                    Assert.True(entityStatus);
 
                     // get the notification details
                     var notificationContract = await testBase.client.Notification.GetAsync(
@@ -157,12 +154,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                         firstNotification.Name,
                         listUsersResponse.First().Name);
 
-                    entityStatus = await testBase.client.NotificationRecipientUser.CheckEntityExistsAsync(
+                    await testBase.client.NotificationRecipientUser.CheckEntityExistsAsync(
                             testBase.rgName,
                             testBase.serviceName,
                             firstNotification.Name,
                             listUsersResponse.First().Name);
-                    Assert.False(entityStatus);
                 }
                 finally
                 {

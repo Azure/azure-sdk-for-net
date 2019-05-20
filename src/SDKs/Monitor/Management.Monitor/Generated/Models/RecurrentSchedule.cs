@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Initializes a new instance of the RecurrentSchedule class.
         /// </summary>
         /// <param name="timeZone">the timezone for the hours of the profile.
-        /// Some examples of valid timezones are: Dateline Standard Time,
+        /// Some examples of valid time zones are: Dateline Standard Time,
         /// UTC-11, Hawaiian Standard Time, Alaskan Standard Time, Pacific
         /// Standard Time (Mexico), Pacific Standard Time, US Mountain Standard
         /// Time, Mountain Standard Time (Mexico), Mountain Standard Time,
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the timezone for the hours of the profile. Some
-        /// examples of valid timezones are: Dateline Standard Time, UTC-11,
+        /// examples of valid time zones are: Dateline Standard Time, UTC-11,
         /// Hawaiian Standard Time, Alaskan Standard Time, Pacific Standard
         /// Time (Mexico), Pacific Standard Time, US Mountain Standard Time,
         /// Mountain Standard Time (Mexico), Mountain Standard Time, Central

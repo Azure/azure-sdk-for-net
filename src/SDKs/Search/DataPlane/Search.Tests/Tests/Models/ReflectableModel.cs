@@ -12,6 +12,37 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Spatial;
     using Newtonsoft.Json;
 
+    public class ReflectableAddress
+    {
+        [IsSearchable]
+        public string City { get; set; }
+
+        [IsFilterable, IsFacetable]
+        public string Country { get; set; }
+    }
+
+    public class ReflectableComplexObject
+    {
+        [IsSearchable]
+        [Analyzer(AnalyzerName.AsString.EnMicrosoft)]
+        public string Name { get; set; }
+
+        [IsFilterable]
+        public int Rating { get; set; }
+
+        // Ensure that leaf-field-specific attributes are ignored by FieldBuilder on complex fields.
+        [IsSearchable]
+        [IsFilterable]
+        [IsSortable]
+        [IsFacetable]
+        [IsRetrievable(false)]
+        [Analyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [IndexAnalyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [SearchAnalyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [SynonymMaps("myMap")]
+        public ReflectableAddress Address { get; set; }
+    }
+
     public class ReflectableModel
     {
         [Key]
@@ -28,6 +59,7 @@ namespace Microsoft.Azure.Search.Tests
         public DateTime TimeWithoutOffset { get; set; }
 
         [IsSearchable]
+        [SynonymMaps("myMap")]
         public string Text { get; set; }
 
         public string UnsearchableText { get; set; }
@@ -71,9 +103,77 @@ namespace Microsoft.Azure.Search.Tests
 
         public GeographyPoint GeographyPoint { get; set; }
 
+        public int[] IntArray { get; set; }
+
+        public IList<int> IntIList { get; set; }
+
+        public List<int> IntList { get; set; }
+
+        public IEnumerable<int> IntIEnumerable { get; set; }
+
+        public long[] LongArray { get; set; }
+
+        public IList<long> LongIList { get; set; }
+
+        public List<long> LongList { get; set; }
+
+        public IEnumerable<long> LongIEnumerable { get; set; }
+
+        public double[] DoubleArray { get; set; }
+
+        public IList<double> DoubleIList { get; set; }
+
+        public List<double> DoubleList { get; set; }
+
+        public IEnumerable<double> DoubleIEnumerable { get; set; }
+
+        public bool[] BoolArray { get; set; }
+
+        public IList<bool> BoolIList { get; set; }
+
+        public List<bool> BoolList { get; set; }
+
+        public IEnumerable<bool> BoolIEnumerable { get; set; }
+
+        public DateTime[] DateTimeArray { get; set; }
+
+        public IList<DateTime> DateTimeIList { get; set; }
+
+        public List<DateTime> DateTimeList { get; set; }
+
+        public IEnumerable<DateTime> DateTimeIEnumerable { get; set; }
+
+        public DateTimeOffset[] DateTimeOffsetArray { get; set; }
+
+        public IList<DateTimeOffset> DateTimeOffsetIList { get; set; }
+
+        public List<DateTimeOffset> DateTimeOffsetList { get; set; }
+
+        public IEnumerable<DateTimeOffset> DateTimeOffsetIEnumerable { get; set; }
+
+        public GeographyPoint[] GeographyPointArray { get; set; }
+
+        public IList<GeographyPoint> GeographyPointIList { get; set; }
+
+        public List<GeographyPoint> GeographyPointList { get; set; }
+
+        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
+
+        public ReflectableComplexObject Complex { get; set; }
+
+        public ReflectableComplexObject[] ComplexArray { get; set; }
+
+        public IList<ReflectableComplexObject> ComplexIList { get; set; }
+
+        public List<ReflectableComplexObject> ComplexList { get; set; }
+
+        public IEnumerable<ReflectableComplexObject> ComplexIEnumerable { get; set; }
+
         [JsonIgnore]
         [IsRetrievable(false)]
+#pragma warning disable IDE1006 // Naming Styles
         public RecordEnum recordEnum { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
     }
 
     public enum RecordEnum

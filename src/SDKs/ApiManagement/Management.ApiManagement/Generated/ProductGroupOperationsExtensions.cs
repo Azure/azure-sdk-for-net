@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static bool CheckEntityExists(this IProductGroupOperations operations, string resourceGroupName, string serviceName, string productId, string groupId)
+            public static void CheckEntityExists(this IProductGroupOperations operations, string resourceGroupName, string serviceName, string productId, string groupId)
             {
-                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, productId, groupId).GetAwaiter().GetResult();
+                operations.CheckEntityExistsAsync(resourceGroupName, serviceName, productId, groupId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,12 +128,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckEntityExistsAsync(this IProductGroupOperations operations, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckEntityExistsAsync(this IProductGroupOperations operations, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, productId, groupId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, productId, groupId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

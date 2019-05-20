@@ -48,9 +48,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="singlePlacementGroup">When true this limits the scale
         /// set to a single placement group, of max size 100 virtual
         /// machines.</param>
+        /// <param name="additionalCapabilities">Specifies additional
+        /// capabilities enabled or disabled on the Virtual Machines in the
+        /// Virtual Machine Scale Set. For instance: whether the Virtual
+        /// Machines have the capability to support attaching managed data
+        /// disks with UltraSSD_LRS storage account type.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
             : base(tags)
         {
             Sku = sku;
@@ -59,6 +64,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             VirtualMachineProfile = virtualMachineProfile;
             Overprovision = overprovision;
             SinglePlacementGroup = singlePlacementGroup;
+            AdditionalCapabilities = additionalCapabilities;
             Identity = identity;
             CustomInit();
         }
@@ -106,6 +112,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies additional capabilities enabled or disabled
+        /// on the Virtual Machines in the Virtual Machine Scale Set. For
+        /// instance: whether the Virtual Machines have the capability to
+        /// support attaching managed data disks with UltraSSD_LRS storage
+        /// account type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

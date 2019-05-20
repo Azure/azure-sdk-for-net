@@ -7,13 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.28.0-preview</Version>
+		<Version>1.31.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Support database sensitivity labels.
-- Added two new properties (PublicDataEndpointEnabled and ProxyOverride) to managed instance.
+- Added support for serverless databases.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Kubernetes network. Possible values include: 'azure',
         /// 'kubenet'</param>
         /// <param name="networkPolicy">Network policy used for building
-        /// Kubernetes network. Possible values include: 'calico'</param>
+        /// Kubernetes network. Possible values include: 'calico',
+        /// 'azure'</param>
         /// <param name="podCidr">A CIDR notation IP range from which to assign
         /// pod IPs when kubenet is used.</param>
         /// <param name="serviceCidr">A CIDR notation IP range from which to
@@ -48,7 +49,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="dockerBridgeCidr">A CIDR notation IP range assigned to
         /// the Docker bridge network. It must not overlap with any Subnet IP
         /// ranges or the Kubernetes service address range.</param>
-        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string))
+        /// <param name="loadBalancerSku">The load balancer sku for the managed
+        /// cluster. Possible values include: 'standard', 'basic'</param>
+        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string loadBalancerSku = default(string))
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
@@ -56,6 +59,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
             DockerBridgeCidr = dockerBridgeCidr;
+            LoadBalancerSku = loadBalancerSku;
             CustomInit();
         }
 
@@ -73,7 +77,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets network policy used for building Kubernetes network.
-        /// Possible values include: 'calico'
+        /// Possible values include: 'calico', 'azure'
         /// </summary>
         [JsonProperty(PropertyName = "networkPolicy")]
         public string NetworkPolicy { get; set; }
@@ -107,6 +111,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "dockerBridgeCidr")]
         public string DockerBridgeCidr { get; set; }
+
+        /// <summary>
+        /// Gets or sets the load balancer sku for the managed cluster.
+        /// Possible values include: 'standard', 'basic'
+        /// </summary>
+        [JsonProperty(PropertyName = "loadBalancerSku")]
+        public string LoadBalancerSku { get; set; }
 
         /// <summary>
         /// Validate the object.

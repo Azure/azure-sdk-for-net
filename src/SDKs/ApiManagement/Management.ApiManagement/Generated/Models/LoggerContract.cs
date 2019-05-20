@@ -46,13 +46,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="description">Logger description.</param>
         /// <param name="isBuffered">Whether records are buffered in the logger
         /// before publishing. Default is assumed to be true.</param>
-        public LoggerContract(string loggerType, IDictionary<string, string> credentials, string id = default(string), string name = default(string), string type = default(string), string description = default(string), bool? isBuffered = default(bool?))
+        /// <param name="resourceId">Azure Resource Id of a log target (either
+        /// Azure Event Hub resource or Azure Application Insights
+        /// resource).</param>
+        public LoggerContract(string loggerType, IDictionary<string, string> credentials, string id = default(string), string name = default(string), string type = default(string), string description = default(string), bool? isBuffered = default(bool?), string resourceId = default(string))
             : base(id, name, type)
         {
             LoggerType = loggerType;
             Description = description;
             Credentials = credentials;
             IsBuffered = isBuffered;
+            ResourceId = resourceId;
             CustomInit();
         }
 
@@ -88,6 +92,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isBuffered")]
         public bool? IsBuffered { get; set; }
+
+        /// <summary>
+        /// Gets or sets azure Resource Id of a log target (either Azure Event
+        /// Hub resource or Azure Application Insights resource).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceId")]
+        public string ResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

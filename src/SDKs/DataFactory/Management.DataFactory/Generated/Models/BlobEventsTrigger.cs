@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the trigger.</param>
         /// <param name="pipelines">Pipelines that need to be started.</param>
         /// <param name="blobPathBeginsWith">The blob path must begin with the
         /// pattern provided for trigger to fire. For example,
@@ -56,8 +58,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'december/boxes.csv' will only fire the trigger for blobs named
         /// boxes in a december folder. At least one of these must be provided:
         /// blobPathBeginsWith, blobPathEndsWith.</param>
-        public BlobEventsTrigger(IList<string> events, string scope, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string blobPathBeginsWith = default(string), string blobPathEndsWith = default(string))
-            : base(additionalProperties, description, runtimeState, pipelines)
+        public BlobEventsTrigger(IList<string> events, string scope, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string blobPathBeginsWith = default(string), string blobPathEndsWith = default(string))
+            : base(additionalProperties, description, runtimeState, annotations, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;
