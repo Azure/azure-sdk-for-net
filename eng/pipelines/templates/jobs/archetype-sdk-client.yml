@@ -9,34 +9,29 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-<<<<<<< HEAD
-      - script: "dotnet pack ${{parameters.ProjectFile}} -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
-        displayName: "Build and Package"
-=======
-      - script: "dotnet build $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet build ${{parameters.ProjectFile}} -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
         displayName: "Build"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - script: "dotnet pack $(ProjectFile) --no-build --version-suffix pr.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix pr.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
         displayName: "Package (pr.$(Build.BuildID))"
         condition: eq(variables['Build.Reason'], 'PullRequest')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - script: "dotnet pack $(ProjectFile) --no-build --version-suffix ci.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix ci.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
         displayName: "Package (pr.$(Build.BuildID))"
         condition: ne(variables['Build.Reason'], 'PullRequest')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - script: "dotnet pack $(ProjectFile) --no-build -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet pack ${{parameters.ProjectFile}} --no-build -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
         displayName: "Package (pr.$(Build.BuildID))"
         condition: ne(variables['Build.Reason'], 'PullRequest')
->>>>>>> Experimentation with multi-pack.
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
