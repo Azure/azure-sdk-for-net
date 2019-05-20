@@ -19,22 +19,10 @@ namespace Microsoft.Azure.Management.BotService
         /// </summary>
         public string TenantId { get; set; }
 
-#if !NET452
-
-        /// <summary>
-        /// Device code authentication callback, only if MsaAppId is not provided.
-        /// If an MsaAppId is not provided in the Bot payload, then a new MsaApp will be provisioned, 
-        /// but first authentication needs to happen, and this callback will be called to allow
-        /// users to enter the device code.
-        /// </summary>
-        public Action<DeviceCodeResult> DeviceCodeAuthCallback { get; set; }
-#endif
-
         partial void CustomInitialize()
         {
             // Override the bot services operations with an augmented bot services operations,
-            // which includes the creation of an msa app id and other operations required to complete
-            // the provisioning of the bot
+            // which includes operations required to complete the provisioning of the bot
             this.Bots = new CustomBotsOperations(this.Bots, this);
         }
     }

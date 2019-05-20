@@ -70,20 +70,5 @@ namespace Microsoft.Azure.Management.BotService.Customizations
                 }
             }
         }
-
-        /// <summary>
-        /// Determines whether on bot creation we should provision an Msa app id. The default is yes, 
-        /// but when test environment variables are set, we avoid provisioning an Msa app id since it
-        /// requires user credentials
-        /// </summary>
-        public static bool ShouldProvisionMsaApp
-        {
-            get
-            {
-                // The environment variable BOT_SERVICE_OMIT_MSA_APPID is set on test environments
-                string environmentOverride = Environment.GetEnvironmentVariable(OmitMsaAppIdCreationEnvironmentVariableName);
-                return string.IsNullOrEmpty(environmentOverride);
-            }
-        }
     }
 }

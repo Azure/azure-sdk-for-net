@@ -29,7 +29,7 @@ namespace BotService.Tests
             Environment.SetEnvironmentVariable(OmitMsaAppIdCreationEnvironmentVariableName, "1");
         }
 
-        [Fact(Skip = skip)]
+        [Fact]
         public void BotCreateEmailChannel()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -89,7 +89,7 @@ namespace BotService.Tests
             }
         }
 
-        [Fact(Skip = skip)]
+        [Fact]
         public void BotCreateAndListByResourceGroupTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -119,7 +119,7 @@ namespace BotService.Tests
             }
         }
 
-        [Fact(Skip = skip)]
+        [Fact]
         public void BotCreateGetUpdateGetDeleteGet()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -182,7 +182,7 @@ namespace BotService.Tests
             }
         }
 
-        [Fact(Skip = skip)]
+        [Fact]
         public void BotUpdateSku()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -222,7 +222,7 @@ namespace BotService.Tests
             }
         }
 
-        [Fact(Skip = skip)]
+        [Fact]
         public void BotCreateWithoutResourceGroupShouldFail()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
