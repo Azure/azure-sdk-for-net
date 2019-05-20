@@ -1,39 +1,46 @@
 {
   "_entries": [
     {
-      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-237869509?label=test_label",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-346815333?label=test_label",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 May 2019 21:44:21 GMT",
+        "Date": "Mon, 20 May 2019 17:28:25 GMT",
         "If-Match": "*",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
         ],
-        "x-ms-client-request-id": "9d94ab0c-5d25-4fb7-a3c8-52dde68c4b6d",
+        "x-ms-client-request-id": "c3abee88-f5bc-41d9-9628-55b29c7d98a6",
         "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022value\u0022:\u0022test_value\u0022,\u0022content_type\u0022:\u0022test_content_type\u0022,\u0022tags\u0022:{\u0022tag1\u0022:\u0022value1\u0022,\u0022tag2\u0022:\u0022value2\u0022}}",
+      "RequestBody": {
+        "value": "test_value",
+        "content_type": "test_content_type",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        }
+      },
       "StatusCode": 412,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Fri, 17 May 2019 21:44:21 GMT",
+        "Date": "Mon, 20 May 2019 17:28:25 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "x-ms-client-request-id": "9d94ab0c-5d25-4fb7-a3c8-52dde68c4b6d",
-        "x-ms-correlation-request-id": "f85de98b-d039-49e7-8517-03e93b678de9",
-        "x-ms-request-id": "f85de98b-d039-49e7-8517-03e93b678de9"
+        "x-ms-client-request-id": "c3abee88-f5bc-41d9-9628-55b29c7d98a6",
+        "x-ms-correlation-request-id": "1177c4e6-8fa8-4de4-a9e8-f3509e031763",
+        "x-ms-request-id": "1177c4e6-8fa8-4de4-a9e8-f3509e031763"
       },
-      "ResponseBody": ""
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
-    "RandomSeed": "829303582"
+    "RandomSeed": "1266509209"
   }
 }

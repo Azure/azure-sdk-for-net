@@ -77,7 +77,29 @@ namespace Azure.Core.Testing
 
             if (IsTextContentType(headers, out Encoding encoding))
             {
-                return encoding.GetBytes(property.GetString());
+                if (property.Type == JsonValueType.Object)
+                {
+                    var arrayBufferWriter = new ArrayBufferWriter<byte>();
+                    using var writer = new Utf8JsonWriter(arrayBufferWriter);
+                    property.WriteAsValue(writer);
+                    writer.Flush();
+                    return arrayBufferWriter.WrittenMemory.ToArray();
+                }
+                else if (property.Type == JsonValueType.Array)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    foreach (var item in property.EnumerateArray())
+                    {
+                        stringBuilder.Append(item.GetString());
+                    }
+
+                    return encoding.GetBytes(stringBuilder.ToString());
+                }
+                else
+                {
+                    return encoding.GetBytes(property.GetString());
+                }
             }
 
             return Convert.FromBase64String(property.GetString());
@@ -112,7 +134,7 @@ namespace Azure.Core.Testing
             jsonWriter.WriteString(nameof(RequestMethod), HttpPipelineMethodConverter.ToString(RequestMethod));
             jsonWriter.WriteStartObject(nameof(RequestHeaders));
             SerializeHeaders(jsonWriter, RequestHeaders);
-            jsonWriter.WriteEndObject();;
+            jsonWriter.WriteEndObject();
 
             SerializeBody(jsonWriter, nameof(RequestBody), RequestBody, RequestHeaders);
 
@@ -128,18 +150,72 @@ namespace Azure.Core.Testing
 
         private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers)
         {
-            if (requestBody == null)
+            if (requestBody == null || requestBody.Length == 0)
             {
                 jsonWriter.WriteNull(name);
             }
             else if (IsTextContentType(headers, out Encoding encoding))
             {
-                jsonWriter.WriteString(name, encoding.GetString(requestBody));
+                // Try parse response as JSON and write it directly if possible
+                Utf8JsonReader reader = new Utf8JsonReader(requestBody, true, default);
+                if (JsonDocument.TryParseValue(ref reader, out JsonDocument document))
+                {
+                    using (document)
+                    {
+                        document.RootElement.WriteAsProperty(name.AsSpan(), jsonWriter);
+                    }
+                }
+                else
+                {
+                    ReadOnlySpan<char> text = encoding.GetString(requestBody).AsMemory().Span;
+
+                    var indexOfNewline = IndexOfNewline(text);
+                    if (indexOfNewline == -1)
+                    {
+                        jsonWriter.WriteString(name, text);
+                    }
+                    else
+                    {
+                        jsonWriter.WriteStartArray(name);
+                        do
+                        {
+                            jsonWriter.WriteStringValue(text.Slice(0, indexOfNewline + 1));
+                            text = text.Slice(indexOfNewline + 1);
+                            indexOfNewline = IndexOfNewline(text);
+                        } while (indexOfNewline != -1);
+
+                        if (!text.IsEmpty)
+                        {
+                            jsonWriter.WriteStringValue(text);
+                        }
+
+                        jsonWriter.WriteEndArray();
+                    }
+                }
             }
             else
             {
                 jsonWriter.WriteString(name, Convert.ToBase64String(requestBody));
             }
+        }
+
+        private int IndexOfNewline(ReadOnlySpan<char> span)
+        {
+            int indexOfNewline = span.IndexOfAny('\r', '\n');
+
+            if (indexOfNewline == -1)
+            {
+                return -1;
+            }
+
+            if (span.Length > indexOfNewline + 1 &&
+                (span[indexOfNewline + 1] == '\r' ||
+                span[indexOfNewline + 1] == '\n'))
+            {
+                indexOfNewline++;
+            }
+
+            return indexOfNewline;
         }
 
         private void SerializeHeaders(Utf8JsonWriter jsonWriter, IDictionary<string, string[]> header)
