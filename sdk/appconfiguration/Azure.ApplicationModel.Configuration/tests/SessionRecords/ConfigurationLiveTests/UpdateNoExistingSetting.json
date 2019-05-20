@@ -1,19 +1,19 @@
 {
-  "_entries": [
+  "Entries": [
     {
-      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-346815333?label=test_label",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-1396170714?label=test_label",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Mon, 20 May 2019 17:28:25 GMT",
+        "Date": "Mon, 20 May 2019 18:32:36 GMT",
         "If-Match": "*",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
         ],
-        "x-ms-client-request-id": "c3abee88-f5bc-41d9-9628-55b29c7d98a6",
+        "x-ms-client-request-id": "a17b86e3-ccad-401b-88ae-a7d98e5d456e",
         "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,18 +29,18 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Mon, 20 May 2019 17:28:25 GMT",
+        "Date": "Mon, 20 May 2019 18:32:36 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "x-ms-client-request-id": "c3abee88-f5bc-41d9-9628-55b29c7d98a6",
-        "x-ms-correlation-request-id": "1177c4e6-8fa8-4de4-a9e8-f3509e031763",
-        "x-ms-request-id": "1177c4e6-8fa8-4de4-a9e8-f3509e031763"
+        "x-ms-client-request-id": "a17b86e3-ccad-401b-88ae-a7d98e5d456e",
+        "x-ms-correlation-request-id": "3d99a1f0-3306-4699-aab0-a24ac23b6060",
+        "x-ms-request-id": "3d99a1f0-3306-4699-aab0-a24ac23b6060"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
-    "RandomSeed": "1266509209"
+    "RandomSeed": "2076273114"
   }
 }
