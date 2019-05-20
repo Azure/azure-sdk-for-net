@@ -17,8 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Helpers()
         {
-            ConfigurationClient client = new ConfigurationClient(TestEnvironment.GetClientConnectionString());TestEnvironment.GetClientConnectionString();
-            var source = new CancellationTokenSource();
+            ConfigurationClient client = new ConfigurationClient(TestEnvironment.GetClientConnectionString());
 
             const int numberOfSettings = 2;
 
