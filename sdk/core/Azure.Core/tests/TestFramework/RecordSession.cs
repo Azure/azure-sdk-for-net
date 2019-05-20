@@ -9,15 +9,15 @@ namespace Azure.Core.Testing
 {
     public class RecordSession
     {
-        private readonly List<RecordEntry> _entries = new List<RecordEntry>();
+        public List<RecordEntry> Entries { get; } = new List<RecordEntry>();
 
         public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public void Serialize(Utf8JsonWriter jsonWriter)
         {
             jsonWriter.WriteStartObject();
-            jsonWriter.WriteStartArray(nameof(_entries));
-            foreach (RecordEntry record in _entries)
+            jsonWriter.WriteStartArray(nameof(Entries));
+            foreach (RecordEntry record in Entries)
             {
                 record.Serialize(jsonWriter);
             }
@@ -36,11 +36,11 @@ namespace Azure.Core.Testing
         public static RecordSession Deserialize(JsonElement element)
         {
             var session = new RecordSession();
-            if (element.TryGetProperty(nameof(_entries), out JsonElement property))
+            if (element.TryGetProperty(nameof(Entries), out JsonElement property))
             {
                 foreach (JsonElement item in property.EnumerateArray())
                 {
-                    session._entries.Add(RecordEntry.Deserialize(item));
+                    session.Entries.Add(RecordEntry.Deserialize(item));
                 }
             }
 
@@ -56,24 +56,24 @@ namespace Azure.Core.Testing
 
         public void Record(RecordEntry entry)
         {
-            lock (_entries)
+            lock (Entries)
             {
-                _entries.Add(entry);
+                Entries.Add(entry);
             }
         }
 
         public RecordEntry Lookup(Request request, RecordMatcher matcher)
         {
-            lock (_entries)
+            lock (Entries)
             {
-                var index = matcher.FindMatch(request, _entries);
+                var index = matcher.FindMatch(request, Entries);
                 if (index == -1)
                 {
                     throw new InvalidOperationException($"Unable to find recorded request with method {request.Method} and uri {request.UriBuilder.ToString()}");
                 }
 
-                var entry = _entries[index];
-                _entries.RemoveAt(index);
+                var entry = Entries[index];
+                Entries.RemoveAt(index);
                 return entry;
             }
 
@@ -81,9 +81,9 @@ namespace Azure.Core.Testing
 
         public void Sanitize(RecordedTestSanitizer sanitizer)
         {
-            lock (_entries)
+            lock (Entries)
             {
-                foreach (RecordEntry entry in _entries)
+                foreach (RecordEntry entry in Entries)
                 {
                     entry.Sanitize(sanitizer);
                 }

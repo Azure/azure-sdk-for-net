@@ -157,40 +157,40 @@ namespace Azure.Core.Testing
             else if (IsTextContentType(headers, out Encoding encoding))
             {
                 // Try parse response as JSON and write it directly if possible
-                Utf8JsonReader reader = new Utf8JsonReader(requestBody, true, default);
-                if (JsonDocument.TryParseValue(ref reader, out JsonDocument document))
+                try
                 {
-                    using (document)
-                    {
-                        document.RootElement.WriteAsProperty(name.AsSpan(), jsonWriter);
-                    }
+                    using JsonDocument document = JsonDocument.Parse(requestBody);
+                    document.RootElement.WriteAsProperty(name.AsSpan(), jsonWriter);
+                    return;
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+
+                ReadOnlySpan<char> text = encoding.GetString(requestBody).AsMemory().Span;
+
+                var indexOfNewline = IndexOfNewline(text);
+                if (indexOfNewline == -1)
+                {
+                    jsonWriter.WriteString(name, text);
                 }
                 else
                 {
-                    ReadOnlySpan<char> text = encoding.GetString(requestBody).AsMemory().Span;
-
-                    var indexOfNewline = IndexOfNewline(text);
-                    if (indexOfNewline == -1)
+                    jsonWriter.WriteStartArray(name);
+                    do
                     {
-                        jsonWriter.WriteString(name, text);
-                    }
-                    else
+                        jsonWriter.WriteStringValue(text.Slice(0, indexOfNewline + 1));
+                        text = text.Slice(indexOfNewline + 1);
+                        indexOfNewline = IndexOfNewline(text);
+                    } while (indexOfNewline != -1);
+
+                    if (!text.IsEmpty)
                     {
-                        jsonWriter.WriteStartArray(name);
-                        do
-                        {
-                            jsonWriter.WriteStringValue(text.Slice(0, indexOfNewline + 1));
-                            text = text.Slice(indexOfNewline + 1);
-                            indexOfNewline = IndexOfNewline(text);
-                        } while (indexOfNewline != -1);
-
-                        if (!text.IsEmpty)
-                        {
-                            jsonWriter.WriteStringValue(text);
-                        }
-
-                        jsonWriter.WriteEndArray();
+                        jsonWriter.WriteStringValue(text);
                     }
+
+                    jsonWriter.WriteEndArray();
                 }
             }
             else
