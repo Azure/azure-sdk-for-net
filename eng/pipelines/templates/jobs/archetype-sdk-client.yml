@@ -9,7 +9,7 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet pack ${{parameters.ProjectFile}} -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -86,7 +86,7 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet test $(ProjectFile) --filter TestCategory!=Live --logger trx"
+      - script: "dotnet test ${{parameters.ProjectFile}} --filter TestCategory!=Live --logger trx"
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
