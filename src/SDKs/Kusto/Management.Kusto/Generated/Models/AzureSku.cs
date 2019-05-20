@@ -35,20 +35,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
-        /// 'Standard_L4s'</param>
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'</param>
+        /// <param name="tier">SKU tier. Possible values include: 'Basic',
+        /// 'Standard'</param>
         /// <param name="capacity">SKU capacity.</param>
-        public AzureSku(string name, int? capacity = default(int?))
+        public AzureSku(string name, string tier, int? capacity = default(int?))
         {
             Name = name;
             Capacity = capacity;
+            Tier = tier;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for AzureSku class.
-        /// </summary>
-        static AzureSku()
-        {
-            Tier = "Standard";
         }
 
         /// <summary>
@@ -62,7 +58,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
-        /// 'Standard_L4s'
+        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -74,10 +70,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public int? Capacity { get; set; }
 
         /// <summary>
-        /// SKU tier.
+        /// Gets or sets SKU tier. Possible values include: 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public static string Tier { get; private set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -90,6 +86,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Tier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
             }
         }
     }

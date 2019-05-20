@@ -27,5 +27,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string StandardD11V2 = "Standard_D11_v2";
         public const string StandardD12V2 = "Standard_D12_v2";
         public const string StandardL4s = "Standard_L4s";
+        public const string DevNoSLAStandardD11V2 = "Dev(No SLA)_Standard_D11_v2";
     }
 }

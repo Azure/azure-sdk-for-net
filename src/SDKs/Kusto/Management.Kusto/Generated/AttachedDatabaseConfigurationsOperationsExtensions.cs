@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Kusto
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -21,6 +23,48 @@ namespace Microsoft.Azure.Management.Kusto
     /// </summary>
     public static partial class AttachedDatabaseConfigurationsOperationsExtensions
     {
+            /// <summary>
+            /// Returns the list of attached database configurations of the given Kusto
+            /// cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            public static IEnumerable<AttachedDatabaseConfiguration> ListByCluster(this IAttachedDatabaseConfigurationsOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.ListByClusterAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the list of attached database configurations of the given Kusto
+            /// cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<AttachedDatabaseConfiguration>> ListByClusterAsync(this IAttachedDatabaseConfigurationsOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByClusterWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Returns an attached database configuration.
             /// </summary>

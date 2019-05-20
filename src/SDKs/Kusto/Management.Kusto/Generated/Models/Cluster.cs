@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         public Cluster()
         {
-            Sku = new AzureSku();
             CustomInit();
         }
 

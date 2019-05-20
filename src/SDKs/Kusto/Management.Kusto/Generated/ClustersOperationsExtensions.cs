@@ -485,52 +485,6 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
-            /// Checks that the database name is valid and is not already in use.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Kusto cluster.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the Kusto cluster.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the resource.
-            /// </param>
-            public static CheckNameResult CheckNameAvailability1(this IClustersOperations operations, string resourceGroupName, string clusterName, CheckNameRequest resourceName)
-            {
-                return operations.CheckNameAvailability1Async(resourceGroupName, clusterName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks that the database name is valid and is not already in use.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Kusto cluster.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the Kusto cluster.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameResult> CheckNameAvailability1Async(this IClustersOperations operations, string resourceGroupName, string clusterName, CheckNameRequest resourceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailability1WithHttpMessagesAsync(resourceGroupName, clusterName, resourceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Returns the SKUs available for the provided resource.
             /// </summary>
             /// <param name='operations'>
