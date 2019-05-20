@@ -112,18 +112,6 @@ namespace Azure.Core.Testing
             }
         }
 
-        public void SetConnectionString(string name, string connectionString)
-        {
-            ConnectionString s = ConnectionString.Parse(connectionString);
-            _sanitizer.SanitizeConnectionString(s);
-            _session.Variables[name] = s.ToString();
-        }
-
-        public string GetConnectionString(string name)
-        {
-            return _session.Variables[name];
-        }
-
         public string GenerateId()
         {
             return Random.Next().ToString();
@@ -135,12 +123,31 @@ namespace Azure.Core.Testing
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    SetConnectionString(variableName, environmentVariableValue);
+                    ConnectionString s = ConnectionString.Parse(environmentVariableValue);
+                    _sanitizer.SanitizeConnectionString(s);
+                    _session.Variables[variableName] = s.ToString();
                     return environmentVariableValue;
                 case RecordedTestMode.None:
                     return environmentVariableValue;
                 case RecordedTestMode.Playback:
-                    return GetConnectionString(variableName);
+                    return _session.Variables[variableName];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public string GetVariableFromEnvironment(string variableName)
+        {
+            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session.Variables[variableName] = environmentVariableValue;
+                    return environmentVariableValue;
+                case RecordedTestMode.None:
+                    return environmentVariableValue;
+                case RecordedTestMode.Playback:
+                    return _session.Variables[variableName];
                 default:
                     throw new ArgumentOutOfRangeException();
             }
