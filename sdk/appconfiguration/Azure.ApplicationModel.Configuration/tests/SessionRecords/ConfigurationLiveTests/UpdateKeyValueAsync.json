@@ -1,0 +1,144 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-618586690",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "User-Agent": [
+          "azsdk-net-config/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "483f077b-2bc3-42b1-b54f-fd94960c4ed0",
+        "x-ms-content-sha256": "0OIR8m2PFBz/tLVzxJAua4RsVSufVwRNmaSLhMmyIDE=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "my_value",
+        "content_type": "",
+        "tags": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "ETag": "\u0022tJmvXjBNk7yCqMqqOWfDFQwdhaT\u0022",
+        "Last-Modified": "Mon, 20 May 2019 18:32:40 GMT",
+        "Server": "nginx/1.13.9",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTYwOTA=;sn=196090",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "483f077b-2bc3-42b1-b54f-fd94960c4ed0",
+        "x-ms-correlation-request-id": "4a82538f-5beb-434d-a11e-07007f94ca89",
+        "x-ms-request-id": "4a82538f-5beb-434d-a11e-07007f94ca89"
+      },
+      "ResponseBody": {
+        "etag": "tJmvXjBNk7yCqMqqOWfDFQwdhaT",
+        "key": "key-618586690",
+        "label": null,
+        "content_type": "",
+        "value": "my_value",
+        "tags": {},
+        "locked": false,
+        "last_modified": "2019-05-20T18:32:40\u002b00:00"
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-618586690",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-config/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "e6b058d7-ecfc-444a-995d-1a80d7b6065f",
+        "x-ms-content-sha256": "eewPMDV1zAO9I3b\u002b2TWCyWj/52zWhWcEDL8B1Ut2X\u002bw=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "my_value2",
+        "content_type": "",
+        "tags": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "ETag": "\u0022hsKOqExoWEkwMbicqKuPh0CGDg1\u0022",
+        "Last-Modified": "Mon, 20 May 2019 18:32:40 GMT",
+        "Server": "nginx/1.13.9",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTYwOTE=;sn=196091",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "e6b058d7-ecfc-444a-995d-1a80d7b6065f",
+        "x-ms-correlation-request-id": "f04142d7-d933-4633-880a-712d8a70d177",
+        "x-ms-request-id": "f04142d7-d933-4633-880a-712d8a70d177"
+      },
+      "ResponseBody": {
+        "etag": "hsKOqExoWEkwMbicqKuPh0CGDg1",
+        "key": "key-618586690",
+        "label": null,
+        "content_type": "",
+        "value": "my_value2",
+        "tags": {},
+        "locked": false,
+        "last_modified": "2019-05-20T18:32:40\u002b00:00"
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-618586690",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "User-Agent": [
+          "azsdk-net-config/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "f5b07fa0-3ade-4c20-9435-062494edcc28",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002b/TImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/vnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "ETag": "\u0022hsKOqExoWEkwMbicqKuPh0CGDg1\u0022",
+        "Last-Modified": "Mon, 20 May 2019 18:32:40 GMT",
+        "Server": "nginx/1.13.9",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTYwOTI=;sn=196092",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "f5b07fa0-3ade-4c20-9435-062494edcc28",
+        "x-ms-correlation-request-id": "b7114fb6-0f2c-465b-9107-8997aa617e83",
+        "x-ms-request-id": "b7114fb6-0f2c-465b-9107-8997aa617e83"
+      },
+      "ResponseBody": {
+        "etag": "hsKOqExoWEkwMbicqKuPh0CGDg1",
+        "key": "key-618586690",
+        "label": null,
+        "content_type": "",
+        "value": "my_value2",
+        "tags": {},
+        "locked": false,
+        "last_modified": "2019-05-20T18:32:40\u002b00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
+    "RandomSeed": "851408453"
+  }
+}
