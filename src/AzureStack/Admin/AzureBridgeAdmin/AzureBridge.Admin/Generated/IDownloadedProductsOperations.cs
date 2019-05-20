@@ -38,7 +38,7 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -66,7 +66,7 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -77,7 +77,7 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// </exception>
         Task<AzureOperationResponse<DownloadedProductResource>> GetWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a downloaded product.
+        /// Create or update a downloaded product.
         /// </summary>
         /// <param name='resourceGroup'>
         /// The resource group the resource is located under.
@@ -88,13 +88,16 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <param name='productName'>
         /// Name of the product.
         /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to create or update downloaded product.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -103,7 +106,7 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadedProductResource>> DeleteWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadedProductResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, PutDownloadedProduct parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a downloaded product.
         /// </summary>
@@ -122,7 +125,35 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a downloaded product.
+        /// </summary>
+        /// <param name='resourceGroup'>
+        /// The resource group the resource is located under.
+        /// </param>
+        /// <param name='activationName'>
+        /// Name of the activation.
+        /// </param>
+        /// <param name='productName'>
+        /// Name of the product.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to create or update downloaded product.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -131,7 +162,32 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadedProductResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadedProductResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, PutDownloadedProduct parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a downloaded product.
+        /// </summary>
+        /// <param name='resourceGroup'>
+        /// The resource group the resource is located under.
+        /// </param>
+        /// <param name='activationName'>
+        /// Name of the activation.
+        /// </param>
+        /// <param name='productName'>
+        /// Name of the product.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroup, string activationName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of downloaded products.
         /// </summary>
@@ -144,7 +200,7 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

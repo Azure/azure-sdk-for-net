@@ -122,9 +122,9 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
             /// <param name='productName'>
             /// Name of the product.
             /// </param>
-            public static void Download(this IProductsOperations operations, string resourceGroup, string activationName, string productName)
+            public static DownloadedProductResource Download(this IProductsOperations operations, string resourceGroup, string activationName, string productName)
             {
-                operations.DownloadAsync(resourceGroup, activationName, productName).GetAwaiter().GetResult();
+                return operations.DownloadAsync(resourceGroup, activationName, productName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,9 +145,12 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DownloadAsync(this IProductsOperations operations, string resourceGroup, string activationName, string productName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadedProductResource> DownloadAsync(this IProductsOperations operations, string resourceGroup, string activationName, string productName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DownloadWithHttpMessagesAsync(resourceGroup, activationName, productName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(resourceGroup, activationName, productName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -165,9 +168,9 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
             /// <param name='productName'>
             /// Name of the product.
             /// </param>
-            public static void BeginDownload(this IProductsOperations operations, string resourceGroup, string activationName, string productName)
+            public static DownloadedProductResource BeginDownload(this IProductsOperations operations, string resourceGroup, string activationName, string productName)
             {
-                operations.BeginDownloadAsync(resourceGroup, activationName, productName).GetAwaiter().GetResult();
+                return operations.BeginDownloadAsync(resourceGroup, activationName, productName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -188,9 +191,12 @@ namespace Microsoft.AzureStack.Management.AzureBridge.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDownloadAsync(this IProductsOperations operations, string resourceGroup, string activationName, string productName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadedProductResource> BeginDownloadAsync(this IProductsOperations operations, string resourceGroup, string activationName, string productName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDownloadWithHttpMessagesAsync(resourceGroup, activationName, productName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(resourceGroup, activationName, productName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
