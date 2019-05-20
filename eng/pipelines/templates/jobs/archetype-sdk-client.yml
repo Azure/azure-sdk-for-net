@@ -23,14 +23,14 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
       - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix ci.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
-        displayName: "Package (pr.$(Build.BuildID))"
+        displayName: "Package (ci.$(Build.BuildID))"
         condition: ne(variables['Build.Reason'], 'PullRequest')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
       - script: "dotnet pack ${{parameters.ProjectFile}} --no-build -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
-        displayName: "Package (pr.$(Build.BuildID))"
+        displayName: "Package"
         condition: ne(variables['Build.Reason'], 'PullRequest')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
