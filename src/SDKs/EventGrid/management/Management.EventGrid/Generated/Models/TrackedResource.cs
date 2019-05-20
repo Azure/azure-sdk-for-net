@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of a Tracked Resource
+    /// Definition of a Tracked Resource.
     /// </summary>
     public partial class TrackedResource : Resource
     {
@@ -32,11 +32,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        /// <param name="location">Location of the resource</param>
-        /// <param name="id">Fully qualified identifier of the resource</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
-        /// <param name="tags">Tags of the resource</param>
+        /// <param name="location">Location of the resource.</param>
+        /// <param name="id">Fully qualified identifier of the
+        /// resource.</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
+        /// <param name="tags">Tags of the resource.</param>
         public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
@@ -51,13 +52,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location of the resource
+        /// Gets or sets location of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets tags of the resource
+        /// Gets or sets tags of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

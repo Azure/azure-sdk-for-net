@@ -51,16 +51,16 @@ namespace Microsoft.Azure.Management.EventGrid
         public EventGridManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get a domain
+        /// Get a domain.
         /// </summary>
         /// <remarks>
-        /// Get properties of a domain
+        /// Get properties of a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain
+        /// Create or update a domain.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates or updates a new domain with the specified
@@ -260,10 +260,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainInfo'>
-        /// Domain information
+        /// Domain information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -279,16 +279,16 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Delete a domain
+        /// Delete a domain.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain
+        /// Delete existing domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Update a domain
+        /// Update a domain.
         /// </summary>
         /// <remarks>
         /// Asynchronously updates a domain with the specified parameters.
@@ -313,10 +313,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='tags'>
-        /// Tags of the domains resource
+        /// Tags of the domains resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -332,16 +332,24 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List domains under an Azure subscription
+        /// List domains under an Azure subscription.
         /// </summary>
         /// <remarks>
-        /// List all the domains under an Azure subscription
+        /// List all the domains under an Azure subscription.
         /// </remarks>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax. Filtering
+        /// is permitted on the 'name' property only and with limited number of OData
+        /// operations. These operations are: the 'contains' function as well as the
+        /// following logical operations: not, and, or, eq (for equal), and ne (for not
+        /// equal). No arithmetic operations are supported. The following is a valid
+        /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+        /// The following is not a valid filter example: $filter=location eq 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
+        /// The number of results to return per page for the list operation. Valid
+        /// range for top parameter is 1 to 100. If not specified, the default number
+        /// of results to be returned is 20 items per page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -529,19 +537,27 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List domains under a resource group
+        /// List domains under a resource group.
         /// </summary>
         /// <remarks>
-        /// List all the domains under a resource group
+        /// List all the domains under a resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax. Filtering
+        /// is permitted on the 'name' property only and with limited number of OData
+        /// operations. These operations are: the 'contains' function as well as the
+        /// following logical operations: not, and, or, eq (for equal), and ne (for not
+        /// equal). No arithmetic operations are supported. The following is a valid
+        /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+        /// The following is not a valid filter example: $filter=location eq 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
+        /// The number of results to return per page for the list operation. Valid
+        /// range for top parameter is 1 to 100. If not specified, the default number
+        /// of results to be returned is 20 items per page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -735,16 +751,16 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List keys for a domain
+        /// List keys for a domain.
         /// </summary>
         /// <remarks>
-        /// List the two keys used to publish to a domain
+        /// List the two keys used to publish to a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -934,19 +950,19 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Regenerate key for a domain
+        /// Regenerate key for a domain.
         /// </summary>
         /// <remarks>
-        /// Regenerate a shared access key for a domain
+        /// Regenerate a shared access key for a domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='keyName'>
-        /// Key name to regenerate key1 or key2
+        /// Key name to regenerate key1 or key2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1152,7 +1168,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain
+        /// Create or update a domain.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates or updates a new domain with the specified
@@ -1162,10 +1178,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainInfo'>
-        /// Domain information
+        /// Domain information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1370,16 +1386,16 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Delete a domain
+        /// Delete a domain.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain
+        /// Delete existing domain.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1548,7 +1564,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Update a domain
+        /// Update a domain.
         /// </summary>
         /// <remarks>
         /// Asynchronously updates a domain with the specified parameters.
@@ -1557,10 +1573,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='tags'>
-        /// Tags of the domains resource
+        /// Tags of the domains resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1762,10 +1778,10 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List domains under an Azure subscription
+        /// List domains under an Azure subscription.
         /// </summary>
         /// <remarks>
-        /// List all the domains under an Azure subscription
+        /// List all the domains under an Azure subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1938,10 +1954,10 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List domains under a resource group
+        /// List domains under a resource group.
         /// </summary>
         /// <remarks>
-        /// List all the domains under a resource group
+        /// List all the domains under a resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.EventGrid
     public partial interface IOperations
     {
         /// <summary>
-        /// List available operations
+        /// List available operations.
         /// </summary>
         /// <remarks>
         /// List the available operations supported by the Microsoft.EventGrid
-        /// resource provider
+        /// resource provider.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Domain regenerate share access key request
+    /// Domain regenerate share access key request.
     /// </summary>
     public partial class DomainRegenerateKeyRequest
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the DomainRegenerateKeyRequest class.
         /// </summary>
-        /// <param name="keyName">Key name to regenerate key1 or key2</param>
+        /// <param name="keyName">Key name to regenerate key1 or key2.</param>
         public DomainRegenerateKeyRequest(string keyName)
         {
             KeyName = keyName;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets key name to regenerate key1 or key2
+        /// Gets or sets key name to regenerate key1 or key2.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }
