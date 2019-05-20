@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for Status.
+    /// Defines values for TokenCertificateName.
     /// </summary>
-    public static class Status
+    public static class TokenCertificateName
     {
-        public const string Enabled = "enabled";
-        public const string Disabled = "disabled";
+        public const string Certificate1 = "certificate1";
+        public const string Certificate2 = "certificate2";
     }
 }
