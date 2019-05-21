@@ -37,6 +37,7 @@ namespace Azure.Core.Testing
                     mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
                 }
 
+                mode = RecordedTestMode.Record;
                 return mode;
             }
         }
