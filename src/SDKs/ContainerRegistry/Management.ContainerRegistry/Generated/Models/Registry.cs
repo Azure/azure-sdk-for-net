@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// for the container registry. Only applicable to Classic SKU.</param>
         /// <param name="networkRuleSet">The network rule set for a container
         /// registry.</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status1 status = default(Status1), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet))
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// was called.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public Status1 Status { get; private set; }
+        public Status Status { get; private set; }
 
         /// <summary>
         /// Gets or sets the value that indicates whether the admin user is

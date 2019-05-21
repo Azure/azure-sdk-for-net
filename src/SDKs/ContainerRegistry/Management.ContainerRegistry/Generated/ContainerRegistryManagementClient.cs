@@ -87,14 +87,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IWebhooksOperations Webhooks { get; private set; }
 
         /// <summary>
-        /// Gets the IScopeMapsOperations.
+        /// Gets the IRunsOperations.
         /// </summary>
-        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
+        public virtual IRunsOperations Runs { get; private set; }
 
         /// <summary>
-        /// Gets the ITokensOperations.
+        /// Gets the ITasksOperations.
         /// </summary>
-        public virtual ITokensOperations Tokens { get; private set; }
+        public virtual ITasksOperations Tasks { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ContainerRegistryManagementClient class.
@@ -341,8 +341,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             Operations = new Operations(this);
             Replications = new ReplicationsOperations(this);
             Webhooks = new WebhooksOperations(this);
-            ScopeMaps = new ScopeMapsOperations(this);
-            Tokens = new TokensOperations(this);
+            Runs = new RunsOperations(this);
+            Tasks = new TasksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -373,6 +373,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RunRequest>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RunRequest>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskStepProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TaskStepProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskStepUpdateParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TaskStepUpdateParameters>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
