@@ -3,9 +3,12 @@ jobs:
 
     variables:
       - template: ../variables/globals.yml
-      PrereleaseTagPrefix: $[format('{0:yyyyMMdd}', pipeline.startTime)]
-      PrereleaseTagSuffix: $[counter(PatchSegment, 0)]
-      PrereleaseTag: $(PrereleaseTagPrefix).$(PrereleaseTagSuffix)
+      - name: PrereleaseTagPrefix
+        value: $[format('{0:yyyyMMdd}', pipeline.startTime)]
+      - name: PrereleaseTagSuffix
+        value: $[counter(PatchSegment, 0)]
+      - name: PrereleaseTag
+        value: $(PrereleaseTagPrefix).$(PrereleaseTagSuffix)
 
     pool:
       vmImage: vs2017-win2016
