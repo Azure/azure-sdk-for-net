@@ -94,12 +94,12 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='applicationTypeName'>
             /// The name of the application type name resource.
             /// </param>
-            /// <param name='location'>
-            /// Azure resource location.
+            /// <param name='parameters'>
+            /// The application type name resource.
             /// </param>
-            public static ApplicationTypeResource Create(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string location = default(string))
+            public static ApplicationTypeResource Create(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, applicationTypeName, location).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, clusterName, applicationTypeName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,15 +121,15 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='applicationTypeName'>
             /// The name of the application type name resource.
             /// </param>
-            /// <param name='location'>
-            /// Azure resource location.
+            /// <param name='parameters'>
+            /// The application type name resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationTypeResource> CreateAsync(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, string location = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationTypeResource> CreateAsync(this IApplicationTypesOperations operations, string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

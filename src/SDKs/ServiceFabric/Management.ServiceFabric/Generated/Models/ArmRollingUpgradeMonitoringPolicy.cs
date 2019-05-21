@@ -16,21 +16,23 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     /// <summary>
     /// The policy used for monitoring the application upgrade
     /// </summary>
-    public partial class RollingUpgradeMonitoringPolicy
+    public partial class ArmRollingUpgradeMonitoringPolicy
     {
         /// <summary>
-        /// Initializes a new instance of the RollingUpgradeMonitoringPolicy
+        /// Initializes a new instance of the ArmRollingUpgradeMonitoringPolicy
         /// class.
         /// </summary>
-        public RollingUpgradeMonitoringPolicy()
+        public ArmRollingUpgradeMonitoringPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RollingUpgradeMonitoringPolicy
+        /// Initializes a new instance of the ArmRollingUpgradeMonitoringPolicy
         /// class.
         /// </summary>
+        /// <param name="failureAction">The activation Mode of the service
+        /// package. Possible values include: 'Rollback', 'Manual'</param>
         /// <param name="healthCheckWaitDuration">The amount of time to wait
         /// after completing an upgrade domain before applying health policies.
         /// It is first interpreted as a string representing an ISO 8601
@@ -58,8 +60,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// first interpreted as a string representing an ISO 8601 duration. If
         /// that fails, then it is interpreted as a number representing the
         /// total number of milliseconds.</param>
-        public RollingUpgradeMonitoringPolicy(string healthCheckWaitDuration = default(string), string healthCheckStableDuration = default(string), string healthCheckRetryTimeout = default(string), string upgradeTimeout = default(string), string upgradeDomainTimeout = default(string))
+        public ArmRollingUpgradeMonitoringPolicy(string failureAction = default(string), string healthCheckWaitDuration = default(string), string healthCheckStableDuration = default(string), string healthCheckRetryTimeout = default(string), string upgradeTimeout = default(string), string upgradeDomainTimeout = default(string))
         {
+            FailureAction = failureAction;
             HealthCheckWaitDuration = healthCheckWaitDuration;
             HealthCheckStableDuration = healthCheckStableDuration;
             HealthCheckRetryTimeout = healthCheckRetryTimeout;
@@ -72,6 +75,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the activation Mode of the service package. Possible
+        /// values include: 'Rollback', 'Manual'
+        /// </summary>
+        [JsonProperty(PropertyName = "failureAction")]
+        public string FailureAction { get; set; }
 
         /// <summary>
         /// Gets or sets the amount of time to wait after completing an upgrade

@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// name that is specified in Name exactly. Note that metric names are
         /// case sensitive.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// other metrics configured for this service, as a number. Possible
         /// values include: 'Zero', 'Low', 'Medium', 'High'
         /// </summary>
-        [JsonProperty(PropertyName = "Weight")]
+        [JsonProperty(PropertyName = "weight")]
         public string Weight { get; set; }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// load, as a number, that this service creates for this metric when
         /// it is a Primary replica.
         /// </summary>
-        [JsonProperty(PropertyName = "PrimaryDefaultLoad")]
+        [JsonProperty(PropertyName = "primaryDefaultLoad")]
         public int? PrimaryDefaultLoad { get; set; }
 
         /// <summary>
@@ -93,14 +93,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// load, as a number, that this service creates for this metric when
         /// it is a Secondary replica.
         /// </summary>
-        [JsonProperty(PropertyName = "SecondaryDefaultLoad")]
+        [JsonProperty(PropertyName = "secondaryDefaultLoad")]
         public int? SecondaryDefaultLoad { get; set; }
 
         /// <summary>
         /// Gets or sets used only for Stateless services. The default amount
         /// of load, as a number, that this service creates for this metric.
         /// </summary>
-        [JsonProperty(PropertyName = "DefaultLoad")]
+        [JsonProperty(PropertyName = "defaultLoad")]
         public int? DefaultLoad { get; set; }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// The operations group for this extension method.
             /// </param>
             /// <param name='apiVersion'>
-            /// The version of the Service Fabric resouce provider API
+            /// The version of the Service Fabric resource provider API
             /// </param>
             public static IPage<OperationResult> List(this IOperations operations, string apiVersion)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// The operations group for this extension method.
             /// </param>
             /// <param name='apiVersion'>
-            /// The version of the Service Fabric resouce provider API
+            /// The version of the Service Fabric resource provider API
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

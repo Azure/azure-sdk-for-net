@@ -55,6 +55,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Service Fabric versions for new clusters use [ClusterVersion
         /// API](./ClusterVersion.md). To get the list of available version for
         /// existing clusters use **availableClusterVersions**.</param>
+        /// <param name="eventStoreServiceEnabled">Indicates if the event store
+        /// service is enabled.</param>
         /// <param name="fabricSettings">The list of custom fabric settings to
         /// configure the cluster. This will overwrite the existing
         /// list.</param>
@@ -91,7 +93,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// resource.
         /// . Possible values include: 'Automatic', 'Manual'</param>
         /// <param name="tags">Cluster update parameters</param>
-        public ClusterUpdateParameters(IList<string> addOnFeatures = default(IList<string>), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterUpdateParameters(IList<string> addOnFeatures = default(IList<string>), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             AddOnFeatures = addOnFeatures;
             Certificate = certificate;
@@ -99,6 +101,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ClientCertificateCommonNames = clientCertificateCommonNames;
             ClientCertificateThumbprints = clientCertificateThumbprints;
             ClusterCodeVersion = clusterCodeVersion;
+            EventStoreServiceEnabled = eventStoreServiceEnabled;
             FabricSettings = fabricSettings;
             NodeTypes = nodeTypes;
             ReliabilityLevel = reliabilityLevel;
@@ -162,6 +165,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterCodeVersion")]
         public string ClusterCodeVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the event store service is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventStoreServiceEnabled")]
+        public bool? EventStoreServiceEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the list of custom fabric settings to configure the
