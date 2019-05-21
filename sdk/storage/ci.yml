@@ -8,7 +8,6 @@ trigger:
   paths:
     include:
     - sdk/storage/
-    - sdk/core/
 
 pr:
   branches:
@@ -17,7 +16,6 @@ pr:
   paths:
     include:
     - sdk/storage/
-    - sdk/core/
 
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
