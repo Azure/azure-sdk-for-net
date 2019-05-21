@@ -23,7 +23,7 @@ jobs:
 
       - ${{ if eq(variables['Build.Reason'], 'PullRequest')}}:
         - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix pr.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
-          displayName: "Package"
+          displayName: "Package (ci.$(Build.BuildID))"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -37,7 +37,7 @@ jobs:
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
             DOTNET_MULTILEVEL_LOOKUP: 0
         - script: "dotnet pack ${{parameters.ProjectFile}} --no-build -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
-          displayName: "Package"
+          displayName: "Package (no suffix)"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
