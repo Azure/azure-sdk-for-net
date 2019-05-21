@@ -114,6 +114,7 @@ tools/*.dll
 
 # Sensitive files
 *.keys
+!Azure.Security.Keyvault.Keys
 *.pfx
 sdk/storage/Azure.Storage.Common/tests/Shared/TestConfigurations.xml
 
