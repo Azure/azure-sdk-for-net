@@ -32,6 +32,8 @@ namespace Azure.Core.Testing
 
         private RecordSession _previousSession;
 
+        private readonly Random _nonReproducibleRandom = new Random();
+
         private Random _random;
 
         public Random Random
@@ -132,9 +134,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public string GenerateId()
+        public string GenerateId(bool reproducible = true)
         {
-            return Random.Next().ToString();
+            return (reproducible ? Random : _nonReproducibleRandom).Next().ToString();
         }
 
         public string GetConnectionStringFromEnvironment(string variableName)
