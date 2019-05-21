@@ -7,7 +7,7 @@
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 May 2019 17:32:30 GMT",
+        "Date": "Tue, 21 May 2019 17:38:29 GMT",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
@@ -21,12 +21,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Tue, 21 May 2019 17:32:30 GMT",
+        "Date": "Tue, 21 May 2019 17:38:29 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
         "x-ms-client-request-id": "3dbe2c44dfdd932a08d9a1d3088a2611",
-        "x-ms-correlation-request-id": "b656798c-42e4-4e43-bd6f-3bf778b2d093",
-        "x-ms-request-id": "b656798c-42e4-4e43-bd6f-3bf778b2d093"
+        "x-ms-correlation-request-id": "d42ff0f4-36ec-4417-9dfb-d7ae7d43f41c",
+        "x-ms-request-id": "d42ff0f4-36ec-4417-9dfb-d7ae7d43f41c"
       },
       "ResponseBody": null
     }

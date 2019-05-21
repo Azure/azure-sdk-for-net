@@ -20,9 +20,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        private string GenerateKeyId(string prefix = null, bool reproducible = true)
+        private string GenerateKeyId(string prefix = null)
         {
-            return prefix + Recording.GenerateId(reproducible);
+            return prefix + Recording.GenerateId();
         }
 
         private ConfigurationClient GetClient()
@@ -501,14 +501,17 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRevisions()
         {
+            // The service keeps revision history even after the key was removed
+            // Avoid reusing ids
+            Recording.DisableIdReuse();
+
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             //Prepare environment
             ConfigurationSetting setting = testSetting;
-            // The service keeps revision history even after the key was removed
-            // Avoid reusing ids
-            setting.Key = GenerateKeyId("key-", reproducible: false);
+
+            setting.Key = GenerateKeyId("key-");
             var testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";
             int expectedEvents = 2;

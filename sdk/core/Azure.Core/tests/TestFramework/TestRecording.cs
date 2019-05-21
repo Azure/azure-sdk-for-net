@@ -134,9 +134,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public string GenerateId(bool reproducible = true)
+        public string GenerateId()
         {
-            return (reproducible ? Random : _nonReproducibleRandom).Next().ToString();
+            return Random .Next().ToString();
         }
 
         public string GetConnectionStringFromEnvironment(string variableName)
@@ -173,6 +173,11 @@ namespace Azure.Core.Testing
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void DisableIdReuse()
+        {
+            _previousSession = null;
         }
     }
 }
