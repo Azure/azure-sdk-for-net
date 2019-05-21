@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Shared access keys of the Domain
+    /// Shared access keys of the Domain.
     /// </summary>
     public partial class DomainSharedAccessKeys
     {

@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.EventGrid
         public EventGridManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List topic types
+        /// List topic types.
         /// </summary>
         /// <remarks>
-        /// List all registered topic types
+        /// List all registered topic types.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -227,13 +227,13 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Get a topic type
+        /// Get a topic type.
         /// </summary>
         /// <remarks>
-        /// Get information about a topic type
+        /// Get information about a topic type.
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -412,13 +412,13 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List event types
+        /// List event types.
         /// </summary>
         /// <remarks>
-        /// List event types for a topic type
+        /// List event types for a topic type.
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

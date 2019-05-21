@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Filter for the Event Subscription
+    /// Filter for the Event Subscription.
     /// </summary>
     public partial class EventSubscriptionFilter
     {
