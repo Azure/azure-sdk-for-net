@@ -3,12 +3,6 @@ jobs:
 
     variables:
       - template: ../variables/globals.yml
-      - name: PrereleaseTagPrefix
-        value: $[format('{0:yyyyMMdd}', pipeline.startTime)]
-      - name: PrereleaseTagSuffix
-        value: $[counter(PatchSegment, 0)]
-      - name: PrereleaseTag
-        value: $(PrereleaseTagPrefix).$(PrereleaseTagSuffix)
 
     pool:
       vmImage: vs2017-win2016
@@ -28,7 +22,7 @@ jobs:
           DOTNET_MULTILEVEL_LOOKUP: 0
 
       - ${{ if eq(variables['Build.Reason'], 'PullRequest')}}:
-        - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix pr.$(PrereleaseTag) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+        - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix pr.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
           displayName: "Package"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -36,7 +30,7 @@ jobs:
             DOTNET_MULTILEVEL_LOOKUP: 0
       
       - ${{ if eq(variables['Build.Reason'], 'PullRequest')}}:
-        - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix ci.$(PrereleaseTag) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+        - script: "dotnet pack ${{parameters.ProjectFile}} --no-build --version-suffix ci.$(Build.BuildID) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
           displayName: "Package (ci.$(Build.BuildID))"
           env:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
