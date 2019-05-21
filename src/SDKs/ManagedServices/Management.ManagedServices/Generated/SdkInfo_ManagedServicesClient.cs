@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.ManagedServices
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ManagedServices", "OperationStatuses", "2018-06-01-preview"),
                 new Tuple<string, string, string>("ManagedServices", "Operations", "2018-06-01-preview"),
                 new Tuple<string, string, string>("ManagedServices", "RegistrationAssignments", "2018-06-01-preview"),
                 new Tuple<string, string, string>("ManagedServices", "RegistrationDefinitions", "2018-06-01-preview"),

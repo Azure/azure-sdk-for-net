@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
-            public static RegistrationAssignment Delete(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion)
+            public static void Delete(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion)
             {
-                return operations.DeleteAsync(scope, registrationAssignmentId, apiVersion).GetAwaiter().GetResult();
+                operations.DeleteAsync(scope, registrationAssignmentId, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,12 +113,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationAssignment> DeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -236,9 +233,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
-            public static RegistrationAssignment BeginDelete(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion)
+            public static void BeginDelete(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion)
             {
-                return operations.BeginDeleteAsync(scope, registrationAssignmentId, apiVersion).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(scope, registrationAssignmentId, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -259,12 +256,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationAssignment> BeginDeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

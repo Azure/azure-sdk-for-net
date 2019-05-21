@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            public static RegistrationDefinition Delete(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope)
+            public static void Delete(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope)
             {
-                return operations.DeleteAsync(registrationDefinitionId, apiVersion, scope).GetAwaiter().GetResult();
+                operations.DeleteAsync(registrationDefinitionId, apiVersion, scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -105,12 +105,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationDefinition> DeleteAsync(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(registrationDefinitionId, apiVersion, scope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(registrationDefinitionId, apiVersion, scope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
