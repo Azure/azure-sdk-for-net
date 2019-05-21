@@ -7,28 +7,16 @@ namespace Azure
 {
     public class RequestFailedException : Exception
     {
-        int _status;
+        public int Status { get; }
 
-        public RequestFailedException(Response response, string summary = null)
-            : this(response, summary, null)
+        public RequestFailedException(int status, string message)
+            : this(status, message, null)
         {}
 
-        public RequestFailedException(Response response, string summary, Exception innerException)
-            : base(FormatMessage(response, summary), innerException)
+        public RequestFailedException(int status, string message, Exception innerException)
+            : base(message, innerException)
         {
-            _status = response.Status;
+            Status = status;
         }
-
-        private static string FormatMessage(Response response, string summary)
-        {
-            if (summary != null) {
-                return $"{summary}{Environment.NewLine}{response}";
-            }
-            else {
-                return response.ToString();
-            }
-        }
-
-        public int Status => _status; 
     }
 }

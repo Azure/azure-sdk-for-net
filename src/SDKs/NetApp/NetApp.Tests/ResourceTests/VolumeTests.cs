@@ -165,7 +165,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("was not found", ex.Message);
                 }
 
                 // cleanup
@@ -192,7 +192,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("not found", ex.Message);
                 }
 
                 // cleanup - remove the account
@@ -218,7 +218,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("not found", ex.Message);
                 }
 
                 // cleanup - remove the account
@@ -248,7 +248,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("Conflict", ex.Message);
+                    Assert.Contains("Can not delete resource before nested resources are deleted", ex.Message);
                 }
 
                 // clean up
@@ -267,13 +267,21 @@ namespace NetApp.Tests.ResourceTests
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // create the volume
-                var volume = ResourceUtils.CreateVolume(netAppMgmtClient);
-                Assert.Equal("Premium", volume.ServiceLevel);
-                Assert.Equal(100 * ResourceUtils.gibibyte, volume.UsageThreshold);
+                var oldVolume = ResourceUtils.CreateVolume(netAppMgmtClient);
+                Assert.Equal("Premium", oldVolume.ServiceLevel);
+                Assert.Equal(100 * ResourceUtils.gibibyte, oldVolume.UsageThreshold);
 
+                // The returned volume contains some items which cnanot be part of the payload, such as baremetaltenant, therefore create a new object selectively from the old one
+                var volume = new Volume
+                {
+                    Location = oldVolume.Location,
+                    UsageThreshold = 2 * oldVolume.UsageThreshold,
+                    ServiceLevel = oldVolume.ServiceLevel,
+                    CreationToken = oldVolume.CreationToken,
+                    SubnetId = oldVolume.SubnetId,
+                };
                 // update
                 volume.ServiceLevel = "Standard";
-                volume.UsageThreshold = 100 * ResourceUtils.gibibyte * 2;
                 var updatedVolume = netAppMgmtClient.Volumes.CreateOrUpdate(volume, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
                 Assert.Equal("Standard", updatedVolume.ServiceLevel);
                 Assert.Equal(100 * ResourceUtils.gibibyte * 2, updatedVolume.UsageThreshold);

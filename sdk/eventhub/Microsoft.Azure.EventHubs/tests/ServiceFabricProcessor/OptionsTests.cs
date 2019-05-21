@@ -159,7 +159,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6056")]
         [DisplayTestMethodName]
         public void RuntimeInformationTest()
         {

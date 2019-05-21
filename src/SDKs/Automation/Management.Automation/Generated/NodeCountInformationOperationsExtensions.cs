@@ -34,9 +34,13 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='automationAccountName'>
             /// The name of the automation account.
             /// </param>
-            public static NodeCounts Get(this INodeCountInformationOperations operations, string resourceGroupName, string automationAccountName)
+            /// <param name='countType'>
+            /// The type of counts to retrieve. Possible values include: 'status',
+            /// 'nodeconfiguration'
+            /// </param>
+            public static NodeCounts Get(this INodeCountInformationOperations operations, string resourceGroupName, string automationAccountName, string countType)
             {
-                return operations.GetAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, countType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -52,12 +56,16 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='automationAccountName'>
             /// The name of the automation account.
             /// </param>
+            /// <param name='countType'>
+            /// The type of counts to retrieve. Possible values include: 'status',
+            /// 'nodeconfiguration'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NodeCounts> GetAsync(this INodeCountInformationOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NodeCounts> GetAsync(this INodeCountInformationOperations operations, string resourceGroupName, string automationAccountName, string countType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, countType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

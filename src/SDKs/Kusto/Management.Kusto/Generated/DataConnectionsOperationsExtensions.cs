@@ -122,6 +122,58 @@ namespace Microsoft.Azure.Management.Kusto
             }
 
             /// <summary>
+            /// Checks that the data connection name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
+            /// </param>
+            public static CheckNameResult CheckNameAvailability(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName)
+            {
+                return operations.CheckNameAvailabilityAsync(resourceGroupName, clusterName, databaseName, dataConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks that the data connection name is valid and is not already in use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the Kusto cluster.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the Kusto cluster.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database in the Kusto cluster.
+            /// </param>
+            /// <param name='dataConnectionName'>
+            /// The name of the data connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns a data connection.
             /// </summary>
             /// <param name='operations'>

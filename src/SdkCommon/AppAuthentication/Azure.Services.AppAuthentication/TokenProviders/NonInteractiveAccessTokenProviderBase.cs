@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -13,9 +14,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public string ConnectionString;
         public Principal PrincipalUsed;
 
-        public abstract Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority);
+        public abstract Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority, CancellationToken cancellationToken);
 
-        internal async Task<AppAuthenticationResult> GetAuthResultAsync(string authority, string resource, string scope)
+        internal async Task<AppAuthenticationResult> GetAuthResultAsync(string authority, string resource, string scope, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(resource))
             {
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     AzureServiceTokenProviderException.MissingResource);
             }
 
-            return await GetAuthResultAsync(resource, authority).ConfigureAwait(false);
+            return await GetAuthResultAsync(resource, authority, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -10,7 +10,8 @@ trigger:
   - master
 
 variables:
-  DotNetCoreVersion: '2.1.503'
+  DotNetCoreSDKVersion: '3.0.100-preview5-011568'
+  DotNetCoreRuntimeVersion: '2.1.10'
 
 jobs:
   - job: 'Build'
@@ -19,10 +20,10 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
-      - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+      - task: DotNetCoreInstaller@2
+        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
-          version: '$(DotNetCoreVersion)'
+          version: '$(DotNetCoreSDKVersion)'
 
       - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false'
         displayName: 'Build and Package'
@@ -101,10 +102,17 @@ jobs:
           scriptPath: '$(Build.BinariesDirectory)/sdk-tools/scripts/python/verify_agent_os.py'
           arguments: $(OSName)
 
-      - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+      - task: DotNetCoreInstaller@2
+        displayName: 'Use .NET Core runtime $(DotNetCoreRuntimeVersion)'
         inputs:
-          version: '$(DotNetCoreVersion)'
+          packageType: runtime
+          version: '$(DotNetCoreRuntimeVersion)'
+
+      - task: DotNetCoreInstaller@2
+        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        inputs:
+          packageType: sdk
+          version: '$(DotNetCoreSDKVersion)'
 
       - script: 'dotnet test $(ProjectFile) --filter TestCategory!=Live --logger trx'
         displayName: 'Build & Test'
@@ -112,11 +120,10 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/*.trx'
-          testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
+          testRunTitle: '$(OSName) DotNet $(DotNetCoreRuntimeVersion)'
           testResultsFormat: 'VSTest'
           mergeTestResults: true

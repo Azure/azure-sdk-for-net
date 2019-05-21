@@ -84,14 +84,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IWebhooksOperations Webhooks { get; }
 
         /// <summary>
-        /// Gets the IRunsOperations.
+        /// Gets the IScopeMapsOperations.
         /// </summary>
-        IRunsOperations Runs { get; }
+        IScopeMapsOperations ScopeMaps { get; }
 
         /// <summary>
-        /// Gets the ITasksOperations.
+        /// Gets the ITokensOperations.
         /// </summary>
-        ITasksOperations Tasks { get; }
+        ITokensOperations Tokens { get; }
 
     }
 }

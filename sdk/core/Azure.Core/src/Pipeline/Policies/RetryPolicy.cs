@@ -44,11 +44,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                     }
                     else
                     {
-                        ProcessNext(pipeline, message);
+                        ProcessNext(message, pipeline);
                     }
                 }
                 catch (Exception ex)

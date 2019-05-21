@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
@@ -11,14 +12,20 @@ namespace Azure.Core.Pipeline
     {
         private HttpPipelineTransport _transport = HttpClientTransport.Shared;
 
+        public HttpClientOptions()
+        {
+            TelemetryPolicy = new TelemetryPolicy(GetType().Assembly);
+            LoggingPolicy = LoggingPolicy.Shared;
+        }
+
         public HttpPipelineTransport Transport {
             get => _transport;
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public bool DisableTelemetry { get; set; } = false;
+        public TelemetryPolicy TelemetryPolicy { get; set; }
 
-        public string ApplicationId { get; set; }
+        public LoggingPolicy LoggingPolicy { get; set; }
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 

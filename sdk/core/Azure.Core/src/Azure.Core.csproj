@@ -2,29 +2,32 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.0.0-preview.5</Version>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       ]]>
     </PackageReleaseNotes>
 
-   <!-- Make sure that we don't pull in additional dependencies during build or package -->	
+   <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
 
     <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
     <PackageReference Include="System.Buffers" Version="4.5.0" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
   </ItemGroup>
 </Project>

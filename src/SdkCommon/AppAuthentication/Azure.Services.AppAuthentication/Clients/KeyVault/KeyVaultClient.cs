@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -42,19 +43,21 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal const string SecretIdentifierInvalidUriError = "Specified secret identifier is not a valid URI.";
         internal const string TokenProviderErrorsFormat = "Tried the following {0} methods to get a Key Vault access token, but none of them worked.";
 
+        internal Principal PrincipalUsed { get; private set; }
+
         public KeyVaultClient(HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
             _httpClient = httpClient ?? new HttpClient();
             _tokenProvider = tokenProvider;
         }
 
-        public async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier)
+        public async Task<X509Certificate2> GetCertificateAsync(string secretIdentifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
                 ValidateSecretIdentifier(secretIdentifier);
 
-                string accessToken = await GetKeyVaultAccessToken(secretIdentifier).ConfigureAwait(false);
+                string accessToken = await GetKeyVaultAccessTokenAsync(secretIdentifier, cancellationToken).ConfigureAwait(false);
 
                 var requestUrl = $"{secretIdentifier}?api-version={KeyVaultRestApiVersion}";
 
@@ -62,7 +65,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Add("Authorization", $"Bearer {accessToken}");
 
-                HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+                HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -121,11 +124,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
             }
         }
-        private async Task<string> GetKeyVaultAccessToken(string secretUrl)
+        private async Task<string> GetKeyVaultAccessTokenAsync(string secretUrl, CancellationToken cancellationToken)
         {
             // Send an anonymous request to Key Vault endpoint to get an OAuth2 HTTP Bearer challenge
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, secretUrl);
-            HttpResponseMessage response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             // Parse challenge to get authorization server and resource identifier for Key Vault
             var authenticateHeader = response.Headers.WwwAuthenticate.FirstOrDefault()?.ToString();
@@ -144,7 +147,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 try
                 {
                     var authResult = await tokenProvider.GetAuthResultAsync(challenge.AuthorizationServer,
-                        challenge.Resource, challenge.Scope).ConfigureAwait(false);
+                        challenge.Resource, challenge.Scope, cancellationToken).ConfigureAwait(false);
+
+                    PrincipalUsed = tokenProvider.PrincipalUsed;
 
                     return authResult.AccessToken;
                 }

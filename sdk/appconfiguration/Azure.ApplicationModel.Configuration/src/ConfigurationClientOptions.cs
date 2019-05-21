@@ -12,11 +12,8 @@ namespace Azure.ApplicationModel.Configuration
 
         public FixedRetryPolicy RetryPolicy { get; set; }
 
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
         public ConfigurationClientOptions()
         {
-            LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = new FixedRetryPolicy()
             {
                 Delay =  TimeSpan.Zero,

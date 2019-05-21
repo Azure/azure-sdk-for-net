@@ -89,23 +89,28 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             TestUtilities.Wait(TimeSpan.FromSeconds(20));
         }
 
-        public SearchIndexClient GetSearchIndexClient(string indexName = null, params DelegatingHandler[] handlers)
+        public SearchIndexClient GetSearchIndexClient(
+            string indexName = null, 
+            bool? useHttpGet = null, 
+            params DelegatingHandler[] handlers)
         {
             indexName = indexName ?? IndexName;
-            return GetSearchIndexClientForKey(indexName, PrimaryApiKey);
+            return GetSearchIndexClientForKey(indexName, PrimaryApiKey, useHttpGet, handlers);
         }
 
         public SearchIndexClient GetSearchIndexClientForQuery(
             string indexName = null, 
+            bool? useHttpGet = null,
             params DelegatingHandler[] handlers)
         {
             indexName = indexName ?? IndexName;
-            return GetSearchIndexClientForKey(indexName, QueryApiKey);
+            return GetSearchIndexClientForKey(indexName, QueryApiKey, useHttpGet, handlers);
         }
 
         private SearchIndexClient GetSearchIndexClientForKey(
             string indexName, 
             string apiKey, 
+            bool? useHttpGet,
             params DelegatingHandler[] handlers)
         {
             TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
@@ -120,6 +125,12 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             client.SearchServiceName = SearchServiceName;
             client.SearchDnsSuffix = currentEnvironment.GetSearchDnsSuffix(SearchServiceName);
             client.IndexName = indexName;
+
+            if (useHttpGet.HasValue)
+            {
+                client.UseHttpGetForQueries = useHttpGet.Value;
+            }
+
             return client;
         }
     }

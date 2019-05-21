@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// definition.</param>
         /// <param name="lastModified">Last modified time of this blueprint
         /// definition.</param>
-        public AssignmentStatus(string timeCreated = default(string), string lastModified = default(string))
+        public AssignmentStatus(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(timeCreated, lastModified)
         {
             CustomInit();

@@ -5,7 +5,7 @@
 using System.Reflection;
 
 [assembly: AssemblyVersion("9.0.0.0")]
-[assembly: AssemblyFileVersion("9.0.0.0")]
+[assembly: AssemblyFileVersion("9.0.1.0")]
 
 [assembly: AssemblyTitle("Microsoft Azure Search Common Library")]
 [assembly: AssemblyDescription("Common types needed by the Azure Search .NET libraries. This is not the assembly you are looking for; It is only meant to be used as a dependency.")]

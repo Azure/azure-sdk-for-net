@@ -17,13 +17,13 @@ namespace Azure.Core.Pipeline.Policies
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessNextAsync(pipeline, message);
+            await ProcessNextAsync(message, pipeline);
             await BufferResponse(message, true);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessNext(pipeline, message);
+            ProcessNext(message, pipeline);
             BufferResponse(message, false).GetAwaiter().GetResult();
         }
 

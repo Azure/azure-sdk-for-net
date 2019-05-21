@@ -81,7 +81,10 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="searchText">A full-text search query expression; Use
         /// "*" or omit this parameter to match all documents.</param>
         /// <param name="searchFields">The comma-separated list of field names
-        /// to include in the full-text search.</param>
+        /// to which to scope the full-text search. When using fielded search
+        /// (fieldName:searchExpression) in a full Lucene query, the field
+        /// names of each fielded search expression take precedence over any
+        /// field names listed in this parameter.</param>
         /// <param name="searchMode">A value that specifies whether any or all
         /// of the search terms must be matched in order to count the document
         /// as a match. Possible values include: 'any', 'all'</param>
@@ -230,8 +233,11 @@ namespace Microsoft.Azure.Search.Models
         public string SearchText { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma-separated list of field names to include in
-        /// the full-text search.
+        /// Gets or sets the comma-separated list of field names to which to
+        /// scope the full-text search. When using fielded search
+        /// (fieldName:searchExpression) in a full Lucene query, the field
+        /// names of each fielded search expression take precedence over any
+        /// field names listed in this parameter.
         /// </summary>
         [JsonProperty(PropertyName = "searchFields")]
         public string SearchFields { get; set; }

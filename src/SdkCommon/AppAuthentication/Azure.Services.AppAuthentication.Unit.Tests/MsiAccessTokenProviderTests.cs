@@ -22,6 +22,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
         private async Task GetTokenUsingManagedIdentityAzureVm(bool specifyUserAssignedManagedIdentity)
         {
             string expectedAppId;
@@ -52,18 +55,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Check if the principalused and type are as expected. 
             Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, expectedAppId, expiresOn: authResult.ExpiresOn);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingMsiAzureVm()
-        {
-            await GetTokenUsingManagedIdentityAzureVm(specifyUserAssignedManagedIdentity: false);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingUserAssignedManagedIdentityAzureVm()
-        {
-            await GetTokenUsingManagedIdentityAzureVm(specifyUserAssignedManagedIdentity: true);
         }
 
         /// <summary>
@@ -104,6 +95,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
         public async Task GetTokenUsingManagedIdentityAppServices(bool specifyUserAssignedManagedIdentity)
         {
             // Setup the environment variables that App Service MSI would setup. 
@@ -141,18 +135,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
 
             Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, expectedAppId, expiresOn: authResult.ExpiresOn);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingMsiAppServices()
-        {
-            await GetTokenUsingManagedIdentityAppServices(specifyUserAssignedManagedIdentity: false);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingUserAssignedManagedIdentityAppServices()
-        {
-            await GetTokenUsingManagedIdentityAppServices(specifyUserAssignedManagedIdentity: true);
         }
 
         /// <summary>
@@ -221,6 +203,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
+            // use test hook to expedite test
+            MsiRetryHelper.WaitBeforeRetry = false;
+
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             // Delete the environment variables
@@ -229,6 +214,38 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
         }
+
+        [Fact]
+        private async Task AzureVmImdsTimeoutTest()
+        {
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmTimeout);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            DateTime start = DateTime.Now;
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            TimeSpan duration = DateTime.Now - start;
+
+            Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
+        }
+
+        [Theory]
+        [InlineData(MockMsi.MsiTestType.MsiUnresponsive)]
+        [InlineData(MockMsi.MsiTestType.MsiThrottled)]
+        [InlineData(MockMsi.MsiTestType.MsiTransientServerError)]
+        private async Task TransientErrorTest(MockMsi.MsiTestType testType)
+        {
+            MockMsi mockMsi = new MockMsi(testType);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+            MsiRetryHelper.WaitBeforeRetry = false;
+
+            // Get token.
+            var authResult = await msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+
+            // Check if the principalused and type are as expected. 
+            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, expiresOn: authResult.ExpiresOn);
+        }
     }
-    
+
 }

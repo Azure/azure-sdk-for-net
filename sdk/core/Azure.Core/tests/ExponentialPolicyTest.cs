@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
-using Azure.Core.Tests.Testing;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
