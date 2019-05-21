@@ -203,6 +203,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationVaultHealthOperations ReplicationVaultHealth { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationVaultSettingOperations.
+        /// </summary>
+        public virtual IReplicationVaultSettingOperations ReplicationVaultSetting { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SiteRecoveryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -467,6 +472,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationRecoveryPlans = new ReplicationRecoveryPlansOperations(this);
             SupportedOperatingSystems = new SupportedOperatingSystemsOperations(this);
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
+            ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-07-10";
             AcceptLanguage = "en-US";
