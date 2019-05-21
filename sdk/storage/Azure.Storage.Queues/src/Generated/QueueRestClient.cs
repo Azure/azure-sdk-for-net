@@ -733,7 +733,7 @@ namespace Azure.Storage.Queues
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2557,7 +2557,7 @@ namespace Azure.Storage.Queues.Models
         {
             if (!skipInitialization)
             {
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -2572,7 +2572,7 @@ namespace Azure.Storage.Queues.Models
             System.Xml.Linq.XElement _child;
             Azure.Storage.Queues.Models.QueueItem _value = new Azure.Storage.Queues.Models.QueueItem(true);
             _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
             {
@@ -3205,7 +3205,7 @@ namespace Azure.Storage.Queues.Models
         /// </summary>
         public QueueProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }

@@ -542,7 +542,7 @@ namespace Azure.Storage.Files
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -1548,7 +1548,7 @@ namespace Azure.Storage.Files
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2440,7 +2440,7 @@ namespace Azure.Storage.Files
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2553,7 +2553,7 @@ namespace Azure.Storage.Files
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2750,7 +2750,7 @@ namespace Azure.Storage.Files
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -5275,7 +5275,7 @@ namespace Azure.Storage.Files.Models
             if (!skipInitialization)
             {
                 this.Properties = new Azure.Storage.Files.Models.ShareItemProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -5296,7 +5296,7 @@ namespace Azure.Storage.Files.Models
                 _value.Snapshot = _child.Value;
             }
             _value.Properties = Azure.Storage.Files.Models.ShareItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
             {
@@ -5591,7 +5591,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public ShareProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -5677,7 +5677,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public StorageDirectoryProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -5928,7 +5928,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public FlattenedStorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -6068,7 +6068,7 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public StorageFileProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             this.ContentEncoding = new System.Collections.Generic.List<string>();
             this.ContentLanguage = new System.Collections.Generic.List<string>();
         }
