@@ -131,7 +131,7 @@ namespace Azure.Storage.Test
 
             service = service ?? GetServiceClient_SharedKey();
 
-            var result = new DisposingContainer(service.GetBlobContainerClient(containerName), metadata ?? new Dictionary<string, string>(), publicAccessType ?? PublicAccessType.Container);
+            var result = new DisposingContainer(service.GetBlobContainerClient(containerName), metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase), publicAccessType ?? PublicAccessType.Container);
 
             container = result.ContainerClient;
 

@@ -6,9 +6,14 @@
 # EventHubsConnectionString - The connection string to the namespace used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 # EventHubsStorageConnectionString - The connection string to the storage account used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 
+parameters:
+  presteps: []
+  envvars: []
+
 jobs:
+
   - job: 'Test'
-    variables: 
+    variables:
     - template: ../variables/globals.yml
 
     # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
@@ -32,6 +37,8 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
+      - ${{ each step in parameters.presteps }}:
+        - ${{ step }}
       - powershell: |
           Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
           -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
@@ -44,10 +51,17 @@ jobs:
           scriptPath: '$(Build.BinariesDirectory)/sdk-tools/scripts/python/verify_agent_os.py'
           arguments: $(OSName)
 
-      - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
-          version: '$(DotNetCoreVersion)'
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
 
       - script: 'dotnet test $(ProjectFile) --logger trx'
         displayName: 'Build & Test (all tests)'
@@ -55,16 +69,14 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
-          SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)
-          EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
-          EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
+          AZURE_TEST_MODE: "Live"
+          ${{ each envvar in parameters.envvars }}:
+            ${{ envvar.key }}: ${{ envvar.value }}
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/*.trx'
-          testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
+          testRunTitle: '$(OSName) DotNet $(DotNetCoreRuntimeVersion)'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
-          

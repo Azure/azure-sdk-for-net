@@ -12,19 +12,25 @@ using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-    [Category("Live")]
-    public class ConfigurationLiveTests: ClientTestBase
+    public class ConfigurationLiveTests: RecordedTestBase
     {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync) { }
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
+        {
+            Sanitizer = new ConfigurationRecordedTestSanitizer();
+            Matcher = new RecordMatcher(Sanitizer);
+        }
 
         private string GenerateKeyId(string prefix = null)
         {
-            return prefix + Guid.NewGuid().ToString("N");
+            return prefix + Recording.GenerateId();
         }
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(TestEnvironment.GetClient());
+            return InstrumentClient(
+                new ConfigurationClient(
+                    Recording.GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
+                    InstrumentClientOptions(new ConfigurationClientOptions())));
         }
 
         private ConfigurationSetting CreateSetting()

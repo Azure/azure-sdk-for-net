@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-1361954500?label=test_label",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "If-Match": "*",
+        "User-Agent": [
+          "azsdk-net-config/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "e4a4dcb7-820c-4a1a-b47d-2e67cd006cb1",
+        "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "test_value",
+        "content_type": "test_content_type",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        }
+      },
+      "StatusCode": 412,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 20 May 2019 18:32:39 GMT",
+        "Server": "nginx/1.13.9",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
+        "x-ms-client-request-id": "e4a4dcb7-820c-4a1a-b47d-2e67cd006cb1",
+        "x-ms-correlation-request-id": "44e1a9ce-f5ec-4440-b4b4-cffaa1875389",
+        "x-ms-request-id": "44e1a9ce-f5ec-4440-b4b4-cffaa1875389"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
+    "RandomSeed": "1934185026"
+  }
+}
