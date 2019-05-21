@@ -9,7 +9,7 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet build ${{parameters.ProjectFile}} -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet build ${{parameters.ProjectFile}} -warnaserror /p:PublicSign=false"
         displayName: "Build"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
