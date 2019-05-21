@@ -116,7 +116,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.QueueServiceProperties _value = Azure.Storage.Queues.Models.QueueServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
@@ -217,7 +217,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -304,7 +304,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.QueueServiceStatistics _value = Azure.Storage.Queues.Models.QueueServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
@@ -318,7 +318,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -428,7 +428,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.QueuesSegment _value = Azure.Storage.Queues.Models.QueuesSegment.FromXml(_xml.Root);
 
                         // Create the response
@@ -442,7 +442,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -554,7 +554,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -643,7 +643,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -757,7 +757,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -858,7 +858,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -944,7 +944,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SignedIdentifier> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -962,7 +962,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1071,7 +1071,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1176,7 +1176,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.DequeuedMessage> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -1194,7 +1194,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1396,7 +1396,7 @@ namespace Azure.Storage.Queues
                     case 201:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.EnqueuedMessage> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -1414,7 +1414,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1506,7 +1506,7 @@ namespace Azure.Storage.Queues
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage> _value =
                             System.Linq.Enumerable.ToList(
                                 System.Linq.Enumerable.Select(
@@ -1524,7 +1524,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1673,7 +1673,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1772,7 +1772,7 @@ namespace Azure.Storage.Queues
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);

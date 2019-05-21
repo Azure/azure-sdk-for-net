@@ -426,7 +426,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`${valueName}.${naming.property(response.bodyClientName)} = ${responseName}.ContentStream; // You should manually wrap with RetriableStream!`);
             } else if (operation.produces === `xml`) {
                 // Deserialize XML
-                w.line(`System.Xml.Linq.XDocument ${xmlName} = System.Xml.Linq.XDocument.Load(${responseName}.ContentStream);`);
+                w.line(`System.Xml.Linq.XDocument ${xmlName} = System.Xml.Linq.XDocument.Load(${responseName}.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);`);
                 if (isObjectType(model) && model.deserialize) {
                     w.line(`${types.getName(model)} ${valueName} = ${types.getName(model)}.FromXml(${xmlName}.Root);`);
                 } else {

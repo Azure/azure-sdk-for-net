@@ -116,7 +116,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.BlobServiceProperties _value = Azure.Storage.Blobs.Models.BlobServiceProperties.FromXml(_xml.Root);
 
                         // Create the response
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -304,7 +304,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.BlobServiceStatistics _value = Azure.Storage.Blobs.Models.BlobServiceStatistics.FromXml(_xml.Root);
 
                         // Create the response
@@ -318,7 +318,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -428,7 +428,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.ContainersSegment _value = Azure.Storage.Blobs.Models.ContainersSegment.FromXml(_xml.Root);
 
                         // Create the response
@@ -442,7 +442,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -545,7 +545,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.UserDelegationKey _value = Azure.Storage.Blobs.Models.UserDelegationKey.FromXml(_xml.Root);
 
                         // Create the response
@@ -559,7 +559,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -658,7 +658,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -793,7 +793,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -953,7 +953,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1195,7 +1195,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1288,7 +1288,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.ContainerAccessPolicy _value = new Azure.Storage.Blobs.Models.ContainerAccessPolicy();
                         _value.SignedIdentifiers =
                             System.Linq.Enumerable.ToList(
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1476,7 +1476,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1750,7 +1750,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -1888,7 +1888,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2034,7 +2034,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2182,7 +2182,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2293,7 +2293,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.BlobsFlatSegment _value = Azure.Storage.Blobs.Models.BlobsFlatSegment.FromXml(_xml.Root);
 
                         // Create the response
@@ -2307,7 +2307,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2424,7 +2424,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.BlobsHierarchySegment _value = Azure.Storage.Blobs.Models.BlobsHierarchySegment.FromXml(_xml.Root);
 
                         // Create the response
@@ -2438,7 +2438,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2537,7 +2537,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -2970,7 +2970,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -3386,7 +3386,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -3476,7 +3476,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -3678,7 +3678,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -3845,7 +3845,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -3996,7 +3996,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4141,7 +4141,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4290,7 +4290,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4449,7 +4449,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4606,7 +4606,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4761,7 +4761,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -4953,7 +4953,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5146,7 +5146,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5253,7 +5253,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5363,7 +5363,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5462,7 +5462,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5693,7 +5693,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -5890,7 +5890,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6069,7 +6069,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6316,7 +6316,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6444,7 +6444,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.PageRangesInfo _value = new Azure.Storage.Blobs.Models.PageRangesInfo();
                         _value.Body = Azure.Storage.Blobs.Models.PageList.FromXml(_xml.Root);
 
@@ -6488,7 +6488,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6622,7 +6622,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.PageRangesInfo _value = new Azure.Storage.Blobs.Models.PageRangesInfo();
                         _value.Body = Azure.Storage.Blobs.Models.PageList.FromXml(_xml.Root);
 
@@ -6666,7 +6666,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6812,7 +6812,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -6964,7 +6964,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -7116,7 +7116,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -7335,7 +7335,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -7527,7 +7527,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -7761,7 +7761,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -7992,7 +7992,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -8150,7 +8150,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -8350,7 +8350,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -8569,7 +8569,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
@@ -8673,7 +8673,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.GetBlockListOperation _value = new Azure.Storage.Blobs.Models.GetBlockListOperation();
                         _value.Body = Azure.Storage.Blobs.Models.BlockList.FromXml(_xml.Root);
 
@@ -8719,7 +8719,7 @@ namespace Azure.Storage.Blobs
                     default:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream);
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
                         throw _value.CreateException(response);
