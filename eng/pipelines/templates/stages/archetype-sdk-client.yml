@@ -2,7 +2,7 @@ stages:
 - stage: Build
   displayName: Ring 0 / Build
   jobs:
-  - template: ../jobs/achetype-sdk-client.yml
+  - template: ../jobs/archetype-sdk-client.yml
     parameters:
       ProjectFile: ${{parameters.ProjectFile}}
 - stage: ExtendedValidation
