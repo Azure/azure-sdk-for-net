@@ -7,7 +7,7 @@
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
@@ -21,16 +21,16 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "ETag": "\u0022Al3nrQNM6vuDgq7vYDmjRtW703g\u0022",
         "Last-Modified": "Mon, 08 Apr 2019 20:02:37 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "Sync-Token": "zAJw6V16=NDotMSMxOTY2MTU=;sn=196615",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTcwMzU=;sn=197035",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "dbaa2c00459b673c28db144a403b76cf",
-        "x-ms-correlation-request-id": "9a92c9c1-0a9e-477e-a6ce-cef9704cf560",
-        "x-ms-request-id": "9a92c9c1-0a9e-477e-a6ce-cef9704cf560"
+        "x-ms-correlation-request-id": "f8126bc2-6ebb-4d82-8042-b2d15a08fe3d",
+        "x-ms-request-id": "f8126bc2-6ebb-4d82-8042-b2d15a08fe3d"
       },
       "ResponseBody": {
         "etag": "Al3nrQNM6vuDgq7vYDmjRtW703g",
@@ -49,7 +49,7 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
@@ -63,15 +63,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "Link": "\u003c/kv/?key=key-cf4ac67640fc46f2b682583c217b28da\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjk0\u003e; rel=\u0022next\u0022",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "Sync-Token": "zAJw6V16=NDotMSMxOTY2MTU=;sn=196615",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTcwMzU=;sn=197035",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "b0b801fdb25dfa2d2188e0dd41adb87c",
-        "x-ms-correlation-request-id": "b6e8e639-6c7b-47ea-a64b-40ab66656e5b",
-        "x-ms-request-id": "b6e8e639-6c7b-47ea-a64b-40ab66656e5b"
+        "x-ms-correlation-request-id": "94e3aa5a-c127-4b71-a3ed-ddca5a3ac4af",
+        "x-ms-request-id": "94e3aa5a-c127-4b71-a3ed-ddca5a3ac4af"
       },
       "ResponseBody": {
         "items": [
@@ -1085,7 +1085,7 @@
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
@@ -1099,14 +1099,14 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
-        "Date": "Tue, 21 May 2019 17:16:11 GMT",
+        "Date": "Tue, 21 May 2019 17:19:27 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "Sync-Token": "zAJw6V16=NDotMSMxOTY2MTU=;sn=196615",
+        "Sync-Token": "zAJw6V16=NDotMSMxOTcwMzU=;sn=197035",
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f0bf9f08ba7b7c285f7cbb6dc131c349",
-        "x-ms-correlation-request-id": "e1983815-3a38-443e-acc8-8e638a4244b6",
-        "x-ms-request-id": "e1983815-3a38-443e-acc8-8e638a4244b6"
+        "x-ms-correlation-request-id": "3c339f4e-2d29-40f9-9e1c-346a84d78828",
+        "x-ms-request-id": "3c339f4e-2d29-40f9-9e1c-346a84d78828"
       },
       "ResponseBody": {
         "items": [

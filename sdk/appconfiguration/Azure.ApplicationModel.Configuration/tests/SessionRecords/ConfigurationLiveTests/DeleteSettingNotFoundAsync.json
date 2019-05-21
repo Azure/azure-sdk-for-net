@@ -5,7 +5,7 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Date": "Tue, 21 May 2019 17:16:14 GMT",
+        "Date": "Tue, 21 May 2019 17:19:29 GMT",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
@@ -19,12 +19,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/vnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
-        "Date": "Tue, 21 May 2019 17:16:14 GMT",
+        "Date": "Tue, 21 May 2019 17:19:29 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
         "x-ms-client-request-id": "7b0237036954a20c0cf029cf6f16242a",
-        "x-ms-correlation-request-id": "96217797-8305-49a3-9e7b-61ba0f5771f5",
-        "x-ms-request-id": "96217797-8305-49a3-9e7b-61ba0f5771f5"
+        "x-ms-correlation-request-id": "7b4f820e-7e77-4cf5-8098-8de126256f82",
+        "x-ms-request-id": "7b4f820e-7e77-4cf5-8098-8de126256f82"
       },
       "ResponseBody": null
     }
