@@ -1,0 +1,4 @@
+jobs:
+- job: ${{parameters.Name}}
+  steps:
+  - script: echo Hello from ${{parameters.Name}}!

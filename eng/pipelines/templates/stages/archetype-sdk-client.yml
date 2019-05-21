@@ -1,0 +1,56 @@
+stages:
+- stage: Build
+  displayName: Ring 0 / Build
+  jobs:
+  - template: ../jobs/achetype-sdk-client.yml
+    parameters:
+      ProjectFile: ${{parameters.ProjectFile}}
+- stage: ExtendedValidation
+  dependsOn: Build
+  displayName: Ring 1 / Extended Validation
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder1
+- stage: LiveTesting
+  dependsOn: ExtendedValidation
+  displayName: Ring 2 / Live Testing
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder2
+- stage: PreviewPrep
+  dependsOn: LiveTesting
+  displayName: Ring 3 / Preview Preparation
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder3
+- stage: PreviewGoLive
+  dependsOn: PreviewPrep
+  displayName: Ring 4 / Preview Go-Live!
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder4
+- stage: Bake
+  dependsOn: PreviewGoLive
+  displayName: Ring 5 / Bake
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder5
+- stage: ReleasePrep
+  dependsOn: Bake
+  displayName: Ring 6 / Release Prep
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder6
+- stage: ReleaseGoLive
+  dependsOn: ReleasePrep
+  displayName: Ring 7 / Release Go Live!
+  jobs:
+  - template: ../jobs/dummy.yml
+    parameters:
+      Name: Placeholder7
