@@ -11,10 +11,6 @@ using ResourceGroups.Tests;
 using Xunit;
 using Microsoft.Azure.Management.BotService;
 using Microsoft.Azure.Management.BotService.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure.Authentication;
 
 namespace BotService.Tests
 {
