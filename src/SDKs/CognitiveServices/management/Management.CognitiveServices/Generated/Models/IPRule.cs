@@ -8,32 +8,35 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid.Models
+namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Domain regenerate share access key request.
+    /// A rule governing the accessibility from a specific ip address or ip
+    /// range.
     /// </summary>
-    public partial class DomainRegenerateKeyRequest
+    public partial class IPRule
     {
         /// <summary>
-        /// Initializes a new instance of the DomainRegenerateKeyRequest class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        public DomainRegenerateKeyRequest()
+        public IPRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainRegenerateKeyRequest class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        /// <param name="keyName">Key name to regenerate key1 or key2.</param>
-        public DomainRegenerateKeyRequest(string keyName)
+        /// <param name="value">An IPv4 address range in CIDR notation, such as
+        /// '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all
+        /// addresses that start with 124.56.78).</param>
+        public IPRule(string value)
         {
-            KeyName = keyName;
+            Value = value;
             CustomInit();
         }
 
@@ -43,10 +46,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets key name to regenerate key1 or key2.
+        /// Gets or sets an IPv4 address range in CIDR notation, such as
+        /// '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all
+        /// addresses that start with 124.56.78).
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -56,9 +61,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (KeyName == null)
+            if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

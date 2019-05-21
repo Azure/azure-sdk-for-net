@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Domain Topic
+    /// Domain Topic.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DomainTopic : Resource
@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the DomainTopic class.
         /// </summary>
-        /// <param name="id">Fully qualified identifier of the resource</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="id">Fully qualified identifier of the
+        /// resource.</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the domain
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>

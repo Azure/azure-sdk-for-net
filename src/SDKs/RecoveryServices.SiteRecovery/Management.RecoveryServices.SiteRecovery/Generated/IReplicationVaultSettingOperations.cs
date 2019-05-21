@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid
+namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -19,15 +19,16 @@ namespace Microsoft.Azure.Management.EventGrid
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TopicTypesOperations operations.
+    /// ReplicationVaultSettingOperations operations.
     /// </summary>
-    public partial interface ITopicTypesOperations
+    public partial interface IReplicationVaultSettingOperations
     {
         /// <summary>
-        /// List topic types.
+        /// Gets the list of vault setting.
         /// </summary>
         /// <remarks>
-        /// List all registered topic types.
+        /// Gets the list of vault setting. This includes the Migration Hub
+        /// connection settings.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,15 +45,16 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<TopicTypeInfo>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VaultSetting>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a topic type.
+        /// Gets the vault setting.
         /// </summary>
         /// <remarks>
-        /// Get information about a topic type.
+        /// Gets the vault setting. This includes the Migration Hub connection
+        /// settings.
         /// </remarks>
-        /// <param name='topicTypeName'>
-        /// Name of the topic type.
+        /// <param name='vaultSettingName'>
+        /// Vault setting name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -69,15 +71,19 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TopicTypeInfo>> GetWithHttpMessagesAsync(string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VaultSetting>> GetWithHttpMessagesAsync(string vaultSettingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List event types.
+        /// Updates vault setting. A vault setting object is a singleton per
+        /// vault and it is always present by default.
         /// </summary>
         /// <remarks>
-        /// List event types for a topic type.
+        /// The operation to configure vault setting.
         /// </remarks>
-        /// <param name='topicTypeName'>
-        /// Name of the topic type.
+        /// <param name='vaultSettingName'>
+        /// Vault setting name.
+        /// </param>
+        /// <param name='input'>
+        /// Vault setting creation input.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,6 +100,32 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventType>>> ListEventTypesWithHttpMessagesAsync(string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VaultSetting>> CreateWithHttpMessagesAsync(string vaultSettingName, VaultSettingCreationInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the list of vault setting.
+        /// </summary>
+        /// <remarks>
+        /// Gets the list of vault setting. This includes the Migration Hub
+        /// connection settings.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<VaultSetting>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

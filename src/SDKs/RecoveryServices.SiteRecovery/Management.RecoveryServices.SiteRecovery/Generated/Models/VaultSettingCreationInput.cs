@@ -8,32 +8,33 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid.Models
+namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Domain regenerate share access key request.
+    /// Input to create vault setting.
     /// </summary>
-    public partial class DomainRegenerateKeyRequest
+    public partial class VaultSettingCreationInput
     {
         /// <summary>
-        /// Initializes a new instance of the DomainRegenerateKeyRequest class.
+        /// Initializes a new instance of the VaultSettingCreationInput class.
         /// </summary>
-        public DomainRegenerateKeyRequest()
+        public VaultSettingCreationInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainRegenerateKeyRequest class.
+        /// Initializes a new instance of the VaultSettingCreationInput class.
         /// </summary>
-        /// <param name="keyName">Key name to regenerate key1 or key2.</param>
-        public DomainRegenerateKeyRequest(string keyName)
+        /// <param name="properties">Vault setting creation input
+        /// properties.</param>
+        public VaultSettingCreationInput(VaultSettingCreationInputProperties properties)
         {
-            KeyName = keyName;
+            Properties = properties;
             CustomInit();
         }
 
@@ -43,10 +44,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets key name to regenerate key1 or key2.
+        /// Gets or sets vault setting creation input properties.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public VaultSettingCreationInputProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -56,9 +57,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (KeyName == null)
+            if (Properties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }

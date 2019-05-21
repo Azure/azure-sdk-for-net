@@ -8,33 +8,32 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid.Models
+namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Properties of the Domain update.
+    /// Vault setting properties.
     /// </summary>
-    public partial class DomainUpdateParameters
+    public partial class VaultSettingProperties
     {
         /// <summary>
-        /// Initializes a new instance of the DomainUpdateParameters class.
+        /// Initializes a new instance of the VaultSettingProperties class.
         /// </summary>
-        public DomainUpdateParameters()
+        public VaultSettingProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainUpdateParameters class.
+        /// Initializes a new instance of the VaultSettingProperties class.
         /// </summary>
-        /// <param name="tags">Tags of the domains resource.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="migrationSolutionId">The migration solution ARM
+        /// Id.</param>
+        public VaultSettingProperties(string migrationSolutionId = default(string))
         {
-            Tags = tags;
+            MigrationSolutionId = migrationSolutionId;
             CustomInit();
         }
 
@@ -44,10 +43,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the domains resource.
+        /// Gets or sets the migration solution ARM Id.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "migrationSolutionId")]
+        public string MigrationSolutionId { get; set; }
 
     }
 }
