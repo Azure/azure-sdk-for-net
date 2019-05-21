@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.BotService</PackageId>
     <Description>Microsoft Azure Management Bot Service Library</Description>
-    <VersionPrefix>0.9.2-preview</VersionPrefix>
+    <VersionPrefix>0.9.3-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.BotService</AssemblyName>
     <PackageTags>Microsoft Azure Bot Service management;Bot;Bot Service;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      This is a public preview release of the Azure Bot Service SDK. Included with this release is bot management and channel registration.
+      This is a public preview release of the Azure Bot Service SDK. Included with this release are adjustments to bot creation, where we don't expose ways to create an AAD application anymore, pivoting users to do that calling the graph api or using the Azure AAD SDK.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
