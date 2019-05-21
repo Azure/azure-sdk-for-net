@@ -275,6 +275,103 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(count == messageCount);
         }
 
+        internal async Task MessageHandlerUnregisterAsyncTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+                {
+                    var count = 0;
+                    await TestUtility.SendMessagesAsync(messageSender, messageCount);
+                    messageReceiver.RegisterMessageHandler(
+                        async (message, token) =>
+                        {
+                            TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+
+                            // Method should be thread safe and stop the message handler after first batch of messages
+                            messageReceiver.UnregisterMessageHandler();
+
+                            // Simulate "long running" task
+                            Thread.Sleep(1000);
+                                                       
+                            if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                            {
+                                // Completion should still work, even after message handler is stopped
+                                await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                            }
+
+                            Interlocked.Increment(ref count);
+                        },
+                        new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+                    // Wait for the OnMessage Tasks to finish
+                    var stopwatch = Stopwatch.StartNew();
+                    while (stopwatch.Elapsed.TotalSeconds <= 30)
+                    {
+                        if (count == messageCount)
+                        {
+                            TestUtility.Log($"Too many ('{maxConcurrentCalls}') messages received.");
+                            break;
+                        }
+                        await Task.Delay(TimeSpan.FromSeconds(5));
+                    }
+
+                    Assert.True(count < messageCount);
+                }
+
+        internal async Task MultipleMessageHandlerAsyncTestCase(
+            IMessageSender messageSender,
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete,
+            int messageCount)
+            {
+            var count = 0;
+
+            void HandlerRegistration(bool unregisterImmediately)
+            {
+                messageReceiver.RegisterMessageHandler(
+                    async (message, token) =>
+                    {
+                        TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+
+                        if (unregisterImmediately)
+                        {
+                            messageReceiver.UnregisterMessageHandler();
+                            
+                            // recursively register a new handler and expect it to handle the open messages 
+                            HandlerRegistration(false);
+                        }
+
+                        if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                        {
+                                                    // Completion should still work, even after message handler is stopped
+                                                    await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                        }
+
+                        Interlocked.Increment(ref count);
+                    },
+                    new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+            }
+
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+            HandlerRegistration(true);
+
+            // Wait for the OnMessage Tasks to finish
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == messageCount)
+                {
+                    TestUtility.Log($"All '{messageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == messageCount);
+        }
+
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
             IMessageSender messageSender,
             IMessageReceiver messageReceiver,

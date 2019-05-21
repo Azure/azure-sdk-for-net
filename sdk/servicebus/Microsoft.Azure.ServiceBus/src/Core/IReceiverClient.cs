@@ -64,6 +64,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions);
 
         /// <summary>
+        /// Cancels the continuuous reception of messages without closing the underlying service bus connection and unregisters the message handler.
+        /// <remarks>Register a message handler first, using <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, Func{ExceptionReceivedEventArgs, Task})"/> 
+        /// or <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)"/>.
+        /// Although the message handler is unregistered, active threads are not cancelled.</remarks>
+        /// </summary>
+        void UnregisterMessageHandler();
+
+        /// <summary>
         /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the queue.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>

@@ -16,7 +16,12 @@ namespace Microsoft.Azure.ServiceBus
         readonly string endpoint;
         readonly MessageHandlerOptions registerHandlerOptions;
         readonly IMessageReceiver messageReceiver;
+
+        // Signals that the entire processing should be immediately cancelled because the pump is getting disposed
         readonly CancellationToken pumpCancellationToken;
+
+        // Signals that message reception should stop but active processing should continue
+        readonly CancellationToken receiveCancellationToken;
         readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
@@ -24,13 +29,15 @@ namespace Microsoft.Azure.ServiceBus
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback,
             Uri endpoint,
-            CancellationToken pumpCancellationToken)
+            CancellationToken pumpCancellationToken,
+            CancellationToken receiveCancellationToken)
         {
             this.messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
             this.registerHandlerOptions = registerHandlerOptions;
             this.onMessageCallback = callback;
             this.endpoint = endpoint.Authority;
             this.pumpCancellationToken = pumpCancellationToken;
+            this.receiveCancellationToken = receiveCancellationToken;
             this.maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(this.registerHandlerOptions.MaxConcurrentCalls);
             this.diagnosticSource = new ServiceBusDiagnosticSource(messageReceiver.Path, endpoint);
         }
@@ -55,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus
 
         async Task MessagePumpTaskAsync()
         {
-            while (!this.pumpCancellationToken.IsCancellationRequested)
+            while (!this.pumpCancellationToken.IsCancellationRequested && ! this.receiveCancellationToken.IsCancellationRequested)
             {
                 Message message = null;
                 try

@@ -420,6 +420,16 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Cancels the continuuous reception of messages without closing the underlying service bus connection and unregisters the message handler.
+        /// <remarks>Register a message handler first, using <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, Func{ExceptionReceivedEventArgs, Task})"/> 
+        /// or <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)"/></remarks>
+        /// </summary>
+        public void UnregisterMessageHandler()
+        {
+            this.InnerSubscriptionClient.InnerReceiver.UnregisterMessageHandler();
+        }
+
+        /// <summary>
         /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
         /// </summary>

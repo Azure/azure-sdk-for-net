@@ -50,11 +50,15 @@ namespace Microsoft.Azure.ServiceBus.Core
         readonly object messageReceivePumpSyncLock;
         readonly ActiveClientLinkManager clientLinkManager;
         readonly ServiceBusDiagnosticSource diagnosticSource;
-
         int prefetchCount;
         long lastPeekedSequenceNumber;
         MessageReceivePump receivePump;
-        CancellationTokenSource receivePumpCancellationTokenSource;
+
+        // Signals that the entire processing should be immediately cancelled because the pump is getting disposed
+        CancellationTokenSource pumpCancellationTokenSource;
+
+        // Signals that message reception should stop but active processing should continue
+        CancellationTokenSource receiveCancellationTokenSource;
 
         /// <summary>
         /// Creates a new MessageReceiver from a <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -900,6 +904,27 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
+        /// Cancels the continuuous reception of messages without closing the underlying service bus connection and unregisters the message handler.
+        /// <remarks>Register a message handler first, using <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, Func{ExceptionReceivedEventArgs, Task})"/> 
+        /// or <see cref="RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)"/>.
+        /// Although the message handler is unregistered, active threads are not cancelled.</remarks>
+        /// </summary>
+        public void UnregisterMessageHandler()
+        {
+            this.ThrowIfClosed();
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump != null)
+                {
+                    this.receiveCancellationTokenSource.Cancel();
+                    this.receiveCancellationTokenSource.Dispose();
+                    this.receivePump = null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
@@ -1001,8 +1026,9 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (this.receivePump != null)
                 {
-                    this.receivePumpCancellationTokenSource.Cancel();
-                    this.receivePumpCancellationTokenSource.Dispose();
+                    this.pumpCancellationTokenSource.Cancel();
+                    this.pumpCancellationTokenSource.Dispose();
+                    this.receiveCancellationTokenSource.Dispose();
                     this.receivePump = null;
                 }
             }
@@ -1276,9 +1302,15 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
                 }
+                
+                // pump cancellation token source can be reused on message handlers
+                if (this.pumpCancellationTokenSource == null)
+                {
+                    this.pumpCancellationTokenSource = new CancellationTokenSource();
+                }
 
-                this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+                this.receiveCancellationTokenSource = new CancellationTokenSource();
+                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.pumpCancellationTokenSource.Token, this.receiveCancellationTokenSource.Token);
             }
 
             try
@@ -1292,8 +1324,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     if (this.receivePump != null)
                     {
-                        this.receivePumpCancellationTokenSource.Cancel();
-                        this.receivePumpCancellationTokenSource.Dispose();
+                        this.pumpCancellationTokenSource.Cancel();
+                        this.pumpCancellationTokenSource.Dispose();
+                        this.receiveCancellationTokenSource.Dispose();
                         this.receivePump = null;
                     }
                 }
