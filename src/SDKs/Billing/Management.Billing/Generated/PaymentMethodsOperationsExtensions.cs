@@ -22,6 +22,42 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PaymentMethodsOperationsExtensions
     {
             /// <summary>
+            /// Lists the Payment Methods by billing account Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            public static IPage<PaymentMethod> ListByBillingAccountName(this IPaymentMethodsOperations operations, string billingAccountName)
+            {
+                return operations.ListByBillingAccountNameAsync(billingAccountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Payment Methods by billing account Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PaymentMethod>> ListByBillingAccountNameAsync(this IPaymentMethodsOperations operations, string billingAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the Payment Methods by billing profile Id.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
@@ -58,6 +94,42 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<IPage<PaymentMethod>> ListByBillingProfileNameAsync(this IPaymentMethodsOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingProfileNameWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the Payment Methods by billing account Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PaymentMethod> ListByBillingAccountNameNext(this IPaymentMethodsOperations operations, string nextPageLink)
+            {
+                return operations.ListByBillingAccountNameNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Payment Methods by billing account Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PaymentMethod>> ListByBillingAccountNameNextAsync(this IPaymentMethodsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
