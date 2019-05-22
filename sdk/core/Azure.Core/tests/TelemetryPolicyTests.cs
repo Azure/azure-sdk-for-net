@@ -60,5 +60,27 @@ namespace Azure.Core.Tests
                 Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", null);
             }
         }
+
+        [NonParallelizable]
+        [Test]
+        public async Task UsesDefaultApplicationId()
+        {
+            try
+            {
+                TelemetryPolicy.DefaultApplicationId = "Global-application-id";
+
+                var transport = new MockTransport(new MockResponse(200));
+                var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
+
+                await SendGetRequest(transport, telemetryPolicy);
+
+                Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+                StringAssert.StartsWith("Global-application-id ", userAgent);
+            }
+            finally
+            {
+                TelemetryPolicy.DefaultApplicationId = null;
+            }
+        }
     }
 }
