@@ -31,9 +31,7 @@ jobs:
           solution: build.proj
           msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\Compute
         displayName: 'Build and Run tests'
-      - script: dir /S TestResults
-        workingDirectory: $(Agent.BuildDirectory)
-      - script: dir /S src\SDKs\Compute
+      - script: dir /S
         workingDirectory: $(Agent.BuildDirectory)
       - task: PublishTestResults@2
         condition: succeededOrFailed()
