@@ -12,16 +12,10 @@ namespace Azure.ApplicationModel.Configuration
         public static string AuthenticationPolicy { get; } = "Authentication";
         public static string BufferResponsePolicy { get; } = "BufferResponse";
 
-        public FixedRetryOptions Retry { get; set; }
-
-        public ConfigurationClientOptions()
+        public FixedRetryOptions Retry { get; } = new FixedRetryOptions()
         {
-            Retry = new FixedRetryOptions()
-            {
-                Delay =  TimeSpan.Zero,
-                MaxRetries = 3
-            };
-        }
-
+            Delay =  TimeSpan.Zero,
+            MaxRetries = 3
+        };
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     {
         public static string TelemetryPolicy { get; } = "Telemetry";
         public static string RetryPolicy { get; } = "Retry";
-        public static string LoggingPolicy { get; } = "Retry";
+        public static string LoggingPolicy { get; } = "Logging";
         public static string ClientRequestIdPolicy { get; } = "ClientRequestIdPolicy";
         public static string TransportPolicy { get; } = "ClientRequestIdPolicy";
 

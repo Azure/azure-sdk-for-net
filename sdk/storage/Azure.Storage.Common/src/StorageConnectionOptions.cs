@@ -72,16 +72,18 @@ namespace Azure.Storage
         /// An HttpPipeline used to make requests to Azure Storage
         /// </returns>
         internal virtual HttpPipeline Build()
-            => new HttpPipelineBuilder(this)
-                .Replace(RetryPolicy, new FixedRetryPolicy(this.Retry))
-                // TODO: Disable logging for now
-                .Replace(LoggingPolicy, null)
-                .InsertAfter(RetryPolicy, AuthenticationPolicy, this.GetAuthenticationPipelinePolicy(this.Credentials))
-                // TODO: PageBlob's UploadPagesAsync test currently fails
-                // without buffered responses, so I'm leaving this on for now.
-                // It'd be a great perf win to remove it soon.
-                .InsertBefore(TransportPolicy, BufferResponsePolicy, Core.Pipeline.Policies.BufferResponsePolicy.Singleton)
-                .Build();
+        {
+            var builder = new HttpPipelineBuilder(this);
+            builder.Replace(RetryPolicy, new FixedRetryPolicy(this.Retry));
+            // TODO: Disable logging for now
+            builder.Replace(LoggingPolicy, null);
+            builder.InsertAfter(RetryPolicy, AuthenticationPolicy, this.GetAuthenticationPipelinePolicy(this.Credentials));
+            // TODO: PageBlob's UploadPagesAsync test currently fails
+            // without buffered responses, so I'm leaving this on for now.
+            // It'd be a great perf win to remove it soon.
+            builder.InsertBefore(TransportPolicy, BufferResponsePolicy, Core.Pipeline.Policies.BufferResponsePolicy.Singleton);
+            return builder.Build();
+        }
 
         /// <summary>
         /// Create an authentication HttpPipelinePolicy to sign requests

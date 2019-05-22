@@ -25,27 +25,23 @@ namespace Azure.Core.Pipeline
             };
         }
 
-        public HttpPipelineBuilder InsertBefore(string beforePolicy, string policyName, HttpPipelinePolicy policy)
+        public void InsertBefore(string beforePolicy, string policyName, HttpPipelinePolicy policy)
         {
             var index = FindPolicy(beforePolicy);
             _policies.Insert(index, new PolicyHolder(policyName, policy));
-            return this;
         }
 
-        public HttpPipelineBuilder InsertAfter(string afterPolicy, string policyName, HttpPipelinePolicy policy)
+        public void InsertAfter(string afterPolicy, string policyName, HttpPipelinePolicy policy)
         {
             var index = FindPolicy(afterPolicy);
             _policies.Insert(index + 1, new PolicyHolder(policyName, policy));
-            return this;
         }
 
-        public HttpPipelineBuilder Replace(string policyName, HttpPipelinePolicy policy)
+        public void Replace(string policyName, HttpPipelinePolicy policy)
         {
             var index = FindPolicy(policyName);
             _policies[index] = new PolicyHolder(policyName, policy);
-            return this;
         }
-
 
         public HttpPipeline Build()
         {

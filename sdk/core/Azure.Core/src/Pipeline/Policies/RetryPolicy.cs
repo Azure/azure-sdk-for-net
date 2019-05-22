@@ -12,7 +12,6 @@ namespace Azure.Core.Pipeline.Policies
 {
     public class RetryOptions
     {
-
         /// <summary>
         /// Gets or sets the maximum number of retry attempts before giving up.
         /// </summary>
