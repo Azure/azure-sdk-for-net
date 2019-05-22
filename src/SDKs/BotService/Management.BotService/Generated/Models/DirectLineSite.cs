@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.BotService.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,17 +34,22 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </summary>
         /// <param name="siteName">Site name</param>
         /// <param name="isEnabled">Whether this site is enabled for DirectLine
-        /// channel</param>
+        /// channel.</param>
         /// <param name="isV1Enabled">Whether this site is enabled for Bot
-        /// Framework V1 protocol</param>
+        /// Framework V1 protocol.</param>
         /// <param name="isV3Enabled">Whether this site is enabled for Bot
-        /// Framework V1 protocol</param>
+        /// Framework V1 protocol.</param>
         /// <param name="siteId">Site Id</param>
         /// <param name="key">Primary key. Value only returned through POST to
         /// the action Channel List API, otherwise empty.</param>
         /// <param name="key2">Secondary key. Value only returned through POST
         /// to the action Channel List API, otherwise empty.</param>
-        public DirectLineSite(string siteName, bool isEnabled, bool isV1Enabled, bool isV3Enabled, string siteId = default(string), string key = default(string), string key2 = default(string))
+        /// <param name="isSecureSiteEnabled">Whether this site is enabled for
+        /// authentication with Bot Framework.</param>
+        /// <param name="trustedOrigins">List of Trusted Origin URLs for this
+        /// site. This field is applicable only if isSecureSiteEnabled is
+        /// True.</param>
+        public DirectLineSite(string siteName, bool isEnabled, bool isV1Enabled, bool isV3Enabled, string siteId = default(string), string key = default(string), string key2 = default(string), bool? isSecureSiteEnabled = default(bool?), IList<string> trustedOrigins = default(IList<string>))
         {
             SiteId = siteId;
             SiteName = siteName;
@@ -51,6 +58,8 @@ namespace Microsoft.Azure.Management.BotService.Models
             IsEnabled = isEnabled;
             IsV1Enabled = isV1Enabled;
             IsV3Enabled = isV3Enabled;
+            IsSecureSiteEnabled = isSecureSiteEnabled;
+            TrustedOrigins = trustedOrigins;
             CustomInit();
         }
 
@@ -86,24 +95,38 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string Key2 { get; private set; }
 
         /// <summary>
-        /// Gets or sets whether this site is enabled for DirectLine channel
+        /// Gets or sets whether this site is enabled for DirectLine channel.
         /// </summary>
         [JsonProperty(PropertyName = "isEnabled")]
         public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets whether this site is enabled for Bot Framework V1
-        /// protocol
+        /// protocol.
         /// </summary>
         [JsonProperty(PropertyName = "isV1Enabled")]
         public bool IsV1Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets whether this site is enabled for Bot Framework V1
-        /// protocol
+        /// protocol.
         /// </summary>
         [JsonProperty(PropertyName = "isV3Enabled")]
         public bool IsV3Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this site is enabled for authentication with
+        /// Bot Framework.
+        /// </summary>
+        [JsonProperty(PropertyName = "isSecureSiteEnabled")]
+        public bool? IsSecureSiteEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Trusted Origin URLs for this site. This field
+        /// is applicable only if isSecureSiteEnabled is True.
+        /// </summary>
+        [JsonProperty(PropertyName = "trustedOrigins")]
+        public IList<string> TrustedOrigins { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.BotService
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
+            /// The name of the Bot resource group in the user subscription.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Bot resource.

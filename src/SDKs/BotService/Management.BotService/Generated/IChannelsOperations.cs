@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Creates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Updates a Channel registration for a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Deletes a Channel registration from a Bot Service
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.BotService
         /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.BotService
         /// Lists a Channel registration for a Bot Service including secrets
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.BotService
         /// resource
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
+        /// The name of the Bot resource group in the user subscription.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Bot resource.
