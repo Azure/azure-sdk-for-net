@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// policy.</param>
         /// <param name="frontendEndpointLinks">Describes Frontend Endpoints
         /// associated with this Web Application Firewall policy.</param>
-        /// <param name="provisioningState">Provisioning state of the policy.
-        /// Possible values include: 'Succeeded', 'Creating', 'Failed'</param>
+        /// <param name="provisioningState">Provisioning state of the
+        /// policy.</param>
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
@@ -98,8 +98,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public IList<FrontendEndpointLink> FrontendEndpointLinks { get; private set; }
 
         /// <summary>
-        /// Gets provisioning state of the policy. Possible values include:
-        /// 'Succeeded', 'Creating', 'Failed'
+        /// Gets provisioning state of the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
