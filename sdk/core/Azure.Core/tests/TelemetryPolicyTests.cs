@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         public async Task ComponentNameAndVersionReadFromAssembly()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryOptions(), typeof(TelemetryPolicyTests).Assembly);
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             await SendGetRequest(transport, telemetryPolicy);
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
         public async Task ApplicationIdIsIncluded()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly) { ApplicationId = "application-id" };
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryOptions() { ApplicationId = "application-id" }, typeof(TelemetryPolicyTests).Assembly);
 
             await SendGetRequest(transport, telemetryPolicy);
 
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
                 Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
 
                 var transport = new MockTransport(new MockResponse(200));
-                var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
+                var telemetryPolicy = new TelemetryPolicy(new TelemetryOptions(), typeof(TelemetryPolicyTests).Assembly);
                 await SendGetRequest(transport, telemetryPolicy);
 
                 Assert.False(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));

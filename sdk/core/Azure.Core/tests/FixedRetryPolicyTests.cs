@@ -91,10 +91,12 @@ namespace Azure.Core.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public FixedRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default)
+            public FixedRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default): base(new FixedRetryOptions()
             {
-                Delay = delay;
-                MaxRetries = maxRetries;
+                Delay = delay,
+                MaxRetries = maxRetries
+            })
+            {
             }
 
             internal override void Wait(TimeSpan time, CancellationToken cancellationToken)

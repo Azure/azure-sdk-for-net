@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline.Policies
         /// <summary>
         ///   Creates a retry policy with exponential backoff for use with external operations.
         /// </summary>
-        public ExponentialRetryPolicy(ExponentialRetryOptions options) : base(options)
+        public ExponentialRetryPolicy(ExponentialRetryOptions options) : base(options.MaxRetries)
         {
             _delay = options.Delay;
             _maxDelay = options.MaxDelay;

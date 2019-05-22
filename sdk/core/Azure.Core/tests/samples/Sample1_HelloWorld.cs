@@ -16,7 +16,11 @@ namespace Azure.Core.Samples
         [Test]
         public async Task HelloWorld()
         {
-            var pipeline = new HttpPipeline(new HttpClientTransport());
+            HttpClientTransport httpPipelineTransport = new HttpClientTransport();
+            var pipeline = new HttpPipeline(httpPipelineTransport, new HttpPipelinePolicy[]
+            {
+                new HttpPipelineTransportPolicy(httpPipelineTransport)
+            });
 
             var request = pipeline.CreateRequest();
 

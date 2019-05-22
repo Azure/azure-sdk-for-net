@@ -10,9 +10,9 @@ namespace Azure.Core.Pipeline.Policies
     {
         private readonly TimeSpan _delay;
 
-        public FixedRetryPolicy(FixedRetryOptions fixedRetryOptions) : base(fixedRetryOptions)
+        public FixedRetryPolicy(FixedRetryOptions options) : base(options.MaxRetries)
         {
-            _delay = fixedRetryOptions.Delay;
+            _delay = options.Delay;
         }
 
         protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)

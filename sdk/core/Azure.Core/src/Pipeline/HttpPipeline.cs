@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
@@ -19,7 +15,7 @@ namespace Azure.Core.Pipeline
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
         private readonly IServiceProvider _services;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
         {
             _pipeline = policies ?? throw new ArgumentNullException(nameof(transport));
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));

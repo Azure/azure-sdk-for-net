@@ -52,11 +52,11 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = new HttpPipelineBuilder(options)
-                .Replace(HttpClientOptions.RetryPolicy, new FixedRetryPolicy(options.Retry))
-                .InsertAfter(HttpClientOptions.RetryPolicy, ConfigurationClientOptions.AuthenticationPolicy, new AuthenticationPolicy(credential, secret))
-                .InsertBefore(HttpClientOptions.TransportPolicy, ConfigurationClientOptions.BufferResponsePolicy, BufferResponsePolicy.Singleton)
-                .Build();
+            var builder = new HttpPipelineBuilder(options);
+            builder.Replace(HttpClientOptions.RetryPolicy, new FixedRetryPolicy(options.Retry));
+            builder.InsertAfter(HttpClientOptions.RetryPolicy, ConfigurationClientOptions.AuthenticationPolicy, new AuthenticationPolicy(credential, secret));
+            builder.InsertBefore(HttpClientOptions.TransportPolicy, ConfigurationClientOptions.BufferResponsePolicy, BufferResponsePolicy.Singleton);
+            _pipeline = builder.Build();
         }
 
         /// <summary>

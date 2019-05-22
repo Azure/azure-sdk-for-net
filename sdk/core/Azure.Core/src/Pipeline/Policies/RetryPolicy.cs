@@ -10,44 +10,13 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class RetryOptions
-    {
-        /// <summary>
-        /// Gets or sets the maximum number of retry attempts before giving up.
-        /// </summary>
-        public int MaxRetries { get; set; } = 10;
-    }
-
-    public class ExponentialRetryOptions: RetryOptions
-    {
-
-        /// <summary>
-        /// Gets or sets the timespan used as a base for exponential backoff.
-        /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
-
-        /// <summary>
-        /// Gets or sets maximum timespan to pause between requests.
-        /// </summary>
-        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
-
-    }
-
-    public class FixedRetryOptions: RetryOptions
-    {
-        /// <summary>
-        /// Gets or sets the timespan to wait before retries.
-        /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
-    }
-
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
 
-        protected RetryPolicy(RetryOptions options)
+        protected RetryPolicy(int maxRetries)
         {
-            _maxRetries = options.MaxRetries;
+            _maxRetries = maxRetries;
         }
 
         private const string RetryAfterHeaderName = "Retry-After";
