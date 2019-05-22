@@ -86,7 +86,7 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet test --filter TestCategory!=Live --logger trx /p:ServiceDirectory=${{parameters.ServiceDirectory}}"
+      - script: "dotnet test eng/service.proj --filter TestCategory!=Live --logger trx /p:ServiceDirectory=${{parameters.ServiceDirectory}}"
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
