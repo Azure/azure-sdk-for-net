@@ -433,8 +433,8 @@ namespace BatchClientIntegrationTests
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
                     string poolId = "Bug1432812-" + TestUtilities.GetMyName();
-                    const string poolASFormulaOrig = "$TargetDedicatedNodes = 1;";
-                    const string poolASFormula2 = "$TargetDedicatedNodes=2;";
+                    const string poolASFormulaOrig = "$TargetDedicatedNodes=0;";
+                    const string poolASFormula2 = "$TargetDedicatedNodes=1;";
                     // craft exactly how it would be returned by Evaluate so indexof can work
 
                     try
@@ -447,6 +447,8 @@ namespace BatchClientIntegrationTests
                             unboundPool.AutoScaleFormula = poolASFormulaOrig;
 
                             unboundPool.Commit();
+
+                            TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
                         }
 
                         // EvaluteAutoScale
@@ -470,15 +472,7 @@ namespace BatchClientIntegrationTests
                         Assert.False(boundPool.AutoScaleEnabled.Value);
 
                         // EnableAutoScale
-
-                        while (AllocationState.Steady != boundPool.AllocationState)
-                        {
-                            this.testOutputHelper.WriteLine("Bug1432812SetAutoScaleMissingOnPoolPoolMgr waiting for pool to be steady before EnableAutoScale call.");
-
-                            System.Threading.Thread.Sleep(5000);
-
-                            boundPool.Refresh();
-                        }
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromMinutes(5)).Wait();
 
                         boundPool.EnableAutoScale(poolASFormula2);
 
@@ -619,8 +613,9 @@ namespace BatchClientIntegrationTests
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
-                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
 
+                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
@@ -670,6 +665,8 @@ namespace BatchClientIntegrationTests
                         //Create a pool
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
                         pool.Commit();
+
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
