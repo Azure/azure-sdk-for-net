@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the EventType class.
         /// </summary>
-        /// <param name="id">Fully qualified identifier of the resource</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="id">Fully qualified identifier of the
+        /// resource.</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="displayName">Display name of the event type.</param>
         /// <param name="description">Description of the event type.</param>
         /// <param name="schemaUrl">Url of the schema for this event
