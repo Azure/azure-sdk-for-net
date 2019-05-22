@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Metadata
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    public sealed class EventHubInformation
+    public sealed class EventHubProperties
     {
         /// <summary>
         ///   The path of the Event Hub, relative to the namespace
@@ -41,29 +41,29 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   Event Hub.
         /// </summary>
         ///
-        public DateTime InformationRetrievalTimeUtc { get; }
+        public DateTime PropertyRetrievalTimeUtc { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubInformation"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="path">The path of the Event Hub.</param>
         /// <param name="createdUtc">The date and time at which the Event Hub was created.</param>
-        /// <param name="partitionCount">The number of paritions in the Event Hub.</param>
+        /// <param name="partitionCount">The number of partitions in the Event Hub.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
-        /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the serivce; if not provided, the current date/time will be used.</param>
+        /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
-        internal EventHubInformation(string    path,
-                                     DateTime  createdUtc,
-                                     int       partitionCount,
-                                     string[]  partitionIds,
-                                     DateTime? retrievalTimeUtc = null)
+        internal EventHubProperties(string    path,
+                                    DateTime  createdUtc,
+                                    int       partitionCount,
+                                    string[]  partitionIds,
+                                    DateTime? retrievalTimeUtc = null)
         {
             Path = path;
             CreatedDateUtc = createdUtc;
             PartitionCount = partitionCount;
             PartitionIds = partitionIds;
-            InformationRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
+            PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
         }
     }
 }

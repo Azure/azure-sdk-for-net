@@ -15,11 +15,11 @@ namespace Azure.Messaging.EventHubs
     ///   use one of the provided implementations.
     /// </remarks>
     ///
-    /// <see cref="RetryPolicy.Default" />
-    /// <see cref="RetryPolicy.NoRetry" />
-    /// <seealso cref="ExponentialRetryPolicy"/>
+    /// <see cref="Retry.Default" />
+    /// <see cref="Retry.NoRetry" />
+    /// <seealso cref="ExponentialRetry"/>
     ///
-    public abstract class RetryPolicy
+    public abstract class Retry
     {
         /// <summary>The maximum number of retries allowed by default when no value is specified.</summary>
         private const int DefaultMaximumRetryCount = 10;
@@ -34,13 +34,13 @@ namespace Azure.Messaging.EventHubs
         ///   The default retry policy, recommended for most general purpose scenarios.
         /// </summary>
         ///
-        public static RetryPolicy Default => new ExponentialRetryPolicy(DefaultRetryMinimumBackoff, DefaultRetryMaximumBackoff, DefaultMaximumRetryCount);
+        public static Retry Default => new ExponentialRetry(DefaultRetryMinimumBackoff, DefaultRetryMaximumBackoff, DefaultMaximumRetryCount);
 
         /// <summary>
         ///   A policy that disallows retries alltogether.
         /// </summary>
         ///
-        public static RetryPolicy NoRetry => new ExponentialRetryPolicy(TimeSpan.Zero, TimeSpan.Zero, 0);
+        public static Retry NoRetry => new ExponentialRetry(TimeSpan.Zero, TimeSpan.Zero, 0);
 
         /// <summary>
         ///   Determines whether or not a given exception is eligible for a retry attempt.
@@ -96,16 +96,16 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="RetryPolicy" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="RetryPolicy" />.</returns>
+        /// <returns>A new copy of <see cref="Retry" />.</returns>
         ///
-        public abstract RetryPolicy Clone();
+        public abstract Retry Clone();
 
         /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in
-        ///   the calculations performed by <see cref="RetryPolicy.GetNextRetryInterval" />.
+        ///   the calculations performed by <see cref="Retry.GetNextRetryInterval" />.
         /// </summary>
         ///
         /// <param name="lastException">The last exception that was observed for the operation to be retried.</param>
@@ -117,7 +117,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The interval produced by this method is considered non-authoritative and is subject to adjustment by the
-        ///   <see cref="RetryPolicy.GetNextRetryInterval" /> implementation.
+        ///   <see cref="Retry.GetNextRetryInterval" /> implementation.
         /// </remarks>
         ///
         protected abstract TimeSpan? OnGetNextRetryInterval(Exception lastException,

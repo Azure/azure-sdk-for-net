@@ -25,6 +25,6 @@
         public const string Publisher = "x-opt-publisher";
 
         /// <summary>The identifier associated with a given partition.</summary>
-        public const string partitionId = "x-opt-partition-key";
+        public const string PartitionName = "x-opt-partition-key";
     }
 }

@@ -12,9 +12,9 @@ namespace Azure.Messaging.EventHubs
     ///   exponential manner, allowing more time to recover as the number of retries increases.
     /// </summary>
     ///
-    /// <seealso cref="RetryPolicy" />
+    /// <seealso cref="Retry" />
     ///
-    public sealed class ExponentialRetryPolicy : RetryPolicy
+    public sealed class ExponentialRetry : Retry
     {
         /// <summary>The minimum time period permissible for backing off between retries.</summary>
         private readonly TimeSpan _minimumBackoff;
@@ -29,16 +29,16 @@ namespace Azure.Messaging.EventHubs
         private readonly double _retryFactor;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ExponentialRetryPolicy"/> class.
+        ///   Initializes a new instance of the <see cref="ExponentialRetry"/> class.
         /// </summary>
         ///
         /// <param name="minimumBackoff">The minimum time period permissible for backing off between retries.</param>
         /// <param name="maximumBackoff">The maximum time period permissible for backing off between retries.</param>
         /// <param name="maximumRetryCount">The maximum number of retries allowed.</param>
         ///
-        public ExponentialRetryPolicy(TimeSpan minimumBackoff,
-                                      TimeSpan maximumBackoff,
-                                      int      maximumRetryCount)
+        public ExponentialRetry(TimeSpan minimumBackoff,
+                                TimeSpan maximumBackoff,
+                                int      maximumRetryCount)
         {
             Guard.ArgumentNotNegative(nameof(minimumBackoff), minimumBackoff);
             Guard.ArgumentNotNegative(nameof(maximumBackoff), maximumBackoff);
@@ -50,13 +50,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="RetryPolicy" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="RetryPolicy" />.</returns>
+        /// <returns>A new copy of <see cref="Retry" />.</returns>
         ///
-        public override RetryPolicy Clone() =>
-            new ExponentialRetryPolicy(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
+        public override Retry Clone() =>
+            new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in
-        ///   the calculations performed by <see cref="RetryPolicy.GetNextRetryInterval" />.
+        ///   the calculations performed by <see cref="Retry.GetNextRetryInterval" />.
         /// </summary>
         ///
         /// <param name="lastException">The last exception that was observed for the operation to be retried.</param>
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   The interval produced by this method is considered non-authoritative and is subject to adjustment by the
-        ///   <see cref="RetryPolicy.GetNextRetryInterval" /> implementation.
+        ///   <see cref="Retry.GetNextRetryInterval" /> implementation.
         /// </remarks>
         ///
         protected override TimeSpan? OnGetNextRetryInterval(Exception lastException,
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs
                                                             int       baseWaitSeconds,
                                                             int       retryCount)
         {
-            if ((!RetryPolicy.IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
+            if ((!Retry.IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
             {
                 return null;
             }

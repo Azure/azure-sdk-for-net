@@ -8,16 +8,17 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The set of options that can be specified when sending a set of events to configure
-    ///   how the event data is packaged as a batch.
+    ///   how the event data is packaged into batches.
     /// </summary>
     ///
-    public class EventBatchOptions
+    public class EventBatchingOptions
     {
         /// <summary>The maximum size to allow for the batch, in bytes.</summary>
         private int _maximumSizeInBytes = EventSender.MaximumBatchSizeLimit;
 
         /// <summary>
-        ///   The maximum size to allow for the batch, in bytes.
+        ///   The maximum size to allow for a single batch of events, in bytes.  If this size is exceeded,
+        ///   an exception will be thrown and the send operation will fail.
         /// </summary>
         ///
         public int MaximumSizeInBytes
@@ -34,7 +35,7 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Allows a batch to be identified as part of a group, which hints to the
         ///   Event Hubs service that reasonable efforts should be made to use the same
-        ///   partition for batches that belong to the same group.
+        ///   partition for events belonging to that group.
         ///
         ///   This should be specified only when there is a need to try and group events by partition, but
         ///   there is flexibility in allowing them to appear in other partitions at the discretion of the service,
@@ -44,9 +45,9 @@ namespace Azure.Messaging.EventHubs
         ///   identifier of the position be specified directly when sending the batch.
         /// </summary>
         ///
-        /// <value>The name of the group to which the batch is associated; if the batch is not</value>
+        /// <value>The label for the group to which the batch is associated; if the batch is not</value>
         ///
-        public string BatchGroup { get; set; }
+        public string BatchLabel { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

@@ -30,18 +30,6 @@ namespace Azure.Messaging.EventHubs
         public string EventHubPath { get; protected set; }
 
         /// <summary>
-        ///   The proxy to use for communication over web sockets.  If not specified,
-        ///   the system-wide proxy settings will be honored.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   A proxy cannot be used for communication over TCP; if websockets are not in
-        ///   use, any specified proxy will be ignored.
-        /// </remarks>
-        ///
-        public IWebProxy Proxy { get; protected set; }
-
-        /// <summary>
         ///   The credential to use for authorization with the Azure Event Hubs connection.  This credential
         ///   will be validated against the Event Hubs namespace and the requested Event Hub for which operations
         ///   will be performed.
@@ -78,30 +66,29 @@ namespace Azure.Messaging.EventHubs
                               EventHubClientOptions clientOptions)
         {
             EventHubPath = "THIS WOULD BE PARSED FROM THE CONNECTION STRING";
-            Proxy = clientOptions?.Proxy;
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="address">The fully qualified domain name for the Event Hubs namespace.  This is likely to be <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
-        public EventHubClient(Uri                     address,
+        public EventHubClient(string                  host,
                               string                  eventHubPath,
                               TokenCredential         credential,
                               EventHubClientOptions   clientOptions = default)
         {
-            Guard.ArgumentNotNull(nameof(address), address);
+            Guard.ArgumentNotNull(nameof(host), host);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNull(nameof(credential), credential);
 
             EventHubPath = eventHubPath;
             Credential = credential;
-            Proxy = clientOptions?.Proxy;
+            ClientOptions = clientOptions;
         }
 
         /// <summary>
@@ -121,8 +108,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the Event Hub this client is associated with.</returns>
         ///
-        public virtual Task<EventHubInformation> GetEventHubInformationAsync(CancellationToken cancellationToken = default) =>
-            Task.FromResult(new EventHubInformation("/sample-path", DateTime.UtcNow.AddDays(-5), 3, new[] { "one", "two", "three" }, DateTime.UtcNow));
+        public virtual Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult(new EventHubProperties("/sample-path", DateTime.UtcNow.AddDays(-5), 3, new[] { "one", "two", "three" }, DateTime.UtcNow));
 
         /// <summary>
         ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
@@ -134,9 +121,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
-        public virtual Task<PartitionInformation> GetPartitionInformationAsync(string            partitionId,
-                                                                               CancellationToken cancellationToken = default) =>
-            Task.FromResult(new PartitionInformation("/sample-path", partitionId, 2, 100, "421", DateTime.UtcNow.AddHours(-1.65), false, DateTime.UtcNow));
+        public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string            partitionId,
+                                                                             CancellationToken cancellationToken = default) =>
+            Task.FromResult(new PartitionProperties("/sample-path", partitionId, 2, 100, "421", DateTime.UtcNow.AddHours(-1.65), false, DateTime.UtcNow));
 
         /// <summary>
         ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
@@ -149,7 +136,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>An event sender configured in the requested manner.</returns>
         ///
-        public virtual EventSender CreateEventSender(SenderOptions senderOptions = default)
+        public virtual EventSender CreateSender(SenderOptions senderOptions = default)
         {
             //TODO: If no options were reeived, create a new set.  Otherwise, copy them.
             //TODO: If options are missing values that the client should default, set them.
@@ -174,17 +161,20 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="beginRecievingAt">The position of the event where the receiver should begin reading events.</param>
         /// <param name="receiverOptions">The set of options to apply when creating the receiver.</param>
         ///
         /// <returns>An event receiver configured in the requested manner.</returns>
         ///
+        /// <remarks>
+        ///   If the starting event position is not specified in the <paramref name="receiverOptions"/>, the receiver will
+        ///   default to ignoring events in the partition that were queued prior to the receiver being created and read only
+        ///   events which appear after that point.
+        /// </remarks>
+        ///
         public virtual PartitionReceiver CreatePartitionReceiver(string          partitionId,
-                                                                 EventPosition   beginRecievingAt,
                                                                  ReceiverOptions receiverOptions = default)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(beginRecievingAt), beginRecievingAt);
 
             //TODO: If no options were received, create a new set.
             //TODO: If options are missing values that the client should default, set them.
@@ -192,45 +182,7 @@ namespace Azure.Messaging.EventHubs
             return new PartitionReceiver(ClientOptions.ConnectionType,
                                          EventHubPath,
                                          partitionId,
-                                         beginRecievingAt,
                                          receiverOptions);
-        }
-
-        /// <summary>
-        ///   Creates an event receiver responsible for reading <see cref="EventData" /> from a specific Event Hub
-        ///   across all available partitions, and as a member of a specific consumer group.
-        ///
-        ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
-        ///   group to ensure that only one receiver from that group is reading the from the partition.
-        ///   These exclusive receivers are sometimes referred to as "Epoch Receivers."
-        ///
-        ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
-        ///   group to be actively reading events from the partition.  These non-exclusive receivers are
-        ///   sometimes referred to as "Non-epoch Receivers."
-        ///
-        ///   Designating a receiver as exclusive may be specified in the <paramref name="receiverOptions" />.
-        ///   By default, receivers are created as non-exclusive.
-        /// </summary>
-        ///
-        /// <param name="beginReceivingAt">The position of the event where the receiver should begin reading events.</param>
-        /// <param name="receiverOptions">The set of options to apply when creating the receiver.</param>
-        ///
-        /// <returns>An event receiver configured in the requested manner.</returns>
-        ///
-        public virtual EventReceiver CreateEventReceiver(ReceiverCheckpoint beginReceivingAt,
-                                                         ReceiverOptions    receiverOptions = default)
-        {
-            //TODO: This method is not in scope for the June Preview; remove it.
-
-            Guard.ArgumentNotNull(nameof(beginReceivingAt), beginReceivingAt);
-
-            //TODO: If no options were received, create a new set.
-            //TODO: If options are missing values that the client should default, set them.
-
-            return new EventReceiver(ClientOptions.ConnectionType,
-                                     EventHubPath,
-                                     beginReceivingAt,
-                                     receiverOptions);
         }
 
         /// <summary>

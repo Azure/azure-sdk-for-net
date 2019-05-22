@@ -21,10 +21,31 @@ namespace Azure.Messaging.EventHubs
         protected const string EndOfStreamOffset = "@latest";
 
         /// <summary>
+        ///   Corresponds to the location of the the first event present in the partition.  Use
+        ///   this position to begin receiving from the first available event in the partition.
+        /// </summary>
+        ///
+        public static EventPosition FirstAvailable => FromOffset(StartOfStreamOffset, true);
+
+        /// <summary>
+        ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
+        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="PartitionReceiver"/>
+        ///   is created with this position.
+        /// </summary>
+        ///
+        public static EventPosition NewEventsOnly => FromOffset(EndOfStreamOffset, false);
+
+        /// <summary>
         ///   The offset of the eventidentified by this position.
         /// </summary>
         ///
-        /// <value>Excpected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
+        /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
+        /// 
+        /// <remarks>
+        ///   The offset is the relative position for event in the context of the stream.  The offset
+        ///   should not be considered a stable value, as the same offset may refer to a different event
+        ///   as events reach the age limit for retention and are no longer visible within the stream.
+        /// </remarks>
         ///
         internal string Offset { get; set; }
 
@@ -54,21 +75,6 @@ namespace Azure.Messaging.EventHubs
         internal long? SequenceNumber { get; set; }
 
         /// <summary>
-        ///   Corresponds to the location of the the first event present in the partition.  Use
-        ///   this position to begin receiving from the first available event in the partition.
-        /// </summary>
-        ///
-        public static EventPosition FirstAvailable => FromOffset(StartOfStreamOffset, true);
-
-        /// <summary>
-        ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventSender"/>
-        ///   is created with this position.
-        /// </summary>
-        ///
-        public static EventPosition EndOfStream => FromOffset(EndOfStreamOffset, false);
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="EventPosition"/> class.
         /// </summary>
         ///
@@ -89,6 +95,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
         ///
         /// <returns>The position of the specified event.</returns>
+        /// 
+        /// <remarks>
+        ///   The offset is the relative position for event in the context of the stream.  The offset
+        ///   should not be considered a stable value, as the same offset may refer to a different event
+        ///   as events reach the age limit for retention and are no longer visible within the stream.
+        /// </remarks>
         ///
         public static EventPosition FromOffset(int  offset) => FromOffset(offset.ToString(), true);
 
@@ -136,6 +148,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
         ///
         /// <returns>The position of the specified event.</returns>
+        /// 
+        /// <remarks>
+        ///   The offset is the relative position for event in the context of the stream.  The offset
+        ///   should not be considered a stable value, as the same offset may refer to a different event
+        ///   as events reach the age limit for retention and are no longer visible within the stream.
+        /// </remarks>
         ///
         private static EventPosition FromOffset(string offset,
                                                 bool   isInclusive = false)

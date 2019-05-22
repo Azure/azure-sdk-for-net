@@ -153,12 +153,6 @@
   <data name="PartitionSenderInvalidWithpartitionIdOnBatch" xml:space="preserve">
     <value>EventData batch with partitionId cannot be sent on PartitionSender.</value>
   </data>
-  <data name="PluginAlreadyRegistered" xml:space="preserve">
-    <value>The {0} plugin has already been registered.</value>
-  </data>
-  <data name="PluginRegistrationFailed" xml:space="preserve">
-    <value>There was an error trying to register the {0} plugin.</value>
-  </data>
   <data name="ReceiverIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
@@ -179,5 +173,8 @@
   </data>
   <data name="ValueOutOfRange" xml:space="preserve">
     <value>The value supplied must be between {0} and {1}.</value>
+  </data>
+  <data name="PartitionPropertiesNotPopulated" xml:space="preserve">
+    <value>No partition properties are available.  Either no events have been received yet or partition properties were set to not update.</value>
   </data>
 </root>

@@ -160,29 +160,20 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No partition properties are available.  Either no events have been received yet or partition properties were set to not update..
+        /// </summary>
+        internal static string PartitionPropertiesNotPopulated {
+            get {
+                return ResourceManager.GetString("PartitionPropertiesNotPopulated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EventData batch with partitionId cannot be sent on PartitionSender..
         /// </summary>
         internal static string PartitionSenderInvalidWithpartitionIdOnBatch {
             get {
                 return ResourceManager.GetString("PartitionSenderInvalidWithpartitionIdOnBatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The {0} plugin has already been registered..
-        /// </summary>
-        internal static string PluginAlreadyRegistered {
-            get {
-                return ResourceManager.GetString("PluginAlreadyRegistered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There was an error trying to register the {0} plugin..
-        /// </summary>
-        internal static string PluginRegistrationFailed {
-            get {
-                return ResourceManager.GetString("PluginRegistrationFailed", resourceCulture);
             }
         }
         

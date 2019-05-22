@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs
                 this[MessagePropertyName.SequenceNumber] = sequenceNumber;
                 this[MessagePropertyName.EnqueuedTimeUtc] = enqueuedTimeUtc;
                 this[MessagePropertyName.Offset] = offset;
-                this[MessagePropertyName.partitionId] = partitionId;
+                this[MessagePropertyName.PartitionName] = partitionId;
             }
 
             /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.Messaging.EventHubs
             {
                 get
                 {
-                    if (this.TryGetValue(MessagePropertyName.partitionId, out var value))
+                    if (this.TryGetValue(MessagePropertyName.PartitionName, out var value))
                     {
                         return (string)value;
                     }

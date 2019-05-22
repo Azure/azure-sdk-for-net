@@ -51,10 +51,11 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Sends the event to the associated Event Hub.
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
+        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="eventData">The event data to send.</param>
+        /// <param name="events">The set of event data to send.</param>
         /// <param name="partitionId">The identifier of the partition to which the event should be sent.  If not specified, a partition will be automatically selected.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
@@ -70,23 +71,23 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchOptions, CancellationToken)"/>
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchingOptions, CancellationToken)"/>
         ///
-        public virtual Task SendAsync(EventData         eventData,
-                                      string            partitionId = null,
-                                      CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public virtual Task SendAsync(IEnumerable<EventData> events,
+                                      string                 partitionId = default,
+                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
 
         /// <summary>
-        ///   Sends a size-limited batch of events to the Event Hub associated with this client, using the erequested partition requested
-        ///   automatically selecting one if no partition was requested.
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
+        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="eventBatch">The batch of event data to send to the Event Hub.</param>
+        /// <param name="events">The set of event data to send.</param>
         /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
-        /// <returns>The set of event data that could not be included in the batch because it had reached it's maximum size; <c>null</c> if all events were included in the batch.</returns>
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <remarks>
         ///   Allowing automatic selection of a partition is recommended when:
@@ -98,24 +99,24 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        /// <seealso cref="SendAsync(EventData, string, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchingOptions, CancellationToken)"/>
         ///
-        public virtual Task<IEnumerable<EventData>> SendAsync(IEnumerable<EventData> eventBatch,
-                                                              EventBatchOptions      batchOptions = default,
-                                                              CancellationToken      cancellationToken = default) => Task.FromResult(Enumerable.Empty<EventData>());
+        public virtual Task SendAsync(IEnumerable<EventData> events,
+                                      EventBatchingOptions   batchOptions,
+                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
 
         /// <summary>
-        ///   Sends a size-limited batch of events to the Event Hub associated with this client, using the erequested partition requested
-        ///   automatically selecting one if no partition was requested.
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
+        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="eventBatch">The batch of event data to send to the Event Hub.</param>
+        /// <param name="events">The set of event data to send.</param>
         /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
         /// <param name="partitionId">The identifier of the partition to which the event should be sent.  If not specified, a partition will be automatically selected.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
-        /// <returns>The set of event data that could not be included in the batch because it had reached it's maximum size; <c>null</c> if all events were included in the batch.</returns>
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         /// <remarks>
         ///   Allowing automatic selection of a partition is recommended when:
@@ -127,13 +128,13 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        /// <seealso cref="SendAsync(EventData, string, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
         ///
-        public virtual Task<IEnumerable<EventData>> SendAsync(IEnumerable<EventData> eventBatch,
-                                                              string                 partitionId = null,
-                                                              EventBatchOptions      batchOptions = default,
-                                                              CancellationToken      cancellationToken = default) => Task.FromResult(Enumerable.Empty<EventData>());
+        public virtual Task SendAsync(IEnumerable<EventData> events,
+                                      string                 partitionId,
+                                      EventBatchingOptions   batchOptions,
+                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
 
         /// <summary>
         ///   Closes the sender.

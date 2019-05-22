@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   A receiver responsible for reading <see cref="EventData" /> from a specific Event Hub
-    ///   partition, and as a member of a specific consumer group.
+    ///   partition and as a member of a specific consumer group.
     ///
     ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
     ///   group to ensure that only one receiver from that group is reading the from the partition.
@@ -21,11 +21,14 @@ namespace Azure.Messaging.EventHubs
     ///
     ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
     ///   group to be actively reading events from the partition.  These non-exclusive receivers are
-    ///   sometimes referred to as "Non-epoch Receivers."
+    ///   sometimes referred to as "Non-Epoch Receivers."
     /// </summary>
     ///
     public class PartitionReceiver
     {
+        /// <summary>If populated, the most recent information about the associated partition known the receiver.</summary>
+        private PartitionProperties _partitionProperties = null;
+
         /// <summary>
         ///   The identifier of the Event Hub partition that this receiver is associated with.  Events will be read
         ///   only from this partition.
@@ -58,14 +61,29 @@ namespace Azure.Messaging.EventHubs
         public long? Priority { get; protected set; }
 
         /// <summary>
-        ///   The most recent information about each partition in the Event Hub known by the current receiver.  This
+        ///   The most recent information about the partition in the Event Hub known by the current receiver.  This
         ///   set of information can be used to mark the position of an event receiver so that a new reciever can
         ///   begin reading where this receiver last left off.
         /// </summary>
         ///
-        /// <value>If <see cref="ReceiverOptions.UpdateInformationOnReceive" /> is <c>true</c>, this information will be refreshed when events are received; otherwise, this will not be populated.</value>
+        /// <value>If <see cref="ReceiverOptions.UpdatePropertiesOnReceive" /> is <c>true</c>, this information will be refreshed when events are received; otherwise, this will not be populated.</value>
         ///
-        public PartitionInformation PartitionInformation { get; protected set; }
+        public PartitionProperties PartitionProperties
+        {
+          get
+          {
+              //TODO: Review Error
+
+              if ((_partitionProperties == null) || (!ReceiverOptions.UpdatePropertiesOnReceive))
+              {
+                  throw new NotSupportedException(Resources.PartitionPropertiesNotPopulated);
+              }
+
+              return _partitionProperties;
+          }
+
+          protected set => _partitionProperties = value;
+        }
 
         /// <summary>
         ///   The position of the event in the partition where the receiver should begin reading.
@@ -86,34 +104,36 @@ namespace Azure.Messaging.EventHubs
         /// <param name="connectionType">The type of connection used for communicating with the Event Hubs service.</param>
         /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="eventPosition">The position of the event where the receiver should begin reading events.</param>
         /// <param name="receiverOptions">The set of options to use for this receiver.</param>
+        ///
+        /// <remarks>
+        ///   If the starting event position is not specified in the <paramref name="receiverOptions"/>, the receiver will
+        ///   default to ignoring events in the partition that were queued prior to the receiver being created and read only
+        ///   events which appear after that point.
+        /// </remarks>
         ///
         protected internal PartitionReceiver(ConnectionType  connectionType,
                                              string          eventHubPath,
                                              string          partitionId,
-                                             EventPosition   eventPosition,
                                              ReceiverOptions receiverOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
 
             //TODO: Validate and clone the options (to avoid any changes on the options being carried over)
             //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpPartitionReceiver.
 
+            //TODO: Remove this line.
+            receiverOptions = receiverOptions ?? new ReceiverOptions();
+
             PartitionId = partitionId;
-            StartingPosition = eventPosition;
+            StartingPosition = receiverOptions.BeginReceivingAt;
             ReceiverOptions = receiverOptions;
             IsExclusiveReceiver = receiverOptions.IsExclusiveReceiver;
 
             Priority = receiverOptions.IsExclusiveReceiver
                 ? receiverOptions.ExclusiveReceiverPriority
                 : (long?)null;
-
-            PartitionInformation = receiverOptions.UpdateInformationOnReceive
-                ? new PartitionInformation(eventHubPath, partitionId, default, default, default,  default, default, null)
-                : null;
         }
 
         /// <summary>

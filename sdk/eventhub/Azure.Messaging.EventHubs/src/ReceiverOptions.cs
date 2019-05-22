@@ -9,8 +9,8 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating an <see cref="EventReceiver" />
-    ///   or <see cref="PartitionReceiver" /> to configure its behavior.
+    ///   The baseline set of options that can be specified when creating a <see cref="PartitionReceiver" />
+    ///   to configure its behavior.
     /// </summary>
     ///
     public class ReceiverOptions
@@ -40,6 +40,18 @@ namespace Azure.Messaging.EventHubs
         public string ConsumerGroup { get; set; } = DefaultConsumerGroupName;
 
         /// <summary>
+        ///   The position within the partition where the receiver should begin reading events.
+        /// </summary>
+        ///
+        /// <value>
+        ///   If not specified, the receiver will ignore events in the partition that were
+        ///   queued prior to the receiver being created and read only events which appear
+        ///   after that point.
+        /// </value>
+        ///
+        public EventPosition BeginReceivingAt { get; set; } = EventPosition.NewEventsOnly;
+
+        /// <summary>
         ///   Indicates that the receiver is intended to be the only reader of events for the requested partition and an
         ///   associated consumer group.  To do so, this receiver will attempt to assert ownership over the partition;
         ///   in the case where two exclusive receivers attempt to assert ownership for the same partition/consumer group
@@ -62,13 +74,13 @@ namespace Azure.Messaging.EventHubs
         public long ExclusiveReceiverPriority { get; set; }
 
         /// <summary>
-        ///   The <see cref="EventHubs.RetryPolicy" /> used to govern retry attempts when an issue
+        ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
         ///   is encountered while receiving.
         /// </summary>
         ///
         /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public RetryPolicy RetryPolicy { get; set; }
+        public Retry Retry { get; set; }
 
         /// <summary>
         ///   The default amount of time to wait for the requested amount of messages when receiving; if this
@@ -81,13 +93,28 @@ namespace Azure.Messaging.EventHubs
         public TimeSpan? DefaultReceiveWaitTime { get; set; }
 
         /// <summary>
-        ///   Indicates whether or not information about the current state of events received is updated as the receiver reads
-        ///   events.
+        ///   Indicates whether or not properties about the current state of events received is kept up to date
+        ///   as the receiver reads events.
+        ///
+        ///   Enabling updates allows consumers that wish to create checkpoints more easily and frequently, as the
+        ///   necessary inormation needed to do so is readily available on the <see cref="PartitionReceiver" />.  If
+        ///   updates are not enabled, consumers will need to request partition properties using
+        ///   <see cref="EventHubClient.GetPartitionPropertiesAsync(string, System.Threading.CancellationToken)"/>.
+        ///
+        ///   Should a consumer wish to save checkpoint information frequently, to try and minimize the number of events
+        ///   which would be repeated in the event of crash recovery, it is recommended that updates are enabled.  For consumers
+        ///   that would prefer to minimize network transfers at the cost of potentially having more repeated events after a crash
+        ///   resovery, it is recommended that updating be disabled.
         /// </summary>
         ///
         /// <value><c>true</c> if the information should be kept up-to-date as events are received; otherwise, <c>false</c>.</value>
         ///
-        public bool UpdateInformationOnReceive { get; set; } = true;
+        /// <remarks>
+        ///   Enabling updates does result in use of a small amount of additional bandwidth when receiving messages, as the
+        ///   properties for the state of the partition are sent with events.
+        /// </remarks>
+        ///
+        public bool UpdatePropertiesOnReceive { get; set; } = true;
 
         /// <summary>
         ///     An optional text-based identifierlabel to assign to an event receiver.

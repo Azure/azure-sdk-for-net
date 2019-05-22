@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
         ///   if so, the amount of time to wait between retry attempts.
         /// </summary>
         ///
-        public RetryPolicy RetryPolicy { get; set; } = RetryPolicy.Default;
+        public Retry Retry { get; set; } = Retry.Default;
 
         /// <summary>
         ///   The type of connection that will be used for communicating with the Event Hubs
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         ///   the requested Event Hub.
         /// </summary>
         ///
-        public TimeSpan OperationTimeout { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         ///   The proxy to use for communication over web sockets.  If not specified,

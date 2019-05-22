@@ -11,6 +11,6 @@ namespace Azure.Messaging.EventHubs
     public enum  ServiceVersion
     {
         /// <summary>The latest available Event Hubs API version.</summary>
-        v2017_04_01 = 0
+        Latest = 0
     }
 }
