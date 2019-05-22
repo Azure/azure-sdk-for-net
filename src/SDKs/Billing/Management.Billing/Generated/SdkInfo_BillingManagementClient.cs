@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "EnrollmentAccounts", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSections", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Invoices", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "LineOfCredits", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Operations", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "PaymentMethods", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Policies", "2018-11-01-preview"),

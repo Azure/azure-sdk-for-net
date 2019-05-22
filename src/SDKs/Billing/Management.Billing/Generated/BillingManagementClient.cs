@@ -182,6 +182,11 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IAgreementsOperations Agreements { get; private set; }
 
         /// <summary>
+        /// Gets the ILineOfCreditsOperations.
+        /// </summary>
+        public virtual ILineOfCreditsOperations LineOfCredits { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -443,6 +448,7 @@ namespace Microsoft.Azure.Management.Billing
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
+            LineOfCredits = new LineOfCreditsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";

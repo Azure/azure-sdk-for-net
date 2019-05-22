@@ -176,5 +176,10 @@ namespace Microsoft.Azure.Management.Billing
         /// </summary>
         IAgreementsOperations Agreements { get; }
 
+        /// <summary>
+        /// Gets the ILineOfCreditsOperations.
+        /// </summary>
+        ILineOfCreditsOperations LineOfCredits { get; }
+
     }
 }
