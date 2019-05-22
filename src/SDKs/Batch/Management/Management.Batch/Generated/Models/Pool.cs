@@ -269,6 +269,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets the maximum number of tasks that can run concurrently
         /// on a single compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value is the smaller of 4 times
+        /// the number of cores of the vmSize of the pool or 256.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
@@ -276,6 +280,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets how tasks are distributed across compute nodes in a
         /// pool.
         /// </summary>
+        /// <remarks>
+        /// If not specified, the default is spread.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
@@ -331,9 +338,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// each compute node in the pool.
         /// </summary>
         /// <remarks>
-        /// Changes to application packages affect all new compute nodes
-        /// joining the pool, but do not affect compute nodes that are already
-        /// in the pool until they are rebooted or reimaged.
+        /// Changes to application package references affect all new compute
+        /// nodes joining the pool, but do not affect compute nodes that are
+        /// already in the pool until they are rebooted or reimaged. There is a
+        /// maximum of 10 application package references on any given pool.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.applicationPackages")]
         public IList<ApplicationPackageReference> ApplicationPackages { get; set; }
