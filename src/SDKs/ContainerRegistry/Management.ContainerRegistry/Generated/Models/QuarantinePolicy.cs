@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// An object that represents quarantine policy for a container registry.
+    /// The quarantine policy for a container registry.
     /// </summary>
     public partial class QuarantinePolicy
     {

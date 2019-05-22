@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// An object that represents content trust policy for a container
-    /// registry.
+    /// The content trust policy for a container registry.
     /// </summary>
     public partial class TrustPolicy
     {
