@@ -29,12 +29,12 @@ jobs:
         inputs:
           solution: build.proj
           msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\Compute
-      - script: dir /S
+      - script: dir /S TestResults
         workingDirectory: $(Agent.BuildDirectory)
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: '**/*.trx'
+          testResultsFiles: 'TestResults/**/*.trx'
           testRunTitle: 'Windows Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
