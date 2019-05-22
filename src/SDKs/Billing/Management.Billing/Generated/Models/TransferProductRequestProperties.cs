@@ -31,11 +31,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the TransferProductRequestProperties
         /// class.
         /// </summary>
-        /// <param name="destinationInvoiceSectionId">Destination invoice
+        /// <param name="destinationInvoiceSectionId">The destination invoice
         /// section id.</param>
-        public TransferProductRequestProperties(string destinationInvoiceSectionId = default(string))
+        /// <param name="destinationBillingProfileId">The destination billing
+        /// profile id.</param>
+        public TransferProductRequestProperties(string destinationInvoiceSectionId = default(string), string destinationBillingProfileId = default(string))
         {
             DestinationInvoiceSectionId = destinationInvoiceSectionId;
+            DestinationBillingProfileId = destinationBillingProfileId;
             CustomInit();
         }
 
@@ -45,10 +48,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets destination invoice section id.
+        /// Gets or sets the destination invoice section id.
         /// </summary>
         [JsonProperty(PropertyName = "destinationInvoiceSectionId")]
         public string DestinationInvoiceSectionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the destination billing profile id.
+        /// </summary>
+        [JsonProperty(PropertyName = "destinationBillingProfileId")]
+        public string DestinationBillingProfileId { get; set; }
 
     }
 }
