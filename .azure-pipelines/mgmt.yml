@@ -31,7 +31,7 @@ jobs:
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: '**/*.trx'
+          testResultsFiles: 'src/**/*.trx'
           testRunTitle: 'Windows Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
