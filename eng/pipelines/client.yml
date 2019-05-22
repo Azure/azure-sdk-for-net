@@ -13,4 +13,5 @@ pr: none
 jobs:
 - template: templates/jobs/archetype-sdk-client.yml
   parameters:
+    ServiceDirectory: '*'
     VersioningProperties: /p:OfficialBuildId=$(OfficialBuildId) /p:PreRelaseVersionLabel=$(PreReleaseVersionLabel) /p:DotNetFinalVersionKind=$(DotNetFinalVersionKind)
