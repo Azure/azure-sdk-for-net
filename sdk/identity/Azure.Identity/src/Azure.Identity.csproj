@@ -10,15 +10,10 @@
       ]]>
     </PackageReleaseNotes>
 
-    <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblyName>Azure.Identity</AssemblyName>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,9 +6,6 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
-
     <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
     <!--

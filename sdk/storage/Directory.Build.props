@@ -2,7 +2,7 @@
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />  
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup>
     <!--
@@ -17,15 +17,6 @@
     fully formalized so we won't enable them just yet.
      -->
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-
-    <!--
-    The Azure Storage projects don't want the Rest Client Runtimes or default
-    test projects (xunit instead of MSTest).
-    -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
-
-    <!-- Note that we disable this for DEBUG -->
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!--
     Storage used to point to its main documentation page, but the rest of the
@@ -43,15 +34,6 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-
-  <!-- Add a reference to Azure.Core -->
-  <PropertyGroup>
-    <!--
-    You can set the UseProjectReferenceToAzureCore property to switch between
-    project references and public NuGet references.
-     -->
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
-  </PropertyGroup>
   <Import Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
 
