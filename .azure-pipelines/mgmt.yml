@@ -50,10 +50,6 @@ jobs:
             version: '$(DotNetCoreVersion)'
         - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
           displayName: 'Build and test on Non-windows machine'
-        - task: CmdLine@1
-          inputs:
-            filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
-            arguments: -Vr *,31bf3856ad364e35
         - task: PublishTestResults@2
           condition: succeededOrFailed()
           inputs:
