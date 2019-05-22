@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
+    <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
+    <Version>4.0.1-preview</Version>
+    <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
+    <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
+    <PackageReleaseNotes>This corresponds to the 2019-02-01-preview API version which includes the following new functionalities: pagination and search filter for resources list operations, Service Bus Queue as destination, manual create/delete of domain topics and disallows usage of ‘All’ with IncludedEventTypes."</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AzureApiTag>EventGrid_2019-02-01-preview;</AzureApiTag>
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+</Project>
