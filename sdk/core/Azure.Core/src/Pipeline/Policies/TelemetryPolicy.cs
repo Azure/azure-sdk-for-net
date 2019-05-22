@@ -17,6 +17,8 @@ namespace Azure.Core.Pipeline.Policies
 
         private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;
 
+        public static string DefaultApplicationId { get; set; }
+
         public string ApplicationId
         {
             get => _applicationId;
@@ -29,6 +31,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public TelemetryPolicy(Assembly clientAssembly)
         {
+            _applicationId = DefaultApplicationId;
             _clientAssembly = clientAssembly;
             InitializeHeader();
         }
