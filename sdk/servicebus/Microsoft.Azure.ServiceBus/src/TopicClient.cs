@@ -117,6 +117,52 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new instance of the Topic client using Azure Active Directory authentication.
+        /// </summary>
+        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="entityPath">Topic path.</param>
+        /// <param name="authCallback">User provided delegate that will provide the access token.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
+        /// <param name="transportType">Transport type.</param>
+        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first send/receive operation.</remarks>
+        public static TopicClient CreateWithAzureActiveDirectory(
+            string endpoint,
+            string entityPath,
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
+            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
+            TransportType transportType = TransportType.Amqp,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            RetryPolicy retryPolicy = null)
+        {
+            return new TopicClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
+            {
+                TokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority)
+            }, entityPath, retryPolicy);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the Topic client by using Azure Managed Identity authentication.
+        /// </summary>
+        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="entityPath">Topic path.</param>
+        /// <param name="transportType">Transport type.</param>
+        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first send/receive operation.</remarks>
+        public static TopicClient CreateWithManagedIdentity(
+            string endpoint,
+            string entityPath,
+            TransportType transportType = TransportType.Amqp,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            RetryPolicy retryPolicy = null)
+        {
+            return new TopicClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
+            {
+                TokenProvider = TokenProvider.CreateManagedIdentityTokenProvider()
+            }, entityPath, retryPolicy);
+        }
+
+        /// <summary>
         /// Gets the name of the topic.
         /// </summary>
         public string TopicName { get; }
