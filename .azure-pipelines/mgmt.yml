@@ -25,11 +25,15 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
+        displayName: 'Install build tools'
       - task: MSBuild@1
         inputs:
           solution: build.proj
           msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\Compute
+        displayName: 'Build and Run tests'
       - script: dir /S TestResults
+        workingDirectory: $(Agent.BuildDirectory)
+      - script: dir /S src\SDKs\Compute
         workingDirectory: $(Agent.BuildDirectory)
       - task: PublishTestResults@2
         condition: succeededOrFailed()
