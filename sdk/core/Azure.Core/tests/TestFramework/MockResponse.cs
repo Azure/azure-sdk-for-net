@@ -21,6 +21,13 @@ namespace Azure.Core.Testing
             allPolicies[policies.Length] = new HttpPipelineTransportPolicy(transport);
             return new HttpPipeline(transport, allPolicies);
         }
+        public static HttpPipeline Create(HttpPipelineTransport transport, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] policies)
+        {
+            var allPolicies = new HttpPipelinePolicy[policies.Length + 1];
+            policies.AsMemory().CopyTo(allPolicies);
+            allPolicies[policies.Length] = new HttpPipelineTransportPolicy(transport);
+            return new HttpPipeline(transport, allPolicies, responseClassifier);
+        }
 
         private class HttpPipelineTransportPolicy : HttpPipelinePolicy
         {
