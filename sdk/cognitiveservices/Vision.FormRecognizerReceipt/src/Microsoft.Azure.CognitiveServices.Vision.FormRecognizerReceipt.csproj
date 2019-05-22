@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Cognitive Services Form Recognizer Receipt SDK</AssemblyTitle>
+    <Description>This client library provides access to the Microsoft Cognitive Services Form Recognizer Receipt APIs.</Description>
+    <VersionPrefix>0.8.0</VersionPrefix>
+    <PackageTags>FormRecognizerReceipt;Form Recognizer Receipt;</PackageTags>
+    <PackageReleaseNotes>
+<![CDATA[
+This is a public preview release of the Cognitive Services Form Recognizer Receipt SDK.
+]]>
+	</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <AzureApiTag />
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+</Project>
