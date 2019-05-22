@@ -44,6 +44,23 @@ namespace Microsoft.Azure.Management.CostManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<View>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The operation to delete all private views.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists all views at the given scope.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
         /// </summary>
@@ -82,6 +99,41 @@ namespace Microsoft.Azure.Management.CostManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<View>>> ListByScopeWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The operation to delete all views by scope.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+        /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with view operations. This includes
+        /// 'subscriptions/{subscriptionId}' for subscription scope,
+        /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+        /// for Department scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+        /// for BillingProfile scope,
+        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+        /// for InvoiceSection scope and
+        /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAllByScopeWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List all views by external billing account
         /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
         /// </summary>
@@ -105,6 +157,26 @@ namespace Microsoft.Azure.Management.CostManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<View>>> ListByExternalBillingAccountWithHttpMessagesAsync(string externalBillingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// The operation to delete all views by external billing account.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+        /// </summary>
+        /// <param name='externalBillingAccountName'>
+        /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAllByExternalBillingAccountWithHttpMessagesAsync(string externalBillingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List all views by external subscription
         /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
         /// </summary>
@@ -127,6 +199,26 @@ namespace Microsoft.Azure.Management.CostManagement
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<View>>> ListByExternalSubscriptionWithHttpMessagesAsync(string externalSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The operation to delete all views by external subscription.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
+        /// </summary>
+        /// <param name='externalSubscriptionName'>
+        /// External Subscription Name. (eg 'aws-{UsageAccountId}')
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAllByExternalSubscriptionWithHttpMessagesAsync(string externalSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the view by view name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
