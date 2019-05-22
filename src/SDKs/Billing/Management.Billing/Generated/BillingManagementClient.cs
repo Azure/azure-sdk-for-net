@@ -82,14 +82,14 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IAvailableBalancesOperations.
-        /// </summary>
-        public virtual IAvailableBalancesOperations AvailableBalances { get; private set; }
-
-        /// <summary>
         /// Gets the IPaymentMethodsOperations.
         /// </summary>
         public virtual IPaymentMethodsOperations PaymentMethods { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableBalancesOperations.
+        /// </summary>
+        public virtual IAvailableBalancesOperations AvailableBalances { get; private set; }
 
         /// <summary>
         /// Gets the IBillingProfilesOperations.
@@ -423,8 +423,8 @@ namespace Microsoft.Azure.Management.Billing
         private void Initialize()
         {
             BillingAccounts = new BillingAccountsOperations(this);
-            AvailableBalances = new AvailableBalancesOperations(this);
             PaymentMethods = new PaymentMethodsOperations(this);
+            AvailableBalances = new AvailableBalancesOperations(this);
             BillingProfiles = new BillingProfilesOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
             Departments = new DepartmentsOperations(this);

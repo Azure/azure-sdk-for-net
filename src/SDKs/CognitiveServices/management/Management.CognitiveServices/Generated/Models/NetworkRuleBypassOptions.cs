@@ -8,16 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid.Models
+namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
 
     /// <summary>
-    /// Defines values for EventDeliverySchema.
+    /// Defines values for NetworkRuleBypassOptions.
     /// </summary>
-    public static class EventDeliverySchema
+    public static class NetworkRuleBypassOptions
     {
-        public const string EventGridSchema = "EventGridSchema";
-        public const string CloudEventV01Schema = "CloudEventV01Schema";
-        public const string CustomInputSchema = "CustomInputSchema";
+        public const string AzureServices = "AzureServices";
+        public const string None = "None";
     }
 }

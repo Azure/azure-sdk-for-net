@@ -30,6 +30,10 @@ namespace Azure.Core.Testing
 
         private RecordSession _session;
 
+        private RecordSession _previousSession;
+
+        private readonly Random _nonReproducibleRandom = new Random();
+
         private Random _random;
 
         public Random Random
@@ -44,8 +48,15 @@ namespace Azure.Core.Testing
                             _random = new Random();
                             break;
                         case RecordedTestMode.Record:
-                            _random = new Random();
-                            int seed = _random.Next();
+                            // Try get the seed from existing session
+                            if (!(_previousSession != null &&
+                                  _previousSession.Variables.TryGetValue(RandomSeedVariableKey, out string seedString) &&
+                                  int.TryParse(seedString, out int seed)
+                                ))
+                            {
+                                _random = new Random();
+                                seed = _random.Next();
+                            }
                             _session.Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new Random(seed);
                             break;
@@ -73,6 +84,17 @@ namespace Azure.Core.Testing
             {
                 case RecordedTestMode.Record:
                     _session = new RecordSession();
+                    if (File.Exists(_sessionFile))
+                    {
+                        try
+                        {
+                            _previousSession = Load();
+                        }
+                        catch (Exception)
+                        {
+                            // ignore
+                        }
+                    }
                     break;
                 case RecordedTestMode.Playback:
                     _session = Load();
@@ -104,7 +126,7 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Live:
                     return currentTransport;
                 case RecordedTestMode.Record:
-                    return new RecordTransport(_session, currentTransport);
+                    return new RecordTransport(_session, currentTransport, Random);
                 case RecordedTestMode.Playback:
                     return new PlaybackTransport(_session, _matcher);
                 default:
@@ -114,7 +136,7 @@ namespace Azure.Core.Testing
 
         public string GenerateId()
         {
-            return Random.Next().ToString();
+            return Random .Next().ToString();
         }
 
         public string GetConnectionStringFromEnvironment(string variableName)
@@ -151,6 +173,11 @@ namespace Azure.Core.Testing
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void DisableIdReuse()
+        {
+            _previousSession = null;
         }
     }
 }

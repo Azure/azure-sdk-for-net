@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -1420,6 +1421,27 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                 container.ListBlobsFlatSegmentAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+        }
+
+        [TestMethod]
+        [TestCategory("Live")]
+        public async Task ListBlobsFlatSegmentAsync_PreservesWhitespace()
+        {
+            await VerifyBlobNameWhitespaceRoundtrips("    prefix");
+            await VerifyBlobNameWhitespaceRoundtrips("suffix    ");
+            await VerifyBlobNameWhitespaceRoundtrips("    ");
+
+            async Task VerifyBlobNameWhitespaceRoundtrips(string blobName)
+            {
+                using (TestHelper.GetNewContainer(out var container))
+                {
+                    var blob = container.GetBlockBlobClient(blobName);
+                    await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
+                    var response = await container.ListBlobsFlatSegmentAsync();
+                    var blobItem = response.Value.BlobItems.First();
+                    Assert.AreEqual(blobName, blobItem.Name);
+                }
+            }
         }
 
         [TestMethod]

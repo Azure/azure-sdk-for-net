@@ -12,15 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
+    public static class RandomExtensions
+    {
+        public static Guid NewGuid(this Random random)
+        {
+            var bytes = new byte[16];
+            random.NextBytes(bytes);
+            return new Guid(bytes);
+        }
+    }
     public class RecordTransport : HttpPipelineTransport
     {
         private readonly HttpPipelineTransport _innerTransport;
 
+        private readonly Random _random;
+
         private readonly RecordSession _session;
 
-        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport)
+        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport, Random random)
         {
             _innerTransport = innerTransport;
+            _random = random;
             _session = session;
         }
 
@@ -38,7 +50,15 @@ namespace Azure.Core.Testing
 
         public override Request CreateRequest(IServiceProvider services)
         {
-            return _innerTransport.CreateRequest(services);
+            Request request = _innerTransport.CreateRequest(services);
+
+            lock (_random)
+            {
+                // Override ClientRequestId to avoid excessive diffs
+                request.ClientRequestId = _random.NewGuid().ToString("N");
+            }
+
+            return request;
         }
 
         public RecordEntry CreateEntry(Request request, Response response)

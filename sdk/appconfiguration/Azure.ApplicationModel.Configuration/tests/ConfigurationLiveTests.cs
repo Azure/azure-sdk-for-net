@@ -501,11 +501,16 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRevisions()
         {
+            // The service keeps revision history even after the key was removed
+            // Avoid reusing ids
+            Recording.DisableIdReuse();
+
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             //Prepare environment
             ConfigurationSetting setting = testSetting;
+
             setting.Key = GenerateKeyId("key-");
             var testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";

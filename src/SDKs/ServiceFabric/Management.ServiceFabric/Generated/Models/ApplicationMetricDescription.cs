@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets the name of the metric.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// or equal to TotalApplicationCapacity.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "MaximumCapacity")]
+        [JsonProperty(PropertyName = "maximumCapacity")]
         public long? MaximumCapacity { get; set; }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// MaximumCapacity for each metric.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "ReservationCapacity")]
+        [JsonProperty(PropertyName = "reservationCapacity")]
         public long? ReservationCapacity { get; set; }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// smaller than or equal to this value.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "TotalApplicationCapacity")]
+        [JsonProperty(PropertyName = "totalApplicationCapacity")]
         public long? TotalApplicationCapacity { get; set; }
 
     }

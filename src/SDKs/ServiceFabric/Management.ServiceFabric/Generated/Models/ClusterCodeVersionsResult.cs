@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of the ServiceFabric runtime versions
+    /// The result of the Service Fabric runtime versions
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ClusterCodeVersionsResult

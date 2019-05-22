@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Initializes a new instance of the ServiceResourceList class.
         /// </summary>
-        public ServiceResourceList(IList<ServiceResource> value = default(IList<ServiceResource>))
+        /// <param name="nextLink">URL to get the next set of service list
+        /// results if there are any.</param>
+        public ServiceResourceList(IList<ServiceResource> value = default(IList<ServiceResource>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -46,6 +49,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ServiceResource> Value { get; set; }
+
+        /// <summary>
+        /// Gets URL to get the next set of service list results if there are
+        /// any.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }

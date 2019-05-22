@@ -86,7 +86,7 @@ namespace Azure.Storage.Test
         {
             service = service ?? GetServiceClient_SharedKey();
 
-            var result = new DisposingShare(service.GetShareClient(shareName ?? GetNewShareName()), metadata ?? new Dictionary<string, string>());
+            var result = new DisposingShare(service.GetShareClient(shareName ?? GetNewShareName()), metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
 
             share = result.ShareClient;
 

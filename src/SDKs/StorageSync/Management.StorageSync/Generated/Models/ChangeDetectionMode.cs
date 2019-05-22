@@ -8,16 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.EventGrid.Models
+namespace Microsoft.Azure.Management.StorageSync.Models
 {
 
     /// <summary>
-    /// Defines values for InputSchema.
+    /// Defines values for ChangeDetectionMode.
     /// </summary>
-    public static class InputSchema
+    public static class ChangeDetectionMode
     {
-        public const string EventGridSchema = "EventGridSchema";
-        public const string CustomEventSchema = "CustomEventSchema";
-        public const string CloudEventV01Schema = "CloudEventV01Schema";
+        public const string Default = "Default";
+        public const string Recursive = "Recursive";
     }
 }

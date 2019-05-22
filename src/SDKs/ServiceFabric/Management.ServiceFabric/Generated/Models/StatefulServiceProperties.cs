@@ -53,6 +53,9 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="serviceTypeName">The name of the service type</param>
         /// <param name="partitionDescription">Describes how the service is
         /// partitioned.</param>
+        /// <param name="servicePackageActivationMode">The activation Mode of
+        /// the service package. Possible values include: 'SharedProcess',
+        /// 'ExclusiveProcess'</param>
         /// <param name="hasPersistedState">A flag indicating whether this is a
         /// persistent service which stores states on the local disk. If it is
         /// then the value of this property is true, if not it is
@@ -70,8 +73,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="standByReplicaKeepDuration">The definition on how long
         /// StandBy replicas should be maintained before being removed,
         /// represented in ISO 8601 format (hh:mm:ss.s).</param>
-        public StatefulServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), bool? hasPersistedState = default(bool?), int? targetReplicaSetSize = default(int?), int? minReplicaSetSize = default(int?), System.DateTime? replicaRestartWaitDuration = default(System.DateTime?), System.DateTime? quorumLossWaitDuration = default(System.DateTime?), System.DateTime? standByReplicaKeepDuration = default(System.DateTime?))
-            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription)
+        public StatefulServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), bool? hasPersistedState = default(bool?), int? targetReplicaSetSize = default(int?), int? minReplicaSetSize = default(int?), System.DateTime? replicaRestartWaitDuration = default(System.DateTime?), System.DateTime? quorumLossWaitDuration = default(System.DateTime?), System.DateTime? standByReplicaKeepDuration = default(System.DateTime?))
+            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription, servicePackageActivationMode)
         {
             HasPersistedState = hasPersistedState;
             TargetReplicaSetSize = targetReplicaSetSize;

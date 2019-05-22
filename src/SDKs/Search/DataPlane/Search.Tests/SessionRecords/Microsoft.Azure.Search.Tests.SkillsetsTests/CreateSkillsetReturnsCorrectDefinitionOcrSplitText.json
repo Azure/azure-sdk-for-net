@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9f1c5a1a-6cea-4e47-956a-3f3ecee390e4"
+          "53f11757-1b91-46ec-9a69-c3e601fcfdfe"
         ],
         "accept-language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.5.0.0"
         ]
       },
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:12 GMT"
+          "Thu, 16 May 2019 17:22:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1146"
+          "1187"
         ],
         "x-ms-request-id": [
-          "0b7b01b8-8d5d-4582-97b8-2b3713860dd6"
+          "9a2e049f-f29a-41ed-b376-dcc9a9f9760c"
         ],
         "x-ms-correlation-request-id": [
-          "0b7b01b8-8d5d-4582-97b8-2b3713860dd6"
+          "9a2e049f-f29a-41ed-b376-dcc9a9f9760c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221613Z:0b7b01b8-8d5d-4582-97b8-2b3713860dd6"
+          "NORTHEUROPE:20190516T172244Z:9a2e049f-f29a-41ed-b376-dcc9a9f9760c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet5679?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1Njc5P2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet5614?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1NjE0P2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1708f824-bc20-4d1e-abc8-6a3db15e9048"
+          "051ac64a-6bfe-4299-a41d-37db40df2aa0"
         ],
         "accept-language": [
           "en-US"
@@ -75,7 +75,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.5.0.0"
         ],
         "Content-Type": [
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:13 GMT"
+          "Thu, 16 May 2019 17:22:44 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1146"
+          "1187"
         ],
         "x-ms-request-id": [
-          "f1d78b01-09f4-42ce-a4e9-09787d4b3529"
+          "1d1b1b89-c4d7-4e3d-9a30-5adff9c17fa6"
         ],
         "x-ms-correlation-request-id": [
-          "f1d78b01-09f4-42ce-a4e9-09787d4b3529"
+          "1d1b1b89-c4d7-4e3d-9a30-5adff9c17fa6"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221614Z:f1d78b01-09f4-42ce-a4e9-09787d4b3529"
+          "NORTHEUROPE:20190516T172245Z:1d1b1b89-c4d7-4e3d-9a30-5adff9c17fa6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679\",\r\n  \"name\": \"azsmnet5679\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614\",\r\n  \"name\": \"azsmnet5614\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679/providers/Microsoft.Search/searchServices/azs-7334?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1Njc5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzM0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614/providers/Microsoft.Search/searchServices/azs-7190?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NjE0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MTkwP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4a6b27b4-d33d-465a-945e-d41d533115cf"
+          "05e54f43-5acc-4e78-a7a7-ea87dcdabaa3"
         ],
         "accept-language": [
           "en-US"
@@ -141,7 +141,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ],
         "Content-Type": [
@@ -156,34 +156,34 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:16 GMT"
+          "Thu, 16 May 2019 17:22:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2019-04-27T22%3A16%3A16.9441159Z'\""
+          "W/\"datetime'2019-05-16T17%3A22%3A47.6022287Z'\""
         ],
         "x-ms-request-id": [
-          "4a6b27b4-d33d-465a-945e-d41d533115cf"
+          "05e54f43-5acc-4e78-a7a7-ea87dcdabaa3"
         ],
         "request-id": [
-          "4a6b27b4-d33d-465a-945e-d41d533115cf"
+          "05e54f43-5acc-4e78-a7a7-ea87dcdabaa3"
         ],
         "elapsed-time": [
-          "1524"
+          "1026"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1145"
+          "1190"
         ],
         "x-ms-correlation-request-id": [
-          "cc9b8521-1d73-4c01-8de5-899130d9e097"
+          "0cf60995-61c6-4c17-821e-d30d357f9b0c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221617Z:cc9b8521-1d73-4c01-8de5-899130d9e097"
+          "NORTHEUROPE:20190516T172248Z:0cf60995-61c6-4c17-821e-d30d357f9b0c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -198,17 +198,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679/providers/Microsoft.Search/searchServices/azs-7334\",\r\n  \"name\": \"azs-7334\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614/providers/Microsoft.Search/searchServices/azs-7190\",\r\n  \"name\": \"azs-7190\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679/providers/Microsoft.Search/searchServices/azs-7334/listAdminKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1Njc5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzM0L2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614/providers/Microsoft.Search/searchServices/azs-7190/listAdminKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NjE0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MTkwL2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3af069f0-c972-4dc8-ae6c-e6395ba25706"
+          "f06b7bd6-ccca-416c-8fd3-9bd3bc96eacf"
         ],
         "accept-language": [
           "en-US"
@@ -216,7 +216,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:19 GMT"
+          "Thu, 16 May 2019 17:22:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -234,25 +234,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "3af069f0-c972-4dc8-ae6c-e6395ba25706"
+          "f06b7bd6-ccca-416c-8fd3-9bd3bc96eacf"
         ],
         "request-id": [
-          "3af069f0-c972-4dc8-ae6c-e6395ba25706"
+          "f06b7bd6-ccca-416c-8fd3-9bd3bc96eacf"
         ],
         "elapsed-time": [
-          "440"
+          "118"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1145"
+          "1190"
         ],
         "x-ms-correlation-request-id": [
-          "cf538f84-bddb-4b6e-8a71-64d2e74c4b46"
+          "a2c841f0-bc09-4c4e-be54-0977a3232045"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221619Z:cf538f84-bddb-4b6e-8a71-64d2e74c4b46"
+          "NORTHEUROPE:20190516T172249Z:a2c841f0-bc09-4c4e-be54-0977a3232045"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"F53C89CDA8D6FE587E2D0EBD36598549\",\r\n  \"secondaryKey\": \"90FF9D3CE9AAD42FBD63344ABBAEDB68\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"AEDBC36F9D9A55370CC341CC425C08A2\",\r\n  \"secondaryKey\": \"3D48C51A2D86A4B99DA05BDAD793B735\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679/providers/Microsoft.Search/searchServices/azs-7334/listQueryKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1Njc5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzM0L2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614/providers/Microsoft.Search/searchServices/azs-7190/listQueryKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NjE0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MTkwL2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cfa2f739-413d-47c9-8721-ffcf60cedc63"
+          "9a24618f-d1b4-481b-9e20-88a0f3973cb5"
         ],
         "accept-language": [
           "en-US"
@@ -285,7 +285,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
@@ -294,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:20 GMT"
+          "Thu, 16 May 2019 17:22:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -303,25 +303,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "cfa2f739-413d-47c9-8721-ffcf60cedc63"
+          "9a24618f-d1b4-481b-9e20-88a0f3973cb5"
         ],
         "request-id": [
-          "cfa2f739-413d-47c9-8721-ffcf60cedc63"
+          "9a24618f-d1b4-481b-9e20-88a0f3973cb5"
         ],
         "elapsed-time": [
-          "286"
+          "86"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14971"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "07372eaf-5382-4346-8af4-5d9a21b2f1e4"
+          "d2e29487-82d4-4729-99ae-e3e6baefb374"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221620Z:07372eaf-5382-4346-8af4-5d9a21b2f1e4"
+          "NORTHEUROPE:20190516T172250Z:d2e29487-82d4-4729-99ae-e3e6baefb374"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -336,35 +336,35 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"B048D751F77D02282201DEE1A0B93CB0\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"A14837F76EA33E3BB69A4E0F49519C87\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/skillsets?api-version=2019-05-06",
       "EncodedRequestUri": "L3NraWxsc2V0cz9hcGktdmVyc2lvbj0yMDE5LTA1LTA2",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "4d26d265-b5cc-4d62-961c-de1e233d786a"
+          "88a87bca-6c59-4fd1-978c-f4a00e7f9603"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1106"
+          "1100"
         ]
       },
       "ResponseHeaders": {
@@ -372,22 +372,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:21 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6CB5DFAE52632\""
+          "W/\"0x8D6DA231FFF8E76\""
         ],
         "Location": [
-          "https://azs-7334.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
+          "https://azs-7190.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
         ],
         "request-id": [
-          "4d26d265-b5cc-4d62-961c-de1e233d786a"
+          "88a87bca-6c59-4fd1-978c-f4a00e7f9603"
         ],
         "elapsed-time": [
-          "111"
+          "105"
         ],
         "OData-Version": [
           "4.0"
@@ -408,35 +408,35 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7334.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CB5DFAE52632\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7190.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6DA231FFF8E76\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/skillsets?api-version=2019-05-06",
       "EncodedRequestUri": "L3NraWxsc2V0cz9hcGktdmVyc2lvbj0yMDE5LTA1LTA2",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "baa6815c-8344-4659-b879-c6618aabbe14"
+          "3f67d826-d9f7-40d9-9d6a-568425134c4e"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1106"
+          "1100"
         ]
       },
       "ResponseHeaders": {
@@ -444,22 +444,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6CB5DFB007D00\""
+          "W/\"0x8D6DA23201A7011\""
         ],
         "Location": [
-          "https://azs-7334.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
+          "https://azs-7190.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
         ],
         "request-id": [
-          "baa6815c-8344-4659-b879-c6618aabbe14"
+          "3f67d826-d9f7-40d9-9d6a-568425134c4e"
         ],
         "elapsed-time": [
-          "49"
+          "51"
         ],
         "OData-Version": [
           "4.0"
@@ -480,35 +480,35 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7334.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CB5DFB007D00\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7190.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6DA23201A7011\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"defaultLanguageCode\": \"fr\",\r\n      \"textSplitMode\": \"pages\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/skillsets?api-version=2019-05-06",
       "EncodedRequestUri": "L3NraWxsc2V0cz9hcGktdmVyc2lvbj0yMDE5LTA1LTA2",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "659f03ac-c071-4f31-bc19-f0a96990fdff"
+          "5ac41a1c-f99a-4b35-8d7d-5ce798a6b257"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1110"
+          "1104"
         ]
       },
       "ResponseHeaders": {
@@ -516,22 +516,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6CB5DFB147F0C\""
+          "W/\"0x8D6DA23202FD1F9\""
         ],
         "Location": [
-          "https://azs-7334.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
+          "https://azs-7190.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
         ],
         "request-id": [
-          "659f03ac-c071-4f31-bc19-f0a96990fdff"
+          "5ac41a1c-f99a-4b35-8d7d-5ce798a6b257"
         ],
         "elapsed-time": [
-          "62"
+          "50"
         ],
         "OData-Version": [
           "4.0"
@@ -552,35 +552,35 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7334.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CB5DFB147F0C\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7190.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6DA23202FD1F9\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"defaultLanguageCode\": \"fi\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/skillsets?api-version=2019-05-06",
       "EncodedRequestUri": "L3NraWxsc2V0cz9hcGktdmVyc2lvbj0yMDE5LTA1LTA2",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "91f799a1-2688-4e4f-ab27-59992bee14f6"
+          "78cefd90-338a-487e-92d5-960ec478c686"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1110"
+          "1104"
         ]
       },
       "ResponseHeaders": {
@@ -588,22 +588,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6CB5DFB2FD5DA\""
+          "W/\"0x8D6DA232044E5BC\""
         ],
         "Location": [
-          "https://azs-7334.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
+          "https://azs-7190.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2019-05-06"
         ],
         "request-id": [
-          "91f799a1-2688-4e4f-ab27-59992bee14f6"
+          "78cefd90-338a-487e-92d5-960ec478c686"
         ],
         "elapsed-time": [
-          "44"
+          "51"
         ],
         "OData-Version": [
           "4.0"
@@ -624,7 +624,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7334.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CB5DFB2FD5DA\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Split skill\",\r\n      \"context\": \"/document\",\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7190.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6DA232044E5BC\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": \"Tested OCR skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"textExtractionAlgorithm\": \"printed\",\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.SplitSkill\",\r\n      \"name\": \"Tested Split skill\",\r\n      \"description\": \"/document\",\r\n      \"context\": null,\r\n      \"defaultLanguageCode\": \"da\",\r\n      \"textSplitMode\": \"sentences\",\r\n      \"maximumPageLength\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"textItems\",\r\n          \"targetName\": \"myTextItems\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
       "StatusCode": 201
     },
     {
@@ -634,18 +634,18 @@
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "094ba2d4-1393-4fea-9c29-8502f8e7297a"
+          "54ebbbda-1a50-4e04-89fe-b2c062551c28"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ]
       },
@@ -654,13 +654,13 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:21 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "094ba2d4-1393-4fea-9c29-8502f8e7297a"
+          "54ebbbda-1a50-4e04-89fe-b2c062551c28"
         ],
         "elapsed-time": [
           "53"
@@ -682,18 +682,18 @@
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "117cd89d-3656-4d60-9369-b9ff337fe086"
+          "b84c26ab-4214-47a3-9517-1cc5c7e8d709"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ]
       },
@@ -702,13 +702,61 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "117cd89d-3656-4d60-9369-b9ff337fe086"
+          "b84c26ab-4214-47a3-9517-1cc5c7e8d709"
+        ],
+        "elapsed-time": [
+          "42"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/skillsets('testskillset')?api-version=2019-05-06",
+      "EncodedRequestUri": "L3NraWxsc2V0cygndGVzdHNraWxsc2V0Jyk/YXBpLXZlcnNpb249MjAxOS0wNS0wNg==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "client-request-id": [
+          "84d98bcd-66d3-4e00-88b4-847b7ac62c44"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "api-key": [
+          "AEDBC36F9D9A55370CC341CC425C08A2"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 16 May 2019 17:22:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "request-id": [
+          "84d98bcd-66d3-4e00-88b4-847b7ac62c44"
         ],
         "elapsed-time": [
           "41"
@@ -730,18 +778,18 @@
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "9df09ea7-7e37-4d4c-afd6-1728f6dc9c3f"
+          "f13beec9-edf3-4367-862c-80b71e0a6d20"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
+          "AEDBC36F9D9A55370CC341CC425C08A2"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
         ]
       },
@@ -750,16 +798,16 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
+          "Thu, 16 May 2019 17:22:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "9df09ea7-7e37-4d4c-afd6-1728f6dc9c3f"
+          "f13beec9-edf3-4367-862c-80b71e0a6d20"
         ],
         "elapsed-time": [
-          "69"
+          "41"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -772,61 +820,13 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/skillsets('testskillset')?api-version=2019-05-06",
-      "EncodedRequestUri": "L3NraWxsc2V0cygndGVzdHNraWxsc2V0Jyk/YXBpLXZlcnNpb249MjAxOS0wNS0wNg==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "client-request-id": [
-          "1c9a6a78-bf8a-481d-8e5d-325cf8f540ef"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "api-key": [
-          "F53C89CDA8D6FE587E2D0EBD36598549"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Search.SearchServiceClient/9.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sat, 27 Apr 2019 22:16:22 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "request-id": [
-          "1c9a6a78-bf8a-481d-8e5d-325cf8f540ef"
-        ],
-        "elapsed-time": [
-          "61"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5679/providers/Microsoft.Search/searchServices/azs-7334?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1Njc5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzM0P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet5614/providers/Microsoft.Search/searchServices/azs-7190?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NjE0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MTkwP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "95714fdd-e789-4686-a5da-139728030d77"
+          "330ae728-c5d6-4d76-b891-25b54cf3a4e2"
         ],
         "accept-language": [
           "en-US"
@@ -834,7 +834,7 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
@@ -843,31 +843,31 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 22:16:26 GMT"
+          "Thu, 16 May 2019 17:22:54 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "95714fdd-e789-4686-a5da-139728030d77"
+          "330ae728-c5d6-4d76-b891-25b54cf3a4e2"
         ],
         "request-id": [
-          "95714fdd-e789-4686-a5da-139728030d77"
+          "330ae728-c5d6-4d76-b891-25b54cf3a4e2"
         ],
         "elapsed-time": [
-          "1246"
+          "969"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14937"
+          "14991"
         ],
         "x-ms-correlation-request-id": [
-          "99420ded-2692-42bd-8b71-a244a138fd69"
+          "34f80623-1139-408e-ae9f-628d09c3c32d"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190427T221626Z:99420ded-2692-42bd-8b71-a244a138fd69"
+          "NORTHEUROPE:20190516T172254Z:34f80623-1139-408e-ae9f-628d09c3c32d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -885,10 +885,10 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet5679"
+      "azsmnet5614"
     ],
     "GenerateServiceName": [
-      "azs-7334"
+      "azs-7190"
     ]
   },
   "Variables": {

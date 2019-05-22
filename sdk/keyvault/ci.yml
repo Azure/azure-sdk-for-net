@@ -8,8 +8,6 @@ trigger:
   paths:
     include:
     - sdk/keyvault/
-    - sdk/core/
-    - eng/
 
 pr:
   branches:
@@ -18,8 +16,6 @@ pr:
   paths:
     include:
     - sdk/keyvault/
-    - sdk/core/
-    - eng/
 
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml

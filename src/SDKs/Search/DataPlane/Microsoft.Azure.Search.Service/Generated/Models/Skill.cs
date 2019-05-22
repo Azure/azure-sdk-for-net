@@ -40,13 +40,17 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
         /// /document or /document/content). The default is /document.</param>
-        public Skill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string))
+        public Skill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string))
         {
+            Name = name;
             Description = description;
             Context = context;
             Inputs = inputs;
@@ -58,6 +62,14 @@ namespace Microsoft.Azure.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the skill which uniquely identifies it
+        /// within the skillset. A skill with no name defined will be given a
+        /// default name of its 1-based index in the skills array.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the skill which describes the

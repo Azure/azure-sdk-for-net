@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using System.Linq;
 
     /// <summary>
-    /// Operation supported by Service Fabric resource provider
+    /// Operation supported by the Service Fabric resource provider
     /// </summary>
     public partial class AvailableOperationDisplay
     {
