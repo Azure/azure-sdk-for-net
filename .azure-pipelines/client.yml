@@ -6,8 +6,8 @@
 # EventHubsConnectionString - The connection string to the namespace used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 # EventHubsStorageConnectionString - The connection string to the storage account used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 
-trigger:
-  - master
+trigger: none
+pr: none
 
 variables:
   DotNetCoreSDKVersion: '3.0.100-preview5-011568'

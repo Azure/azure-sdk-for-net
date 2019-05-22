@@ -4,6 +4,10 @@ pr:
     - master
     - search-preview
     - BuildToolsForSdk
+  paths:
+    exclude:
+    - sdk/
+    - eng/
 
 variables:
   DotNetCoreVersion: '2.1.503'
