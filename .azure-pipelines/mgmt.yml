@@ -27,11 +27,11 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\Compute
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: 'src/**/*.trx'
+          testResultsFiles: '**/*.trx'
           testRunTitle: 'Windows Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
