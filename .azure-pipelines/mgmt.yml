@@ -21,8 +21,6 @@ jobs:
         inputs:
           filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
           arguments: -Vr *,31bf3856ad364e35
-      - script: dir /S *.trx
-        workingDirectory: $(Agent.BuildDirectory)
       - task: MSBuild@1
         inputs:
           solution: build.proj
@@ -30,6 +28,8 @@ jobs:
         inputs:
           solution: build.proj
           msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\Compute
+      - script: dir /S *.trx
+        workingDirectory: $(Agent.BuildDirectory)
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
