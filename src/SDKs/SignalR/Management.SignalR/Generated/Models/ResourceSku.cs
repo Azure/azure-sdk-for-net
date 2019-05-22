@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// + number code, such as A0 or P3.  Required (if sku is
         /// specified)</param>
         /// <param name="tier">Optional tier of this particular SKU. `Basic` is
-        /// deprecated, use `Standard` instead for Basic tier. Possible values
-        /// include: 'Free', 'Basic', 'Standard', 'Premium'</param>
+        /// deprecated, use `Standard` instead. Possible values include:
+        /// 'Free', 'Basic', 'Standard', 'Premium'</param>
         /// <param name="size">Optional, string. When the name field is the
         /// combination of tier and some other value, this would be the
         /// standalone code.</param>
@@ -70,8 +70,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
 
         /// <summary>
         /// Gets or sets optional tier of this particular SKU. `Basic` is
-        /// deprecated, use `Standard` instead for Basic tier. Possible values
-        /// include: 'Free', 'Basic', 'Standard', 'Premium'
+        /// deprecated, use `Standard` instead. Possible values include:
+        /// 'Free', 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
