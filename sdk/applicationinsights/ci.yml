@@ -8,8 +8,6 @@ trigger:
   paths:
     include:
     - sdk/applicationinsights/
-    - sdk/core/
-    - eng/
 
 pr:
   branches:
@@ -18,10 +16,8 @@ pr:
   paths:
     include:
     - sdk/applicationinsights/
-    - sdk/core/
-    - eng/
 
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
   parameters:
-    ProjectFile: sdk/applicationinsights/Microsoft.Azure.ApplicationInsights/Microsoft.Azure.ApplicationInsights.sln
+    ServiceDirectory: applicationinsights

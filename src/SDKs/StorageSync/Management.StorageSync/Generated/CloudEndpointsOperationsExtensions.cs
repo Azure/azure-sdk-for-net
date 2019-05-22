@@ -516,6 +516,66 @@ namespace Microsoft.Azure.Management.StorageSync
             }
 
             /// <summary>
+            /// Triggers detection of changes performed on Azure File share connected to
+            /// the specified Azure File Sync Cloud Endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            /// <param name='parameters'>
+            /// Trigger Change Detection Action parameters.
+            /// </param>
+            public static CloudEndpointsTriggerChangeDetectionHeaders TriggerChangeDetection(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters)
+            {
+                return operations.TriggerChangeDetectionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers detection of changes performed on Azure File share connected to
+            /// the specified Azure File Sync Cloud Endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            /// <param name='parameters'>
+            /// Trigger Change Detection Action parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CloudEndpointsTriggerChangeDetectionHeaders> TriggerChangeDetectionAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TriggerChangeDetectionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Create a new CloudEndpoint.
             /// </summary>
             /// <param name='operations'>
@@ -852,6 +912,66 @@ namespace Microsoft.Azure.Management.StorageSync
             public static async Task<CloudEndpointsPostRestoreHeaders> BeginPostRestoreAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPostRestoreWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Triggers detection of changes performed on Azure File share connected to
+            /// the specified Azure File Sync Cloud Endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            /// <param name='parameters'>
+            /// Trigger Change Detection Action parameters.
+            /// </param>
+            public static CloudEndpointsTriggerChangeDetectionHeaders BeginTriggerChangeDetection(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters)
+            {
+                return operations.BeginTriggerChangeDetectionAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers detection of changes performed on Azure File share connected to
+            /// the specified Azure File Sync Cloud Endpoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='storageSyncServiceName'>
+            /// Name of Storage Sync Service resource.
+            /// </param>
+            /// <param name='syncGroupName'>
+            /// Name of Sync Group resource.
+            /// </param>
+            /// <param name='cloudEndpointName'>
+            /// Name of Cloud Endpoint object.
+            /// </param>
+            /// <param name='parameters'>
+            /// Trigger Change Detection Action parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CloudEndpointsTriggerChangeDetectionHeaders> BeginTriggerChangeDetectionAsync(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginTriggerChangeDetectionWithHttpMessagesAsync(resourceGroupName, storageSyncServiceName, syncGroupName, cloudEndpointName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

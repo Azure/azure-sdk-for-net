@@ -7,17 +7,10 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class TelemetryOptions
-    {
-        public string ApplicationId { get; set; }
-    }
-
     public class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
+        private readonly bool _disable;
         private readonly string _header;
-
-        private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;
-
 
         public TelemetryPolicy(TelemetryOptions options, Assembly clientAssembly)
         {
@@ -42,6 +35,8 @@ namespace Azure.Core.Pipeline.Policies
             {
                 _header = $"azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
+
+            _disable = options.IsDisabled;
         }
 
 
@@ -52,23 +47,5 @@ namespace Azure.Core.Pipeline.Policies
                 message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
             }
         }
-
-        private static bool? EnvironmentVariableToBool(string value)
-        {
-            if (string.Equals("true", value, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals("1", value, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            if (string.Equals("false", value, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals("0", value, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            return null;
-        }
-
     }
 }

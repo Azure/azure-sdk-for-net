@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="etag">The configuartion ETag for updates.</param>
+        /// <param name="etag">The configuration ETag for updates.</param>
         /// <param name="ssl">The SSL configuration properties</param>
         /// <param name="serviceAuth">Optional global authorization keys for
         /// all user services deployed in cluster. These are used if the
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the configuartion ETag for updates.
+        /// Gets or sets the configuration ETag for updates.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }

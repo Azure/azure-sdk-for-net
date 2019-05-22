@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="httpHeaders">The headers required to make the http
         /// request.</param>
         /// <param name="httpMethod">The method for the http request.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -55,8 +58,8 @@ namespace Microsoft.Azure.Search.Models
         /// is 30 seconds.</param>
         /// <param name="batchSize">The desired batch size which indicates
         /// number of documents.</param>
-        public WebApiSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, string description = default(string), string context = default(string), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
-            : base(inputs, outputs, description, context)
+        public WebApiSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, string name = default(string), string description = default(string), string context = default(string), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
+            : base(inputs, outputs, name, description, context)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;

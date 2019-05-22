@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Azure resource location.</param>
+        /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
         /// <param name="placementConstraints">The placement constraints as a
         /// string. Placement constraints are boolean expressions on node
         /// properties and allow for restricting a service to particular nodes
@@ -53,8 +55,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="defaultMoveCost">Specifies the move cost for the
         /// service. Possible values include: 'Zero', 'Low', 'Medium',
         /// 'High'</param>
-        public ServiceResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string))
-            : base(id, name, type, location)
+        public ServiceResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string))
+            : base(id, name, type, location, tags, etag)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;

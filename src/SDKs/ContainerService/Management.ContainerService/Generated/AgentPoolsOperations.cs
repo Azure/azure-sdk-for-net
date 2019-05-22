@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='customHeaders'>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<AgentPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AgentPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -101,9 +101,24 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (managedClusterName == null)
+            if (resourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "managedClusterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 63);
+                }
+                if (resourceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             // Tracing
@@ -115,16 +130,16 @@ namespace Microsoft.Azure.Management.ContainerService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("managedClusterName", managedClusterName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{managedClusterName}/agentPools").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{managedClusterName}", System.Uri.EscapeDataString(managedClusterName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -264,7 +279,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -291,7 +306,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AgentPool>> GetWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AgentPool>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -308,9 +323,24 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (managedClusterName == null)
+            if (resourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "managedClusterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 63);
+                }
+                if (resourceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             if (agentPoolName == null)
             {
@@ -326,17 +356,17 @@ namespace Microsoft.Azure.Management.ContainerService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("managedClusterName", managedClusterName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("agentPoolName", agentPoolName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{managedClusterName}/agentPools/{agentPoolName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{managedClusterName}", System.Uri.EscapeDataString(managedClusterName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -477,7 +507,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -492,10 +522,10 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<AgentPool>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AgentPool>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<AgentPool> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<AgentPool> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -508,7 +538,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -520,10 +550,10 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -536,7 +566,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -566,7 +596,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AgentPool>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AgentPool>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -583,9 +613,24 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (managedClusterName == null)
+            if (resourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "managedClusterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 63);
+                }
+                if (resourceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             if (agentPoolName == null)
             {
@@ -609,7 +654,7 @@ namespace Microsoft.Azure.Management.ContainerService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("managedClusterName", managedClusterName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("agentPoolName", agentPoolName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -617,10 +662,10 @@ namespace Microsoft.Azure.Management.ContainerService
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{managedClusterName}/agentPools/{agentPoolName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{managedClusterName}", System.Uri.EscapeDataString(managedClusterName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -785,7 +830,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -809,7 +854,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -826,9 +871,24 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            if (managedClusterName == null)
+            if (resourceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "managedClusterName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (resourceName != null)
+            {
+                if (resourceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceName", 63);
+                }
+                if (resourceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             if (agentPoolName == null)
             {
@@ -844,17 +904,17 @@ namespace Microsoft.Azure.Management.ContainerService
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("managedClusterName", managedClusterName);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("agentPoolName", agentPoolName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{managedClusterName}/agentPools/{agentPoolName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{managedClusterName}", System.Uri.EscapeDataString(managedClusterName));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)

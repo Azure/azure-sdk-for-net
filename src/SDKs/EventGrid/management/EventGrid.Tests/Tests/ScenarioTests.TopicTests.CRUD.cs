@@ -125,6 +125,7 @@ namespace EventGrid.Tests.ScenarioTests
                         catch(Exception ex)
                         {
                             Console.WriteLine(ex);
+                            break;
                         }
                     }
                 }

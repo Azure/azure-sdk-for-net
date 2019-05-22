@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='customHeaders'>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AgentPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AgentPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the agent pool.
         /// </summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AgentPool>> GetWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AgentPool>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an agent pool.
         /// </summary>
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AgentPool>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AgentPool>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an agent pool.
         /// </summary>
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an agent pool.
         /// </summary>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AgentPool>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AgentPool>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an agent pool.
         /// </summary>
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='managedClusterName'>
+        /// <param name='resourceName'>
         /// The name of the managed cluster resource.
         /// </param>
         /// <param name='agentPoolName'>
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedClusterName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of agent pools in the specified managed cluster.
         /// </summary>
