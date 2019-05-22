@@ -66,7 +66,9 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// container group.</param>
         /// <param name="networkProfile">The network profile information for a
         /// container group.</param>
-        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), ContainerGroupNetworkProfile networkProfile = default(ContainerGroupNetworkProfile))
+        /// <param name="dnsConfig">The DNS config information for a container
+        /// group.</param>
+        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), ContainerGroupNetworkProfile networkProfile = default(ContainerGroupNetworkProfile), DnsConfiguration dnsConfig = default(DnsConfiguration))
             : base(id, name, type, location, tags)
         {
             Identity = identity;
@@ -80,6 +82,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             InstanceView = instanceView;
             Diagnostics = diagnostics;
             NetworkProfile = networkProfile;
+            DnsConfig = dnsConfig;
             CustomInit();
         }
 
@@ -165,6 +168,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public ContainerGroupNetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets the DNS config information for a container group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsConfig")]
+        public DnsConfiguration DnsConfig { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -221,6 +230,10 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             if (NetworkProfile != null)
             {
                 NetworkProfile.Validate();
+            }
+            if (DnsConfig != null)
+            {
+                DnsConfig.Validate();
             }
         }
     }
