@@ -19,6 +19,15 @@ namespace Microsoft.Azure.Management.Batch.Models
     /// A task which is run when a compute node joins a pool in the Azure Batch
     /// service, or when the compute node is rebooted or reimaged.
     /// </summary>
+    /// <remarks>
+    /// In some cases the start task may be re-run even though the node was not
+    /// rebooted. Due to this, start tasks should be idempotent and exit
+    /// gracefully if the setup they're performing has already been done.
+    /// Special care should be taken to avoid start tasks which create
+    /// breakaway process or install/launch services from the start task
+    /// working directory, as this will block Batch from being able to re-run
+    /// the start task.
+    /// </remarks>
     public partial class StartTask
     {
         /// <summary>
