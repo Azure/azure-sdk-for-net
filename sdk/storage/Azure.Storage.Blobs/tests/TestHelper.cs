@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -35,10 +36,15 @@ namespace Azure.Storage.Test
         {
             raise = raise ?? new Exception("Simulated connection fault");
             var options = GetOptions<BlobConnectionOptions>(credentials);
-            options.PerCallPolicies.Add(new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.ConfigurePipeline = builder =>
+            {
+                // Chain in existing configuration
+                options?.ConfigurePipeline(builder);
+                builder.InsertBefore(HttpClientOptions.TransportPolicy, "FaultyDownload", new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            };
             return options;
         }
-        
+
         private static BlobServiceClient GetServiceClientFromSharedKeyConfig(TenantConfiguration config)
             => new BlobServiceClient(
                 new Uri(config.BlobServiceEndpoint),
@@ -59,7 +65,7 @@ namespace Azure.Storage.Test
 
         public static BlobServiceClient GetServiceClient_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetTenant);
-        
+
         public static BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultSecondaryTargetTenant);
 
@@ -121,10 +127,10 @@ namespace Azure.Storage.Test
                     GetOptions<BlobConnectionOptions>());
 
         public static IDisposable GetNewContainer(
-            out BlobContainerClient container, 
-            BlobServiceClient service = default, 
-            string containerName = default, 
-            IDictionary<string, string> metadata = default, 
+            out BlobContainerClient container,
+            BlobServiceClient service = default,
+            string containerName = default,
+            IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default)
         {
             containerName = containerName ?? TestHelper.GetNewContainerName();
@@ -137,7 +143,7 @@ namespace Azure.Storage.Test
 
             return result;
         }
-        
+
         public static SharedKeyCredentials GetNewSharedKeyCredentials()
             => new SharedKeyCredentials(
                     TestConfigurations.DefaultTargetTenant.AccountName,

@@ -1,4 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -51,13 +52,11 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
-                    new AuthenticationPolicy(credential, secret),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+            _pipeline = new HttpPipelineBuilder(options)
+                .Replace(HttpClientOptions.RetryPolicy, new FixedRetryPolicy(options.Retry))
+                .InsertAfter(HttpClientOptions.RetryPolicy, ConfigurationClientOptions.AuthenticationPolicy, new AuthenticationPolicy(credential, secret))
+                .InsertBefore(HttpClientOptions.TransportPolicy, ConfigurationClientOptions.BufferResponsePolicy, BufferResponsePolicy.Singleton)
+                .Build();
         }
 
         /// <summary>

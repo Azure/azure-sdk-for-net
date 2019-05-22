@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -92,7 +93,7 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Create and configure connection option instances to use a test
         /// specific retry policy and response classifier.
-        /// 
+        ///
         /// We're willing to wait longer and make gratuitous retries than our
         /// default connection options for the sake of robust test execution.
         /// </summary>
@@ -105,14 +106,12 @@ namespace Azure.Storage.Test
                 {
                     Credentials = credentials,
                     ResponseClassifier = new TestResponseClassifier(),
-                    LoggingPolicy = LoggingPolicy.Shared,
-                    RetryPolicy =
-                        new ExponentialRetryPolicy()
+                    ConfigurePipeline = builder => builder.Replace(HttpClientOptions.RetryPolicy, new ExponentialRetryPolicy(new ExponentialRetryOptions()
                         {
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                            MaxRetries = Storage.Constants.MaxReliabilityRetries,
                             Delay = TimeSpan.FromSeconds(0.5),
                             MaxDelay = TimeSpan.FromSeconds(10)
-                        }
+                        }))
             };
     }
 }

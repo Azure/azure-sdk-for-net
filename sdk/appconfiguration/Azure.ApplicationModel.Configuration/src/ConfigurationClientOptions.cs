@@ -9,12 +9,14 @@ namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions: HttpClientOptions
     {
+        public static string AuthenticationPolicy { get; } = "Authentication";
+        public static string BufferResponsePolicy { get; } = "BufferResponse";
 
-        public FixedRetryPolicy RetryPolicy { get; set; }
+        public FixedRetryOptions Retry { get; set; }
 
         public ConfigurationClientOptions()
         {
-            RetryPolicy = new FixedRetryPolicy()
+            Retry = new FixedRetryOptions()
             {
                 Delay =  TimeSpan.Zero,
                 MaxRetries = 3

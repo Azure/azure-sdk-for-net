@@ -24,21 +24,20 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // specify custon HttpClient
             options.Transport = new HttpClientTransport(s_client);
 
-            // remove logging policy
-            options.LoggingPolicy = null;
 
             // specify custom retry policy options
-            options.RetryPolicy = new FixedRetryPolicy()
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(1);
+
+            options.ConfigurePipeline = builder =>
             {
-                MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1)
+                // add a policy (custom behavior) that executes once per client call
+                builder.InsertBefore(HttpClientOptions.LoggingPolicy, "AddHeader", new AddHeaderPolicy());
+                // add a policy that executes once per retry
+                builder.InsertBefore(HttpClientOptions.TransportPolicy, "CustomLog", new CustomLogPolicy());
+                // remove logging policy
+                builder.Replace(HttpClientOptions.LoggingPolicy, null);
             };
-
-            // add a policy (custom behavior) that executes once per client call
-            options.PerCallPolicies.Add(new AddHeaderPolicy());
-
-            // add a policy that executes once per retry
-            options.PerRetryPolicies.Add(new CustomLogPolicy());
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             // pass the policy options to the client

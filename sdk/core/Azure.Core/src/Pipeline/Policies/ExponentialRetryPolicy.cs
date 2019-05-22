@@ -10,21 +10,17 @@ namespace Azure.Core.Pipeline.Policies
     {
         private readonly Random _random = new ThreadSafeRandom();
 
-        /// <summary>
-        /// Gets or sets the timespan used as a base for exponential backoff.
-        /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
+        private readonly TimeSpan _maxDelay;
 
-        /// <summary>
-        /// Gets or sets maximum timespan to pause between requests.
-        /// </summary>
-        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _delay;
 
         /// <summary>
         ///   Creates a retry policy with exponential backoff for use with external operations.
         /// </summary>
-        public ExponentialRetryPolicy()
+        public ExponentialRetryPolicy(ExponentialRetryOptions options) : base(options)
         {
+            _delay = options.Delay;
+            _maxDelay = options.MaxDelay;
         }
 
         protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
@@ -46,8 +42,8 @@ namespace Azure.Core.Pipeline.Policies
         {
             return TimeSpan.FromMilliseconds(
                 Math.Min(
-                    (1 << (attempted - 1)) * _random.Next((int)(Delay.TotalMilliseconds * 0.8), (int)(Delay.TotalMilliseconds * 1.2)),
-                    MaxDelay.TotalMilliseconds));
+                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                    _maxDelay.TotalMilliseconds));
         }
     }
 }

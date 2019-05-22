@@ -7,54 +7,43 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Core.Pipeline.Policies
 {
+    public class TelemetryOptions
+    {
+        public string ApplicationId { get; set; }
+    }
+
     public class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
-        private readonly Assembly _clientAssembly;
-
-        private string _header;
-
-        private string _applicationId;
+        private readonly string _header;
 
         private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;
 
-        public string ApplicationId
-        {
-            get => _applicationId;
-            set
-            {
-                _applicationId = value;
-                InitializeHeader();
-            }
-        }
 
-        public TelemetryPolicy(Assembly clientAssembly)
+        public TelemetryPolicy(TelemetryOptions options, Assembly clientAssembly)
         {
-            _clientAssembly = clientAssembly;
-            InitializeHeader();
-        }
+            string applicationId = options.ApplicationId;
 
-        private void InitializeHeader()
-        {
-            var componentAttribute = _clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
             if (componentAttribute == null)
             {
                 throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{_clientAssembly.FullName}'.");
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
             }
 
             var componentName = componentAttribute.ComponentName;
-            var componentVersion = _clientAssembly.GetName().Version.ToString();
+            var componentVersion = clientAssembly.GetName().Version.ToString();
 
             var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
-            if (_applicationId != null)
+            if (applicationId != null)
             {
-                _header = $"{_applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}";
+                _header = $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
             else
             {
                 _header = $"azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
         }
+
 
         public override void OnSendingRequest(HttpPipelineMessage message)
         {

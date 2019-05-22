@@ -8,14 +8,16 @@ namespace Azure.Core.Pipeline.Policies
 {
     public class FixedRetryPolicy : RetryPolicy
     {
-        /// <summary>
-        /// Gets or sets the timespan to wait before retries.
-        /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
+        private readonly TimeSpan _delay;
+
+        public FixedRetryPolicy(FixedRetryOptions fixedRetryOptions) : base(fixedRetryOptions)
+        {
+            _delay = fixedRetryOptions.Delay;
+        }
 
         protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
-            delay = Delay;
+            delay = _delay;
 
             TimeSpan serverDelay = GetServerDelay(message);
             if (serverDelay > delay)
@@ -26,7 +28,7 @@ namespace Azure.Core.Pipeline.Policies
 
         protected override void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
-            delay = Delay;
+            delay = _delay;
         }
     }
 }

@@ -10,16 +10,50 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    public class RetryOptions
     {
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
         /// <summary>
         /// Gets or sets the maximum number of retry attempts before giving up.
         /// </summary>
         public int MaxRetries { get; set; } = 10;
+    }
+
+    public class ExponentialRetryOptions: RetryOptions
+    {
+
+        /// <summary>
+        /// Gets or sets the timespan used as a base for exponential backoff.
+        /// </summary>
+        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        /// Gets or sets maximum timespan to pause between requests.
+        /// </summary>
+        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
+
+    }
+
+    public class FixedRetryOptions: RetryOptions
+    {
+        /// <summary>
+        /// Gets or sets the timespan to wait before retries.
+        /// </summary>
+        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
+    }
+
+    public abstract class RetryPolicy : HttpPipelinePolicy
+    {
+        private readonly int _maxRetries;
+
+        protected RetryPolicy(RetryOptions options)
+        {
+            _maxRetries = options.MaxRetries;
+        }
+
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -67,7 +101,7 @@ namespace Azure.Core.Pipeline.Policies
 
                 attempt++;
 
-                var shouldRetry = attempt <= MaxRetries;
+                var shouldRetry = attempt <= _maxRetries;
 
                 if (lastException != null)
                 {

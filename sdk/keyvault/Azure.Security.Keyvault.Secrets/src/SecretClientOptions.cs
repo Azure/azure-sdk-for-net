@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
@@ -6,15 +7,14 @@ namespace Azure.Security.KeyVault.Secrets
 {
     public class SecretClientOptions : HttpClientOptions
     {
-        public RetryPolicy RetryPolicy { get; set; }
+        public static string AuthenticationPolicy { get; } = "Authentication";
 
-        public SecretClientOptions()
+        public static string BufferResponsePolicy { get; } = "BufferResponse";
+
+        public ExponentialRetryOptions Retry { get; } = new ExponentialRetryOptions()
         {
-            RetryPolicy = new ExponentialRetryPolicy()
-            {
-                Delay = TimeSpan.FromMilliseconds(800),
-                MaxRetries = 3
-            };
-        }
+            Delay = TimeSpan.FromMilliseconds(800),
+            MaxRetries = 3
+        };
     }
 }

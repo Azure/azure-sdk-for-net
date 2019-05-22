@@ -21,16 +21,9 @@ namespace Azure.Core.Pipeline
 
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
         {
+            _pipeline = policies ?? throw new ArgumentNullException(nameof(transport));
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _responseClassifier = responseClassifier ?? new ResponseClassifier();
-
-            policies = policies ?? Array.Empty<HttpPipelinePolicy>();
-
-            var all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
-            policies.CopyTo(all, 0);
-
-            _pipeline = all;
             _services = services ?? HttpClientOptions.EmptyServiceProvider.Singleton;
         }
 
@@ -59,25 +52,6 @@ namespace Azure.Core.Pipeline
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
                 return message.Response;
             }
-        }
-
-        public static HttpPipeline Build(HttpClientOptions options, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] clientPolicies)
-        {
-            var policies = new List<HttpPipelinePolicy>();
-
-            policies.AddRange(options.PerCallPolicies);
-
-            policies.Add(options.TelemetryPolicy);
-
-            policies.AddRange(clientPolicies);
-
-            policies.AddRange(options.PerRetryPolicies);
-
-            policies.Add(options.LoggingPolicy);
-
-            policies.RemoveAll(policy => policy == null);
-
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, options.ServiceProvider);
         }
     }
 }
