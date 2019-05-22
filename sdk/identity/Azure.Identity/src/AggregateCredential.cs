@@ -30,7 +30,7 @@ namespace Azure.Identity
             _sources = sources;
         }
 
-        public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+        public override string GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
             string token = null;
 
