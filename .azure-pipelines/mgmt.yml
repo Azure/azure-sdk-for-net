@@ -29,10 +29,8 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:Scope=SDKs\SignalR
+          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
         displayName: 'Build and Run tests'
-      - script: dir /S
-        workingDirectory: $(Agent.BuildDirectory)
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
