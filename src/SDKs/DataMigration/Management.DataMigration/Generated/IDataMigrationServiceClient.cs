@@ -85,11 +85,6 @@ namespace Microsoft.Azure.Management.DataMigration
         ITasksOperations Tasks { get; }
 
         /// <summary>
-        /// Gets the IServiceTasksOperations.
-        /// </summary>
-        IServiceTasksOperations ServiceTasks { get; }
-
-        /// <summary>
         /// Gets the IProjectsOperations.
         /// </summary>
         IProjectsOperations Projects { get; }
