@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Billing
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Billing", "Address", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Agreements", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "AvailableBalances", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccounts", "2018-11-01-preview"),
@@ -40,7 +41,6 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "RecipientTransfers", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Transactions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Transfers", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "ValidateAddress", "2018-11-01-preview"),
               }.AsEnumerable();
           }
       }
