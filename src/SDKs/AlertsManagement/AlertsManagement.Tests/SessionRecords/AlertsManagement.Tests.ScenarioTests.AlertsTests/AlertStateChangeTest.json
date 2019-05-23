@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/a3033ce9-6b95-4c36-8621-62b148434b8b/changestate?api-version=2018-05-05&newState=Closed",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvYTMwMzNjZTktNmI5NS00YzM2LTg2MjEtNjJiMTQ4NDM0YjhiL2NoYW5nZXN0YXRlP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDUmbmV3U3RhdGU9Q2xvc2Vk",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "db148125-33c4-4337-bebd-faf891866864"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 23 May 2019 15:14:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2732246d-36bc-4383-84a6-824693ed64b3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "f00fb339-8103-48fd-b26c-209badc5061c"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190523T151402Z:f00fb339-8103-48fd-b26c-209badc5061c"
+        ],
+        "Content-Length": [
+          "2215"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"essentials\": {\r\n      \"severity\": \"Sev1\",\r\n      \"alertState\": \"Closed\",\r\n      \"signalType\": \"Log\",\r\n      \"monitorCondition\": \"Fired\",\r\n      \"monitorService\": \"Log Analytics\",\r\n      \"targetResource\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/mms-eus/providers/microsoft.operationalinsights/workspaces/alertsint\",\r\n      \"targetResourceName\": \"alertsint\",\r\n      \"targetResourceGroup\": \"mms-eus\",\r\n      \"targetResourceType\": \"workspaces\",\r\n      \"sourceCreatedId\": \"ac14f9e7-b757-4d97-a8bd-93772d32bbc6\",\r\n      \"alertRule\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/mms-eus/providers/microsoft.insights/scheduledqueryrules/alertsint|72889438-27af-49d8-862d-c18a3a145455|7aab6ba9-1e55-4b47-9d30-a101f1d05fb5|7404160a-13a1-40c1-b23f-e4350d384972\",\r\n      \"startDateTime\": \"2019-05-23T14:40:05.1348878Z\",\r\n      \"lastModifiedDateTime\": \"2019-05-23T15:14:00.9700444Z\",\r\n      \"lastModifiedUserName\": \"User\",\r\n      \"actionStatus\": {\r\n        \"isSuppressed\": false\r\n      },\r\n      \"description\": \"TestLA\"\r\n    },\r\n    \"context\": {\r\n      \"AlertRuleName\": \"TestLA\",\r\n      \"SearchQuery\": \"Heartbeat\",\r\n      \"AlertThresholdOperator\": \"Less Than\",\r\n      \"AlertThresholdValue\": 1000,\r\n      \"SearchIntervalStartTimeUtc\": \"5/23/2019 2:21:08 PM\",\r\n      \"SearchIntervalEndtimeUtc\": \"5/23/2019 2:26:08 PM\",\r\n      \"ResultCount\": 0,\r\n      \"SearchIntervalInSeconds\": 300,\r\n      \"LinkToSearchResults\": \"https://portal.azure.com#@72f988bf-86f1-41af-91ab-2d7cd011db47/blade/Microsoft_OperationsManagementSuite_Workspace/AnalyticsBlade/initiator/AnalyticsShareLinkToQuery/isQueryEditorVisible/true/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2Fdd91de05-d791-4ceb-b6dc-988682dc7d72%2FresourceGroups%2Fmms-eus%2Fproviders%2FMicrosoft.OperationalInsights%2Fworkspaces%2Falertsint%22%7D%5D%7D/query/Heartbeat/isQuerybase64Compressed/false/timespanInIsoFormat/2019-05-23T14%3a21%3a08.0000000Z%2f2019-05-23T14%3a26%3a08.0000000Z\",\r\n      \"Description\": \"TestLA\",\r\n      \"SeverityDescription\": \"Warning\",\r\n      \"SubscriptionId\": \"dd91de05-d791-4ceb-b6dc-988682dc7d72\",\r\n      \"WorkspaceId\": \"1dd402b0-02c7-421b-8dd0-a016a02c0f10\",\r\n      \"SearchIntervalDurationMin\": \"5\",\r\n      \"AffectedConfigurationItems\": [],\r\n      \"AlertType\": \"Number of results\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/a3033ce9-6b95-4c36-8621-62b148434b8b\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"TestLA\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dd91de05-d791-4ceb-b6dc-988682dc7d72"
+  }
+}

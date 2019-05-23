@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alertsSummary?groupby=Severity&api-version=2018-05-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHNTdW1tYXJ5P2dyb3VwYnk9U2V2ZXJpdHkmYXBpLXZlcnNpb249MjAxOC0wNS0wNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "49d7afd4-3967-4d72-984e-16d475c53911"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 23 May 2019 15:15:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a8ab421f-c89c-4242-8bb6-2f21819a3a53"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "999"
+        ],
+        "x-ms-correlation-request-id": [
+          "21f079a5-30c0-4c49-bd5c-5a92eba6ac99"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190523T151502Z:21f079a5-30c0-4c49-bd5c-5a92eba6ac99"
+        ],
+        "Content-Length": [
+          "382"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"groupedby\": \"severity\",\r\n    \"total\": 816,\r\n    \"values\": [\r\n      {\r\n        \"name\": \"Sev0\",\r\n        \"count\": 0\r\n      },\r\n      {\r\n        \"name\": \"Sev1\",\r\n        \"count\": 292\r\n      },\r\n      {\r\n        \"name\": \"Sev2\",\r\n        \"count\": 1\r\n      },\r\n      {\r\n        \"name\": \"Sev3\",\r\n        \"count\": 94\r\n      },\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 429\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alertsSummary/current\",\r\n  \"type\": \"Microsoft.AlertsManagement/alertsSummary\",\r\n  \"name\": \"current\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dd91de05-d791-4ceb-b6dc-988682dc7d72"
+  }
+}

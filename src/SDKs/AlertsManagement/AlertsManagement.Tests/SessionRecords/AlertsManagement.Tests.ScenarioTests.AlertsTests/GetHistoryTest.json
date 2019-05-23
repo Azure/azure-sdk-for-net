@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/e694ddf0-8430-4349-a5ed-c5866e9f4377/history?api-version=2018-05-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvZTY5NGRkZjAtODQzMC00MzQ5LWE1ZWQtYzU4NjZlOWY0Mzc3L2hpc3Rvcnk/YXBpLXZlcnNpb249MjAxOC0wNS0wNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "00ad8be6-f74d-48e4-bb14-656ee443e6fe"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 23 May 2019 15:12:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "76221257-057b-4752-a1b1-7b1179b15ea8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "7f373942-1338-435a-ba80-b2c559450f65"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20190523T151259Z:7f373942-1338-435a-ba80-b2c559450f65"
+        ],
+        "Content-Length": [
+          "931"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertId\": \"e694ddf0-8430-4349-a5ed-c5866e9f4377\",\r\n    \"modifications\": [\r\n      {\r\n        \"modificationEvent\": \"StateChange\",\r\n        \"oldValue\": \"New\",\r\n        \"newValue\": \"Closed\",\r\n        \"modifiedAt\": \"2019-05-23T14:59:30.0471973Z\",\r\n        \"modifiedBy\": \"User\",\r\n        \"comments\": \"\",\r\n        \"description\": \"State changed from 'New' to 'Closed'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"MonitorConditionChange\",\r\n        \"oldValue\": \"Fired\",\r\n        \"newValue\": \"Resolved\",\r\n        \"modifiedAt\": \"2019-05-23T14:40:33.3691372Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"description\": \"Monitor Condition changed from 'Fired' to 'Resolved'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"AlertCreated\",\r\n        \"oldValue\": \"\",\r\n        \"newValue\": \"\",\r\n        \"modifiedAt\": \"2019-05-23T14:35:30.7389599Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"comments\": \"\",\r\n        \"description\": \"New Alert Object is created\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/e694ddf0-8430-4349-a5ed-c5866e9f4377/history/default\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"Processing Latency high\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dd91de05-d791-4ceb-b6dc-988682dc7d72"
+  }
+}
