@@ -3,12 +3,10 @@ using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Security.Keyvault.Keys
+namespace Azure.Security.KeyVault.Keys
 {
     public class KeyClient
     {

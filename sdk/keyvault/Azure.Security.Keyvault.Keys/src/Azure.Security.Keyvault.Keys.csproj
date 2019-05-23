@@ -10,24 +10,21 @@
       ]]>
     </PackageReleaseNotes>
 
-    <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  
+  <!-- Import the Azure.Core project -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-
+  </ItemGroup>-->
+    
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.2" />
-    <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19259.10" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
   </ItemGroup>
 </Project>

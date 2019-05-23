@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.Security.Keyvault.Keys
+namespace Azure.Security.KeyVault.Keys
 {
     public class ECKey
     {

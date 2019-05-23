@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.Keyvault.Secrets", "Azure.Security.Keyvault.Secrets\src\Azure.Security.Keyvault.Secrets.csproj", "{AA1C6FB6-7176-400E-B556-B04253A69949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.Keyvault.Keys", "Azure.Security.Keyvault.Keys\src\Azure.Security.Keyvault.Keys.csproj", "{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "Azure.Security.Keyvault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

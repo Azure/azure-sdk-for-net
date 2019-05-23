@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Azure.Security.Keyvault.Keys
+namespace Azure.Security.KeyVault.Keys
 {
     public class KeyBase
     {

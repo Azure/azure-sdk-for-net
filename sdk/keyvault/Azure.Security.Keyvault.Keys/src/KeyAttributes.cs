@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace Azure.Security.Keyvault.Keys
+namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
