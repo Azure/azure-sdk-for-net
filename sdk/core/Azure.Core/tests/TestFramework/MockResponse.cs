@@ -3,56 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public class TestPipelineFactory
-    {
-        public static HttpPipeline Create(HttpPipelineTransport transport, params HttpPipelinePolicy[] policies)
-        {
-            var allPolicies = new HttpPipelinePolicy[policies.Length + 1];
-            policies.AsMemory().CopyTo(allPolicies);
-            allPolicies[policies.Length] = new HttpPipelineTransportPolicy(transport);
-            return new HttpPipeline(transport, allPolicies);
-        }
-        public static HttpPipeline Create(HttpPipelineTransport transport, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] policies)
-        {
-            var allPolicies = new HttpPipelinePolicy[policies.Length + 1];
-            policies.AsMemory().CopyTo(allPolicies);
-            allPolicies[policies.Length] = new HttpPipelineTransportPolicy(transport);
-            return new HttpPipeline(transport, allPolicies, responseClassifier);
-        }
-
-        private class HttpPipelineTransportPolicy : HttpPipelinePolicy
-        {
-            private readonly HttpPipelineTransport _transport;
-
-            public HttpPipelineTransportPolicy(HttpPipelineTransport transport)
-            {
-                _transport = transport;
-            }
-
-            public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                Debug.Assert(pipeline.IsEmpty);
-
-                return _transport.ProcessAsync(message);
-            }
-
-            public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                Debug.Assert(pipeline.IsEmpty);
-
-                _transport.Process(message);
-            }
-        }
-    }
     public class MockResponse : Response
     {
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);

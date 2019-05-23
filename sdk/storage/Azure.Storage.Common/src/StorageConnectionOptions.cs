@@ -14,10 +14,6 @@ namespace Azure.Storage
     /// </summary>
     public abstract class StorageConnectionOptions : HttpClientOptions
     {
-        public static string AuthenticationPolicy { get; } = "Authentication";
-
-        public static string BufferResponsePolicy { get; } = "BufferResponse";
-
         /// <summary>
         /// Optional credentials for authenticating requests to the service
         /// </summary>
@@ -41,6 +37,10 @@ namespace Azure.Storage
         {
             // We're going to use the default ResponseClassifier (for now)
             // to decide which errors are retriable
+            this.ResponseClassifier = new ResponseClassifier();
+
+            // Log request details to the AzureSDK event source
+            this.DisableLogging = true; // Azure.Core.Pipeline.Policies.LoggingPolicy.Shared;
         }
 
         /// <summary>
@@ -72,18 +72,15 @@ namespace Azure.Storage
         /// An HttpPipeline used to make requests to Azure Storage
         /// </returns>
         internal virtual HttpPipeline Build()
-        {
-            var builder = new HttpPipelineBuilder(this);
-            builder.Replace(RetryPolicy, new FixedRetryPolicy(this.Retry));
-            // TODO: Disable logging for now
-            builder.Replace(LoggingPolicy, null);
-            builder.InsertAfter(RetryPolicy, AuthenticationPolicy, this.GetAuthenticationPipelinePolicy(this.Credentials));
-            // TODO: PageBlob's UploadPagesAsync test currently fails
-            // without buffered responses, so I'm leaving this on for now.
-            // It'd be a great perf win to remove it soon.
-            builder.InsertBefore(TransportPolicy, BufferResponsePolicy, Core.Pipeline.Policies.BufferResponsePolicy.Singleton);
-            return builder.Build();
-        }
+            => HttpPipeline.Build(
+                this,
+                ClientRequestIdPolicy.Singleton,
+                new FixedRetryPolicy(this.Retry),
+                this.GetAuthenticationPipelinePolicy(this.Credentials),
+                // TODO: PageBlob's UploadPagesAsync test currently fails
+                // without buffered responses, so I'm leaving this on for now.
+                // It'd be a great perf win to remove it soon.
+                BufferResponsePolicy.Singleton);
 
         /// <summary>
         /// Create an authentication HttpPipelinePolicy to sign requests

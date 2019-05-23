@@ -106,12 +106,22 @@ namespace Azure.Storage.Test
                 {
                     Credentials = credentials,
                     ResponseClassifier = new TestResponseClassifier(),
-                    ConfigurePipeline = builder => builder.Replace(HttpClientOptions.RetryPolicy, new ExponentialRetryPolicy(new ExponentialRetryOptions()
+                    ConfigurePipeline = policies =>
+                    {
+                        for (var i = 0; i < policies.Count; i++)
                         {
-                            MaxRetries = Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(0.5),
-                            MaxDelay = TimeSpan.FromSeconds(10)
-                        }))
-            };
+                            var policy = policies[i];
+                            if (policy is FixedRetryPolicy)
+                            {
+                                policies[i] = new ExponentialRetryPolicy(new ExponentialRetryOptions()
+                                {
+                                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
+                                    Delay = TimeSpan.FromSeconds(0.5),
+                                    MaxDelay = TimeSpan.FromSeconds(10)
+                                });
+                            }
+                        }
+                    }
+                };
     }
 }

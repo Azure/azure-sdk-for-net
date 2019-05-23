@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
@@ -54,12 +53,8 @@ namespace Azure.Storage.Test
             Exception raise = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
-            var options = GetOptions<FileConnectionOptions>(credentials);   options.ConfigurePipeline = builder =>
-            {
-                // Chain in existing configuration
-                options?.ConfigurePipeline(builder);
-                builder.InsertBefore(HttpClientOptions.TransportPolicy, "FaultyDownload", new FaultyDownloadPipelinePolicy(raiseAt, raise));
-            };
+            var options = GetOptions<FileConnectionOptions>(credentials);
+            options.PerCallPolicies.Add(new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
 

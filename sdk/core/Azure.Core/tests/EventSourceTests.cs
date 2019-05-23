@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
 
             var mockTransport = CreateMockTransport(response);
 
-            var pipeline = TestPipelineFactory.Create(mockTransport, LoggingPolicy.Shared);
+            var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
@@ -137,7 +137,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(500);
             var mockTransport = CreateMockTransport(response);
 
-            var pipeline = TestPipelineFactory.Create(mockTransport, LoggingPolicy.Shared);
+            var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
             using (Request request = pipeline.CreateRequest())
@@ -308,7 +308,7 @@ namespace Azure.Core.Tests
             setupRequest?.Invoke(mockResponse);
 
             var mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = TestPipelineFactory.Create(mockTransport, LoggingPolicy.Shared);
+            var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
             using (Request request = pipeline.CreateRequest())
             {

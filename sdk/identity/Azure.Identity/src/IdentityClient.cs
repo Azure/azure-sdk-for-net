@@ -24,10 +24,10 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            var builder = new HttpPipelineBuilder(options);
-            builder.Replace(HttpClientOptions.RetryPolicy, new ExponentialRetryPolicy(options.Retry));
-            builder.InsertBefore(HttpClientOptions.TransportPolicy, IdentityClientOptions.BufferResponsePolicy, BufferResponsePolicy.Singleton);
-            _pipeline = builder.Build();
+            _pipeline = HttpPipeline.Build(_options,
+                    new ExponentialRetryPolicy(_options.Retry),
+                    ClientRequestIdPolicy.Singleton,
+                    BufferResponsePolicy.Singleton);
         }
 
         public async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)

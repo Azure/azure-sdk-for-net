@@ -10,18 +10,18 @@ namespace Azure.Core.Pipeline
 {
     public class HttpClientOptions
     {
-        public static string TelemetryPolicy { get; } = "Telemetry";
-        public static string RetryPolicy { get; } = "Retry";
-        public static string LoggingPolicy { get; } = "Logging";
-        public static string ClientRequestIdPolicy { get; } = "ClientRequestIdPolicy";
-        public static string TransportPolicy { get; } = "ClientRequestIdPolicy";
-
         private HttpPipelineTransport _transport = HttpClientTransport.Shared;
+
+        public HttpClientOptions()
+        {
+        }
 
         public HttpPipelineTransport Transport {
             get => _transport;
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        public bool DisableLogging { get; set; }
 
         public TelemetryOptions Telemetry { get; } = new TelemetryOptions();
 
@@ -29,7 +29,11 @@ namespace Azure.Core.Pipeline
 
         public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
 
-        public Action<HttpPipelineBuilder> ConfigurePipeline { get; set; }
+        public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+
+        public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
+
+        public Action<IList<HttpPipelinePolicy>> ConfigurePipeline { get; set; }
 
         public void AddService(object service, Type type = null)
         {

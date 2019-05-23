@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
-            var pipeline = TestPipelineFactory.Create(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport);
 
             var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
-            var pipeline = TestPipelineFactory.Create(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport);
 
             var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
-            var pipeline = TestPipelineFactory.Create(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport);
 
             var reliableStream = RetriableStream.Create(await SendTestRequestAsync(pipeline, 0), offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
@@ -108,7 +108,7 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var mockTransport = new MockTransport(new MockResponse(200) { ContentStream = stream1 });
 
-            var pipeline = TestPipelineFactory.Create(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport);
 
             var reliableStream = await RetriableStream.Create(
                 async offset =>
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 3) }
                 );
 
-            var pipeline = TestPipelineFactory.Create(mockTransport);
+            var pipeline = new HttpPipeline(mockTransport);
 
             var reliableStream = await RetriableStream.Create(
                 async offset =>

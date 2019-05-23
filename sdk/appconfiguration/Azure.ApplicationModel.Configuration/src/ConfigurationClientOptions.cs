@@ -9,9 +9,6 @@ namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions: HttpClientOptions
     {
-        public static string AuthenticationPolicy { get; } = "Authentication";
-        public static string BufferResponsePolicy { get; } = "BufferResponse";
-
         public FixedRetryOptions Retry { get; } = new FixedRetryOptions()
         {
             Delay =  TimeSpan.Zero,

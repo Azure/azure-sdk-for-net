@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault.Secrets
 
         protected SecretClient()
         {
-        }
 
+        }
         public SecretClient(Uri vaultUri, TokenCredential credential)
             : this(vaultUri, credential, null)
         {
@@ -31,14 +31,11 @@ namespace Azure.Security.KeyVault.Secrets
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new SecretClientOptions();
 
-            var builder = new HttpPipelineBuilder(options);
-
-            builder.Replace(HttpClientOptions.RetryPolicy, new ExponentialRetryPolicy(options.Retry));
-            builder.InsertAfter(HttpClientOptions.RetryPolicy, SecretClientOptions.AuthenticationPolicy, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.Default"));
-            builder.InsertBefore(HttpClientOptions.TransportPolicy, SecretClientOptions.BufferResponsePolicy, BufferResponsePolicy.Singleton);
-            builder.Build();
-
-            _pipeline = builder.Build();
+            _pipeline = HttpPipeline.Build(options,
+                    new ExponentialRetryPolicy(options.Retry),
+                    ClientRequestIdPolicy.Singleton,
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.Default"),
+                    BufferResponsePolicy.Singleton);
         }
 
         public virtual async Task<Response<Secret>> GetAsync(string name, string version = null, CancellationToken cancellationToken = default)

@@ -21,11 +21,7 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport,
-                new HttpPipelinePolicy[] {
-                    new FixedRetryPolicy(new FixedRetryOptions() { Delay = TimeSpan.Zero, MaxRetries = 5 }),
-                    new HttpPipelineTransportPolicy(mockTransport)
-                }, responseClassifier: new CustomResponseClassifier());
+            var pipeline = new HttpPipeline(mockTransport, new [] { new FixedRetryPolicy(new FixedRetryOptions() { Delay = TimeSpan.Zero, MaxRetries = 5 } ) }, responseClassifier: new CustomResponseClassifier());
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
