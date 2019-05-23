@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,19 +38,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="location">Resource location</param>
         /// <param name="creationToken">Creation Token or File Path</param>
         /// <param name="serviceLevel">serviceLevel</param>
+        /// <param name="usageThreshold">usageThreshold</param>
+        /// <param name="subnetId">The Azure Resource URI for a delegated
+        /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
-        /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
+        /// <param name="protocolTypes">protocolTypes</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
-        /// <param name="subnetId">The Azure Resource URI for a delegated
-        /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
-        public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), string subnetId = default(string))
+        /// <param name="mountTargets">mountTargets</param>
+        public Volume(string location, string creationToken, string serviceLevel, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object))
         {
             Location = location;
             Id = id;
@@ -60,10 +64,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
             ExportPolicy = exportPolicy;
+            ProtocolTypes = protocolTypes;
             ProvisioningState = provisioningState;
             SnapshotId = snapshotId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
+            MountTargets = mountTargets;
             CustomInit();
         }
 
@@ -136,10 +142,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// Maximum storage quota allowed for a file system in bytes. This is a
         /// soft quota used for alerting only. Minimum size is 100 GiB. Upper
-        /// limit is 100TiB.
+        /// limit is 100TiB. Specified in bytes.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
-        public long? UsageThreshold { get; set; }
+        public long UsageThreshold { get; set; }
 
         /// <summary>
         /// Gets or sets exportPolicy
@@ -149,6 +155,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.exportPolicy")]
         public VolumePropertiesExportPolicy ExportPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets protocolTypes
+        /// </summary>
+        /// <remarks>
+        /// Set of protocol types
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.protocolTypes")]
+        public IList<string> ProtocolTypes { get; set; }
 
         /// <summary>
         /// Gets azure lifecycle management
@@ -182,6 +197,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SubnetId { get; set; }
 
         /// <summary>
+        /// Gets or sets mountTargets
+        /// </summary>
+        /// <remarks>
+        /// List of mount targets
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.mountTargets")]
+        public object MountTargets { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -200,6 +224,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (ServiceLevel == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ServiceLevel");
+            }
+            if (SubnetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SubnetId");
             }
             if (FileSystemId != null)
             {
