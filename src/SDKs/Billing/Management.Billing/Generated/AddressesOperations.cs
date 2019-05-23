@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AddressOperations operations.
+    /// AddressesOperations operations.
     /// </summary>
-    internal partial class AddressOperations : IServiceOperations<BillingManagementClient>, IAddressOperations
+    internal partial class AddressesOperations : IServiceOperations<BillingManagementClient>, IAddressesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the AddressOperations class.
+        /// Initializes a new instance of the AddressesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal AddressOperations(BillingManagementClient client)
+        internal AddressesOperations(BillingManagementClient client)
         {
             if (client == null)
             {

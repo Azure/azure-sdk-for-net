@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.Billing
         IPaymentMethodsOperations PaymentMethods { get; }
 
         /// <summary>
-        /// Gets the IAddressOperations.
+        /// Gets the IAddressesOperations.
         /// </summary>
-        IAddressOperations Address { get; }
+        IAddressesOperations Addresses { get; }
 
         /// <summary>
         /// Gets the IAvailableBalancesOperations.

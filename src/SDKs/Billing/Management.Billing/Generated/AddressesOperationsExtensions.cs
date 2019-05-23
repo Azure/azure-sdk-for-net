@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for AddressOperations.
+    /// Extension methods for AddressesOperations.
     /// </summary>
-    public static partial class AddressOperationsExtensions
+    public static partial class AddressesOperationsExtensions
     {
             /// <summary>
             /// Validates the address.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Billing
             /// </param>
             /// <param name='address'>
             /// </param>
-            public static ValidateAddressResponse Validate(this IAddressOperations operations, Address address)
+            public static ValidateAddressResponse Validate(this IAddressesOperations operations, Address address)
             {
                 return operations.ValidateAsync(address).GetAwaiter().GetResult();
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ValidateAddressResponse> ValidateAsync(this IAddressOperations operations, Address address, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ValidateAddressResponse> ValidateAsync(this IAddressesOperations operations, Address address, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ValidateWithHttpMessagesAsync(address, null, cancellationToken).ConfigureAwait(false))
                 {

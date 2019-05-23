@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AddressOperations operations.
+    /// AddressesOperations operations.
     /// </summary>
-    public partial interface IAddressOperations
+    public partial interface IAddressesOperations
     {
         /// <summary>
         /// Validates the address.
