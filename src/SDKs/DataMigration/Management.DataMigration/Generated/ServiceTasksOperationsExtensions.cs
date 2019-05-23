@@ -22,66 +22,6 @@ namespace Microsoft.Azure.Management.DataMigration
     public static partial class ServiceTasksOperationsExtensions
     {
             /// <summary>
-            /// Get service level tasks for a service
-            /// </summary>
-            /// <remarks>
-            /// The services resource is the top-level resource that represents the
-            /// Database Migration Service. This method returns a list of service level
-            /// tasks owned by a service resource. Some tasks may have a status of Unknown,
-            /// which indicates that an error occurred while querying the status of that
-            /// task.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='groupName'>
-            /// Name of the resource group
-            /// </param>
-            /// <param name='serviceName'>
-            /// Name of the service
-            /// </param>
-            /// <param name='taskType'>
-            /// Filter tasks by task type
-            /// </param>
-            public static IPage<ProjectTask> List(this IServiceTasksOperations operations, string groupName, string serviceName, string taskType = default(string))
-            {
-                return operations.ListAsync(groupName, serviceName, taskType).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get service level tasks for a service
-            /// </summary>
-            /// <remarks>
-            /// The services resource is the top-level resource that represents the
-            /// Database Migration Service. This method returns a list of service level
-            /// tasks owned by a service resource. Some tasks may have a status of Unknown,
-            /// which indicates that an error occurred while querying the status of that
-            /// task.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='groupName'>
-            /// Name of the resource group
-            /// </param>
-            /// <param name='serviceName'>
-            /// Name of the service
-            /// </param>
-            /// <param name='taskType'>
-            /// Filter tasks by task type
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ProjectTask>> ListAsync(this IServiceTasksOperations operations, string groupName, string serviceName, string taskType = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(groupName, serviceName, taskType, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Create or update service task
             /// </summary>
             /// <remarks>
@@ -381,54 +321,6 @@ namespace Microsoft.Azure.Management.DataMigration
             public static async Task<ProjectTask> CancelAsync(this IServiceTasksOperations operations, string groupName, string serviceName, string taskName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CancelWithHttpMessagesAsync(groupName, serviceName, taskName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get service level tasks for a service
-            /// </summary>
-            /// <remarks>
-            /// The services resource is the top-level resource that represents the
-            /// Database Migration Service. This method returns a list of service level
-            /// tasks owned by a service resource. Some tasks may have a status of Unknown,
-            /// which indicates that an error occurred while querying the status of that
-            /// task.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ProjectTask> ListNext(this IServiceTasksOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get service level tasks for a service
-            /// </summary>
-            /// <remarks>
-            /// The services resource is the top-level resource that represents the
-            /// Database Migration Service. This method returns a list of service level
-            /// tasks owned by a service resource. Some tasks may have a status of Unknown,
-            /// which indicates that an error occurred while querying the status of that
-            /// task.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ProjectTask>> ListNextAsync(this IServiceTasksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

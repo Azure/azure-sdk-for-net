@@ -24,41 +24,6 @@ namespace Microsoft.Azure.Management.DataMigration
     public partial interface IServiceTasksOperations
     {
         /// <summary>
-        /// Get service level tasks for a service
-        /// </summary>
-        /// <remarks>
-        /// The services resource is the top-level resource that represents the
-        /// Database Migration Service. This method returns a list of service
-        /// level tasks owned by a service resource. Some tasks may have a
-        /// status of Unknown, which indicates that an error occurred while
-        /// querying the status of that task.
-        /// </remarks>
-        /// <param name='groupName'>
-        /// Name of the resource group
-        /// </param>
-        /// <param name='serviceName'>
-        /// Name of the service
-        /// </param>
-        /// <param name='taskType'>
-        /// Filter tasks by task type
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ApiErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ProjectTask>>> ListWithHttpMessagesAsync(string groupName, string serviceName, string taskType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Create or update service task
         /// </summary>
         /// <remarks>
@@ -235,34 +200,5 @@ namespace Microsoft.Azure.Management.DataMigration
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ProjectTask>> CancelWithHttpMessagesAsync(string groupName, string serviceName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get service level tasks for a service
-        /// </summary>
-        /// <remarks>
-        /// The services resource is the top-level resource that represents the
-        /// Database Migration Service. This method returns a list of service
-        /// level tasks owned by a service resource. Some tasks may have a
-        /// status of Unknown, which indicates that an error occurred while
-        /// querying the status of that task.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ApiErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ProjectTask>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
