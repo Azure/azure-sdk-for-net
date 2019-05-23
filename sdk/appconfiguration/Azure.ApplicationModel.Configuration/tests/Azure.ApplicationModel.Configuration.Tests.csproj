@@ -2,14 +2,12 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateProgramFile>false</GenerateProgramFile>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="Moq" Version="4.10.1" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
   </ItemGroup>
   <ItemGroup>

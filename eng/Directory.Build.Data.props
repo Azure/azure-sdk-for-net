@@ -10,6 +10,7 @@
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
     -->
     <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
@@ -93,7 +94,16 @@
     <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
 
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <AssemblyOriginatorKeyFile Condition="'$(IsClientLibrary)' == 'true'">$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <!-- Use a full key for the new client libraries and disable delay signing -->
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
