@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.Billing
         IPaymentMethodsOperations PaymentMethods { get; }
 
         /// <summary>
+        /// Gets the IValidateAddressOperations.
+        /// </summary>
+        IValidateAddressOperations ValidateAddress { get; }
+
+        /// <summary>
         /// Gets the IAvailableBalancesOperations.
         /// </summary>
         IAvailableBalancesOperations AvailableBalances { get; }

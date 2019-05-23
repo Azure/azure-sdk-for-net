@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "RecipientTransfers", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Transactions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Transfers", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "ValidateAddress", "2018-11-01-preview"),
               }.AsEnumerable();
           }
       }
