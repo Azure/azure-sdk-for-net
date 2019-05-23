@@ -77,14 +77,14 @@ namespace Microsoft.Azure.Management.Billing
         IBillingAccountsOperations BillingAccounts { get; }
 
         /// <summary>
-        /// Gets the IPaymentMethodsOperations.
-        /// </summary>
-        IPaymentMethodsOperations PaymentMethods { get; }
-
-        /// <summary>
         /// Gets the IAvailableBalancesOperations.
         /// </summary>
         IAvailableBalancesOperations AvailableBalances { get; }
+
+        /// <summary>
+        /// Gets the IPaymentMethodsOperations.
+        /// </summary>
+        IPaymentMethodsOperations PaymentMethods { get; }
 
         /// <summary>
         /// Gets the IBillingProfilesOperations.
