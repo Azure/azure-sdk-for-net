@@ -47,6 +47,7 @@ jobs:
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
         # scheduled builds should be good enough.
+        ignoreDirectories: "sdk\storage\Azure.Storage.Common\swagger\Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: "Test"
     variables:
