@@ -73,7 +73,10 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
-            policies.Add(LoggingPolicy.Shared);
+            if (!options.DisableLogging)
+            {
+                policies.Add(LoggingPolicy.Shared);
+            }
 
             policies.RemoveAll(policy => policy == null);
 

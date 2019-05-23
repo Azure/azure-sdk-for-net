@@ -12,10 +12,6 @@ namespace Azure.Core.Pipeline
     {
         private HttpPipelineTransport _transport = HttpClientTransport.Shared;
 
-        public HttpClientOptions()
-        {
-        }
-
         public HttpPipelineTransport Transport {
             get => _transport;
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
