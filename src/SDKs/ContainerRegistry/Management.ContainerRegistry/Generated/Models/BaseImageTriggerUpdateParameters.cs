@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// 'Runtime'</param>
         /// <param name="updateTriggerEndpoint">The endpoint URL for receiving
         /// update triggers.</param>
+        /// <param name="includeTriggerMetadata">Include Trigger metadata on
+        /// Base image update triggers.</param>
         /// <param name="status">The current status of trigger. Possible values
         /// include: 'Disabled', 'Enabled'</param>
-        public BaseImageTriggerUpdateParameters(string name, string baseImageTriggerType = default(string), string updateTriggerEndpoint = default(string), string status = default(string))
+        public BaseImageTriggerUpdateParameters(string name, string baseImageTriggerType = default(string), string updateTriggerEndpoint = default(string), bool? includeTriggerMetadata = default(bool?), string status = default(string))
         {
             BaseImageTriggerType = baseImageTriggerType;
             UpdateTriggerEndpoint = updateTriggerEndpoint;
+            IncludeTriggerMetadata = includeTriggerMetadata;
             Status = status;
             Name = name;
             CustomInit();
@@ -66,6 +69,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "updateTriggerEndpoint")]
         public string UpdateTriggerEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets include Trigger metadata on Base image update
+        /// triggers.
+        /// </summary>
+        [JsonProperty(PropertyName = "includeTriggerMetadata")]
+        public bool? IncludeTriggerMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets the current status of trigger. Possible values
