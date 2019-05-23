@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.DataMigration
         public virtual ITasksOperations Tasks { get; private set; }
 
         /// <summary>
+        /// Gets the IServiceTasksOperations.
+        /// </summary>
+        public virtual IServiceTasksOperations ServiceTasks { get; private set; }
+
+        /// <summary>
         /// Gets the IProjectsOperations.
         /// </summary>
         public virtual IProjectsOperations Projects { get; private set; }
@@ -353,6 +358,7 @@ namespace Microsoft.Azure.Management.DataMigration
             ResourceSkus = new ResourceSkusOperations(this);
             Services = new ServicesOperations(this);
             Tasks = new TasksOperations(this);
+            ServiceTasks = new ServiceTasksOperations(this);
             Projects = new ProjectsOperations(this);
             Usages = new UsagesOperations(this);
             Operations = new Operations(this);

@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.DataMigration
                 new Tuple<string, string, string>("DataMigration", "Operations", "2018-07-15-preview"),
                 new Tuple<string, string, string>("DataMigration", "Projects", "2018-07-15-preview"),
                 new Tuple<string, string, string>("DataMigration", "ResourceSkus", "2018-07-15-preview"),
+                new Tuple<string, string, string>("DataMigration", "ServiceTasks", "2018-07-15-preview"),
                 new Tuple<string, string, string>("DataMigration", "Services", "2018-07-15-preview"),
                 new Tuple<string, string, string>("DataMigration", "Tasks", "2018-07-15-preview"),
                 new Tuple<string, string, string>("DataMigration", "Usages", "2018-07-15-preview"),
