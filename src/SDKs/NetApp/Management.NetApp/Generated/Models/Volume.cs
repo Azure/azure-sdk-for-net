@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="creationToken">Creation Token or File Path</param>
-        /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
@@ -46,13 +45,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
+        /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="exportPolicy">exportPolicy</param>
         /// <param name="protocolTypes">protocolTypes</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="mountTargets">mountTargets</param>
-        public Volume(string location, string creationToken, string serviceLevel, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object))
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object))
         {
             Location = location;
             Id = id;
@@ -220,10 +220,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (CreationToken == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreationToken");
-            }
-            if (ServiceLevel == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceLevel");
             }
             if (SubnetId == null)
             {
