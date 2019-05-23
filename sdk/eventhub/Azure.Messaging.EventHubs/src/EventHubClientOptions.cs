@@ -15,13 +15,6 @@ namespace Azure.Messaging.EventHubs
     public class EventHubClientOptions
     {
         /// <summary>
-        ///   The version of the Event Hubs service API that the client should use for
-        ///   operations.
-        /// </summary>
-        ///
-        public ServiceVersion ServiceVersion { get; protected set; }
-
-        /// <summary>
         ///   The policy to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.
         /// </summary>
@@ -53,17 +46,6 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public IWebProxy Proxy { get; set; } = null;
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubClientOptions"/> class.
-        /// </summary>
-        ///
-        /// <param name="serviceVersion">The version of the Event Hubs service API that the client should use for operations.</param>
-        ///
-        public EventHubClientOptions(ServiceVersion serviceVersion)
-        {
-            ServiceVersion = serviceVersion;
-        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A new copy of <see cref="Retry" />.</returns>
         ///
-        public abstract Retry Clone();
+        internal abstract Retry Clone();
 
         /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in

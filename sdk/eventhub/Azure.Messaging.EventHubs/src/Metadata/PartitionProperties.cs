@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The identifier of the partition, unique to the Event Hub which contains it.
         /// </summary>
         ///
-        public string Identifier { get; private set; }
+        public string Id { get; private set; }
 
         /// <summary>
         ///   The first sequence number available for events in the partition.
@@ -95,30 +95,13 @@ namespace Azure.Messaging.EventHubs.Metadata
                                       DateTime? retrievalTimeUtc = null)
         {
             EventHubPath = path;
-            Identifier = key;
+            Id = key;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTimeUtc = lastEnqueueUtc;
             IsEmpty = isEmpty;
             PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
-        }
-
-        /// <summary>
-        ///   Updates the current set of partition information using an <see cref="EventHubs.EventData" />
-        ///   instance as the source.
-        /// </summary>
-        ///
-        /// <param name="sourceEvent">The event to use as the information source for the updates.</param>
-        ///
-        internal void UpdateFromEvent(EventData sourceEvent)
-        {
-            Guard.ArgumentNotNull(nameof(sourceEvent), sourceEvent);
-
-            LastEnqueuedSequenceNumber = sourceEvent.LastSequenceNumber;
-            LastEnqueuedOffset = sourceEvent.LastEnqueuedOffset;
-            LastEnqueuedTimeUtc = sourceEvent.LastEnqueuedTimeUtc;
-            PropertyRetrievalTimeUtc = sourceEvent.RetrievalTimeUtc;
         }
     }
 }

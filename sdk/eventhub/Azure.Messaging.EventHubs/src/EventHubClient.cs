@@ -49,6 +49,15 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and SAS token are contained in this connection string.</param>
         ///
+        /// <remarks>
+        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the path to the desired Event Hub,
+        ///   which is needed.  In this case, the path can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
+        ///   Event Hub will result in a connection string that contains the path.
+        /// </remarks>
+        ///
         public EventHubClient(string connectionString)
         {
             EventHubPath = "THIS WOULD BE PARSED FROM THE CONNECTION STRING";
@@ -61,6 +70,15 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and SAS token are contained in this connection string.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the path to the desired Event Hub,
+        ///   which is needed.  In this case, the path can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
+        ///   Event Hub will result in a connection string that contains the path.
+        /// </remarks>
         ///
         public EventHubClient(string                connectionString,
                               EventHubClientOptions clientOptions)
@@ -106,10 +124,27 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
-        /// <returns>The set of information for the Event Hub this client is associated with.</returns>
+        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
         public virtual Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken = default) =>
             Task.FromResult(new EventHubProperties("/sample-path", DateTime.UtcNow.AddDays(-5), 3, new[] { "one", "two", "three" }, DateTime.UtcNow));
+
+        /// <summary>
+        ///   Retrieves the set of identifiers for the partitions of an Event Hub.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        ///
+        /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
+        ///
+        /// <remarks>
+        ///   This method is synonomous with invoking <see cref="GetPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   property that is returned. It is offered as a convienience for quick access to the set of partition identifiers for the associated Event Hub.
+        ///   No new or extended information is presented.
+        /// </remarks>
+        ///
+        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) =>
+            (await GetPropertiesAsync(cancellationToken)).PartitionIds;
 
         /// <summary>
         ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available

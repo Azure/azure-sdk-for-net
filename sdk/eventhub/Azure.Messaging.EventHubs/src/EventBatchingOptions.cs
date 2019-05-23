@@ -25,8 +25,10 @@ namespace Azure.Messaging.EventHubs
         {
             get => _maximumSizeInBytes;
 
-            set
+            protected set
             {
+                //TODO: Expose this when splitting of batches is supported.
+
                 Guard.ArgumentInRange(nameof(MaximumSizeInBytes), value, EventSender.MinimumBatchSizeLimit, EventSender.MaximumBatchSizeLimit);
                 _maximumSizeInBytes = value;
             }

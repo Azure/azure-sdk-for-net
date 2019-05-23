@@ -68,22 +68,22 @@ namespace Azure.Messaging.EventHubs
         public SystemEventProperties SystemProperties { get; protected internal set; }
 
         /// <summary>
-        ///   The sequence number assigned to the the last event to be enqueued in the associated Event Hub partition.
+        ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
-        internal long LastSequenceNumber { get; set; }
+        internal long SequenceNumber { get; set; }
 
         /// <summary>
-        ///   The offset of the last event to be enqueued in the associated Event Hub partition.
+        ///   The offset of the the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        internal string LastEnqueuedOffset { get; set; }
+        internal string Offset { get; set; }
 
         /// <summary>
-        ///   The date and time, in UTC, of the last event to be enqueued in the Event Hub partition.
+        ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
-        internal DateTime LastEnqueuedTimeUtc { get; set; }
+        internal DateTime EnqueuedTimeUtc { get; set; }
 
         /// <summary>
         ///   The date and time, in UTC, that this event data was retrieved from the Event Hub partition.

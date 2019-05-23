@@ -2,7 +2,7 @@
 
 Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.
 
-The Azure Events Hubs client libraries allow for sending and receiving of Azure Event Hubs events. Most common scenarios call for an application to act as either an event publisher or an event consumer, but rarely both.
+The Azure Event Hubs client libraries allow for sending and receiving of Azure Event Hubs events. Most common scenarios call for an application to act as either an event publisher or an event consumer, but rarely both.
 
 An **event publisher** is a source of telemetry data, diagnostics information, usage logs, or other log data, as part of an embedded device solution, a mobile device application, a game title running on a console or other device, some client or server based business solution, or a web site.  
 

@@ -174,7 +174,7 @@
   <data name="ValueOutOfRange" xml:space="preserve">
     <value>The value supplied must be between {0} and {1}.</value>
   </data>
-  <data name="PartitionPropertiesNotPopulated" xml:space="preserve">
-    <value>No partition properties are available.  Either no events have been received yet or partition properties were set to not update.</value>
+  <data name="ReceiverCheckpointPropertiesNotPopulated" xml:space="preserve">
+    <value>No receiver checkpoint properties are available.  Either no events have been received yet or updating of the checkpoint properties was disabled.</value>
   </data>
 </root>

@@ -26,8 +26,8 @@ namespace Azure.Messaging.EventHubs
     ///
     public class PartitionReceiver
     {
-        /// <summary>If populated, the most recent information about the associated partition known the receiver.</summary>
-        private PartitionProperties _partitionProperties = null;
+        /// <summary>If populated, the information about the most recent event that was received.</summary>
+        private ReceiverCheckpointProperties _receiverCheckpoint = null;
 
         /// <summary>
         ///   The identifier of the Event Hub partition that this receiver is associated with.  Events will be read
@@ -44,21 +44,18 @@ namespace Azure.Messaging.EventHubs
         public string ConsumerGroupName { get; protected set; }
 
         /// <summary>
-        ///   Indicates that the receiver is the only reader of events for the requested partition and associated
-        ///   consumer group.
+        ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
+        ///   requested partition and an associated consumer group.  To do so, this receiver will attempt to assert ownership
+        ///   over the partition; in the case where more than one exclusive receiver attempts to assert ownership for the same
+        ///   partition/consumer group pair, the one having a larger priority value will "win."
+        ///
+        ///   When an exclusive receiver is used, those receivers which are not exclusive or which have a lower priority will either
+        ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value><c>true</c> if the receiver is exclusive; otherwise, <c>false</c>.</value>
+        /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value will be <c>null</c>.</value>
         ///
-        public bool IsExclusiveReceiver { get; protected set; }
-
-        /// <summary>
-        ///   The relative priority of the receiver within the associated consumer group, used to resolve conflicting requests for partition ownership when using exclusive receivers.
-        /// </summary>
-        ///
-        /// <value>This value is expected to be <c>null</c> if the receiver is not intended to be exclusive; an exclusive receiver must have a value.</value>
-        ///
-        public long? Priority { get; protected set; }
+        public long? ExclusiveReceiverPriority { get; protected set; }
 
         /// <summary>
         ///   The most recent information about the partition in the Event Hub known by the current receiver.  This
@@ -66,23 +63,23 @@ namespace Azure.Messaging.EventHubs
         ///   begin reading where this receiver last left off.
         /// </summary>
         ///
-        /// <value>If <see cref="ReceiverOptions.UpdatePropertiesOnReceive" /> is <c>true</c>, this information will be refreshed when events are received; otherwise, this will not be populated.</value>
+        /// <value>If <see cref="ReceiverOptions.UpdateCheckpointPropertiesOnReceive" /> is <c>true</c>, this information will be refreshed when events are received; otherwise, this will not be populated.</value>
         ///
-        public PartitionProperties PartitionProperties
+        public ReceiverCheckpointProperties ReceiverCheckpointProperties
         {
-          get
-          {
-              //TODO: Review Error
+            get
+            {
+                //TODO: Review Error
 
-              if ((_partitionProperties == null) || (!ReceiverOptions.UpdatePropertiesOnReceive))
-              {
-                  throw new NotSupportedException(Resources.PartitionPropertiesNotPopulated);
-              }
+                if ((!ReceiverOptions.UpdateCheckpointPropertiesOnReceive) || (_receiverCheckpoint?.PropertyRetrievalTimeUtc == null))
+                {
+                    throw new NotSupportedException(Resources.ReceiverCheckpointPropertiesNotPopulated);
+                }
 
-              return _partitionProperties;
-          }
+                return _receiverCheckpoint;
+            }
 
-          protected set => _partitionProperties = value;
+            protected set => _receiverCheckpoint = value;
         }
 
         /// <summary>
@@ -129,11 +126,12 @@ namespace Azure.Messaging.EventHubs
             PartitionId = partitionId;
             StartingPosition = receiverOptions.BeginReceivingAt;
             ReceiverOptions = receiverOptions;
-            IsExclusiveReceiver = receiverOptions.IsExclusiveReceiver;
+            ExclusiveReceiverPriority = receiverOptions.ExclusiveReceiverPriority;
 
-            Priority = receiverOptions.IsExclusiveReceiver
-                ? receiverOptions.ExclusiveReceiverPriority
-                : (long?)null;
+            ReceiverCheckpointProperties = receiverOptions.UpdateCheckpointPropertiesOnReceive
+                ? new ReceiverCheckpointProperties(eventHubPath, partitionId)
+                : null;
+
         }
 
         /// <summary>

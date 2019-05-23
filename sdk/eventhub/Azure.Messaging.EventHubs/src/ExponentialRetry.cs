@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A new copy of <see cref="Retry" />.</returns>
         ///
-        public override Retry Clone() =>
+        internal override Retry Clone() =>
             new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>

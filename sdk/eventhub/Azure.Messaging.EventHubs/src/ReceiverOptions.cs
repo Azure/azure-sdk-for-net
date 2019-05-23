@@ -44,34 +44,26 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>
-        ///   If not specified, the receiver will ignore events in the partition that were
-        ///   queued prior to the receiver being created and read only events which appear
-        ///   after that point.
+        ///   If not specified, the receiver will begin receiving all events that are
+        ///   contained in the partition, starting with the first event that was enqueued and
+        ///   will continue receiving until there are no more events observed.
         /// </value>
         ///
-        public EventPosition BeginReceivingAt { get; set; } = EventPosition.NewEventsOnly;
+        public EventPosition BeginReceivingAt { get; set; } = EventPosition.FirstAvailableEvent;
 
         /// <summary>
-        ///   Indicates that the receiver is intended to be the only reader of events for the requested partition and an
-        ///   associated consumer group.  To do so, this receiver will attempt to assert ownership over the partition;
-        ///   in the case where two exclusive receivers attempt to assert ownership for the same partition/consumer group
-        ///   pair, the one having a larger <see cref="ExclusiveReceiverPriority"/> value will "win."
+        ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
+        ///   requested partition and an associated consumer group.  To do so, this receiver will attempt to assert ownership
+        ///   over the partition; in the case where more than one exclusive receiver attempts to assert ownership for the same
+        ///   partition/consumer group pair, the one having a larger <see cref="ExclusiveReceiverPriority"/> value will "win."
+        ///
+        ///   When an exclusive receiver is used, those receivers which are not exclusive or which have a lower priority will either
+        ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value><c>true</c> if the receiver should be exclusive; otherwise, <c>false</c>.</value>
+        /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value should be <c>null</c>.</value>
         ///
-        public bool IsExclusiveReceiver { get; set; }
-
-        /// <summary>
-        ///   For an exlclusive receiver, the relative priority within the associated consumer group, used to resolve
-        ///   conflicting requests for partition ownership.
-        /// </summary>
-        ///
-        /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value has no effect.</value>
-        ///
-        /// <seealso cref="IsExclusiveReceiver" />
-        ///
-        public long ExclusiveReceiverPriority { get; set; }
+        public long? ExclusiveReceiverPriority { get; set; }
 
         /// <summary>
         ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
@@ -90,11 +82,13 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the operation timeout requested for the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public TimeSpan? DefaultReceiveWaitTime { get; set; }
+        public TimeSpan? DefaultMaximumReceiveWaitTime { get; set; }
 
         /// <summary>
-        ///   Indicates whether or not properties about the current state of events received is kept up to date
-        ///   as the receiver reads events.
+        ///   Indicates whether or not properties relevant to creating a checkpoint for restoring the state
+        ///   of receiver is kept up to date as the receiver reads events.  These checkpoint properties reflect the
+        ///   position of the last event read by a receiver; creating a new receiver using these properties allows it
+        ///   to begin reading at the last received event rather than needing to restart at the beginning.
         ///
         ///   Enabling updates allows consumers that wish to create checkpoints more easily and frequently, as the
         ///   necessary inormation needed to do so is readily available on the <see cref="PartitionReceiver" />.  If
@@ -114,7 +108,7 @@ namespace Azure.Messaging.EventHubs
         ///   properties for the state of the partition are sent with events.
         /// </remarks>
         ///
-        public bool UpdatePropertiesOnReceive { get; set; } = true;
+        public bool UpdateCheckpointPropertiesOnReceive { get; set; } = true;
 
         /// <summary>
         ///     An optional text-based identifierlabel to assign to an event receiver.

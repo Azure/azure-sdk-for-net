@@ -22,10 +22,11 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the location of the the first event present in the partition.  Use
-        ///   this position to begin receiving from the first available event in the partition.
+        ///   this position to begin receiving from the first event that was enqueued in the partition
+        ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition FirstAvailable => FromOffset(StartOfStreamOffset, true);
+        public static EventPosition FirstAvailableEvent => FromOffset(StartOfStreamOffset, true);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -40,7 +41,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
-        /// 
+        ///
         /// <remarks>
         ///   The offset is the relative position for event in the context of the stream.  The offset
         ///   should not be considered a stable value, as the same offset may refer to a different event
@@ -95,7 +96,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
         ///
         /// <returns>The position of the specified event.</returns>
-        /// 
+        ///
         /// <remarks>
         ///   The offset is the relative position for event in the context of the stream.  The offset
         ///   should not be considered a stable value, as the same offset may refer to a different event
@@ -148,7 +149,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
         ///
         /// <returns>The position of the specified event.</returns>
-        /// 
+        ///
         /// <remarks>
         ///   The offset is the relative position for event in the context of the stream.  The offset
         ///   should not be considered a stable value, as the same offset may refer to a different event
