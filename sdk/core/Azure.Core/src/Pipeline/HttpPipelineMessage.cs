@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Azure.Core.Pipeline
 {
-    public struct HttpPipelineMessage
+    public class HttpPipelineMessage
     {
         public CancellationToken CancellationToken { get; }
 

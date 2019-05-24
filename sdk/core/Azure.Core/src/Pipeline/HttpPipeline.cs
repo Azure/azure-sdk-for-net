@@ -38,25 +38,21 @@ namespace Azure.Core.Pipeline
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            using (var message = new HttpPipelineMessage(cancellationToken))
-            {
-                message.Request = request;
-                message.ResponseClassifier = _responseClassifier;
-                await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
-                return message.Response;
-            }
+            var message = new HttpPipelineMessage(cancellationToken);
+            message.Request = request;
+            message.ResponseClassifier = _responseClassifier;
+            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+            return message.Response;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            using (var message = new HttpPipelineMessage(cancellationToken))
-            {
-                message.Request = request;
-                message.ResponseClassifier = _responseClassifier;
-                _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-                return message.Response;
-            }
+            var message = new HttpPipelineMessage(cancellationToken);
+            message.Request = request;
+            message.ResponseClassifier = _responseClassifier;
+            _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+            return message.Response;
         }
 
         public static HttpPipeline Build(HttpClientOptions options, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] clientPolicies)
