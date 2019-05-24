@@ -86,7 +86,7 @@ namespace Azure.Storage.Queues.Test
                 var result = await messageId.UpdateAsync(message1, enqueuedMessage.PopReceipt, new TimeSpan(100));
 
                 // Assert
-                Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(result.Raw.Headers.RequestId);
             }
         }
 
@@ -108,11 +108,11 @@ namespace Azure.Storage.Queues.Test
                 var result = await messageId.UpdateAsync(message1, enqueuedMessage.PopReceipt);
 
                 // Assert
-                Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(result.Raw.Headers.RequestId);
             }
         }
 
-        [TestMethod]    
+        [TestMethod]
         [TestCategory("Live")]
         public async Task UpdateAsync_UpdatePeek()
         {
