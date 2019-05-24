@@ -9,8 +9,14 @@ namespace Azure.Security.KeyVault.Keys
     public class RsaKeyCreateOptions : KeyCreateOptions
     {
         public int KeySize { get; set; }
-        
-        public RsaKeyCreateOptions(int size, string name, List<string> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
+
+        public RsaKeyCreateOptions(string name) 
+            : base(name)
+        {
+            KeyType = JsonWebKeyType.Rsa;
+        }
+
+        public RsaKeyCreateOptions(string name, int size, List<string> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
             :base(name)
         {
             KeySize = size;
