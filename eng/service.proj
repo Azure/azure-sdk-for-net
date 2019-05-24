@@ -1,5 +1,15 @@
 <Project Sdk="Microsoft.Build.Traversal">
+  <PropertyGroup>
+    <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" />
   </ItemGroup>
+  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+
+  <Target Name="CheckProjects" AfterTargets="Build">
+    <Error Condition="'@(ProjectReference)' == ''"
+        Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\**\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
+  </Target>
 </Project>
