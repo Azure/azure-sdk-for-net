@@ -25,6 +25,13 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public IList<string> KeyOps { get; set; }
 
+        public JsonWebKey(string keyId, string keyType, IList<string> keyOperations)
+        {
+            KeyId = keyId;
+            KeyType = keyType;
+            keyOperations = new List<string>(keyOperations);
+        }
+
         #region RSA Public Key Parameters
 
         /// <summary>

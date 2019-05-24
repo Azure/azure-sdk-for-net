@@ -17,10 +17,6 @@
   
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
-  <!--<ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>-->
     
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.2" />

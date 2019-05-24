@@ -13,5 +13,13 @@ namespace Azure.Security.KeyVault.Keys
         public DateTime? DeletedDate { get; private set; }
 
         public DateTime? ScheduledPurgeDate { get; private set; }
+
+        public DeletedKey(string name, string recoveryId, DateTime? deletedDate, DateTime? scheduledPurge)
+            : base(name)
+        {
+            RecoveryId = recoveryId;
+            DeletedDate = deletedDate;
+            ScheduledPurgeDate = scheduledPurge;
+        }
     }
 }
