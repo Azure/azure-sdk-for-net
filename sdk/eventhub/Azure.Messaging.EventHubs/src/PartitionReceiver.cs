@@ -121,8 +121,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual Task<IEnumerable<EventData>> ReceiveAsync(int               maximumMessageCount,
                                                                  TimeSpan?         maximumWaitTime = null,
-                                                                 CancellationToken cancellationToken = default) =>
-            Task.FromResult<IEnumerable<EventData>>(new[] { new EventData(System.Text.Encoding.UTF8.GetBytes("Sample")), new EventData(System.Text.Encoding.UTF8.GetBytes("Other")) });
+                                                                 CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the receiver.
@@ -132,7 +131,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the receiver.

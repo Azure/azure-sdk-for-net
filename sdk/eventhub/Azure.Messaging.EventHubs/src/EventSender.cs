@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
+                                      CancellationToken      cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
                                       EventBatchingOptions   batchOptions,
-                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
+                                      CancellationToken      cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the sender.
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the sender.

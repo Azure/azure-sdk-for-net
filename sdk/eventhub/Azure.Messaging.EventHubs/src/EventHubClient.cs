@@ -60,8 +60,6 @@ namespace Azure.Messaging.EventHubs
         ///
         public EventHubClient(string connectionString)
         {
-            EventHubPath = "THIS WOULD BE PARSED FROM THE CONNECTION STRING";
-
         }
 
         /// <summary>
@@ -83,7 +81,6 @@ namespace Azure.Messaging.EventHubs
         public EventHubClient(string                connectionString,
                               EventHubClientOptions clientOptions)
         {
-            EventHubPath = "THIS WOULD BE PARSED FROM THE CONNECTION STRING";
         }
 
         /// <summary>
@@ -126,8 +123,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public virtual Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken = default) =>
-            Task.FromResult(new EventHubProperties("/sample-path", DateTime.UtcNow.AddDays(-5), 3, new[] { "one", "two", "three" }, DateTime.UtcNow));
+        public virtual Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
@@ -143,8 +139,7 @@ namespace Azure.Messaging.EventHubs
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) =>
-            (await GetPropertiesAsync(cancellationToken)).PartitionIds;
+        public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
@@ -157,8 +152,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string            partitionId,
-                                                                             CancellationToken cancellationToken = default) =>
-            Task.FromResult(new PartitionProperties("/sample-path", partitionId, 2, 100, "421", DateTime.UtcNow.AddHours(-1.65), false, DateTime.UtcNow));
+                                                                             CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
@@ -238,7 +232,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the connection to the Event Hub instance.

@@ -16,65 +16,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, true },
-            //new object[] { true, true }
+            new object[] { true, true }
         };
-
-        [Theory]
-        [MemberData(nameof(TestPermutations))]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task JESSE_SessionTest(bool partitioned, bool sessionEnabled)
-        {
-            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
-            {
-                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-                var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
-
-                try
-                {
-                    var messageId1 = "test-message1";
-                    var sessionId1 = "sessionId1";
-                    await sender.SendAsync(new Message { MessageId = messageId1, SessionId = sessionId1 }).ConfigureAwait(false);
-                    TestUtility.Log($"Sent Message: {messageId1} to Session: {sessionId1}");
-
-                    var messageId2 = "test-message2";
-                    var sessionId2 = "sessionId2";
-                    await sender.SendAsync(new Message { MessageId = messageId2, SessionId = sessionId2 }).ConfigureAwait(false);
-                    TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
-
-                    // Receive Message, Complete and Close with SessionId - sessionId 1
-
-                    try
-                    {
-                      await this.AcceptAndCompleteSessionsAsync(sessionClient, sessionId1, messageId1).ConfigureAwait(false);
-                      
-                    }
-                    catch (Exception ex)
-                    {
-                        var x = ex.GetType().Name;
-                        var y = ex.Message;
-                        var z = y;
-                        throw;
-                    }
-
-                    // Receive Message, Complete and Close with SessionId - sessionId 2
-                    await this.AcceptAndCompleteSessionsAsync(sessionClient, sessionId2, messageId2).ConfigureAwait(false);
-
-                    // Receive Message, Complete and Close - With Null SessionId specified
-                    var messageId3 = "test-message3";
-                    var sessionId3 = "sessionId3";
-                    await sender.SendAsync(new Message { MessageId = messageId3, SessionId = sessionId3 }).ConfigureAwait(false);
-
-                    await this.AcceptAndCompleteSessionsAsync(sessionClient, null, messageId3).ConfigureAwait(false);
-                }
-                finally
-                {
-                    await sender.CloseAsync();
-                    await sessionClient.CloseAsync();
-                }
-            });
-        }
-
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
