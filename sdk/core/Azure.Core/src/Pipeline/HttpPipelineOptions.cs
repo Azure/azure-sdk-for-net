@@ -29,23 +29,9 @@ namespace Azure.Core.Pipeline
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
-        public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
-
         public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
 
         public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
-
-        public void AddService(object service, Type type = null)
-        {
-            if (service == null) throw new ArgumentNullException(nameof(service));
-
-            if (!(ServiceProvider is DictionaryServiceProvider dictionaryServiceProvider))
-            {
-                ServiceProvider = dictionaryServiceProvider = new DictionaryServiceProvider();
-            }
-
-            dictionaryServiceProvider.Add(service, type != null ? type : service.GetType());
-        }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -57,28 +43,6 @@ namespace Azure.Core.Pipeline
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
         #endregion
-
-        private sealed class DictionaryServiceProvider : IServiceProvider
-        {
-            Dictionary<Type, object> _services = new Dictionary<Type, object>();
-
-            public object GetService(Type serviceType)
-            {
-                _services.TryGetValue(serviceType, out var service);
-                return service;
-            }
-
-            internal void Add(object service, Type type)
-                => _services.Add(type, service);
-        }
-
-        internal sealed class EmptyServiceProvider : IServiceProvider
-        {
-            public static IServiceProvider Singleton { get; } = new EmptyServiceProvider();
-            private EmptyServiceProvider() { }
-
-            public object GetService(Type serviceType) => null;
-        }
     }
 }
 

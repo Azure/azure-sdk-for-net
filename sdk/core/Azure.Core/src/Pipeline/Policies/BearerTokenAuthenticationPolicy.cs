@@ -51,8 +51,8 @@ namespace Azure.Core.Pipeline.Policies
         public async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             string token = async ?
-                    await _credential.GetTokenAsync(_scopes, message.Cancellation).ConfigureAwait(false) :
-                    _credential.GetToken(_scopes, message.Cancellation);
+                    await _credential.GetTokenAsync(_scopes, message.CancellationToken).ConfigureAwait(false) :
+                    _credential.GetToken(_scopes, message.CancellationToken);
 
             if (token != _currentToken)
             {

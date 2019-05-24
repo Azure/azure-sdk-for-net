@@ -17,9 +17,8 @@ namespace Azure.Core.Pipeline
         private readonly HttpPipelineTransport _transport;
         private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
-        private readonly IServiceProvider _services;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _responseClassifier = responseClassifier ?? new ResponseClassifier();
@@ -31,11 +30,10 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
-            _services = services ?? HttpClientOptions.EmptyServiceProvider.Singleton;
         }
 
         public Request CreateRequest()
-            => _transport.CreateRequest(_services);
+            => _transport.CreateRequest();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
@@ -77,7 +75,7 @@ namespace Azure.Core.Pipeline
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, options.ServiceProvider);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier);
         }
     }
 }

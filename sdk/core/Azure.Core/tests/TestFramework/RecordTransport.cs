@@ -48,9 +48,9 @@ namespace Azure.Core.Testing
             _session.Record(CreateEntry(message.Request, message.Response));
         }
 
-        public override Request CreateRequest(IServiceProvider services)
+        public override Request CreateRequest()
         {
-            Request request = _innerTransport.CreateRequest(services);
+            Request request = _innerTransport.CreateRequest();
 
             lock (_random)
             {

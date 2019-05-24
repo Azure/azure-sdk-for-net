@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
 
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override Request CreateRequest(IServiceProvider services)
+        public sealed override Request CreateRequest()
             => new PipelineRequest();
 
         public override void Process(HttpPipelineMessage message)
@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
+                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                     .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
             }
-            return pipelineRequest.BuildRequestMessage(message.Cancellation);
+            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)

@@ -45,7 +45,7 @@ namespace Azure.Core.Testing
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest(null))
+            using (Request request = transport.CreateRequest())
             {
                 request.Method = HttpPipelineMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
