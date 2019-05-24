@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="reason">The reason for the line of credit status when
         /// not approved.</param>
         /// <param name="remainingBalance">Remaining balance.</param>
-        /// <param name="status">The line of credit status.</param>
+        /// <param name="status">The line of credit status. Possible values
+        /// include: 'Approved', 'Rejected'</param>
         public LineOfCredit(string id = default(string), string name = default(string), string type = default(string), Amount creditLimit = default(Amount), string reason = default(string), Amount remainingBalance = default(Amount), string status = default(string))
             : base(id, name, type)
         {
@@ -74,10 +75,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         public Amount RemainingBalance { get; private set; }
 
         /// <summary>
-        /// Gets the line of credit status.
+        /// Gets or sets the line of credit status. Possible values include:
+        /// 'Approved', 'Rejected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
     }
 }
