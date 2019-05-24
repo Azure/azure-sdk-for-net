@@ -14,24 +14,24 @@ using Microsoft.Rest.Azure;
 
 namespace AlertsManagement.Tests.ScenarioTests
 {
-    public class AlertsTests : TestBase
+    public class SmartGroupsTests : TestBase
     {
         private RecordedDelegatingHandler handler;
 
-        public AlertsTests() : base()
+        public SmartGroupsTests() : base()
         {
             handler = new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
         }
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void GetAlertsListTest()
+        public void GetSmartGroupListTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                IPage<Alert> actual = alertsManagementClient.Alerts.GetAll();
+                SmartGroupsList actual = alertsManagementClient.SmartGroups.GetAll();
 
                 if (!this.IsRecording)
                 {
@@ -42,13 +42,13 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void GetAlertByIdTest()
+        public void GetSmartGroupByIdTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                Alert actual = alertsManagementClient.Alerts.GetById("e694ddf0-8430-4349-a5ed-c5866e9f4377");
+                SmartGroup actual = alertsManagementClient.SmartGroups.GetById("720dd30b-ed61-446b-bcd3-cf1793236916");
 
                 if (!this.IsRecording)
                 {
@@ -59,13 +59,13 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void AlertStateChangeTest()
+        public void SmartGroupStateChangeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                Alert actual = alertsManagementClient.Alerts.ChangeState("a3033ce9-6b95-4c36-8621-62b148434b8b", AlertState.Closed);
+                SmartGroup actual = alertsManagementClient.SmartGroups.ChangeState("720dd30b-ed61-446b-bcd3-cf1793236916", AlertState.Closed);
 
                 if (!this.IsRecording)
                 {
@@ -76,13 +76,13 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void GetAlertHistoryTest()
+        public void SmartGroupHistoryTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                var actual = alertsManagementClient.Alerts.GetHistory("e694ddf0-8430-4349-a5ed-c5866e9f4377");
+                var actual = alertsManagementClient.SmartGroups.GetHistory("720dd30b-ed61-446b-bcd3-cf1793236916");
 
                 if (!this.IsRecording)
                 {
@@ -91,49 +91,19 @@ namespace AlertsManagement.Tests.ScenarioTests
             }
         }
 
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetAlertsSummaryTest()
+        private void Check(AlertsManagementClient alertsManagementClient, SmartGroupsList actual)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                var actual = alertsManagementClient.Alerts.GetSummary("Severity");
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        private static void Check(
-            AlertsManagementClient alertsManagementClient,
-            IPage<Alert> alertListResult)
+        private void Check(AlertsManagementClient alertsManagementClient, SmartGroup actual)
         {
-            Assert.Equal("true", "true");
+            throw new NotImplementedException();
         }
 
-        private static void Check(
-            AlertsManagementClient alertsManagementClient,
-            Alert alertListResult)
+        private void Check(AlertsManagementClient alertsManagementClient, SmartGroupModification actual)
         {
-            Assert.Equal("true", "true");
-        }
-
-        private static void Check(
-           AlertsManagementClient alertsManagementClient,
-           AlertModification modification)
-        {
-            Assert.Equal("true", "true");
-        }
-
-        private static void Check(
-           AlertsManagementClient alertsManagementClient,
-           AlertsSummary modification)
-        {
-            Assert.Equal("true", "true");
+            throw new NotImplementedException();
         }
     }
 }

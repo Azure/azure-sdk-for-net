@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/720dd30b-ed61-446b-bcd3-cf1793236916/changeState?api-version=2018-05-05&newState=Closed",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy83MjBkZDMwYi1lZDYxLTQ0NmItYmNkMy1jZjE3OTMyMzY5MTYvY2hhbmdlU3RhdGU/YXBpLXZlcnNpb249MjAxOC0wNS0wNSZuZXdTdGF0ZT1DbG9zZWQ=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4c943e84-cc38-47e3-bbc4-fd63962f5147"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27019.06",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d7222f0f-1476-4e47-a3f8-8cb1acb6c825"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "6f6fb45e-8179-43ec-a8ab-cd7ff4be07a4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20190524T055746Z:6f6fb45e-8179-43ec-a8ab-cd7ff4be07a4"
+        ],
+        "Date": [
+          "Fri, 24 May 2019 05:57:46 GMT"
+        ],
+        "Content-Length": [
+          "962"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertsCount\": 6,\r\n    \"smartGroupState\": \"Closed\",\r\n    \"severity\": \"Sev3\",\r\n    \"startDateTime\": \"2019-05-23T18:25:23.2296295Z\",\r\n    \"lastModifiedDateTime\": \"2019-05-24T05:57:45.5499728Z\",\r\n    \"lastAlertAddedDateTime\": \"2019-05-23T19:53:29.9419822Z\",\r\n    \"lastModifiedUserName\": \"User\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertslab/providers/microsoft.apimanagement/service/aig-test\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"resourceTypes\": [\r\n      {\r\n        \"name\": \"microsoft.apimanagement/service\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"resourceGroups\": [\r\n      {\r\n        \"name\": \"alertslab\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"monitorSources\": [\r\n      {\r\n        \"name\": \"Platform\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"monitorConditions\": [\r\n      {\r\n        \"name\": \"Resolved\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"alertStates\": [\r\n      {\r\n        \"name\": \"New\",\r\n        \"count\": 6\r\n      }\r\n    ],\r\n    \"alertSeverities\": [\r\n      {\r\n        \"name\": \"Sev3\",\r\n        \"count\": 6\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/720dd30b-ed61-446b-bcd3-cf1793236916\",\r\n  \"type\": \"Microsoft.AlertsManagement/smartGroups\",\r\n  \"name\": \"Processing Latency high\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "dd91de05-d791-4ceb-b6dc-988682dc7d72"
+  }
+}

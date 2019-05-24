@@ -10,40 +10,12 @@ namespace AlertsManagement.Tests.Helpers
 {
     public class ComparisonUtility
     {
+        #region Alerts Test
         public static void AreEqual(IList<Alert> exp, IList<Alert> act)
         {
             if (exp != null)
             {
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
-        }
-
-        public static void AreEqual(SmartGroupsList exp, SmartGroupsList act)
-        {
-            if (exp != null)
-            {
-                AreEqual(exp.Value, act.Value);
-            }
-        }
-
-        public static void AreEqual(IList<SmartGroup> exp, IList<SmartGroup> act)
-        {
-            if (exp != null)
-            {
-                for (int i = 0; i < exp.Count; i++)
-                {
-                    AreEqual(exp[i], act[i]);
-                }
-            }
-        }
-
-        public static void AreEqual(IList<Operation> exp, IList<Operation> act)
-        {
-            if (exp != null)
-            {
+                Assert.Equal(exp.Count, act.Count);
                 for (int i = 0; i < exp.Count; i++)
                 {
                     AreEqual(exp[i], act[i]);
@@ -82,6 +54,89 @@ namespace AlertsManagement.Tests.Helpers
             }
         }
 
+        public static void AreEqual(IList<AlertModificationItem> exp, IList<AlertModificationItem> act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Count, act.Count);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        public static void AreEqual(AlertModificationItem exp, AlertModificationItem act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.ModificationEvent, act.ModificationEvent);
+                Assert.Equal(exp.NewValue, act.NewValue);
+                Assert.Equal(exp.OldValue, act.OldValue);
+            }
+        }
+
+        public static void AreEqual(AlertsSummaryGroup exp, AlertsSummaryGroup act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Total, act.Total);
+                Assert.Equal(exp.SmartGroupsCount, act.SmartGroupsCount);
+                Assert.Equal(exp.Groupedby, act.Groupedby);
+                AreEqual(exp.Values, act.Values);
+            }
+        }
+
+        public static void AreEqual(IList<AlertsSummaryGroupItem> exp, IList<AlertsSummaryGroupItem> act)
+        {
+            if (exp == null && act == null)
+            {
+                return;
+            }
+            if (exp != null)
+            {
+                Assert.Equal(exp.Count, act.Count);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        public static void AreEqual(AlertsSummaryGroupItem exp, AlertsSummaryGroupItem act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.Count, act.Count);
+                Assert.Equal(exp.Groupedby, act.Groupedby);
+                AreEqual(exp.Values, act.Values);
+            }
+        }
+
+        #endregion
+
+        #region Smart Groups Tests
+        public static void AreEqual(SmartGroupsList exp, SmartGroupsList act)
+        {
+            if (exp != null)
+            {
+                AreEqual(exp.Value, act.Value);
+            }
+        }
+
+        public static void AreEqual(IList<SmartGroup> exp, IList<SmartGroup> act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Count, act.Count);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
         public static void AreEqual(SmartGroup exp, SmartGroup act)
         {
             if (exp != null)
@@ -96,6 +151,42 @@ namespace AlertsManagement.Tests.Helpers
             }
         }
 
+        public static void AreEqual(IList<SmartGroupModificationItem> exp, IList<SmartGroupModificationItem> act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Count, act.Count);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        public static void AreEqual(SmartGroupModificationItem exp, SmartGroupModificationItem act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.ModificationEvent, act.ModificationEvent);
+                Assert.Equal(exp.NewValue, act.NewValue);
+                Assert.Equal(exp.OldValue, act.OldValue);
+            }
+        }
+        #endregion
+
+        #region Operations Tests
+        public static void AreEqual(IList<Operation> exp, IList<Operation> act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Count, act.Count);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
         public static void AreEqual(Operation exp, Operation act)
         {
             if (exp != null)
@@ -107,5 +198,6 @@ namespace AlertsManagement.Tests.Helpers
                 Assert.Equal(exp.Display.Description, act.Display.Description);
             }
         }
+        #endregion
     }
 }

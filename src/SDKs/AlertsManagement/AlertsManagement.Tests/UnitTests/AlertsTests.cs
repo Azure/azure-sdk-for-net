@@ -73,6 +73,9 @@ namespace AlertsManagement.Tests.UnitTests
             string alertID = "249a7944-dabc-4c80-8025-61165619d78f";
             Alert expectedParameters = CreateAlert(alertID);
 
+            string updatedState = AlertState.Acknowledged;
+            expectedParameters.Properties.Essentials.AlertState = updatedState;
+
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
@@ -84,10 +87,64 @@ namespace AlertsManagement.Tests.UnitTests
 
             handler = new RecordedDelegatingHandler(expectedResponse);
             alertsManagementClient = GetAlertsManagementClient(handler);
-            string updatedState = AlertState.Closed;
+            
             var result = alertsManagementClient.Alerts.ChangeState(alertID, updatedState);
 
-            Assert.Equal(updatedState, result.Properties.Essentials.AlertState);
+            ComparisonUtility.AreEqual(expectedParameters, result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void GetAlertHistoryTest()
+        {
+            string alertID = "249a7944-dabc-4c80-8025-61165619d78f";
+            List<AlertModificationItem> modificationitems = new List<AlertModificationItem>
+            {
+                new AlertModificationItem(AlertModificationEvent.AlertCreated),
+                new AlertModificationItem(AlertModificationEvent.StateChange, AlertState.New, AlertState.Closed)
+            };
+
+            AlertModification expectedParameters = new AlertModification(properties: new AlertModificationProperties(alertID, modificationitems));
+
+            var handler = new RecordedDelegatingHandler();
+            var alertsManagementClient = GetAlertsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
+
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            alertsManagementClient = GetAlertsManagementClient(handler);
+
+            var result = alertsManagementClient.Alerts.GetHistory(alertID);
+
+            ComparisonUtility.AreEqual(expectedParameters.Properties.Modifications, result.Properties.Modifications);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void GetAlertsSummaryTest()
+        {
+            AlertsSummaryGroup group = GetTestSummaryGroup();
+            
+            AlertsSummary expectedParameters = new AlertsSummary(properties: group);
+
+            var handler = new RecordedDelegatingHandler();
+            var alertsManagementClient = GetAlertsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
+
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            alertsManagementClient = GetAlertsManagementClient(handler);
+            var result = alertsManagementClient.Alerts.GetSummary("Severity");
+
+            ComparisonUtility.AreEqual(expectedParameters.Properties, result.Properties);
         }
 
         private List<Alert> GetAlerts()
@@ -136,6 +193,27 @@ namespace AlertsManagement.Tests.UnitTests
                 name: name,
                 properties: properties
             );
+        }
+
+        AlertsSummaryGroup GetTestSummaryGroup()
+        {
+            AlertsSummaryGroup group = new AlertsSummaryGroup(
+                    total: 7,
+                    smartGroupsCount: 2,
+                    groupedby: "Severity",
+                    values: new List<AlertsSummaryGroupItem>
+                    {
+                        new AlertsSummaryGroupItem("Sev0", 4, "AlertState", new List<AlertsSummaryGroupItem>{
+                            new AlertsSummaryGroupItem("New", 1),
+                            new AlertsSummaryGroupItem("Closed", 3)
+                        }),
+                        new AlertsSummaryGroupItem("Sev2", 3, "AlertState", new List<AlertsSummaryGroupItem>{
+                            new AlertsSummaryGroupItem("New", 1),
+                            new AlertsSummaryGroupItem("Acknowledged", 2)
+                        })
+                    }                    
+                );
+            return group;
         }
     }
 }

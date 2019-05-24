@@ -7,15 +7,15 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "49d7afd4-3967-4d72-984e-16d475c53911"
+          "c18228a9-6232-455a-b2bb-b6b0e051fa50"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27019.06",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
         ]
       },
@@ -23,14 +23,11 @@
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 23 May 2019 15:15:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a8ab421f-c89c-4242-8bb6-2f21819a3a53"
+          "ee2803f7-4a41-47ac-a406-75638b353a9b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -42,10 +39,13 @@
           "999"
         ],
         "x-ms-correlation-request-id": [
-          "21f079a5-30c0-4c49-bd5c-5a92eba6ac99"
+          "593d498c-ab59-45a6-acdf-223d5680328d"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190523T151502Z:21f079a5-30c0-4c49-bd5c-5a92eba6ac99"
+          "CENTRALINDIA:20190524T060501Z:593d498c-ab59-45a6-acdf-223d5680328d"
+        ],
+        "Date": [
+          "Fri, 24 May 2019 06:05:01 GMT"
         ],
         "Content-Length": [
           "382"
@@ -57,7 +57,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"groupedby\": \"severity\",\r\n    \"total\": 816,\r\n    \"values\": [\r\n      {\r\n        \"name\": \"Sev0\",\r\n        \"count\": 0\r\n      },\r\n      {\r\n        \"name\": \"Sev1\",\r\n        \"count\": 292\r\n      },\r\n      {\r\n        \"name\": \"Sev2\",\r\n        \"count\": 1\r\n      },\r\n      {\r\n        \"name\": \"Sev3\",\r\n        \"count\": 94\r\n      },\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 429\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alertsSummary/current\",\r\n  \"type\": \"Microsoft.AlertsManagement/alertsSummary\",\r\n  \"name\": \"current\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"groupedby\": \"severity\",\r\n    \"total\": 998,\r\n    \"values\": [\r\n      {\r\n        \"name\": \"Sev0\",\r\n        \"count\": 0\r\n      },\r\n      {\r\n        \"name\": \"Sev1\",\r\n        \"count\": 293\r\n      },\r\n      {\r\n        \"name\": \"Sev2\",\r\n        \"count\": 1\r\n      },\r\n      {\r\n        \"name\": \"Sev3\",\r\n        \"count\": 82\r\n      },\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 622\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alertsSummary/current\",\r\n  \"type\": \"Microsoft.AlertsManagement/alertsSummary\",\r\n  \"name\": \"current\"\r\n}",
       "StatusCode": 200
     }
   ],
