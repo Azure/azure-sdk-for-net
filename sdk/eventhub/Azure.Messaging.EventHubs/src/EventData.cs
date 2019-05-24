@@ -71,25 +71,25 @@ namespace Azure.Messaging.EventHubs
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
-        internal long SequenceNumber { get; set; }
+        public long SequenceNumber => SystemProperties.SequenceNumber;
 
         /// <summary>
         ///   The offset of the the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        internal string Offset { get; set; }
+        public int Offset => SystemProperties.Offset;
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
-        internal DateTime EnqueuedTimeUtc { get; set; }
+        public DateTime EnqueuedTimeUtc => SystemProperties.EnqueuedTimeUtc;
 
         /// <summary>
         ///   The date and time, in UTC, that this event data was retrieved from the Event Hub partition.
         /// </summary>
         ///
-        internal DateTime RetrievalTimeUtc { get; set; }
+        public DateTime RetrievalTimeUtc { get; protected internal set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -197,13 +197,21 @@ namespace Azure.Messaging.EventHubs
             ///   identifier is unique within a partition of the Event Hubs stream.
             /// </remarks>
             ///
-            public string Offset
+            public int Offset
             {
                 get
                 {
                     if (this.TryGetValue(MessagePropertyName.Offset, out var value))
                     {
-                        return (string)value;
+                        if (value is int offset)
+                        {
+                            return offset;
+                        }
+
+                        if ((value is string token) && (int.TryParse(token, out var parsedOffset)))
+                        {
+                            return parsedOffset;
+                        }
                     }
 
                     throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.Offset));

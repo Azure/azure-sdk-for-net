@@ -26,9 +26,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class PartitionReceiver
     {
-        /// <summary>If populated, the information about the most recent event that was received.</summary>
-        private ReceiverCheckpointProperties _receiverCheckpoint = null;
-
         /// <summary>
         ///   The identifier of the Event Hub partition that this receiver is associated with.  Events will be read
         ///   only from this partition.
@@ -56,31 +53,6 @@ namespace Azure.Messaging.EventHubs
         /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value will be <c>null</c>.</value>
         ///
         public long? ExclusiveReceiverPriority { get; protected set; }
-
-        /// <summary>
-        ///   The most recent information about the partition in the Event Hub known by the current receiver.  This
-        ///   set of information can be used to mark the position of an event receiver so that a new reciever can
-        ///   begin reading where this receiver last left off.
-        /// </summary>
-        ///
-        /// <value>If <see cref="ReceiverOptions.UpdateCheckpointPropertiesOnReceive" /> is <c>true</c>, this information will be refreshed when events are received; otherwise, this will not be populated.</value>
-        ///
-        public ReceiverCheckpointProperties ReceiverCheckpointProperties
-        {
-            get
-            {
-                //TODO: Review Error
-
-                if ((!ReceiverOptions.UpdateCheckpointPropertiesOnReceive) || (_receiverCheckpoint?.PropertyRetrievalTimeUtc == null))
-                {
-                    throw new NotSupportedException(Resources.ReceiverCheckpointPropertiesNotPopulated);
-                }
-
-                return _receiverCheckpoint;
-            }
-
-            protected set => _receiverCheckpoint = value;
-        }
 
         /// <summary>
         ///   The position of the event in the partition where the receiver should begin reading.
@@ -127,11 +99,6 @@ namespace Azure.Messaging.EventHubs
             StartingPosition = receiverOptions.BeginReceivingAt;
             ReceiverOptions = receiverOptions;
             ExclusiveReceiverPriority = receiverOptions.ExclusiveReceiverPriority;
-
-            ReceiverCheckpointProperties = receiverOptions.UpdateCheckpointPropertiesOnReceive
-                ? new ReceiverCheckpointProperties(eventHubPath, partitionId)
-                : null;
-
         }
 
         /// <summary>

@@ -85,32 +85,6 @@ namespace Azure.Messaging.EventHubs
         public TimeSpan? DefaultMaximumReceiveWaitTime { get; set; }
 
         /// <summary>
-        ///   Indicates whether or not properties relevant to creating a checkpoint for restoring the state
-        ///   of receiver is kept up to date as the receiver reads events.  These checkpoint properties reflect the
-        ///   position of the last event read by a receiver; creating a new receiver using these properties allows it
-        ///   to begin reading at the last received event rather than needing to restart at the beginning.
-        ///
-        ///   Enabling updates allows consumers that wish to create checkpoints more easily and frequently, as the
-        ///   necessary inormation needed to do so is readily available on the <see cref="PartitionReceiver" />.  If
-        ///   updates are not enabled, consumers will need to request partition properties using
-        ///   <see cref="EventHubClient.GetPartitionPropertiesAsync(string, System.Threading.CancellationToken)"/>.
-        ///
-        ///   Should a consumer wish to save checkpoint information frequently, to try and minimize the number of events
-        ///   which would be repeated in the event of crash recovery, it is recommended that updates are enabled.  For consumers
-        ///   that would prefer to minimize network transfers at the cost of potentially having more repeated events after a crash
-        ///   resovery, it is recommended that updating be disabled.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if the information should be kept up-to-date as events are received; otherwise, <c>false</c>.</value>
-        ///
-        /// <remarks>
-        ///   Enabling updates does result in use of a small amount of additional bandwidth when receiving messages, as the
-        ///   properties for the state of the partition are sent with events.
-        /// </remarks>
-        ///
-        public bool UpdateCheckpointPropertiesOnReceive { get; set; } = true;
-
-        /// <summary>
         ///     An optional text-based identifierlabel to assign to an event receiver.
         /// </summary>
         ///

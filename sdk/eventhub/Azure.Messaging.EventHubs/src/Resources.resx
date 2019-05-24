@@ -150,9 +150,6 @@
   <data name="MissingSystemProperty" xml:space="preserve">
     <value>System property '{0}' is missing in the event.</value>
   </data>
-  <data name="PartitionSenderInvalidWithpartitionIdOnBatch" xml:space="preserve">
-    <value>EventData batch with partitionId cannot be sent on PartitionSender.</value>
-  </data>
   <data name="ReceiverIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
@@ -173,8 +170,5 @@
   </data>
   <data name="ValueOutOfRange" xml:space="preserve">
     <value>The value supplied must be between {0} and {1}.</value>
-  </data>
-  <data name="ReceiverCheckpointPropertiesNotPopulated" xml:space="preserve">
-    <value>No receiver checkpoint properties are available.  Either no events have been received yet or updating of the checkpoint properties was disabled.</value>
   </data>
 </root>

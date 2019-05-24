@@ -160,24 +160,6 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EventData batch with partitionId cannot be sent on PartitionSender..
-        /// </summary>
-        internal static string PartitionSenderInvalidWithpartitionIdOnBatch {
-            get {
-                return ResourceManager.GetString("PartitionSenderInvalidWithpartitionIdOnBatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No receiver checkpoint properties are available.  Either no events have been received yet or updating of the checkpoint properties was disabled..
-        /// </summary>
-        internal static string ReceiverCheckpointPropertiesNotPopulated {
-            get {
-                return ResourceManager.GetString("ReceiverCheckpointPropertiesNotPopulated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
         internal static string ReceiverIdentifierOverMaxValue {
