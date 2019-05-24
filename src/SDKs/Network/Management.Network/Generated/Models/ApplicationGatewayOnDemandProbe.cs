@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of on demand test probe request
+    /// Details of on demand test probe request.
     /// </summary>
     public partial class ApplicationGatewayOnDemandProbe
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
-        /// &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;</param>
+        /// &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;.</param>
         /// <param name="timeout">The probe timeout in seconds. Probe marked as
         /// failed if valid response is not received with this timeout period.
         /// Acceptable values are from 1 second to 86400 seconds.</param>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="backendPoolName">Name of backend pool of application
         /// gateway to which probe request will be sent.</param>
         /// <param name="backendHttpSettingName">Name of backend http setting
-        /// of application gateway to be used for test probe</param>
+        /// of application gateway to be used for test probe.</param>
         public ApplicationGatewayOnDemandProbe(string protocol = default(string), string host = default(string), string path = default(string), int? timeout = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), string backendPoolName = default(string), string backendHttpSettingName = default(string))
         {
             Protocol = protocol;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets relative path of probe. Valid path starts from '/'.
         /// Probe is sent to
-        /// &amp;lt;Protocol&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;&amp;lt;path&amp;gt;
+        /// &amp;lt;Protocol&amp;gt;://&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt;&amp;lt;path&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets name of backend http setting of application gateway to
-        /// be used for test probe
+        /// be used for test probe.
         /// </summary>
         [JsonProperty(PropertyName = "backendHttpSettingName")]
         public string BackendHttpSettingName { get; set; }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface INetworkInterfaceIPConfigurationsOperations
     {
         /// <summary>
-        /// Get all ip configurations in a network interface
+        /// Get all ip configurations in a network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<NetworkInterfaceIPConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, string ipConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all ip configurations in a network interface
+        /// Get all ip configurations in a network interface.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

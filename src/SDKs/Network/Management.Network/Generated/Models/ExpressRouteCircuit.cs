@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// ExpressRouteCircuit resource
+    /// ExpressRouteCircuit resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ExpressRouteCircuit : Resource
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The SKU.</param>
         /// <param name="allowClassicOperations">Allow classic
-        /// operations</param>
+        /// operations.</param>
         /// <param name="circuitProvisioningState">The CircuitProvisioningState
         /// state of the resource.</param>
         /// <param name="serviceProviderProvisioningState">The
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets allow classic operations
+        /// Gets or sets allow classic operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowClassicOperations")]
         public bool? AllowClassicOperations { get; set; }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// IP configuration
+    /// IP configuration.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class IPConfiguration : SubResource

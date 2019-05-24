@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="policySettings">Describes  policySettings for
-        /// policy</param>
+        /// policy.</param>
         /// <param name="customRules">Describes custom rules inside the
-        /// policy</param>
+        /// policy.</param>
         /// <param name="applicationGateways">A collection of references to
         /// application gateways.</param>
         /// <param name="provisioningState">Provisioning state of the
@@ -70,13 +70,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes  policySettings for policy
+        /// Gets or sets describes  policySettings for policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policySettings")]
         public PolicySettings PolicySettings { get; set; }
 
         /// <summary>
-        /// Gets or sets describes custom rules inside the policy
+        /// Gets or sets describes custom rules inside the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRules")]
         public IList<WebApplicationFirewallCustomRule> CustomRules { get; set; }

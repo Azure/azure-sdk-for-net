@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// SKU of a public IP prefix
+    /// SKU of a public IP prefix.
     /// </summary>
     public partial class PublicIPPrefixSku
     {

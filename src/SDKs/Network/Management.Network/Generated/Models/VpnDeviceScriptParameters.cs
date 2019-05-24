@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Vpn device configuration script generation parameters
+    /// Vpn device configuration script generation parameters.
     /// </summary>
     public partial class VpnDeviceScriptParameters
     {

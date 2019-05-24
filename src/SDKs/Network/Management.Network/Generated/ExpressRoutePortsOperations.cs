@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "expressRoutePortName");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Update ExpressRoutePort tags
+        /// Update ExpressRoutePort tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// List all the ExpressRoutePort resources in the specified subscription
+        /// List all the ExpressRoutePort resources in the specified subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "expressRoutePortName");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -901,7 +901,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1077,7 +1077,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Update ExpressRoutePort tags
+        /// Update ExpressRoutePort tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1127,7 +1127,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1458,7 +1458,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// List all the ExpressRoutePort resources in the specified subscription
+        /// List all the ExpressRoutePort resources in the specified subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

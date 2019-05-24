@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='policyName'>
-            /// The name of the policy
+            /// The name of the policy.
             /// </param>
             public static WebApplicationFirewallPolicy Get(this IWebApplicationFirewallPoliciesOperations operations, string resourceGroupName, string policyName)
             {
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='policyName'>
-            /// The name of the policy
+            /// The name of the policy.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Deletes Policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Deletes Policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Deletes Policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Deletes Policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

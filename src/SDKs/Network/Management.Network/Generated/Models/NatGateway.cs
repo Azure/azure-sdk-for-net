@@ -53,9 +53,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// NatGateway resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
+        /// <param name="zones">A list of availability zones denoting the zone
+        /// in which Nat Gateway should be deployed.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NatGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), NatGatewaySku sku = default(NatGatewaySku), int? idleTimeoutInMinutes = default(int?), IList<SubResource> publicIpAddresses = default(IList<SubResource>), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), IList<SubResource> subnets = default(IList<SubResource>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NatGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), NatGatewaySku sku = default(NatGatewaySku), int? idleTimeoutInMinutes = default(int?), IList<SubResource> publicIpAddresses = default(IList<SubResource>), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), IList<SubResource> subnets = default(IList<SubResource>), string resourceGuid = default(string), string provisioningState = default(string), IList<string> zones = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            Zones = zones;
             Etag = etag;
             CustomInit();
         }
@@ -120,6 +123,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of availability zones denoting the zone in
+        /// which Nat Gateway should be deployed.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the

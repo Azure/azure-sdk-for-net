@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Define match variables
+    /// Define match variables.
     /// </summary>
     public partial class MatchVariable
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'RequestUri', 'RequestHeaders', 'RequestBody',
         /// 'RequestCookies'</param>
         /// <param name="selector">Describes field of the matchVariable
-        /// collection</param>
+        /// collection.</param>
         public MatchVariable(string variableName, string selector = default(string))
         {
             VariableName = variableName;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string VariableName { get; set; }
 
         /// <summary>
-        /// Gets or sets describes field of the matchVariable collection
+        /// Gets or sets describes field of the matchVariable collection.
         /// </summary>
         [JsonProperty(PropertyName = "selector")]
         public string Selector { get; set; }

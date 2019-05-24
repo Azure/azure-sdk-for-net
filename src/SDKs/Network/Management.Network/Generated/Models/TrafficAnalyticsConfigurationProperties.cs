@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enabled">Flag to enable/disable traffic
         /// analytics.</param>
         /// <param name="workspaceId">The resource guid of the attached
-        /// workspace</param>
+        /// workspace.</param>
         /// <param name="workspaceRegion">The location of the attached
-        /// workspace</param>
+        /// workspace.</param>
         /// <param name="workspaceResourceId">Resource Id of the attached
-        /// workspace </param>
+        /// workspace.</param>
         /// <param name="trafficAnalyticsInterval">The interval in minutes
         /// which would decide how frequently TA service should do flow
-        /// analytics</param>
+        /// analytics.</param>
         public TrafficAnalyticsConfigurationProperties(bool enabled, string workspaceId, string workspaceRegion, string workspaceResourceId, int? trafficAnalyticsInterval = default(int?))
         {
             Enabled = enabled;
@@ -65,26 +65,26 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource guid of the attached workspace
+        /// Gets or sets the resource guid of the attached workspace.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceId")]
         public string WorkspaceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of the attached workspace
+        /// Gets or sets the location of the attached workspace.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceRegion")]
         public string WorkspaceRegion { get; set; }
 
         /// <summary>
-        /// Gets or sets resource Id of the attached workspace
+        /// Gets or sets resource Id of the attached workspace.
         /// </summary>
         [JsonProperty(PropertyName = "workspaceResourceId")]
         public string WorkspaceResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the interval in minutes which would decide how
-        /// frequently TA service should do flow analytics
+        /// frequently TA service should do flow analytics.
         /// </summary>
         [JsonProperty(PropertyName = "trafficAnalyticsInterval")]
         public int? TrafficAnalyticsInterval { get; set; }

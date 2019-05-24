@@ -193,6 +193,46 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Resets the primary of the vpn gateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            public static VpnGateway Reset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName)
+            {
+                return operations.ResetAsync(resourceGroupName, gatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resets the primary of the vpn gateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VpnGateway> ResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all the VpnGateways in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -383,6 +423,46 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginDeleteAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Resets the primary of the vpn gateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            public static VpnGateway BeginReset(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName)
+            {
+                return operations.BeginResetAsync(resourceGroupName, gatewayName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resets the primary of the vpn gateway in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
+            /// <param name='gatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VpnGateway> BeginResetAsync(this IVpnGatewaysOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

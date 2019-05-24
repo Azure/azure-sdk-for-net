@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Initiate troubleshooting on a specified resource
+            /// Initiate troubleshooting on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Initiate troubleshooting on a specified resource
+            /// Initiate troubleshooting on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get the last completed troubleshooting result on a specified resource
+            /// Get the last completed troubleshooting result on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get the last completed troubleshooting result on a specified resource
+            /// Get the last completed troubleshooting result on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1000,7 +1000,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Initiate troubleshooting on a specified resource
+            /// Initiate troubleshooting on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1020,7 +1020,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Initiate troubleshooting on a specified resource
+            /// Initiate troubleshooting on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1046,7 +1046,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get the last completed troubleshooting result on a specified resource
+            /// Get the last completed troubleshooting result on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1066,7 +1066,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get the last completed troubleshooting result on a specified resource
+            /// Get the last completed troubleshooting result on a specified resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

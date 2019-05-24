@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ruleType">Rule type. Possible values include: 'Basic',
         /// 'PathBasedRouting'</param>
         /// <param name="backendAddressPool">Backend address pool resource of
-        /// the application gateway. </param>
+        /// the application gateway.</param>
         /// <param name="backendHttpSettings">Backend http settings resource of
         /// the application gateway.</param>
         /// <param name="httpListener">Http listener resource of the
-        /// application gateway. </param>
+        /// application gateway.</param>
         /// <param name="urlPathMap">URL path map resource of the application
         /// gateway.</param>
         /// <param name="rewriteRuleSet">Rewrite Rule Set resource in Basic

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// BGP peer status details
+    /// BGP peer status details.
     /// </summary>
     public partial class BgpPeerStatus
     {
@@ -30,19 +30,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the BgpPeerStatus class.
         /// </summary>
         /// <param name="localAddress">The virtual network gateway's local
-        /// address</param>
-        /// <param name="neighbor">The remote BGP peer</param>
+        /// address.</param>
+        /// <param name="neighbor">The remote BGP peer.</param>
         /// <param name="asn">The autonomous system number of the remote BGP
-        /// peer</param>
+        /// peer.</param>
         /// <param name="state">The BGP peer state. Possible values include:
         /// 'Unknown', 'Stopped', 'Idle', 'Connecting', 'Connected'</param>
         /// <param name="connectedDuration">For how long the peering has been
-        /// up</param>
+        /// up.</param>
         /// <param name="routesReceived">The number of routes learned from this
-        /// peer</param>
-        /// <param name="messagesSent">The number of BGP messages sent</param>
+        /// peer.</param>
+        /// <param name="messagesSent">The number of BGP messages sent.</param>
         /// <param name="messagesReceived">The number of BGP messages
-        /// received</param>
+        /// received.</param>
         public BgpPeerStatus(string localAddress = default(string), string neighbor = default(string), int? asn = default(int?), string state = default(string), string connectedDuration = default(string), long? routesReceived = default(long?), long? messagesSent = default(long?), long? messagesReceived = default(long?))
         {
             LocalAddress = localAddress;
@@ -62,19 +62,19 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the virtual network gateway's local address
+        /// Gets the virtual network gateway's local address.
         /// </summary>
         [JsonProperty(PropertyName = "localAddress")]
         public string LocalAddress { get; private set; }
 
         /// <summary>
-        /// Gets the remote BGP peer
+        /// Gets the remote BGP peer.
         /// </summary>
         [JsonProperty(PropertyName = "neighbor")]
         public string Neighbor { get; private set; }
 
         /// <summary>
-        /// Gets the autonomous system number of the remote BGP peer
+        /// Gets the autonomous system number of the remote BGP peer.
         /// </summary>
         [JsonProperty(PropertyName = "asn")]
         public int? Asn { get; private set; }
@@ -87,25 +87,25 @@ namespace Microsoft.Azure.Management.Network.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets for how long the peering has been up
+        /// Gets for how long the peering has been up.
         /// </summary>
         [JsonProperty(PropertyName = "connectedDuration")]
         public string ConnectedDuration { get; private set; }
 
         /// <summary>
-        /// Gets the number of routes learned from this peer
+        /// Gets the number of routes learned from this peer.
         /// </summary>
         [JsonProperty(PropertyName = "routesReceived")]
         public long? RoutesReceived { get; private set; }
 
         /// <summary>
-        /// Gets the number of BGP messages sent
+        /// Gets the number of BGP messages sent.
         /// </summary>
         [JsonProperty(PropertyName = "messagesSent")]
         public long? MessagesSent { get; private set; }
 
         /// <summary>
-        /// Gets the number of BGP messages received
+        /// Gets the number of BGP messages received.
         /// </summary>
         [JsonProperty(PropertyName = "messagesReceived")]
         public long? MessagesReceived { get; private set; }

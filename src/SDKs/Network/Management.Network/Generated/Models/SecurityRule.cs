@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the SecurityRule class.
         /// </summary>
         /// <param name="protocol">Network protocol this rule applies to.
-        /// Possible values are 'Tcp', 'Udp', 'Icmp', 'Esp', and '*'. Possible
-        /// values include: 'Tcp', 'Udp', 'Icmp', 'Esp', '*'</param>
+        /// Possible values include: 'Tcp', 'Udp', 'Icmp', 'Esp', '*'</param>
         /// <param name="access">The network traffic is allowed or denied.
         /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="direction">The direction of the rule. The direction
@@ -55,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Asterisk '*' can also be used to match all source IPs. Default tags
         /// such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can
         /// also be used. If this is an ingress rule, specifies where network
-        /// traffic originates from. </param>
+        /// traffic originates from.</param>
         /// <param name="sourceAddressPrefixes">The CIDR or source IP
         /// ranges.</param>
         /// <param name="sourceApplicationSecurityGroups">The application
@@ -120,8 +119,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets network protocol this rule applies to. Possible values
-        /// are 'Tcp', 'Udp', 'Icmp', 'Esp', and '*'. Possible values include:
-        /// 'Tcp', 'Udp', 'Icmp', 'Esp', '*'
+        /// include: 'Tcp', 'Udp', 'Icmp', 'Esp', '*'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

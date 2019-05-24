@@ -40,8 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Outbound traffic is randomly load balanced across IPs in the
         /// backend IPs.</param>
         /// <param name="protocol">The protocol for the outbound rule in load
-        /// balancer. Possible values are: 'Tcp', 'Udp', and 'All'. Possible
-        /// values include: 'Tcp', 'Udp', 'All'</param>
+        /// balancer. Possible values include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="allocatedOutboundPorts">The number of outbound ports
         /// to be used for NAT.</param>
@@ -52,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// flow idle timeout or unexpected connection termination. This
         /// element is only used when the protocol is set to TCP.</param>
         /// <param name="idleTimeoutInMinutes">The timeout for the TCP idle
-        /// connection</param>
+        /// connection.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
@@ -106,8 +105,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the protocol for the outbound rule in load balancer.
-        /// Possible values are: 'Tcp', 'Udp', and 'All'. Possible values
-        /// include: 'Tcp', 'Udp', 'All'
+        /// Possible values include: 'Tcp', 'Udp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
@@ -121,7 +119,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableTcpReset { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout for the TCP idle connection
+        /// Gets or sets the timeout for the TCP idle connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }

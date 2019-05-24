@@ -10,30 +10,32 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Identifies the service being brought into the virtual network.
+    /// The visibility list of the private link service.
     /// </summary>
-    public partial class EndpointService
+    public partial class PrivateLinkServicePropertiesVisibility : ResourceSet
     {
         /// <summary>
-        /// Initializes a new instance of the EndpointService class.
+        /// Initializes a new instance of the
+        /// PrivateLinkServicePropertiesVisibility class.
         /// </summary>
-        public EndpointService()
+        public PrivateLinkServicePropertiesVisibility()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EndpointService class.
+        /// Initializes a new instance of the
+        /// PrivateLinkServicePropertiesVisibility class.
         /// </summary>
-        /// <param name="id">A unique identifier of the service being
-        /// referenced by the interface endpoint.</param>
-        public EndpointService(string id = default(string))
+        /// <param name="subscriptions">The list of subscriptions.</param>
+        public PrivateLinkServicePropertiesVisibility(IList<string> subscriptions = default(IList<string>))
+            : base(subscriptions)
         {
-            Id = id;
             CustomInit();
         }
 
@@ -41,13 +43,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets a unique identifier of the service being referenced by
-        /// the interface endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
 
     }
 }

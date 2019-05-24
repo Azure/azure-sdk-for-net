@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="backendIPConfigurations">Collection of references to
         /// IPs defined in network interfaces.</param>
-        /// <param name="backendAddresses">Backend addresses</param>
+        /// <param name="backendAddresses">Backend addresses.</param>
         /// <param name="provisioningState">Provisioning state of the backend
         /// address pool resource. Possible values are: 'Updating', 'Deleting',
         /// and 'Failed'.</param>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets backend addresses
+        /// Gets or sets backend addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddresses")]
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; set; }

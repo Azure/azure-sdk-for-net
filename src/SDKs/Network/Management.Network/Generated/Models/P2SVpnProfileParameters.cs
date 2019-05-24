@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Vpn Client Parameters for package generation
+    /// Vpn Client Parameters for package generation.
     /// </summary>
     public partial class P2SVpnProfileParameters
     {

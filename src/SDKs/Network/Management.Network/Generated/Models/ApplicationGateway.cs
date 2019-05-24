@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Application gateway resource
+    /// Application gateway resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApplicationGateway : Resource
@@ -362,13 +362,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (BackendHttpSettingsCollection != null)
+            if (Probes != null)
             {
-                foreach (var element in BackendHttpSettingsCollection)
+                foreach (var element in Probes)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (BackendHttpSettingsCollection != null)
+            {
+                foreach (var element1 in BackendHttpSettingsCollection)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

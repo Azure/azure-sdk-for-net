@@ -36,18 +36,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="name">The name of the security rule specified by the
         /// user (if created by the user).</param>
         /// <param name="protocol">The network protocol this rule applies to.
-        /// Possible values are: 'Tcp', 'Udp', and 'All'. Possible values
-        /// include: 'Tcp', 'Udp', 'All'</param>
+        /// Possible values include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="sourcePortRange">The source port or range.</param>
         /// <param name="destinationPortRange">The destination port or
         /// range.</param>
         /// <param name="sourcePortRanges">The source port ranges. Expected
         /// values include a single integer between 0 and 65535, a range using
-        /// '-' as separator (e.g. 100-400), or an asterisk (*)</param>
+        /// '-' as separator (e.g. 100-400), or an asterisk (*).</param>
         /// <param name="destinationPortRanges">The destination port ranges.
         /// Expected values include a single integer between 0 and 65535, a
         /// range using '-' as separator (e.g. 100-400), or an asterisk
-        /// (*)</param>
+        /// (*).</param>
         /// <param name="sourceAddressPrefix">The source address
         /// prefix.</param>
         /// <param name="destinationAddressPrefix">The destination address
@@ -103,8 +102,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the network protocol this rule applies to. Possible
-        /// values are: 'Tcp', 'Udp', and 'All'. Possible values include:
-        /// 'Tcp', 'Udp', 'All'
+        /// values include: 'Tcp', 'Udp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }
@@ -124,7 +122,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the source port ranges. Expected values include a
         /// single integer between 0 and 65535, a range using '-' as separator
-        /// (e.g. 100-400), or an asterisk (*)
+        /// (e.g. 100-400), or an asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "sourcePortRanges")]
         public IList<string> SourcePortRanges { get; set; }
@@ -132,7 +130,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the destination port ranges. Expected values include a
         /// single integer between 0 and 65535, a range using '-' as separator
-        /// (e.g. 100-400), or an asterisk (*)
+        /// (e.g. 100-400), or an asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; set; }

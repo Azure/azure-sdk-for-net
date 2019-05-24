@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Response for GetConnectionSharedKey API service call
+    /// Response for GetConnectionSharedKey API service call.
     /// </summary>
     public partial class ConnectionSharedKey : SubResource
     {

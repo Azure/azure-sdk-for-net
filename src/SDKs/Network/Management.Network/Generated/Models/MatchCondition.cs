@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Define match conditions
+    /// Define match conditions.
     /// </summary>
     public partial class MatchCondition
     {
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the MatchCondition class.
         /// </summary>
-        /// <param name="matchVariables">List of match variables</param>
+        /// <param name="matchVariables">List of match variables.</param>
         /// <param name="operatorProperty">Describes operator to be matched.
         /// Possible values include: 'IPMatch', 'Equal', 'Contains',
         /// 'LessThan', 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
         /// 'BeginsWith', 'EndsWith', 'Regex'</param>
-        /// <param name="matchValues">Match value</param>
+        /// <param name="matchValues">Match value.</param>
         /// <param name="negationConditon">Describes if this is negate
-        /// condition or not</param>
-        /// <param name="transforms">List of transforms</param>
+        /// condition or not.</param>
+        /// <param name="transforms">List of transforms.</param>
         public MatchCondition(IList<MatchVariable> matchVariables, string operatorProperty, IList<string> matchValues, bool? negationConditon = default(bool?), IList<string> transforms = default(IList<string>))
         {
             MatchVariables = matchVariables;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of match variables
+        /// Gets or sets list of match variables.
         /// </summary>
         [JsonProperty(PropertyName = "matchVariables")]
         public IList<MatchVariable> MatchVariables { get; set; }
@@ -72,19 +72,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public string OperatorProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets describes if this is negate condition or not
+        /// Gets or sets describes if this is negate condition or not.
         /// </summary>
         [JsonProperty(PropertyName = "negationConditon")]
         public bool? NegationConditon { get; set; }
 
         /// <summary>
-        /// Gets or sets match value
+        /// Gets or sets match value.
         /// </summary>
         [JsonProperty(PropertyName = "matchValues")]
         public IList<string> MatchValues { get; set; }
 
         /// <summary>
-        /// Gets or sets list of transforms
+        /// Gets or sets list of transforms.
         /// </summary>
         [JsonProperty(PropertyName = "transforms")]
         public IList<string> Transforms { get; set; }
