@@ -14,6 +14,10 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT' ">
+    <DefineConstants>Windows</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
     <DefineConstants>netcoreapp11</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -42,5 +46,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.csproj" />
     <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 </Project>
