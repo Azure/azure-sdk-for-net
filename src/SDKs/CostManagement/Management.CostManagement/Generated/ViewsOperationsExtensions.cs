@@ -72,9 +72,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             public static IPage<View> ListByScope(this IViewsOperations operations, string scope)
             {
@@ -102,9 +106,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -112,78 +120,6 @@ namespace Microsoft.Azure.Management.CostManagement
             public static async Task<IPage<View>> ListByScopeAsync(this IViewsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByScopeWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all views by external billing account
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            public static IPage<View> ListByExternalBillingAccount(this IViewsOperations operations, string externalBillingAccountName)
-            {
-                return operations.ListByExternalBillingAccountAsync(externalBillingAccountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all views by external billing account
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<View>> ListByExternalBillingAccountAsync(this IViewsOperations operations, string externalBillingAccountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByExternalBillingAccountWithHttpMessagesAsync(externalBillingAccountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all views by external subscription
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            public static IPage<View> ListByExternalSubscription(this IViewsOperations operations, string externalSubscriptionName)
-            {
-                return operations.ListByExternalSubscriptionAsync(externalSubscriptionName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all views by external subscription
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<View>> ListByExternalSubscriptionAsync(this IViewsOperations operations, string externalSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByExternalSubscriptionWithHttpMessagesAsync(externalSubscriptionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -325,9 +261,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -358,9 +298,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -399,9 +343,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -437,9 +385,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -479,9 +431,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -512,9 +468,13 @@ namespace Microsoft.Azure.Management.CostManagement
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
             /// for BillingProfile scope,
             /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
+            /// for InvoiceSection scope,
             /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
+            /// Management Group scope,
+            /// 'providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}'
+            /// for External Billing Account scope and
+            /// 'providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}'
+            /// for External Subscription scope.
             /// </param>
             /// <param name='viewName'>
             /// View name
@@ -525,276 +485,6 @@ namespace Microsoft.Azure.Management.CostManagement
             public static async Task DeleteByScopeAsync(this IViewsOperations operations, string scope, string viewName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteByScopeWithHttpMessagesAsync(scope, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the view for external billing account by view name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            public static View GetByExternalBillingAccount(this IViewsOperations operations, string externalBillingAccountName, string viewName)
-            {
-                return operations.GetByExternalBillingAccountAsync(externalBillingAccountName, viewName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the view for external billing account by view name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<View> GetByExternalBillingAccountAsync(this IViewsOperations operations, string externalBillingAccountName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByExternalBillingAccountWithHttpMessagesAsync(externalBillingAccountName, viewName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to create or update a view by external billing account.
-            /// Update operation requires latest eTag to be set in the request. You may
-            /// obtain the latest eTag by performing a get operation. Create operation does
-            /// not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate View operation.
-            /// </param>
-            public static View CreateOrUpdateByExternalBillingAccount(this IViewsOperations operations, string externalBillingAccountName, string viewName, View parameters)
-            {
-                return operations.CreateOrUpdateByExternalBillingAccountAsync(externalBillingAccountName, viewName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create or update a view by external billing account.
-            /// Update operation requires latest eTag to be set in the request. You may
-            /// obtain the latest eTag by performing a get operation. Create operation does
-            /// not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate View operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<View> CreateOrUpdateByExternalBillingAccountAsync(this IViewsOperations operations, string externalBillingAccountName, string viewName, View parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateByExternalBillingAccountWithHttpMessagesAsync(externalBillingAccountName, viewName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to delete a view by external billing account.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            public static void DeleteByExternalBillingAccount(this IViewsOperations operations, string externalBillingAccountName, string viewName)
-            {
-                operations.DeleteByExternalBillingAccountAsync(externalBillingAccountName, viewName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete a view by external billing account.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteByExternalBillingAccountAsync(this IViewsOperations operations, string externalBillingAccountName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteByExternalBillingAccountWithHttpMessagesAsync(externalBillingAccountName, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the view for external subscription by view name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            public static View GetByExternalSubscription(this IViewsOperations operations, string externalSubscriptionName, string viewName)
-            {
-                return operations.GetByExternalSubscriptionAsync(externalSubscriptionName, viewName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the view for external subscription by view name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<View> GetByExternalSubscriptionAsync(this IViewsOperations operations, string externalSubscriptionName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByExternalSubscriptionWithHttpMessagesAsync(externalSubscriptionName, viewName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to create or update a view by external subscription. Update
-            /// operation requires latest eTag to be set in the request. You may obtain the
-            /// latest eTag by performing a get operation. Create operation does not
-            /// require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate View operation.
-            /// </param>
-            public static View CreateOrUpdateByExternalSubscription(this IViewsOperations operations, string externalSubscriptionName, string viewName, View parameters)
-            {
-                return operations.CreateOrUpdateByExternalSubscriptionAsync(externalSubscriptionName, viewName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create or update a view by external subscription. Update
-            /// operation requires latest eTag to be set in the request. You may obtain the
-            /// latest eTag by performing a get operation. Create operation does not
-            /// require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate View operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<View> CreateOrUpdateByExternalSubscriptionAsync(this IViewsOperations operations, string externalSubscriptionName, string viewName, View parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateByExternalSubscriptionWithHttpMessagesAsync(externalSubscriptionName, viewName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to delete a view by external subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            public static void DeleteByExternalSubscription(this IViewsOperations operations, string externalSubscriptionName, string viewName)
-            {
-                operations.DeleteByExternalSubscriptionAsync(externalSubscriptionName, viewName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete a view by external subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='viewName'>
-            /// View name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteByExternalSubscriptionAsync(this IViewsOperations operations, string externalSubscriptionName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteByExternalSubscriptionWithHttpMessagesAsync(externalSubscriptionName, viewName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -864,78 +554,6 @@ namespace Microsoft.Azure.Management.CostManagement
             public static async Task<IPage<View>> ListByScopeNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all views by external billing account
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<View> ListByExternalBillingAccountNext(this IViewsOperations operations, string nextPageLink)
-            {
-                return operations.ListByExternalBillingAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all views by external billing account
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<View>> ListByExternalBillingAccountNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByExternalBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List all views by external subscription
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<View> ListByExternalSubscriptionNext(this IViewsOperations operations, string nextPageLink)
-            {
-                return operations.ListByExternalSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all views by external subscription
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<View>> ListByExternalSubscriptionNextAsync(this IViewsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByExternalSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
