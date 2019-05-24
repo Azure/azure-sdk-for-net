@@ -60,23 +60,23 @@ namespace Azure.Security.KeyVault.Keys
             throw new NotImplementedException();
         }
 
-        public virtual Response<Key> CreateECKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
+        public virtual Response<Key> CreateEcKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Key>> CreateECKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> CreateEcKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
-        public virtual Response<Key> CreateRSAKey(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
+        public virtual Response<Key> CreateRsaKey(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Key>> CreateRSAKeyAsync(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> CreateRsaKeyAsync(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
             throw new NotImplementedException();
@@ -104,22 +104,22 @@ namespace Azure.Security.KeyVault.Keys
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<Response<Key>> GetKeys(int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<Key>> GetAllKeys(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IAsyncEnumerable<Response<Key>> GetKeysAsync(int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<Key>> GetAllKeysAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<Response<Key>> GetKeyVersions(string name, int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<Key>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IAsyncEnumerable<Response<Key>> GetKeyVersionsAsync(string name, int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<Key>> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -146,12 +146,12 @@ namespace Azure.Security.KeyVault.Keys
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<Response<DeletedKey>> GetDeletedKeys(int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<DeletedKey>> GetAllDeletedKeys(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IAsyncEnumerable<Response<DeletedKey>> GetDeletedKeysAsync(int maxresults = 25, CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<DeletedKey>> GetAllDeletedKeysAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -189,12 +189,34 @@ namespace Azure.Security.KeyVault.Keys
             throw new NotImplementedException();
         }
 
-        public virtual Response<Key> RestoreKey(string name, CancellationToken cancellationToken = default)
+        public virtual Response<Key> RestoreKey(byte[] backup, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Key>> RestoreKeyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> RestoreKeyAsync(byte[] backup, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        public virtual Response<Key> ImportKey(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual async Task<Response<Key>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        public virtual Response<Key> ImportKey(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual async Task<Response<Key>> ImportKeyAsync(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
             throw new NotImplementedException();
