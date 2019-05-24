@@ -162,14 +162,24 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
-        ///   Event Hub, indendepently or grouped together as a single batch.  For each send request,
-        ///   event data may be sent to a specific partition or allowed to be automatically routed to an
-        ///   available partition.
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
+        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   partition or specific to a partition.
         /// </summary>
         ///
         /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
         ///
         /// <returns>An event sender configured in the requested manner.</returns>
+        ///
+        /// <remarks>
+        ///   Allowing automatic routing of partitions is recommended when:
+        ///   <para>- The sending of events needs to be highly available.</para>
+        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+        ///
+        ///   If no partition is specified, the following rules are used for automatically selecting one:
+        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+        /// </remarks>
         ///
         public virtual EventSender CreateSender(SenderOptions senderOptions = default)
         {

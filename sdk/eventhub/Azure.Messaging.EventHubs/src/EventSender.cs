@@ -12,9 +12,20 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   A sender responsible for transmitting <see cref="EventData" /> to a specific Event Hub,
-    ///   indendepently or grouped together as a single batch.  Data may be sent to a specific
-    ///   partition or allowed to be automatically routed to an available partition.
+    ///   grouped together in batches.  Depending on the options specified at creation, the sender may
+    ///   be created to allow event data to be automatically routed to an available partition or specific
+    ///   to a partition.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   Allowing automatic routing of partitions is recommended when:
+    ///   <para>- The sending of events needs to be highly available.</para>
+    ///   <para>- The event data should be evenly distributed among all available partitions.</para>
+    ///
+    ///   If no partition is specified, the following rules are used for automatically selecting one:
+    ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+    ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    /// </remarks>
     ///
     public class EventSender
     {
@@ -23,6 +34,18 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MaximumBatchSizeLimit = 4 * 1024 * 1024;
+
+        /// <summary>
+        ///   The identifier of the Event Hub partition that the <see cref="EventSender" /> is bound to, indicating
+        ///   that it will send events to only that partition.
+        ///
+        ///   If the identifier was not specified at creation, the sender will allow the Event Hubs service to be
+        ///   responsible for routing events that are sent to an available partition.
+        /// </summary>
+        ///
+        /// <value>If <c>null</c>, the sender is not specific to a partition and events will be automatically routed; otherwise, the identifier of the partition events will be sent to.</value>
+        ///
+        public string PartitionId { get; protected set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventSender"/> class.
@@ -37,6 +60,8 @@ namespace Azure.Messaging.EventHubs
                                        SenderOptions  senderOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+
+            PartitionId = senderOptions?.PartitionId;
 
             //TODO: Validate and clone the options (to avoid any changes on the options being carried over)
             //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpEventSender.
@@ -56,26 +81,13 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="events">The set of event data to send.</param>
-        /// <param name="partitionId">The identifier of the partition to which the event should be sent.  If not specified, a partition will be automatically selected.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <remarks>
-        ///   Allowing automatic selection of a partition is recommended when:
-        ///   <para>- The sending of events needs to be highly available.</para>
-        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
-        ///
-        ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
-        /// </remarks>
-        ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchingOptions, CancellationToken)"/>
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      string                 partitionId = default,
                                       CancellationToken      cancellationToken = default) => Task.CompletedTask;
 
         /// <summary>
@@ -89,50 +101,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <remarks>
-        ///   Allowing automatic selection of a partition is recommended when:
-        ///   <para>- The sending of events needs to be highly available.</para>
-        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
-        ///
-        ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
-        /// </remarks>
-        ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, EventBatchingOptions, CancellationToken)"/>
+        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      EventBatchingOptions   batchOptions,
-                                      CancellationToken      cancellationToken = default) => Task.CompletedTask;
-
-        /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
-        /// </summary>
-        ///
-        /// <param name="events">The set of event data to send.</param>
-        /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
-        /// <param name="partitionId">The identifier of the partition to which the event should be sent.  If not specified, a partition will be automatically selected.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        /// <remarks>
-        ///   Allowing automatic selection of a partition is recommended when:
-        ///   <para>- The sending of events needs to be highly available.</para>
-        ///   <para>- The event data should be evenly distributed among all available partitions.</para>
-        ///
-        ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
-        /// </remarks>
-        ///
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, string, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
-        ///
-        public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      string                 partitionId,
                                       EventBatchingOptions   batchOptions,
                                       CancellationToken      cancellationToken = default) => Task.CompletedTask;
 
