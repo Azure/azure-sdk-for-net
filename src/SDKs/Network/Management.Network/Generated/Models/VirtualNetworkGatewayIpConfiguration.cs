@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// IP configuration for virtual network gateway
+    /// IP configuration for virtual network gateway.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualNetworkGatewayIPConfiguration : SubResource

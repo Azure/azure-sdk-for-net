@@ -19,18 +19,18 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InterfaceEndpointsOperations operations.
+    /// BastionHostsOperations operations.
     /// </summary>
-    public partial interface IInterfaceEndpointsOperations
+    public partial interface IBastionHostsOperations
     {
         /// <summary>
-        /// Deletes the specified interface endpoint.
+        /// Deletes the specified Bastion Host.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='interfaceEndpointName'>
-        /// The name of the interface endpoint.
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,18 +44,15 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string interfaceEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified interface endpoint by resource group.
+        /// Gets the specified Bastion Host.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='interfaceEndpointName'>
-        /// The name of the interface endpoint.
-        /// </param>
-        /// <param name='expand'>
-        /// Expands referenced resources.
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,20 +69,18 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InterfaceEndpoint>> GetWithHttpMessagesAsync(string resourceGroupName, string interfaceEndpointName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BastionHost>> GetWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an interface endpoint in the specified resource
-        /// group.
+        /// Creates or updates the specified Bastion Host.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='interfaceEndpointName'>
-        /// The name of the interface endpoint.
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update interface endpoint
-        /// operation
+        /// Parameters supplied to the create or update Bastion Host operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,9 +97,28 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InterfaceEndpoint>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string interfaceEndpointName, InterfaceEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BastionHost>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionHost parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all interface endpoints in a resource group.
+        /// Lists all Bastion Hosts in a subscription.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<BastionHost>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all Bastion Hosts in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -124,34 +138,15 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<InterfaceEndpoint>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BastionHost>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all interface endpoints in a subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<InterfaceEndpoint>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the specified interface endpoint.
+        /// Deletes the specified Bastion Host.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='interfaceEndpointName'>
-        /// The name of the interface endpoint.
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,20 +160,18 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string interfaceEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an interface endpoint in the specified resource
-        /// group.
+        /// Creates or updates the specified Bastion Host.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='interfaceEndpointName'>
-        /// The name of the interface endpoint.
+        /// <param name='bastionHostName'>
+        /// The name of the Bastion Host.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update interface endpoint
-        /// operation
+        /// Parameters supplied to the create or update Bastion Host operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -195,9 +188,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InterfaceEndpoint>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string interfaceEndpointName, InterfaceEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BastionHost>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string bastionHostName, BastionHost parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all interface endpoints in a resource group.
+        /// Lists all Bastion Hosts in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -217,9 +210,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<InterfaceEndpoint>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BastionHost>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all interface endpoints in a subscription.
+        /// Lists all Bastion Hosts in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -239,6 +232,6 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<InterfaceEndpoint>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BastionHost>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// ExpressRouteCrossConnection resource
+    /// ExpressRouteCrossConnection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ExpressRouteCrossConnection : Resource
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ExpressRoute circuit.</param>
         /// <param name="bandwidthInMbps">The circuit bandwidth In
         /// Mbps.</param>
-        /// <param name="expressRouteCircuit">The ExpressRouteCircuit</param>
+        /// <param name="expressRouteCircuit">The ExpressRouteCircuit.</param>
         /// <param name="serviceProviderProvisioningState">The provisioning
         /// state of the circuit in the connectivity provider system. Possible
         /// values include: 'NotProvisioned', 'Provisioning', 'Provisioned',
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? BandwidthInMbps { get; set; }
 
         /// <summary>
-        /// Gets or sets the ExpressRouteCircuit
+        /// Gets or sets the ExpressRouteCircuit.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteCircuit")]
         public ExpressRouteCircuitReference ExpressRouteCircuit { get; set; }

@@ -55,8 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="remoteAddressSpace">The reference of the remote
         /// virtual network address space.</param>
         /// <param name="peeringState">The status of the virtual network
-        /// peering. Possible values are 'Initiated', 'Connected', and
-        /// 'Disconnected'. Possible values include: 'Initiated', 'Connected',
+        /// peering. Possible values include: 'Initiated', 'Connected',
         /// 'Disconnected'</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource.</param>
@@ -137,7 +136,6 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the status of the virtual network peering. Possible
-        /// values are 'Initiated', 'Connected', and 'Disconnected'. Possible
         /// values include: 'Initiated', 'Connected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringState")]

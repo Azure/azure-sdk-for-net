@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="port">Frontend port</param>
+        /// <param name="port">Frontend port.</param>
         /// <param name="provisioningState">Provisioning state of the frontend
         /// port resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
         /// <param name="name">Name of the frontend port that is unique within
-        /// an Application Gateway</param>
+        /// an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets frontend port
+        /// Gets or sets frontend port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets name of the frontend port that is unique within an
-        /// Application Gateway
+        /// Application Gateway.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualHub">The VirtualHub to which the gateway
-        /// belongs</param>
+        /// belongs.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the VirtualHub to which the gateway belongs
+        /// Gets or sets the VirtualHub to which the gateway belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualHub")]
         public SubResource VirtualHub { get; set; }

@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Get all Tap configurations in a network interface
+        /// Get all Tap configurations in a network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -740,7 +740,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Get all Tap configurations in a network interface
+        /// Get all Tap configurations in a network interface.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

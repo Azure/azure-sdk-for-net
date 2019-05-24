@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Allow to exclude some variable satisfy the condition for the WAF check
+    /// Allow to exclude some variable satisfy the condition for the WAF check.
     /// </summary>
     public partial class ApplicationGatewayFirewallExclusion
     {

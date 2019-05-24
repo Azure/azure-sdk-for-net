@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// The routes table associated with the ExpressRouteCircuit
+    /// The routes table associated with the ExpressRouteCircuit.
     /// </summary>
     public partial class ExpressRouteCircuitRoutesTable
     {
@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitRoutesTable
         /// class.
         /// </summary>
-        /// <param name="network">IP address of a network entity</param>
-        /// <param name="nextHop">NextHop address</param>
+        /// <param name="network">IP address of a network entity.</param>
+        /// <param name="nextHop">NextHop address.</param>
         /// <param name="locPrf">Local preference value as set with the set
-        /// local-preference route-map configuration command</param>
+        /// local-preference route-map configuration command.</param>
         /// <param name="weight">Route Weight.</param>
         /// <param name="path">Autonomous system paths to the destination
         /// network.</param>
@@ -54,20 +54,20 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets IP address of a network entity
+        /// Gets or sets IP address of a network entity.
         /// </summary>
         [JsonProperty(PropertyName = "network")]
         public string Network { get; set; }
 
         /// <summary>
-        /// Gets or sets nextHop address
+        /// Gets or sets nextHop address.
         /// </summary>
         [JsonProperty(PropertyName = "nextHop")]
         public string NextHop { get; set; }
 
         /// <summary>
         /// Gets or sets local preference value as set with the set
-        /// local-preference route-map configuration command
+        /// local-preference route-map configuration command.
         /// </summary>
         [JsonProperty(PropertyName = "locPrf")]
         public string LocPrf { get; set; }

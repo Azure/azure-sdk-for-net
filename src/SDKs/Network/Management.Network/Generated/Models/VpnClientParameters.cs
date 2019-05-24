@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Vpn Client Parameters for package generation
+    /// Vpn Client Parameters for package generation.
     /// </summary>
     public partial class VpnClientParameters
     {
@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VpnClientParameters class.
         /// </summary>
         /// <param name="processorArchitecture">VPN client Processor
-        /// Architecture. Possible values are: 'AMD64' and 'X86'. Possible
-        /// values include: 'Amd64', 'X86'</param>
+        /// Architecture. Possible values include: 'Amd64', 'X86'</param>
         /// <param name="authenticationMethod">VPN client authentication
         /// method. Possible values include: 'EAPTLS', 'EAPMSCHAPv2'</param>
         /// <param name="radiusServerAuthCertificate">The public certificate
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets VPN client Processor Architecture. Possible values
-        /// are: 'AMD64' and 'X86'. Possible values include: 'Amd64', 'X86'
+        /// include: 'Amd64', 'X86'
         /// </summary>
         [JsonProperty(PropertyName = "processorArchitecture")]
         public string ProcessorArchitecture { get; set; }

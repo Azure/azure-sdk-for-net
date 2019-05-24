@@ -18,51 +18,50 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Interface endpoint resource.
+    /// Private endpoint resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class InterfaceEndpoint : Resource
+    public partial class PrivateEndpoint : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the InterfaceEndpoint class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public InterfaceEndpoint()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InterfaceEndpoint class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="fqdn">A first-party service's FQDN that is mapped to
-        /// the private IP allocated via this interface endpoint.</param>
-        /// <param name="endpointService">A reference to the service being
-        /// brought into the virtual network.</param>
         /// <param name="subnet">The ID of the subnet from which the private IP
         /// will be allocated.</param>
         /// <param name="networkInterfaces">Gets an array of references to the
-        /// network interfaces created for this interface endpoint.</param>
-        /// <param name="owner">A read-only property that identifies who
-        /// created this interface endpoint.</param>
+        /// network interfaces created for this private endpoint.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// interface endpoint. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// private endpoint. Possible values are: 'Updating', 'Deleting', and
+        /// 'Failed'.</param>
+        /// <param name="privateLinkServiceConnections">A grouping of
+        /// information about the connection to the remote resource.</param>
+        /// <param name="manualPrivateLinkServiceConnections">A grouping of
+        /// information about the connection to the remote resource. Used when
+        /// the network admin does not have access to approve connections to
+        /// the remote resource.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public InterfaceEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fqdn = default(string), EndpointService endpointService = default(EndpointService), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string owner = default(string), string provisioningState = default(string), string etag = default(string))
+        public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
-            Fqdn = fqdn;
-            EndpointService = endpointService;
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
-            Owner = owner;
             ProvisioningState = provisioningState;
+            PrivateLinkServiceConnections = privateLinkServiceConnections;
+            ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             Etag = etag;
             CustomInit();
         }
@@ -73,20 +72,6 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a first-party service's FQDN that is mapped to the
-        /// private IP allocated via this interface endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.fqdn")]
-        public string Fqdn { get; set; }
-
-        /// <summary>
-        /// Gets or sets a reference to the service being brought into the
-        /// virtual network.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.endpointService")]
-        public EndpointService EndpointService { get; set; }
-
-        /// <summary>
         /// Gets or sets the ID of the subnet from which the private IP will be
         /// allocated.
         /// </summary>
@@ -95,24 +80,32 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets an array of references to the network interfaces created for
-        /// this interface endpoint.
+        /// this private endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkInterfaces")]
         public IList<NetworkInterface> NetworkInterfaces { get; private set; }
 
         /// <summary>
-        /// Gets a read-only property that identifies who created this
-        /// interface endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.owner")]
-        public string Owner { get; private set; }
-
-        /// <summary>
-        /// Gets the provisioning state of the interface endpoint. Possible
+        /// Gets the provisioning state of the private endpoint. Possible
         /// values are: 'Updating', 'Deleting', and 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a grouping of information about the connection to the
+        /// remote resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateLinkServiceConnections")]
+        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets a grouping of information about the connection to the
+        /// remote resource. Used when the network admin does not have access
+        /// to approve connections to the remote resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.manualPrivateLinkServiceConnections")]
+        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

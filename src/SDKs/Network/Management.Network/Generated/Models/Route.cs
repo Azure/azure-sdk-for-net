@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Route resource
+    /// Route resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Route : SubResource

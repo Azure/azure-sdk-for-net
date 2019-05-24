@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public PeerExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string circuitConnectionStatus = default(string), string connectionName = default(string), string authResourceGuid = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public PeerExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string circuitConnectionStatus = default(string), string connectionName = default(string), string authResourceGuid = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
@@ -71,6 +72,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -142,6 +144,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

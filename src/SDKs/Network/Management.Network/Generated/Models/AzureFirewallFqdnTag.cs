@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure Firewall FQDN Tag Resource
+    /// Azure Firewall FQDN Tag Resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AzureFirewallFqdnTag : Resource

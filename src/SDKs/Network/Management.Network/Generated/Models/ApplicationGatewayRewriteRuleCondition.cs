@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// RewriteRuleCondition.</param>
         /// <param name="pattern">The pattern, either fixed string or regular
         /// expression, that evaluates the truthfulness of the
-        /// condition</param>
+        /// condition.</param>
         /// <param name="ignoreCase">Setting this paramter to truth value with
         /// force the pattern to do a case in-sensitive comparison.</param>
         /// <param name="negate">Setting this value as truth will force to
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the pattern, either fixed string or regular
-        /// expression, that evaluates the truthfulness of the condition
+        /// expression, that evaluates the truthfulness of the condition.
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
         public string Pattern { get; set; }

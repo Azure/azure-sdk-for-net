@@ -45,11 +45,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="peeringLocation">The name of the peering location that
         /// the ExpressRoutePort is mapped to physically.</param>
         /// <param name="bandwidthInGbps">Bandwidth of procured ports in
-        /// Gbps</param>
+        /// Gbps.</param>
         /// <param name="provisionedBandwidthInGbps">Aggregate Gbps of
         /// associated circuit bandwidths.</param>
         /// <param name="mtu">Maximum transmission unit of the physical port
-        /// pair(s)</param>
+        /// pair(s).</param>
         /// <param name="encapsulation">Encapsulation method on physical ports.
         /// Possible values include: 'Dot1Q', 'QinQ'</param>
         /// <param name="etherType">Ether type of the physical port.</param>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PeeringLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets bandwidth of procured ports in Gbps
+        /// Gets or sets bandwidth of procured ports in Gbps.
         /// </summary>
         [JsonProperty(PropertyName = "properties.bandwidthInGbps")]
         public int? BandwidthInGbps { get; set; }
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public double? ProvisionedBandwidthInGbps { get; private set; }
 
         /// <summary>
-        /// Gets maximum transmission unit of the physical port pair(s)
+        /// Gets maximum transmission unit of the physical port pair(s).
         /// </summary>
         [JsonProperty(PropertyName = "properties.mtu")]
         public string Mtu { get; private set; }
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets expressRouteLink Sub-Resources
         /// </summary>
         /// <remarks>
-        /// The set of physical links of the ExpressRoutePort resource
+        /// The set of physical links of the ExpressRoutePort resource.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.links")]
         public IList<ExpressRouteLink> Links { get; set; }

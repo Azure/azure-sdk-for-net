@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Gateway routing details
+    /// Gateway routing details.
     /// </summary>
     public partial class GatewayRoute
     {
@@ -29,14 +29,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the GatewayRoute class.
         /// </summary>
-        /// <param name="localAddress">The gateway's local address</param>
-        /// <param name="network">The route's network prefix</param>
-        /// <param name="nextHop">The route's next hop</param>
+        /// <param name="localAddress">The gateway's local address.</param>
+        /// <param name="network">The route's network prefix.</param>
+        /// <param name="nextHop">The route's next hop.</param>
         /// <param name="sourcePeer">The peer this route was learned
-        /// from</param>
-        /// <param name="origin">The source this route was learned from</param>
-        /// <param name="asPath">The route's AS path sequence</param>
-        /// <param name="weight">The route's weight</param>
+        /// from.</param>
+        /// <param name="origin">The source this route was learned
+        /// from.</param>
+        /// <param name="asPath">The route's AS path sequence.</param>
+        /// <param name="weight">The route's weight.</param>
         public GatewayRoute(string localAddress = default(string), string network = default(string), string nextHop = default(string), string sourcePeer = default(string), string origin = default(string), string asPath = default(string), int? weight = default(int?))
         {
             LocalAddress = localAddress;
@@ -55,43 +56,43 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the gateway's local address
+        /// Gets the gateway's local address.
         /// </summary>
         [JsonProperty(PropertyName = "localAddress")]
         public string LocalAddress { get; private set; }
 
         /// <summary>
-        /// Gets the route's network prefix
+        /// Gets the route's network prefix.
         /// </summary>
         [JsonProperty(PropertyName = "network")]
         public string Network { get; private set; }
 
         /// <summary>
-        /// Gets the route's next hop
+        /// Gets the route's next hop.
         /// </summary>
         [JsonProperty(PropertyName = "nextHop")]
         public string NextHop { get; private set; }
 
         /// <summary>
-        /// Gets the peer this route was learned from
+        /// Gets the peer this route was learned from.
         /// </summary>
         [JsonProperty(PropertyName = "sourcePeer")]
         public string SourcePeer { get; private set; }
 
         /// <summary>
-        /// Gets the source this route was learned from
+        /// Gets the source this route was learned from.
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; private set; }
 
         /// <summary>
-        /// Gets the route's AS path sequence
+        /// Gets the route's AS path sequence.
         /// </summary>
         [JsonProperty(PropertyName = "asPath")]
         public string AsPath { get; private set; }
 
         /// <summary>
-        /// Gets the route's weight
+        /// Gets the route's weight.
         /// </summary>
         [JsonProperty(PropertyName = "weight")]
         public int? Weight { get; private set; }

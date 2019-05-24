@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// LoadBalancer resource
+    /// LoadBalancer resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class LoadBalancer : Resource
@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The load balancer SKU.</param>
         /// <param name="frontendIPConfigurations">Object representing the
-        /// frontend IPs to be used for the load balancer</param>
+        /// frontend IPs to be used for the load balancer.</param>
         /// <param name="backendAddressPools">Collection of backend address
-        /// pools used by a load balancer</param>
+        /// pools used by a load balancer.</param>
         /// <param name="loadBalancingRules">Object collection representing the
-        /// load balancing rules Gets the provisioning </param>
+        /// load balancing rules Gets the provisioning.</param>
         /// <param name="probes">Collection of probe objects used in the load
-        /// balancer</param>
+        /// balancer.</param>
         /// <param name="inboundNatRules">Collection of inbound NAT Rules used
         /// by a load balancer. Defining inbound NAT rules on your load
         /// balancer is mutually exclusive with defining an inbound NAT pool.
@@ -103,27 +103,27 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets object representing the frontend IPs to be used for
-        /// the load balancer
+        /// the load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
         public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets collection of backend address pools used by a load
-        /// balancer
+        /// balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPools")]
         public IList<BackendAddressPool> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets object collection representing the load balancing
-        /// rules Gets the provisioning
+        /// rules Gets the provisioning.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<LoadBalancingRule> LoadBalancingRules { get; set; }
 
         /// <summary>
-        /// Gets or sets collection of probe objects used in the load balancer
+        /// Gets or sets collection of probe objects used in the load balancer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.probes")]
         public IList<Probe> Probes { get; set; }

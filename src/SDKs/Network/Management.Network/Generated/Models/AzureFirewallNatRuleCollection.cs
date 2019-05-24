@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// NAT rule collection resource
+    /// NAT rule collection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AzureFirewallNatRuleCollection : SubResource
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="priority">Priority of the NAT rule collection
         /// resource.</param>
         /// <param name="action">The action type of a NAT rule
-        /// collection</param>
+        /// collection.</param>
         /// <param name="rules">Collection of rules used by a NAT rule
         /// collection.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the action type of a NAT rule collection
+        /// Gets or sets the action type of a NAT rule collection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.action")]
         public AzureFirewallNatRCAction Action { get; set; }

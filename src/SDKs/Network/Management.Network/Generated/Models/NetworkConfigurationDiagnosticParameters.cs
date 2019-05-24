@@ -40,9 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gateway.</param>
         /// <param name="profiles">List of network configuration diagnostic
         /// profiles.</param>
-        /// <param name="verbosityLevel">Verbosity level. Accepted values are
-        /// 'Normal', 'Minimum', 'Full'. Possible values include: 'Normal',
-        /// 'Minimum', 'Full'</param>
+        /// <param name="verbosityLevel">Verbosity level. Possible values
+        /// include: 'Normal', 'Minimum', 'Full'</param>
         public NetworkConfigurationDiagnosticParameters(string targetResourceId, IList<NetworkConfigurationDiagnosticProfile> profiles, string verbosityLevel = default(string))
         {
             TargetResourceId = targetResourceId;
@@ -65,9 +64,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string TargetResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets verbosity level. Accepted values are 'Normal',
-        /// 'Minimum', 'Full'. Possible values include: 'Normal', 'Minimum',
-        /// 'Full'
+        /// Gets or sets verbosity level. Possible values include: 'Normal',
+        /// 'Minimum', 'Full'
         /// </summary>
         [JsonProperty(PropertyName = "verbosityLevel")]
         public string VerbosityLevel { get; set; }
