@@ -106,11 +106,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await WaitAsync(delay, message.Cancellation);
+                        await WaitAsync(delay, message.CancellationToken);
                     }
                     else
                     {
-                        Wait(delay, message.Cancellation);
+                        Wait(delay, message.CancellationToken);
                     }
                 }
 

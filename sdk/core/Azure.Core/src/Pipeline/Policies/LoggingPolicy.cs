@@ -52,22 +52,22 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.Cancellation);
+                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.CancellationToken);
                     }
                     else
                     {
-                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.Cancellation);
+                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.CancellationToken);
                     }
                 }
                 else
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                        await s_eventSource.RequestContentAsync(message.Request, message.CancellationToken);
                     }
                     else
                     {
-                        s_eventSource.RequestContent(message.Request, message.Cancellation);
+                        s_eventSource.RequestContent(message.Request, message.CancellationToken);
                     }
                 }
             }
@@ -106,18 +106,18 @@ namespace Azure.Core.Pipeline.Policies
                     {
                         if (async)
                         {
-                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding, message.Cancellation);
+                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding, message.CancellationToken);
                         }
                     }
                     else
                     {
                         if (async)
                         {
-                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
@@ -133,11 +133,11 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (textResponse)
                 {
-                    await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                    await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    await s_eventSource.ResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
                 }
             }
 
