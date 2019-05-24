@@ -120,7 +120,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
         /// <returns></returns>
-        public static EventHubClient CreateWithManagedServiceIdentity(
+        public static EventHubClient CreateWithManagedIdentity(
             Uri endpointAddress,
             string entityPath,
             TimeSpan? operationTimeout = null,
