@@ -373,15 +373,14 @@ namespace Azure.Storage.Files
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.Raw,
+                        response.GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
-                                range,
-                                rangeGetContentHash,
-                                startOffset,
-                                cancellation)
-                                .ConfigureAwait(false))
-                                .Raw,
+                                    range,
+                                    rangeGetContentHash,
+                                    startOffset,
+                                    cancellation)
+                                .ConfigureAwait(false)).GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -389,7 +388,7 @@ namespace Azure.Storage.Files
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
-                    return new Response<StorageFileDownloadInfo>(response.Raw, new StorageFileDownloadInfo(response.Value));
+                    return new Response<StorageFileDownloadInfo>(response.GetRawResponse(), new StorageFileDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -452,7 +451,7 @@ namespace Azure.Storage.Files
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     cancellation: cancellation)
                     .ConfigureAwait(false);
-            this._pipeline.LogTrace($"Response: {response.Raw.Status}, ContentLength: {response.Value.ContentLength}");
+            this._pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return response;
         }
 

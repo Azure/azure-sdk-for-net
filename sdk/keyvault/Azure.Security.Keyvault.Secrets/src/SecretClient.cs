@@ -189,7 +189,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "backup");
 
-            return new Response<byte[]>(backup.Raw, backup.Value.Value);
+            return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
 
         public virtual Response<byte[]> Backup(string name, CancellationToken cancellationToken = default)

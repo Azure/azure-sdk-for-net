@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
                         content: stream);
 
                     // Assert
-                    Assert.IsNotNull(response.Raw.Headers.RequestId);
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
                         });
 
                     // Assert
-                    Assert.IsNotNull(response.Raw.Headers.RequestId);
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
@@ -630,7 +630,7 @@ namespace Azure.Storage.Blobs.Test
                     });
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.Test
                     });
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Blobs.Test
                         });
 
                     // Assert
-                    Assert.IsNotNull(response.Raw.Headers.RequestId);
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
