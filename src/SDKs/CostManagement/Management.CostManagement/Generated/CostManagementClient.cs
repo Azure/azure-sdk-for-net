@@ -78,11 +78,6 @@ namespace Microsoft.Azure.Management.CostManagement
         public virtual IViewsOperations Views { get; private set; }
 
         /// <summary>
-        /// Gets the ICostManagementOperations.
-        /// </summary>
-        public virtual ICostManagementOperations CostManagement { get; private set; }
-
-        /// <summary>
         /// Gets the IBudgetsOperations.
         /// </summary>
         public virtual IBudgetsOperations Budgets { get; private set; }
@@ -339,7 +334,6 @@ namespace Microsoft.Azure.Management.CostManagement
         private void Initialize()
         {
             Views = new ViewsOperations(this);
-            CostManagement = new CostManagementOperations(this);
             Budgets = new BudgetsOperations(this);
             Budget = new BudgetOperations(this);
             Operations = new Operations(this);

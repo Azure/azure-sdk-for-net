@@ -44,9 +44,6 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         /// <param name="eTag">eTag of the resource. To handle concurrent
         /// update scenario, this field will be used to determine whether the
         /// user is updating the latest version or not.</param>
-        /// <param name="version">View API version used to create the
-        /// view.</param>
-        /// <param name="queryVersion">Query API version to use.</param>
         /// <param name="displayName">User input name of the view.
         /// Required.</param>
         /// <param name="scope">Cost Management scope to save the view on. This
@@ -87,11 +84,9 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         /// UI.</param>
         /// <param name="pivots">Configuration of 3 sub-views in the Cost
         /// Analysis UI.</param>
-        public View(string timeframe, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string version = default(string), string queryVersion = default(string), string displayName = default(string), string scope = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), ReportConfigTimePeriod timePeriod = default(ReportConfigTimePeriod), ReportConfigDataset dataset = default(ReportConfigDataset), string chart = default(string), string accumulated = default(string), string metric = default(string), IList<KpiProperties> kpis = default(IList<KpiProperties>), IList<PivotProperties> pivots = default(IList<PivotProperties>))
+        public View(string timeframe, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string displayName = default(string), string scope = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? modifiedOn = default(System.DateTime?), ReportConfigTimePeriod timePeriod = default(ReportConfigTimePeriod), ReportConfigDataset dataset = default(ReportConfigDataset), string chart = default(string), string accumulated = default(string), string metric = default(string), IList<KpiProperties> kpis = default(IList<KpiProperties>), IList<PivotProperties> pivots = default(IList<PivotProperties>))
             : base(id, name, type, eTag)
         {
-            Version = version;
-            QueryVersion = queryVersion;
             DisplayName = displayName;
             Scope = scope;
             CreatedOn = createdOn;
@@ -118,18 +113,6 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets view API version used to create the view.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.version")]
-        public string Version { get; set; }
-
-        /// <summary>
-        /// Gets or sets query API version to use.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queryVersion")]
-        public string QueryVersion { get; set; }
 
         /// <summary>
         /// Gets or sets user input name of the view. Required.

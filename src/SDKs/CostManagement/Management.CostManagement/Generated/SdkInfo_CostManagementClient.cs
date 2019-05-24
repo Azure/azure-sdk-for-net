@@ -21,7 +21,6 @@ namespace Microsoft.Azure.Management.CostManagement
               {
                 new Tuple<string, string, string>("CostManagement", "Budget", "2019-04-01-preview"),
                 new Tuple<string, string, string>("CostManagement", "Budgets", "2019-04-01-preview"),
-                new Tuple<string, string, string>("CostManagement", "CostManagement", "2019-04-01-preview"),
                 new Tuple<string, string, string>("CostManagement", "Operations", "2019-04-01-preview"),
                 new Tuple<string, string, string>("CostManagement", "Views", "2019-04-01-preview"),
               }.AsEnumerable();

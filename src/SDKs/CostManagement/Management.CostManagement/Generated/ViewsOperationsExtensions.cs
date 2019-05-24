@@ -52,33 +52,6 @@ namespace Microsoft.Azure.Management.CostManagement
             }
 
             /// <summary>
-            /// The operation to delete all private views.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static void DeleteAll(this IViewsOperations operations)
-            {
-                operations.DeleteAllAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete all private views.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAllAsync(this IViewsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Lists all views at the given scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
@@ -145,69 +118,6 @@ namespace Microsoft.Azure.Management.CostManagement
             }
 
             /// <summary>
-            /// The operation to delete all views by scope.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// The scope associated with view operations. This includes
-            /// 'subscriptions/{subscriptionId}' for subscription scope,
-            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
-            /// resourceGroup scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
-            /// Billing Account scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-            /// for Department scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
-            /// for EnrollmentAccount scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
-            /// for BillingProfile scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
-            /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
-            /// </param>
-            public static void DeleteAllByScope(this IViewsOperations operations, string scope)
-            {
-                operations.DeleteAllByScopeAsync(scope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete all views by scope.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// The scope associated with view operations. This includes
-            /// 'subscriptions/{subscriptionId}' for subscription scope,
-            /// 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
-            /// resourceGroup scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
-            /// Billing Account scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-            /// for Department scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
-            /// for EnrollmentAccount scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
-            /// for BillingProfile scope,
-            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
-            /// for InvoiceSection scope and
-            /// 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-            /// Management Group scope.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAllByScopeAsync(this IViewsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteAllByScopeWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// List all views by external billing account
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
@@ -244,39 +154,6 @@ namespace Microsoft.Azure.Management.CostManagement
             }
 
             /// <summary>
-            /// The operation to delete all views by external billing account.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            public static void DeleteAllByExternalBillingAccount(this IViewsOperations operations, string externalBillingAccountName)
-            {
-                operations.DeleteAllByExternalBillingAccountAsync(externalBillingAccountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete all views by external billing account.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalBillingAccountName'>
-            /// External Billing Account Name. (eg 'aws-{PayerAccountId}')
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAllByExternalBillingAccountAsync(this IViewsOperations operations, string externalBillingAccountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteAllByExternalBillingAccountWithHttpMessagesAsync(externalBillingAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// List all views by external subscription
             /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
             /// </summary>
@@ -310,39 +187,6 @@ namespace Microsoft.Azure.Management.CostManagement
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// The operation to delete all views by external subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            public static void DeleteAllByExternalSubscription(this IViewsOperations operations, string externalSubscriptionName)
-            {
-                operations.DeleteAllByExternalSubscriptionAsync(externalSubscriptionName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete all views by external subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/costmanagement/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='externalSubscriptionName'>
-            /// External Subscription Name. (eg 'aws-{UsageAccountId}')
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAllByExternalSubscriptionAsync(this IViewsOperations operations, string externalSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteAllByExternalSubscriptionWithHttpMessagesAsync(externalSubscriptionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

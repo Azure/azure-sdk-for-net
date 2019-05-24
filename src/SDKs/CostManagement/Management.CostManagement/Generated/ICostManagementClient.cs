@@ -75,11 +75,6 @@ namespace Microsoft.Azure.Management.CostManagement
         IViewsOperations Views { get; }
 
         /// <summary>
-        /// Gets the ICostManagementOperations.
-        /// </summary>
-        ICostManagementOperations CostManagement { get; }
-
-        /// <summary>
         /// Gets the IBudgetsOperations.
         /// </summary>
         IBudgetsOperations Budgets { get; }
