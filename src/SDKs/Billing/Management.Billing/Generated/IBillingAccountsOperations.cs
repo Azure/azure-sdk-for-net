@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingAccount,BillingAccountsUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, BillingAccountUpdateProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingAccount>> UpdateWithHttpMessagesAsync(string billingAccountName, BillingAccountUpdateProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to update a billing account.
         /// </summary>
@@ -119,6 +119,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingAccount,BillingAccountsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, BillingAccountUpdateProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingAccount>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, BillingAccountUpdateProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
