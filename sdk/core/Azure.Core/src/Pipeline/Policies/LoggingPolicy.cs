@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
@@ -133,11 +134,25 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (textResponse)
                 {
-                    await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding, message.CancellationToken);
+                    }
                 }
                 else
                 {
-                    await s_eventSource.ResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await s_eventSource.ResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        s_eventSource.ResponseContent(message.Response, message.CancellationToken);
+                    }
                 }
             }
 
@@ -186,9 +201,17 @@ namespace Azure.Core.Pipeline.Policies
             public override int Read(byte[] buffer, int offset, int count)
             {
                 var result = _originalStream.Read(buffer, offset, count);
-                if (result == 0)
+
+                LogBuffer(buffer, offset, result);
+
+                return result;
+            }
+
+            private void LogBuffer(byte[] buffer, int offset, int count)
+            {
+                if (count == 0)
                 {
-                    return result;
+                    return;
                 }
 
                 if (_textEncoding != null)
@@ -211,6 +234,13 @@ namespace Azure.Core.Pipeline.Policies
                 }
 
                 _blockNumber++;
+            }
+
+            public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken);
+
+                LogBuffer(buffer, offset, result);
 
                 return result;
             }

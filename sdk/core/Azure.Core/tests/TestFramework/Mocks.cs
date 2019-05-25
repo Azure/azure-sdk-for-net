@@ -75,6 +75,11 @@ namespace Azure.Core.Testing
             }
 
             message.Response.ClientRequestId = request.ClientRequestId;
+
+            if (message.Response.ContentStream != null && ExpectSyncPipeline != null)
+            {
+                message.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, message.Response.ContentStream);
+            }
         }
 
         public MockRequest SingleRequest => Requests.Single();

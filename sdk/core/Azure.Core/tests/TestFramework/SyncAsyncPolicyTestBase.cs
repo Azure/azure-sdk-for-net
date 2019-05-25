@@ -11,29 +11,10 @@ namespace Azure.Core.Testing
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class SyncAsyncPolicyTestBase
+    public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     {
-        public bool IsAsync { get; }
-
-        public SyncAsyncPolicyTestBase(bool isAsync)
+        public SyncAsyncPolicyTestBase(bool isAsync) : base(isAsync)
         {
-            IsAsync = isAsync;
-        }
-
-        protected MockTransport CreateMockTransport()
-        {
-            return new MockTransport()
-            {
-                ExpectSyncPipeline = !IsAsync
-            };
-        }
-
-        protected MockTransport CreateMockTransport(params MockResponse[] responses)
-        {
-            return new MockTransport(responses)
-            {
-                ExpectSyncPipeline = !IsAsync
-            };
         }
 
         protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
