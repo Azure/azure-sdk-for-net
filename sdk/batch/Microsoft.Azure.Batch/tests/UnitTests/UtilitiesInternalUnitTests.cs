@@ -51,7 +51,7 @@
             IEnumerable<Protocol.Models.MetadataItem> result = UtilitiesInternal.ConvertToProtocolCollection(collection);
             
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
 
             Protocol.Models.MetadataItem protoItem = result.First();
 
@@ -89,7 +89,7 @@
                 objectCreationFunc: o => new MetadataItem(o));
 
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
 
             MetadataItem protoItem = result.First();
 
@@ -115,7 +115,7 @@
                 objectCreationFunc: o => new MetadataItem(o)).AsReadOnly();
 
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
 
             MetadataItem protoItem = result.First();
 
@@ -155,7 +155,7 @@
                 objectCreationFunc: o => new MetadataItem(o));
 
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
 
             MetadataItem protoItem = result.First();
 
@@ -177,7 +177,7 @@
                 objectCreationFunc: o => new MetadataItem(o));
 
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
 
             MetadataItem protoItem = result.First();
             Assert.Null(protoItem);

@@ -17,7 +17,8 @@ namespace Azure.Batch.Unit.Tests
     {
         private const string url = "http://localhost:2055";
 
-#if Windows
+//https://github.com/Azure/azure-sdk-for-net/issues/6417
+#if Windows 
         [Theory]
         [MemberData(nameof(HttpMethods))]
         public async Task HttpClient_IncludesContentLengthHeaderOnExpectedHttpVerbs(HttpMethod httpMethod)

@@ -195,11 +195,11 @@ namespace Azure.Batch.Unit.Tests
                 var pool = client.PoolOperations.GetPool("batch-test", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
                 Assert.Equal("batch-test", pool.DisplayName);
-                Assert.Equal(pool.AutoScaleEnabled, true);
-                Assert.Equal(pool.AutoScaleRun.Error.Code, "InsufficientSampleData");
-                Assert.Equal(pool.AutoScaleRun.Error.Message, "Autoscale evaluation failed due to insufficient sample data");
-                Assert.Equal(pool.AutoScaleRun.Error.Values.First().Name, "Message");
-                Assert.Equal(pool.AutoScaleRun.Error.Values.First().Value, "Line 1, Col 24: Insufficient data from data set: $RunningTasks wanted 100%, received 0%");
+                Assert.Equal(true, pool.AutoScaleEnabled);
+                Assert.Equal("InsufficientSampleData", pool.AutoScaleRun.Error.Code);
+                Assert.Equal("Autoscale evaluation failed due to insufficient sample data", pool.AutoScaleRun.Error.Message);
+                Assert.Equal("Message", pool.AutoScaleRun.Error.Values.First().Name);
+                Assert.Equal("Line 1, Col 24: Insufficient data from data set: $RunningTasks wanted 100%, received 0%", pool.AutoScaleRun.Error.Values.First().Value);
             }
         }
 
@@ -239,12 +239,12 @@ namespace Azure.Batch.Unit.Tests
                 var pool = client.PoolOperations.GetPool("batch-test", additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
                 Assert.Equal("batch-test", pool.DisplayName);
-                Assert.Equal(pool.StartTask.CommandLine, "-start");
-                Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Name, "windows");
-                Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Value, "foo");
-                Assert.Equal(pool.StartTask.MaxTaskRetryCount, 3);
-                Assert.Equal(pool.StartTask.UserIdentity.AutoUser.ElevationLevel, ElevationLevel.NonAdmin);
-                Assert.Equal(pool.StartTask.WaitForSuccess, false);
+                Assert.Equal("-start", pool.StartTask.CommandLine);
+                Assert.Equal("windows", pool.StartTask.EnvironmentSettings.FirstOrDefault().Name);
+                Assert.Equal("foo", pool.StartTask.EnvironmentSettings.FirstOrDefault().Value);
+                Assert.Equal(3, pool.StartTask.MaxTaskRetryCount);
+                Assert.Equal(ElevationLevel.NonAdmin, pool.StartTask.UserIdentity.AutoUser.ElevationLevel);
+                Assert.Equal(false, pool.StartTask.WaitForSuccess);
             }
         }
 
@@ -282,9 +282,9 @@ namespace Azure.Batch.Unit.Tests
 
                 List<Microsoft.Azure.Batch.ComputeNode> vms = client.PoolOperations.ListComputeNodes("foo", additionalBehaviors: new List<BatchClientBehavior> { interceptor }).ToList();
 
-                Assert.Equal(vms.Count, 1);
-                Assert.Equal(vms[0].Id, "computeNode1");
-                Assert.Equal(vms[0].State, ComputeNodeState.Running);
+                Assert.Single(vms);
+                Assert.Equal("computeNode1", vms[0].Id);
+                Assert.Equal(ComputeNodeState.Running, vms[0].State);
                 Assert.Equal(vms[0].LastBootTime, dateTime);
             }
         }

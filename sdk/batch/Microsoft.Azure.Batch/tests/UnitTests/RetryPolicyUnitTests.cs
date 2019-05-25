@@ -433,7 +433,7 @@
 
             //TODO: Why can't this be 2?
             //Assert.Equal(2, aggregateException.InnerExceptions.Count);
-            Assert.Equal(1, aggregateException.InnerExceptions.Count);
+            Assert.Single(aggregateException.InnerExceptions);
 
             Assert.Equal(maxRetries + 1, serviceRequestFuncCallCount);
             Assert.Equal(maxRetries + 1, request.OperationContext.RequestResults.Count);
@@ -481,7 +481,7 @@
 
             //TODO: Why can't this be 2?
             //Assert.Equal(2, aggregateException.InnerExceptions.Count);
-            Assert.Equal(1, aggregateException.InnerExceptions.Count);
+            Assert.Single(aggregateException.InnerExceptions);
 
             Assert.Equal(1, serviceRequestFuncCallCount);
         }

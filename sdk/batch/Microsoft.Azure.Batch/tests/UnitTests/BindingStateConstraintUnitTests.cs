@@ -127,8 +127,8 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobSchedule.Id, jobScheduleId); // can set an unbound object
                 Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
-                Assert.Equal(jobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
-                Assert.Equal(jobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
+                Assert.Equal(OnAllTasksComplete.TerminateJob, jobSchedule.JobSpecification.OnAllTasksComplete);
+                Assert.Equal(OnTaskFailure.PerformExitOptionsJobAction, jobSchedule.JobSpecification.OnTaskFailure);
 
                 jobSchedule.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobScheduleRequestInterceptor());
 
@@ -187,8 +187,8 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobScheduleId, boundJobSchedule.Id); // reading is allowed from a jobSchedule that is returned from the server.
                 Assert.Equal(creationTime, boundJobSchedule.CreationTime);
                 Assert.Equal(displayName, boundJobSchedule.DisplayName);
-                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
-                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
+                Assert.Equal(OnAllTasksComplete.TerminateJob, boundJobSchedule.JobSpecification.OnAllTasksComplete);
+                Assert.Equal(OnTaskFailure.PerformExitOptionsJobAction, boundJobSchedule.JobSpecification.OnTaskFailure);
 
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.Id = "cannot-change-id");
@@ -196,8 +196,8 @@ namespace Azure.Batch.Unit.Tests
                 boundJobSchedule.JobSpecification.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
                 boundJobSchedule.JobSpecification.OnTaskFailure = OnTaskFailure.NoAction;
 
-                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
-                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.NoAction);
+                Assert.Equal(OnAllTasksComplete.TerminateJob, boundJobSchedule.JobSpecification.OnAllTasksComplete);
+                Assert.Equal(OnTaskFailure.NoAction, boundJobSchedule.JobSpecification.OnTaskFailure);
             }
         }
 
@@ -234,8 +234,8 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(cloudJob.Id, jobId); // can set an unbound object
                 Assert.Equal(cloudJob.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(cloudJob.Metadata.First().Value, metadataItem.Value);
-                Assert.Equal(cloudJob.OnAllTasksComplete, OnAllTasksComplete.NoAction);
-                Assert.Equal(cloudJob.OnTaskFailure, OnTaskFailure.NoAction);
+                Assert.Equal(OnAllTasksComplete.NoAction, cloudJob.OnAllTasksComplete);
+                Assert.Equal(OnTaskFailure.NoAction, cloudJob.OnTaskFailure);
 
                 cloudJob.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobRequestInterceptor());
 

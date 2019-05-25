@@ -83,7 +83,7 @@
                 batchClient.CustomBehaviors.Add(SynchronousMethodExceptionBehavior.ThrowAggregateException);
 
                 AggregateException outerAggregate = Assert.Throws<AggregateException>(() => batchClient.JobOperations.GetJob(dummyJobId));
-                Assert.Equal(1, outerAggregate.InnerExceptions.Count);
+                Assert.Single(outerAggregate.InnerExceptions);
                 
                 AggregateException innerAggregate = outerAggregate.InnerException as AggregateException;
                 Assert.NotNull(innerAggregate);

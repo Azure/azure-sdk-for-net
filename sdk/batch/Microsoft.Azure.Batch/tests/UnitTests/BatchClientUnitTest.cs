@@ -52,8 +52,8 @@ namespace Azure.Batch.Unit.Tests
                 }
             }
 
-            Assert.Equal(capturedRequest.Headers.Authorization.Parameter, "foo");
-            Assert.Equal(capturedRequest.Headers.Authorization.Scheme, "Bearer");
+            Assert.Equal("foo", capturedRequest.Headers.Authorization.Parameter);
+            Assert.Equal("Bearer", capturedRequest.Headers.Authorization.Scheme);
         }
 
         [Fact]
@@ -74,9 +74,9 @@ namespace Azure.Batch.Unit.Tests
                 var client = BatchClient.Open(restClient);
 
                 await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
-                Assert.Equal(count, 1);
+                Assert.Equal(1, count);
                 await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
-                Assert.Equal(count, 2);
+                Assert.Equal(2, count);
             }
         }
 
@@ -101,8 +101,8 @@ namespace Azure.Batch.Unit.Tests
                 }
             }
 
-            Assert.Equal(capturedRequest.Headers.Authorization.Parameter, "foo");
-            Assert.Equal(capturedRequest.Headers.Authorization.Scheme, "Bearer");
+            Assert.Equal("foo", capturedRequest.Headers.Authorization.Parameter);
+            Assert.Equal("Bearer", capturedRequest.Headers.Authorization.Scheme);
         }
 
         [Fact]

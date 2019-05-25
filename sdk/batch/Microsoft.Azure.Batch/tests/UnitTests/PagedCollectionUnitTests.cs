@@ -120,7 +120,7 @@
 
             var list = await seq.ToListAsync();
 
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]

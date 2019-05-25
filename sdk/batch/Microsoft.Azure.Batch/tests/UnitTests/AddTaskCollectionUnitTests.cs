@@ -147,7 +147,7 @@
                         tasksToAdd,
                         additionalBehaviors: InterceptorFactory.CreateAddTaskCollectionInterceptor(results)));
 
-                Assert.Equal(1, parallelOperationsException.InnerExceptions.Count);
+                Assert.Single(parallelOperationsException.InnerExceptions);
 
                 var exception = parallelOperationsException.InnerException as AddTaskCollectionTerminatedException;
 

@@ -93,11 +93,11 @@
             const string item2 = "test2";
 
             ConcurrentChangeTrackedList<string> list = new ConcurrentChangeTrackedList<string>();
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
             Assert.False(list.HasBeenModified);
 
             list.Add(item1);
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             
             list.Add(item2);
             Assert.Equal(2, list.Count);
@@ -107,10 +107,10 @@
             Assert.True(list.HasBeenModified);
 
             list.Remove(item1);
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
 
             list.Clear();
-            Assert.Equal(0, list.Count);
+            Assert.Empty(list);
         }
 
         [Fact]
@@ -170,7 +170,7 @@
         {
             var list = new ConcurrentChangeTrackedModifiableList<DummyComplexType>(
                 new List<DummyComplexType> { new DummyComplexType() });
-            Assert.Equal(1, list.Count);
+            Assert.Single(list);
             Assert.False(list.HasBeenModified);
 
             list.First().HasBeenModified = true;

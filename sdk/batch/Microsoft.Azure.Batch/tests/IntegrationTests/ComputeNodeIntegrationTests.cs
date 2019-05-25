@@ -283,7 +283,7 @@ namespace BatchClientIntegrationTests
                             Assert.Equal(expectedErrorCode, computeNodeError.Code);
                             Assert.Equal(expectedErrorMessage, computeNodeError.Message);
                             Assert.NotNull(computeNodeError.ErrorDetails);
-                            Assert.Equal(1, computeNodeError.ErrorDetails.Count());
+                            Assert.Single(computeNodeError.ErrorDetails);
                             Assert.Contains(nvpValue, computeNodeError.ErrorDetails.First().Name);
                         }
                     }
@@ -877,7 +877,7 @@ namespace BatchClientIntegrationTests
 
                         var nodes = sharedPool.ListComputeNodes().ToList();
 
-                        Assert.Equal<int>(expected: 1, actual: nodes.Count);
+                        Assert.Single(nodes);
 
                         ComputeNode cn = nodes[0];
 

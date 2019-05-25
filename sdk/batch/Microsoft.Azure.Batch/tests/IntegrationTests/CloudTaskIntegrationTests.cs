@@ -728,7 +728,7 @@
                             //Wait for the task to go to running state
                             List<CloudTask> tasks = batchCli.JobOperations.ListTasks(jobId).ToList();
 
-                            Assert.Equal(1, tasks.Count);
+                            Assert.Single(tasks);
 
                             //Check that the task is running
                             TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
@@ -758,7 +758,7 @@
 
                             List<CloudTask> taskListAfterDelete = batchCli.JobOperations.ListTasks(jobId).ToList();
 
-                            Assert.Equal(0, taskListAfterDelete.Count);
+                            Assert.Empty(taskListAfterDelete);
                         }
 
                         {
@@ -773,7 +773,7 @@
                             //Wait for the task to go to running state
                             List<CloudTask> tasks = batchCli.JobOperations.ListTasks(jobId).ToList();
 
-                            Assert.Equal(1, tasks.Count);
+                            Assert.Single(tasks);
 
                             //Check that the task is running
                             TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
@@ -804,7 +804,7 @@
 
                             List<CloudTask> taskListAfterDelete = batchCli.JobOperations.ListTasks(jobId).ToList();
 
-                            Assert.Equal(0, taskListAfterDelete.Count);
+                            Assert.Empty(taskListAfterDelete);
                         }
                     }
                     finally

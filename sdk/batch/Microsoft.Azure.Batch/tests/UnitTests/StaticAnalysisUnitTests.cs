@@ -146,7 +146,7 @@
                 this.testOutputHelper.WriteLine("Found .Wait or .Result in {0} at {1} -- {2}", parserResult.File, parserResult.LineNumber, parserResult.Match);
             }
 
-            Assert.Equal(0, results.Count);
+            Assert.Empty(results);
         }
 
         #region Private helpers

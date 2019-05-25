@@ -285,7 +285,7 @@
                         // the victim nodes.  pool should have size 1.
                         List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
 
-                        Assert.Equal(1, computeNodes.Count);
+                        Assert.Single(computeNodes);
                         // now we have a job with zero tasks... lets call get-status methods
 
                         // call it
@@ -347,7 +347,7 @@
                         // the victim compute node.  pool should have size 1.
                         List<ComputeNode> nodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
 
-                        Assert.Equal(1, nodes.Count);
+                        Assert.Single(nodes);
 
                         // now we have a job that should be trying to run the JP
                         // poll for the JP to have been run, and it must have a scheduling error
@@ -472,7 +472,7 @@
                         // the victim compute node.  pool should have size 1.
                         List<ComputeNode> computeNodes = client.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).ToList();
 
-                        Assert.Equal(1, computeNodes.Count);
+                        Assert.Single(computeNodes);
 
                         // now we have a job that should be trying to run the JP
                         // poll for the JP to have been run, and it must have a scheduling error

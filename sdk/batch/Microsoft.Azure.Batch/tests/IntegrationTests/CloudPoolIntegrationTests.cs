@@ -260,8 +260,8 @@ namespace BatchClientIntegrationTests
                         // confirm that the collections are non-null and have count-0
                         Assert.NotNull(count0ResFiles);
                         Assert.NotNull(count0EnvSettings);
-                        Assert.Equal(0, count0ResFiles.Count());
-                        Assert.Equal(0, count0EnvSettings.Count());
+                        Assert.Empty(count0ResFiles);
+                        Assert.Empty(count0EnvSettings);
 
                         //clean up
                         boundPool.Delete();
@@ -292,8 +292,8 @@ namespace BatchClientIntegrationTests
                         // confirm that the collections are non-null and have count-0
                         Assert.NotNull(count0ResFiles);
                         Assert.NotNull(count0EnvSettings);
-                        Assert.Equal(0, count0ResFiles.Count());
-                        Assert.Equal(0, count0EnvSettings.Count());
+                        Assert.Empty(count0ResFiles);
+                        Assert.Empty(count0EnvSettings);
                     }
                     finally
                     {
@@ -1347,7 +1347,7 @@ namespace BatchClientIntegrationTests
                         //Ensure that the other ComputeNodes were not impacted and we now have 1 less ComputeNode
                         computeNodesAfterRemove = refreshablePool.ListComputeNodes().ToList();
 
-                        Assert.Equal(targetDedicated - 2, computeNodesAfterRemove.Count);
+                        Assert.Single(computeNodesAfterRemove);
 
                         this.testOutputHelper.WriteLine("Verified that the compute node was removed correctly");
 
@@ -1367,7 +1367,7 @@ namespace BatchClientIntegrationTests
 
                         //Ensure that the other ComputeNodes were not impacted and we now have 1 less ComputeNode
                         computeNodesAfterRemove = refreshablePool.ListComputeNodes().ToList();
-                        Assert.Equal(targetDedicated - 3, computeNodesAfterRemove.Count);
+                        Assert.Empty(computeNodesAfterRemove);
 
                         this.testOutputHelper.WriteLine("Verified that the ComputeNode was removed correctly");
                     }
@@ -1432,7 +1432,7 @@ namespace BatchClientIntegrationTests
                         Assert.Equal(targetLowPriority, pool.CurrentLowPriorityComputeNodes);
 
                         IEnumerable<ComputeNode> computeNodes = pool.ListComputeNodes();
-                        Assert.Equal(targetLowPriority, computeNodes.Count());
+                        Assert.Single(computeNodes);
 
                         ComputeNode node = computeNodes.Single();
                         Assert.False(node.IsDedicated);

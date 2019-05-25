@@ -166,7 +166,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
                 // some ugly mechanics all for confirming we get the correct exception and it has the correct "message"
                 // there can be only one
-                Assert.Equal<int>(1, ae.InnerExceptions.Count);
+                Assert.Single(ae.InnerExceptions);
 
                 // get the one exception
                 theOneInner = ae.InnerExceptions[0];

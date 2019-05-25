@@ -367,7 +367,7 @@
                             List<CloudTask> tasks = batchCli.JobOperations.ListTasks(jobId).ToList();
 
                             // confirm delete suceeded
-                            Assert.Equal(0, tasks.Count);
+                            Assert.Empty(tasks);
                         }
 
                         // test job double refresh and verbs

@@ -4,7 +4,7 @@
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NoWarn>1591;CS1998;xUnit2013</NoWarn>
+    <NoWarn>CS1998</NoWarn>
     <AssemblyTitle>Microsoft Azure Batch Integration Tests</AssemblyTitle>
   </PropertyGroup>
 

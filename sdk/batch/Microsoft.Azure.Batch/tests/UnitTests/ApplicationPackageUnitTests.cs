@@ -56,7 +56,7 @@ namespace Azure.Batch.Unit.Tests
 
                 IPagedEnumerable<Microsoft.Azure.Batch.ApplicationSummary> applicationSummaries = client.ApplicationOperations.ListApplicationSummaries(additionalBehaviors: new List<BatchClientBehavior> { interceptor });
 
-                Assert.Equal(1, applicationSummaries.Count());
+                Assert.Single(applicationSummaries);
 
                 var applicationSummary = applicationSummaries.First();
                 Assert.Equal(applicationId, applicationSummary.Id);
@@ -174,7 +174,7 @@ namespace Azure.Batch.Unit.Tests
                 results = await client.ApplicationOperations.ListApplicationSummaries().ToListAsync();
             }
 
-            Assert.Equal(1, requests.Count);
+            Assert.Single(requests);
 
             Assert.Equal(3, results.Count);
             Assert.Equal("app1", results[0].Id);
