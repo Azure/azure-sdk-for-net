@@ -25,85 +25,63 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void GetSmartGroupListTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                SmartGroupsList actual = alertsManagementClient.SmartGroups.GetAll();
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetSmartGroupByIdTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                SmartGroup actual = alertsManagementClient.SmartGroups.GetById("720dd30b-ed61-446b-bcd3-cf1793236916");
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
         public void SmartGroupStateChangeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                SmartGroup actual = alertsManagementClient.SmartGroups.ChangeState("720dd30b-ed61-446b-bcd3-cf1793236916", AlertState.Closed);
+                string smartGroupId = "9587da05-0fb6-44a0-a757-e242968c7c57";
+
+                // Get smart group by ID
+                SmartGroup actualSmartGroup = alertsManagementClient.SmartGroups.GetById(smartGroupId);
 
                 if (!this.IsRecording)
                 {
-                    Check(alertsManagementClient, actual);
+                    Assert.Equal(AlertState.New, actualSmartGroup.SmartGroupState);
+                }
+
+                // Perform state change operation
+                string updatedState = AlertState.Closed;
+                SmartGroup smartGroupPostStateChange = alertsManagementClient.SmartGroups.ChangeState(smartGroupId, updatedState);
+
+                // Verify the state change operation was successful
+                if (!this.IsRecording)
+                {
+                    Assert.Equal(updatedState, smartGroupPostStateChange.SmartGroupState);
+                }
+
+                // Get History of smart group
+                var smartGroupHistory = alertsManagementClient.SmartGroups.GetHistory(smartGroupId);
+
+                // Check if the history contains the state update event
+                if (!this.IsRecording)
+                {
+                    CheckHistoryContainsStateChangeEvent(smartGroupHistory);
                 }
             }
         }
 
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void SmartGroupHistoryTest()
+        private void CheckHistoryContainsStateChangeEvent(SmartGroupModification smartGroupHistory)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            bool eventFound = false;
+
+            IList<SmartGroupModificationItem> modifications = smartGroupHistory.Properties.Modifications;
+            foreach (var item in modifications)
             {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                var actual = alertsManagementClient.SmartGroups.GetHistory("720dd30b-ed61-446b-bcd3-cf1793236916");
-
-                if (!this.IsRecording)
+                if (item.ModificationEvent == SmartGroupModificationEvent.StateChange)
                 {
-                    Check(alertsManagementClient, actual);
+                    Assert.Equal(AlertState.New, item.OldValue);
+                    Assert.Equal(AlertState.Closed, item.NewValue);
+                    eventFound = true;
+                    break;
                 }
             }
-        }
 
-        private void Check(AlertsManagementClient alertsManagementClient, SmartGroupsList actual)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Check(AlertsManagementClient alertsManagementClient, SmartGroup actual)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Check(AlertsManagementClient alertsManagementClient, SmartGroupModification actual)
-        {
-            throw new NotImplementedException();
+            if (!eventFound)
+            {
+                throw new Exception("Test Failed : State update event not found in alert history.");
+            }
         }
     }
 }

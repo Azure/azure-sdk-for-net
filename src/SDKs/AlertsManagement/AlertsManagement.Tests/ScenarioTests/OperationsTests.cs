@@ -36,16 +36,43 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 if (!this.IsRecording)
                 {
-                    Check(alertsManagementClient, actual);
+                    CheckListedOperations(actual);
                 }
             }
         }
 
-        private static void Check(
-            AlertsManagementClient alertsManagementClient,
-            IPage<Operation> operationListResult)
+        private static void CheckListedOperations(IPage<Operation> operationListResult)
         {
-            Assert.Equal("true", "true");
+            /*
+            List<String> supportedOperations = new List<String>
+            {
+                "Microsoft.AlertsManagement/register/action",
+                "Microsoft.AlertsManagement/alerts/read",
+                "Microsoft.AlertsManagement/alertsList/read",
+                "Microsoft.AlertsManagement/alerts/changestate/action",
+                "Microsoft.AlertsManagement/alerts/history/read",
+                "Microsoft.AlertsManagement/alertsSummary/read",
+                "Microsoft.AlertsManagement/alertsSummaryList/read",
+                "Microsoft.AlertsManagement/smartGroups/read",
+                "Microsoft.AlertsManagement/smartGroups/changestate/action",
+                "Microsoft.AlertsManagement/smartGroups/history/read",
+                "Microsoft.AlertsManagement/smartGroups/read",
+                "Microsoft.AlertsManagement/alerts/diagnostics/read",
+                "Microsoft.AlertsManagement/smartDetectorAlertRules/write",
+                "Microsoft.AlertsManagement/smartDetectorAlertRules/read",
+                "Microsoft.AlertsManagement/smartDetectorAlertRules/delete"
+            };
+            */
+
+            string expectedProvider = "Microsoft.AlertsManagement";
+
+            var enumerator = operationListResult.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Operation current = enumerator.Current;
+                // Assert.Contains(current.Name, supportedOperations);
+                Assert.Equal(expectedProvider, current.Display.Provider);
+            }
         }
     }
 }

@@ -25,115 +25,94 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         [Fact]
         [Trait("Category", "Scenario")]
-        public void GetAlertsListTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                IPage<Alert> actual = alertsManagementClient.Alerts.GetAll();
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetAlertByIdTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                Alert actual = alertsManagementClient.Alerts.GetById("e694ddf0-8430-4349-a5ed-c5866e9f4377");
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Scenario")]
         public void AlertStateChangeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                Alert actual = alertsManagementClient.Alerts.ChangeState("a3033ce9-6b95-4c36-8621-62b148434b8b", AlertState.Closed);
+                string alertId = "a2c9dbe6-9e60-43b7-b88a-47558a325dc3";
+
+                // Get alert by ID
+                Alert actualAlert = alertsManagementClient.Alerts.GetById(alertId);
 
                 if (!this.IsRecording)
                 {
-                    Check(alertsManagementClient, actual);
+                    Assert.Equal(AlertState.New, actualAlert.Properties.Essentials.AlertState);
+                }
+
+                // Perform state change operation
+                string updatedState = AlertState.Closed;
+                Alert alertPostStateChange = alertsManagementClient.Alerts.ChangeState(alertId, updatedState);
+
+                // Verify the state change operation was successful
+                if (!this.IsRecording)
+                {
+                    Assert.Equal(updatedState, alertPostStateChange.Properties.Essentials.AlertState);
+                }
+
+                // Get History of alerts
+                var alertHistory = alertsManagementClient.Alerts.GetHistory(alertId);
+
+                // Check if the history contains the state update event
+                if (!this.IsRecording)
+                {
+                    CheckHistoryContainsStateChangeEvent(alertHistory);
+                }
+
+                // Fetch all alerts
+                IPage<Alert> allAlerts = alertsManagementClient.Alerts.GetAll();
+
+                // Verify that all alerts contain the updated alert instance
+                if (!this.IsRecording)
+                {
+                    CheckAllAlertsContainsUpdatedAlertObject(allAlerts, alertPostStateChange);
                 }
             }
         }
 
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetAlertHistoryTest()
+        private void CheckAllAlertsContainsUpdatedAlertObject(IPage<Alert> allAlerts, Alert alertPostStateChange)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            bool alertFound = false;
+
+            var enumerator = allAlerts.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                var actual = alertsManagementClient.Alerts.GetHistory("e694ddf0-8430-4349-a5ed-c5866e9f4377");
-
-                if (!this.IsRecording)
+                Alert current = enumerator.Current;
+                if (current.Properties.Essentials.SourceCreatedId == alertPostStateChange.Properties.Essentials.SourceCreatedId)
                 {
-                    Check(alertsManagementClient, actual);
+                    alertFound = true;
+                    ComparisonUtility.AreEqual(alertPostStateChange, current);
+                    break;
                 }
             }
-        }
 
-        [Fact]
-        [Trait("Category", "Scenario")]
-        public void GetAlertsSummaryTest()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            if (!alertFound)
             {
-                var alertsManagementClient = GetAlertsManagementClient(context, handler);
-
-                var actual = alertsManagementClient.Alerts.GetSummary("Severity");
-
-                if (!this.IsRecording)
-                {
-                    Check(alertsManagementClient, actual);
-                }
+                throw new Exception("Test Failed : Alert not found in list of alerts.");
             }
         }
 
-        private static void Check(
-            AlertsManagementClient alertsManagementClient,
-            IPage<Alert> alertListResult)
+        private void CheckHistoryContainsStateChangeEvent(AlertModification alertHistory)
         {
-            Assert.Equal("true", "true");
-        }
+            bool eventFound = false;
 
-        private static void Check(
-            AlertsManagementClient alertsManagementClient,
-            Alert alertListResult)
-        {
-            Assert.Equal("true", "true");
-        }
+            IList<AlertModificationItem> modifications = alertHistory.Properties.Modifications;
+            foreach (var item in modifications)
+            {
+                if (item.ModificationEvent == AlertModificationEvent.StateChange)
+                {
+                    Assert.Equal(AlertState.New, item.OldValue);
+                    Assert.Equal(AlertState.Closed, item.NewValue);
+                    eventFound = true;
+                    break;
+                }
+            }
 
-        private static void Check(
-           AlertsManagementClient alertsManagementClient,
-           AlertModification modification)
-        {
-            Assert.Equal("true", "true");
-        }
-
-        private static void Check(
-           AlertsManagementClient alertsManagementClient,
-           AlertsSummary modification)
-        {
-            Assert.Equal("true", "true");
+            if (!eventFound)
+            {
+                throw new Exception("Test Failed : State update event not found in alert history.");
+            }
         }
     }
 }
