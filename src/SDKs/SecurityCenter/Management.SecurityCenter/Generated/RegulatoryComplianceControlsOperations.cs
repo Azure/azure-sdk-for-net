@@ -54,10 +54,6 @@ namespace Microsoft.Azure.Management.Security
         /// All supported regulatory compliance controls details and state for selected
         /// standard
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -85,7 +81,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RegulatoryComplianceControl>>> ListWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RegulatoryComplianceControl>>> ListWithHttpMessagesAsync(string regulatoryComplianceStandardName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -96,25 +92,6 @@ namespace Microsoft.Azure.Management.Security
                 if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (regulatoryComplianceStandardName == null)
@@ -130,7 +107,6 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("regulatoryComplianceStandardName", regulatoryComplianceStandardName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -140,7 +116,6 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{regulatoryComplianceStandardName}", System.Uri.EscapeDataString(regulatoryComplianceStandardName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -279,10 +254,6 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Selected regulatory compliance control details and state
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -310,7 +281,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegulatoryComplianceControl>> GetWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegulatoryComplianceControl>> GetWithHttpMessagesAsync(string regulatoryComplianceStandardName, string regulatoryComplianceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -321,25 +292,6 @@ namespace Microsoft.Azure.Management.Security
                 if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (regulatoryComplianceStandardName == null)
@@ -359,7 +311,6 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("regulatoryComplianceStandardName", regulatoryComplianceStandardName);
                 tracingParameters.Add("regulatoryComplianceControlName", regulatoryComplianceControlName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -369,7 +320,6 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{regulatoryComplianceStandardName}", System.Uri.EscapeDataString(regulatoryComplianceStandardName));
             _url = _url.Replace("{regulatoryComplianceControlName}", System.Uri.EscapeDataString(regulatoryComplianceControlName));
             List<string> _queryParameters = new List<string>();

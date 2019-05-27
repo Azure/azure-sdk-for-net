@@ -27,10 +27,6 @@ namespace Microsoft.Azure.Management.Security
         /// Details and state of assessments mapped to selected regulatory
         /// compliance control
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -55,15 +51,11 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RegulatoryComplianceAssessment>>> ListWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RegulatoryComplianceAssessment>>> ListWithHttpMessagesAsync(string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Supported regulatory compliance details and state for selected
         /// assessment
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -88,7 +80,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegulatoryComplianceAssessment>> GetWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegulatoryComplianceAssessment>> GetWithHttpMessagesAsync(string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Details and state of assessments mapped to selected regulatory
         /// compliance control
