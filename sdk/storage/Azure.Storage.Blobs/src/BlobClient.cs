@@ -219,6 +219,15 @@ namespace Azure.Storage.Blobs.Specialized
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
                         response.GetRawResponse(),
+                         startOffset =>
+                            (this.StartDownloadAsync(
+                                    range,
+                                    accessConditions,
+                                    rangeGetContentHash,
+                                    startOffset,
+                                    cancellation)
+                                .ConfigureAwait(false).GetAwaiter().GetResult())
+                            .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
                                 range,
