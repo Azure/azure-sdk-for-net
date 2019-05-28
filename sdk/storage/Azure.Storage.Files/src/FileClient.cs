@@ -373,7 +373,7 @@ namespace Azure.Storage.Files
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.Raw,
+                        response.GetRawResponse(),
                         startOffset =>
                             (this.StartDownloadAsync(
                                     range,
