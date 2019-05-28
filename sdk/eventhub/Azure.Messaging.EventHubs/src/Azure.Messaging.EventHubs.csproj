@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Amqp\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
@@ -54,8 +53,11 @@
 
   <!-- Track One Source, for the first preview only -->
   <ItemGroup>
+    <Compile Remove="Amqp\**" />
     <Compile Remove="TrackOneClient\**" />
+    <EmbeddedResource Remove="Amqp\**" />
     <EmbeddedResource Remove="TrackOneClient\**" />
+    <None Remove="Amqp\**" />
     <None Remove="TrackOneClient\**" />
   </ItemGroup>
 

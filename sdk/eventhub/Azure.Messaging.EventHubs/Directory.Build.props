@@ -15,11 +15,5 @@
 
      <!-- If there was no override specified, assume a project reference to Azure.Core -->
      <UseProjectReferenceToAzureCore Condition="'$(UseProjectReferenceToAzureCore)' == ''">true</UseProjectReferenceToAzureCore>
-
-    <!--
-        If the assembly is to be signed, emit a constant so that any constructs which rely on the assembly
-        names, such as declaration of friend assemblies for testing, can be adjusted as necessary
-    -->
-    <DefineConstants Condition="'$(SignAssembly)' == 'true'">$(DefineConstants);CODESIGN</DefineConstants>
   </PropertyGroup>
 </Project>
