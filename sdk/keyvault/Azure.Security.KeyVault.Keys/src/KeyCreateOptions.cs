@@ -9,16 +9,11 @@ namespace Azure.Security.KeyVault.Keys
 {
     public class KeyCreateOptions
     {
-        public string Name { get; }
-        public string KeyType { get; set; }
-        public IList<string> KeyOps { get; set; }
-        public DateTime? NotBefore { get; set; }
-        public DateTime? Expires { get; set; }
+        public IList<KeyOperations> KeyOperations { get; set; }
+        public bool Hsm { get; set; }
+        public DateTimeOffset? NotBefore { get; set; }
+        public DateTimeOffset? Expires { get; set; }
         public IDictionary<string, string> Tags { get; set; }
 
-        public KeyCreateOptions(string name)
-        {
-            Name = name;
-        }
     }
 }

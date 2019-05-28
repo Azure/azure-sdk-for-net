@@ -9,20 +9,19 @@ namespace Azure.Security.KeyVault.Keys
 {
     public class EcKeyCreateOptions : KeyCreateOptions
     {
-        public JsonWebKeyCurveName Curve { get; set; }
+        public KeyCurveName Curve { get; set; }
+        public KeyType KeyType { get; set; }
 
-        public EcKeyCreateOptions(string name)
-            : base(name)
+        public EcKeyCreateOptions()
         {
-            KeyType = JsonWebKeyType.EllipticCurve;
+            KeyType = KeyType.EllipticCurve;
         }
 
-        public EcKeyCreateOptions(JsonWebKeyCurveName curve, string name, List<string> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
-            : base(name)
+        public EcKeyCreateOptions(KeyCurveName curve, List<KeyOperations> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
         {
             Curve = curve;
-            KeyOps = keyOps;
-            KeyType = JsonWebKeyType.EllipticCurve;
+            KeyOperations = keyOps;
+            KeyType = KeyType.EllipticCurve;
             NotBefore = notBefore;
             Expires = expires;
             Tags = new Dictionary<string, string>(tags);
