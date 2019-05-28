@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Management.Billing
         /// </param>
         public async Task<AzureOperationResponse<LineOfCredit,LineOfCreditsIncreaseHeaders>> IncreaseWithHttpMessagesAsync(IncreaseLineOfCreditRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // Send request
+            // Send Request
             AzureOperationResponse<LineOfCredit,LineOfCreditsIncreaseHeaders> _response = await BeginIncreaseWithHttpMessagesAsync(parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Billing
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
