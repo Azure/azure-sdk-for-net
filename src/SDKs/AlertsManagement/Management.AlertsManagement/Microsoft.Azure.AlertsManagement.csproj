@@ -11,7 +11,7 @@
     <PackageTags>alerts;notification;alertsmanagement;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-			This is a public release of the Azure AlertsManagement SDK.
+      This is a public release of the Azure AlertsManagement SDK.
 		  ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
