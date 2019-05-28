@@ -1,10 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Azure.Messaging.EventHubs.Tests</AssemblyName>    
+    <AssemblyName>Azure.Messaging.EventHubs.Tests</AssemblyName>
     <VersionPrefix>4.0.0</VersionPrefix>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>Microsoft.Azure.EventHubs.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +24,5 @@
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\" />
   </ItemGroup>
 </Project>

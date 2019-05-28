@@ -6,7 +6,6 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Azure.Messaging.EventHubs.xml</DocumentationFile>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>Azure.Messaging.EventHubs</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,4 +51,15 @@
 
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
+  <!-- Track One Source, for the first preview only -->
+  <ItemGroup>
+    <Compile Remove="TrackOneClient\**" />
+    <EmbeddedResource Remove="TrackOneClient\**" />
+    <None Remove="TrackOneClient\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)TrackOneClient\Azure.Messaging.EventHubs.TrackOne.csproj" />
+  </ItemGroup>
 </Project>
