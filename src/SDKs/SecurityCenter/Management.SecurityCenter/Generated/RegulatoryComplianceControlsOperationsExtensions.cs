@@ -28,19 +28,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
             /// <param name='regulatoryComplianceStandardName'>
             /// Name of the regulatory compliance standard object
             /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
-            public static IPage<RegulatoryComplianceControl> List(this IRegulatoryComplianceControlsOperations operations, string resourceGroupName, string regulatoryComplianceStandardName, string filter = default(string))
+            public static IPage<RegulatoryComplianceControl> List(this IRegulatoryComplianceControlsOperations operations, string regulatoryComplianceStandardName, string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName, regulatoryComplianceStandardName, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(regulatoryComplianceStandardName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,10 +45,6 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
             /// </param>
             /// <param name='regulatoryComplianceStandardName'>
             /// Name of the regulatory compliance standard object
@@ -63,9 +55,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RegulatoryComplianceControl>> ListAsync(this IRegulatoryComplianceControlsOperations operations, string resourceGroupName, string regulatoryComplianceStandardName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RegulatoryComplianceControl>> ListAsync(this IRegulatoryComplianceControlsOperations operations, string regulatoryComplianceStandardName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, regulatoryComplianceStandardName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(regulatoryComplianceStandardName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -77,19 +69,15 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
             /// <param name='regulatoryComplianceStandardName'>
             /// Name of the regulatory compliance standard object
             /// </param>
             /// <param name='regulatoryComplianceControlName'>
             /// Name of the regulatory compliance control object
             /// </param>
-            public static RegulatoryComplianceControl Get(this IRegulatoryComplianceControlsOperations operations, string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName)
+            public static RegulatoryComplianceControl Get(this IRegulatoryComplianceControlsOperations operations, string regulatoryComplianceStandardName, string regulatoryComplianceControlName)
             {
-                return operations.GetAsync(resourceGroupName, regulatoryComplianceStandardName, regulatoryComplianceControlName).GetAwaiter().GetResult();
+                return operations.GetAsync(regulatoryComplianceStandardName, regulatoryComplianceControlName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -97,10 +85,6 @@ namespace Microsoft.Azure.Management.Security
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
             /// </param>
             /// <param name='regulatoryComplianceStandardName'>
             /// Name of the regulatory compliance standard object
@@ -111,9 +95,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegulatoryComplianceControl> GetAsync(this IRegulatoryComplianceControlsOperations operations, string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegulatoryComplianceControl> GetAsync(this IRegulatoryComplianceControlsOperations operations, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, regulatoryComplianceStandardName, regulatoryComplianceControlName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(regulatoryComplianceStandardName, regulatoryComplianceControlName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
