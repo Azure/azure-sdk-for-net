@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.Tests.csproj" />
+    <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.csproj" />
   </ItemGroup>
   
   <ItemGroup>

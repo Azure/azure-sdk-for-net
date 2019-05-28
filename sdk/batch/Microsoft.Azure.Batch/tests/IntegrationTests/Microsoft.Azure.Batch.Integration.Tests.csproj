@@ -55,8 +55,8 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.csproj" />
-    <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.Tests.csproj" />
-    <ProjectReference Include="..\IntegrationTestCommon\Microsoft.Azure.Batch.IntegrationTestCommon.Tests.csproj" />
+    <ProjectReference Include="..\TestCommon\Microsoft.Azure.Batch.Common.csproj" />
+    <ProjectReference Include="..\IntegrationTestCommon\Microsoft.Azure.Batch.IntegrationTestCommon.csproj" />
   </ItemGroup>
   
   <ItemGroup>
