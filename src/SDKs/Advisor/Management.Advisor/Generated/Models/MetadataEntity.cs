@@ -40,14 +40,17 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <param name="displayName">The display name.</param>
         /// <param name="dependsOn">The list of keys on which this entity
         /// depends on.</param>
+        /// <param name="applicableScenarios">The list of scenarios applicable
+        /// to this metadata entity.</param>
         /// <param name="supportedValues">The list of supported values.</param>
-        public MetadataEntity(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), IList<string> dependsOn = default(IList<string>), IList<MetadataSupportedValueDetail> supportedValues = default(IList<MetadataSupportedValueDetail>))
+        public MetadataEntity(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), IList<string> dependsOn = default(IList<string>), IList<string> applicableScenarios = default(IList<string>), IList<MetadataSupportedValueDetail> supportedValues = default(IList<MetadataSupportedValueDetail>))
         {
             Id = id;
             Type = type;
             Name = name;
             DisplayName = displayName;
             DependsOn = dependsOn;
+            ApplicableScenarios = applicableScenarios;
             SupportedValues = supportedValues;
             CustomInit();
         }
@@ -86,6 +89,13 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dependsOn")]
         public IList<string> DependsOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of scenarios applicable to this metadata
+        /// entity.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableScenarios")]
+        public IList<string> ApplicableScenarios { get; set; }
 
         /// <summary>
         /// Gets or sets the list of supported values.
