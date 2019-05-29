@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// principal</param>
         /// <param name="tags">Optional list of tags that you can apply to your
         /// service principals. Not nullable.</param>
-        public ServicePrincipalBase(string accountEnabled = default(string), bool? appRoleAssignmentRequired = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
+        public ServicePrincipalBase(bool? accountEnabled = default(bool?), bool? appRoleAssignmentRequired = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
         {
             AccountEnabled = accountEnabled;
             AppRoleAssignmentRequired = appRoleAssignmentRequired;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// enabled
         /// </summary>
         [JsonProperty(PropertyName = "accountEnabled")]
-        public string AccountEnabled { get; set; }
+        public bool? AccountEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether an AppRoleAssignment to a user or
