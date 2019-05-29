@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Azure.Core.Buffers
 {
     internal static class AzureBaseBuffersExtensions
