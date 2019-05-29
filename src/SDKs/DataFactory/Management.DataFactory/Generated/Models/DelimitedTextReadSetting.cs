@@ -37,14 +37,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="skipLineCount">Indicates the number of non-empty rows
         /// to skip when reading data from input files. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="treatEmptyAsNull">Specify whether to treat null or
-        /// empty string as a null value when reading data from an input
-        /// file.</param>
-        public DelimitedTextReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object), bool? treatEmptyAsNull = default(bool?))
+        public DelimitedTextReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object))
             : base(type, additionalProperties)
         {
             SkipLineCount = skipLineCount;
-            TreatEmptyAsNull = treatEmptyAsNull;
             CustomInit();
         }
 
@@ -60,13 +56,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "skipLineCount")]
         public object SkipLineCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets specify whether to treat null or empty string as a
-        /// null value when reading data from an input file.
-        /// </summary>
-        [JsonProperty(PropertyName = "treatEmptyAsNull")]
-        public bool? TreatEmptyAsNull { get; set; }
 
         /// <summary>
         /// Validate the object.
