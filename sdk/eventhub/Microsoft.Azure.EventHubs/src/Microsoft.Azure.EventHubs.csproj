@@ -42,27 +42,4 @@
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
-
-  <Target Name="AddUAPPackageAsset" BeforeTargets="BuiltProjectOutputGroup">
-    <!--
-      For compat with the older package we are keeping a uap10.0 asset
-      in the package but it will just be a copy of the netstandard1.4 asset,
-      as the library doesn't use any UAP specific APIs and we don't want to
-      complicate our cross-platform engineering system to pull in uap tools.
-    -->
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
-      <BuiltProjectOutputGroupKeyOutput Include="@(IntermediateAssembly->'%(FullPath)')">
-        <IsKeyOutput>true</IsKeyOutput>
-        <FinalOutputPath>$(TargetPath)</FinalOutputPath>
-        <TargetPath>$(TargetFileName)</TargetPath>
-        <TargetFramework>uap10.0</TargetFramework>
-      </BuiltProjectOutputGroupKeyOutput>
-      <DocumentationProjectOutputGroupOutput Include="@(DocFileItem->'%(FullPath)')">
-        <FinalOutputPath>@(FinalDocFile->'%(FullPath)')</FinalOutputPath>
-        <IsKeyOutput>true</IsKeyOutput>
-        <TargetPath>@(DocFileItem->'%(Filename)%(Extension)')</TargetPath>
-        <TargetFramework>uap10.0</TargetFramework>
-      </DocumentationProjectOutputGroupOutput>
-    </ItemGroup>
-  </Target>
 </Project>

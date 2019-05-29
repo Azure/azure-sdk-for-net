@@ -15,7 +15,8 @@ namespace Microsoft.Azure.EventHubs.Amqp
     {
         const string CbsSaslMechanismName = "MSSBCBS";
         readonly Lazy<AmqpServiceClient> managementServiceClient; // serviceClient that handles management calls
-        public AmqpEventHubClient(
+
+        internal AmqpEventHubClient(
             Uri endpointAddress,
             string entityPath,
             ITokenProvider tokenProvider,
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
         {
         }
 
-        public AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
+        internal AmqpEventHubClient(EventHubsConnectionStringBuilder csb, ITokenProvider tokenProvider)
             : base(csb)
         {
             this.ContainerId = Guid.NewGuid().ToString("N");
