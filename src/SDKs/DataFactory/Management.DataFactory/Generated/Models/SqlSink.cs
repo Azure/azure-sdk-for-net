@@ -55,13 +55,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string).</param>
         /// <param name="storedProcedureParameters">SQL stored procedure
         /// parameters.</param>
-        public SqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
+        /// <param name="storedProcedureTableTypeParameterName">The stored
+        /// procedure parameter name of the table type. Type: string (or
+        /// Expression with resultType string).</param>
+        public SqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>), object storedProcedureTableTypeParameterName = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;
             PreCopyScript = preCopyScript;
             StoredProcedureParameters = storedProcedureParameters;
+            StoredProcedureTableTypeParameterName = storedProcedureTableTypeParameterName;
             CustomInit();
         }
 
@@ -96,6 +100,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "storedProcedureParameters")]
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stored procedure parameter name of the table type.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "storedProcedureTableTypeParameterName")]
+        public object StoredProcedureTableTypeParameterName { get; set; }
 
     }
 }

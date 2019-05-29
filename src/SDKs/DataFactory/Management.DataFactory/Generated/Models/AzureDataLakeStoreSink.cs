@@ -46,13 +46,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="copyBehavior">The type of copy behavior for copy sink.
-        /// Possible values include: 'PreserveHierarchy', 'FlattenHierarchy',
-        /// 'MergeFiles'</param>
-        public AzureDataLakeStoreSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string copyBehavior = default(string))
+        /// <param name="copyBehavior">The type of copy behavior for copy
+        /// sink.</param>
+        /// <param name="enableAdlsSingleFileParallel">Single File
+        /// Parallel.</param>
+        public AzureDataLakeStoreSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object enableAdlsSingleFileParallel = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             CopyBehavior = copyBehavior;
+            EnableAdlsSingleFileParallel = enableAdlsSingleFileParallel;
             CustomInit();
         }
 
@@ -62,12 +64,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of copy behavior for copy sink. Possible
-        /// values include: 'PreserveHierarchy', 'FlattenHierarchy',
-        /// 'MergeFiles'
+        /// Gets or sets the type of copy behavior for copy sink.
         /// </summary>
         [JsonProperty(PropertyName = "copyBehavior")]
-        public string CopyBehavior { get; set; }
+        public object CopyBehavior { get; set; }
+
+        /// <summary>
+        /// Gets or sets single File Parallel.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAdlsSingleFileParallel")]
+        public object EnableAdlsSingleFileParallel { get; set; }
 
     }
 }

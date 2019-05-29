@@ -10,32 +10,35 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A copy activity translator.
+    /// Format write settings.
     /// </summary>
-    public partial class CopyTranslator
+    public partial class FormatWriteSetting
     {
         /// <summary>
-        /// Initializes a new instance of the CopyTranslator class.
+        /// Initializes a new instance of the FormatWriteSetting class.
         /// </summary>
-        public CopyTranslator()
+        public FormatWriteSetting()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CopyTranslator class.
+        /// Initializes a new instance of the FormatWriteSetting class.
         /// </summary>
+        /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public CopyTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public FormatWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
+            Type = type;
             CustomInit();
         }
 
@@ -51,5 +54,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
+        /// <summary>
+        /// Gets or sets the write setting type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

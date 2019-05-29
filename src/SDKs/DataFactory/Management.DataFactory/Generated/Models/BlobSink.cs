@@ -53,10 +53,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         /// <param name="blobWriterAddHeader">Blob writer add header. Type:
         /// boolean (or Expression with resultType boolean).</param>
-        /// <param name="copyBehavior">The type of copy behavior for copy sink.
-        /// Possible values include: 'PreserveHierarchy', 'FlattenHierarchy',
-        /// 'MergeFiles'</param>
-        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), string copyBehavior = default(string))
+        /// <param name="copyBehavior">The type of copy behavior for copy
+        /// sink.</param>
+        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), object copyBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
@@ -93,12 +92,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object BlobWriterAddHeader { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of copy behavior for copy sink. Possible
-        /// values include: 'PreserveHierarchy', 'FlattenHierarchy',
-        /// 'MergeFiles'
+        /// Gets or sets the type of copy behavior for copy sink.
         /// </summary>
         [JsonProperty(PropertyName = "copyBehavior")]
-        public string CopyBehavior { get; set; }
+        public object CopyBehavior { get; set; }
 
     }
 }
