@@ -88,27 +88,7 @@ namespace Azure.Identity
 
             return request;
         }
-
-        private ReadOnlyMemory<byte> Serialize(params (string, string)[] bodyArgs)
-        {
-            var buff = new byte[1024];
-
-            var writer = new FixedSizedBufferWriter(buff);
-
-            var json = new Utf8JsonWriter(writer);
-
-            json.WriteStartObject();
-
-            foreach (var prop in bodyArgs)
-            {
-                json.WriteString(prop.Item1, prop.Item2);
-            }
-
-            json.WriteEndObject();
-
-            return buff.AsMemory(0, (int)json.BytesWritten);
-        }
-
+        
         private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
