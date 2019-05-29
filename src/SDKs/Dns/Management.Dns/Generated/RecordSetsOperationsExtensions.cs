@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns
+namespace Dns
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='ifMatch'>
             /// The etag of the record set. Omit this value to always overwrite the current
             /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting concurrent changes.
+            /// overwriting concurrent changes.
             /// </param>
             public static RecordSet Update(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSet parameters, string ifMatch = default(string))
             {
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='ifMatch'>
             /// The etag of the record set. Omit this value to always overwrite the current
             /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting concurrent changes.
+            /// overwriting concurrent changes.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='ifMatch'>
             /// The etag of the record set. Omit this value to always overwrite the current
             /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting any concurrent changes.
+            /// overwriting any concurrent changes.
             /// </param>
             /// <param name='ifNoneMatch'>
             /// Set to '*' to allow a new record set to be created, but to prevent updating
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='ifMatch'>
             /// The etag of the record set. Omit this value to always overwrite the current
             /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting any concurrent changes.
+            /// overwriting any concurrent changes.
             /// </param>
             /// <param name='ifNoneMatch'>
             /// Set to '*' to allow a new record set to be created, but to prevent updating

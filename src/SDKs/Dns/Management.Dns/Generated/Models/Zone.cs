@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns.Models
+namespace Dns.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// <summary>
     /// Describes a DNS zone.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class Zone : Resource
     {
         /// <summary>

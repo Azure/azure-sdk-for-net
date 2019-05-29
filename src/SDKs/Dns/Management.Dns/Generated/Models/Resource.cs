@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns.Models
+namespace Dns.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

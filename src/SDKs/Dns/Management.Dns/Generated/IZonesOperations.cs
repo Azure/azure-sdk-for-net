@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns
+namespace Dns
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='ifMatch'>
         /// The etag of the DNS zone. Omit this value to always overwrite the
         /// current zone. Specify the last-seen etag value to prevent
-        /// accidentally overwritting any concurrent changes.
+        /// accidentally overwriting any concurrent changes.
         /// </param>
         /// <param name='ifNoneMatch'>
         /// Set to '*' to allow a new DNS zone to be created, but to prevent
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='ifMatch'>
         /// The etag of the DNS zone. Omit this value to always overwrite the
         /// current zone. Specify the last-seen etag value to prevent
-        /// accidentally overwritting any concurrent changes.
+        /// accidentally overwriting any concurrent changes.
         /// </param>
         /// <param name='tags'>
         /// Resource tags.

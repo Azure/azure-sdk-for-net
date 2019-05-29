@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns.Models
+namespace Dns.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Models
     /// Describes a DNS record set (a collection of DNS records with the same
     /// name and type).
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
+    [JsonTransformation]
     public partial class RecordSet : IResource
     {
         /// <summary>

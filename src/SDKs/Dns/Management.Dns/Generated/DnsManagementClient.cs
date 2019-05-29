@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns
+namespace Dns
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

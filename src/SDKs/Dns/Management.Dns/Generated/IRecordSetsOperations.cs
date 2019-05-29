@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.Dns
+namespace Dns
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='ifMatch'>
         /// The etag of the record set. Omit this value to always overwrite the
         /// current record set. Specify the last-seen etag value to prevent
-        /// accidentally overwritting concurrent changes.
+        /// accidentally overwriting concurrent changes.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='ifMatch'>
         /// The etag of the record set. Omit this value to always overwrite the
         /// current record set. Specify the last-seen etag value to prevent
-        /// accidentally overwritting any concurrent changes.
+        /// accidentally overwriting any concurrent changes.
         /// </param>
         /// <param name='ifNoneMatch'>
         /// Set to '*' to allow a new record set to be created, but to prevent
