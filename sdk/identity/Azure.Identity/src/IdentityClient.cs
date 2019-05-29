@@ -71,6 +71,8 @@ namespace Azure.Identity
 
             request.Method = HttpPipelineMethod.Post;
 
+            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
+
             request.UriBuilder.Uri = _options.AuthorityHost;
 
             request.UriBuilder.AppendPath(tenantId);
@@ -82,7 +84,7 @@ namespace Azure.Identity
                 ("grant_type", "client_credentials"),
                 ("client_id", clientId),
                 ("client_secret", clientSecret),
-                ("scopes", string.Join(" ", scopes)));
+                ("scope", string.Join(" ", scopes)));
 
             request.Content = HttpPipelineRequestContent.Create(content);
 
