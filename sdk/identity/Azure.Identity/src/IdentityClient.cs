@@ -9,6 +9,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,7 +70,9 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = HttpPipelineMethod.Get;
+
+            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
 
             request.UriBuilder.Uri = _options.AuthorityHost;
 
@@ -77,12 +80,9 @@ namespace Azure.Identity
 
             request.UriBuilder.AppendPath("/oauth2/v2.0/token");
 
-            ReadOnlyMemory<byte> content = Serialize(
-                ("response_type", "token"),
-                ("grant_type", "client_credentials"),
-                ("client_id", clientId),
-                ("client_secret", clientSecret),
-                ("scopes", string.Join(" ", scopes)));
+            var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
+
+            ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
             request.Content = HttpPipelineRequestContent.Create(content);
 
