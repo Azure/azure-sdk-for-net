@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup>
@@ -15,11 +15,5 @@
 
      <!-- If there was no override specified, assume a project reference to Azure.Core -->
      <UseProjectReferenceToAzureCore Condition="'$(UseProjectReferenceToAzureCore)' == ''">true</UseProjectReferenceToAzureCore>
-
-    <!--
-        If the assembly is to be signed, emit a constant so that any constructs which rely on the assembly
-        names, such as declaration of friend assemblies for testing, can be adjusted as necessary
-    -->
-    <DefineConstants Condition="'$(SignAssembly)' == 'true'">$(DefineConstants);CODESIGN</DefineConstants>
   </PropertyGroup>
 </Project>
