@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -45,9 +46,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        public ParquetSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object))
+        /// <param name="storeSettings">Parquet store settings.</param>
+        public ParquetSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), ConnectorWriteSetting storeSettings = default(ConnectorWriteSetting))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
+            StoreSettings = storeSettings;
             CustomInit();
         }
 
@@ -56,5 +59,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Gets or sets parquet store settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "storeSettings")]
+        public ConnectorWriteSetting StoreSettings { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (StoreSettings != null)
+            {
+                StoreSettings.Validate();
+            }
+        }
     }
 }
