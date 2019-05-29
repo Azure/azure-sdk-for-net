@@ -11,56 +11,97 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LiveOutputResourceState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LiveOutputResourceState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(LiveOutputResourceStateConverter))]
+    public struct LiveOutputResourceState : System.IEquatable<LiveOutputResourceState>
     {
-        [EnumMember(Value = "Creating")]
-        Creating,
-        [EnumMember(Value = "Running")]
-        Running,
-        [EnumMember(Value = "Deleting")]
-        Deleting
-    }
-    internal static class LiveOutputResourceStateEnumExtension
-    {
-        internal static string ToSerializedValue(this LiveOutputResourceState? value)
+        private LiveOutputResourceState(string underlyingValue)
         {
-            return value == null ? null : ((LiveOutputResourceState)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this LiveOutputResourceState value)
+        public static readonly LiveOutputResourceState Creating = "Creating";
+
+        public static readonly LiveOutputResourceState Running = "Running";
+
+        public static readonly LiveOutputResourceState Deleting = "Deleting";
+
+
+        /// <summary>
+        /// Underlying value of enum LiveOutputResourceState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for LiveOutputResourceState
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case LiveOutputResourceState.Creating:
-                    return "Creating";
-                case LiveOutputResourceState.Running:
-                    return "Running";
-                case LiveOutputResourceState.Deleting:
-                    return "Deleting";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static LiveOutputResourceState? ParseLiveOutputResourceState(this string value)
+        /// <summary>
+        /// Compares enums of type LiveOutputResourceState
+        /// </summary>
+        public bool Equals(LiveOutputResourceState e)
         {
-            switch( value )
-            {
-                case "Creating":
-                    return LiveOutputResourceState.Creating;
-                case "Running":
-                    return LiveOutputResourceState.Running;
-                case "Deleting":
-                    return LiveOutputResourceState.Deleting;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to LiveOutputResourceState
+        /// </summary>
+        public static implicit operator LiveOutputResourceState(string value)
+        {
+            return new LiveOutputResourceState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert LiveOutputResourceState to string
+        /// </summary>
+        public static implicit operator string(LiveOutputResourceState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum LiveOutputResourceState
+        /// </summary>
+        public static bool operator == (LiveOutputResourceState e1, LiveOutputResourceState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum LiveOutputResourceState
+        /// </summary>
+        public static bool operator != (LiveOutputResourceState e1, LiveOutputResourceState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for LiveOutputResourceState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is LiveOutputResourceState && Equals((LiveOutputResourceState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode LiveOutputResourceState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

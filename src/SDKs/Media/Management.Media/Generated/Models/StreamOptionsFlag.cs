@@ -11,50 +11,95 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StreamOptionsFlag.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StreamOptionsFlag
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(StreamOptionsFlagConverter))]
+    public struct StreamOptionsFlag : System.IEquatable<StreamOptionsFlag>
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "LowLatency")]
-        LowLatency
-    }
-    internal static class StreamOptionsFlagEnumExtension
-    {
-        internal static string ToSerializedValue(this StreamOptionsFlag? value)
+        private StreamOptionsFlag(string underlyingValue)
         {
-            return value == null ? null : ((StreamOptionsFlag)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this StreamOptionsFlag value)
+        public static readonly StreamOptionsFlag Default = "Default";
+
+        public static readonly StreamOptionsFlag LowLatency = "LowLatency";
+
+
+        /// <summary>
+        /// Underlying value of enum StreamOptionsFlag
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for StreamOptionsFlag
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case StreamOptionsFlag.Default:
-                    return "Default";
-                case StreamOptionsFlag.LowLatency:
-                    return "LowLatency";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static StreamOptionsFlag? ParseStreamOptionsFlag(this string value)
+        /// <summary>
+        /// Compares enums of type StreamOptionsFlag
+        /// </summary>
+        public bool Equals(StreamOptionsFlag e)
         {
-            switch( value )
-            {
-                case "Default":
-                    return StreamOptionsFlag.Default;
-                case "LowLatency":
-                    return StreamOptionsFlag.LowLatency;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to StreamOptionsFlag
+        /// </summary>
+        public static implicit operator StreamOptionsFlag(string value)
+        {
+            return new StreamOptionsFlag(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert StreamOptionsFlag to string
+        /// </summary>
+        public static implicit operator string(StreamOptionsFlag e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum StreamOptionsFlag
+        /// </summary>
+        public static bool operator == (StreamOptionsFlag e1, StreamOptionsFlag e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum StreamOptionsFlag
+        /// </summary>
+        public static bool operator != (StreamOptionsFlag e1, StreamOptionsFlag e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for StreamOptionsFlag
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is StreamOptionsFlag && Equals((StreamOptionsFlag)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode StreamOptionsFlag
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

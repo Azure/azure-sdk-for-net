@@ -11,74 +11,105 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for StreamingEndpointResourceState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum StreamingEndpointResourceState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(StreamingEndpointResourceStateConverter))]
+    public struct StreamingEndpointResourceState : System.IEquatable<StreamingEndpointResourceState>
     {
-        [EnumMember(Value = "Stopped")]
-        Stopped,
-        [EnumMember(Value = "Starting")]
-        Starting,
-        [EnumMember(Value = "Running")]
-        Running,
-        [EnumMember(Value = "Stopping")]
-        Stopping,
-        [EnumMember(Value = "Deleting")]
-        Deleting,
-        [EnumMember(Value = "Scaling")]
-        Scaling
-    }
-    internal static class StreamingEndpointResourceStateEnumExtension
-    {
-        internal static string ToSerializedValue(this StreamingEndpointResourceState? value)
+        private StreamingEndpointResourceState(string underlyingValue)
         {
-            return value == null ? null : ((StreamingEndpointResourceState)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this StreamingEndpointResourceState value)
+        public static readonly StreamingEndpointResourceState Stopped = "Stopped";
+
+        public static readonly StreamingEndpointResourceState Starting = "Starting";
+
+        public static readonly StreamingEndpointResourceState Running = "Running";
+
+        public static readonly StreamingEndpointResourceState Stopping = "Stopping";
+
+        public static readonly StreamingEndpointResourceState Deleting = "Deleting";
+
+        public static readonly StreamingEndpointResourceState Scaling = "Scaling";
+
+
+        /// <summary>
+        /// Underlying value of enum StreamingEndpointResourceState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for StreamingEndpointResourceState
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case StreamingEndpointResourceState.Stopped:
-                    return "Stopped";
-                case StreamingEndpointResourceState.Starting:
-                    return "Starting";
-                case StreamingEndpointResourceState.Running:
-                    return "Running";
-                case StreamingEndpointResourceState.Stopping:
-                    return "Stopping";
-                case StreamingEndpointResourceState.Deleting:
-                    return "Deleting";
-                case StreamingEndpointResourceState.Scaling:
-                    return "Scaling";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static StreamingEndpointResourceState? ParseStreamingEndpointResourceState(this string value)
+        /// <summary>
+        /// Compares enums of type StreamingEndpointResourceState
+        /// </summary>
+        public bool Equals(StreamingEndpointResourceState e)
         {
-            switch( value )
-            {
-                case "Stopped":
-                    return StreamingEndpointResourceState.Stopped;
-                case "Starting":
-                    return StreamingEndpointResourceState.Starting;
-                case "Running":
-                    return StreamingEndpointResourceState.Running;
-                case "Stopping":
-                    return StreamingEndpointResourceState.Stopping;
-                case "Deleting":
-                    return StreamingEndpointResourceState.Deleting;
-                case "Scaling":
-                    return StreamingEndpointResourceState.Scaling;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// StreamingEndpointResourceState
+        /// </summary>
+        public static implicit operator StreamingEndpointResourceState(string value)
+        {
+            return new StreamingEndpointResourceState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert StreamingEndpointResourceState to
+        /// string
+        /// </summary>
+        public static implicit operator string(StreamingEndpointResourceState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum StreamingEndpointResourceState
+        /// </summary>
+        public static bool operator == (StreamingEndpointResourceState e1, StreamingEndpointResourceState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum StreamingEndpointResourceState
+        /// </summary>
+        public static bool operator != (StreamingEndpointResourceState e1, StreamingEndpointResourceState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for StreamingEndpointResourceState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is StreamingEndpointResourceState && Equals((StreamingEndpointResourceState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode StreamingEndpointResourceState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

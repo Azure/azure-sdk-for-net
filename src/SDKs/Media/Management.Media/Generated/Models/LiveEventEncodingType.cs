@@ -11,56 +11,99 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LiveEventEncodingType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LiveEventEncodingType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(LiveEventEncodingTypeConverter))]
+    public struct LiveEventEncodingType : System.IEquatable<LiveEventEncodingType>
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Basic")]
-        Basic,
-        [EnumMember(Value = "Standard")]
-        Standard
-    }
-    internal static class LiveEventEncodingTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this LiveEventEncodingType? value)
+        private LiveEventEncodingType(string underlyingValue)
         {
-            return value == null ? null : ((LiveEventEncodingType)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this LiveEventEncodingType value)
+        public static readonly LiveEventEncodingType None = "None";
+
+        public static readonly LiveEventEncodingType Basic = "Basic";
+
+        public static readonly LiveEventEncodingType Standard = "Standard";
+
+        public static readonly LiveEventEncodingType Premium1080p = "Premium1080p";
+
+
+        /// <summary>
+        /// Underlying value of enum LiveEventEncodingType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for LiveEventEncodingType
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case LiveEventEncodingType.None:
-                    return "None";
-                case LiveEventEncodingType.Basic:
-                    return "Basic";
-                case LiveEventEncodingType.Standard:
-                    return "Standard";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static LiveEventEncodingType? ParseLiveEventEncodingType(this string value)
+        /// <summary>
+        /// Compares enums of type LiveEventEncodingType
+        /// </summary>
+        public bool Equals(LiveEventEncodingType e)
         {
-            switch( value )
-            {
-                case "None":
-                    return LiveEventEncodingType.None;
-                case "Basic":
-                    return LiveEventEncodingType.Basic;
-                case "Standard":
-                    return LiveEventEncodingType.Standard;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to LiveEventEncodingType
+        /// </summary>
+        public static implicit operator LiveEventEncodingType(string value)
+        {
+            return new LiveEventEncodingType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert LiveEventEncodingType to string
+        /// </summary>
+        public static implicit operator string(LiveEventEncodingType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum LiveEventEncodingType
+        /// </summary>
+        public static bool operator == (LiveEventEncodingType e1, LiveEventEncodingType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum LiveEventEncodingType
+        /// </summary>
+        public static bool operator != (LiveEventEncodingType e1, LiveEventEncodingType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for LiveEventEncodingType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is LiveEventEncodingType && Equals((LiveEventEncodingType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode LiveEventEncodingType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
