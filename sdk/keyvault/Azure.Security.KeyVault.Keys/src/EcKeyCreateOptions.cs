@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyType = KeyType.EllipticCurve;
         }
 
-        public EcKeyCreateOptions(KeyCurveName curve, List<KeyOperations> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
+        public EcKeyCreateOptions(KeyCurveName curve, List<KeyOperations> keyOps, DateTimeOffset? notBefore, DateTimeOffset? expires, Dictionary<string, string> tags)
         {
             Curve = curve;
             KeyOperations = keyOps;

@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys
             KeyType = KeyType.Rsa;
         }
 
-        public RsaKeyCreateOptions(int size, List<KeyOperations> keyOps, DateTime? notBefore, DateTime? expires, Dictionary<string, string> tags)
+        public RsaKeyCreateOptions(int size, List<KeyOperations> keyOps, DateTimeOffset? notBefore, DateTimeOffset? expires, Dictionary<string, string> tags)
         {
             KeySize = size;
             KeyOperations = keyOps;
