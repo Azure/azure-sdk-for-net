@@ -164,6 +164,21 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual(exception.Message, "Unable to find client registration with type 'TestClient' and name 'Other'.");
         }
 
+        [Test]
+        public void RetrhowsExceptionFromClientCreation()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", "throw"));
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
+
+            var exception = Assert.Throws<ArgumentException>(() => factory.CreateClient("Default"));
+            var otherException = Assert.Throws<ArgumentException>(() => factory.CreateClient("Default"));
+
+            Assert.AreSame(otherException, exception);
+            Assert.AreEqual(exception.Message, "Throwing");
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();

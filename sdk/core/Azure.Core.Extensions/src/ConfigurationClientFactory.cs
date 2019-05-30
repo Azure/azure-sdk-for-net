@@ -65,7 +65,7 @@ namespace Azure.Core.Extensions
             var builder = new StringBuilder();
             builder.AppendLine("Unable to find matching constructor. Define one of the follow sets of configuration parameters:");
 
-            int i = 1;
+            int counter = 1;
 
             foreach (var constructor in clientType.GetConstructors())
             {
@@ -74,7 +74,7 @@ namespace Azure.Core.Extensions
                     continue;
                 }
 
-                builder.Append(i).Append(". ");
+                builder.Append(counter).Append(". ");
 
                 bool first = true;
 
@@ -98,7 +98,7 @@ namespace Azure.Core.Extensions
                 }
 
                 builder.AppendLine();
-                i++;
+                counter++;
             }
 
             return builder.ToString();

@@ -12,6 +12,8 @@ namespace Azure.Core.Extensions
 
         private readonly Func<TOptions, TClient> _factory;
 
+        private readonly object _cacheLock = new object();
+
         private TClient _cachedClient;
 
         private ExceptionDispatchInfo _cachedException;
@@ -31,7 +33,7 @@ namespace Azure.Core.Extensions
                 return _cachedClient;
             }
 
-            lock (this)
+            lock (_cacheLock)
             {
                 _cachedException?.Throw();
 
@@ -47,6 +49,7 @@ namespace Azure.Core.Extensions
                 catch (Exception e)
                 {
                     _cachedException = ExceptionDispatchInfo.Capture(e);
+                    throw;
                 }
 
                 return _cachedClient;

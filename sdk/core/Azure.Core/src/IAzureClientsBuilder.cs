@@ -7,6 +7,6 @@ namespace Azure.Core
 {
     public interface IAzureClientsBuilder
     {
-        void RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> func, Action<TOptions> configureOptions) where TOptions : class;
+        void RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory, Action<TOptions> configureOptions) where TOptions : class;
     }
 }

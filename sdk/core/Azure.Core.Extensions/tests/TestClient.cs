@@ -17,6 +17,11 @@ namespace Azure.Core.Extensions.Tests
         }
         public TestClient(string connectionString, TestClientOptions options)
         {
+            if (connectionString == "throw")
+            {
+                throw new ArgumentException("Throwing");
+            }
+
             ConnectionString = connectionString;
             Options = options;
         }
