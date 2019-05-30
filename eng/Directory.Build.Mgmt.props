@@ -1,0 +1,52 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LibraryRoot>$(RepoRoot)</LibraryRoot>
+    <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
+    <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+    <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NetSdkBuildTargetsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)\targets</NetSdkBuildTargetsDir>
+    <NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>
+    <NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
+    <NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
+  </PropertyGroup>
+
+  <!-- If Scope is specified then don't ignore any tests by default otherwise when building all ignore the projects with issues -->
+  <PropertyGroup Condition="'$(Scope)' == '' or '$(Scope)' == 'All' or '$(Scope)' == 'SDKs\'">
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Rest.ClientRuntime.Tracing.Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Microsoft.Azure.Services.AppAuthentication.IntegrationTests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\DataPlane</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\Support</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) LocationBasedServices</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) BotService</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) TestFramework\TestFramework.Net45Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) batch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) appconfiguration</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) applicationinsights</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) core</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventgrid</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) hdinsight</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) identity</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) operationalinsights</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) servicebus</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) storage</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Template</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) containerregistry</DefaultPathTokenToIgnore>
+  </PropertyGroup>
+
+  <!-- Ignore all data plane libraries following the "data-plane" naming convention -->
+  <PropertyGroup>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) data-plane</DefaultPathTokenToIgnore>
+  </PropertyGroup>
+
+  <Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
+
+  <PropertyGroup>
+    <LibrarySourceFolder>$(LibraryRoot)sdk</LibrarySourceFolder>
+  </PropertyGroup>
+</Project>
