@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -7,12 +11,13 @@ using System.Linq;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 using Azure.Identity;
+using Azure.Core.Testing;
 
 namespace Azure.Security.KeyVault.Test
 {
     public class SecretTests : KeyVaultTestBase
     {
-        public SecretTests()
+        public SecretTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -117,7 +122,7 @@ namespace Azure.Security.KeyVault.Test
         private static readonly Dictionary<string, Secret> s_versions = new Dictionary<string, Secret>(VersionCount);
         private readonly SecretClient _client;
 
-        public SecretListTests()
+        public SecretListTests(bool isAsync) : base(isAsync)
         {
             _client = new SecretClient(VaultUri, AzureCredential.Default);
         }
@@ -223,8 +228,12 @@ namespace Azure.Security.KeyVault.Test
         }
     }
 
-    public class KeyVaultTestBase
+    public class KeyVaultTestBase : RecordedTestBase
     {
+        protected KeyVaultTestBase(bool isAsync) : base(isAsync)
+        {
+        }
+
         private static Lazy<Uri> s_vaultUri = new Lazy<Uri>(() => { return new Uri(Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL")); });
 
         protected Uri VaultUri { get => s_vaultUri.Value; }
@@ -232,7 +241,6 @@ namespace Azure.Security.KeyVault.Test
         protected void AssertSecretsEqual(Secret exp, Secret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
-
         }
 
         protected void AssertSecretsEqual(SecretBase exp, SecretBase act)
