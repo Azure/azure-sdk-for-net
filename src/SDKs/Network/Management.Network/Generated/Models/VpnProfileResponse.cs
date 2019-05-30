@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Vpn Profile Response for package generation
+    /// Vpn Profile Response for package generation.
     /// </summary>
     public partial class VpnProfileResponse
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VpnProfileResponse class.
         /// </summary>
-        /// <param name="profileUrl">URL to the VPN profile</param>
+        /// <param name="profileUrl">URL to the VPN profile.</param>
         public VpnProfileResponse(string profileUrl = default(string))
         {
             ProfileUrl = profileUrl;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets URL to the VPN profile
+        /// Gets or sets URL to the VPN profile.
         /// </summary>
         [JsonProperty(PropertyName = "profileUrl")]
         public string ProfileUrl { get; set; }

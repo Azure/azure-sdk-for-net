@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="memoryInGB">The memory limit in GB of this container
         /// instance.</param>
         /// <param name="cpu">The CPU limit of this container instance.</param>
-        public ResourceLimits(double? memoryInGB = default(double?), double? cpu = default(double?))
+        /// <param name="gpu">The GPU limit of this container instance.</param>
+        public ResourceLimits(double? memoryInGB = default(double?), double? cpu = default(double?), GpuResource gpu = default(GpuResource))
         {
             MemoryInGB = memoryInGB;
             Cpu = cpu;
+            Gpu = gpu;
             CustomInit();
         }
 
@@ -56,5 +58,24 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         [JsonProperty(PropertyName = "cpu")]
         public double? Cpu { get; set; }
 
+        /// <summary>
+        /// Gets or sets the GPU limit of this container instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "gpu")]
+        public GpuResource Gpu { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Gpu != null)
+            {
+                Gpu.Validate();
+            }
+        }
     }
 }

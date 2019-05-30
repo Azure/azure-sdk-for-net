@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualWan">The VirtualWAN to which the VirtualHub
-        /// belongs</param>
+        /// belongs.</param>
         /// <param name="vpnGateway">The VpnGateway associated with this
-        /// VirtualHub</param>
+        /// VirtualHub.</param>
         /// <param name="p2SVpnGateway">The P2SVpnGateway associated with this
-        /// VirtualHub</param>
+        /// VirtualHub.</param>
         /// <param name="expressRouteGateway">The expressRouteGateway
-        /// associated with this VirtualHub</param>
+        /// associated with this VirtualHub.</param>
         /// <param name="virtualNetworkConnections">List of all vnet
         /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
@@ -79,26 +79,26 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the VirtualWAN to which the VirtualHub belongs
+        /// Gets or sets the VirtualWAN to which the VirtualHub belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualWan")]
         public SubResource VirtualWan { get; set; }
 
         /// <summary>
-        /// Gets or sets the VpnGateway associated with this VirtualHub
+        /// Gets or sets the VpnGateway associated with this VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnGateway")]
         public SubResource VpnGateway { get; set; }
 
         /// <summary>
-        /// Gets or sets the P2SVpnGateway associated with this VirtualHub
+        /// Gets or sets the P2SVpnGateway associated with this VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.p2SVpnGateway")]
         public SubResource P2SVpnGateway { get; set; }
 
         /// <summary>
         /// Gets or sets the expressRouteGateway associated with this
-        /// VirtualHub
+        /// VirtualHub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteGateway")]
         public SubResource ExpressRouteGateway { get; set; }

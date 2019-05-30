@@ -84,7 +84,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 for (int i = 0; i < _keysToWatch.Count; i++) {
 
                     var response = await _client.GetAsync(_keysToWatch[i], null, default, cancellationToken).ConfigureAwait(false);
-                    if (response.Raw.Status == 200) {
+                    if (response.GetRawResponse().Status == 200) {
                         var setting = response.Value;
                         _lastPolled[setting.Key] = setting;
                     }
@@ -110,7 +110,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             foreach(var task in tasks) {
                 var response = task.Result;
-                if (response.Raw.Status == 200) {
+                if (response.GetRawResponse().Status == 200) {
                     ConfigurationSetting current = response.Value;
                     _lastPolled.TryGetValue(current.Key, out var previous);
                     if (CompareSetting(current, previous)) {

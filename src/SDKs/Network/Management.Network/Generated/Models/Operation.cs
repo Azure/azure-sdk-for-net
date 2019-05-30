@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the Operation class.
         /// </summary>
         /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}</param>
+        /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">Display metadata associated with the
         /// operation.</param>
         /// <param name="origin">Origin of the operation.</param>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation name: {provider}/{resource}/{operation}
+        /// Gets or sets operation name: {provider}/{resource}/{operation}.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.EventGrid
     public static partial class TopicTypesOperationsExtensions
     {
             /// <summary>
-            /// List topic types
+            /// List topic types.
             /// </summary>
             /// <remarks>
-            /// List all registered topic types
+            /// List all registered topic types.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topic types
+            /// List topic types.
             /// </summary>
             /// <remarks>
-            /// List all registered topic types
+            /// List all registered topic types.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,16 +58,16 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Get a topic type
+            /// Get a topic type.
             /// </summary>
             /// <remarks>
-            /// Get information about a topic type
+            /// Get information about a topic type.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='topicTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             public static TopicTypeInfo Get(this ITopicTypesOperations operations, string topicTypeName)
             {
@@ -75,16 +75,16 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Get a topic type
+            /// Get a topic type.
             /// </summary>
             /// <remarks>
-            /// Get information about a topic type
+            /// Get information about a topic type.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='topicTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -98,16 +98,16 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List event types
+            /// List event types.
             /// </summary>
             /// <remarks>
-            /// List event types for a topic type
+            /// List event types for a topic type.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='topicTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             public static IEnumerable<EventType> ListEventTypes(this ITopicTypesOperations operations, string topicTypeName)
             {
@@ -115,16 +115,16 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List event types
+            /// List event types.
             /// </summary>
             /// <remarks>
-            /// List event types for a topic type
+            /// List event types for a topic type.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='topicTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

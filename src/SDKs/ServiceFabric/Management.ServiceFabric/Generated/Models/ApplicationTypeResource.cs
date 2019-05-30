@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,10 +38,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Azure resource location.</param>
+        /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        public ApplicationTypeResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string))
-            : base(id, name, type, location)
+        public ApplicationTypeResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string))
+            : base(id, name, type, location, tags, etag)
         {
             ProvisioningState = provisioningState;
             CustomInit();

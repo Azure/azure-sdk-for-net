@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Effective Route
+    /// Effective Route.
     /// </summary>
     public partial class EffectiveRoute
     {
@@ -36,13 +36,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="disableBgpRoutePropagation">If true, on-premises
         /// routes are not propagated to the network interfaces in the
         /// subnet.</param>
-        /// <param name="source">Who created the route. Possible values are:
-        /// 'Unknown', 'User', 'VirtualNetworkGateway', and 'Default'. Possible
-        /// values include: 'Unknown', 'User', 'VirtualNetworkGateway',
+        /// <param name="source">Who created the route. Possible values
+        /// include: 'Unknown', 'User', 'VirtualNetworkGateway',
         /// 'Default'</param>
         /// <param name="state">The value of effective route. Possible values
-        /// are: 'Active' and 'Invalid'. Possible values include: 'Active',
-        /// 'Invalid'</param>
+        /// include: 'Active', 'Invalid'</param>
         /// <param name="addressPrefix">The address prefixes of the effective
         /// routes in CIDR notation.</param>
         /// <param name="nextHopIpAddress">The IP address of the next hop of
@@ -81,17 +79,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? DisableBgpRoutePropagation { get; set; }
 
         /// <summary>
-        /// Gets or sets who created the route. Possible values are: 'Unknown',
-        /// 'User', 'VirtualNetworkGateway', and 'Default'. Possible values
-        /// include: 'Unknown', 'User', 'VirtualNetworkGateway', 'Default'
+        /// Gets or sets who created the route. Possible values include:
+        /// 'Unknown', 'User', 'VirtualNetworkGateway', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public string Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of effective route. Possible values are:
-        /// 'Active' and 'Invalid'. Possible values include: 'Active',
-        /// 'Invalid'
+        /// Gets or sets the value of effective route. Possible values include:
+        /// 'Active', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

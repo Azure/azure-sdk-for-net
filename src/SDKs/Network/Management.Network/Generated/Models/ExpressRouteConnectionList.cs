@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// ExpressRouteConnection list
+    /// ExpressRouteConnection list.
     /// </summary>
     public partial class ExpressRouteConnectionList
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ExpressRouteConnectionList class.
         /// </summary>
-        /// <param name="value">The list of ExpressRoute connections</param>
+        /// <param name="value">The list of ExpressRoute connections.</param>
         public ExpressRouteConnectionList(IList<ExpressRouteConnection> value = default(IList<ExpressRouteConnection>))
         {
             Value = value;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of ExpressRoute connections
+        /// Gets or sets the list of ExpressRoute connections.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ExpressRouteConnection> Value { get; set; }

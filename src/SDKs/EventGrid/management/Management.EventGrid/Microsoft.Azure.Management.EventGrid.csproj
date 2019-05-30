@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
     <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-    <Version>4.0.1-preview</Version>
+    <Version>5.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-    <PackageReleaseNotes>This corresponds to the 2019-02-01-preview API version which includes the following new functionalities: pagination and search filter for resources list operations, Service Bus Queue as destination, manual create/delete of domain topics and disallows usage of ‘All’ with IncludedEventTypes."</PackageReleaseNotes>
+    <PackageReleaseNotes>This corresponds to the 2019-06-01 API version which includes the following new functionalities: Domains, pagination and search filter for resources list operations, Service Bus Queue as destination, Advanced filtering and disallows usage of ‘All’ with IncludedEventTypes."</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

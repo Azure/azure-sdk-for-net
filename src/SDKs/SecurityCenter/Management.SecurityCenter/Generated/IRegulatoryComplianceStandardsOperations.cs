@@ -26,10 +26,6 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Supported regulatory compliance standards details and state
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
         /// </param>
@@ -48,14 +44,10 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Supported regulatory compliance details state for selected standard
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -74,7 +66,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegulatoryComplianceStandard>> GetWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegulatoryComplianceStandard>> GetWithHttpMessagesAsync(string regulatoryComplianceStandardName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Supported regulatory compliance standards details and state
         /// </summary>

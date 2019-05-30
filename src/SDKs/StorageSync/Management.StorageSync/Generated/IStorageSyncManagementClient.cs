@@ -104,5 +104,10 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </summary>
         IWorkflowsOperations Workflows { get; }
 
+        /// <summary>
+        /// Gets the IOperationStatusOperations.
+        /// </summary>
+        IOperationStatusOperations OperationStatus { get; }
+
     }
 }

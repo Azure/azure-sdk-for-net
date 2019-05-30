@@ -406,6 +406,49 @@ namespace Microsoft.Azure.Management.ContainerInstance
             }
 
             /// <summary>
+            /// Starts all containers in a container group.
+            /// </summary>
+            /// <remarks>
+            /// Starts all containers in a container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            public static void Start(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName)
+            {
+                operations.StartAsync(resourceGroupName, containerGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts all containers in a container group.
+            /// </summary>
+            /// <remarks>
+            /// Starts all containers in a container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create or update container groups.
             /// </summary>
             /// <remarks>
@@ -500,6 +543,49 @@ namespace Microsoft.Azure.Management.ContainerInstance
             public static async Task BeginRestartAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Starts all containers in a container group.
+            /// </summary>
+            /// <remarks>
+            /// Starts all containers in a container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            public static void BeginStart(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName)
+            {
+                operations.BeginStartAsync(resourceGroupName, containerGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts all containers in a container group.
+            /// </summary>
+            /// <remarks>
+            /// Starts all containers in a container group.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

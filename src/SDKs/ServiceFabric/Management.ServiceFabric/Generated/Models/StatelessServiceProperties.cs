@@ -53,9 +53,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="serviceTypeName">The name of the service type</param>
         /// <param name="partitionDescription">Describes how the service is
         /// partitioned.</param>
+        /// <param name="servicePackageActivationMode">The activation Mode of
+        /// the service package. Possible values include: 'SharedProcess',
+        /// 'ExclusiveProcess'</param>
         /// <param name="instanceCount">The instance count.</param>
-        public StatelessServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), int? instanceCount = default(int?))
-            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription)
+        public StatelessServiceProperties(string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string), int? instanceCount = default(int?))
+            : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, provisioningState, serviceTypeName, partitionDescription, servicePackageActivationMode)
         {
             InstanceCount = instanceCount;
             CustomInit();

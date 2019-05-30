@@ -2,28 +2,20 @@
 
 This repository contains official .NET client libraries for Microsoft Azure services.
 
-## NuGet packages
-
-See the list of [all NuGet packages](packages.md).
+You can find NuGet packages for these libraries [here](packages.md).
 
 ## Getting started
 
-To get started with a library, see the **README<span />.md** file for that component. Each README is located within the subdirectory for the component. For example, the getting started READMEs for App Configuration and Service Bus are in the following subdirectories:
+To get started with a specific library, see the **README.md** file located in the library's project folder.
 
-* [/sdk/appconfiguration/Azure.ApplicationModel.Configuration/](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
-* [/sdk/servicebus/Microsoft.Azure.ServiceBus/](/sdk/servicebus/Microsoft.Azure.ServiceBus/README.md)
-
-The following sections provide direct links to the most commonly used components.
+The following sections provide direct links to READMEs of the most commonly used libraries.
 
 ### Core services
 
-[Azure.Messaging.EventHub](/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
-
-[Azure.Identity.KeyVault](/sdk/keyvault/Microsoft.Azure.KeyVault/README.md)
-
-Azure.Storage.Blobs
-
-Azure.Data.Cosmos
+* [Azure.Messaging.EventHubs](/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
+* [Azure.Identity.KeyVault](/sdk/keyvault/Microsoft.Azure.KeyVault/README.md)
+* [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
+* [Azure.Storage.Files](/sdk/storage/Azure.Storage.Files/README.md)
 
 ### Shared libraries
 

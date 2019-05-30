@@ -9,7 +9,7 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false"
+      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -47,6 +47,8 @@ jobs:
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
         # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
   - job: "Test"
     variables:
@@ -86,7 +88,7 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet test $(ProjectFile) --filter TestCategory!=Live --logger trx"
+      - script: "dotnet test eng/service.proj --filter TestCategory!=Live --logger trx /p:ServiceDirectory=${{parameters.ServiceDirectory}}"
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

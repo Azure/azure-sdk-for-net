@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// List of Vpn-Sites
+    /// List of Vpn-Sites.
     /// </summary>
     public partial class GetVpnSitesConfigurationRequest
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="outputBlobSasUrl">The sas-url to download the
-        /// configurations for vpn-sites</param>
+        /// configurations for vpn-sites.</param>
         /// <param name="vpnSites">List of resource-ids of the vpn-sites for
         /// which config is to be downloaded.</param>
         public GetVpnSitesConfigurationRequest(string outputBlobSasUrl, IList<string> vpnSites = default(IList<string>))
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the sas-url to download the configurations for
-        /// vpn-sites
+        /// vpn-sites.
         /// </summary>
         [JsonProperty(PropertyName = "outputBlobSasUrl")]
         public string OutputBlobSasUrl { get; set; }

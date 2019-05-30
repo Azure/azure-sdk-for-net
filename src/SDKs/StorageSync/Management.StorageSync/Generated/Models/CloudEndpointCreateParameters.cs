@@ -45,12 +45,14 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="azureFileShareName">Azure file share name</param>
         /// <param name="storageAccountTenantId">Storage Account Tenant
         /// Id</param>
-        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string))
+        /// <param name="friendlyName">Friendly Name</param>
+        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string), string friendlyName = default(string))
             : base(id, name, type)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
+            FriendlyName = friendlyName;
             CustomInit();
         }
 
@@ -76,6 +78,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountTenantId")]
         public string StorageAccountTenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets friendly Name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.friendlyName")]
+        public string FriendlyName { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// A common class for general resource information
+    /// A common class for general resource information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class LocalNetworkGateway : Resource

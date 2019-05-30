@@ -1,44 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourcegroups/res6633?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlZ3JvdXBzL3JlczY2MzM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourcegroups/res610?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlZ3JvdXBzL3JlczYxMD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "31"
-        ],
         "x-ms-client-request-id": [
-          "42758626-de36-461e-a394-2e096df15540"
+          "724e661c-96a7-429f-b4a1-34b7908fbd10"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633\",\r\n  \"name\": \"res6633\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "170"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "31"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:29 GMT"
+          "Tue, 21 May 2019 04:19:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,290 +39,274 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "54f5cfb1-2bff-481e-baa9-cc5764bf1c42"
+          "3be17981-33f7-442e-99bd-7a80e6272608"
         ],
         "x-ms-correlation-request-id": [
-          "54f5cfb1-2bff-481e-baa9-cc5764bf1c42"
+          "3be17981-33f7-442e-99bd-7a80e6272608"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170229Z:54f5cfb1-2bff-481e-baa9-cc5764bf1c42"
+          "WESTUS2:20190521T041920Z:3be17981-33f7-442e-99bd-7a80e6272608"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "363"
-        ],
-        "x-ms-client-request-id": [
-          "76d118a3-ed94-4c4b-bead-aebdfdafcd3e"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
-        ],
-        "x-ms-client-principal-name": [
-          "test@microsoft.com"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096\",\r\n  \"name\": \"botservice5096\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T17%3A02%3A32.2022365Z'\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "837"
+          "168"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610\",\r\n  \"name\": \"res610\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"55163318-54ee-411f-b94a-3194d3121f72\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "08bf8044-6200-4651-aa53-5db680552f1c"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "426"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:32 GMT"
+          "Tue, 21 May 2019 04:19:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2018-04-02T17%3A02%3A32.2022365Z'\""
+          "\"0903ab6c-0000-0800-0000-5ce37c540000\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
         ],
         "x-ms-request-id": [
-          "28517692-9ee8-4d04-8373-eb64ad423a67"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "a54aee9e-279b-4032-a095-7e6baf6c30e7"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "93b279ba-f7f8-4e17-89f9-5f9131002c4c"
+          "63da35e0-957f-4937-b512-9c0d3bfa5536"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170232Z:93b279ba-f7f8-4e17-89f9-5f9131002c4c"
+          "WESTUS2:20190521T041933Z:63da35e0-957f-4937-b512-9c0d3bfa5536"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1035"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115\",\r\n  \"name\": \"botservice1115\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"\\\"0903ab6c-0000-0800-0000-5ce37c540000\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"developerAppInsightKey\": null,\r\n    \"developerAppInsightsApplicationId\": null,\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"isStreamingSupported\": false,\r\n    \"publishingCredentials\": null,\r\n    \"parameters\": null,\r\n    \"allSettings\": null,\r\n    \"manifestUrl\": null,\r\n    \"storageResourceId\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e9e3a8cf-7cfe-4493-8e05-71c3f89d192b"
+          "765a1aa0-a0ea-4264-8572-e4771be117aa"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
         ],
         "x-ms-client-principal-name": [
           "test@microsoft.com"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096\",\r\n  \"name\": \"botservice5096\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T17%3A02%3A32.2022365Z'\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:33 GMT"
+          "Tue, 21 May 2019 04:19:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "W/\"datetime'2018-04-02T17%3A02%3A32.2022365Z'\""
+          "\"0903ab6c-0000-0800-0000-5ce37c540000\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-request-id": [
-          "36057d31-f274-4de2-9790-33019704262f"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "cac4afe0-0833-469a-bd3b-f48eba26d850"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "4657463f-4042-45cd-ad38-eb8c041bbcc6"
+          "b3c1ef30-f163-4a97-8400-2b56c18dff29"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170233Z:4657463f-4042-45cd-ad38-eb8c041bbcc6"
+          "WESTUS2:20190521T041936Z:b3c1ef30-f163-4a97-8400-2b56c18dff29"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "bc60c2ac-df3a-42d4-80ca-9f6549084206"
         ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
-        ],
-        "x-ms-client-principal-name": [
-          "test@microsoft.com"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096\",\r\n  \"name\": \"botservice5096\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T17%3A02%3A34.5404782Z'\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Mon, 02 Apr 2018 17:02:35 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "ETag": [
-          "W/\"datetime'2018-04-02T17%3A02%3A34.5404782Z'\""
-        ],
-        "Server": [
-          "Microsoft-IIS/10.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "e6fba913-1beb-4955-8942-e39842e2b13b"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
-        ],
-        "x-ms-correlation-request-id": [
-          "9bf84417-45ca-4851-b77a-dfd4d1043b4c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170235Z:9bf84417-45ca-4851-b77a-dfd4d1043b4c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "feb567db-c99e-4925-a0f2-b36e20ef76d3"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
-        ],
-        "x-ms-client-principal-name": [
-          "test@microsoft.com"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.BotService/botServices/botservice5096' under resource group 'res6633' was not found.\"\r\n  }\r\n}",
-      "ResponseHeaders": {
         "Content-Length": [
-          "158"
+          "1035"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115\",\r\n  \"name\": \"botservice1115\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"\\\"0903ab6c-0000-0800-0000-5ce37c540000\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"developerAppInsightKey\": null,\r\n    \"developerAppInsightsApplicationId\": null,\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"isStreamingSupported\": false,\r\n    \"publishingCredentials\": null,\r\n    \"parameters\": null,\r\n    \"allSettings\": null,\r\n    \"manifestUrl\": null,\r\n    \"storageResourceId\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "00351f49-9c9b-4777-8a8f-010b36d4fe7a"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:42 GMT"
+          "Tue, 21 May 2019 04:20:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"0903ad77-0000-0800-0000-5ce37c790000\""
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-request-id": [
+          "e8a9d604-83f6-4444-97b9-27125aa7cb6e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "eff983db-640c-40e1-ab25-e2aaa3517204"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190521T042011Z:eff983db-640c-40e1-ab25-e2aaa3517204"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1039"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115\",\r\n  \"name\": \"botservice1115\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"\\\"0903ad77-0000-0800-0000-5ce37c790000\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"developerAppInsightKey\": null,\r\n    \"developerAppInsightsApplicationId\": null,\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"isStreamingSupported\": false,\r\n    \"publishingCredentials\": null,\r\n    \"parameters\": null,\r\n    \"allSettings\": null,\r\n    \"manifestUrl\": null,\r\n    \"storageResourceId\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6e2e008d-d85d-4e0e-8ed1-d4f4c573df3b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 21 May 2019 04:20:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -339,138 +315,136 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "668f8c34-24ff-491c-82b1-f2e2d08c8b06"
+          "9d01faab-1f14-46be-ada7-600f712cc3f8"
         ],
         "x-ms-correlation-request-id": [
-          "668f8c34-24ff-491c-82b1-f2e2d08c8b06"
+          "9d01faab-1f14-46be-ada7-600f712cc3f8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170243Z:668f8c34-24ff-491c-82b1-f2e2d08c8b06"
+          "WESTUS2:20190521T042053Z:9d01faab-1f14-46be-ada7-600f712cc3f8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T17%3A02%3A32.2022365Z'\\\"\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "561"
+          "157"
         ],
-        "x-ms-client-request-id": [
-          "40720ce7-977c-4926-bf21-4899b6bbb97b"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
-        ],
-        "x-ms-client-principal-name": [
-          "test@microsoft.com"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096\",\r\n  \"name\": \"botservice5096\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T17%3A02%3A34.5404782Z'\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"d99a8277-fbbb-4dbe-9c6b-b7fc2a9be1e0\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.BotService/botServices/botservice1115' under resource group 'res610' was not found.\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"luisAppIds\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"etag\": \"\\\"0903ab6c-0000-0800-0000-5ce37c540000\\\"\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0b85f09a-628e-42c0-af16-a6108205ed8a"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "559"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:34 GMT"
+          "Tue, 21 May 2019 04:20:10 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "W/\"datetime'2018-04-02T17%3A02%3A34.5404782Z'\""
+          "\"0903ad77-0000-0800-0000-5ce37c790000\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-request-id": [
-          "914bf1f8-13ce-4e61-bceb-9ed8408dcd96"
-        ],
-        "Request-Context": [
-          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "9a254269-0307-44a5-b73d-a4e46870da36"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "49aff1aa-f5a5-44a3-9e8a-65a60779892a"
+          "3b013cea-574e-4522-9000-c6fdb0d3af18"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170234Z:49aff1aa-f5a5-44a3-9e8a-65a60779892a"
+          "WESTUS2:20190521T042010Z:3b013cea-574e-4522-9000-c6fdb0d3af18"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1039"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115\",\r\n  \"name\": \"botservice1115\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"\\\"0903ad77-0000-0800-0000-5ce37c790000\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"developerAppInsightKey\": null,\r\n    \"developerAppInsightsApplicationId\": null,\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"isStreamingSupported\": false,\r\n    \"publishingCredentials\": null,\r\n    \"parameters\": null,\r\n    \"allSettings\": null,\r\n    \"manifestUrl\": null,\r\n    \"storageResourceId\": null,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res6633/providers/Microsoft.BotService/botServices/botservice5096?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczY2MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U1MDk2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4a181fd6-1bd5-4826-987b-834e08a155d2"
+          "c7cf1617-7e79-4472-be07-8913f1823927"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.15063.",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/0.9.2.preview"
         ],
         "x-ms-client-principal-name": [
           "test@microsoft.com"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 02 Apr 2018 17:02:42 GMT"
+          "Tue, 21 May 2019 04:20:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -478,43 +452,44 @@
         "Server": [
           "Microsoft-IIS/10.0"
         ],
-        "Request-Context": [
-          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-request-id": [
-          "a3f2eea1-6bc1-48ca-ba77-4c058b74903a"
+          "38caa330-ad42-4f48-9921-9456b69c4211"
         ],
         "x-ms-correlation-request-id": [
-          "a3f2eea1-6bc1-48ca-ba77-4c058b74903a"
+          "38caa330-ad42-4f48-9921-9456b69c4211"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180402T170243Z:a3f2eea1-6bc1-48ca-ba77-4c058b74903a"
+          "WESTUS2:20190521T042052Z:38caa330-ad42-4f48-9921-9456b69c4211"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res6633"
+      "res610"
     ],
     "CreateAndValidateBot": [
-      "botservice5096"
+      "botservice1115"
     ]
   },
   "Variables": {
-    "SubscriptionId": "35fa7461-d48a-4053-9aa2-56c014495e89"
+    "SubscriptionId": "41e010d8-8a1c-4c4b-9fca-d31fb6e90655"
   }
 }

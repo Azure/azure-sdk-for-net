@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// Get the list of available Service Fabric resource provider API operations.
         /// </remarks>
         /// <param name='apiVersion'>
-        /// The version of the Service Fabric resouce provider API
+        /// The version of the Service Fabric resource provider API
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

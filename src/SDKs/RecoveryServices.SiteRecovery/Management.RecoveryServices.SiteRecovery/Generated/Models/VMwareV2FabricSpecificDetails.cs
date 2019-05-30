@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="migrationSolutionId">The Migration solution ARM
         /// Id.</param>
         /// <param name="serviceEndpoint">The service endpoint.</param>
-        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string))
+        /// <param name="serviceResourceId">The service resource Id.</param>
+        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string), string serviceResourceId = default(string))
         {
             VmwareSiteId = vmwareSiteId;
             MigrationSolutionId = migrationSolutionId;
             ServiceEndpoint = serviceEndpoint;
+            ServiceResourceId = serviceResourceId;
             CustomInit();
         }
 
@@ -66,6 +68,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "serviceEndpoint")]
         public string ServiceEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets the service resource Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceResourceId")]
+        public string ServiceResourceId { get; private set; }
 
     }
 }

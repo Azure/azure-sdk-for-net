@@ -51,14 +51,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="connectionBandwidth">Expected bandwidth in
         /// MBPS.</param>
         /// <param name="sharedKey">SharedKey for the vpn connection.</param>
-        /// <param name="enableBgp">EnableBgp flag</param>
+        /// <param name="enableBgp">EnableBgp flag.</param>
+        /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
+        /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
         /// this connection.</param>
-        /// <param name="enableRateLimiting">EnableBgp flag</param>
+        /// <param name="enableRateLimiting">EnableBgp flag.</param>
         /// <param name="enableInternetSecurity">Enable internet
-        /// security</param>
+        /// security.</param>
         /// <param name="useLocalAzureIpAddress">Use local azure ip to initiate
-        /// connection</param>
+        /// connection.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ConnectionBandwidth = connectionBandwidth;
             SharedKey = sharedKey;
             EnableBgp = enableBgp;
+            UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
             EnableRateLimiting = enableRateLimiting;
             EnableInternetSecurity = enableInternetSecurity;
@@ -145,10 +148,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string SharedKey { get; set; }
 
         /// <summary>
-        /// Gets or sets enableBgp flag
+        /// Gets or sets enableBgp flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable policy-based traffic selectors.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.usePolicyBasedTrafficSelectors")]
+        public bool? UsePolicyBasedTrafficSelectors { get; set; }
 
         /// <summary>
         /// Gets or sets the IPSec Policies to be considered by this
@@ -158,19 +167,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<IpsecPolicy> IpsecPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets enableBgp flag
+        /// Gets or sets enableBgp flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableRateLimiting")]
         public bool? EnableRateLimiting { get; set; }
 
         /// <summary>
-        /// Gets or sets enable internet security
+        /// Gets or sets enable internet security.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
 
         /// <summary>
-        /// Gets or sets use local azure ip to initiate connection
+        /// Gets or sets use local azure ip to initiate connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.useLocalAzureIpAddress")]
         public bool? UseLocalAzureIpAddress { get; set; }

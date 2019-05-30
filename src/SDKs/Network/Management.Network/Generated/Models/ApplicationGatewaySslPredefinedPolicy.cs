@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// An Ssl predefined policy
+    /// An Ssl predefined policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApplicationGatewaySslPredefinedPolicy : SubResource

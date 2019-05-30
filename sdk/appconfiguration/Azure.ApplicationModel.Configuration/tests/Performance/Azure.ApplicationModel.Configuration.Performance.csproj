@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <OutputType>Exe</OutputType>
-    <ImportDefaultReferences>false</ImportDefaultReferences>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using System.Linq;
 
     /// <summary>
-    /// The list results of the ServiceFabric runtime versions.
+    /// The list results of the Service Fabric runtime versions.
     /// </summary>
     public partial class ClusterCodeVersionsListResult
     {

@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2019-02-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2019-02-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2019-02-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2019-02-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2019-02-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2019-02-01-preview"),
+                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2019-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Domains", "2019-06-01"),
+                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2019-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Operations", "2019-06-01"),
+                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2019-06-01"),
+                new Tuple<string, string, string>("EventGrid", "Topics", "2019-06-01"),
               }.AsEnumerable();
           }
       }

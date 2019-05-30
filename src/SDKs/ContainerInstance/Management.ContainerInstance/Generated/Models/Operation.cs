@@ -33,12 +33,14 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="name">The name of the operation.</param>
         /// <param name="display">The display information of the
         /// operation.</param>
+        /// <param name="properties">The additional properties.</param>
         /// <param name="origin">The intended executor of the operation.
         /// Possible values include: 'User', 'System'</param>
-        public Operation(string name, OperationDisplay display, string origin = default(string))
+        public Operation(string name, OperationDisplay display, object properties = default(object), string origin = default(string))
         {
             Name = name;
             Display = display;
+            Properties = properties;
             Origin = origin;
             CustomInit();
         }
@@ -59,6 +61,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets the additional properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the intended executor of the operation. Possible

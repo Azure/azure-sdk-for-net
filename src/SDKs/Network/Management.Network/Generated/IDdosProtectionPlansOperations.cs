@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<DdosProtectionPlan>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a DDoS protection plan tags
+        /// Update a DDoS protection plan tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<DdosProtectionPlan>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ddosProtectionPlanName, DdosProtectionPlan parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a DDoS protection plan tags
+        /// Update a DDoS protection plan tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

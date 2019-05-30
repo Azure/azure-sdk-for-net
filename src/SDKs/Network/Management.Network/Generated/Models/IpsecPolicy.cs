@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// An IPSec Policy configuration for a virtual network gateway connection
+    /// An IPSec Policy configuration for a virtual network gateway connection.
     /// </summary>
     public partial class IpsecPolicy
     {

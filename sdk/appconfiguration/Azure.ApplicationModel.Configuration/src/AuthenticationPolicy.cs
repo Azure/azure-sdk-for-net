@@ -41,11 +41,11 @@ namespace Azure.ApplicationModel.Configuration
                     {
                         if (async)
                         {
-                            await message.Request.Content.WriteToAsync(contentHashStream, message.Cancellation);
+                            await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken);
                         }
                         else
                         {
-                            message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                            message.Request.Content.WriteTo(contentHashStream, message.CancellationToken);
                         }
                     }
                 }

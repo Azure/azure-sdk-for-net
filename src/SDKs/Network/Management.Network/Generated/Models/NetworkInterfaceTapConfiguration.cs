@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Tap configuration in a Network Interface
+    /// Tap configuration in a Network Interface.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class NetworkInterfaceTapConfiguration : SubResource

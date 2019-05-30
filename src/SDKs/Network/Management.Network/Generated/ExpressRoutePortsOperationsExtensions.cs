@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update ExpressRoutePort tags
+            /// Update ExpressRoutePort tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update ExpressRoutePort tags
+            /// Update ExpressRoutePort tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// List all the ExpressRoutePort resources in the specified subscription
+            /// List all the ExpressRoutePort resources in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// List all the ExpressRoutePort resources in the specified subscription
+            /// List all the ExpressRoutePort resources in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update ExpressRoutePort tags
+            /// Update ExpressRoutePort tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update ExpressRoutePort tags
+            /// Update ExpressRoutePort tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -416,7 +416,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// List all the ExpressRoutePort resources in the specified subscription
+            /// List all the ExpressRoutePort resources in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// List all the ExpressRoutePort resources in the specified subscription
+            /// List all the ExpressRoutePort resources in the specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

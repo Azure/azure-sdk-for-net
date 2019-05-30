@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of on demand test probe
+    /// Result of on demand test probe.
     /// </summary>
     public partial class ApplicationGatewayBackendHealthOnDemand
     {

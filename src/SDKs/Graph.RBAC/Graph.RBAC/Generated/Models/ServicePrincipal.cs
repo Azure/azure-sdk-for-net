@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// principal</param>
         /// <param name="tags">Optional list of tags that you can apply to your
         /// service principals. Not nullable.</param>
-        public ServicePrincipal(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?), string accountEnabled = default(string), IList<string> alternativeNames = default(IList<string>), string appDisplayName = default(string), string appId = default(string), string appOwnerTenantId = default(string), bool? appRoleAssignmentRequired = default(bool?), IList<AppRole> appRoles = default(IList<AppRole>), string displayName = default(string), string errorUrl = default(string), string homepage = default(string), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), string logoutUrl = default(string), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string preferredTokenSigningKeyThumbprint = default(string), string publisherName = default(string), IList<string> replyUrls = default(IList<string>), string samlMetadataUrl = default(string), IList<string> servicePrincipalNames = default(IList<string>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
+        public ServicePrincipal(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?), bool? accountEnabled = default(bool?), IList<string> alternativeNames = default(IList<string>), string appDisplayName = default(string), string appId = default(string), string appOwnerTenantId = default(string), bool? appRoleAssignmentRequired = default(bool?), IList<AppRole> appRoles = default(IList<AppRole>), string displayName = default(string), string errorUrl = default(string), string homepage = default(string), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), string logoutUrl = default(string), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string preferredTokenSigningKeyThumbprint = default(string), string publisherName = default(string), IList<string> replyUrls = default(IList<string>), string samlMetadataUrl = default(string), IList<string> servicePrincipalNames = default(IList<string>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
             : base(additionalProperties, objectId, deletionTimestamp)
         {
             AccountEnabled = accountEnabled;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// enabled
         /// </summary>
         [JsonProperty(PropertyName = "accountEnabled")]
-        public string AccountEnabled { get; set; }
+        public bool? AccountEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets alternative names

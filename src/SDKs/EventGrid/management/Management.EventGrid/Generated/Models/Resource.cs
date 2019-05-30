@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of a Resource
+    /// Definition of a Resource.
     /// </summary>
     public partial class Resource : IResource
     {
@@ -31,9 +31,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">Fully qualified identifier of the resource</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="id">Fully qualified identifier of the
+        /// resource.</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
@@ -48,19 +49,19 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified identifier of the resource
+        /// Gets fully qualified identifier of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource
+        /// Gets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource
+        /// Gets type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

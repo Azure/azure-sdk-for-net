@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VpnClientConnectionHealth properties
+    /// VpnClientConnectionHealth properties.
     /// </summary>
     public partial class VpnClientConnectionHealth
     {
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the VpnClientConnectionHealth class.
         /// </summary>
         /// <param name="totalIngressBytesTransferred">Total of the Ingress
-        /// Bytes Transferred in this P2S Vpn connection</param>
+        /// Bytes Transferred in this P2S Vpn connection.</param>
         /// <param name="totalEgressBytesTransferred">Total of the Egress Bytes
-        /// Transferred in this connection</param>
+        /// Transferred in this connection.</param>
         /// <param name="vpnClientConnectionsCount">The total of p2s vpn
         /// clients connected at this time to this P2SVpnGateway.</param>
         /// <param name="allocatedIpAddresses">List of allocated ip addresses
@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets total of the Ingress Bytes Transferred in this P2S Vpn
-        /// connection
+        /// connection.
         /// </summary>
         [JsonProperty(PropertyName = "totalIngressBytesTransferred")]
         public long? TotalIngressBytesTransferred { get; private set; }
 
         /// <summary>
-        /// Gets total of the Egress Bytes Transferred in this connection
+        /// Gets total of the Egress Bytes Transferred in this connection.
         /// </summary>
         [JsonProperty(PropertyName = "totalEgressBytesTransferred")]
         public long? TotalEgressBytesTransferred { get; private set; }

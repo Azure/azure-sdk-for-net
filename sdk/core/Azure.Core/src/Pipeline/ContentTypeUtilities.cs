@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Azure.Core.Pipeline
 {
-    internal class ContentTypeUtilities
+    public class ContentTypeUtilities
     {
         public static bool TryGetTextEncoding(string contentType, out Encoding encoding)
         {

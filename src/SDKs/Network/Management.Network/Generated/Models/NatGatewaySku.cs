@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// SKU of nat gateway
+    /// SKU of nat gateway.
     /// </summary>
     public partial class NatGatewaySku
     {

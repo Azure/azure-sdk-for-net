@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.EventGrid
     public static partial class TopicsOperationsExtensions
     {
             /// <summary>
-            /// Get a topic
+            /// Get a topic.
             /// </summary>
             /// <remarks>
-            /// Get properties of a topic
+            /// Get properties of a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             public static Topic Get(this ITopicsOperations operations, string resourceGroupName, string topicName)
             {
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Get a topic
+            /// Get a topic.
             /// </summary>
             /// <remarks>
-            /// Get properties of a topic
+            /// Get properties of a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously creates a new topic with the specified parameters.
@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='topicInfo'>
-            /// Topic information
+            /// Topic information.
             /// </param>
             public static Topic CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo)
             {
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously creates a new topic with the specified parameters.
@@ -105,10 +105,10 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='topicInfo'>
-            /// Topic information
+            /// Topic information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -122,10 +122,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a topic.
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             public static void Delete(this ITopicsOperations operations, string resourceGroupName, string topicName)
             {
@@ -142,10 +142,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a topic.
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously updates a topic with the specified parameters.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='tags'>
             /// Tags of the resource
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously updates a topic with the specified parameters.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='tags'>
             /// Tags of the resource
@@ -217,19 +217,27 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List topics under an Azure subscription.
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the topics under an Azure subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// Filter the results using OData syntax.
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
             /// </param>
             /// <param name='top'>
-            /// The number of results to return.
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<Topic> ListBySubscription(this ITopicsOperations operations, string filter = default(string), int? top = default(int?))
             {
@@ -237,19 +245,27 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List topics under an Azure subscription.
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the topics under an Azure subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// Filter the results using OData syntax.
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
             /// </param>
             /// <param name='top'>
-            /// The number of results to return.
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -263,10 +279,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List topics under a resource group.
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the topics under a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -275,10 +291,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='filter'>
-            /// Filter the results using OData syntax.
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
             /// </param>
             /// <param name='top'>
-            /// The number of results to return.
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<Topic> ListByResourceGroup(this ITopicsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
             {
@@ -286,10 +310,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List topics under a resource group.
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the topics under a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -298,10 +322,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='filter'>
-            /// Filter the results using OData syntax.
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
             /// </param>
             /// <param name='top'>
-            /// The number of results to return.
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -315,10 +347,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List keys for a topic
+            /// List keys for a topic.
             /// </summary>
             /// <remarks>
-            /// List the two keys used to publish to a topic
+            /// List the two keys used to publish to a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -327,7 +359,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             public static TopicSharedAccessKeys ListSharedAccessKeys(this ITopicsOperations operations, string resourceGroupName, string topicName)
             {
@@ -335,10 +367,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List keys for a topic
+            /// List keys for a topic.
             /// </summary>
             /// <remarks>
-            /// List the two keys used to publish to a topic
+            /// List the two keys used to publish to a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -347,7 +379,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -361,10 +393,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Regenerate key for a topic
+            /// Regenerate key for a topic.
             /// </summary>
             /// <remarks>
-            /// Regenerate a shared access key for a topic
+            /// Regenerate a shared access key for a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -373,7 +405,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='keyName'>
             /// Key name to regenerate key1 or key2
@@ -384,10 +416,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Regenerate key for a topic
+            /// Regenerate key for a topic.
             /// </summary>
             /// <remarks>
-            /// Regenerate a shared access key for a topic
+            /// Regenerate a shared access key for a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -396,7 +428,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='keyName'>
             /// Key name to regenerate key1 or key2
@@ -413,10 +445,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topic event types
+            /// List topic event types.
             /// </summary>
             /// <remarks>
-            /// List event types for a topic
+            /// List event types for a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -425,13 +457,13 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='providerNamespace'>
-            /// Namespace of the provider of the topic
+            /// Namespace of the provider of the topic.
             /// </param>
             /// <param name='resourceTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             /// <param name='resourceName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             public static IEnumerable<EventType> ListEventTypes(this ITopicsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName)
             {
@@ -439,10 +471,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topic event types
+            /// List topic event types.
             /// </summary>
             /// <remarks>
-            /// List event types for a topic
+            /// List event types for a topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -451,13 +483,13 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='providerNamespace'>
-            /// Namespace of the provider of the topic
+            /// Namespace of the provider of the topic.
             /// </param>
             /// <param name='resourceTypeName'>
-            /// Name of the topic type
+            /// Name of the topic type.
             /// </param>
             /// <param name='resourceName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -471,7 +503,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously creates a new topic with the specified parameters.
@@ -483,10 +515,10 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='topicInfo'>
-            /// Topic information
+            /// Topic information.
             /// </param>
             public static Topic BeginCreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo)
             {
@@ -494,7 +526,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously creates a new topic with the specified parameters.
@@ -506,10 +538,10 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='topicInfo'>
-            /// Topic information
+            /// Topic information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -523,10 +555,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a topic.
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -535,7 +567,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             public static void BeginDelete(this ITopicsOperations operations, string resourceGroupName, string topicName)
             {
@@ -543,10 +575,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a topic.
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing topic.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -555,7 +587,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -566,7 +598,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously updates a topic with the specified parameters.
@@ -578,7 +610,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='tags'>
             /// Tags of the resource
@@ -589,7 +621,7 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a topic.
             /// </summary>
             /// <remarks>
             /// Asynchronously updates a topic with the specified parameters.
@@ -601,7 +633,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='topicName'>
-            /// Name of the topic
+            /// Name of the topic.
             /// </param>
             /// <param name='tags'>
             /// Tags of the resource
@@ -618,10 +650,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List topics under an Azure subscription.
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the topics under an Azure subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -635,10 +667,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List topics under an Azure subscription.
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the topics under an Azure subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -658,10 +690,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List topics under a resource group.
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the topics under a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -675,10 +707,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List topics under a resource group.
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the topics under a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

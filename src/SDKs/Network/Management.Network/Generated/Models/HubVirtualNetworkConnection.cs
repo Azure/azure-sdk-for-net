@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="allowRemoteVnetToUseHubVnetGateways">Allow RemoteVnet
         /// to use Virtual Hub's gateways.</param>
         /// <param name="enableInternetSecurity">Enable internet
-        /// security</param>
+        /// security.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }
 
         /// <summary>
-        /// Gets or sets enable internet security
+        /// Gets or sets enable internet security.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }

@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayHeaderConfiguration class.
         /// </summary>
         /// <param name="headerName">Header name of the header
-        /// configuration</param>
+        /// configuration.</param>
         /// <param name="headerValue">Header value of the header
-        /// configuration</param>
+        /// configuration.</param>
         public ApplicationGatewayHeaderConfiguration(string headerName = default(string), string headerValue = default(string))
         {
             HeaderName = headerName;
@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets header name of the header configuration
+        /// Gets or sets header name of the header configuration.
         /// </summary>
         [JsonProperty(PropertyName = "headerName")]
         public string HeaderName { get; set; }
 
         /// <summary>
-        /// Gets or sets header value of the header configuration
+        /// Gets or sets header value of the header configuration.
         /// </summary>
         [JsonProperty(PropertyName = "headerValue")]
         public string HeaderValue { get; set; }
