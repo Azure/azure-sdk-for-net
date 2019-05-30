@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CredentialProvider()
         {
-            var client = new Secrets.SecretClient(VaultUri, AzureCredential.Default);
+            var client = GetClient();
 
             Secret setResult = await client.SetAsync("CrudBasic", "CrudBasicValue1");
 
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CrudBasic()
         {
-            var client = new SecretClient(VaultUri, AzureCredential.Default);
+            var client = GetClient();
 
             Secret setResult = await client.SetAsync("CrudBasic", "CrudBasicValue1");
 
@@ -65,9 +65,11 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CrudWithExtendedProps()
         {
+            // TODO: make this a static date.
+            
             var nbf = UtcNowMs() + TimeSpan.FromDays(1);
             var exp = UtcNowMs() + TimeSpan.FromDays(90);
-            var client = new SecretClient(VaultUri, AzureCredential.Default);
+            var client = GetClient();
 
             var secret = new Secret("CrudWithExtendedProps", "CrudWithExtendedPropsValue1")
             {
@@ -94,7 +96,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task BackupRestore()
         {
-            var client = new SecretClient(VaultUri, AzureCredential.Default);
+            var client = GetClient();
 
             Secret setResult = await client.SetAsync("BackupRestore", "BackupRestore");
 
@@ -111,39 +113,54 @@ namespace Azure.Security.KeyVault.Test
         {
             return DateTime.MinValue.ToUniversalTime() + TimeSpan.FromMilliseconds(new TimeSpan(DateTime.UtcNow.Ticks).TotalMilliseconds);
         }
-
     }
 
     public class SecretListTests : KeyVaultTestBase
     {
         private const int VersionCount = 50;
-        private readonly string SecretName = Guid.NewGuid().ToString("N");
+        private string SecretName = Guid.NewGuid().ToString("N");
 
         private static readonly Dictionary<string, Secret> s_versions = new Dictionary<string, Secret>(VersionCount);
-        private readonly SecretClient _client;
+        private SecretClient _client;
 
         public SecretListTests(bool isAsync) : base(isAsync)
         {
-            _client = new SecretClient(VaultUri, AzureCredential.Default);
+
+        }
+
+        public override void StartTestRecording()
+        {
+            base.StartTestRecording();
+            SecretName = Recording.GetVariable("secretName", SecretName);
+            _client = GetClient();
         }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            for (int i = 0; i < VersionCount; i++)
+            if (Mode != RecordedTestMode.Playback)
             {
-                Secret secret = _client.SetAsync(SecretName, Guid.NewGuid().ToString("N")).GetAwaiter().GetResult();
+                // do this to bypass the recording
+                _client = new SecretClient(VaultUri, AzureCredential.Default);
 
-                typeof(Secret).GetProperty(nameof(secret.Value)).SetValue(secret, null);
-                
-                s_versions[secret.Id.ToString()] = secret;
+                for (int i = 0; i < VersionCount; i++)
+                {
+                    Secret secret = _client.SetAsync(SecretName, Guid.NewGuid().ToString("N")).GetAwaiter().GetResult();
+
+                    typeof(Secret).GetProperty(nameof(secret.Value)).SetValue(secret, null);
+
+                    s_versions[secret.Id.ToString()] = secret;
+                }
             }
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            var deleteResult = _client.DeleteAsync(SecretName);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                var deleteResult = _client.DeleteAsync(SecretName);
+            }
         }
 
         [Test]
@@ -230,6 +247,16 @@ namespace Azure.Security.KeyVault.Test
 
     public class KeyVaultTestBase : RecordedTestBase
     {
+        internal SecretClient GetClient()
+        {
+            return InstrumentClient(
+                new SecretClient(
+                    new Uri(Recording.GetVariableFromEnvironment("AZURE_KEYVAULT_URL")),
+                    AzureCredential.Default,
+                    InstrumentClientOptions(new SecretClientOptions())));
+        }
+
+
         protected KeyVaultTestBase(bool isAsync) : base(isAsync)
         {
         }

@@ -175,6 +175,22 @@ namespace Azure.Core.Testing
             }
         }
 
+        public string GetVariable(string variableName, string defaultValue)
+        {
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session.Variables[variableName] = defaultValue;
+                    return defaultValue;
+                case RecordedTestMode.Live:
+                    return defaultValue;
+                case RecordedTestMode.Playback:
+                    return _session.Variables[variableName];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void DisableIdReuse()
         {
             _previousSession = null;
