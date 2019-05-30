@@ -1,1 +1,0 @@
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/FormRecognizer/readme.receipt.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=.\Generated
