@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the AzureAsyncOperationResult class.
         /// </summary>
         /// <param name="status">Status of the Azure async operation. Possible
-        /// values are: 'InProgress', 'Succeeded', and 'Failed'. Possible
         /// values include: 'InProgress', 'Succeeded', 'Failed'</param>
         /// <param name="error">Details of the error occurred during specified
         /// asynchronous operation.</param>
@@ -55,7 +54,6 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets status of the Azure async operation. Possible values
-        /// are: 'InProgress', 'Succeeded', and 'Failed'. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]

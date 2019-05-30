@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Virtual Network Tap resource
+    /// Virtual Network Tap resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualNetworkTap : Resource
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// and 'Failed'.</param>
         /// <param name="destinationNetworkInterfaceIPConfiguration">The
         /// reference to the private IP Address of the collector nic that will
-        /// receive the tap</param>
+        /// receive the tap.</param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration">The
         /// reference to the private IP address on the internal Load Balancer
-        /// that will receive the tap</param>
+        /// that will receive the tap.</param>
         /// <param name="destinationPort">The VXLAN destination port that will
         /// receive the tapped traffic.</param>
         /// <param name="etag">Gets a unique read-only string that changes
@@ -97,14 +97,14 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the reference to the private IP Address of the
-        /// collector nic that will receive the tap
+        /// collector nic that will receive the tap.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationNetworkInterfaceIPConfiguration")]
         public NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the private IP address on the
-        /// internal Load Balancer that will receive the tap
+        /// internal Load Balancer that will receive the tap.
         /// </summary>
         [JsonProperty(PropertyName = "properties.destinationLoadBalancerFrontEndIPConfiguration")]
         public FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration { get; set; }

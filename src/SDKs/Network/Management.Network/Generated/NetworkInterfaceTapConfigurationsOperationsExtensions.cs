@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get all Tap configurations in a network interface
+            /// Get all Tap configurations in a network interface.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get all Tap configurations in a network interface
+            /// Get all Tap configurations in a network interface.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get all Tap configurations in a network interface
+            /// Get all Tap configurations in a network interface.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get all Tap configurations in a network interface
+            /// Get all Tap configurations in a network interface.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

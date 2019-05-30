@@ -317,9 +317,19 @@ namespace Azure.Core.Tests
                 Response response = await SendRequestAsync(pipeline, request, CancellationToken.None);
 
                 var buffer = new byte[11];
-                Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
-                Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
-                Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+
+                if (IsAsync)
+                {
+                    Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
+                    Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
+                    Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+                }
+                else
+                {
+                    Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
+                    Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
+                    Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
+                }
 
                 return mockResponse;
             }

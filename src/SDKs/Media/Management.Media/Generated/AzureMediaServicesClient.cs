@@ -447,6 +447,8 @@ namespace Microsoft.Azure.Management.Media
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Layer>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobInput>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobInput>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ClipTime>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ClipTime>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobOutput>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobOutput>("@odata.type"));
             CustomInitialize();

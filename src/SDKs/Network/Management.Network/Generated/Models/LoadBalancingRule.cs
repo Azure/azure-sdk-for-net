@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="probe">The reference of the load balancer probe used
         /// by the load balancing rule.</param>
         /// <param name="loadDistribution">The load distribution policy for
-        /// this rule. Possible values are 'Default', 'SourceIP', and
-        /// 'SourceIPProtocol'. Possible values include: 'Default', 'SourceIP',
+        /// this rule. Possible values include: 'Default', 'SourceIP',
         /// 'SourceIPProtocol'</param>
         /// <param name="backendPort">The port used for internal connections on
         /// the endpoint. Acceptable values are between 0 and 65535. Note that
@@ -131,7 +130,6 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the load distribution policy for this rule. Possible
-        /// values are 'Default', 'SourceIP', and 'SourceIPProtocol'. Possible
         /// values include: 'Default', 'SourceIP', 'SourceIPProtocol'
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadDistribution")]

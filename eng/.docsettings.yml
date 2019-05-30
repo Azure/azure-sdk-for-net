@@ -52,6 +52,7 @@ known_content_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs/README.md','#5499']
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md','#5499']
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/tests/Readme.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
@@ -61,6 +62,8 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
+  - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
+  
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

@@ -30,12 +30,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitSku class.
         /// </summary>
         /// <param name="name">The name of the SKU.</param>
-        /// <param name="tier">The tier of the SKU. Possible values are
-        /// 'Standard', 'Premium' or 'Local'. Possible values include:
+        /// <param name="tier">The tier of the SKU. Possible values include:
         /// 'Standard', 'Premium', 'Basic', 'Local'</param>
-        /// <param name="family">The family of the SKU. Possible values are:
-        /// 'UnlimitedData' and 'MeteredData'. Possible values include:
-        /// 'UnlimitedData', 'MeteredData'</param>
+        /// <param name="family">The family of the SKU. Possible values
+        /// include: 'UnlimitedData', 'MeteredData'</param>
         public ExpressRouteCircuitSku(string name = default(string), string tier = default(string), string family = default(string))
         {
             Name = name;
@@ -56,16 +54,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the tier of the SKU. Possible values are 'Standard',
-        /// 'Premium' or 'Local'. Possible values include: 'Standard',
-        /// 'Premium', 'Basic', 'Local'
+        /// Gets or sets the tier of the SKU. Possible values include:
+        /// 'Standard', 'Premium', 'Basic', 'Local'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the family of the SKU. Possible values are:
-        /// 'UnlimitedData' and 'MeteredData'. Possible values include:
+        /// Gets or sets the family of the SKU. Possible values include:
         /// 'UnlimitedData', 'MeteredData'
         /// </summary>
         [JsonProperty(PropertyName = "family")]

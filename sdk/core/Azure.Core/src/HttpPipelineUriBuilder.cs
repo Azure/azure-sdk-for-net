@@ -159,7 +159,7 @@ namespace Azure.Core
             }
             if (HasQuery)
             {
-                _pathAndQuery.Insert(_queryIndex, value.Substring(startIndex, value.Length - startIndex));
+                _pathAndQuery.Insert(_queryIndex - 1, value.Substring(startIndex, value.Length - startIndex));
                 _queryIndex += value.Length;
             }
             else

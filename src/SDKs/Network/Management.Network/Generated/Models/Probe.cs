@@ -34,12 +34,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Probe class.
         /// </summary>
-        /// <param name="protocol">The protocol of the end point. Possible
-        /// values are: 'Http', 'Tcp', or 'Https'. If 'Tcp' is specified, a
-        /// received ACK is required for the probe to be successful. If 'Http'
-        /// or 'Https' is specified, a 200 OK response from the specifies URI
-        /// is required for the probe to be successful. Possible values
-        /// include: 'Http', 'Tcp', 'Https'</param>
+        /// <param name="protocol">The protocol of the end point. If 'Tcp' is
+        /// specified, a received ACK is required for the probe to be
+        /// successful. If 'Http' or 'Https' is specified, a 200 OK response
+        /// from the specifies URI is required for the probe to be successful.
+        /// Possible values include: 'Http', 'Tcp', 'Https'</param>
         /// <param name="port">The port for communicating the probe. Possible
         /// values range from 1 to 65535, inclusive.</param>
         /// <param name="id">Resource ID.</param>
@@ -94,12 +93,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
-        /// Gets or sets the protocol of the end point. Possible values are:
-        /// 'Http', 'Tcp', or 'Https'. If 'Tcp' is specified, a received ACK is
-        /// required for the probe to be successful. If 'Http' or 'Https' is
-        /// specified, a 200 OK response from the specifies URI is required for
-        /// the probe to be successful. Possible values include: 'Http', 'Tcp',
-        /// 'Https'
+        /// Gets or sets the protocol of the end point. If 'Tcp' is specified,
+        /// a received ACK is required for the probe to be successful. If
+        /// 'Http' or 'Https' is specified, a 200 OK response from the
+        /// specifies URI is required for the probe to be successful. Possible
+        /// values include: 'Http', 'Tcp', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

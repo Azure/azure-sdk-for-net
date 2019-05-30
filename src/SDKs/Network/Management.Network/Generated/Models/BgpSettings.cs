@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// BGP settings details
+    /// BGP settings details.
     /// </summary>
     public partial class BgpSettings
     {

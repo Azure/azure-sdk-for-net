@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await container.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
             finally
             {
@@ -79,7 +79,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await container.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
             finally
             {
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await container.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
             finally
             {
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await container.GetAccountInfoAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -400,7 +400,7 @@ namespace Azure.Storage.Blobs.Test
                 accessConditions: accessConditions);
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // Cleanup
             await container.DeleteAsync(new ContainerAccessConditions
@@ -596,7 +596,7 @@ namespace Azure.Storage.Blobs.Test
             );
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // Cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions
@@ -705,7 +705,7 @@ namespace Azure.Storage.Blobs.Test
                 accessConditions: accessConditions);
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions
@@ -763,7 +763,7 @@ namespace Azure.Storage.Blobs.Test
             var renewResponse = await container.RenewLeaseAsync(leaseResponse.Value.LeaseId);
 
             // Assert
-            Assert.IsNotNull(renewResponse.Raw.Headers.RequestId);
+            Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
 
             // Cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions
@@ -817,7 +817,7 @@ namespace Azure.Storage.Blobs.Test
                 accessConditions: accessConditions);
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions
@@ -931,7 +931,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1037,7 +1037,7 @@ namespace Azure.Storage.Blobs.Test
                 accessConditions: accessConditions);
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // Cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions
@@ -1154,7 +1154,7 @@ namespace Azure.Storage.Blobs.Test
                 accessConditions: accessConditions);
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
             // Cleanup
             await container.DeleteAsync(accessConditions: new ContainerAccessConditions

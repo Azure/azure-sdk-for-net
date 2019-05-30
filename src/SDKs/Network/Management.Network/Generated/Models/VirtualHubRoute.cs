@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualHub route
+    /// VirtualHub route.
     /// </summary>
     public partial class VirtualHubRoute
     {

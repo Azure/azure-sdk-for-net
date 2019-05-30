@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the policy
+        /// The name of the policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<WebApplicationFirewallPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes Policy
+        /// Deletes Policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes Policy
+        /// Deletes Policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

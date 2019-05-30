@@ -3,7 +3,6 @@
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-      <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +11,7 @@
     <PackageReference Include="Moq" Version="4.9.0" />
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
     <PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19226.8" />
   </ItemGroup>

@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update a DDoS protection plan tags
+            /// Update a DDoS protection plan tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update a DDoS protection plan tags
+            /// Update a DDoS protection plan tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update a DDoS protection plan tags
+            /// Update a DDoS protection plan tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Update a DDoS protection plan tags
+            /// Update a DDoS protection plan tags.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualNetworkGatewayConnection properties
+    /// VirtualNetworkGatewayConnection properties.
     /// </summary>
     public partial class TunnelConnectionHealth
     {
@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// status. Possible values include: 'Unknown', 'Connecting',
         /// 'Connected', 'NotConnected'</param>
         /// <param name="ingressBytesTransferred">The Ingress Bytes Transferred
-        /// in this connection</param>
+        /// in this connection.</param>
         /// <param name="egressBytesTransferred">The Egress Bytes Transferred
-        /// in this connection</param>
+        /// in this connection.</param>
         /// <param name="lastConnectionEstablishedUtcTime">The time at which
         /// connection was established in Utc format.</param>
         public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), string lastConnectionEstablishedUtcTime = default(string))
@@ -68,13 +68,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ConnectionStatus { get; private set; }
 
         /// <summary>
-        /// Gets the Ingress Bytes Transferred in this connection
+        /// Gets the Ingress Bytes Transferred in this connection.
         /// </summary>
         [JsonProperty(PropertyName = "ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; private set; }
 
         /// <summary>
-        /// Gets the Egress Bytes Transferred in this connection
+        /// Gets the Egress Bytes Transferred in this connection.
         /// </summary>
         [JsonProperty(PropertyName = "egressBytesTransferred")]
         public long? EgressBytesTransferred { get; private set; }

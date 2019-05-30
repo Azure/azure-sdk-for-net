@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines contents of a web application rule
+    /// Defines contents of a web application rule.
     /// </summary>
     public partial class WebApplicationFirewallCustomRule
     {
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="priority">Describes priority of the rule. Rules with a
         /// lower value will be evaluated before rules with a higher
-        /// value</param>
+        /// value.</param>
         /// <param name="ruleType">Describes type of rule. Possible values
         /// include: 'MatchRule', 'Invalid'</param>
-        /// <param name="matchConditions">List of match conditions</param>
+        /// <param name="matchConditions">List of match conditions.</param>
         /// <param name="action">Type of Actions. Possible values include:
         /// 'Allow', 'Block', 'Log'</param>
         /// <param name="name">Gets name of the resource that is unique within
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets describes priority of the rule. Rules with a lower
-        /// value will be evaluated before rules with a higher value
+        /// value will be evaluated before rules with a higher value.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RuleType { get; set; }
 
         /// <summary>
-        /// Gets or sets list of match conditions
+        /// Gets or sets list of match conditions.
         /// </summary>
         [JsonProperty(PropertyName = "matchConditions")]
         public IList<MatchCondition> MatchConditions { get; set; }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// SKU of an application gateway
+    /// SKU of an application gateway.
     /// </summary>
     public partial class ApplicationGatewaySku
     {

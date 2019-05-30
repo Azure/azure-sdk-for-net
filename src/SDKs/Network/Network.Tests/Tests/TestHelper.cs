@@ -132,7 +132,7 @@ namespace Networks.Tests
                     },
                     LegacyMode = Convert.ToInt32(true)
                 },
-                RouteFilter = filter
+                RouteFilter = { Id = filter.Id }
             };
 
             var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName,

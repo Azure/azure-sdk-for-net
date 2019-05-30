@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ExpressRoutePortsLocationBandwidths class.
         /// </summary>
-        /// <param name="offerName">Bandwidth descriptive name</param>
-        /// <param name="valueInGbps">Bandwidth value in Gbps</param>
+        /// <param name="offerName">Bandwidth descriptive name.</param>
+        /// <param name="valueInGbps">Bandwidth value in Gbps.</param>
         public ExpressRoutePortsLocationBandwidths(string offerName = default(string), int? valueInGbps = default(int?))
         {
             OfferName = offerName;
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets bandwidth descriptive name
+        /// Gets bandwidth descriptive name.
         /// </summary>
         [JsonProperty(PropertyName = "offerName")]
         public string OfferName { get; private set; }
 
         /// <summary>
-        /// Gets bandwidth value in Gbps
+        /// Gets bandwidth value in Gbps.
         /// </summary>
         [JsonProperty(PropertyName = "valueInGbps")]
         public int? ValueInGbps { get; private set; }

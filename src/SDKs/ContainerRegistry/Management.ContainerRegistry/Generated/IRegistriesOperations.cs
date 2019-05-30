@@ -310,7 +310,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </exception>
         System.Threading.Tasks.Task<AzureOperationResponse<RegistryUsageListResult>> ListUsagesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the policies for the specified container registry.
+        /// Schedules a new run based on the request parameters and add it to
+        /// the run queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -318,6 +319,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </param>
         /// <param name='registryName'>
         /// The name of the container registry.
+        /// </param>
+        /// <param name='runRequest'>
+        /// The parameters of a run that needs to scheduled.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -334,9 +338,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> ListPoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Run>> ScheduleRunWithHttpMessagesAsync(string resourceGroupName, string registryName, RunRequest runRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the policies for the specified container registry.
+        /// Get the upload location for the user to be able to upload the
+        /// source.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -344,14 +349,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </param>
         /// <param name='registryName'>
         /// The name of the container registry.
-        /// </param>
-        /// <param name='quarantinePolicy'>
-        /// An object that represents quarantine policy for a container
-        /// registry.
-        /// </param>
-        /// <param name='trustPolicy'>
-        /// An object that represents content trust policy for a container
-        /// registry.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -368,36 +365,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> UpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Generate keys for a token of a specified container registry.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='generateCredentialsParameters'>
-        /// The parameters for generating credentials.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<GenerateCredentialsResult>> GenerateCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<SourceUploadDefinition>> GetBuildSourceUploadUrlWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Copies an image to this container registry from the specified
         /// container registry.
@@ -508,7 +476,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </exception>
         System.Threading.Tasks.Task<AzureOperationResponse<Registry>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, RegistryUpdateParameters registryUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the policies for the specified container registry.
+        /// Schedules a new run based on the request parameters and add it to
+        /// the run queue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -517,13 +486,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='quarantinePolicy'>
-        /// An object that represents quarantine policy for a container
-        /// registry.
-        /// </param>
-        /// <param name='trustPolicy'>
-        /// An object that represents content trust policy for a container
-        /// registry.
+        /// <param name='runRequest'>
+        /// The parameters of a run that needs to scheduled.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -540,36 +504,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<RegistryPolicies>> BeginUpdatePoliciesWithHttpMessagesAsync(string resourceGroupName, string registryName, QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Generate keys for a token of a specified container registry.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='generateCredentialsParameters'>
-        /// The parameters for generating credentials.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<GenerateCredentialsResult>> BeginGenerateCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<Run>> BeginScheduleRunWithHttpMessagesAsync(string resourceGroupName, string registryName, RunRequest runRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the container registries under the specified resource
         /// group.

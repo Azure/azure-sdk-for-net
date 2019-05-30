@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Application rule collection resource
+    /// Application rule collection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AzureFirewallApplicationRuleCollection : SubResource
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="priority">Priority of the application rule collection
         /// resource.</param>
-        /// <param name="action">The action type of a rule collection</param>
+        /// <param name="action">The action type of a rule collection.</param>
         /// <param name="rules">Collection of rules used by a application rule
         /// collection.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the action type of a rule collection
+        /// Gets or sets the action type of a rule collection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.action")]
         public AzureFirewallRCAction Action { get; set; }

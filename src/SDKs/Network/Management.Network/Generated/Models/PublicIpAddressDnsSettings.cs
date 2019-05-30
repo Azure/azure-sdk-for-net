@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains FQDN of the DNS record associated with the public IP address
+    /// Contains FQDN of the DNS record associated with the public IP address.
     /// </summary>
     public partial class PublicIPAddressDnsSettings
     {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// user-visible, fully qualified domain name that resolves to this
         /// public IP address. If the reverseFqdn is specified, then a PTR DNS
         /// record is created pointing from the IP address in the in-addr.arpa
-        /// domain to the reverse FQDN. </param>
+        /// domain to the reverse FQDN.</param>
         public PublicIPAddressDnsSettings(string domainNameLabel = default(string), string fqdn = default(string), string reverseFqdn = default(string))
         {
             DomainNameLabel = domainNameLabel;

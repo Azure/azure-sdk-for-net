@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,19 +40,26 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="link">Link to the external resource.</param>
         /// <param name="provisioningState">Provisioning state of the
         /// ServiceAssociationLink resource.</param>
+        /// <param name="allowDelete">If true, the resource can be
+        /// deleted.</param>
+        /// <param name="locations">A list of locations.</param>
         /// <param name="name">Name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ServiceAssociationLink(string id = default(string), string linkedResourceType = default(string), string link = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Resource type</param>
+        public ServiceAssociationLink(string id = default(string), string linkedResourceType = default(string), string link = default(string), string provisioningState = default(string), bool? allowDelete = default(bool?), IList<string> locations = default(IList<string>), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             LinkedResourceType = linkedResourceType;
             Link = link;
             ProvisioningState = provisioningState;
+            AllowDelete = allowDelete;
+            Locations = locations;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -78,6 +87,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets if true, the resource can be deleted.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowDelete")]
+        public bool? AllowDelete { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of locations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.locations")]
+        public IList<string> Locations { get; set; }
+
+        /// <summary>
         /// Gets or sets name of the resource that is unique within a resource
         /// group. This name can be used to access the resource.
         /// </summary>
@@ -90,6 +111,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

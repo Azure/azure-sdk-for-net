@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the policy
+        /// The name of the policy.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -847,7 +847,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes Policy
+        /// Deletes Policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -869,7 +869,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes Policy
+        /// Deletes Policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -916,7 +916,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-02-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

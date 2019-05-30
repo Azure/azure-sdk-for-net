@@ -4,6 +4,10 @@ pr:
     - master
     - search-preview
     - BuildToolsForSdk
+  paths:
+    exclude:
+    - sdk/
+    - eng/
 
 variables:
   DotNetCoreVersion: '2.1.503'
@@ -21,17 +25,20 @@ jobs:
         inputs:
           filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
           arguments: -Vr *,31bf3856ad364e35
+        displayName: 'Disable strong name verification'
       - task: MSBuild@1
         inputs:
           solution: build.proj
+        displayName: 'Install build tools'
       - task: MSBuild@1
         inputs:
           solution: build.proj
           msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+        displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: 'src/**/*.trx'
+          testResultsFiles: 'TestResults/**/*.trx'
           testRunTitle: 'Windows Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
