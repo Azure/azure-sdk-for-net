@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -17,13 +21,13 @@ namespace Azure.Security.KeyVault.Keys
 
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
-        public DateTime? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
+        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
-        public DateTime? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
 
-        public DateTime? Created => _attributes.Created;
+        public DateTimeOffset? Created => _attributes.Created;
 
-        public DateTime? Updated => _attributes.Updated;
+        public DateTimeOffset? Updated => _attributes.Updated;
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
