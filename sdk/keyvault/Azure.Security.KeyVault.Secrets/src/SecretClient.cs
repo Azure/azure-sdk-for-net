@@ -59,13 +59,13 @@ namespace Azure.Security.KeyVault.Secrets
             return SendRequest(HttpPipelineMethod.Get, () => new Secret(), cancellationToken, SecretsPath, name, version);
         }
 
-        public virtual AsyncEnumerator<SecretBase> GetAllVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<SecretBase>> GetAllVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
             Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions?api-version={ApiVersion}");
 
-            return new AsyncEnumerator<SecretBase>(firstPageUri, () => new SecretBase(), this.GetPageAsync<SecretBase>, cancellationToken);
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, ()=> new SecretBase(), cancellationToken));
         }
 
         public virtual IEnumerable<SecretBase> GetAllVersions(string name, CancellationToken cancellationToken = default)
@@ -73,12 +73,12 @@ namespace Azure.Security.KeyVault.Secrets
             throw new NotImplementedException();
         }
 
-        public virtual AsyncEnumerator<SecretBase> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<SecretBase>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, SecretsPath + $"?api-version={ApiVersion}");
 
 
-            return new AsyncEnumerator<SecretBase>(firstPageUri, () => new SecretBase(), this.GetPageAsync<SecretBase>, cancellationToken);
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual IEnumerable<SecretBase> GetAll(CancellationToken cancellationToken = default)
@@ -172,11 +172,11 @@ namespace Azure.Security.KeyVault.Secrets
             return SendRequest(HttpPipelineMethod.Get, () => new DeletedSecret(), cancellationToken, DeletedSecretsPath, name);
         }
 
-        public virtual AsyncEnumerator<DeletedSecret> GetAllDeletedAsync(CancellationToken cancellationToken = default)
+        public virtual IAsyncEnumerable<Response<DeletedSecret>> GetAllDeletedAsync(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, DeletedSecretsPath + $"?api-version={ApiVersion}");
 
-            return new AsyncEnumerator<DeletedSecret>(firstPageUri, () => new DeletedSecret(), this.GetPageAsync<DeletedSecret>, cancellationToken);
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, () => new DeletedSecret(), cancellationToken));
         }
 
         public virtual IEnumerable<DeletedSecret> GetAllDeleted(CancellationToken cancellationToken = default)
@@ -336,14 +336,19 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private async Task<Response<Page<T>>> GetPageAsync<T>(Uri pageUri, Func<T> itemFactory, CancellationToken cancellationToken)
-            where T : Model
+        private async Task<PageResponse<T>> GetPageAsync<T>(Uri pageUri, Func<T> itemFactory, CancellationToken cancellationToken)
+                where T : Model
         {
             using (Request request = CreateRequest(HttpPipelineMethod.Get, pageUri, addAPIVersion:false))
             {
                 Response response = await SendRequestAsync(request, cancellationToken);
 
-                return this.CreateResponse(response, new Page<T>(itemFactory));
+                // read the respose
+                Page<T> responseAsPage = new Page<T>(itemFactory);
+                responseAsPage.Deserialize(response.ContentStream);
+
+                // convert from the Page<T> to PageResponse<T>
+                return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink.ToString());
             }
         }
 
