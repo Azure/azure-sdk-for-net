@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Core
         {
             if (String.IsNullOrEmpty(argumentValue))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrEmpty, argumentName));
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrEmpty, argumentName), argumentName);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Core
         {
             if (String.IsNullOrWhiteSpace(argumentValue))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrWhiteSpace, argumentName));
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentNullOrWhiteSpace, argumentName), argumentName);
             }
         }
 

@@ -61,24 +61,6 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link..
-        /// </summary>
-        internal static string AmqpMessageSizeExceeded {
-            get {
-                return ResourceManager.GetString("AmqpMessageSizeExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please make sure either all or none of the following arguments are defined: &apos;{0},{1}&apos;..
-        /// </summary>
-        internal static string ArgumentInvalidCombination {
-            get {
-                return ResourceManager.GetString("ArgumentInvalidCombination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty..
         /// </summary>
         internal static string ArgumentNullOrEmpty {
@@ -106,29 +88,11 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sending empty {0} is not a valid operation..
+        ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens..
         /// </summary>
-        internal static string CannotSendAnEmptyEvent {
+        internal static string InvalidConnectionString {
             get {
-                return ResourceManager.GetString("CannotSendAnEmptyEvent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There are no event data supplied. Please make sure input events are not empty..
-        /// </summary>
-        internal static string EventDataListIsNullOrEmpty {
-            get {
-                return ResourceManager.GetString("EventDataListIsNullOrEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
-        /// </summary>
-        internal static string FailedToSerializeUnsupportedType {
-            get {
-                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
+                return ResourceManager.GetString("InvalidConnectionString", resourceCulture);
             }
         }
         
@@ -151,11 +115,29 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, the path to an Event Hub, and a Shared Access Signature (both the name and value) to be valid..
+        /// </summary>
+        internal static string MalformedEventHubClientConnectionString {
+            get {
+                return ResourceManager.GetString("MalformedEventHubClientConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
         /// </summary>
         internal static string MissingSystemProperty {
             get {
                 return ResourceManager.GetString("MissingSystemProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A proxy may only be used for a websockets connection..
+        /// </summary>
+        internal static string ProxyMustUseWebsockets {
+            get {
+                return ResourceManager.GetString("ProxyMustUseWebsockets", resourceCulture);
             }
         }
         
@@ -169,16 +151,16 @@ namespace Azure.Messaging.EventHubs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request..
+        ///   Looks up a localized string similar to A retry must be set for the options; if no retry is desired, please set the value to Retry.NoRetry.
         /// </summary>
-        internal static string SasTokenShouldBeAlone {
+        internal static string RetryMustBeSet {
             get {
-                return ResourceManager.GetString("SasTokenShouldBeAlone", resourceCulture);
+                return ResourceManager.GetString("RetryMustBeSet", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument {0} must be a positive timeout value. The provided value was {1}..
+        ///   Looks up a localized string similar to A timeout value must be positive.  To request using the default timeout, please use TimeSpan.Zero or null..
         /// </summary>
         internal static string TimeoutMustBePositive {
             get {
@@ -192,24 +174,6 @@ namespace Azure.Messaging.EventHubs {
         internal static string TimeSpanMustBeNonNegative {
             get {
                 return ResourceManager.GetString("TimeSpanMustBeNonNegative", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;Audience&apos; value..
-        /// </summary>
-        internal static string TokenMissingAudience {
-            get {
-                return ResourceManager.GetString("TokenMissingAudience", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;ExpiresOn&apos; value..
-        /// </summary>
-        internal static string TokenMissingExpiresOn {
-            get {
-                return ResourceManager.GetString("TokenMissingExpiresOn", resourceCulture);
             }
         }
         
