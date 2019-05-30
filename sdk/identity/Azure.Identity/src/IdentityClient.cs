@@ -9,6 +9,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = HttpPipelineMethod.Get;
 
             request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
 
@@ -79,38 +80,15 @@ namespace Azure.Identity
 
             request.UriBuilder.AppendPath("/oauth2/v2.0/token");
 
-            ReadOnlyMemory<byte> content = Serialize(
-                ("response_type", "token"),
-                ("grant_type", "client_credentials"),
-                ("client_id", clientId),
-                ("client_secret", clientSecret),
-                ("scope", string.Join(" ", scopes)));
+            var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
+
+            ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
             request.Content = HttpPipelineRequestContent.Create(content);
 
             return request;
         }
-
-        private ReadOnlyMemory<byte> Serialize(params (string, string)[] bodyArgs)
-        {
-            var buff = new byte[1024];
-
-            var writer = new FixedSizedBufferWriter(buff);
-
-            var json = new Utf8JsonWriter(writer);
-
-            json.WriteStartObject();
-
-            foreach (var prop in bodyArgs)
-            {
-                json.WriteString(prop.Item1, prop.Item2);
-            }
-
-            json.WriteEndObject();
-
-            return buff.AsMemory(0, (int)json.BytesWritten);
-        }
-
+        
         private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
@@ -144,33 +122,6 @@ namespace Azure.Identity
             }
 
             return new AccessToken(accessToken, expiresOn);
-        }
-
-        // TODO (pri 3): CoreFx will soon have a type like this. We should remove this one then.
-        internal class FixedSizedBufferWriter : IBufferWriter<byte>
-        {
-            private readonly byte[] _buffer;
-            private int _count;
-
-            public FixedSizedBufferWriter(byte[] buffer)
-            {
-                _buffer = buffer;
-            }
-
-            public Memory<byte> GetMemory(int minimumLength = 0) => _buffer.AsMemory(_count);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public Span<byte> GetSpan(int minimumLength = 0) => _buffer.AsSpan(_count);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public void Advance(int bytes)
-            {
-                _count += bytes;
-                if (_count > _buffer.Length)
-                {
-                    throw new InvalidOperationException("Cannot advance past the end of the buffer.");
-                }
-            }
         }
     }
 }

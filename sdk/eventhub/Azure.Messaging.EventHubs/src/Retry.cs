@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns><c>true</c> if the operation that produced the exception may be retried; otherwise, <c>false</c>.</returns>
         ///
-        internal static bool IsRetriableException(Exception exception) => false;
+        internal static bool IsRetriableException(Exception exception) => throw new NotImplementedException();
 
         /// <summary>
         ///   Calculates the amount of time to delay before the next retry attempt.
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public TimeSpan? GetNextRetryInterval(Exception lastException,
                                               TimeSpan  remainingTime,
-                                              int       retryCount) => null;
+                                              int       retryCount) => throw new NotImplementedException();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

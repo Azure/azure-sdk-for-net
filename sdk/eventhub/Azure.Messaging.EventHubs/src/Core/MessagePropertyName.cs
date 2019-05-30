@@ -18,7 +18,7 @@
         /// <summary>The sequence number assigned to a message.</summary>
         public const string SequenceNumber = "x-opt-sequence-number";
 
-        /// <summary>The offset of a message within a fiven partition.</summary>
+        /// <summary>The offset of a message within a given partition.</summary>
         public const string Offset = "x-opt-offset";
 
         /// <summary>The name of the entity that published a message.</summary>
