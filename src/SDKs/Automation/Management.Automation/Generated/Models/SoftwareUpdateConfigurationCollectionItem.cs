@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// software update configuration.</param>
         /// <param name="frequency">execution frequency of the schedule
         /// associated with the software update configuration. Possible values
-        /// include: 'OneTime', 'Day', 'Hour', 'Week', 'Month'</param>
+        /// include: 'OneTime', 'Day', 'Hour', 'Week', 'Month',
+        /// 'Minute'</param>
         /// <param name="startTime">the start time of the update.</param>
         /// <param name="creationTime">Creation time of the software update
         /// configuration, which only appears in the response.</param>
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets or sets execution frequency of the schedule associated with
         /// the software update configuration. Possible values include:
-        /// 'OneTime', 'Day', 'Hour', 'Week', 'Month'
+        /// 'OneTime', 'Day', 'Hour', 'Week', 'Month', 'Minute'
         /// </summary>
         [JsonProperty(PropertyName = "properties.frequency")]
         public string Frequency { get; set; }
