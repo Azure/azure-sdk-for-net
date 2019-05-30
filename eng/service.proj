@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Exclude="..\sdk\$(ServiceDirectory)\Microsoft.Azure.Management.*\**\*.csproj" />
+    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\Microsoft.Azure.Management.*\**\*.csproj" />
     <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(ExcludeMgmtLib)"/>
   </ItemGroup>
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
