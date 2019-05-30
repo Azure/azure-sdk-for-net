@@ -1,0 +1,210 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMz9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"central us\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "32"
+        ],
+        "x-ms-client-request-id": [
+          "a1847aa5-8ced-4248-b697-5179679823ca"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg3733\",\r\n  \"name\": \"csmrg3733\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "174"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 08 Jun 2018 19:49:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "08807c5a-99b7-4823-a75a-505e8bec30e2"
+        ],
+        "x-ms-correlation-request-id": [
+          "08807c5a-99b7-4823-a75a-505e8bec30e2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180608T194953Z:08807c5a-99b7-4823-a75a-505e8bec30e2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733/providers/Sendgrid.Email//accounts/csmr178?api-version=2015-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMy9wcm92aWRlcnMvU2VuZGdyaWQuRW1haWwvL2FjY291bnRzL2NzbXIxNzg/YXBpLXZlcnNpb249MjAxNS0wMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"password\": \"p@ss4931\",\r\n    \"acceptMarketingEmails\": false,\r\n    \"email\": \"tiano@email.com\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "333"
+        ],
+        "x-ms-client-request-id": [
+          "3bb71596-59ec-4cba-abba-b3d4692c30d4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"email\": \"tiano@email.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"status\": \"Running\",\r\n    \"username\": \"azure_f0c395cd7d337bef276f48552150205a@azure.com\",\r\n    \"smtpServer\": \"smtp.sendgrid.net\",\r\n    \"planLabel\": \"Free\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "356"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "0"
+        ],
+        "Cache-Control": [
+          "must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Fri, 08 Jun 2018 19:50:05 GMT"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "Set-Cookie": [
+          "sendgrid_frontend=a945067376ee56fac0472fa238da1b22:b44246c100e67cb75d7b69f9388d00d10185319f; expires=Sun, 08-Jul-2018 19:49:57 GMT; path=/; httponly"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "df293ae6-bcc7-4f91-b1b6-d8dc61463a5d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "X-Ms-Request-Id": [
+          "5b1adde5b58d70-43175005"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180608T195006Z:df293ae6-bcc7-4f91-b1b6-d8dc61463a5d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3733/providers/Sendgrid.Email//accounts/csmr178?api-version=2015-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzczMy9wcm92aWRlcnMvU2VuZGdyaWQuRW1haWwvL2FjY291bnRzL2NzbXIxNzg/YXBpLXZlcnNpb249MjAxNS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a2c02a3a-fa98-411f-891f-d08ad2022523"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg3733/providers/Sendgrid.Email/accounts/csmr178\",\r\n  \"name\": \"csmr178\",\r\n  \"type\": \"Sendgrid.Email/accounts\",\r\n  \"location\": \"centralus\",\r\n  \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n  \"resourceGroup\": \"csmrg3733\",\r\n  \"plan\": {\r\n    \"name\": \"free\",\r\n    \"publisher\": \"Sendgrid\",\r\n    \"product\": \"sendgrid_azure\",\r\n    \"promotionCode\": \"\"\r\n  },\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Running\",\r\n    \"username\": \"azure_f0c395cd7d337bef276f48552150205a@azure.com\",\r\n    \"smtpServer\": \"smtp.sendgrid.net\",\r\n    \"email\": \"tiano@email.com\",\r\n    \"planLabel\": \"Free\",\r\n    \"isFromPortalV1\": false,\r\n    \"firstName\": \"Sender\",\r\n    \"lastName\": \"Whiz\",\r\n    \"company\": \"Company\",\r\n    \"website\": \"http://Website\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "0"
+        ],
+        "Cache-Control": [
+          "must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Fri, 08 Jun 2018 19:50:05 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-correlation-request-id": [
+          "4cc5b116-d56d-4fdc-b9fb-74d4b3131a89"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "X-Ms-Request-Id": [
+          "5b1addee85e040-24761613"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180608T195006Z:4cc5b116-d56d-4fdc-b9fb-74d4b3131a89"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceWithPlan": [
+      "csmrg3733",
+      "csmr178",
+      "p@ss4931"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+  }
+}

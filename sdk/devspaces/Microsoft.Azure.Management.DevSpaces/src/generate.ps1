@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "devspaces/resource-manager" -AutoRestVersion "latest"
