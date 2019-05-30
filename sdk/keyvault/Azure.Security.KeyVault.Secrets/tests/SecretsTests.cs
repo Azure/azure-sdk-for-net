@@ -12,10 +12,6 @@ namespace Azure.Security.KeyVault.Test
 {
     public class SecretTests : KeyVaultTestBase
     {
-        static void Main(string[] args)
-        {
-
-        }
         public SecretTests()
         {
         }
@@ -46,6 +42,7 @@ namespace Azure.Security.KeyVault.Test
             Secret getResult = await client.GetAsync("CrudBasic");
 
             Assert.AreEqual("CrudBasic", setResult.Name);
+            Assert.AreEqual("CrudBasicValue1", setResult.Value);
             Assert.AreEqual(VaultUri, setResult.Vault);
 
             AssertSecretsEqual(setResult, getResult);
@@ -63,18 +60,22 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CrudWithExtendedProps()
         {
+            var nbf = UtcNowMs() + TimeSpan.FromDays(1);
+            var exp = UtcNowMs() + TimeSpan.FromDays(90);
             var client = new SecretClient(VaultUri, AzureCredential.Default);
 
             var secret = new Secret("CrudWithExtendedProps", "CrudWithExtendedPropsValue1")
             {
                 ContentType = "password",
-                NotBefore = UtcNowMs() + TimeSpan.FromDays(1),
-                Expires = UtcNowMs() + TimeSpan.FromDays(90)
+                NotBefore = nbf,
+                Expires = exp
             };
 
             Secret setResult = await client.SetAsync(secret);
 
             Assert.AreEqual("password", setResult.ContentType);
+            Assert.AreEqual(nbf, setResult.NotBefore);
+            Assert.AreEqual(exp, setResult.Expires);
 
             Secret getResult = await client.GetAsync("CrudWithExtendedProps");
 
@@ -82,38 +83,23 @@ namespace Azure.Security.KeyVault.Test
 
             DeletedSecret deleteResult = await client.DeleteAsync("CrudWithExtendedProps");
 
-            // remove the value which is not set on the deleted response
-            typeof(Secret).GetProperty(nameof(setResult.Value)).SetValue(setResult, null);
-
             AssertSecretsEqual(setResult, deleteResult);
         }
 
         [Test]
         public async Task BackupRestore()
         {
-            var backupPath = Path.GetTempFileName();
+            var client = new SecretClient(VaultUri, AzureCredential.Default);
 
-            try
-            {
-                var client = new SecretClient(VaultUri, AzureCredential.Default);
+            Secret setResult = await client.SetAsync("BackupRestore", "BackupRestore");
 
-                Secret setResult = await client.SetAsync("BackupRestore", "BackupRestore");
+            byte[] backup = await client.BackupAsync("BackupRestore");
 
-                byte[] backup = await client.BackupAsync("BackupRestore");
+            await client.DeleteAsync("BackupRestore");
 
-                await client.DeleteAsync("BackupRestore");
+            SecretBase restoreResult = await client.RestoreAsync(backup);
 
-                Secret restoreResult = await client.RestoreAsync(backup);
-
-                // remove the vaule which is not set in the restore response
-                typeof(Secret).GetProperty(nameof(setResult.Value)).SetValue(setResult, null);
-
-                AssertSecretsEqual(setResult, restoreResult);
-            }
-            finally
-            {
-                File.Delete(backupPath);
-            }
+            AssertSecretsEqual(setResult, restoreResult);
         }
 
         private DateTime UtcNowMs()
@@ -123,29 +109,34 @@ namespace Azure.Security.KeyVault.Test
 
     }
 
-    public class SecretListTests : KeyVaultTestBase, IDisposable
+    public class SecretListTests : KeyVaultTestBase
     {
         private const int VersionCount = 50;
         private readonly string SecretName = Guid.NewGuid().ToString("N");
 
-        private readonly Dictionary<string, Secret> _versions = new Dictionary<string, Secret>(VersionCount);
+        private static readonly Dictionary<string, Secret> s_versions = new Dictionary<string, Secret>(VersionCount);
         private readonly SecretClient _client;
 
         public SecretListTests()
         {
             _client = new SecretClient(VaultUri, AzureCredential.Default);
+        }
 
+        [OneTimeSetUp]
+        public void Setup()
+        {
             for (int i = 0; i < VersionCount; i++)
             {
                 Secret secret = _client.SetAsync(SecretName, Guid.NewGuid().ToString("N")).GetAwaiter().GetResult();
 
                 typeof(Secret).GetProperty(nameof(secret.Value)).SetValue(secret, null);
-
-                _versions[secret.Id.ToString()] = secret;
+                
+                s_versions[secret.Id.ToString()] = secret;
             }
         }
 
-        public void Dispose()
+        [OneTimeTearDown]
+        public void TearDown()
         {
             var deleteResult = _client.DeleteAsync(SecretName);
         }
@@ -157,7 +148,7 @@ namespace Azure.Security.KeyVault.Test
 
             await foreach (var secret in _client.GetAllVersionsAsync(SecretName))
             {
-                Assert.True(_versions.TryGetValue(secret.Id.ToString(), out Secret exp));
+                Assert.True(s_versions.TryGetValue(secret.Id.ToString(), out Secret exp));
 
                 AssertSecretsEqual(exp, secret);
 
@@ -176,7 +167,7 @@ namespace Azure.Security.KeyVault.Test
 
             while (await enumerator.MoveNextAsync())
             {
-                Assert.True(_versions.TryGetValue(enumerator.Current.Id.ToString(), out Secret exp));
+                Assert.True(s_versions.TryGetValue(enumerator.Current.Id.ToString(), out Secret exp));
 
                 AssertSecretsEqual(exp, enumerator.Current);
 
@@ -196,7 +187,7 @@ namespace Azure.Security.KeyVault.Test
             {
                 for (int i = 0; i < currentPage.Items.Length; i++)
                 {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
+                    Assert.True(s_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
 
                     AssertSecretsEqual(exp, currentPage.Items[i]);
 
@@ -220,7 +211,7 @@ namespace Azure.Security.KeyVault.Test
 
                 for (int i = 0; i < currentPage.Items.Length; i++)
                 {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
+                    Assert.True(s_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
 
                     AssertSecretsEqual(exp, currentPage.Items[i]);
 

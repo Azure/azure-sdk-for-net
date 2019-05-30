@@ -202,11 +202,11 @@ namespace Azure.Security.KeyVault.Secrets
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Secret>> RestoreAsync(byte[] backup, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretBase>> RestoreAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new Secret(), cancellationToken, SecretsPath, "restore");
+            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "restore");
         }
 
         public virtual Response<Secret> Restore(byte[] backup, CancellationToken cancellationToken = default)
@@ -295,8 +295,8 @@ namespace Azure.Security.KeyVault.Secrets
             // request.UriBuilder when you call AppendQuery before AppendPath
             Request request = _pipeline.CreateRequest();
 
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Headers.Add(HttpHeader.Names.Accept, "application/json");
             request.Method = method;
             request.UriBuilder.Uri = _vaultUri;
 
