@@ -14,6 +14,5 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? NotBefore { get; set; }
         public DateTimeOffset? Expires { get; set; }
         public IDictionary<string, string> Tags { get; set; }
-
     }
 }

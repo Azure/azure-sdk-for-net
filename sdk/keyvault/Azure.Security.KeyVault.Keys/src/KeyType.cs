@@ -21,5 +21,4 @@ namespace Azure.Security.KeyVault.Keys
 
         All = uint.MaxValue
     }
-
 }
