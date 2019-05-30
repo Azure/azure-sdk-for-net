@@ -68,9 +68,13 @@ namespace Azure.Security.KeyVault.Secrets
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, ()=> new SecretBase(), cancellationToken));
         }
 
-        public virtual IEnumerable<SecretBase> GetAllVersions(string name, CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<SecretBase>> GetAllVersions(string name, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions");
+
+            return PageResponseEnumerator.CreateEnumerable(nextLink => this.GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual IAsyncEnumerable<Response<SecretBase>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -81,9 +85,11 @@ namespace Azure.Security.KeyVault.Secrets
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
-        public virtual IEnumerable<SecretBase> GetAll(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<SecretBase>> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Uri firstPageUri = new Uri(_vaultUri, SecretsPath);
+
+            return PageResponseEnumerator.CreateEnumerable(nextLink => this.GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual async Task<Response<SecretBase>> UpdateAsync(SecretBase secret, CancellationToken cancellationToken = default)
@@ -179,9 +185,11 @@ namespace Azure.Security.KeyVault.Secrets
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, () => new DeletedSecret(), cancellationToken));
         }
 
-        public virtual IEnumerable<DeletedSecret> GetAllDeleted(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Response<DeletedSecret>> GetAllDeleted(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Uri firstPageUri = new Uri(_vaultUri, DeletedSecretsPath);
+
+            return PageResponseEnumerator.CreateEnumerable(nextLink => GetPage(firstPageUri, () => new DeletedSecret(), cancellationToken));
         }
 
         public virtual async Task<Response<Secret>> RecoverDeletedAsync(string name, CancellationToken cancellationToken = default)
@@ -352,14 +360,19 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private Response<Page<T>> GetPage<T>(Uri pageUri, Func<T> itemFactory, CancellationToken cancellationToken)
+        private PageResponse<T> GetPage<T>(Uri pageUri, Func<T> itemFactory, CancellationToken cancellationToken)
             where T : Model
         {
             using (Request request = CreateRequest(HttpPipelineMethod.Get, pageUri))
             {
                 Response response = SendRequest(request, cancellationToken);
 
-                return this.CreateResponse(response, new Page<T>(itemFactory));
+                // read the respose
+                Page<T> responseAsPage = new Page<T>(itemFactory);
+                responseAsPage.Deserialize(response.ContentStream);
+
+                // convert from the Page<T> to PageResponse<T>
+                return new PageResponse<T>(responseAsPage.Items.ToArray(), response, responseAsPage.NextLink.ToString());
             }
         }
 
