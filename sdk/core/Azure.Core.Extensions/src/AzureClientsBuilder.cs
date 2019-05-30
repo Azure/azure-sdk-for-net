@@ -17,7 +17,7 @@ namespace Azure.Core.Extensions
         {
             _serviceCollection = serviceCollection;
             _serviceCollection.AddOptions();
-            _serviceCollection.AddSingleton<EventSourceLogForwarder>();
+            _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
         }
 
         void IAzureClientsBuilder.RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory, Action<TOptions> configureOptions)
