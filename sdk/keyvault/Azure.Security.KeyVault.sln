@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets", "Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj", "{AA1C6FB6-7176-400E-B556-B04253A69949}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "Azure.Security.Keyvault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Tests", "Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{6BEF56A3-A6B2-4F21-A4B6-895764A384F3}"
 EndProject
