@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
@@ -15,32 +14,15 @@ namespace Azure.ApplicationModel.Configuration
             Action<ConfigurationClientOptions> configureOptions = null)
             where TBuilder: IAzureClientsBuilder
         {
-            builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(name, options => new ConfigurationClient(connectionString, options));
-            builder.ConfigureClientOptions<ConfigurationClientOptions>(name, configureOptions);
+            builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(name, options => new ConfigurationClient(connectionString, options), configureOptions);
             return builder;
         }
 
         public static TBuilder AddAppConfiguration<TBuilder, TConfiguration>(this TBuilder builder, string name, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
-            builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(name,
-                options => CreateClientFromConfiguration(builder.AsDictionary(configuration), options));
-            builder.ConfigureClientOptions<ConfigurationClientOptions>(name, options => builder.Bind(configuration, options));
+            builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(name, configuration);
             return builder;
-        }
-
-        private static ConfigurationClient CreateClientFromConfiguration(
-            IReadOnlyDictionary<string, string> configuration,
-            ConfigurationClientOptions options)
-        {
-            // TODO: Extract a helper type
-
-            if (configuration["connectionString"] is string connectionString)
-            {
-                return new ConfigurationClient(connectionString, options);
-            }
-
-            throw new InvalidOperationException("Unable to resolve connection options from configuration. Supported combinations are: connectionString");
         }
     }
 }

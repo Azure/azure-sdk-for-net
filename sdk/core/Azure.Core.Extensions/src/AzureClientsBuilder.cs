@@ -13,29 +13,31 @@ namespace Azure.Core.Extensions
         private readonly IServiceCollection _serviceCollection;
         private static readonly ConfigurationClientFactory ConfigurationClientFactory = new ConfigurationClientFactory();
 
-        public AzureClientsBuilder(IServiceCollection serviceCollection)
+        internal AzureClientsBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection;
             _serviceCollection.AddOptions();
             _serviceCollection.AddSingleton<EventSourceLogForwarder>();
         }
 
-        void IAzureClientsBuilder.RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory)
+        void IAzureClientsBuilder.RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory, Action<TOptions> configureOptions)
         {
             _serviceCollection.AddSingleton(new ClientRegistration<TClient, TOptions>(name, clientFactory));
 
             _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<TClient>), typeof(AzureClientFactory<TClient, TOptions>));
-        }
 
-        void IAzureClientsBuilder.ConfigureClientOptions<TOptions>(string name, Action<TOptions> configureOptions)
-        {
-            _serviceCollection.Configure<TOptions>(name, configureOptions);
+            if (configureOptions != null)
+            {
+                _serviceCollection.Configure<TOptions>(name, configureOptions);
+            }
         }
 
         void IAzureClientsBuilderWithConfiguration<IConfiguration>.RegisterClient<TClient, TOptions>(string name, IConfiguration configuration)
         {
-            ((IAzureClientsBuilder)this).RegisterClient<TClient, TOptions>(name, options => (TClient)ConfigurationClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration));
-            _serviceCollection.Configure<TOptions>(name, options => configuration.Bind(options));
+            ((IAzureClientsBuilder)this).RegisterClient<TClient, TOptions>(
+                name,
+                options => (TClient)ConfigurationClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration),
+                options => configuration.Bind(options));
         }
     }
 }

@@ -10,13 +10,10 @@ namespace Azure.Core.Extensions.Tests
         public static TBuilder AddTestClient<TBuilder>(this TBuilder builder, string name, Uri uri, Action<TestClientOptions> configureOptions = null)
             where TBuilder: IAzureClientsBuilder
         {
-            builder.RegisterClient<TestClient, TestClientOptions>(name, options => new TestClient(uri, options));
-            if (configureOptions != null)
-            {
-                builder.ConfigureClientOptions(name, configureOptions);
-            }
+            builder.RegisterClient<TestClient, TestClientOptions>(name, options => new TestClient(uri, options), configureOptions);
             return builder;
         }
+
         public static TBuilder AddTestClient<TBuilder, TConfiguration>(this TBuilder builder, string name, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
