@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "src\Azure.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Extensions", "..\Azure.Core.Extensions\src\Azure.Core.Extensions.csproj", "{0C7A5C10-26CB-4710-A0CC-AB1A797D3EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Extensions.Tests", "..\Azure.Core.Extensions\test\Azure.Core.Extensions.Tests.csproj", "{35947FE3-E7A2-41EA-B93E-78B2A991BE9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Extensions.Tests", "..\Azure.Core.Extensions\tests\Azure.Core.Extensions.Tests.csproj", "{35947FE3-E7A2-41EA-B93E-78B2A991BE9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
