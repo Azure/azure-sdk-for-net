@@ -41,9 +41,6 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
-        /// <param name="name">The name of the skill which uniquely identifies
-        /// it within the skillset. A skill with no name defined will be given
-        /// a default name of its 1-based index in the skills array.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -53,8 +50,8 @@ namespace Microsoft.Azure.Search.Models
         /// code to use. Default is en. Possible values include: 'da', 'nl',
         /// 'en', 'fi', 'fr', 'de', 'el', 'it', 'no', 'pl', 'pt-PT', 'ru',
         /// 'es', 'sv', 'tr'</param>
-        public SentimentSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string), SentimentSkillLanguage? defaultLanguageCode = default(SentimentSkillLanguage?))
-            : base(inputs, outputs, name, description, context)
+        public SentimentSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), SentimentSkillLanguage? defaultLanguageCode = default(SentimentSkillLanguage?))
+            : base(inputs, outputs, description, context)
         {
             DefaultLanguageCode = defaultLanguageCode;
             CustomInit();
