@@ -52,11 +52,11 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unique Id of the smartGroup for which the history is
-        /// being retrieved
+        /// Gets unique Id of the smartGroup for which the history is being
+        /// retrieved
         /// </summary>
         [JsonProperty(PropertyName = "smartGroupId")]
-        public string SmartGroupId { get; set; }
+        public string SmartGroupId { get; private set; }
 
         /// <summary>
         /// Gets or sets modification details

@@ -2,10 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.Azure.Management.AlertsManagement.Models;
 
 namespace AlertsManagement.Tests.Helpers
 {
@@ -15,13 +18,13 @@ namespace AlertsManagement.Tests.Helpers
 
         public RecordedDelegatingHandler()
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
+            StatusCodeToReturn = HttpStatusCode.OK;
             SubsequentStatusCodeToReturn = StatusCodeToReturn;
         }
 
         public RecordedDelegatingHandler(HttpResponseMessage response)
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
+            StatusCodeToReturn = HttpStatusCode.OK;
             SubsequentStatusCodeToReturn = StatusCodeToReturn;
             _response = response;
         }
@@ -71,6 +74,8 @@ namespace AlertsManagement.Tests.Helpers
             }
             else
             {
+                // Generate mock response for unit tests
+                MockServer mockServer = new MockServer();
                 if (_response != null && counter == 1)
                 {
                     return _response;
@@ -81,7 +86,7 @@ namespace AlertsManagement.Tests.Helpers
                     if (counter > 1)
                         statusCode = SubsequentStatusCodeToReturn;
                     HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent("");
+                    response.Content = new StringContent(mockServer.GenerateMockResponse(request.RequestUri));
                     return response;
                 }
             }

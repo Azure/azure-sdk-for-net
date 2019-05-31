@@ -105,35 +105,34 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets severity of alert Sev0 being highest and Sev4 being
-        /// lowest. Possible values include: 'Sev0', 'Sev1', 'Sev2', 'Sev3',
-        /// 'Sev4'
+        /// Gets severity of alert Sev0 being highest and Sev4 being lowest.
+        /// Possible values include: 'Sev0', 'Sev1', 'Sev2', 'Sev3', 'Sev4'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
-        public string Severity { get; set; }
+        public string Severity { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of signal the alert is based on, which could
-        /// be metrics, logs or activity logs. Possible values include:
-        /// 'Metric', 'Log', 'Unknown'
+        /// Gets the type of signal the alert is based on, which could be
+        /// metrics, logs or activity logs. Possible values include: 'Metric',
+        /// 'Log', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "signalType")]
-        public string SignalType { get; set; }
+        public string SignalType { get; private set; }
 
         /// <summary>
-        /// Gets or sets alert object state, which can be modified by the user.
+        /// Gets alert object state, which can be modified by the user.
         /// Possible values include: 'New', 'Acknowledged', 'Closed'
         /// </summary>
         [JsonProperty(PropertyName = "alertState")]
-        public string AlertState { get; set; }
+        public string AlertState { get; private set; }
 
         /// <summary>
-        /// Gets or sets can be 'Fired' or 'Resolved', which represents whether
-        /// the underlying conditions have crossed the defined alert rule
+        /// Gets can be 'Fired' or 'Resolved', which represents whether the
+        /// underlying conditions have crossed the defined alert rule
         /// thresholds. Possible values include: 'Fired', 'Resolved'
         /// </summary>
         [JsonProperty(PropertyName = "monitorCondition")]
-        public string MonitorCondition { get; set; }
+        public string MonitorCondition { get; private set; }
 
         /// <summary>
         /// Gets or sets target ARM resource, on which alert got created.
@@ -163,71 +162,70 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         public string TargetResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets monitor service on which the rule(monitor) is set.
-        /// Possible values include: 'Application Insights', 'ActivityLog
+        /// Gets monitor service on which the rule(monitor) is set. Possible
+        /// values include: 'Application Insights', 'ActivityLog
         /// Administrative', 'ActivityLog Security', 'ActivityLog
         /// Recommendation', 'ActivityLog Policy', 'ActivityLog Autoscale',
         /// 'Log Analytics', 'Nagios', 'Platform', 'SCOM', 'ServiceHealth',
         /// 'SmartDetector', 'VM Insights', 'Zabbix'
         /// </summary>
         [JsonProperty(PropertyName = "monitorService")]
-        public string MonitorService { get; set; }
+        public string MonitorService { get; private set; }
 
         /// <summary>
-        /// Gets or sets rule(monitor) which fired alert instance. Depending on
-        /// the monitor service,  this would be ARM id or name of the rule.
+        /// Gets rule(monitor) which fired alert instance. Depending on the
+        /// monitor service,  this would be ARM id or name of the rule.
         /// </summary>
         [JsonProperty(PropertyName = "alertRule")]
-        public string AlertRule { get; set; }
+        public string AlertRule { get; private set; }
 
         /// <summary>
-        /// Gets or sets unique Id created by monitor service for each alert
-        /// instance. This could be used to track the issue at the monitor
-        /// service, in case of Nagios, Zabbix, SCOM etc.
+        /// Gets unique Id created by monitor service for each alert instance.
+        /// This could be used to track the issue at the monitor service, in
+        /// case of Nagios, Zabbix, SCOM etc.
         /// </summary>
         [JsonProperty(PropertyName = "sourceCreatedId")]
-        public string SourceCreatedId { get; set; }
+        public string SourceCreatedId { get; private set; }
 
         /// <summary>
-        /// Gets or sets unique Id of the smart group
+        /// Gets unique Id of the smart group
         /// </summary>
         [JsonProperty(PropertyName = "smartGroupId")]
-        public string SmartGroupId { get; set; }
+        public string SmartGroupId { get; private set; }
 
         /// <summary>
-        /// Gets or sets verbose reason describing the reason why this alert
-        /// instance is added to a smart group
+        /// Gets verbose reason describing the reason why this alert instance
+        /// is added to a smart group
         /// </summary>
         [JsonProperty(PropertyName = "smartGroupingReason")]
-        public string SmartGroupingReason { get; set; }
+        public string SmartGroupingReason { get; private set; }
 
         /// <summary>
-        /// Gets or sets creation time(ISO-8601 format) of alert instance.
+        /// Gets creation time(ISO-8601 format) of alert instance.
         /// </summary>
         [JsonProperty(PropertyName = "startDateTime")]
-        public System.DateTime? StartDateTime { get; set; }
+        public System.DateTime? StartDateTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets last modification time(ISO-8601 format) of alert
-        /// instance.
+        /// Gets last modification time(ISO-8601 format) of alert instance.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedDateTime")]
-        public System.DateTime? LastModifiedDateTime { get; set; }
+        public System.DateTime? LastModifiedDateTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets resolved time(ISO-8601 format) of alert instance. This
-        /// will be updated when monitor service resolves the alert instance
-        /// because the rule condition is no longer met.
+        /// Gets resolved time(ISO-8601 format) of alert instance. This will be
+        /// updated when monitor service resolves the alert instance because
+        /// the rule condition is no longer met.
         /// </summary>
         [JsonProperty(PropertyName = "monitorConditionResolvedDateTime")]
-        public System.DateTime? MonitorConditionResolvedDateTime { get; set; }
+        public System.DateTime? MonitorConditionResolvedDateTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets user who last modified the alert, in case of monitor
-        /// service updates user would be 'system', otherwise name of the user.
+        /// Gets user who last modified the alert, in case of monitor service
+        /// updates user would be 'system', otherwise name of the user.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedUserName")]
-        public string LastModifiedUserName { get; set; }
+        public string LastModifiedUserName { get; private set; }
 
     }
 }

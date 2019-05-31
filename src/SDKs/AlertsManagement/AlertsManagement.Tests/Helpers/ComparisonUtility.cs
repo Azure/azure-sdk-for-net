@@ -117,13 +117,14 @@ namespace AlertsManagement.Tests.Helpers
         #endregion
 
         #region Smart Groups Tests
+        /*
         public static void AreEqual(SmartGroupsList exp, SmartGroupsList act)
         {
             if (exp != null)
             {
                 AreEqual(exp.Value, act.Value);
             }
-        }
+        }*/
 
         public static void AreEqual(IList<SmartGroup> exp, IList<SmartGroup> act)
         {
@@ -197,6 +198,19 @@ namespace AlertsManagement.Tests.Helpers
                 Assert.Equal(exp.Display.Provider, act.Display.Provider);
                 Assert.Equal(exp.Display.Description, act.Display.Description);
             }
+        }
+        #endregion
+
+        #region Extraction Methods
+
+        public static string ExtractIdFromLocalPath(string localPath)
+        {
+            return localPath.Split("/")[6];
+        }
+
+        public static string ExtractStateFromQuery(string query)
+        {
+            return query.Split("&")[1].Split("=")[1];
         }
         #endregion
     }

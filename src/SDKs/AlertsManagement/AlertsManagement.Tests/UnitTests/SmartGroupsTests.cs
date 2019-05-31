@@ -22,23 +22,13 @@ namespace AlertsManagement.Tests.UnitTests
         [Trait("Category", "Mock")]
         public void GetSmartGroupListTest()
         {
-            List<SmartGroup> smartGroupList = GetTestSmartGroupList();
-            SmartGroupsList expectedParameters = new SmartGroupsList("", smartGroupList);
-
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
-
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
             alertsManagementClient = GetAlertsManagementClient(handler);
+
             var result = alertsManagementClient.SmartGroups.GetAll();
 
-            ComparisonUtility.AreEqual(expectedParameters, result);
+            Assert.Equal(3, result.Count());
         }
 
         [Fact]
@@ -46,22 +36,14 @@ namespace AlertsManagement.Tests.UnitTests
         public void GetSmartGroupByIdTest()
         {
             string smartGroupId = "249a7944-dabc-4c80-8025-61165619d78f";
-            SmartGroup expectedParameters = CreateTestSmartGroupById(smartGroupId);
-
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
-
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
             alertsManagementClient = GetAlertsManagementClient(handler);
+
             var result = alertsManagementClient.SmartGroups.GetById(smartGroupId);
 
-            ComparisonUtility.AreEqual(expectedParameters, result);
+            Assert.NotNull(result);
+            Assert.Equal(smartGroupId, result.Id);
         }
 
         [Fact]
@@ -69,25 +51,16 @@ namespace AlertsManagement.Tests.UnitTests
         public void SmartGroupStateChangeTest()
         {
             string smartGroupId = "249a7944-dabc-4c80-8025-61165619d78f";
-            SmartGroup expectedParameters = CreateTestSmartGroupById(smartGroupId);
-            string updatedState = "Acknowledged";
-            expectedParameters.SmartGroupState = updatedState;
 
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
-
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
             alertsManagementClient = GetAlertsManagementClient(handler);
 
+            string updatedState = AlertState.Closed;
             var result = alertsManagementClient.SmartGroups.ChangeState(smartGroupId, updatedState);
 
-            ComparisonUtility.AreEqual(expectedParameters, result);
+            Assert.Equal(smartGroupId, result.Id);
+            Assert.Equal(updatedState, result.SmartGroupState);
         }
 
         [Fact]

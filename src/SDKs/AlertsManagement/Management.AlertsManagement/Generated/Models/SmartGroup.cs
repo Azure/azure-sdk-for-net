@@ -100,39 +100,38 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         public int? AlertsCount { get; set; }
 
         /// <summary>
-        /// Gets or sets smart group state. Possible values include: 'New',
+        /// Gets smart group state. Possible values include: 'New',
         /// 'Acknowledged', 'Closed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.smartGroupState")]
-        public string SmartGroupState { get; set; }
+        public string SmartGroupState { get; private set; }
 
         /// <summary>
-        /// Gets or sets severity of smart group is the highest(Sev0
-        /// &amp;gt;... &amp;gt; Sev4) severity of all the alerts in the group.
-        /// Possible values include: 'Sev0', 'Sev1', 'Sev2', 'Sev3', 'Sev4'
+        /// Gets severity of smart group is the highest(Sev0 &amp;gt;...
+        /// &amp;gt; Sev4) severity of all the alerts in the group. Possible
+        /// values include: 'Sev0', 'Sev1', 'Sev2', 'Sev3', 'Sev4'
         /// </summary>
         [JsonProperty(PropertyName = "properties.severity")]
-        public string Severity { get; set; }
+        public string Severity { get; private set; }
 
         /// <summary>
-        /// Gets or sets creation time of smart group. Date-Time in ISO-8601
-        /// format.
+        /// Gets creation time of smart group. Date-Time in ISO-8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startDateTime")]
-        public System.DateTime? StartDateTime { get; set; }
+        public System.DateTime? StartDateTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets last updated time of smart group. Date-Time in
-        /// ISO-8601 format.
+        /// Gets last updated time of smart group. Date-Time in ISO-8601
+        /// format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedDateTime")]
-        public System.DateTime? LastModifiedDateTime { get; set; }
+        public System.DateTime? LastModifiedDateTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets last modified by user name.
+        /// Gets last modified by user name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedUserName")]
-        public string LastModifiedUserName { get; set; }
+        public string LastModifiedUserName { get; private set; }
 
         /// <summary>
         /// Gets or sets summary of target resources in the smart group

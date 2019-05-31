@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unique Id of the alert for which the history is being
+        /// Gets unique Id of the alert for which the history is being
         /// retrieved
         /// </summary>
         [JsonProperty(PropertyName = "alertId")]
-        public string AlertId { get; set; }
+        public string AlertId { get; private set; }
 
         /// <summary>
         /// Gets or sets modification details

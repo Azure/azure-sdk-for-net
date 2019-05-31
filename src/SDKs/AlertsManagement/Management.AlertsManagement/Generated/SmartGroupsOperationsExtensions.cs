@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// value is 'desc' for time fields and 'asc' for others. Possible values
             /// include: 'asc', 'desc'
             /// </param>
-            public static SmartGroupsList GetAll(this ISmartGroupsOperations operations, string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string))
+            public static IPage<SmartGroup> GetAll(this ISmartGroupsOperations operations, string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string))
             {
                 return operations.GetAllAsync(targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder).GetAwaiter().GetResult();
             }
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SmartGroupsList> GetAllAsync(this ISmartGroupsOperations operations, string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SmartGroup>> GetAllAsync(this ISmartGroupsOperations operations, string targetResource = default(string), string targetResourceGroup = default(string), string targetResourceType = default(string), string monitorService = default(string), string monitorCondition = default(string), string severity = default(string), string smartGroupState = default(string), string timeRange = default(string), int? pageCount = default(int?), string sortBy = default(string), string sortOrder = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAllWithHttpMessagesAsync(targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -266,6 +266,46 @@ namespace Microsoft.Azure.Management.AlertsManagement
             public static async Task<SmartGroupModification> GetHistoryAsync(this ISmartGroupsOperations operations, string smartGroupId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetHistoryWithHttpMessagesAsync(smartGroupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all Smart Groups within a specified subscription
+            /// </summary>
+            /// <remarks>
+            /// List all the Smart Groups within a specified subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SmartGroup> GetAllNext(this ISmartGroupsOperations operations, string nextPageLink)
+            {
+                return operations.GetAllNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all Smart Groups within a specified subscription
+            /// </summary>
+            /// <remarks>
+            /// List all the Smart Groups within a specified subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SmartGroup>> GetAllNextAsync(this ISmartGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

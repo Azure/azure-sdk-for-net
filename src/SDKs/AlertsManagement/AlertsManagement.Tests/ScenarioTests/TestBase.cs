@@ -44,9 +44,8 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 this.IsRecording = true;
                 string connectionString = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
-                //subId = string.IsNullOrWhiteSpace(subId) ? "07c0b09d-9f69-4e6e-8d05-f59f67299cb2" : subId;
 
-                TestEnvironment env = new TestEnvironment(connectionString: connectionString); // ;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47;UserId=gucalder@microsoft.com");
+                TestEnvironment env = new TestEnvironment(connectionString: connectionString);
                 client = context.GetServiceClient<AlertsManagementClient>(
                     currentEnvironment: env,
                     handlers: handler ?? new RecordedDelegatingHandler { SubsequentStatusCodeToReturn = System.Net.HttpStatusCode.OK });
