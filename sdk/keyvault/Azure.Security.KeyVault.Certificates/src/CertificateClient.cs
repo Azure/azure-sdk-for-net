@@ -231,12 +231,12 @@ namespace Azure.Security.KeyVault.Certificates
             throw new NotImplementedException();
         }
 
-        public virtual Response<CertificateBase> UpdateCertificatePolicy(string certificateName, CertificateBase certificateBase, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateBase> UpdateCertificatePolicy(string certificateName, CertificatePolicy policy, CertificateBase certificateBase, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<CertificateBase>> UpdateCertificatePolicyAsync(string certificateName, CertificateBase certificateBase, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateBase>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CertificateBase certificateBase, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
             throw new NotImplementedException();
