@@ -6,12 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>5.1.0</Version>
+		<Version>5.2.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Support update account properties.
+1) Add NetworkRuleSet support.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>
