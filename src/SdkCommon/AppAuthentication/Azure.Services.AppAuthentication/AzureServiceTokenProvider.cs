@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -37,6 +38,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public delegate Task<string> TokenCallback(string authority, string resource, string scope);
 
         /// <summary>
+        /// HTTP client factory to support HTTP proxy in ADAL
+        /// Implemented as a static so that client apps can gain proxy support without having to wait for intermediate packages to support it.
+        /// </summary>
+        public static IHttpClientFactory HttpClientFactory { get; set; }
+
+        /// <summary>
         /// Property to get authentication callback to be used with KeyVaultClient.  
         /// </summary>
         /// <example>
@@ -62,7 +69,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="connectionString">Connection string to specify which option to use to get the token.</param>
         /// <param name="azureAdInstance">Specify a value for clouds other than the Public Cloud.</param>
-        public AzureServiceTokenProvider(string connectionString = default(string), string azureAdInstance = "https://login.microsoftonline.com/")
+        /// <param name="httpClientFactory">Passed to ADAL to allow proxied connections. Takes precedence over the static <see cref="HttpClientFactory"/> property</param>
+        public AzureServiceTokenProvider(string connectionString = default(string), string azureAdInstance = "https://login.microsoftonline.com/", IHttpClientFactory httpClientFactory = null)
         {
             if (string.IsNullOrEmpty(azureAdInstance))
             {
@@ -82,9 +90,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 connectionString = EnvironmentHelper.GetEnvironmentVariable("AzureServicesAuthConnectionString");
             }
 
+            // injection is nicer than static backdoor.
+            var factory = httpClientFactory ?? HttpClientFactory;
+
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
-                _selectedAccessTokenProvider = AzureServiceTokenProviderFactory.Create(connectionString, azureAdInstance);
+                _selectedAccessTokenProvider = AzureServiceTokenProviderFactory.Create(connectionString, azureAdInstance, factory);
 
                 _connectionString = connectionString;
             }
@@ -96,7 +107,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
                     new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx
-                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance)
+                    new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(factory), azureAdInstance)
 #endif
                 };
             }

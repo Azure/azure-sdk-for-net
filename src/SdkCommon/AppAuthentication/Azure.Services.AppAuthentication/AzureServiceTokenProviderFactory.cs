@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -53,8 +54,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="azureAdInstance"></param>
+        /// <param name="httpClientFactory"></param>
         /// <returns></returns>
-        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString, string azureAdInstance)
+        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString,
+            string azureAdInstance, IHttpClientFactory httpClientFactory = null)
         {
             Dictionary<string, string> connectionSettings = ParseConnectionString(connectionString);
 
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             else if (string.Equals(runAs, CurrentUser, StringComparison.OrdinalIgnoreCase))
             {
                 // If RunAs=CurrentUser
-                azureServiceTokenProvider = new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance);
+                azureServiceTokenProvider = new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(httpClientFactory), azureAdInstance);
             }
             else if (string.Equals(runAs, App, StringComparison.OrdinalIgnoreCase))
             {
@@ -117,7 +120,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                     : ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.SubjectName,
                                 connectionSettings[CertificateStoreLocation],
                                 azureAdInstance,
-                                connectionSettings[TenantId]);
+                                connectionSettings[TenantId],
+                                new AdalAuthenticationContext(httpClientFactory));
                     }
                     else if (connectionSettings.ContainsKey(CertificateThumbprint) ||
                              connectionSettings.ContainsKey(CertificateSubjectName))
@@ -137,7 +141,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 connectionSettings.ContainsKey(TenantId) // tenantId can be specified in connection string or retrieved from Key Vault access token later
                                     ? connectionSettings[TenantId]
-                                    : default(string));
+                                    : default(string),
+                                new AdalAuthenticationContext(httpClientFactory));
                     }
                     else if (connectionSettings.ContainsKey(AppKey))
                     {
@@ -149,7 +154,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 connectionSettings[AppId],
                                 connectionSettings[AppKey],
                                 connectionSettings[TenantId],
-                                azureAdInstance);
+                                azureAdInstance,
+                                new AdalAuthenticationContext(httpClientFactory));
                     }
                     else
                     {
