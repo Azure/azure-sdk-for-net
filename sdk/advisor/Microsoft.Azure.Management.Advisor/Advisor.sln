@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advisor.Tests", "tests\Advisor.Tests.csproj", "{000C5AD2-6CC2-4D33-8BB6-6B79D89C5BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Advisor.Tests", "tests\Microsoft.Azure.Management.Advisor.Tests.csproj", "{000C5AD2-6CC2-4D33-8BB6-6B79D89C5BD0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Advisor", "src\Microsoft.Azure.Management.Advisor.csproj", "{7CF438B8-83D1-4E00-B272-0EF405DD311A}"
 EndProject

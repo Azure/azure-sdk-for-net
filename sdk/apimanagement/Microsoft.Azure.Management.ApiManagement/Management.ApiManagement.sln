@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiManagement.Tests", "tests\ApiManagement.Tests.csproj", "{030623AB-8A12-44B3-8CB3-2356152F9C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApiManagement.Tests", "tests\Microsoft.Azure.Management.ApiManagement.Tests.csproj", "{030623AB-8A12-44B3-8CB3-2356152F9C9F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApiManagement", "src\Microsoft.Azure.Management.ApiManagement.csproj", "{7AFDC922-F852-4D10-8157-9AA667DC1569}"
 EndProject

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.MachineLearningCompute", "src\Microsoft.Azure.Management.MachineLearningCompute.csproj", "{BDF53BD4-60B9-4DE5-8DE9-E3ED27F4503C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineLearningCompute.Tests", "tests\MachineLearningCompute.Tests.csproj", "{FE2018E1-2AAD-4D1E-8706-FF8D500B3C0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.MachineLearningCompute.Tests", "tests\Microsoft.Azure.Management.MachineLearningCompute.Tests.csproj", "{FE2018E1-2AAD-4D1E-8706-FF8D500B3C0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
