@@ -218,9 +218,12 @@ namespace Microsoft.Azure.ServiceBus
             {
                 this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
-            else if (!string.Equals(builder.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
+            else if (builder.Authentication != null)
             {
-                this.TokenProvider = Primitives.TokenProvider.CreateManagedIdentityTokenProvider();
+                if (builder.Authentication == ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity)
+                {
+                    this.TokenProvider = new ManagedIdentityTokenProvider();
+                }
             }
 
             this.OperationTimeout = builder.OperationTimeout;

@@ -22,10 +22,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public delegate Task<string> AuthenticationCallback(string audience, string authority, object state);
 
-        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
+        public AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
+            this.AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
             this.authority = authority;
-            this.AuthCallback = authenticationCallback;
             this.authCallbackState = state;
         }
 

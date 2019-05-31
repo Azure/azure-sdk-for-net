@@ -152,54 +152,6 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new instance of the Queue client using Azure Active Directory authentication.
-        /// </summary>
-        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="entityPath">Queue path.</param>
-        /// <param name="authCallback">User provided delegate that will provide the access token.</param>
-        /// <param name="authority">Address of the authority to issue token.</param>
-        /// <param name="transportType">Transport type.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public static QueueClient CreateWithAzureActiveDirectory(
-            string endpoint,
-            string entityPath,
-            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
-            TransportType transportType = TransportType.Amqp,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-        {
-            return new QueueClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
-            {
-                TokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority)
-            }, entityPath, receiveMode, retryPolicy);
-        }
-
-        /// <summary>
-        /// Creates a new instance of the Queue client by using Azure Managed Identity authentication.
-        /// </summary>
-        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="entityPath">Queue path.</param>
-        /// <param name="transportType">Transport type.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
-        public static QueueClient CreateWithManagedIdentity(
-            string endpoint,
-            string entityPath,
-            TransportType transportType = TransportType.Amqp,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-        {
-            return new QueueClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
-            {
-                TokenProvider = TokenProvider.CreateManagedIdentityTokenProvider()
-            }, entityPath, receiveMode, retryPolicy);
-        }
-
-        /// <summary>
         /// Gets the name of the queue.
         /// </summary>
         public string QueueName { get; }

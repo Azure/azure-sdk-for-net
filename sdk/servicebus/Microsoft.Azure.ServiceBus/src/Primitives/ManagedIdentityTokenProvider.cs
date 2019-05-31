@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using Azure.Services.AppAuthentication;
 
     /// <summary>
-    /// Represents the Azure Active Directory token provider for Azure Managed Service Identity integration.
+    /// Represents the Azure Active Directory token provider for Azure Managed Identity integration.
     /// </summary>
     public class ManagedIdentityTokenProvider : TokenProvider
     {

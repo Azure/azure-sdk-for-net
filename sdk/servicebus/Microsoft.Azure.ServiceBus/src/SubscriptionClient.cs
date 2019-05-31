@@ -157,58 +157,6 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new instance of the Subscription client using Azure Active Directory authentication.
-        /// </summary>
-        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="subscriptionPath">Subscription path.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="authCallback">User provided delegate that will provide the access token.</param>
-        /// <param name="authority">Address of the authority to issue token.</param>
-        /// <param name="transportType">Transport type.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the subscription, which is opened during the first send/receive operation.</remarks>
-        public static SubscriptionClient CreateWithAzureActiveDirectory(
-            string endpoint,
-            string subscriptionPath,
-            string subscriptionName,
-            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
-            TransportType transportType = TransportType.Amqp,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-        {
-            return new SubscriptionClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
-            {
-                TokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority)
-            }, subscriptionPath, subscriptionName, receiveMode, retryPolicy);
-        }
-
-        /// <summary>
-        /// Creates a new instance of the Subscription client with the specified endpoint and entity path by using Azure Managed Identity authentication.
-        /// </summary>
-        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="subscriptionPath">Subscription path.</param>
-        /// <param name="subscriptionName">Subscription name.</param>
-        /// <param name="transportType">Transport type.</param>
-        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
-        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the subscription, which is opened during the first send/receive operation.</remarks>
-        public static SubscriptionClient CreateWithManagedIdentity(
-            string endpoint,
-            string subscriptionPath,
-            string subscriptionName,
-            TransportType transportType = TransportType.Amqp,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            RetryPolicy retryPolicy = null)
-        {
-            return new SubscriptionClient(new ServiceBusConnection(endpoint, transportType, retryPolicy)
-            {
-                TokenProvider = TokenProvider.CreateManagedIdentityTokenProvider()
-            }, subscriptionPath, subscriptionName, receiveMode, retryPolicy);
-        }
-
-        /// <summary>
         /// Gets the path of the corresponding topic.
         /// </summary>
         public string TopicPath { get; }

@@ -29,6 +29,12 @@ namespace Microsoft.Azure.ServiceBus
         const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
+        AuthenticationType? authType;
+
+        public enum AuthenticationType
+        {
+            ManagedIdentity
+        }
 
         /// <summary>
         /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>
@@ -188,7 +194,14 @@ namespace Microsoft.Azure.ServiceBus
         public string SasKeyName
         {
             get => this.sasKeyName;
-            set => this.sasKeyName = value.Trim();
+            set
+            {
+                if (this.Authentication != null)
+                {
+                    throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
+                }
+                this.sasKeyName = value.Trim();
+            }
         }
 
         /// <summary>
@@ -208,7 +221,14 @@ namespace Microsoft.Azure.ServiceBus
         public string SasToken
         {
             get => this.sasToken;
-            set => this.sasToken = value.Trim();
+            set
+            {
+                if (this.Authentication != null)
+                {
+                    throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
+                }
+                this.sasToken = value.Trim();
+            }
         }
 
         /// <summary>
@@ -225,7 +245,23 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Enables Azure Active Directory Managed Identity authentication when set to 'Managed Identity'
         /// </summary>
-        public string Authentication { get; set; }
+        public AuthenticationType? Authentication
+        {
+            get => this.authType;
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(this.SasKeyName))
+                {
+                    throw Fx.Exception.Argument("Authentication, SharedAccessKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessKeyName"));
+                }
+
+                if (!string.IsNullOrWhiteSpace(this.SasToken))
+                {
+                    throw Fx.Exception.Argument("Authentication, SharedAccessSignature", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessSignature"));
+                }
+                this.authType = value;
+            }
+        }
 
         internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
@@ -267,9 +303,9 @@ namespace Microsoft.Azure.ServiceBus
                 connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.Authentication))
+            if (this.Authentication != null)
             {
-                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication.ToString()}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -372,19 +408,21 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Authentication = value;
+                    if (Enum.TryParse(value, true, out AuthenticationType authType))
+                    {
+                        this.Authentication = authType;
+                    }
                 }
                 else
                 {
                     ConnectionStringProperties[key] = value;
                 }
             }
-            validate();
         }
 
         void validate()
         {
-            bool hasAuthentication = !string.IsNullOrWhiteSpace(this.Authentication);
+            bool hasAuthentication = this.Authentication != null;
             bool hasSharedAccessKeyName = !string.IsNullOrWhiteSpace(this.SasKeyName);
             bool hasSharedAccessSignature = !string.IsNullOrWhiteSpace(this.SasToken);
 
