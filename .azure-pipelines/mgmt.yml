@@ -22,6 +22,7 @@ jobs:
 
     steps:
       - script: |
+          echo Repo Id: $(Build.Repository.ID)
           echo Commit Id: $(Build.SourceVersion)
           echo Pull Request No: $(System.PullRequest.PullRequestNumber)
           echo Pull Request Id: $(System.PullRequest.PullRequestId)
