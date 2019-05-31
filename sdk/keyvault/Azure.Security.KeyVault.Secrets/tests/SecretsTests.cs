@@ -3,15 +3,9 @@
 // license information.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
-using Azure.Identity;
-using Azure.Core.Testing;
+using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Security.KeyVault.Test
 {
@@ -48,7 +42,7 @@ namespace Azure.Security.KeyVault.Test
 
             Assert.AreEqual("CrudBasic", setResult.Name);
             Assert.AreEqual("CrudBasicValue1", setResult.Value);
-            Assert.AreEqual(VaultUri, setResult.Vault);
+            //Assert.AreEqual(VaultUri, setResult.Vault);
 
             AssertSecretsEqual(setResult, getResult);
 
@@ -65,10 +59,9 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CrudWithExtendedProps()
         {
-            // TODO: make this a static date.
-            
-            var nbf = UtcNowMs() + TimeSpan.FromDays(1);
-            var exp = UtcNowMs() + TimeSpan.FromDays(90);
+            var exp = new DateTime(637027248124480000, DateTimeKind.Utc);
+            var nbf = exp.AddDays(-30);
+
             var client = GetClient();
 
             var secret = new Secret("CrudWithExtendedProps", "CrudWithExtendedPropsValue1")
@@ -112,174 +105,6 @@ namespace Azure.Security.KeyVault.Test
         private DateTime UtcNowMs()
         {
             return DateTime.MinValue.ToUniversalTime() + TimeSpan.FromMilliseconds(new TimeSpan(DateTime.UtcNow.Ticks).TotalMilliseconds);
-        }
-    }
-
-    public class SecretListTests : KeyVaultTestBase
-    {
-        private const int VersionCount = 50;
-        private string SecretName = Guid.NewGuid().ToString("N");
-
-        private static readonly Dictionary<string, Secret> s_versions = new Dictionary<string, Secret>(VersionCount);
-        private SecretClient _client;
-
-        public SecretListTests(bool isAsync) : base(isAsync)
-        {
-
-        }
-
-        public override void StartTestRecording()
-        {
-            base.StartTestRecording();
-            SecretName = Recording.GetVariable("secretName", SecretName);
-            _client = GetClient();
-        }
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                // do this to bypass the recording
-                _client = new SecretClient(VaultUri, AzureCredential.Default);
-
-                for (int i = 0; i < VersionCount; i++)
-                {
-                    Secret secret = _client.SetAsync(SecretName, Guid.NewGuid().ToString("N")).GetAwaiter().GetResult();
-
-                    typeof(Secret).GetProperty(nameof(secret.Value)).SetValue(secret, null);
-
-                    s_versions[secret.Id.ToString()] = secret;
-                }
-            }
-        }
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            if (Mode != RecordedTestMode.Playback)
-            {
-                var deleteResult = _client.DeleteAsync(SecretName);
-            }
-        }
-
-        [Test]
-        public async Task GetAllVersionsAsyncForEach()
-        {
-            int actVersionCount = 0;
-
-            await foreach (var secret in _client.GetAllVersionsAsync(SecretName))
-            {
-                Assert.True(s_versions.TryGetValue(secret.Id.ToString(), out Secret exp));
-
-                AssertSecretsEqual(exp, secret);
-
-                actVersionCount++;
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-        [Test]
-        public async Task ListVersionEnumeratorMoveNext()
-        {
-            int actVersionCount = 0;
-
-            var enumerator = _client.GetAllVersionsAsync(SecretName);
-
-            while (await enumerator.MoveNextAsync())
-            {
-                Assert.True(s_versions.TryGetValue(enumerator.Current.Id.ToString(), out Secret exp));
-
-                AssertSecretsEqual(exp, enumerator.Current);
-
-                actVersionCount++;
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-
-        [Test]
-        public async Task GetAllVersionsByPageAsyncForEach()
-        {
-            int actVersionCount = 0;
-
-            await foreach (Page<SecretBase> currentPage in _client.GetAllVersionsAsync(SecretName).ByPage())
-            {
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(s_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
-
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
-
-                    actVersionCount++;
-                }
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-        [Test]
-        public async Task ListVersionByPageEnumeratorMoveNext()
-        {
-            int actVersionCount = 0;
-
-            var enumerator = _client.GetAllVersionsAsync(SecretName).ByPage();
-
-            while (await enumerator.MoveNextAsync())
-            {
-                Page<SecretBase> currentPage = enumerator.Current;
-
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(s_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
-
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
-
-                    actVersionCount++;
-                }
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-    }
-
-    public class KeyVaultTestBase : RecordedTestBase
-    {
-        internal SecretClient GetClient()
-        {
-            return InstrumentClient(
-                new SecretClient(
-                    new Uri(Recording.GetVariableFromEnvironment("AZURE_KEYVAULT_URL")),
-                    AzureCredential.Default,
-                    InstrumentClientOptions(new SecretClientOptions())));
-        }
-
-
-        protected KeyVaultTestBase(bool isAsync) : base(isAsync)
-        {
-        }
-
-        private static Lazy<Uri> s_vaultUri = new Lazy<Uri>(() => { return new Uri(Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL")); });
-
-        protected Uri VaultUri { get => s_vaultUri.Value; }
-
-        protected void AssertSecretsEqual(Secret exp, Secret act)
-        {
-            Assert.AreEqual(exp.Value, act.Value);
-        }
-
-        protected void AssertSecretsEqual(SecretBase exp, SecretBase act)
-        {
-            Assert.AreEqual(exp.Id, act.Id);
-            Assert.AreEqual(exp.ContentType, act.ContentType);
-            Assert.AreEqual(exp.KeyId, act.KeyId);
-            Assert.AreEqual(exp.Managed, act.Managed);
-
-            Assert.AreEqual(exp.Enabled, act.Enabled);
-            Assert.AreEqual(exp.Expires, act.Expires);
-            Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
     }
 }
