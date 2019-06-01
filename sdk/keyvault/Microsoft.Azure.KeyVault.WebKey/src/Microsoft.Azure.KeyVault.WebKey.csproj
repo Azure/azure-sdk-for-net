@@ -6,16 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="6.0.8" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Cng" Version="4.3.0" />
-    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Collections" />
+    <PackageReference Include="System.Runtime" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
+    <PackageReference Include="System.Security.Cryptography.Cng" />
+    <PackageReference Include="System.Collections.Concurrent" />
+    <PackageReference Include="System.Linq" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="10.0.3" />
   </ItemGroup>
 </Project>

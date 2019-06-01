@@ -24,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.9.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.0" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="3.14.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true'">
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" />
+    <PackageReference Include="System.Diagnostics.TraceSource" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 
   <ItemGroup>
