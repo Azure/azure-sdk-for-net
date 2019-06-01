@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  	<Import Project="$(RepoEngPath)/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Graph.RBAC</PackageId>
+    <Version>3.8.0-preview</Version>
+    <Description>Provides Microsoft Azure Graph RBAC access.</Description>
+    <AssemblyName>Microsoft.Azure.Management.Graph.RBAC</AssemblyName>
+    <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+		  Regenerated .net sdk from the latest version of GraphRbac rest specification.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+  
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

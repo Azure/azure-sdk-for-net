@@ -37,6 +37,7 @@
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) storage</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Template</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) containerregistry</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) datalake-store</DefaultPathTokenToIgnore>
   </PropertyGroup>
 
   <!-- Ignore all data plane libraries following the "data-plane" naming convention -->

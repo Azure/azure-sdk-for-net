@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         {
             var parameters = new ServicePrincipalCreateParameters
             {
-                AccountEnabled = bool.TrueString,
+                AccountEnabled = Boolean.Parse(bool.TrueString),
                 AppId = appId
             };
 
