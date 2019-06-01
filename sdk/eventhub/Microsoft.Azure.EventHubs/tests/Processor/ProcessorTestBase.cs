@@ -954,9 +954,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 return;
             }
 
-            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
-            var clientCrendential = new ClientCredential(aadAppId, aadAppSecret);
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, clientCrendential);
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
+                async (audience, authority, state) =>
+                {
+                    var authContext = new AuthenticationContext(authority);
+                    var cc = new ClientCredential(aadAppId, aadAppSecret);
+                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
+                    return authResult.AccessToken;
+                };
+
+            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback);
             var epo = await GetOptionsAsync();
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
 
