@@ -19,15 +19,29 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2018-05-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2018-05-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2018-05-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2018-05-01"),
-                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2018-05-01"),
-                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2018-05-01"),
-                new Tuple<string, string, string>("Resources", "Deployments", "2018-05-01"),
+                new Tuple<string, string, string>("Management", "DeploymentOperations", "2019-05-01"),
+                new Tuple<string, string, string>("Management", "Deployments", "2019-05-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2019-05-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2019-05-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2019-05-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2019-05-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2019-05-01"),
+                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2019-05-01"),
+                new Tuple<string, string, string>("Resources", "Deployments", "2019-05-01"),
+                new Tuple<string, string, string>("Resources", "Operations", "2019-05-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resources/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-resources-2019-05 --csharp.output-folder=C:\\code\\azure-sdk-for-net\\src\\SDKs\\Resource\\Management.ResourceManager\\Generated";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "f58c2f349207bda6f5ca4c010dd7f56c38ddb70e";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

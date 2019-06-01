@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IDeploymentsOperations.
         /// </summary>
         public virtual IDeploymentsOperations Deployments { get; private set; }
@@ -345,6 +350,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             Deployments = new DeploymentsOperations(this);
             Providers = new ProvidersOperations(this);
             Resources = new ResourcesOperations(this);
@@ -352,7 +358,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Tags = new TagsOperations(this);
             DeploymentOperations = new DeploymentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-05-01";
+            ApiVersion = "2019-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

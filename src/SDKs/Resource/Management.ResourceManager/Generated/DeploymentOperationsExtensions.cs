@@ -27,6 +27,98 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='operationId'>
+            /// The ID of the operation to get.
+            /// </param>
+            public static DeploymentOperation GetAtManagementGroupScope(this IDeploymentOperations operations, string groupId, string deploymentName, string operationId)
+            {
+                return operations.GetAtManagementGroupScopeAsync(groupId, deploymentName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a deployments operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='operationId'>
+            /// The ID of the operation to get.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentOperation> GetAtManagementGroupScopeAsync(this IDeploymentOperations operations, string groupId, string deploymentName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            public static IPage<DeploymentOperation> ListAtManagementGroupScope(this IDeploymentOperations operations, string groupId, string deploymentName, int? top = default(int?))
+            {
+                return operations.ListAtManagementGroupScopeAsync(groupId, deploymentName, top).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeploymentOperation>> ListAtManagementGroupScopeAsync(this IDeploymentOperations operations, string groupId, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a deployments operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
@@ -68,7 +160,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment with the operation to get.
+            /// The name of the deployment.
             /// </param>
             /// <param name='top'>
             /// The number of results to return.
@@ -85,7 +177,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment with the operation to get.
+            /// The name of the deployment.
             /// </param>
             /// <param name='top'>
             /// The number of results to return.
@@ -157,7 +249,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment with the operation to get.
+            /// The name of the deployment.
             /// </param>
             /// <param name='top'>
             /// The number of results to return.
@@ -177,7 +269,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment with the operation to get.
+            /// The name of the deployment.
             /// </param>
             /// <param name='top'>
             /// The number of results to return.
@@ -188,6 +280,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<DeploymentOperation>> ListAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, deploymentName, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DeploymentOperation> ListAtManagementGroupScopeNext(this IDeploymentOperations operations, string nextPageLink)
+            {
+                return operations.ListAtManagementGroupScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeploymentOperation>> ListAtManagementGroupScopeNextAsync(this IDeploymentOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtManagementGroupScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for TenantsOperations.
+    /// Extension methods for Operations.
     /// </summary>
-    public static partial class TenantsOperationsExtensions
+    public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Gets the tenants for your account.
+            /// Lists all of the available Microsoft.Resources REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<TenantIdDescription> List(this ITenantsOperations operations)
+            public static IPage<Operation> List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the tenants for your account.
+            /// Lists all of the available Microsoft.Resources REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TenantIdDescription>> ListAsync(this ITenantsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets the tenants for your account.
+            /// Lists all of the available Microsoft.Resources REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TenantIdDescription> ListNext(this ITenantsOperations operations, string nextPageLink)
+            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the tenants for your account.
+            /// Lists all of the available Microsoft.Resources REST API operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TenantIdDescription>> ListNextAsync(this ITenantsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

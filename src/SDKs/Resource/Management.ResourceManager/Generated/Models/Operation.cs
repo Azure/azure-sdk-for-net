@@ -10,30 +10,33 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Resource link filter.
+    /// Microsoft.Resources operation
     /// </summary>
-    public partial class ResourceLinkFilter
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceLinkFilter class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public ResourceLinkFilter()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceLinkFilter class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="targetId">The ID of the target resource.</param>
-        public ResourceLinkFilter(string targetId)
+        /// <param name="name">Operation name:
+        /// {provider}/{resource}/{operation}</param>
+        /// <param name="display">The object that represents the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
-            TargetId = targetId;
+            Name = name;
+            Display = display;
             CustomInit();
         }
 
@@ -43,23 +46,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the target resource.
+        /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
-        [JsonProperty(PropertyName = "targetId")]
-        public string TargetId { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the object that represents the operation.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (TargetId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetId");
-            }
-        }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
+
     }
 }
