@@ -19,4 +19,26 @@ namespace Azure.Security.KeyVault.Keys
 
         All = uint.MaxValue
     }
+
+    public static class KeyOperationsExtensions
+    {
+        public static KeyOperations ParseFromString(string value)
+        {
+            switch (value)
+            {
+                case "encrypt": return KeyOperations.Encrypt;
+                case "decrypt": return KeyOperations.Decrypt;
+                case "sign": return KeyOperations.Sign;
+                case "verify": return KeyOperations.Verify;
+                case "wrapKey": return KeyOperations.Wrap;
+                case "unwrapKey": return KeyOperations.Unwrap;
+                default: return KeyOperations.Other;
+            }
+        }
+
+        public static string ParseToString(KeyOperations keyType)
+        {
+            return (keyType).ToString().ToLower();
+        }
+    }
 }

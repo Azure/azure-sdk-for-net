@@ -21,4 +21,45 @@ namespace Azure.Security.KeyVault.Keys
 
         All = uint.MaxValue
     }
+
+    public static class KeyTypeExtensions
+    {
+        public static KeyType ParseFromString(string value)
+        {
+            switch (value)
+            {
+                case "EC":
+                    return KeyType.EllipticCurve;
+                case "EC-HSM":
+                    return KeyType.EllipticCurveHsm;
+                case "RSA":
+                    return KeyType.Rsa;
+                case "RSA-HSM":
+                    return KeyType.RsaHsm;
+                case "oct":
+                    return KeyType.Octet;
+                default:
+                    return KeyType.Other;
+            }
+        }
+
+        public static string ParseToString(KeyType keyType)
+        {
+            switch (keyType)
+            {
+                case KeyType.EllipticCurve:
+                    return "EC";
+                case KeyType.EllipticCurveHsm:
+                    return "EC-HSM";
+                case KeyType.Rsa:
+                    return "RSA";
+                case KeyType.RsaHsm:
+                    return "RSA-HSM";
+                case KeyType.Octet:
+                    return "oct";
+                default:
+                    return string.Empty;
+            }
+        }
+    }
 }

@@ -3,9 +3,11 @@
 // license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys
@@ -15,11 +17,18 @@ namespace Azure.Security.KeyVault.Keys
         public JsonWebKey KeyMaterial { get; set; }
 
         public Key(string name) : base(name) { }
-        
-        public Key(string name, string keyId, string keyType, IList<string> keyOperations)
-            :base(name)
+
+        internal override void ReadProperties(JsonElement json)
         {
-            KeyMaterial = new JsonWebKey(keyId, keyType, keyOperations);
+            KeyMaterial = null;
+
+            if (json.TryGetProperty("key", out JsonElement key))
+            {
+                KeyMaterial = new JsonWebKey();
+                KeyMaterial.ReadProperties(key);
+            }
+            
+            base.ReadProperties(json);
         }
     }
 }

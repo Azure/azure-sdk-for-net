@@ -5,11 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    public class KeyBase
+    public class KeyBase : Model
     {
+        public KeyBase(string name)
+        {
+            Name = name;
+        }
+
         private KeyAttributes _attributes;
         
         public string Name { get; private set; }
@@ -31,11 +37,6 @@ namespace Azure.Security.KeyVault.Keys
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public KeyBase(string name)
-        {
-            Name = name;
-        }
-
         private void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute); ;
@@ -50,6 +51,36 @@ namespace Azure.Security.KeyVault.Keys
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
+        }
+
+        internal override void WriteProperties(ref Utf8JsonWriter json) { }
+        
+        internal override void ReadProperties(JsonElement json)
+        {
+            if (json.TryGetProperty("kid", out JsonElement kid))
+            {
+                ParseId(kid.GetString());
+            }
+
+            if (json.TryGetProperty("managed", out JsonElement managed))
+            {
+                Managed = managed.GetBoolean();
+            }
+
+            if (json.TryGetProperty("attributes", out JsonElement attributes))
+            {
+                _attributes.ReadProperties(attributes);
+            }
+
+            if (json.TryGetProperty("tags", out JsonElement tags))
+            {
+                Tags = new Dictionary<string, string>();
+
+                foreach (var prop in tags.EnumerateObject())
+                {
+                    Tags[prop.Name] = prop.Value.GetString();
+                }
+            }
         }
     }
 }
