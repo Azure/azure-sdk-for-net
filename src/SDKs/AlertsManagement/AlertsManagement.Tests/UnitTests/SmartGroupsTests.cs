@@ -24,7 +24,6 @@ namespace AlertsManagement.Tests.UnitTests
         {
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             var result = alertsManagementClient.SmartGroups.GetAll();
 
@@ -38,7 +37,6 @@ namespace AlertsManagement.Tests.UnitTests
             string smartGroupId = "249a7944-dabc-4c80-8025-61165619d78f";
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             var result = alertsManagementClient.SmartGroups.GetById(smartGroupId);
 
@@ -54,7 +52,6 @@ namespace AlertsManagement.Tests.UnitTests
 
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             string updatedState = AlertState.Closed;
             var result = alertsManagementClient.SmartGroups.ChangeState(smartGroupId, updatedState);
@@ -68,54 +65,12 @@ namespace AlertsManagement.Tests.UnitTests
         public void GetSmartGroupHistoryTest()
         {
             string smartGroupId = "249a7944-dabc-4c80-8025-61165619d78f";
-            List<SmartGroupModificationItem> modificationitems = new List<SmartGroupModificationItem>
-            {
-                new SmartGroupModificationItem(SmartGroupModificationEvent.SmartGroupCreated),
-                new SmartGroupModificationItem(SmartGroupModificationEvent.AlertAdded, "AddedAlertId"),
-                new SmartGroupModificationItem(SmartGroupModificationEvent.AlertRemoved, "RemovedAlertId"),
-                new SmartGroupModificationItem(SmartGroupModificationEvent.StateChange, AlertState.New, AlertState.Closed)
-            };
-
-            SmartGroupModification expectedParameters = new SmartGroupModification(properties: new SmartGroupModificationProperties(smartGroupId, modificationitems));
-
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, alertsManagementClient.SerializationSettings);
-
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            alertsManagementClient = GetAlertsManagementClient(handler);
-
             var result = alertsManagementClient.SmartGroups.GetHistory(smartGroupId);
 
-            ComparisonUtility.AreEqual(expectedParameters.Properties.Modifications, result.Properties.Modifications);
-        }
-
-        private List<SmartGroup> GetTestSmartGroupList()
-        {
-            return new List<SmartGroup>
-            {
-                CreateTestSmartGroupById(Guid.NewGuid().ToString()),
-                CreateTestSmartGroupById(Guid.NewGuid().ToString()),
-                CreateTestSmartGroupById(Guid.NewGuid().ToString())
-            };
-        }
-
-        private SmartGroup CreateTestSmartGroupById(string smartGroupId, string smartGroupState = "New")
-        {
-            return new SmartGroup(
-                id: smartGroupId,
-                alertsCount: 10,
-                smartGroupState: smartGroupState,
-                severity: Severity.Sev2,
-                startDateTime: new DateTime(2019, 6, 19, 12, 30, 45),
-                lastModifiedDateTime: new DateTime(2019, 6, 20, 11, 45, 9),
-                lastModifiedUserName: "System"
-            );
+            Assert.Equal(smartGroupId, result.Properties.SmartGroupId);
+            Assert.Equal(4, result.Properties.Modifications.Count);
         }
     }
 }

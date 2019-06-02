@@ -23,46 +23,11 @@ namespace AlertsManagement.Tests.UnitTests
         public void ListOperationsTest()
         {
             var handler = new RecordedDelegatingHandler();
-            var insightsClient = GetAlertsManagementClient(handler);
+            var alertsManagementClient = GetAlertsManagementClient(handler);
 
-            List<Operation> operationsList = new List<Operation>
-            {
-                new Operation
-                {
-                    Name = "Operation1",
-                    Display = new OperationDisplay {
-                        Operation = "Operation1",
-                        Provider = "microsoft.alertsmanagement",
-                        Resource = "resource1"
-                    }
-                },
-                new Operation
-                {
-                    Name = "Operation2",
-                    Display = new OperationDisplay {
-                        Operation = "Operation2",
-                        Provider = "microsoft.alertsmanagement",
-                        Resource = "resource2"
-                    }
-                },
-            };
+            var result = alertsManagementClient.Operations.List();
 
-            var expResponse = new Page<Operation>
-            {
-                Items = operationsList
-            };
-
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            insightsClient = GetAlertsManagementClient(handler);
-
-            var operations = insightsClient.Operations.List();
-            ComparisonUtility.AreEqual(operationsList, operations.ToList());
+            Assert.Equal(2, result.Count());
         }
     }
 }

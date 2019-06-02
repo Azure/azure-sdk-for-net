@@ -24,7 +24,6 @@ namespace AlertsManagement.Tests.UnitTests
         {
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             var result = alertsManagementClient.Alerts.GetAll();
 
@@ -38,7 +37,6 @@ namespace AlertsManagement.Tests.UnitTests
             string alertID = "249a7944-dabc-4c80-8025-61165619d78f";
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             var result = alertsManagementClient.Alerts.GetById(alertID);
 
@@ -53,7 +51,6 @@ namespace AlertsManagement.Tests.UnitTests
             string alertID = "249a7944-dabc-4c80-8025-61165619d78f";
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             string updatedState = AlertState.Closed;
             var result = alertsManagementClient.Alerts.ChangeState(alertID, updatedState);
@@ -69,7 +66,6 @@ namespace AlertsManagement.Tests.UnitTests
             string alertID = "249a7944-dabc-4c80-8025-61165619d78f";
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
             var result = alertsManagementClient.Alerts.GetHistory(alertID);
 
             Assert.Equal(alertID, result.Properties.AlertId);
@@ -82,7 +78,6 @@ namespace AlertsManagement.Tests.UnitTests
         {
             var handler = new RecordedDelegatingHandler();
             var alertsManagementClient = GetAlertsManagementClient(handler);
-            alertsManagementClient = GetAlertsManagementClient(handler);
 
             var result = alertsManagementClient.Alerts.GetSummary("Severity");
             Assert.Equal(2, result.Properties.Values.Count);

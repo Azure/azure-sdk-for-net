@@ -105,12 +105,12 @@ namespace AlertsManagement.Tests.Helpers
                 page.Items = mockSmartGroupsStore;
                 response = Newtonsoft.Json.JsonConvert.SerializeObject(page);
             }
-            else if (uri.LocalPath.EndsWith("/changestate"))
+            else if (uri.LocalPath.EndsWith("/changeState"))
             {
                 // Extract smart group id
                 string id = ComparisonUtility.ExtractIdFromLocalPath(uri.LocalPath);
 
-                // Fetch alert from store by id
+                // Fetch smart group from store by id
                 SmartGroup smartGroup = SearchSmartGroupInStore(id);
 
                 // Extract updated state from query
@@ -125,12 +125,15 @@ namespace AlertsManagement.Tests.Helpers
                 string id = ComparisonUtility.ExtractIdFromLocalPath(uri.LocalPath);
 
                 List<SmartGroupModificationItem> modificationitems = new List<SmartGroupModificationItem>
-                    {
-                        new SmartGroupModificationItem(SmartGroupModificationEvent.AlertAdded),
-                        new SmartGroupModificationItem(SmartGroupModificationEvent.StateChange, AlertState.New, AlertState.Closed)
-                    };
+            {
+                new SmartGroupModificationItem(SmartGroupModificationEvent.SmartGroupCreated),
+                new SmartGroupModificationItem(SmartGroupModificationEvent.AlertAdded, "AddedAlertId"),
+                new SmartGroupModificationItem(SmartGroupModificationEvent.AlertRemoved, "RemovedAlertId"),
+                new SmartGroupModificationItem(SmartGroupModificationEvent.StateChange, AlertState.New, AlertState.Closed)
+            };
 
                 SmartGroupModification history = new SmartGroupModification(properties: new SmartGroupModificationProperties(id, modificationitems));
+
                 response = Newtonsoft.Json.JsonConvert.SerializeObject(history);
             }
             else
@@ -139,9 +142,9 @@ namespace AlertsManagement.Tests.Helpers
                 string id = ComparisonUtility.ExtractIdFromLocalPath(uri.LocalPath);
 
                 // Fetch smart group from store by id
-                SmartGroup alert = SearchSmartGroupInStore(id);
+                SmartGroup smartGroup = SearchSmartGroupInStore(id);
 
-                response = Newtonsoft.Json.JsonConvert.SerializeObject(alert);
+                response = Newtonsoft.Json.JsonConvert.SerializeObject(smartGroup);
             }
 
             return response;
@@ -149,8 +152,34 @@ namespace AlertsManagement.Tests.Helpers
 
         private string GenerateMockResponseForOperations(Uri uri)
         {
-            string response = "";
+            List<Operation> operationsList = new List<Operation>
+            {
+                new Operation
+                {
+                    Name = "Operation1",
+                    Display = new OperationDisplay {
+                        Operation = "Operation1",
+                        Provider = "microsoft.alertsmanagement",
+                        Resource = "resource1"
+                    }
+                },
+                new Operation
+                {
+                    Name = "Operation2",
+                    Display = new OperationDisplay {
+                        Operation = "Operation2",
+                        Provider = "microsoft.alertsmanagement",
+                        Resource = "resource2"
+                    }
+                },
+            };
 
+            var expResponse = new Page<Operation>
+            {
+                Items = operationsList
+            };
+
+            string response = Newtonsoft.Json.JsonConvert.SerializeObject(expResponse);
             return response;
         }
 

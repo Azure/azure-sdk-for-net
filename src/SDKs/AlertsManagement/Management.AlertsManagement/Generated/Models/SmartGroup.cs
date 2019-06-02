@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// <summary>
     /// Set of related alerts grouped together smartly by AMS.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class SmartGroup : Resource
     {
         /// <summary>
