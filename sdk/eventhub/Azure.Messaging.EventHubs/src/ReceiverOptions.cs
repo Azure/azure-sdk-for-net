@@ -16,13 +16,19 @@ namespace Azure.Messaging.EventHubs
     public class ReceiverOptions
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
-        public const string DefaultConsumerGroupName = "$Default";
+        public const string DefaultConsumerGroup = "$Default";
 
         /// <summary>The minimum value allowed for the prefetch count of the receiver.</summary>
         protected const int MinimumPrefetchCount = 10;
 
         /// <summary>The maximum length, in characters, for the identifier assigned to a receiver.</summary>
         protected const int MaximumIdentifierLength = 64;
+
+        /// <summary>The retry policy to apply to operations.</summary>
+        protected Retry _retry = Retry.Default;
+
+        /// <summary>The amount of time to wait for messages when receiving.</summary>
+        protected TimeSpan? _maximumReceiveWaitTime = TimeSpan.FromMinutes(1);
 
         /// <summary>The prefetch count to use for the receiver.</summary>
         protected int _prefetchCount = 300;
@@ -37,7 +43,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the default consumer group will be assumed.</value>
         ///
-        public string ConsumerGroup { get; set; } = DefaultConsumerGroupName;
+        public string ConsumerGroup { get; set; } = DefaultConsumerGroup;
 
         /// <summary>
         ///   The position within the partition where the receiver should begin reading events.
@@ -82,7 +88,23 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the operation timeout requested for the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public TimeSpan? DefaultMaximumReceiveWaitTime { get; set; }
+        public TimeSpan? DefaultMaximumReceiveWaitTime
+        {
+            get => _maximumReceiveWaitTime;
+
+            set
+            {
+               ValidateMaximumReceiveWaitTime(value);
+               _maximumReceiveWaitTime = value;
+            }
+        }
+
+        /// <summary>
+        ///   Normalizes the specified wait time value, returning the timeout period or the
+        ///   a <c>null</c> value if no wait time was specified.
+        /// </summary>
+        ///
+        internal TimeSpan? MaximumReceiveWaitTimeOrDefault => (_maximumReceiveWaitTime == TimeSpan.Zero) ? null : _maximumReceiveWaitTime;
 
         /// <summary>
         ///     An optional text-based identifierlabel to assign to an event receiver.
@@ -147,6 +169,25 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   Creates a new copy of the current <see cref="ReceiverOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="ReceiverOptions" />.</returns>
+        ///
+        internal ReceiverOptions Clone() =>
+            new ReceiverOptions
+            {
+                ConsumerGroup = this.ConsumerGroup,
+                BeginReceivingAt = this.BeginReceivingAt,
+                ExclusiveReceiverPriority = this.ExclusiveReceiverPriority,
+                Retry = this.Retry?.Clone(),
+
+                _identifier = this._identifier,
+                _prefetchCount = this._prefetchCount,
+                _maximumReceiveWaitTime = this._maximumReceiveWaitTime
+            };
+
+        /// <summary>
         ///   Validates that the identifier requested for the receiver can be used, throwing an <see cref="ArgumentException" /> if
         ///   it is not valid.
         /// </summary>
@@ -158,6 +199,21 @@ namespace Azure.Messaging.EventHubs
             if ((!String.IsNullOrEmpty(identifier)) && (identifier.Length > MaximumIdentifierLength))
             {
                 throw new ArgumentException(nameof(identifier), String.Format(CultureInfo.CurrentCulture, Resources.ReceiverIdentifierOverMaxValue, MaximumIdentifierLength));
+            }
+        }
+
+        /// <summary>
+        ///   Validates the time period specified as the maximum time to wait when receiving, throwing an <see cref="ArgumentException" /> if
+        ///   it is not valid.
+        /// </summary>
+        ///
+        /// <param name="maximumWaitTime">The time period to validae.</param>
+        ///
+        protected virtual void ValidateMaximumReceiveWaitTime(TimeSpan? maximumWaitTime)
+        {
+            if (maximumWaitTime < TimeSpan.Zero)
+            {
+                throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(DefaultMaximumReceiveWaitTime));
             }
         }
     }

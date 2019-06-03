@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="interval">Gets or sets the interval of the
         /// schedule.</param>
         /// <param name="frequency">Gets or sets the frequency of the schedule.
-        /// Possible values include: 'OneTime', 'Day', 'Hour', 'Week',
-        /// 'Month'</param>
+        /// Possible values include: 'OneTime', 'Day', 'Hour', 'Week', 'Month',
+        /// 'Minute'</param>
         /// <param name="timeZone">Gets or sets the time zone of the
         /// schedule.</param>
         /// <param name="advancedSchedule">Gets or sets the advanced
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Automation.Models
 
         /// <summary>
         /// Gets or sets the frequency of the schedule. Possible values
-        /// include: 'OneTime', 'Day', 'Hour', 'Week', 'Month'
+        /// include: 'OneTime', 'Day', 'Hour', 'Week', 'Month', 'Minute'
         /// </summary>
         [JsonProperty(PropertyName = "frequency")]
         public string Frequency { get; set; }

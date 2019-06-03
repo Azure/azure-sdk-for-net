@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="Guard.ArgumentNotNullOrEmpty" /> method.
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotNullOrWhitespace" /> method.
         /// </summary>
         ///
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="Guard.ArgumentNotNullOrEmpty" /> method.
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotNullOrWhitespace" /> method.
         /// </summary>
         ///
         [Test]
