@@ -1,6 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />	
-	
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
   <PropertyGroup>
 		<TargetFrameworks>netcoreapp2.0</TargetFrameworks>
 	</PropertyGroup>
@@ -12,9 +10,5 @@
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-    
-    <!-- This is needed for discovering tests in test explorer
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
-    -->
   </ItemGroup>
 </Project>
