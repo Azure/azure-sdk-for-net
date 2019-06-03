@@ -68,8 +68,8 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         protected internal EventSender(ConnectionType connectionType,
-                                       string         eventHubPath,
-                                       SenderOptions  senderOptions)
+                                       string eventHubPath,
+                                       SenderOptions senderOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNull(nameof(senderOptions), senderOptions);
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      CancellationToken      cancellationToken = default) => SendAsync(events, null, cancellationToken);
+                                      CancellationToken cancellationToken = default) => SendAsync(events, null, cancellationToken);
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -117,8 +117,8 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      EventBatchingOptions   batchOptions,
-                                      CancellationToken      cancellationToken = default) => throw new NotImplementedException();
+                                      EventBatchingOptions batchOptions,
+                                      CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the sender.

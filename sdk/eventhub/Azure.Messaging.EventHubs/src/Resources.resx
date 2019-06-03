@@ -123,7 +123,7 @@
   <data name="ArgumentNullOrWhiteSpace" xml:space="preserve">
     <value>The argument '{0}' may not be null or white space.</value>
   </data>
-  <data name="ArgumentStringTooBig" xml:space="preserve">
+  <data name="ArgumentStringTooLong" xml:space="preserve">
     <value>The argument '{0}' cannot exceed {1} characters.</value>
   </data>
   <data name="InvalidEncoding" xml:space="preserve">
@@ -158,5 +158,17 @@
   </data>
   <data name="MalformedEventHubClientConnectionString" xml:space="preserve">
     <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, the path to an Event Hub, and a Shared Access Signature (both the name and value) to be valid.</value>
+  </data>
+  <data name="UnknownConnectionType" xml:space="preserve">
+    <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
+  </data>
+  <data name="InvalidSharedAccessSignature" xml:space="preserve">
+    <value>The shared access signature could not be parsed; it was either malformed or incorrectly encoded.</value>
+  </data>
+  <data name="SharedAccessKeyIsRequired" xml:space="preserve">
+    <value>In order to update the signature, a shared access key must have been provided when the shared access signature was created.</value>
+  </data>
+  <data name="ResourceMustMatchSharedAccessSignature" xml:space="preserve">
+    <value>The reqested resource, '{0}', does not match the resource of the shared access signature, '{1}'.   A token cannot be issued.</value>
   </data>
 </root>

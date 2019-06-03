@@ -84,9 +84,9 @@ namespace Azure.Messaging.EventHubs
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        protected internal PartitionReceiver(ConnectionType  connectionType,
-                                             string          eventHubPath,
-                                             string          partitionId,
+        protected internal PartitionReceiver(ConnectionType connectionType,
+                                             string eventHubPath,
+                                             string partitionId,
                                              ReceiverOptions receiverOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
@@ -119,8 +119,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this receiver is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public virtual Task<IEnumerable<EventData>> ReceiveAsync(int               maximumMessageCount,
-                                                                 TimeSpan?         maximumWaitTime = null,
+        public virtual Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                 TimeSpan? maximumWaitTime = null,
                                                                  CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>

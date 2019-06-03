@@ -14,7 +14,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class ConnectionStringParserTests
     {
         /// <summary>
@@ -63,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ParseValidatesArguments(string connectionString)
         {
-            Assert.That(() => ConnectionStringParser.Parse(connectionString), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => ConnectionStringParser.Parse(connectionString), Throws.ArgumentException);
         }
 
         /// <summary>
