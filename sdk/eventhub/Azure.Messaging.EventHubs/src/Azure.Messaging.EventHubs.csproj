@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Compatibility\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
