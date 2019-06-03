@@ -31,6 +31,7 @@ namespace Azure.Security.KeyVault.Test
         protected void AssertSecretsEqual(Secret exp, Secret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
+            AssertSecretsEqual((SecretBase)exp, (SecretBase)act);
         }
 
         protected void AssertSecretsEqual(SecretBase exp, SecretBase act)
