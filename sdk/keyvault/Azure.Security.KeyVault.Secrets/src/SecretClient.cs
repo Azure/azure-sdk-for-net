@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions?api-version={ApiVersion}");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, ()=> new SecretBase(), cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, ()=> new SecretBase(), cancellationToken));
         }
 
         public virtual IEnumerable<Response<SecretBase>> GetAllVersions(string name, CancellationToken cancellationToken = default)
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => this.GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual IAsyncEnumerable<Response<SecretBase>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -82,14 +82,14 @@ namespace Azure.Security.KeyVault.Secrets
             Uri firstPageUri = new Uri(_vaultUri, SecretsPath + $"?api-version={ApiVersion}");
 
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => this.GetPageAsync(firstPageUri, () => new SecretBase(), cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual IEnumerable<Response<SecretBase>> GetAll(CancellationToken cancellationToken = default)
         {
             Uri firstPageUri = new Uri(_vaultUri, SecretsPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => this.GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => GetPage(firstPageUri, () => new SecretBase(), cancellationToken));
         }
 
         public virtual async Task<Response<SecretBase>> UpdateAsync(SecretBase secret, CancellationToken cancellationToken = default)
@@ -262,7 +262,7 @@ namespace Azure.Security.KeyVault.Secrets
 
                 Response response = await SendRequestAsync(request, cancellationToken);
 
-                return this.CreateResponse(response, resultFactory());
+                return CreateResponse(response, resultFactory());
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.Security.KeyVault.Secrets
 
                 Response response = SendRequest(request, cancellationToken);
 
-                return this.CreateResponse(response, resultFactory());
+                return CreateResponse(response, resultFactory());
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Response response = await SendRequestAsync(request, cancellationToken);
 
-                return this.CreateResponse(response, resultFactory());
+                return CreateResponse(response, resultFactory());
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 Response response = SendRequest(request, cancellationToken);
 
-                return this.CreateResponse(response, resultFactory());
+                return CreateResponse(response, resultFactory());
             }
         }
         private async Task<Response> SendRequestAsync(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
