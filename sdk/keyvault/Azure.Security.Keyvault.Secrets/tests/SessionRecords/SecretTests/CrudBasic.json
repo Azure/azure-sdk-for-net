@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ssnetvault.vault.azure.net/secrets//CrudBasic?api-version=7.0",
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/CrudBasic?api-version=7.0",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -22,7 +22,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2019 17:30:22 GMT",
+        "Date": "Mon, 03 Jun 2019 16:39:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -32,22 +32,22 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "e5df38b9-1d61-42a4-b916-0b229a7f5d16",
+        "x-ms-request-id": "f02a88f1-8a32-4823-8d84-448cd5006337",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudBasicValue1",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/e0a4548c311b452b9abe2083cf515ec5",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/fb1c13cd103940d5930972b4b5139b1e",
         "attributes": {
           "enabled": true,
-          "created": 1559323822,
-          "updated": 1559323822,
+          "created": 1559579950,
+          "updated": 1559579950,
           "recoveryLevel": "Purgeable"
         }
       }
     },
     {
-      "RequestUri": "https://ssnetvault.vault.azure.net/secrets//CrudBasic?api-version=7.0",
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/CrudBasic?api-version=7.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -66,7 +66,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "220",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2019 17:30:22 GMT",
+        "Date": "Mon, 03 Jun 2019 16:39:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -76,22 +76,22 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "7435c272-eb94-4b82-941f-9e9f3ea45c75",
+        "x-ms-request-id": "d5e91ee5-e74b-41dc-be23-77cd9e40b292",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudBasicValue1",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/e0a4548c311b452b9abe2083cf515ec5",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/fb1c13cd103940d5930972b4b5139b1e",
         "attributes": {
           "enabled": true,
-          "created": 1559323822,
-          "updated": 1559323822,
+          "created": 1559579950,
+          "updated": 1559579950,
           "recoveryLevel": "Purgeable"
         }
       }
     },
     {
-      "RequestUri": "https://ssnetvault.vault.azure.net/secrets//CrudBasic/e0a4548c311b452b9abe2083cf515ec5?api-version=7.0",
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/fb1c13cd103940d5930972b4b5139b1e?api-version=7.0",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -115,7 +115,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2019 17:30:22 GMT",
+        "Date": "Mon, 03 Jun 2019 16:39:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -125,21 +125,21 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "3fe9add2-1d6d-4c8b-b90a-08fdf5dfe2c6",
+        "x-ms-request-id": "18bedb35-fec4-4148-beaf-39e8c23751f5",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/e0a4548c311b452b9abe2083cf515ec5",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/fb1c13cd103940d5930972b4b5139b1e",
         "attributes": {
           "enabled": false,
-          "created": 1559323822,
-          "updated": 1559323822,
+          "created": 1559579950,
+          "updated": 1559579950,
           "recoveryLevel": "Purgeable"
         }
       }
     },
     {
-      "RequestUri": "https://ssnetvault.vault.azure.net/secrets//CrudBasic?api-version=7.0",
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/CrudBasic?api-version=7.0",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -158,7 +158,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2019 17:30:22 GMT",
+        "Date": "Mon, 03 Jun 2019 16:39:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -168,15 +168,15 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "33d6c182-430b-4df1-8897-e1b9686a467c",
+        "x-ms-request-id": "6f388a64-00fb-412f-95cd-d78298d98cdf",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/e0a4548c311b452b9abe2083cf515ec5",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudBasic/fb1c13cd103940d5930972b4b5139b1e",
         "attributes": {
           "enabled": false,
-          "created": 1559323822,
-          "updated": 1559323822,
+          "created": 1559579950,
+          "updated": 1559579950,
           "recoveryLevel": "Purgeable"
         }
       }
