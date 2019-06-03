@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Test
 {
-    public class KeyVaultTestBase : RecordedTestBase
+    public abstract class KeyVaultTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 

@@ -50,7 +50,8 @@ namespace Azure.Security.KeyVault.Test
         [OneTimeTearDown]
         public async Task TearDown()
         {
-            await _client.DeleteAsync(_secretName);
+            var setupClient = GetClient(_setupRecording);
+            await setupClient.DeleteAsync(_secretName);
             _setupRecording.Dispose();
         }
 

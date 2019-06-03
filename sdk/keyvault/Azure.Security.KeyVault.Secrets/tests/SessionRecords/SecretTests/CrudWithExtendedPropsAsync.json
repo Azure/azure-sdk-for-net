@@ -27,7 +27,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 16:39:13 GMT",
+        "Date": "Mon, 03 Jun 2019 20:47:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -37,19 +37,19 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "13435f81-62be-463f-9315-3b92affa4692",
+        "x-ms-request-id": "7d2671f7-8e1a-4fee-9f1f-b60fac30c396",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudWithExtendedPropsValue1",
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/be9e5302a8844779a2e4f50403887522",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/a497ad9337864c3cb815f3af8b3a630c",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559579953,
-          "updated": 1559579953,
+          "created": 1559594879,
+          "updated": 1559594879,
           "recoveryLevel": "Purgeable"
         }
       }
@@ -74,7 +74,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 16:39:13 GMT",
+        "Date": "Mon, 03 Jun 2019 20:47:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -84,19 +84,19 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "90199c94-dfcb-4932-9932-c9300de88c10",
+        "x-ms-request-id": "0e5adeb9-c9be-4e72-b496-2162ed5b41b0",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudWithExtendedPropsValue1",
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/be9e5302a8844779a2e4f50403887522",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/a497ad9337864c3cb815f3af8b3a630c",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559579953,
-          "updated": 1559579953,
+          "created": 1559594879,
+          "updated": 1559594879,
           "recoveryLevel": "Purgeable"
         }
       }
@@ -121,7 +121,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 16:39:13 GMT",
+        "Date": "Mon, 03 Jun 2019 20:47:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -131,18 +131,18 @@
         "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "4631e0d8-d972-4ad3-895c-99089f8bdd57",
+        "x-ms-request-id": "ba7cc27c-ffc1-4631-8ff4-7c02e7c1246b",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/be9e5302a8844779a2e4f50403887522",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/a497ad9337864c3cb815f3af8b3a630c",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559579953,
-          "updated": 1559579953,
+          "created": 1559594879,
+          "updated": 1559594879,
           "recoveryLevel": "Purgeable"
         }
       }
