@@ -8,16 +8,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class TokenResponse
-    {
-
-        public string Token { get; private set; }
-
-        public DateTimeOffset ExpiresOn { get; private set; }
-
-        public string Error { get; private set; }
-    }
-
     public abstract class AzureCredential : TokenCredential
     {
         private IdentityClient _client;
