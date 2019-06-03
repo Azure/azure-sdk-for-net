@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -62,7 +64,7 @@ namespace Azure.Security.KeyVault.Test
 
             await foreach (var secret in _client.GetAllVersionsAsync(_secretName))
             {
-                Assert.True(_versions.TryGetValue(secret.Id.ToString(), out Secret exp));
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
                 AssertSecretsEqual(exp, secret);
 
@@ -77,13 +79,11 @@ namespace Azure.Security.KeyVault.Test
         {
             int actVersionCount = 0;
 
-            var enumerator = _client.GetAllVersionsAsync(_secretName);
-
-            while (await enumerator.MoveNextAsync())
+            await foreach (var secret in _client.GetAllVersionsAsync(_secretName))
             {
-                Assert.True(_versions.TryGetValue(enumerator.Current.Id.ToString(), out Secret exp));
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
-                AssertSecretsEqual(exp, enumerator.Current);
+                AssertSecretsEqual(exp, secret.Value);
 
                 actVersionCount++;
             }
@@ -97,16 +97,13 @@ namespace Azure.Security.KeyVault.Test
         {
             int actVersionCount = 0;
 
-            await foreach (Page<SecretBase> currentPage in _client.GetAllVersionsAsync(_secretName).ByPage())
+            await foreach (Response<SecretBase> secret in _client.GetAllVersionsAsync(_secretName))
             {
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
+                AssertSecretsEqual(exp, secret.Value);
 
-                    actVersionCount++;
-                }
+                actVersionCount++;
             }
 
             Assert.AreEqual(VersionCount, actVersionCount);
@@ -117,20 +114,13 @@ namespace Azure.Security.KeyVault.Test
         {
             int actVersionCount = 0;
 
-            var enumerator = _client.GetAllVersionsAsync(_secretName).ByPage();
-
-            while (await enumerator.MoveNextAsync())
+            await foreach (Response<SecretBase> secret in _client.GetAllVersionsAsync(_secretName))
             {
-                Page<SecretBase> currentPage = enumerator.Current;
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
+                AssertSecretsEqual(exp, secret.Value);
 
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
-
-                    actVersionCount++;
-                }
+                actVersionCount++;
             }
 
             Assert.AreEqual(VersionCount, actVersionCount);
