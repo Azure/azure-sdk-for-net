@@ -542,12 +542,11 @@ namespace Microsoft.Azure.Search.Tests
                     new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" + i }
                 };
 
-                skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill" + i, RootPathString)
+                skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
                 {
                     TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
-                    DefaultLanguageCode = "en",
-                    Context = "/document",
+                    DefaultLanguageCode = "en"
                 });
             }
 
@@ -590,7 +589,7 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = ocrLanguageCode,
+                DefaultLanguageCode = ocrLanguageCode
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum TextOperationStatusCodes
     {
-        [EnumMember(Value = "Not Started")]
+        [EnumMember(Value = "NotStarted")]
         NotStarted,
         [EnumMember(Value = "Running")]
         Running,
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             switch( value )
             {
                 case TextOperationStatusCodes.NotStarted:
-                    return "Not Started";
+                    return "NotStarted";
                 case TextOperationStatusCodes.Running:
                     return "Running";
                 case TextOperationStatusCodes.Failed:
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         {
             switch( value )
             {
-                case "Not Started":
+                case "NotStarted":
                     return TextOperationStatusCodes.NotStarted;
                 case "Running":
                     return TextOperationStatusCodes.Running;

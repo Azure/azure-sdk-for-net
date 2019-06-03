@@ -35,7 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// line.</param>
         /// <param name="text">The text content of the line.</param>
         /// <param name="words">List of words in the text line.</param>
-        public Line(IList<int> boundingBox = default(IList<int>), string text = default(string), IList<Word> words = default(IList<Word>))
+        public Line(IList<double> boundingBox = default(IList<double>), string text = default(string), IList<Word> words = default(IList<Word>))
         {
             BoundingBox = boundingBox;
             Text = text;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets bounding box of a recognized line.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
-        public IList<int> BoundingBox { get; set; }
+        public IList<double> BoundingBox { get; set; }
 
         /// <summary>
         /// Gets or sets the text content of the line.
