@@ -1,0 +1,574 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/2102213139/versions?api-version=7.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "6cd167aa01a5974a2401561357855d05",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Jun 2019 20:47:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "a4db3bc9-c3f6-49d8-8c2c-f887464a3bf9",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/089e503bc32c44ce9dd2175d59b9e624",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/0ec79df6b7ab47c79b1e9fef13e05c88",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/1a375d7662d84cd6bdec1e0df956e997",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/1b6948737c6b453cbaa4c4dacf50a8f6",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/1d483abb53c14aaba7728cb24cee83a0",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/2dd5b80ebf494a91baeb184f484b4c42",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/2ff38183edd74ca9aaea1c11c2f1109e",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/356247c73b544fca999344d784e921ee",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/38886cac9b594444b4c08c26cb81c797",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/392ec30fb8a7496994ee55770876b63a",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594865,
+              "updated": 1559594865,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/3b5b86f837e144a288c78c04e78e5288",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/40ec0efa90694211bf3bc56d6f212698",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/43281dfed15e47ad8a9cd528e675a35e",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/44010db4063c4f0e917ed860887706b1",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/4d3857dd0d00402fb94643868995c40c",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/5b198ce3a9e840e38b8a0b84417d0a9d",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/5b355a584da84472995b5737d53b8dbf",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/607b83ce8b0547ff92d557251aa6f158",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/61db16ef11c4458a83d03fdd216533c9",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/664eae9f3c814cb8b35f7fca808d1341",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/66b706e7f5dc4cf7b9f0b1292cce0ef2",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/6f3bfebd47ba4a9f95dcc9d400036d7b",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/72336719e4e14af7933820eb521b8c05",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/7cddcbd8c14d4355a649ed7c6f1f45c5",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/7f5e0d02330544e784ba66f4b0fd7717",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          }
+        ],
+        "nextLink": "https://ssnetvault.vault.azure.net:443/secrets/2102213139/versions?api-version=7.0\u0026$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXdJWE5sWTNKbGRDOHlNVEF5TWpFek1UTTVMemcwTVRRME9EQTVNMFl6UVRSQ01UTkNOVFUwTlRrM1EwSTROamRHUTBFM0lUQXdNREF5T0NFNU9UazVMVEV5TFRNeFZESXpPalU1T2pVNUxqazVPVGs1T1RsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0"
+      }
+    },
+    {
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/2102213139/versions?api-version=7.0\u0026$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXdJWE5sWTNKbGRDOHlNVEF5TWpFek1UTTVMemcwTVRRME9EQTVNMFl6UVRSQ01UTkNOVFUwTlRrM1EwSTROamRHUTBFM0lUQXdNREF5T0NFNU9UazVMVEV5TFRNeFZESXpPalU1T2pVNUxqazVPVGs1T1RsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "548fea03ad2d70667bc308570867f9f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Jun 2019 20:47:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "1638dad3-97ee-4c3e-a1db-fddacb685963",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/841448093f3a4b13b554597cb867fca7",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/8540dc107f9845f79546aeaa726877bb",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/8a76504923564ccb8cd0edb448b89c37",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/8d4b3bf795784395a1758e62bd2978b4",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/8ef33c96f07a4e0cab4192ecc5ce258a",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/8f4e5c9cbd224975a2cb425ba84e9340",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/9c714cb139a442c6ab5e7f3b154f42fb",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/9cea43dacbf84b2fb3ae3fcfddb28fc0",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594869,
+              "updated": 1559594869,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/a65542dc1d1e41319f9347700a018319",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/abab43cca36946f9b562d8da8ef98e3e",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/b846d54da0eb4e14a82f872812823d6a",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594865,
+              "updated": 1559594865,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/bf640ef154164078b6c34367ce185089",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/c20cdb747a164e58a3fc4e5386c49653",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/d172061595c64fb88d0b189ebdc2daad",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/d34077dbef484ddc81ce26c72153f2e3",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/d5e2a985fad84a6fbeea3af512a219f8",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/dd49113ba3a449a3bb93a9eee6603065",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/dd8e933c7ac34b26b989d49cfeeb7768",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/e21dc948538b443891e5692baad489a8",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594865,
+              "updated": 1559594865,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/e622a2b650e14621906b7c69f3faae0e",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/e6d9c668bfd34ba78816b0a6ffbdf001",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/ead352ff56dd42a6bc24b86f1c104123",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/f0f8df5a947b4780a7e85503f835d564",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594866,
+              "updated": 1559594866,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/f21ee2b35724468bb07bceb076704d73",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594867,
+              "updated": 1559594867,
+              "recoveryLevel": "Purgeable"
+            }
+          },
+          {
+            "id": "https://ssnetvault.vault.azure.net/secrets/2102213139/fb2a672e4bbf45028633ea545a286dec",
+            "attributes": {
+              "enabled": true,
+              "created": 1559594868,
+              "updated": 1559594868,
+              "recoveryLevel": "Purgeable"
+            }
+          }
+        ],
+        "nextLink": "https://ssnetvault.vault.azure.net:443/secrets/2102213139/versions?api-version=7.0\u0026$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXdJWE5sWTNKbGRDOHlNVEF5TWpFek1UTTVMMFpDUlRneE9UazVRa1EzUmpRMVJVTkJOelZDTUVFeE1UaENRVGs1UkRSRElUQXdNREF5T0NFNU9UazVMVEV5TFRNeFZESXpPalU1T2pVNUxqazVPVGs1T1RsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0"
+      }
+    },
+    {
+      "RequestUri": "https://ssnetvault.vault.azure.net/secrets/2102213139/versions?api-version=7.0\u0026$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXdJWE5sWTNKbGRDOHlNVEF5TWpFek1UTTVMMFpDUlRneE9UazVRa1EzUmpRMVJVTkJOelZDTUVFeE1UaENRVGs1UkRSRElUQXdNREF5T0NFNU9UazVMVEV5TFRNeFZESXpPalU1T2pVNUxqazVPVGs1T1RsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+        ],
+        "x-ms-client-request-id": "7cffceb525dc6957b16ac853c2a97acf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "28",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Jun 2019 20:47:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "ba0aca87-0444-4de7-996e-bbd862603c55",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://ssnetvault.vault.azure.net/",
+    "RandomSeed": "395300709"
+  }
+}
