@@ -11,6 +11,7 @@ namespace Azure.Security.KeyVault.Keys
 {
     public class KeyBase : Model
     {
+        internal KeyBase() { }
         public KeyBase(string name)
         {
             Name = name;

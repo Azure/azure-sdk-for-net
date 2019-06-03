@@ -192,7 +192,74 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json) { }
+        internal override void WriteProperties(ref Utf8JsonWriter json)
+        {
+            if (KeyType != default)
+            {
+                json.WriteString("kty", KeyTypeExtensions.ParseToString(KeyType));
+            }
+            if (KeyOps != null)
+            {
+                json.WriteStartArray("key_ops");
+                foreach (var operation in KeyOps)
+                {
+                    json.WriteStringValue(KeyOperationsExtensions.ParseToString(operation));
+                }
+                json.WriteEndArray();
+            }
+            if (!string.IsNullOrEmpty(CurveName))
+            {
+                json.WriteString("crv", CurveName);
+            }
+            if (N != null)
+            {
+                json.WriteString("n", Encoding.ASCII.GetString(N));
+            }
+            if (E != null)
+            {
+                json.WriteString("e", Encoding.ASCII.GetString(E));
+            }
+            if (DP != null)
+            {
+                json.WriteString("dp", Encoding.ASCII.GetString(DP));
+            }
+            if (DQ != null)
+            {
+                json.WriteString("dq", Encoding.ASCII.GetString(DQ));
+            }
+            if (QI != null)
+            {
+                json.WriteString("qi", Encoding.ASCII.GetString(QI));
+            }
+            if (P != null)
+            {
+                json.WriteString("p", Encoding.ASCII.GetString(P));
+            }
+            if (Q != null)
+            {
+                json.WriteString("q", Encoding.ASCII.GetString(Q));
+            }
+            if (X != null)
+            {
+                json.WriteString("x", Encoding.ASCII.GetString(X));
+            }
+            if (Y != null)
+            {
+                json.WriteString("y", Encoding.ASCII.GetString(Y));
+            }
+            if (D != null)
+            {
+                json.WriteString("d", Encoding.ASCII.GetString(D));
+            }
+            if (K != null)
+            {
+                json.WriteString("k", Encoding.ASCII.GetString(K));
+            }
+            if (T != null)
+            {
+                json.WriteString("t", Encoding.ASCII.GetString(T));
+            }
+        }
 
         public bool Equals(JsonWebKey other)
         {

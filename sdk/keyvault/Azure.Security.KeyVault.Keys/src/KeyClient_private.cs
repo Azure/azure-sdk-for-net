@@ -39,6 +39,14 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
+        private async Task<Response> SendRequestAsync(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
+        {
+            using (Request request = CreateRequest(HttpPipelineMethod.Get, path))
+            {
+                return await SendRequestAsync(request, cancellationToken);
+            }
+        }
+
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken);

@@ -172,8 +172,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response> PurgeDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedKeysPath, name);
         }
 
         public virtual Response<Key> RecoverDeletedKey(string name, CancellationToken cancellationToken = default)
@@ -194,8 +195,11 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<byte[]>> BackupKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "backup");
+
+            return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
 
         public virtual Response<Key> RestoreKey(byte[] backup, CancellationToken cancellationToken = default)
@@ -205,8 +209,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> RestoreKeyAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (backup == null) throw new ArgumentNullException(nameof(backup));
+
+            return await SendRequestAsync(HttpPipelineMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "restore");
         }
 
         public virtual Response<Key> ImportKey(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
@@ -216,8 +221,12 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (keyMaterial == default) throw new ArgumentNullException(nameof(keyMaterial));
+
+            var keyImportOptions = new KeyImportOptions(name, keyMaterial);
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name);
         }
 
         public virtual Response<Key> ImportKey(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
@@ -227,8 +236,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> ImportKeyAsync(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (keyImportOptions == default) throw new ArgumentNullException(nameof(keyImportOptions));
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
         }
     }
 }

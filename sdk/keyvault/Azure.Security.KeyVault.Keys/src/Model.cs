@@ -21,8 +21,6 @@ namespace Azure.Security.KeyVault.Keys
 
         internal ReadOnlyMemory<byte> Serialize()
         {
-            byte[] buffer = CreateSerializationBuffer();
-            
             var writer = new ArrayBufferWriter<byte>();
 
             var json = new Utf8JsonWriter(writer);
@@ -40,10 +38,5 @@ namespace Azure.Security.KeyVault.Keys
         internal abstract void WriteProperties(ref Utf8JsonWriter json);
 
         internal abstract void ReadProperties(JsonElement json);
-
-        protected virtual byte[] CreateSerializationBuffer()
-        {
-            return new byte[1024];
-        }
     }
 }

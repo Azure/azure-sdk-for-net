@@ -2,19 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys
 {
     public class Key : KeyBase
     {
         public JsonWebKey KeyMaterial { get; set; }
+
+        internal Key() { }
 
         public Key(string name) : base(name) { }
 
