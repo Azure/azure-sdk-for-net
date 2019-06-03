@@ -57,7 +57,7 @@ namespace AlertsManagement.Tests.UnitTests
             var result = alertsManagementClient.SmartGroups.ChangeState(smartGroupId, updatedState);
 
             Assert.Equal(smartGroupId, result.Id);
-            Assert.Equal(updatedState, result.SmartGroupState);
+            Assert.Equal(updatedState, result.Properties.SmartGroupState);
         }
 
         [Fact]

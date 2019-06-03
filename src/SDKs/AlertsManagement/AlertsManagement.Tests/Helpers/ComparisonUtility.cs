@@ -143,12 +143,12 @@ namespace AlertsManagement.Tests.Helpers
             if (exp != null)
             {
                 Assert.Equal(exp.Id, act.Id);
-                Assert.Equal(exp.AlertsCount, act.AlertsCount);
-                Assert.Equal(exp.SmartGroupState, act.SmartGroupState);
-                Assert.Equal(exp.Severity, act.Severity);
-                Assert.Equal(exp.StartDateTime, act.StartDateTime);
-                Assert.Equal(exp.LastModifiedDateTime, act.LastModifiedDateTime);
-                Assert.Equal(exp.LastModifiedUserName, act.LastModifiedUserName);
+                Assert.Equal(exp.Properties.AlertsCount, act.Properties.AlertsCount);
+                Assert.Equal(exp.Properties.SmartGroupState, act.Properties.SmartGroupState);
+                Assert.Equal(exp.Properties.Severity, act.Properties.Severity);
+                Assert.Equal(exp.Properties.StartDateTime, act.Properties.StartDateTime);
+                Assert.Equal(exp.Properties.LastModifiedDateTime, act.Properties.LastModifiedDateTime);
+                Assert.Equal(exp.Properties.LastModifiedUserName, act.Properties.LastModifiedUserName);
             }
         }
 

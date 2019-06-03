@@ -38,7 +38,7 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 if (!this.IsRecording)
                 {
-                    Assert.Equal(AlertState.New, actualSmartGroup.SmartGroupState);
+                    Assert.Equal(AlertState.New, actualSmartGroup.Properties.SmartGroupState);
                 }
 
                 // Perform state change operation
@@ -48,7 +48,7 @@ namespace AlertsManagement.Tests.ScenarioTests
                 // Verify the state change operation was successful
                 if (!this.IsRecording)
                 {
-                    Assert.Equal(updatedState, smartGroupPostStateChange.SmartGroupState);
+                    Assert.Equal(updatedState, smartGroupPostStateChange.Properties.SmartGroupState);
                 }
 
                 // Get History of smart group

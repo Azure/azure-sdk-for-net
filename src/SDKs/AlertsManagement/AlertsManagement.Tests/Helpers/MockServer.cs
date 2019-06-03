@@ -303,12 +303,12 @@ namespace AlertsManagement.Tests.Helpers
         {
             return new SmartGroup(
                 id: smartGroupId,
-                alertsCount: 10,
-                smartGroupState: smartGroupState,
-                severity: Severity.Sev2,
-                startDateTime: new DateTime(2019, 6, 19, 12, 30, 45),
-                lastModifiedDateTime: new DateTime(2019, 6, 20, 11, 45, 9),
-                lastModifiedUserName: "System"
+                properties : new SmartGroupProperties (alertsCount: 10,
+                    smartGroupState: smartGroupState,
+                    severity: Severity.Sev2,
+                    startDateTime: new DateTime(2019, 6, 19, 12, 30, 45),
+                    lastModifiedDateTime: new DateTime(2019, 6, 20, 11, 45, 9),
+                    lastModifiedUserName: "System")
             );
         }
 
