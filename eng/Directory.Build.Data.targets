@@ -10,30 +10,6 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-  <PropertyGroup>
-    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
-    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
-    <EnableClientSdkAnalyzers Condition="'$(EnableClientSdkAnalyzers)' == '' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(SignAssembly)' == 'true' and '$(IsTestProject)' == 'true'">
-    <!-- Always fully sign test assemblies since we have a full public/private key -->
-    <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
-    <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net461</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
-
-    <!-- Disable running of tests for test helper libraries -->
-    <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
-  </PropertyGroup>
-
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
@@ -43,13 +19,19 @@
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
-    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190503.1" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Import default references if this is not set -->
-  <PropertyGroup Condition="'$(ImportDefaultReferences)'==''">
-    <ImportDefaultReferences>true</ImportDefaultReferences>
+  <PropertyGroup>
+    <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
+
+  <Import Project="Versioning.targets" />
 </Project>

@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -326,14 +326,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (versionSetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionSetId");
@@ -348,10 +340,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "versionSetId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "^[^*#&+:<>?]+$");
                 }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -368,11 +368,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets/{versionSetId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{versionSetId}", System.Uri.EscapeDataString(versionSetId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -552,14 +552,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (versionSetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionSetId");
@@ -574,10 +566,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "versionSetId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "^[^*#&+:<>?]+$");
                 }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -594,11 +594,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets/{versionSetId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{versionSetId}", System.Uri.EscapeDataString(versionSetId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -778,7 +778,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApiVersionSetContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string versionSetId, ApiVersionSetContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApiVersionSetContract,ApiVersionSetCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string versionSetId, ApiVersionSetContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -803,14 +803,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (versionSetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionSetId");
@@ -825,9 +817,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "versionSetId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -837,6 +829,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (parameters != null)
             {
                 parameters.Validate();
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -855,11 +855,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets/{versionSetId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{versionSetId}", System.Uri.EscapeDataString(versionSetId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ApiVersionSetContract>();
+            var _result = new AzureOperationResponse<ApiVersionSetContract,ApiVersionSetCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1009,6 +1009,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiVersionSetCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1081,14 +1094,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (versionSetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionSetId");
@@ -1103,9 +1108,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "versionSetId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1115,6 +1120,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1133,11 +1146,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets/{versionSetId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{versionSetId}", System.Uri.EscapeDataString(versionSetId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1320,14 +1333,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (versionSetId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionSetId");
@@ -1342,14 +1347,22 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "versionSetId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(versionSetId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "versionSetId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1367,11 +1380,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/api-version-sets/{versionSetId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{versionSetId}", System.Uri.EscapeDataString(versionSetId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

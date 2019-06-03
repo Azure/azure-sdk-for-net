@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IMountTargetsOperations
     {
         /// <summary>
-        /// List mount targets
+        /// Describe all mount targets
         /// </summary>
+        /// <remarks>
+        /// List all mount targets associated with the volume
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

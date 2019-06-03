@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// principal</param>
         /// <param name="tags">Optional list of tags that you can apply to your
         /// service principals. Not nullable.</param>
-        public ServicePrincipalUpdateParameters(string accountEnabled = default(string), bool? appRoleAssignmentRequired = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
+        public ServicePrincipalUpdateParameters(bool? accountEnabled = default(bool?), bool? appRoleAssignmentRequired = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
             : base(accountEnabled, appRoleAssignmentRequired, keyCredentials, passwordCredentials, servicePrincipalType, tags)
         {
             CustomInit();

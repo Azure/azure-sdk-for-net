@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines contents of a web application firewall global configuration
+    /// Defines contents of a web application firewall global configuration.
     /// </summary>
     public partial class PolicySettings
     {

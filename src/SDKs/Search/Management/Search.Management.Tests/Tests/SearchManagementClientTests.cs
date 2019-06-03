@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-namespace Microsoft.Azure.Search.Tests
+namespace Microsoft.Azure.Management.Search.Tests
 {
     using System;
     using System.Net;

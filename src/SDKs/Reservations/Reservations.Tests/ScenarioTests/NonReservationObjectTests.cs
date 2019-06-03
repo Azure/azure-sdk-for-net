@@ -18,11 +18,8 @@ using System.Text.RegularExpressions;
 
 namespace Reservations.Tests.ScenarioTests
 {
-    public class NonReservationObjectTests : TestBase
-    {
-
-        string SubscriptionId = Common.SubscriptionId;
-
+    public class NonReservationObjectTests : ReservationsTestBase
+    {   
         [Fact]
         public void TestGetCatalog()
         {
@@ -101,13 +98,5 @@ namespace Reservations.Tests.ScenarioTests
                 }
             }
         }
-
-        private static string GetSessionsDirectoryPath()
-        {
-            System.Type something = typeof(Reservations.Tests.ScenarioTests.ReservationTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-        }
-
     }
 }

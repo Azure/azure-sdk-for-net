@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update virtual network operation
+            /// Parameters supplied to the create or update virtual network operation.
             /// </param>
             public static VirtualNetwork CreateOrUpdate(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters)
             {
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update virtual network operation
+            /// Parameters supplied to the create or update virtual network operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update virtual network operation
+            /// Parameters supplied to the create or update virtual network operation.
             /// </param>
             public static VirtualNetwork BeginCreateOrUpdate(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, VirtualNetwork parameters)
             {
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update virtual network operation
+            /// Parameters supplied to the create or update virtual network operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

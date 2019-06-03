@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Security
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IComplianceResultsOperations.
+        /// </summary>
+        public virtual IComplianceResultsOperations ComplianceResults { get; private set; }
+
+        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         public virtual IPricingsOperations Pricings { get; private set; }
@@ -160,6 +165,21 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceControlsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceAssessmentsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -402,6 +422,7 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
+            ComplianceResults = new ComplianceResultsOperations(this);
             Pricings = new PricingsOperations(this);
             Alerts = new AlertsOperations(this);
             Settings = new SettingsOperations(this);
@@ -419,6 +440,9 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
+            RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
+            RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
+            RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

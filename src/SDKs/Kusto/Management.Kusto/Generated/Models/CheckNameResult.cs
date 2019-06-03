@@ -35,11 +35,15 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="message">Message indicating an unavailable name due to
         /// a conflict, or a description of the naming rules that are
         /// violated.</param>
-        public CheckNameResult(bool? nameAvailable = default(bool?), string name = default(string), string message = default(string))
+        /// <param name="reason">Message providing the reason why the given
+        /// name is invalid. Possible values include: 'Invalid',
+        /// 'AlreadyExists'</param>
+        public CheckNameResult(bool? nameAvailable = default(bool?), string name = default(string), string message = default(string), string reason = default(string))
         {
             NameAvailable = nameAvailable;
             Name = name;
             Message = message;
+            Reason = reason;
             CustomInit();
         }
 
@@ -67,6 +71,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets message providing the reason why the given name is
+        /// invalid. Possible values include: 'Invalid', 'AlreadyExists'
+        /// </summary>
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }

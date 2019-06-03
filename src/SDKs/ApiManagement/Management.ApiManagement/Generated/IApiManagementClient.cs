@@ -72,29 +72,14 @@ namespace Microsoft.Azure.Management.ApiManagement
 
 
         /// <summary>
-        /// Gets the IPolicyOperations.
-        /// </summary>
-        IPolicyOperations Policy { get; }
-
-        /// <summary>
-        /// Gets the IPolicySnippetsOperations.
-        /// </summary>
-        IPolicySnippetsOperations PolicySnippets { get; }
-
-        /// <summary>
-        /// Gets the IRegionsOperations.
-        /// </summary>
-        IRegionsOperations Regions { get; }
-
-        /// <summary>
         /// Gets the IApiOperations.
         /// </summary>
         IApiOperations Api { get; }
 
         /// <summary>
-        /// Gets the IApiRevisionsOperations.
+        /// Gets the IApiRevisionOperations.
         /// </summary>
-        IApiRevisionsOperations ApiRevisions { get; }
+        IApiRevisionOperations ApiRevision { get; }
 
         /// <summary>
         /// Gets the IApiReleaseOperations.
@@ -110,6 +95,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IApiOperationPolicyOperations.
         /// </summary>
         IApiOperationPolicyOperations ApiOperationPolicy { get; }
+
+        /// <summary>
+        /// Gets the ITagOperations.
+        /// </summary>
+        ITagOperations Tag { get; }
 
         /// <summary>
         /// Gets the IApiProductOperations.
@@ -132,11 +122,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IApiDiagnosticOperations ApiDiagnostic { get; }
 
         /// <summary>
-        /// Gets the IApiDiagnosticLoggerOperations.
-        /// </summary>
-        IApiDiagnosticLoggerOperations ApiDiagnosticLogger { get; }
-
-        /// <summary>
         /// Gets the IApiIssueOperations.
         /// </summary>
         IApiIssueOperations ApiIssue { get; }
@@ -152,6 +137,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         IApiIssueAttachmentOperations ApiIssueAttachment { get; }
 
         /// <summary>
+        /// Gets the IApiTagDescriptionOperations.
+        /// </summary>
+        IApiTagDescriptionOperations ApiTagDescription { get; }
+
+        /// <summary>
+        /// Gets the IOperationOperations.
+        /// </summary>
+        IOperationOperations Operation { get; }
+
+        /// <summary>
+        /// Gets the IApiVersionSetOperations.
+        /// </summary>
+        IApiVersionSetOperations ApiVersionSet { get; }
+
+        /// <summary>
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         IAuthorizationServerOperations AuthorizationServer { get; }
@@ -160,6 +160,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IBackendOperations.
         /// </summary>
         IBackendOperations Backend { get; }
+
+        /// <summary>
+        /// Gets the ICacheOperations.
+        /// </summary>
+        ICacheOperations Cache { get; }
 
         /// <summary>
         /// Gets the ICertificateOperations.
@@ -187,11 +192,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IDiagnosticOperations Diagnostic { get; }
 
         /// <summary>
-        /// Gets the IDiagnosticLoggerOperations.
-        /// </summary>
-        IDiagnosticLoggerOperations DiagnosticLogger { get; }
-
-        /// <summary>
         /// Gets the IEmailTemplateOperations.
         /// </summary>
         IEmailTemplateOperations EmailTemplate { get; }
@@ -212,9 +212,19 @@ namespace Microsoft.Azure.Management.ApiManagement
         IIdentityProviderOperations IdentityProvider { get; }
 
         /// <summary>
+        /// Gets the IIssueOperations.
+        /// </summary>
+        IIssueOperations Issue { get; }
+
+        /// <summary>
         /// Gets the ILoggerOperations.
         /// </summary>
         ILoggerOperations Logger { get; }
+
+        /// <summary>
+        /// Gets the INetworkStatusOperations.
+        /// </summary>
+        INetworkStatusOperations NetworkStatus { get; }
 
         /// <summary>
         /// Gets the INotificationOperations.
@@ -232,14 +242,19 @@ namespace Microsoft.Azure.Management.ApiManagement
         INotificationRecipientEmailOperations NotificationRecipientEmail { get; }
 
         /// <summary>
-        /// Gets the INetworkStatusOperations.
-        /// </summary>
-        INetworkStatusOperations NetworkStatus { get; }
-
-        /// <summary>
         /// Gets the IOpenIdConnectProviderOperations.
         /// </summary>
         IOpenIdConnectProviderOperations OpenIdConnectProvider { get; }
+
+        /// <summary>
+        /// Gets the IPolicyOperations.
+        /// </summary>
+        IPolicyOperations Policy { get; }
+
+        /// <summary>
+        /// Gets the IPolicySnippetOperations.
+        /// </summary>
+        IPolicySnippetOperations PolicySnippet { get; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -297,6 +312,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IQuotaByPeriodKeysOperations QuotaByPeriodKeys { get; }
 
         /// <summary>
+        /// Gets the IRegionOperations.
+        /// </summary>
+        IRegionOperations Region { get; }
+
+        /// <summary>
         /// Gets the IReportsOperations.
         /// </summary>
         IReportsOperations Reports { get; }
@@ -310,21 +330,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ITagResourceOperations.
         /// </summary>
         ITagResourceOperations TagResource { get; }
-
-        /// <summary>
-        /// Gets the ITagOperations.
-        /// </summary>
-        ITagOperations Tag { get; }
-
-        /// <summary>
-        /// Gets the ITagDescriptionOperations.
-        /// </summary>
-        ITagDescriptionOperations TagDescription { get; }
-
-        /// <summary>
-        /// Gets the IOperationOperations.
-        /// </summary>
-        IOperationOperations Operation { get; }
 
         /// <summary>
         /// Gets the ITenantAccessOperations.
@@ -362,9 +367,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         IUserIdentitiesOperations UserIdentities { get; }
 
         /// <summary>
-        /// Gets the IApiVersionSetOperations.
+        /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
-        IApiVersionSetOperations ApiVersionSet { get; }
+        IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
 
         /// <summary>
         /// Gets the IApiExportOperations.

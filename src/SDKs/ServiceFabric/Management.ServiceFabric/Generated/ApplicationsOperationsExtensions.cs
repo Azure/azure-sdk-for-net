@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='parameters'>
             /// The application resource for patch operations.
             /// </param>
-            public static ApplicationResourceUpdate Update(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters)
+            public static ApplicationResource Update(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationResourceUpdate> UpdateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationResource> UpdateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='parameters'>
             /// The application resource for patch operations.
             /// </param>
-            public static ApplicationResourceUpdate BeginUpdate(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters)
+            public static ApplicationResource BeginUpdate(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, clusterName, applicationName, parameters).GetAwaiter().GetResult();
             }
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationResourceUpdate> BeginUpdateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationResource> BeginUpdateAsync(this IApplicationsOperations operations, string resourceGroupName, string clusterName, string applicationName, ApplicationResourceUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

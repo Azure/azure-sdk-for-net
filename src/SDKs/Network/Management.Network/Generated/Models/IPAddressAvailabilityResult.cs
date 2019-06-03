@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Response for CheckIPAddressAvailability API service call
+    /// Response for CheckIPAddressAvailability API service call.
     /// </summary>
     public partial class IPAddressAvailabilityResult
     {

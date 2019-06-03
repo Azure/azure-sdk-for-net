@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingProfilesOperationsExtensions
     {
             /// <summary>
+            /// Lists all billing profiles for a user which that user has access to.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='expand'>
+            /// May be used to expand the invoiceSections.
+            /// </param>
+            public static BillingProfileListResult ListByBillingAccountName(this IBillingProfilesOperations operations, string billingAccountName, string expand = default(string))
+            {
+                return operations.ListByBillingAccountNameAsync(billingAccountName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all billing profiles for a user which that user has access to.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='expand'>
+            /// May be used to expand the invoiceSections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingProfileListResult> ListByBillingAccountNameAsync(this IBillingProfilesOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get the billing profile by id.
             /// </summary>
             /// <param name='operations'>

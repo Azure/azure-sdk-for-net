@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Search
             "{0} of {1} indexing actions in the batch failed. The remaining actions succeeded and modified the " +
             "index. Check the IndexResponse property for the status of each index action.";
 
-        private readonly IList<IndexingResult> _indexingResults;
-
         /// <summary>
         /// Initializes a new instance of the IndexBatchException class.
         /// </summary>
@@ -29,18 +27,15 @@ namespace Microsoft.Azure.Search
         public IndexBatchException(DocumentIndexResult documentIndexResult) : base(CreateMessage(documentIndexResult))
         {
             // Null check in CreateMessage().
-            _indexingResults = documentIndexResult.Results;
+            IndexingResults = documentIndexResult.Results;
 
-            this.Body = new CloudError() { Code = String.Empty, Message = this.Message };
+            Body = new CloudError() { Code = String.Empty, Message = Message };
         }
 
         /// <summary>
         /// Gets the results for the index batch that contains the status for each individual index action.
         /// </summary>
-        public IList<IndexingResult> IndexingResults
-        {
-            get { return _indexingResults; }
-        }
+        public IList<IndexingResult> IndexingResults { get; }
 
         /// <summary>
         /// Finds all index actions in the given batch that failed and need to be retried, and returns them in a
@@ -51,12 +46,10 @@ namespace Microsoft.Azure.Search
         /// <returns>
         /// A new batch containing all the actions from the given batch that failed and should be retried.
         /// </returns>
-        public IndexBatch FindFailedActionsToRetry(IndexBatch originalBatch, string keyFieldName)
+        public IndexBatch<Document> FindFailedActionsToRetry(IndexBatch<Document> originalBatch, string keyFieldName)
         {
-            Func<Document, string> getKey = d => d[keyFieldName].ToString();
-            IEnumerable<IndexAction> failedActions = 
-                this.DoFindFailedActionsToRetry<IndexBatch, IndexAction, Document>(originalBatch, getKey);
-            return IndexBatch.New(failedActions);
+            string GetKey(Document doc) => doc[keyFieldName].ToString();
+            return FindFailedActionsToRetry(originalBatch, GetKey);
         }
 
         /// <summary>
@@ -72,29 +65,21 @@ namespace Microsoft.Azure.Search
         /// A new batch containing all the actions from the given batch that failed and should be retried.
         /// </returns>
         public IndexBatch<T> FindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
-            where T : class
         {
-            IEnumerable<IndexAction<T>> failedActions = 
-                this.DoFindFailedActionsToRetry<IndexBatch<T>, IndexAction<T>, T>(originalBatch, keySelector);
+            IEnumerable<IndexAction<T>> failedActions = DoFindFailedActionsToRetry(originalBatch, keySelector);
             return IndexBatch.New(failedActions);
         }
 
-        private IEnumerable<TAction> DoFindFailedActionsToRetry<TBatch, TAction, TDoc>(
-            TBatch originalBatch,
-            Func<TDoc, string> keySelector)
-            where TBatch : IndexBatchBase<TAction, TDoc>
-            where TAction : IndexActionBase<TDoc>
-            where TDoc : class
+        private IEnumerable<IndexAction<T>> DoFindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
         {
-            IEnumerable<string> allRetriableKeys = 
-                this.IndexingResults.Where(r => ShouldRetry(r.StatusCode)).Select(r => r.Key);
+            IEnumerable<string> allRetriableKeys = IndexingResults.Where(r => IsRetriableStatusCode(r.StatusCode)).Select(r => r.Key);
 
             var uniqueRetriableKeys = new HashSet<string>(allRetriableKeys);
 
-            Func<TAction, bool> shouldRetry = 
-                a => a.Document != null && uniqueRetriableKeys.Contains(keySelector(a.Document));
+            bool ShouldRetry(IndexAction<T> action) =>
+                action.Document != null && uniqueRetriableKeys.Contains(keySelector(action.Document));
 
-            return originalBatch.Actions.Where(shouldRetry);
+            return originalBatch.Actions.Where(ShouldRetry);
         }
 
         private static string CreateMessage(DocumentIndexResult documentIndexResult)
@@ -107,7 +92,7 @@ namespace Microsoft.Azure.Search
                 documentIndexResult.Results.Count);
         }
 
-        private static bool ShouldRetry(int statusCode)
+        private static bool IsRetriableStatusCode(int statusCode)
         {
             switch (statusCode)
             {

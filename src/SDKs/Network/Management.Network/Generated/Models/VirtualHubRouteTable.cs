@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualHub route table
+    /// VirtualHub route table.
     /// </summary>
     public partial class VirtualHubRouteTable
     {

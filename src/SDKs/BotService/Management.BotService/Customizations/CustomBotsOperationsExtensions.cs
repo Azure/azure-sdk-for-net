@@ -128,10 +128,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
 
             try
             {
-                MsaAppIdInfo appInfo = await GetOrCreateMsaAppId(operations.Client, parameters, operations.Client.TenantId, resourceName).ConfigureAwait(false);
-                parameters.Properties.MsaAppId = appInfo.AppId;
-                parameters.Properties.MsaAppPassword = appInfo.Password;
-
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
@@ -173,9 +169,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
 
             try
             {
-                MsaAppIdInfo appInfo = await GetOrCreateMsaAppId(operations.Client, parameters, operations.Client.TenantId, resourceName).ConfigureAwait(false);
-                parameters.Properties.MsaAppId = appInfo.AppId;
-                parameters.Properties.MsaAppPassword = appInfo.Password;
                 parameters.Kind = Kind.Bot;
 
                 var templateParams = new Dictionary<string, Dictionary<string, object>>{
@@ -186,7 +179,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
                         {"sku", new Dictionary<string, object>{{"value", parameters.Sku.Name}}},
                         {"siteName", new Dictionary<string, object>{{"value", resourceName + "fd"} }},
                         {"appId", new Dictionary<string, object>{{"value", parameters.Properties.MsaAppId}}},
-                        {"appSecret", new Dictionary<string, object>{{"value", appInfo.Password}}},
                         {"createNewStorage", new Dictionary<string, object>{{"value", deploymentInfo.CreateStorage}}},
                         {"storageAccountName", new Dictionary<string, object>{{"value", resourceName + "f32d"} }},
                         {"storageAccountResourceId", new Dictionary<string, object>{{"value", deploymentInfo.StorageAccountResourceId}}},
@@ -266,9 +258,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
 
             try
             {
-                MsaAppIdInfo appInfo = await GetOrCreateMsaAppId(operations.Client, parameters, operations.Client.TenantId, resourceName).ConfigureAwait(false);
-                parameters.Properties.MsaAppId = appInfo.AppId;
-                parameters.Properties.MsaAppPassword = appInfo.Password;
                 parameters.Kind = Kind.Bot;
 
                 var templateParams = new Dictionary<string, Dictionary<string, object>>{
@@ -279,7 +268,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
                         {"sku", new Dictionary<string, object>{{"value", parameters.Sku.Name}}},
                         {"siteName", new Dictionary<string, object>{{"value", resourceName} }},
                         {"appId", new Dictionary<string, object>{{"value", parameters.Properties.MsaAppId}}},
-                        {"appSecret", new Dictionary<string, object>{{"value", appInfo.Password}}},
                         {"createNewStorage", new Dictionary<string, object>{{"value", deploymentInfo.CreateStorage}}},
                         {"storageAccountName", new Dictionary<string, object>{{"value", resourceName} }},
                         {"storageAccountResourceId", new Dictionary<string, object>{{"value", deploymentInfo.StorageAccountResourceId}}},
@@ -316,43 +304,6 @@ namespace Microsoft.Azure.Management.BotService.Customizations
             {
                 throw new ErrorException(BotServiceErrorMessages.CreateOperationFailed, ex);
             }
-        }
-
-        private static async Task<MsaAppIdInfo> GetOrCreateMsaAppId(AzureBotServiceClient client, Bot parameters, string tenantId, string resourceName)
-        {
-            MsaAppIdInfo appInfo = new MsaAppIdInfo();
-
-            // If an MsaAppId is provided, then we use it. Otherwise, we provision one.
-            if (string.IsNullOrEmpty(parameters.Properties.MsaAppId))
-            {
-#if NET452
-                // Obtain user token with bot first party app as audience
-                var authenticator = new MsaAuthenticator(tenantId);
-#endif
-
-#if NETSTANDARD1_4
-                // Obtain user token with bot first party app as audience
-                var authenticator = new MsaAuthenticator(tenantId, client.DeviceCodeAuthCallback);
-#endif
-
-                var authResult = await authenticator.AcquireTokenAsync().ConfigureAwait(false);
-
-                // Provision msa app id and password
-                var msaAppProvider = new MsaAppProvider(authResult);
-                appInfo = await msaAppProvider.ProvisionApp(resourceName).ConfigureAwait(false);
-
-                parameters.Properties.MsaAppId = appInfo.AppId;
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(parameters.Properties.MsaAppPassword))
-                {
-                    throw new ArgumentException(nameof(parameters.Properties.MsaAppPassword));
-                }
-                appInfo.AppId = parameters.Properties.MsaAppId;
-                appInfo.Password = parameters.Properties.MsaAppPassword;
-            }
-            return appInfo;
         }
     }
 }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// <param name="validateOnly">Boolean indicating validate only</param>
         /// <param name="workItemProperties">Custom work item
         /// properties</param>
-        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), bool? validateOnly = default(bool?), string workItemProperties = default(string))
+        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), bool? validateOnly = default(bool?), IDictionary<string, string> workItemProperties = default(IDictionary<string, string>))
         {
             ConnectorId = connectorId;
             ConnectorDataConfiguration = connectorDataConfiguration;
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// Gets or sets custom work item properties
         /// </summary>
         [JsonProperty(PropertyName = "WorkItemProperties")]
-        public string WorkItemProperties { get; set; }
+        public IDictionary<string, string> WorkItemProperties { get; set; }
 
     }
 }

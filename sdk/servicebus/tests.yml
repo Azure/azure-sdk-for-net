@@ -1,0 +1,10 @@
+trigger: none
+
+variables:
+  ProjectFile: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml
+  parameters:
+    envvars:
+      SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)

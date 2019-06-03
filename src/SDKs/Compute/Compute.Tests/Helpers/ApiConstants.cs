@@ -11,6 +11,8 @@ namespace Compute.Tests
             Providers = "providers",
             VirtualMachines = "virtualMachines",
             AvailabilitySets = "availabilitySets",
+            ProximityPlacementGroups = "proximityPlacementGroups",
+            VMScaleSets = "virtualMachineScaleSets",
             ResourceProviderNamespace = "Microsoft.Compute";
     }
 

@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayAutoscaleConfiguration class.
         /// </summary>
         /// <param name="minCapacity">Lower bound on number of Application
-        /// Gateway capacity</param>
+        /// Gateway capacity.</param>
         /// <param name="maxCapacity">Upper bound on number of Application
-        /// Gateway capacity</param>
+        /// Gateway capacity.</param>
         public ApplicationGatewayAutoscaleConfiguration(int minCapacity, int? maxCapacity = default(int?))
         {
             MinCapacity = minCapacity;
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets lower bound on number of Application Gateway capacity
+        /// Gets or sets lower bound on number of Application Gateway capacity.
         /// </summary>
         [JsonProperty(PropertyName = "minCapacity")]
         public int MinCapacity { get; set; }
 
         /// <summary>
-        /// Gets or sets upper bound on number of Application Gateway capacity
+        /// Gets or sets upper bound on number of Application Gateway capacity.
         /// </summary>
         [JsonProperty(PropertyName = "maxCapacity")]
         public int? MaxCapacity { get; set; }

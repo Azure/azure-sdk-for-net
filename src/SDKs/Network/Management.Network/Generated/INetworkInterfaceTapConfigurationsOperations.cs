@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<NetworkInterfaceTapConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, NetworkInterfaceTapConfiguration tapConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Tap configurations in a network interface
+        /// Get all Tap configurations in a network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<NetworkInterfaceTapConfiguration>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, string tapConfigurationName, NetworkInterfaceTapConfiguration tapConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Tap configurations in a network interface
+        /// Get all Tap configurations in a network interface.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

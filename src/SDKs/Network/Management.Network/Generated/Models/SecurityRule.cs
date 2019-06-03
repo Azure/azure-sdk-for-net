@@ -35,15 +35,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the SecurityRule class.
         /// </summary>
         /// <param name="protocol">Network protocol this rule applies to.
-        /// Possible values are 'Tcp', 'Udp', and '*'. Possible values include:
-        /// 'Tcp', 'Udp', '*'</param>
+        /// Possible values include: 'Tcp', 'Udp', 'Icmp', 'Esp', '*'</param>
         /// <param name="access">The network traffic is allowed or denied.
-        /// Possible values are: 'Allow' and 'Deny'. Possible values include:
-        /// 'Allow', 'Deny'</param>
+        /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="direction">The direction of the rule. The direction
         /// specifies if rule will be evaluated on incoming or outgoing
-        /// traffic. Possible values are: 'Inbound' and 'Outbound'. Possible
-        /// values include: 'Inbound', 'Outbound'</param>
+        /// traffic. Possible values include: 'Inbound', 'Outbound'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="description">A description for this rule. Restricted
         /// to 140 chars.</param>
@@ -57,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Asterisk '*' can also be used to match all source IPs. Default tags
         /// such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can
         /// also be used. If this is an ingress rule, specifies where network
-        /// traffic originates from. </param>
+        /// traffic originates from.</param>
         /// <param name="sourceAddressPrefixes">The CIDR or source IP
         /// ranges.</param>
         /// <param name="sourceApplicationSecurityGroups">The application
@@ -122,8 +119,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets network protocol this rule applies to. Possible values
-        /// are 'Tcp', 'Udp', and '*'. Possible values include: 'Tcp', 'Udp',
-        /// '*'
+        /// include: 'Tcp', 'Udp', 'Icmp', 'Esp', '*'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
@@ -202,8 +198,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the network traffic is allowed or denied. Possible
-        /// values are: 'Allow' and 'Deny'. Possible values include: 'Allow',
-        /// 'Deny'
+        /// values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "properties.access")]
         public string Access { get; set; }
@@ -220,8 +215,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the direction of the rule. The direction specifies if
         /// rule will be evaluated on incoming or outgoing traffic. Possible
-        /// values are: 'Inbound' and 'Outbound'. Possible values include:
-        /// 'Inbound', 'Outbound'
+        /// values include: 'Inbound', 'Outbound'
         /// </summary>
         [JsonProperty(PropertyName = "properties.direction")]
         public string Direction { get; set; }

@@ -38,13 +38,15 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="tags">Azure resource tags.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="etag">Azure resource etag.</param>
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Etag = etag;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets azure resource etag.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

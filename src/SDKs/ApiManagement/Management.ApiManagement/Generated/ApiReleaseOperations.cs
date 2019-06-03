@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -357,14 +357,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (apiId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
@@ -379,9 +371,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (releaseId == null)
@@ -398,10 +390,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "releaseId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "^[^*#&+:<>?]+$");
                 }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -422,9 +422,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{releaseId}", System.Uri.EscapeDataString(releaseId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApiReleaseContract>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApiReleaseContract,ApiReleaseGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -608,14 +608,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (apiId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
@@ -630,9 +622,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (releaseId == null)
@@ -649,10 +641,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "releaseId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "^[^*#&+:<>?]+$");
                 }
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -673,9 +673,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{releaseId}", System.Uri.EscapeDataString(releaseId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -769,7 +769,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ApiReleaseContract>();
+            var _result = new AzureOperationResponse<ApiReleaseContract,ApiReleaseGetHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -793,6 +793,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiReleaseGetHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -821,6 +834,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='parameters'>
         /// Create parameters.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. Not required when creating an entity, but required when
+        /// updating an entity.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -842,7 +859,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApiReleaseContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApiReleaseContract,ApiReleaseCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -867,14 +884,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (apiId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
@@ -889,9 +898,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (releaseId == null)
@@ -908,14 +917,22 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "releaseId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -929,17 +946,18 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("releaseId", releaseId);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{releaseId}", System.Uri.EscapeDataString(releaseId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -958,6 +976,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -1039,7 +1065,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ApiReleaseContract>();
+            var _result = new AzureOperationResponse<ApiReleaseContract,ApiReleaseCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1081,6 +1107,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiReleaseCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1157,14 +1196,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (apiId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
@@ -1179,9 +1210,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (releaseId == null)
@@ -1198,9 +1229,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "releaseId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1210,6 +1241,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1232,9 +1271,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{releaseId}", System.Uri.EscapeDataString(releaseId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1421,14 +1460,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (apiId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "apiId");
@@ -1443,9 +1474,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (releaseId == null)
@@ -1462,14 +1493,22 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "releaseId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(releaseId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "releaseId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1491,9 +1530,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
             _url = _url.Replace("{releaseId}", System.Uri.EscapeDataString(releaseId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1639,7 +1678,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1654,7 +1693,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByServiceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

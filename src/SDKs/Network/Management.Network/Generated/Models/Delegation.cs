@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="serviceName">The name of the service to whom the
-        /// subnet should be delegated (e.g. Microsoft.Sql/servers)</param>
+        /// subnet should be delegated (e.g. Microsoft.Sql/servers).</param>
         /// <param name="actions">Describes the actions permitted to the
-        /// service upon delegation</param>
+        /// service upon delegation.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource.</param>
         /// <param name="name">The name of the resource that is unique within a
@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the name of the service to whom the subnet should be
-        /// delegated (e.g. Microsoft.Sql/servers)
+        /// delegated (e.g. Microsoft.Sql/servers).
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceName")]
         public string ServiceName { get; set; }
 
         /// <summary>
         /// Gets or sets describes the actions permitted to the service upon
-        /// delegation
+        /// delegation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.actions")]
         public IList<string> Actions { get; set; }

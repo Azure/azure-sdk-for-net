@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the next generation Azure Event Hubs .NET Standard Event Processor Host library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;Event Processor Host</PackageTags>
+    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
+    <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.EventHubs.Processor</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.EventHubs\src\Microsoft.Azure.EventHubs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
+  </ItemGroup>
+</Project>

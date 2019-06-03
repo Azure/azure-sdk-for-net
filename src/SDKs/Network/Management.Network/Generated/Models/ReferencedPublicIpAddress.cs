@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Reference to a public IP address.
+    /// </summary>
     public partial class ReferencedPublicIpAddress
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ReferencedPublicIpAddress class.
         /// </summary>
-        /// <param name="id">The PublicIPAddress Reference</param>
+        /// <param name="id">The PublicIPAddress Reference.</param>
         public ReferencedPublicIpAddress(string id = default(string))
         {
             Id = id;
@@ -39,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the PublicIPAddress Reference
+        /// Gets or sets the PublicIPAddress Reference.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the HostnameConfiguration class.
         /// </summary>
         /// <param name="type">Hostname type. Possible values include: 'Proxy',
-        /// 'Portal', 'Management', 'Scm'</param>
+        /// 'Portal', 'Management', 'Scm', 'DeveloperPortal'</param>
         /// <param name="hostName">Hostname to configure on the Api Management
         /// service.</param>
         /// <param name="keyVaultId">Url to the KeyVault Secret containing the
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// negotiate client certificate on the hostname. Default Value is
         /// false.</param>
         /// <param name="certificate">Certificate information.</param>
-        public HostnameConfiguration(HostnameType type, string hostName, string keyVaultId = default(string), string encodedCertificate = default(string), string certificatePassword = default(string), bool? defaultSslBinding = default(bool?), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation))
+        public HostnameConfiguration(string type, string hostName, string keyVaultId = default(string), string encodedCertificate = default(string), string certificatePassword = default(string), bool? defaultSslBinding = default(bool?), bool? negotiateClientCertificate = default(bool?), CertificateInformation certificate = default(CertificateInformation))
         {
             Type = type;
             HostName = hostName;
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets hostname type. Possible values include: 'Proxy',
-        /// 'Portal', 'Management', 'Scm'
+        /// 'Portal', 'Management', 'Scm', 'DeveloperPortal'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public HostnameType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets hostname to configure on the Api Management service.
@@ -138,6 +138,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
             if (HostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "HostName");

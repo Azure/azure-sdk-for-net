@@ -5,8 +5,8 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("5.0.0.0")]
-[assembly: AssemblyFileVersion("5.0.3.0")]
+[assembly: AssemblyVersion("9.0.0.0")]
+[assembly: AssemblyFileVersion("9.0.1.0")]
 
 [assembly: AssemblyTitle("Microsoft Azure Search Data Library")]
 [assembly: AssemblyDescription("Use this assembly if you're developing a .NET application using Azure Search, and you only need to query or update documents in your indexes. If you also need to create or update indexes, synonym maps, or other service-level resources, use the Microsoft.Azure.Search assembly instead.")]
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search
 {
     internal class Consts
     {
-        // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
-        public const string TargetApiVersion = "2017-11-11";
+        // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes due to a new REST API version.
+        public const string TargetApiVersion = "2019-05-06";
     }
 }

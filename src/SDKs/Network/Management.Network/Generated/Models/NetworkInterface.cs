@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// machine.</param>
         /// <param name="networkSecurityGroup">The reference of the
         /// NetworkSecurityGroup resource.</param>
-        /// <param name="interfaceEndpoint">A reference to the interface
-        /// endpoint to which the network interface is linked.</param>
+        /// <param name="privateEndpoint">A reference to the private endpoint
+        /// to which the network interface is linked.</param>
         /// <param name="ipConfigurations">A list of IPConfigurations of the
         /// network interface.</param>
         /// <param name="tapConfigurations">A list of TapConfigurations of the
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enableIPForwarding">Indicates whether IP forwarding is
         /// enabled on this network interface.</param>
         /// <param name="hostedWorkloads">A list of references to linked
-        /// BareMetal resources</param>
+        /// BareMetal resources.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// network interface resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -68,12 +68,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// and 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), InterfaceEndpoint interfaceEndpoint = default(InterfaceEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
-            InterfaceEndpoint = interfaceEndpoint;
+            PrivateEndpoint = privateEndpoint;
             IpConfigurations = ipConfigurations;
             TapConfigurations = tapConfigurations;
             DnsSettings = dnsSettings;
@@ -106,11 +106,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
 
         /// <summary>
-        /// Gets a reference to the interface endpoint to which the network
+        /// Gets a reference to the private endpoint to which the network
         /// interface is linked.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.interfaceEndpoint")]
-        public InterfaceEndpoint InterfaceEndpoint { get; private set; }
+        [JsonProperty(PropertyName = "properties.privateEndpoint")]
+        public PrivateEndpoint PrivateEndpoint { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of IPConfigurations of the network interface.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary>
-        /// Gets a list of references to linked BareMetal resources
+        /// Gets a list of references to linked BareMetal resources.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostedWorkloads")]
         public IList<string> HostedWorkloads { get; private set; }

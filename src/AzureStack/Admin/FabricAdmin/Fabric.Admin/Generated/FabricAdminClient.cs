@@ -47,16 +47,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// Subscription credentials that uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client API Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -75,16 +75,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IApplicationOperationResultsOperations.
-        /// </summary>
-        public virtual IApplicationOperationResultsOperations ApplicationOperationResults { get; private set; }
-
-        /// <summary>
-        /// Gets the IComputeOperationResultsOperations.
-        /// </summary>
-        public virtual IComputeOperationResultsOperations ComputeOperationResults { get; private set; }
 
         /// <summary>
         /// Gets the IFabricOperations.
@@ -157,11 +147,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public virtual IMacAddressPoolsOperations MacAddressPools { get; private set; }
 
         /// <summary>
-        /// Gets the INetworkOperationResultsOperations.
-        /// </summary>
-        public virtual INetworkOperationResultsOperations NetworkOperationResults { get; private set; }
-
-        /// <summary>
         /// Gets the IScaleUnitsOperations.
         /// </summary>
         public virtual IScaleUnitsOperations ScaleUnits { get; private set; }
@@ -175,11 +160,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         public virtual ISlbMuxInstancesOperations SlbMuxInstances { get; private set; }
-
-        /// <summary>
-        /// Gets the IStorageOperationResultsOperations.
-        /// </summary>
-        public virtual IStorageOperationResultsOperations StorageOperationResults { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FabricAdminClient class.
@@ -422,8 +402,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </summary>
         private void Initialize()
         {
-            ApplicationOperationResults = new ApplicationOperationResultsOperations(this);
-            ComputeOperationResults = new ComputeOperationResultsOperations(this);
             Fabric = new FabricOperations(this);
             EdgeGateways = new EdgeGatewaysOperations(this);
             EdgeGatewayPools = new EdgeGatewayPoolsOperations(this);
@@ -438,11 +416,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             Volumes = new VolumesOperations(this);
             LogicalSubnets = new LogicalSubnetsOperations(this);
             MacAddressPools = new MacAddressPoolsOperations(this);
-            NetworkOperationResults = new NetworkOperationResultsOperations(this);
             ScaleUnits = new ScaleUnitsOperations(this);
             ScaleUnitNodes = new ScaleUnitNodesOperations(this);
             SlbMuxInstances = new SlbMuxInstancesOperations(this);
-            StorageOperationResults = new StorageOperationResultsOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
             ApiVersion = "2016-05-01";
             AcceptLanguage = "en-US";

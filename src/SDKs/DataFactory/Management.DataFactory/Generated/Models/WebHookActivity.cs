@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        /// <param name="timeout">Specifies the timeout within which the
-        /// webhook should be called back. If there is no value specified, it
-        /// defaults to 10 minutes. Type: string. Pattern:
+        /// <param name="timeout">The timeout within which the webhook should
+        /// be called back. If there is no value specified, it defaults to 10
+        /// minutes. Type: string. Pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="headers">Represents the headers that will be sent to
         /// the request. For example, to set the language and type on a
@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Url { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the timeout within which the webhook should
-        /// be called back. If there is no value specified, it defaults to 10
-        /// minutes. Type: string. Pattern:
+        /// Gets or sets the timeout within which the webhook should be called
+        /// back. If there is no value specified, it defaults to 10 minutes.
+        /// Type: string. Pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.timeout")]

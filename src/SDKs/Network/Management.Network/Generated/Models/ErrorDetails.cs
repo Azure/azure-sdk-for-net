@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Common error details representation.
+    /// </summary>
     public partial class ErrorDetails
     {
         /// <summary>
@@ -26,6 +29,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
+        /// <param name="code">Error code.</param>
+        /// <param name="target">Error target.</param>
+        /// <param name="message">Error message.</param>
         public ErrorDetails(string code = default(string), string target = default(string), string message = default(string))
         {
             Code = code;
@@ -40,16 +46,19 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
+        /// Gets or sets error target.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
 
         /// <summary>
+        /// Gets or sets error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }

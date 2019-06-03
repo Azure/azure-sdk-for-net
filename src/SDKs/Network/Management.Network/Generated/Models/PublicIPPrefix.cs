@@ -41,15 +41,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The public IP prefix SKU.</param>
         /// <param name="publicIPAddressVersion">The public IP address version.
-        /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
-        /// 'IPv4', 'IPv6'</param>
+        /// Possible values include: 'IPv4', 'IPv6'</param>
         /// <param name="ipTags">The list of tags associated with the public IP
         /// prefix.</param>
         /// <param name="prefixLength">The Length of the Public IP
         /// Prefix.</param>
-        /// <param name="ipPrefix">The allocated Prefix</param>
+        /// <param name="ipPrefix">The allocated Prefix.</param>
         /// <param name="publicIPAddresses">The list of all referenced
-        /// PublicIPAddresses</param>
+        /// PublicIPAddresses.</param>
         /// <param name="resourceGuid">The resource GUID property of the public
         /// IP prefix resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -87,8 +86,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public PublicIPPrefixSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the public IP address version. Possible values are:
-        /// 'IPv4' and 'IPv6'. Possible values include: 'IPv4', 'IPv6'
+        /// Gets or sets the public IP address version. Possible values
+        /// include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
         public string PublicIPAddressVersion { get; set; }
@@ -106,13 +105,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? PrefixLength { get; set; }
 
         /// <summary>
-        /// Gets or sets the allocated Prefix
+        /// Gets or sets the allocated Prefix.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipPrefix")]
         public string IpPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of all referenced PublicIPAddresses
+        /// Gets or sets the list of all referenced PublicIPAddresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddresses")]
         public IList<ReferencedPublicIpAddress> PublicIPAddresses { get; set; }

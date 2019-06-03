@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='tags'>
+        /// Include tags in the response.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<OperationContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<OperationContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), string tags = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the entity state (Etag) version of the API operation specified
         /// by its identifier.
@@ -163,7 +166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OperationContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, OperationContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationContract,ApiOperationCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, OperationContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the details of the operation in the API specified by its
         /// identifier.

@@ -25,360 +25,6 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface ITagOperations
     {
         /// <summary>
-        /// Lists a collection of tags defined within a service instance.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TagContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its
-        /// identifier.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<TagGetEntityStateHeaders>> GetEntityStateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the details of the tag specified by its identifier.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TagContract,TagGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates a tag.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='parameters'>
-        /// Create parameters.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TagContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates the details of the tag specified by its identifier.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='parameters'>
-        /// Update parameters.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for
-        /// unconditional update.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes specific tag of the API Management service instance.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for
-        /// unconditional update.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all Tags associated with the API.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TagContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the entity state version of the tag specified by its
-        /// identifier.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<TagGetEntityStateByApiHeaders>> GetEntityStateByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get tag associated with the API.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TagContract,TagGetByApiHeaders>> GetByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Assign tag to the Api.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. Not required when creating an entity, but
-        /// required when updating an entity.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TagContract>> AssignToApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Detach the tag from the Api.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='apiId'>
-        /// API revision identifier. Must be unique in the current API
-        /// Management service instance. Non-current revision has ;rev=n as a
-        /// suffix where n is the revision number.
-        /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
-        /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for
-        /// unconditional update.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DetachFromApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Lists all Tags associated with the Operation.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -511,10 +157,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Tag identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. Not required when creating an entity, but
-        /// required when updating an entity.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -530,7 +172,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagContract>> AssignToOperationWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagContract>> AssignToOperationWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Detach the tag from the Operation.
         /// </summary>
@@ -553,10 +195,70 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Tag identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
-        /// <param name='ifMatch'>
-        /// ETag of the Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for
-        /// unconditional update.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DetachFromOperationWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all Tags associated with the API.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its
+        /// identifier.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -570,7 +272,106 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DetachFromOperationWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<TagGetEntityStateByApiHeaders>> GetEntityStateByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get tag associated with the API.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TagContract,TagGetByApiHeaders>> GetByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Assign tag to the Api.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TagContract,TagAssignToApiHeaders>> AssignToApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Detach the tag from the Api.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DetachFromApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all Tags associated with the Product.
         /// </summary>
@@ -684,6 +485,155 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Tag identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TagContract>> AssignToProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Detach the tag from the Product.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='productId'>
+        /// Product identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DetachFromProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='scope'>
+        /// Scope like 'apis', 'products' or 'apis/{apiId}
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), string scope = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the entity state version of the tag specified by its
+        /// identifier.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<TagGetEntityStateHeaders>> GetEntityStateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the details of the tag specified by its identifier.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TagContract,TagGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a tag.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='parameters'>
+        /// Create parameters.
+        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but
         /// required when updating an entity.
@@ -703,9 +653,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagContract>> AssignToProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagContract,TagCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Detach the tag from the Product.
+        /// Updates the details of the tag specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -713,9 +663,39 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='productId'>
-        /// Product identifier. Must be unique in the current API Management
+        /// <param name='tagId'>
+        /// Tag identifier. Must be unique in the current API Management
         /// service instance.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update parameters.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. ETag should match the current entity state from
+        /// the header response of the GET request or it should be * for
+        /// unconditional update.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes specific tag of the API Management service instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
         /// </param>
         /// <param name='tagId'>
         /// Tag identifier. Must be unique in the current API Management
@@ -738,51 +718,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DetachFromProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists a collection of tags defined within a service instance.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TagContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all Tags associated with the API.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TagContract>>> ListByApiNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all Tags associated with the Operation.
         /// </summary>
@@ -806,6 +742,28 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<TagContract>>> ListByOperationNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists all Tags associated with the API.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagContract>>> ListByApiNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists all Tags associated with the Product.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -827,5 +785,27 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<TagContract>>> ListByProductNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

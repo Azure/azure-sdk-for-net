@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
-            public static IPage<AgentPool> List(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName)
+            public static IPage<AgentPool> List(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName)
             {
-                return operations.ListAsync(resourceGroupName, managedClusterName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,15 +55,15 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AgentPool>> ListAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<AgentPool>> ListAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, managedClusterName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
             /// The name of the agent pool.
             /// </param>
-            public static AgentPool Get(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName)
+            public static AgentPool Get(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
             {
-                return operations.GetAsync(resourceGroupName, managedClusterName, agentPoolName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgentPool> GetAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgentPool> GetAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -142,9 +142,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='parameters'>
             /// Parameters supplied to the Create or Update an agent pool operation.
             /// </param>
-            public static AgentPool CreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters)
+            public static AgentPool CreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, managedClusterName, agentPoolName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, agentPoolName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -171,9 +171,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgentPool> CreateOrUpdateAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgentPool> CreateOrUpdateAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -191,15 +191,15 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
             /// The name of the agent pool.
             /// </param>
-            public static void Delete(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName)
+            public static void Delete(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
             {
-                operations.DeleteAsync(resourceGroupName, managedClusterName, agentPoolName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -223,9 +223,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -249,9 +249,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='parameters'>
             /// Parameters supplied to the Create or Update an agent pool operation.
             /// </param>
-            public static AgentPool BeginCreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters)
+            public static AgentPool BeginCreateOrUpdate(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, managedClusterName, agentPoolName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, agentPoolName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -278,9 +278,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgentPool> BeginCreateOrUpdateAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, AgentPool parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgentPool> BeginCreateOrUpdateAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, AgentPool parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,15 +298,15 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
             /// The name of the agent pool.
             /// </param>
-            public static void BeginDelete(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName)
+            public static void BeginDelete(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, managedClusterName, agentPoolName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='managedClusterName'>
+            /// <param name='resourceName'>
             /// The name of the managed cluster resource.
             /// </param>
             /// <param name='agentPoolName'>
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IAgentPoolsOperations operations, string resourceGroupName, string managedClusterName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IAgentPoolsOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedClusterName, agentPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

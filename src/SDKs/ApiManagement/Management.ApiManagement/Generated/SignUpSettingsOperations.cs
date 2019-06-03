@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Get Sign-Up settings.
+        /// Get Sign Up Settings for the Portal
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -394,14 +394,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -411,10 +410,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -701,6 +696,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='parameters'>
         /// Create or update parameters.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. Not required when creating an entity, but required when
+        /// updating an entity.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -722,7 +721,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PortalSignupSettings>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, PortalSignupSettings parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PortalSignupSettings>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, PortalSignupSettings parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -769,6 +768,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -796,6 +796,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
             }
             if (Client.AcceptLanguage != null)
             {

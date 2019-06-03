@@ -144,7 +144,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(Constants.ActiveDirectoryIntegratedConnectionString, provider.ConnectionString);
         }
 
-
         [Fact]
         public void ManagedServiceIdentityValidTest()
         {
@@ -181,9 +180,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(Constants.CertificateConnStringSubjectNameCurrentUser, provider.ConnectionString);
             Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
 
-            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultSecretIdentifier, Constants.AzureAdInstance);
+            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifier, Constants.AzureAdInstance);
             Assert.NotNull(provider);
-            Assert.Equal(Constants.CertificateConnStringKeyVaultSecretIdentifier, provider.ConnectionString);
+            Assert.Equal(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifier, provider.ConnectionString);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
+
+            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId, Constants.AzureAdInstance);
+            Assert.NotNull(provider);
+            Assert.Equal(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId, provider.ConnectionString);
             Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
         }
 
@@ -194,6 +198,34 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.NotNull(provider);
             Assert.Equal(Constants.ClientSecretConnString, provider.ConnectionString);
             Assert.IsType<ClientSecretAccessTokenProvider>(provider);
+        }
+
+        [Theory]
+        [InlineData("KeyName='value=true'", "KeyName", "value=true")]
+        [InlineData("KeyName=\"value;value2\"", "KeyName", "value;value2")]
+        [InlineData("KeyName= '''value1;value2''' ", "KeyName", "'value1;value2'")]
+        [InlineData("KeyName= \"\"\"value=true\"\"\" ", "KeyName", "\"value=true\"")]
+        [InlineData("KeyName='\"value=true\"'", "KeyName", "\"value=true\"")]
+        [InlineData("KeyName=\"'value1;value2'\"", "KeyName", "'value1;value2'")]
+        public void ConnectionStringParametersWithQuoteEscapingPositiveTest(string connectionString, string setting, string expectedSettingValue)
+        {
+            var connectionSettings = AzureServiceTokenProviderFactory.ParseConnectionString(connectionString);
+            Assert.Equal(expectedSettingValue, connectionSettings[setting]);
+        }
+
+        [Theory]
+        [InlineData("KeyName='value='true''")]
+        [InlineData("KeyName=\"value=\"true\"\"")]
+        [InlineData("KeyName=''value''")]
+        [InlineData("KeyName=\"\"value\"\"")]
+        [InlineData("KeyName='value'value;")]
+        [InlineData("KeyName=\"value\"value;")]
+        [InlineData("KeyName='value\"")]
+        public void ConnectionStringParametersWithQuoteEscapingNegativeTest(string connectionString)
+        {
+            var exception = Assert.Throws<ArgumentException>(() => AzureServiceTokenProviderFactory.ParseConnectionString(connectionString));
+
+            Assert.Contains(Constants.NotInProperFormatError, exception.ToString());
         }
     }
 }

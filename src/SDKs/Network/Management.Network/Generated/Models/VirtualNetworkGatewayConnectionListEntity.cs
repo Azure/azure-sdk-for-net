@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// A common class for general resource information
+    /// A common class for general resource information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualNetworkGatewayConnectionListEntity : Resource
@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualNetworkGateway1">The reference to virtual
         /// network gateway resource.</param>
         /// <param name="connectionType">Gateway connection type. Possible
-        /// values are: 'Ipsec','Vnet2Vnet','ExpressRoute', and 'VPNClient.
-        /// Possible values include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute',
+        /// values include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute',
         /// 'VPNClient'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -56,10 +55,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
-        /// <param name="connectionStatus">Virtual network Gateway connection
-        /// status. Possible values are 'Unknown', 'Connecting', 'Connected'
-        /// and 'NotConnected'. Possible values include: 'Unknown',
-        /// 'Connecting', 'Connected', 'NotConnected'</param>
+        /// <param name="connectionStatus">Virtual Network Gateway connection
+        /// status. Possible values include: 'Unknown', 'Connecting',
+        /// 'Connected', 'NotConnected'</param>
         /// <param name="tunnelConnectionStatus">Collection of all tunnels'
         /// connection health status.</param>
         /// <param name="egressBytesTransferred">The egress bytes transferred
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ingressBytesTransferred">The ingress bytes transferred
         /// in this connection.</param>
         /// <param name="peer">The reference to peerings resource.</param>
-        /// <param name="enableBgp">EnableBgp flag</param>
+        /// <param name="enableBgp">EnableBgp flag.</param>
         /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
@@ -78,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VirtualNetworkGatewayConnection resource. Possible values are:
         /// 'Updating', 'Deleting', and 'Failed'.</param>
         /// <param name="expressRouteGatewayBypass">Bypass ExpressRoute Gateway
-        /// for data forwarding</param>
+        /// for data forwarding.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
         public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkConnectionGatewayReference virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkConnectionGatewayReference virtualNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), VirtualNetworkConnectionGatewayReference localNetworkGateway2 = default(VirtualNetworkConnectionGatewayReference), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
@@ -137,9 +135,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkConnectionGatewayReference LocalNetworkGateway2 { get; set; }
 
         /// <summary>
-        /// Gets or sets gateway connection type. Possible values are:
-        /// 'Ipsec','Vnet2Vnet','ExpressRoute', and 'VPNClient. Possible values
-        /// include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
+        /// Gets or sets gateway connection type. Possible values include:
+        /// 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionType")]
         public string ConnectionType { get; set; }
@@ -164,10 +161,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string SharedKey { get; set; }
 
         /// <summary>
-        /// Gets virtual network Gateway connection status. Possible values are
-        /// 'Unknown', 'Connecting', 'Connected' and 'NotConnected'. Possible
-        /// values include: 'Unknown', 'Connecting', 'Connected',
-        /// 'NotConnected'
+        /// Gets virtual Network Gateway connection status. Possible values
+        /// include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionStatus")]
         public string ConnectionStatus { get; private set; }
@@ -197,7 +192,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource Peer { get; set; }
 
         /// <summary>
-        /// Gets or sets enableBgp flag
+        /// Gets or sets enableBgp flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
@@ -231,7 +226,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets bypass ExpressRoute Gateway for data forwarding
+        /// Gets or sets bypass ExpressRoute Gateway for data forwarding.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expressRouteGatewayBypass")]
         public bool? ExpressRouteGatewayBypass { get; set; }

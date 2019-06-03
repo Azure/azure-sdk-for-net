@@ -24,6 +24,67 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IProductsOperations
     {
         /// <summary>
+        /// Lists products by billing account name.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by product type. The filter supports 'eq',
+        /// 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
+        /// 'ne', 'or', or 'not'. Tag filter is a key value pair string where
+        /// key and value is separated by a colon (:).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ProductSummary>>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists products by invoice section name.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by product type. The filter supports 'eq',
+        /// 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support
+        /// 'ne', 'or', or 'not'. Tag filter is a key value pair string where
+        /// key and value is separated by a colon (:).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ProductsListResult>> ListByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get a single product by name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
@@ -53,7 +114,7 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<ProductSummary>> GetWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to transfer a Product to another InvoiceSection.
+        /// The operation to transfer a Product to another invoice section.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -83,5 +144,89 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ProductSummary,ProductsTransferHeaders>> TransferWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Cancel auto renew for product by product id and billing account
+        /// name
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Cancel auto renew for product by product id and invoice section
+        /// name
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists products by billing account name.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ProductSummary>>> ListByBillingAccountNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

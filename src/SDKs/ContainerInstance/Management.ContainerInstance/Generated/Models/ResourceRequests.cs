@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// instance.</param>
         /// <param name="cpu">The CPU request of this container
         /// instance.</param>
-        public ResourceRequests(double memoryInGB, double cpu)
+        /// <param name="gpu">The GPU request of this container
+        /// instance.</param>
+        public ResourceRequests(double memoryInGB, double cpu, GpuResource gpu = default(GpuResource))
         {
             MemoryInGB = memoryInGB;
             Cpu = cpu;
+            Gpu = gpu;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public double Cpu { get; set; }
 
         /// <summary>
+        /// Gets or sets the GPU request of this container instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "gpu")]
+        public GpuResource Gpu { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -65,7 +74,10 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (Gpu != null)
+            {
+                Gpu.Validate();
+            }
         }
     }
 }

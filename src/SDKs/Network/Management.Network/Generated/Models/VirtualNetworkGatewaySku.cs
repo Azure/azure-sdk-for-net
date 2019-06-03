@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualNetworkGatewaySku details
+    /// VirtualNetworkGatewaySku details.
     /// </summary>
     public partial class VirtualNetworkGatewaySku
     {

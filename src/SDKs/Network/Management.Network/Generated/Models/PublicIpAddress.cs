@@ -40,12 +40,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The public IP address SKU.</param>
-        /// <param name="publicIPAllocationMethod">The public IP allocation
-        /// method. Possible values are: 'Static' and 'Dynamic'. Possible
-        /// values include: 'Static', 'Dynamic'</param>
+        /// <param name="publicIPAllocationMethod">The public IP address
+        /// allocation method. Possible values include: 'Static',
+        /// 'Dynamic'</param>
         /// <param name="publicIPAddressVersion">The public IP address version.
-        /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
-        /// 'IPv4', 'IPv6'</param>
+        /// Possible values include: 'IPv4', 'IPv6'</param>
         /// <param name="ipConfiguration">The IP configuration associated with
         /// the public IP address.</param>
         /// <param name="dnsSettings">The FQDN of the DNS record associated
@@ -101,16 +100,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public PublicIPAddressSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the public IP allocation method. Possible values are:
-        /// 'Static' and 'Dynamic'. Possible values include: 'Static',
-        /// 'Dynamic'
+        /// Gets or sets the public IP address allocation method. Possible
+        /// values include: 'Static', 'Dynamic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
         public string PublicIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the public IP address version. Possible values are:
-        /// 'IPv4' and 'IPv6'. Possible values include: 'IPv4', 'IPv6'
+        /// Gets or sets the public IP address version. Possible values
+        /// include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
         public string PublicIPAddressVersion { get; set; }

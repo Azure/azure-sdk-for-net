@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DiagnosticContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string diagnosticId, DiagnosticContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DiagnosticContract,DiagnosticCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string diagnosticId, DiagnosticContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the details of the Diagnostic specified by its identifier.
         /// </summary>
