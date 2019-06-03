@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-keyvault-secret/1.0.0.0",
-          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.17763 )"
         ],
-        "x-ms-client-request-id": "848988d63b6a550c5b4a158bf5927691",
+        "x-ms-client-request-id": "b0f3f2d7ac0409dbdc1c98a588ba9738",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,29 +27,29 @@
         "Cache-Control": "no-cache",
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 20:47:55 GMT",
+        "Date": "Mon, 03 Jun 2019 23:35:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=167.220.2.255;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "fc2b8af6-d0ec-419d-8ed9-e3f742b01174",
+        "x-ms-request-id": "fb5d703e-85ac-4ee8-bb7b-78ad42b0e0e0",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudWithExtendedPropsValue1",
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/1786d9e9f8b6457fbc1d7a263b2ebaca",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/2df6c2b66cff437892b857f406e9ad4d",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559594876,
-          "updated": 1559594876,
+          "created": 1559604941,
+          "updated": 1559604941,
           "recoveryLevel": "Purgeable"
         }
       }
@@ -63,9 +63,9 @@
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-keyvault-secret/1.0.0.0",
-          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.17763 )"
         ],
-        "x-ms-client-request-id": "1df07955dde1d035119c28d730014205",
+        "x-ms-client-request-id": "5975f4477faa30e09f8bc73f04123582",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -74,29 +74,29 @@
         "Cache-Control": "no-cache",
         "Content-Length": "309",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 20:47:55 GMT",
+        "Date": "Mon, 03 Jun 2019 23:35:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=167.220.2.255;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "080765e8-6b7e-44c7-8990-5297a9d8ea82",
+        "x-ms-request-id": "d628a139-3f88-4ddd-a599-307b7785b7c2",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": "CrudWithExtendedPropsValue1",
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/1786d9e9f8b6457fbc1d7a263b2ebaca",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/2df6c2b66cff437892b857f406e9ad4d",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559594876,
-          "updated": 1559594876,
+          "created": 1559604941,
+          "updated": 1559604941,
           "recoveryLevel": "Purgeable"
         }
       }
@@ -110,9 +110,9 @@
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-keyvault-secret/1.0.0.0",
-          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.17763 )"
         ],
-        "x-ms-client-request-id": "5462b4cf1d8148e3e954ec16ecf7777c",
+        "x-ms-client-request-id": "8889ba4d1b2b82d51f890dec7e292953",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -121,28 +121,28 @@
         "Cache-Control": "no-cache",
         "Content-Length": "271",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Jun 2019 20:47:56 GMT",
+        "Date": "Mon, 03 Jun 2019 23:35:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.78;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=167.220.2.255;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "61e46fb0-2748-428d-bf44-34fe8e4a25fc",
+        "x-ms-request-id": "338e988d-119a-4888-8477-38a4b7af3152",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "contentType": "password",
-        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/1786d9e9f8b6457fbc1d7a263b2ebaca",
+        "id": "https://ssnetvault.vault.azure.net/secrets/CrudWithExtendedProps/2df6c2b66cff437892b857f406e9ad4d",
         "attributes": {
           "enabled": true,
           "nbf": 1564536012448,
           "exp": 1567128012448,
-          "created": 1559594876,
-          "updated": 1559594876,
+          "created": 1559604941,
+          "updated": 1559604941,
           "recoveryLevel": "Purgeable"
         }
       }
@@ -150,6 +150,6 @@
   ],
   "Variables": {
     "AZURE_KEYVAULT_URL": "https://ssnetvault.vault.azure.net/",
-    "RandomSeed": "499157981"
+    "RandomSeed": "708698433"
   }
 }
