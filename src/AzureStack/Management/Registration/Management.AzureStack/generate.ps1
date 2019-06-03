@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "azurestack/resource-manager" -AutoRestVersion "latest" -SdkDirectory $PSScriptRoot
