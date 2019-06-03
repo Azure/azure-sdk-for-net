@@ -150,8 +150,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
 
         public virtual IEnumerable<Response<DeletedKey>> GetDeletedKeys(CancellationToken cancellationToken = default)
