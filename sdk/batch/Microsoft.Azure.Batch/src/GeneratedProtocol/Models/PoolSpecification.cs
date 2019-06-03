@@ -160,8 +160,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// on a single compute node in the pool.
         /// </summary>
         /// <remarks>
-        /// The default value is 1. The maximum value of this setting depends
-        /// on the size of the compute nodes in the pool (the vmSize setting).
+        /// The default value is 1. The maximum value is the smaller of 4 times
+        /// the number of cores of the vmSize of the pool or 256.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
@@ -303,6 +303,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// Changes to application package references affect all new compute
+        /// nodes joining the pool, but do not affect compute nodes that are
+        /// already in the pool until they are rebooted or reimaged. There is a
+        /// maximum of 10 application package references on any given pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 

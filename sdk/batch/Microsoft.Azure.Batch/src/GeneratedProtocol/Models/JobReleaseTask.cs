@@ -142,7 +142,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
         /// node) are mapped into the container, all task environment variables
         /// are mapped into the container, and the task command line is
-        /// executed in the container.
+        /// executed in the container. Files produced in the container outside
+        /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
+        /// meaning that Batch file APIs will not be able to access those
+        /// files.
         /// </remarks>
         [JsonProperty(PropertyName = "containerSettings")]
         public TaskContainerSettings ContainerSettings { get; set; }

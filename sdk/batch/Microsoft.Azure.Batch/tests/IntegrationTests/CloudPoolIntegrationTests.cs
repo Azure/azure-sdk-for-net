@@ -852,7 +852,7 @@ namespace BatchClientIntegrationTests
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 imageDetails.ImageReference,
-                                imageDetails.NodeAgentSku.Id)
+                                imageDetails.NodeAgentSkuId)
                             {
                                 LicenseType = "Windows_Server"
                             },
@@ -897,7 +897,7 @@ namespace BatchClientIntegrationTests
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 imageDetails.ImageReference,
-                                imageDetails.NodeAgentSku.Id)
+                                imageDetails.NodeAgentSkuId)
                             {
                                 DataDisks =  new List<DataDisk>
                                 {
@@ -946,7 +946,7 @@ namespace BatchClientIntegrationTests
                             new VirtualMachineConfiguration(
                                 new ImageReference(
                                     $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.BatchAccountResourceGroup}/providers/Microsoft.Compute/images/FakeImage"),
-                                imageDetails.NodeAgentSku.Id),
+                                imageDetails.NodeAgentSkuId),
                             targetDedicated);
                         var exception = Assert.Throws<BatchException>(() => pool.Commit());
 
@@ -1043,6 +1043,35 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void ListSupportedImages()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                {
+                    var supportedImages = batchCli.PoolOperations.ListSupportedImages().ToList();
+
+                    Assert.True(supportedImages.Count > 0);
+
+                    foreach (ImageInformation imageInfo in supportedImages)
+                    {
+                        this.testOutputHelper.WriteLine("ImageInformation:");
+                        this.testOutputHelper.WriteLine("   skuid: " + imageInfo.NodeAgentSkuId);
+                        this.testOutputHelper.WriteLine("   OSType: " + imageInfo.OSType);
+                        this.testOutputHelper.WriteLine("   publisher: " + imageInfo.ImageReference.Publisher);
+                        this.testOutputHelper.WriteLine("   offer: " + imageInfo.ImageReference.Offer);
+                        this.testOutputHelper.WriteLine("   sku: " + imageInfo.ImageReference.Sku);
+                        this.testOutputHelper.WriteLine("   version: " + imageInfo.ImageReference.Version);
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
         }
 
         #region Test helpers
@@ -1583,40 +1612,6 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
-        }
-
-        [Fact]
-        [LiveTest]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void ListNodeAgentSkus()
-        {
-            Action test = () =>
-            {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
-                {
-                    var nas = batchCli.PoolOperations.ListNodeAgentSkus().ToList();
-
-                    Assert.True(nas.Count > 0);
-
-                    foreach (NodeAgentSku curNAS in nas)
-                    {
-                        this.testOutputHelper.WriteLine("NAS:");
-                        this.testOutputHelper.WriteLine("   skuid: " + curNAS.Id);
-                        this.testOutputHelper.WriteLine("   OSType: " + curNAS.OSType);
-
-                        foreach (ImageReference verifiedImageReference in curNAS.VerifiedImageReferences)
-                        {
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs publisher: " + verifiedImageReference.Publisher);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs offer: " + verifiedImageReference.Offer);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs sku: " + verifiedImageReference.Sku);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs version: " + verifiedImageReference.Version);
-                        }
-                            
-                    }
-                }
-            };
-
-            SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
         }
     }
 }

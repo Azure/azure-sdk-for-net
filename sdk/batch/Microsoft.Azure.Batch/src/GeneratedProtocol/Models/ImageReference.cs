@@ -14,10 +14,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace image or a custom
-    /// Azure Virtual Machine image. To get the list of all Azure Marketplace
-    /// image references verified by Azure Batch, see the 'List node agent
-    /// SKUs' operation.
+    /// A reference to an Azure Virtual Machines Marketplace Image or a custom
+    /// Azure Virtual Machine Image. To get the list of all Azure Marketplace
+    /// Image references verified by Azure Batch, see the 'List supported
+    /// Images' operation.
     /// </summary>
     public partial class ImageReference
     {
@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
         /// <param name="publisher">The publisher of the Azure Virtual Machines
-        /// Marketplace image.</param>
+        /// Marketplace Image.</param>
         /// <param name="offer">The offer type of the Azure Virtual Machines
-        /// Marketplace image.</param>
+        /// Marketplace Image.</param>
         /// <param name="sku">The SKU of the Azure Virtual Machines Marketplace
-        /// image.</param>
+        /// Image.</param>
         /// <param name="version">The version of the Azure Virtual Machines
-        /// Marketplace image.</param>
+        /// Marketplace Image.</param>
         /// <param name="virtualMachineImageId">The ARM resource identifier of
-        /// the virtual machine image. Computes nodes of the pool will be
+        /// the Virtual Machine Image. Computes nodes of the pool will be
         /// created using this custom image. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}</param>
         public ImageReference(string publisher = default(string), string offer = default(string), string sku = default(string), string version = default(string), string virtualMachineImageId = default(string))
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the publisher of the Azure Virtual Machines
-        /// Marketplace image.
+        /// Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the offer type of the Azure Virtual Machines
-        /// Marketplace image.
+        /// Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the SKU of the Azure Virtual Machines Marketplace
-        /// image.
+        /// Image.
         /// </summary>
         /// <remarks>
         /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
@@ -91,26 +91,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the version of the Azure Virtual Machines Marketplace
-        /// image.
+        /// Image.
         /// </summary>
         /// <remarks>
         /// A value of 'latest' can be specified to select the latest version
-        /// of an image. If omitted, the default is 'latest'.
+        /// of an Image. If omitted, the default is 'latest'.
         /// </remarks>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the virtual machine
-        /// image. Computes nodes of the pool will be created using this custom
+        /// Gets or sets the ARM resource identifier of the Virtual Machine
+        /// Image. Computes nodes of the pool will be created using this custom
         /// image. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
         /// </summary>
         /// <remarks>
         /// This property is mutually exclusive with other ImageReference
-        /// properties. The virtual machine image must be in the same region
-        /// and subscription as the Azure Batch account. For more details, see
-        /// https://docs.microsoft.com/azure/batch/batch-custom-images.
+        /// properties. The Virtual Machine Image must be in the same region
+        /// and subscription as the Azure Batch account. For information about
+        /// the firewall settings for the Batch node agent to communicate with
+        /// the Batch service see
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineImageId")]
         public string VirtualMachineImageId { get; set; }

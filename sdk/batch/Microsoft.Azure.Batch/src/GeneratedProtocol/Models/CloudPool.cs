@@ -94,9 +94,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
-        /// the entire lifetime of the pool. The statistics may not be
-        /// immediately available. The Batch service performs periodic roll-up
-        /// of statistics. The typical delay is about 30 minutes.</param>
+        /// the entire lifetime of the pool.</param>
         public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
             Id = id;
@@ -414,6 +412,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// Changes to application package references affect all new compute
+        /// nodes joining the pool, but do not affect compute nodes that are
+        /// already in the pool until they are rebooted or reimaged. There is a
+        /// maximum of 10 application package references on any given pool.
+        /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
@@ -433,6 +437,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the maximum number of tasks that can run concurrently
         /// on a single compute node in the pool.
         /// </summary>
+        /// <remarks>
+        /// The default value is 1. The maximum value is the smaller of 4 times
+        /// the number of cores of the vmSize of the pool or 256.
+        /// </remarks>
         [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
@@ -459,10 +467,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets utilization and resource usage statistics for the
-        /// entire lifetime of the pool. The statistics may not be immediately
-        /// available. The Batch service performs periodic roll-up of
-        /// statistics. The typical delay is about 30 minutes.
+        /// entire lifetime of the pool.
         /// </summary>
+        /// <remarks>
+        /// This property is populated only if the CloudPool was retrieved with
+        /// an expand clause including the 'stats' attribute; otherwise it is
+        /// null. The statistics may not be immediately available. The Batch
+        /// service performs periodic roll-up of statistics. The typical delay
+        /// is about 30 minutes.
+        /// </remarks>
         [JsonProperty(PropertyName = "stats")]
         public PoolStatistics Stats { get; set; }
 

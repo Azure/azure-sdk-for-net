@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="certificateReferences">A list of certificates to be
         /// installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">A list of application
+        /// <param name="applicationPackageReferences">The list of application
         /// packages to be installed on each compute node in the pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
@@ -89,16 +89,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of application packages to be installed on each
-        /// compute node in the pool.
+        /// Gets or sets the list of application packages to be installed on
+        /// each compute node in the pool.
         /// </summary>
         /// <remarks>
         /// The list replaces any existing application package references on
         /// the pool. Changes to application package references affect all new
         /// compute nodes joining the pool, but do not affect compute nodes
         /// that are already in the pool until they are rebooted or reimaged.
-        /// If omitted, or if you specify an empty collection, any existing
-        /// application packages references are removed from the pool.
+        /// There is a maximum of 10 application package references on any
+        /// given pool. If omitted, or if you specify an empty collection, any
+        /// existing application packages references are removed from the pool.
+        /// A maximum of 10 references may be specified on a given pool.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }

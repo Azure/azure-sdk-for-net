@@ -226,7 +226,9 @@ namespace Microsoft.Azure.Batch
         /// this must be set as well. If the pool that will run this task doesn't have <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> 
         /// set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR 
         /// (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables 
-        /// are mapped into the container, and the task command line is executed in the container.
+        /// are mapped into the container, and the task command line is executed in the container. Files produced in the 
+        /// container outside of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk, meaning that Batch file 
+        /// APIs will not be able to access them.
         /// </remarks>
         public TaskContainerSettings ContainerSettings
         {
