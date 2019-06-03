@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
-            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, secret.Version);
+            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
         }
 
         public virtual Response<SecretBase> Update(SecretBase secret, CancellationToken cancellationToken = default)
@@ -192,7 +192,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
-            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "backup");
+            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup");
 
             return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
@@ -206,7 +206,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "restore");
+            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "/restore");
         }
 
         public virtual Response<Secret> Restore(byte[] backup, CancellationToken cancellationToken = default)
@@ -291,8 +291,6 @@ namespace Azure.Security.KeyVault.Secrets
 
         private Request CreateRequest(HttpPipelineMethod method, params string[] path)
         {
-            // duplicating the code from the overload which takes a URI here because there is currently a bug in 
-            // request.UriBuilder when you call AppendQuery before AppendPath
             Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -302,12 +300,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             foreach (var p in path)
             {
-                if (!string.IsNullOrEmpty(p))
-                {
-                    var pp = !p.StartsWith("/") ? "/" + p : p;
-
-                    request.UriBuilder.AppendPath(pp);
-                }
+                request.UriBuilder.AppendPath(p);
             }
 
             request.UriBuilder.AppendQuery("api-version", ApiVersion);
