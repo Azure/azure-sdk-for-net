@@ -119,7 +119,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<KeyBase>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Uri firstPageUri = new Uri(_vaultUri, KeysPath + $"?api-version={ApiVersion}");
+
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
 
         public virtual IEnumerable<Response<KeyBase>> GetKeyVersions(string name, CancellationToken cancellationToken = default)
@@ -129,7 +131,11 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<KeyBase>> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            Uri firstPageUri = new Uri(_vaultUri, $"{KeysPath}{name}/versions?api-version={ApiVersion}");
+
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
 
         public virtual Response<DeletedKey> GetDeletedKey(string name, CancellationToken cancellationToken = default)
@@ -139,8 +145,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<DeletedKey>> GetDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Get, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
 
         public virtual Response<DeletedKey> DeleteKey(string name, CancellationToken cancellationToken = default)
@@ -162,7 +169,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<DeletedKey>> GetDeletedKeysAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Uri firstPageUri = new Uri(_vaultUri, DeletedKeysPath + $"?api-version={ApiVersion}");
+
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), cancellationToken));
         }
 
         public virtual Response PurgeDeletedKey(string name, CancellationToken cancellationToken = default)
