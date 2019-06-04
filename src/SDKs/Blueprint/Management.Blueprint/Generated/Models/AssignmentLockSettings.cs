@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.Blueprint.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Defines how Blueprint-managed resources will be locked.
+    /// Defines how resources deployed by a blueprint assignment are locked.
     /// </summary>
     public partial class AssignmentLockSettings
     {
@@ -30,10 +32,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Initializes a new instance of the AssignmentLockSettings class.
         /// </summary>
         /// <param name="mode">Lock mode. Possible values include: 'None',
-        /// 'AllResources'</param>
-        public AssignmentLockSettings(string mode = default(string))
+        /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'</param>
+        /// <param name="excludedPrincipals">List of AAD principals excluded
+        /// from blueprint locks. Up to 5 principals are permitted.</param>
+        public AssignmentLockSettings(string mode = default(string), IList<string> excludedPrincipals = default(IList<string>))
         {
             Mode = mode;
+            ExcludedPrincipals = excludedPrincipals;
             CustomInit();
         }
 
@@ -44,10 +49,17 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets lock mode. Possible values include: 'None',
-        /// 'AllResources'
+        /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public string Mode { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of AAD principals excluded from blueprint locks.
+        /// Up to 5 principals are permitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "excludedPrincipals")]
+        public IList<string> ExcludedPrincipals { get; set; }
 
     }
 }

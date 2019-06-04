@@ -24,12 +24,15 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class VolumesOperationsExtensions
     {
             /// <summary>
-            /// List volumes
+            /// Describe all volumes
             /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -38,18 +41,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='poolName'>
             /// The name of the capacity pool
             /// </param>
-            public static IEnumerable<Volume> List(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName)
+            public static IEnumerable<Volume> List(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName)
             {
-                return operations.ListAsync(resourceGroup, accountName, poolName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, poolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List volumes
+            /// Describe all volumes
             /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -61,21 +67,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Volume>> ListAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroup, accountName, poolName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, poolName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get a volume
+            /// Describe a volume
             /// </summary>
+            /// <remarks>
+            /// Get the details of the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -87,18 +96,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static Volume Get(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static Volume Get(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                return operations.GetAsync(resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a volume
+            /// Describe a volume
             /// </summary>
+            /// <remarks>
+            /// Get the details of the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -113,24 +125,27 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Volume> GetAsync(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Volume> GetAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Volume object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -142,21 +157,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static Volume CreateOrUpdate(this IVolumesOperations operations, Volume body, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static Volume CreateOrUpdate(this IVolumesOperations operations, Volume body, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                return operations.CreateOrUpdateAsync(body, resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(body, resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Volume object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -171,24 +189,27 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Volume> CreateOrUpdateAsync(this IVolumesOperations operations, Volume body, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Volume> CreateOrUpdateAsync(this IVolumesOperations operations, Volume body, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Patch a volume
+            /// Update a volume
             /// </summary>
+            /// <remarks>
+            /// Patch the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Volume object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -200,21 +221,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static Volume Update(this IVolumesOperations operations, VolumePatch body, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static Volume Update(this IVolumesOperations operations, VolumePatch body, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                return operations.UpdateAsync(body, resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(body, resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Patch a volume
+            /// Update a volume
             /// </summary>
+            /// <remarks>
+            /// Patch the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Volume object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -229,116 +253,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Volume> UpdateAsync(this IVolumesOperations operations, VolumePatch body, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Volume> UpdateAsync(this IVolumesOperations operations, VolumePatch body, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Delete a volume
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the NetApp account
-            /// </param>
-            /// <param name='poolName'>
-            /// The name of the capacity pool
-            /// </param>
-            /// <param name='volumeName'>
-            /// The name of the volume
-            /// </param>
-            public static void Delete(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName)
-            {
-                operations.DeleteAsync(resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete a volume
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the NetApp account
-            /// </param>
-            /// <param name='poolName'>
-            /// The name of the capacity pool
-            /// </param>
-            /// <param name='volumeName'>
-            /// The name of the volume
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or update a volume
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='body'>
-            /// Volume object supplied in the body of the operation.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the NetApp account
-            /// </param>
-            /// <param name='poolName'>
-            /// The name of the capacity pool
-            /// </param>
-            /// <param name='volumeName'>
-            /// The name of the volume
-            /// </param>
-            public static Volume BeginCreateOrUpdate(this IVolumesOperations operations, Volume body, string resourceGroup, string accountName, string poolName, string volumeName)
-            {
-                return operations.BeginCreateOrUpdateAsync(body, resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a volume
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='body'>
-            /// Volume object supplied in the body of the operation.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the NetApp account
-            /// </param>
-            /// <param name='poolName'>
-            /// The name of the capacity pool
-            /// </param>
-            /// <param name='volumeName'>
-            /// The name of the volume
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Volume> BeginCreateOrUpdateAsync(this IVolumesOperations operations, Volume body, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -347,10 +264,13 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -362,18 +282,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static void BeginDelete(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static void Delete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                operations.BeginDeleteAsync(resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -388,9 +311,128 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVolumesOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create or Update a volume
+            /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Volume object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            public static Volume BeginCreateOrUpdate(this IVolumesOperations operations, Volume body, string resourceGroupName, string accountName, string poolName, string volumeName)
+            {
+                return operations.BeginCreateOrUpdateAsync(body, resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or Update a volume
+            /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Volume object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Volume> BeginCreateOrUpdateAsync(this IVolumesOperations operations, Volume body, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a volume
+            /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            public static void BeginDelete(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a volume
+            /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

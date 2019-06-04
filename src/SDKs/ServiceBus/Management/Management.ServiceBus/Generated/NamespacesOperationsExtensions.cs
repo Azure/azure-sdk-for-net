@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static SBAuthorizationRule GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static AccessKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -555,7 +555,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -590,6 +590,135 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<AccessKeys> RegenerateKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// This operation Migrate the given namespace to provided name type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to migrate namespace type.
+            /// </param>
+            public static void Migrate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, SBNamespaceMigrate parameters)
+            {
+                operations.MigrateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This operation Migrate the given namespace to provided name type
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to migrate namespace type.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task MigrateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, SBNamespaceMigrate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.MigrateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create or update NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace IpFilterRule.
+            /// </param>
+            public static NetworkRuleSet CreateOrUpdateNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters)
+            {
+                return operations.CreateOrUpdateNetworkRuleSetAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// The Namespace IpFilterRule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkRuleSet> CreateOrUpdateNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NetworkRuleSet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static NetworkRuleSet GetNetworkRuleSet(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.GetNetworkRuleSetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkRuleSet> GetNetworkRuleSetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNetworkRuleSetWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

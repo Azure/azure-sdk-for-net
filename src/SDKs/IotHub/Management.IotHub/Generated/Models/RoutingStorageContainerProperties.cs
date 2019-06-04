@@ -37,9 +37,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="name">The name that identifies this endpoint. The name
         /// can only include alphanumeric characters, periods, underscores,
         /// hyphens and has a maximum length of 64 characters. The following
-        /// names are reserved:  events, operationsMonitoringEvents,
-        /// fileNotifications, $default. Endpoint names must be unique across
-        /// endpoint types.</param>
+        /// names are reserved:  events, fileNotifications, $default. Endpoint
+        /// names must be unique across endpoint types.</param>
         /// <param name="containerName">The name of storage container in the
         /// storage account.</param>
         /// <param name="subscriptionId">The subscription identifier of the
@@ -56,8 +55,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// blob written to storage. Value should be between 10485760(10MB) and
         /// 524288000(500MB). Default value is 314572800(300MB).</param>
         /// <param name="encoding">Encoding that is used to serialize messages
-        /// to blobs. Supported values are 'avro' and 'avrodeflate'. Default
-        /// value is 'avro'.</param>
+        /// to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'.
+        /// Default value is 'avro'. Possible values include: 'Avro',
+        /// 'AvroDeflate', 'JSON'</param>
         public RoutingStorageContainerProperties(string connectionString, string name, string containerName, string subscriptionId = default(string), string resourceGroup = default(string), string fileNameFormat = default(string), int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), string encoding = default(string))
         {
             ConnectionString = connectionString;
@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Gets or sets the name that identifies this endpoint. The name can
         /// only include alphanumeric characters, periods, underscores, hyphens
         /// and has a maximum length of 64 characters. The following names are
-        /// reserved:  events, operationsMonitoringEvents, fileNotifications,
-        /// $default. Endpoint names must be unique across endpoint types.
+        /// reserved:  events, fileNotifications, $default. Endpoint names must
+        /// be unique across endpoint types.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -137,8 +137,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// Gets or sets encoding that is used to serialize messages to blobs.
-        /// Supported values are 'avro' and 'avrodeflate'. Default value is
-        /// 'avro'.
+        /// Supported values are 'avro', 'avrodeflate', and 'JSON'. Default
+        /// value is 'avro'. Possible values include: 'Avro', 'AvroDeflate',
+        /// 'JSON'
         /// </summary>
         [JsonProperty(PropertyName = "encoding")]
         public string Encoding { get; set; }

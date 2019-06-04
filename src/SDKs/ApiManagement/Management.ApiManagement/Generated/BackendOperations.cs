@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<BackendGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<BackendGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -326,23 +326,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -362,16 +362,16 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityTag", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -527,7 +527,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackendContract,BackendGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackendContract,BackendGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -552,23 +552,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -588,16 +588,16 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -746,7 +746,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -778,7 +778,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackendContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackendContract,BackendCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -803,23 +803,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -847,7 +847,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -855,10 +855,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BackendContract>();
+            var _result = new AzureOperationResponse<BackendContract,BackendCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1010,6 +1010,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackendCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -1026,7 +1039,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -1056,7 +1069,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1081,23 +1094,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1125,7 +1138,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1133,10 +1146,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1268,7 +1281,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -1295,7 +1308,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1320,23 +1333,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
@@ -1360,17 +1373,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1498,7 +1511,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -1523,7 +1536,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ReconnectWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendReconnectContract parameters = default(BackendReconnectContract), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ReconnectWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendReconnectContract parameters = default(BackendReconnectContract), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1548,23 +1561,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
-            if (backendid == null)
+            if (backendId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backendid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "backendId");
             }
-            if (backendid != null)
+            if (backendId != null)
             {
-                if (backendid.Length > 80)
+                if (backendId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "backendid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "backendId", 80);
                 }
-                if (backendid.Length < 1)
+                if (backendId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "backendid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "backendId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(backendid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(backendId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "backendid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "backendId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -1584,17 +1597,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("backendid", backendid);
+                tracingParameters.Add("backendId", backendId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Reconnect", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendid}/reconnect").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}/reconnect").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{backendid}", System.Uri.EscapeDataString(backendid));
+            _url = _url.Replace("{backendId}", System.Uri.EscapeDataString(backendId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

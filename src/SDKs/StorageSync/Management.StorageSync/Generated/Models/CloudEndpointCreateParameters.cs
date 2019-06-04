@@ -42,16 +42,17 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="storageAccountResourceId">Storage Account Resource
         /// Id</param>
-        /// <param name="storageAccountShareName">Storage Account Share
-        /// name</param>
+        /// <param name="azureFileShareName">Azure file share name</param>
         /// <param name="storageAccountTenantId">Storage Account Tenant
         /// Id</param>
-        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string))
+        /// <param name="friendlyName">Friendly Name</param>
+        public CloudEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string), string friendlyName = default(string))
             : base(id, name, type)
         {
             StorageAccountResourceId = storageAccountResourceId;
-            StorageAccountShareName = storageAccountShareName;
+            AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
+            FriendlyName = friendlyName;
             CustomInit();
         }
 
@@ -67,16 +68,22 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string StorageAccountResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets storage Account Share name
+        /// Gets or sets azure file share name
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountShareName")]
-        public string StorageAccountShareName { get; set; }
+        [JsonProperty(PropertyName = "properties.azureFileShareName")]
+        public string AzureFileShareName { get; set; }
 
         /// <summary>
         /// Gets or sets storage Account Tenant Id
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountTenantId")]
         public string StorageAccountTenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets friendly Name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.friendlyName")]
+        public string FriendlyName { get; set; }
 
     }
 }

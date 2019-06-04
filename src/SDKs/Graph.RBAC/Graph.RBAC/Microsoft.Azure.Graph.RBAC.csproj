@@ -5,13 +5,13 @@
   
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Graph.RBAC</PackageId>
-    <VersionPrefix>3.5.1-preview</VersionPrefix>
+    <VersionPrefix>3.8.0-preview</VersionPrefix>
     <Description>Microsoft.Azure.Graph.RBAC</Description>
     <AssemblyName>Microsoft.Azure.Graph.RBAC</AssemblyName>
     <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-          Supporting additional target frameworks ( .NET 461 and .NET Standard 2.0)
+		  Regenerated .net sdk from the latest version of GraphRbac rest specification.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

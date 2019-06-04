@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static SBAuthorizationRule GetAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static AccessKeys ListKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.

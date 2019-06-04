@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="name">Resource Name</param>
         /// <param name="type">Resource Type</param>
         /// <param name="location">Resource Location</param>
-        /// <param name="properties">Proprties of the storage object.</param>
+        /// <param name="properties">Properties of the storage object.</param>
         public StorageClassification(string id = default(string), string name = default(string), string type = default(string), string location = default(string), StorageClassificationProperties properties = default(StorageClassificationProperties))
             : base(id, name, type, location)
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets proprties of the storage object.
+        /// Gets or sets properties of the storage object.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public StorageClassificationProperties Properties { get; set; }

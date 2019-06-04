@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="limit">Indicates the size of the subnet.</param>
         /// <param name="name">The name containing common and localized value
         /// for usage.</param>
-        /// <param name="unit">Usage units. Returns 'Count'</param>
+        /// <param name="unit">Usage units. Returns 'Count'.</param>
         public VirtualNetworkUsage(double? currentValue = default(double?), string id = default(string), double? limit = default(double?), VirtualNetworkUsageName name = default(VirtualNetworkUsageName), string unit = default(string))
         {
             CurrentValue = currentValue;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkUsageName Name { get; private set; }
 
         /// <summary>
-        /// Gets usage units. Returns 'Count'
+        /// Gets usage units. Returns 'Count'.
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; private set; }

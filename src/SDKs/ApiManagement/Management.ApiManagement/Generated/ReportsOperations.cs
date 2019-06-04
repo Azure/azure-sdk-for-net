@@ -960,16 +960,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists report records by GeoGraphy.
+        /// Lists report records by geography.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -992,8 +992,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByGeoWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByGeoWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (odataQuery == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "odataQuery");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -1185,14 +1189,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <summary>
         /// Lists report records by subscription.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1215,8 +1219,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListBySubscriptionWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListBySubscriptionWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (odataQuery == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "odataQuery");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -1408,6 +1416,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <summary>
         /// Lists report records by Time.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -1419,10 +1430,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// zero. The value should be in ISO  8601 format
         /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to
         /// convert TimeSpan to a valid interval string: XmlConvert.ToString(new
-        /// TimeSpan(hours, minutes, secconds))
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// TimeSpan(hours, minutes, seconds)).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1445,8 +1453,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByTimeWithHttpMessagesAsync(string resourceGroupName, string serviceName, System.TimeSpan interval, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByTimeWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, System.TimeSpan interval, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (odataQuery == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "odataQuery");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -2557,7 +2569,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists report records by GeoGraphy.
+        /// Lists report records by geography.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

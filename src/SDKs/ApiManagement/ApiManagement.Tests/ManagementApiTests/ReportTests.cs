@@ -36,13 +36,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.Single(byApiResponse);
                 Assert.NotNull(byApiResponse.First().ApiId);
 
-                var byGeoResponse = testBase.client.Reports.ListByGeo(
-                    testBase.rgName,
-                    testBase.serviceName,
+                var byGeoResponse = testBase.client.Reports.ListByGeo(                    
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
                     {
                         Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
-                    });
+                    },
+                    testBase.rgName,
+                    testBase.serviceName);
 
                 Assert.NotNull(byGeoResponse);
                 Assert.NotNull(byGeoResponse.First().Region);
@@ -71,27 +71,27 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.Equal(2, byProductResponse.Count());
                 Assert.NotNull(byProductResponse.First().ProductId);
 
-                var bySubscriptionResponse = testBase.client.Reports.ListBySubscription(
-                    testBase.rgName,
-                    testBase.serviceName,
+                var bySubscriptionResponse = testBase.client.Reports.ListBySubscription(                    
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
                     {
                         Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
-                    });
+                    },
+                    testBase.rgName,
+                    testBase.serviceName);
 
                 Assert.NotNull(bySubscriptionResponse);
                 Assert.Equal(2, bySubscriptionResponse.Count());
                 Assert.NotNull(bySubscriptionResponse.First().SubscriptionId);
                 Assert.NotNull(bySubscriptionResponse.First().ProductId);
 
-                var byTimeResponse = testBase.client.Reports.ListByTime(
-                    testBase.rgName,
-                    testBase.serviceName,
-                    TimeSpan.FromMinutes(30),
+                var byTimeResponse = testBase.client.Reports.ListByTime(                    
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
                     {
                         Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
-                    });
+                    }, 
+                    testBase.rgName,
+                    testBase.serviceName,
+                    TimeSpan.FromMinutes(30));
 
                 Assert.NotNull(byTimeResponse);                
 

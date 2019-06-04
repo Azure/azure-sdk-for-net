@@ -63,7 +63,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// that are part of this action group.</param>
         /// <param name="azureFunctionReceivers">The list of azure function
         /// receivers that are part of this action group.</param>
-        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>))
+        /// <param name="armRoleReceivers">The list of ARM role receivers that
+        /// are part of this action group. Roles are Azure RBAC roles and only
+        /// built-in roles are supported.</param>
+        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>))
             : base(location, id, name, type, tags)
         {
             GroupShortName = groupShortName;
@@ -77,6 +80,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             VoiceReceivers = voiceReceivers;
             LogicAppReceivers = logicAppReceivers;
             AzureFunctionReceivers = azureFunctionReceivers;
+            ArmRoleReceivers = armRoleReceivers;
             CustomInit();
         }
 
@@ -162,6 +166,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureFunctionReceivers")]
         public IList<AzureFunctionReceiver> AzureFunctionReceivers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of ARM role receivers that are part of this
+        /// action group. Roles are Azure RBAC roles and only built-in roles
+        /// are supported.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.armRoleReceivers")]
+        public IList<ArmRoleReceiver> ArmRoleReceivers { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -270,6 +282,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     if (element8 != null)
                     {
                         element8.Validate();
+                    }
+                }
+            }
+            if (ArmRoleReceivers != null)
+            {
+                foreach (var element9 in ArmRoleReceivers)
+                {
+                    if (element9 != null)
+                    {
+                        element9.Validate();
                     }
                 }
             }

@@ -22,174 +22,128 @@ namespace Microsoft.Azure.Management.Consumption
     public static partial class BudgetsOperationsExtensions
     {
             /// <summary>
-            /// Lists all budgets for a subscription.
+            /// Lists all budgets for the defined scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Budget> List(this IBudgetsOperations operations)
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
+            /// </param>
+            public static IPage<Budget> List(this IBudgetsOperations operations, string scope)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all budgets for a subscription.
+            /// Lists all budgets for the defined scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Budget>> ListAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Budget>> ListAsync(this IBudgetsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
+            /// Gets the budget for the scope by budget name.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            public static IPage<Budget> ListByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupNameAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the budget for a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
             /// </param>
-            public static Budget Get(this IBudgetsOperations operations, string budgetName)
+            public static Budget Get(this IBudgetsOperations operations, string scope, string budgetName)
             {
-                return operations.GetAsync(budgetName).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the budget for a subscription by budget name.
+            /// Gets the budget for the scope by budget name.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Budget operation.
-            /// </param>
-            public static Budget CreateOrUpdate(this IBudgetsOperations operations, string budgetName, Budget parameters)
-            {
-                return operations.CreateOrUpdateAsync(budgetName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Budget operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to delete a budget.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static void Delete(this IBudgetsOperations operations, string budgetName)
-            {
-                operations.DeleteAsync(budgetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete a budget.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
@@ -197,48 +151,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, string scope, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the budget for a resource group under a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static Budget GetByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
-            {
-                return operations.GetByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the budget for a resource group under a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Budget> GetByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, budgetName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -253,8 +168,23 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
@@ -262,9 +192,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
-            public static Budget CreateOrUpdateByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters)
+            public static Budget CreateOrUpdate(this IBudgetsOperations operations, string scope, string budgetName, Budget parameters)
             {
-                return operations.CreateOrUpdateByResourceGroupNameAsync(resourceGroupName, budgetName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, budgetName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -276,8 +206,23 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
@@ -288,9 +233,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> CreateOrUpdateByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, string scope, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -303,15 +248,30 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
             /// </param>
-            public static void DeleteByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
+            public static void Delete(this IBudgetsOperations operations, string scope, string budgetName)
             {
-                operations.DeleteByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
+                operations.DeleteAsync(scope, budgetName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,8 +281,23 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
+            /// <param name='scope'>
+            /// The scope associated with budget operations. This includes
+            /// '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+            /// resourceGroup scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// Billing Account scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
+            /// for Department scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
+            /// for EnrollmentAccount scope,
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+            /// Management Group scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope,
+            /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}'
+            /// for invoiceSection scope.
             /// </param>
             /// <param name='budgetName'>
             /// Budget Name.
@@ -330,13 +305,13 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBudgetsOperations operations, string scope, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(scope, budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Lists all budgets for a subscription.
+            /// Lists all budgets for the defined scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -351,7 +326,7 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// Lists all budgets for a subscription.
+            /// Lists all budgets for the defined scope.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -366,42 +341,6 @@ namespace Microsoft.Azure.Management.Consumption
             public static async Task<IPage<Budget>> ListNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Budget> ListByResourceGroupNameNext(this IBudgetsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNameNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Budget>> ListByResourceGroupNameNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

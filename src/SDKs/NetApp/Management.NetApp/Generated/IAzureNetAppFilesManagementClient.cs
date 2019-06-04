@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Microsoft NetApp Azure Resource Provider specification
@@ -100,6 +104,40 @@ namespace Microsoft.Azure.Management.NetApp
         /// Gets the ISnapshotsOperations.
         /// </summary>
         ISnapshotsOperations Snapshots { get; }
+
+        /// <summary>
+        /// Check resource name availability
+        /// </summary>
+        /// <remarks>
+        /// Check if a resource name is available.
+        /// </remarks>
+        /// <param name='location'>
+        /// The location
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Check file path availability
+        /// </summary>
+        /// <remarks>
+        /// Check if a file path is available.
+        /// </remarks>
+        /// <param name='location'>
+        /// The location
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ResourceNameAvailability>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

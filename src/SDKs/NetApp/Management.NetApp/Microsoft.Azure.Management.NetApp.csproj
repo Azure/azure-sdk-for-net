@@ -8,11 +8,16 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>0.9.0-preview</Version>
+    <Version>1.0.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public preview release of the NetApp storage management SDK. It provides the capability to create multiple file systems volumes through Microsoft Azure.
+        Version 1.0.0 relates to NetApp Files (ANF) RP R4 (Gated) GA
+           - first non-preview version
+           - Correction to error mapping
+           - filesystem id no longer required for snapshot creation
+        General :
+        Azure NetApp Files provides the capability to create multiple file system volumes through Microsoft Azure.
         Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:
         Create an account and pool:
           var accountResource = CreateAccount(netAppMgmtClient, accountName);

@@ -41,24 +41,32 @@ namespace Microsoft.Azure.Management.ServiceFabric
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The version of the Service Fabric resource provider API. This is a
+        /// required parameter and it's value must be "2019-03-01-preview" for
+        /// this specification.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The customer subscription identifier.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 

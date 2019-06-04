@@ -7,14 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.9.0-preview</Version>
+		<Version>19.12.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-        - Added support for PrepareNetworkPolicies in Subnet
-        - Added support for ApplicationGatewayRewriteRuleCondition in ApplicationGatewayRewriteRule
-        - Added support for ThreatIntelMode in AzureFirewall
-        - Fixed return type of ApplicationGateway's ListAvailableServerVariables, ListAvailableRequestHeaders and ListAvailableResponseHeaders
+            - Added ApplicationGatewayBackendHealthOnDemand operation
+            - Added UpdateTags for DDoS protection plan
+            - Added NatGateway resource with operations
+            - Removed "Alert" value from AzureFirewallRCActionType
+            - OutputBlobSasUrl parameter in VirtualWAN changed to required
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

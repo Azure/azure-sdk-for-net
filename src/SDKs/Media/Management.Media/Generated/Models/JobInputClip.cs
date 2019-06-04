@@ -32,8 +32,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the JobInputClip class.
         /// </summary>
-        /// <param name="files">List of files. Required for
-        /// JobInputHttp.</param>
+        /// <param name="files">List of files. Required for JobInputHttp.
+        /// Maximum of 4000 characters each.</param>
+        /// <param name="start">Defines a point on the timeline of the input
+        /// media at which processing will start. Defaults to the beginning of
+        /// the input media.</param>
+        /// <param name="end">Defines a point on the timeline of the input
+        /// media at which processing will end. Defaults to the end of the
+        /// input media.</param>
         /// <param name="label">A label that is assigned to a JobInputClip,
         /// that is used to satisfy a reference used in the Transform. For
         /// example, a Transform can be authored so as to take an image file
@@ -41,9 +47,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// video before it is encoded. When submitting a Job, exactly one of
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
-        public JobInputClip(IList<string> files = default(IList<string>), string label = default(string))
+        public JobInputClip(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string))
         {
             Files = files;
+            Start = start;
+            End = end;
             Label = label;
             CustomInit();
         }
@@ -54,10 +62,26 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of files. Required for JobInputHttp.
+        /// Gets or sets list of files. Required for JobInputHttp. Maximum of
+        /// 4000 characters each.
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines a point on the timeline of the input media at
+        /// which processing will start. Defaults to the beginning of the input
+        /// media.
+        /// </summary>
+        [JsonProperty(PropertyName = "start")]
+        public ClipTime Start { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines a point on the timeline of the input media at
+        /// which processing will end. Defaults to the end of the input media.
+        /// </summary>
+        [JsonProperty(PropertyName = "end")]
+        public ClipTime End { get; set; }
 
         /// <summary>
         /// Gets or sets a label that is assigned to a JobInputClip, that is

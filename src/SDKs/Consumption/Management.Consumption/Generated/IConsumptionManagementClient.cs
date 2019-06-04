@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2018-01-31.
+        /// version is 2019-04-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
@@ -53,19 +53,20 @@ namespace Microsoft.Azure.Management.Consumption
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -81,6 +82,26 @@ namespace Microsoft.Azure.Management.Consumption
         IMarketplacesOperations Marketplaces { get; }
 
         /// <summary>
+        /// Gets the IBudgetsOperations.
+        /// </summary>
+        IBudgetsOperations Budgets { get; }
+
+        /// <summary>
+        /// Gets the ITagsOperations.
+        /// </summary>
+        ITagsOperations Tags { get; }
+
+        /// <summary>
+        /// Gets the IChargesOperations.
+        /// </summary>
+        IChargesOperations Charges { get; }
+
+        /// <summary>
+        /// Gets the IBalancesOperations.
+        /// </summary>
+        IBalancesOperations Balances { get; }
+
+        /// <summary>
         /// Gets the IReservationsSummariesOperations.
         /// </summary>
         IReservationsSummariesOperations ReservationsSummaries { get; }
@@ -91,9 +112,19 @@ namespace Microsoft.Azure.Management.Consumption
         IReservationsDetailsOperations ReservationsDetails { get; }
 
         /// <summary>
-        /// Gets the IBudgetsOperations.
+        /// Gets the IReservationRecommendationsOperations.
         /// </summary>
-        IBudgetsOperations Budgets { get; }
+        IReservationRecommendationsOperations ReservationRecommendations { get; }
+
+        /// <summary>
+        /// Gets the IPriceSheetOperations.
+        /// </summary>
+        IPriceSheetOperations PriceSheet { get; }
+
+        /// <summary>
+        /// Gets the IForecastsOperations.
+        /// </summary>
+        IForecastsOperations Forecasts { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -101,9 +132,9 @@ namespace Microsoft.Azure.Management.Consumption
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IPriceSheetOperations.
+        /// Gets the IAggregatedCostOperations.
         /// </summary>
-        IPriceSheetOperations PriceSheet { get; }
+        IAggregatedCostOperations AggregatedCost { get; }
 
     }
 }

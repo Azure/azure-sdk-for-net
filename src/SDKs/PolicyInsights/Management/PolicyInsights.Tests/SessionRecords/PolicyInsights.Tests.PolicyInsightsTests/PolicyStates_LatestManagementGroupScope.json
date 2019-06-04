@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/azgovtest4/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-04-04&$top=10&$from=2018-04-04T00:00:00Z",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6Z292dGVzdDQvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lTdGF0ZXMvbGF0ZXN0L3F1ZXJ5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDE4LTA0LTA0JiR0b3A9MTAmJGZyb209MjAxOC0wNC0wNFQwMCUzQTAwJTNBMDBa",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/azgovtest4/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-07-01-preview&$top=10&$from=2018-04-04T00:00:00Z",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6Z292dGVzdDQvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lTdGF0ZXMvbGF0ZXN0L3F1ZXJ5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDE4LTA3LTAxLXByZXZpZXcmJHRvcD0xMCYkZnJvbT0yMDE4LTA0LTA0VDAwJTNBMDAlM0EwMFo=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {

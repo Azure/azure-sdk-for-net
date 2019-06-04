@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="filters">The filters that will be applied to determine
         /// which resources to remediate.</param>
         /// <param name="deploymentStatus">The deployment status summary for
-        /// all deplyoments created by the remediation.</param>
+        /// all deployments created by the remediation.</param>
         /// <param name="id">The ID of the remediation.</param>
         /// <param name="type">The type of the remediation.</param>
         /// <param name="name">The name of the remediation.</param>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public RemediationFilters Filters { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment status summary for all deplyoments
+        /// Gets or sets the deployment status summary for all deployments
         /// created by the remediation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deploymentStatus")]

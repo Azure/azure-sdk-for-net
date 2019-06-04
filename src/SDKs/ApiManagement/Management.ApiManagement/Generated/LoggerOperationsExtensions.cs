@@ -83,12 +83,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
-            public static LoggerGetEntityTagHeaders GetEntityTag(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid)
+            public static LoggerGetEntityTagHeaders GetEntityTag(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId)
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName, loggerid).GetAwaiter().GetResult();
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, loggerId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,15 +104,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LoggerGetEntityTagHeaders> GetEntityTagAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoggerGetEntityTagHeaders> GetEntityTagAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, loggerid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -130,12 +130,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
-            public static LoggerContract Get(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid)
+            public static LoggerContract Get(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId)
             {
-                return operations.GetAsync(resourceGroupName, serviceName, loggerid).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, loggerId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -150,15 +150,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LoggerContract> GetAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoggerContract> GetAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, loggerid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='parameters'>
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static LoggerContract CreateOrUpdate(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, LoggerContract parameters, string ifMatch = default(string))
+            public static LoggerContract CreateOrUpdate(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, loggerid, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='parameters'>
@@ -216,9 +216,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LoggerContract> CreateOrUpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, LoggerContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LoggerContract> CreateOrUpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='parameters'>
@@ -247,9 +247,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, LoggerUpdateContract parameters, string ifMatch)
+            public static void Update(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, loggerid, parameters, ifMatch).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='parameters'>
@@ -278,9 +278,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, LoggerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='ifMatch'>
@@ -303,9 +303,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Delete(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, string ifMatch)
+            /// <param name='force'>
+            /// Force deletion even if diagnostic is attached.
+            /// </param>
+            public static void Delete(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, loggerid, ifMatch).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, loggerId, ifMatch, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -320,20 +323,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='loggerid'>
+            /// <param name='loggerId'>
             /// Logger identifier. Must be unique in the API Management service instance.
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
             /// update.
+            /// </param>
+            /// <param name='force'>
+            /// Force deletion even if diagnostic is attached.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerid, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILoggerOperations operations, string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, loggerid, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, loggerId, ifMatch, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.Network
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client API version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -91,6 +96,16 @@ namespace Microsoft.Azure.Management.Network
         IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; }
 
         /// <summary>
+        /// Gets the IAvailablePrivateEndpointTypesOperations.
+        /// </summary>
+        IAvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes { get; }
+
+        /// <summary>
+        /// Gets the IAvailableResourceGroupPrivateEndpointTypesOperations.
+        /// </summary>
+        IAvailableResourceGroupPrivateEndpointTypesOperations AvailableResourceGroupPrivateEndpointTypes { get; }
+
+        /// <summary>
         /// Gets the IAzureFirewallsOperations.
         /// </summary>
         IAzureFirewallsOperations AzureFirewalls { get; }
@@ -99,6 +114,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IAzureFirewallFqdnTagsOperations.
         /// </summary>
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
+
+        /// <summary>
+        /// Gets the IBastionHostsOperations.
+        /// </summary>
+        IBastionHostsOperations BastionHosts { get; }
 
         /// <summary>
         /// Gets the IDdosCustomPoliciesOperations.
@@ -129,6 +149,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteCircuitConnectionsOperations.
         /// </summary>
         IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; }
+
+        /// <summary>
+        /// Gets the IPeerExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        IPeerExpressRouteCircuitConnectionsOperations PeerExpressRouteCircuitConnections { get; }
 
         /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
@@ -176,9 +201,14 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
-        /// Gets the IInterfaceEndpointsOperations.
+        /// Gets the IPrivateEndpointsOperations.
         /// </summary>
-        IInterfaceEndpointsOperations InterfaceEndpoints { get; }
+        IPrivateEndpointsOperations PrivateEndpoints { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkServicesOperations.
+        /// </summary>
+        IPrivateLinkServicesOperations PrivateLinkServices { get; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
@@ -219,6 +249,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILoadBalancerProbesOperations.
         /// </summary>
         ILoadBalancerProbesOperations LoadBalancerProbes { get; }
+
+        /// <summary>
+        /// Gets the INatGatewaysOperations.
+        /// </summary>
+        INatGatewaysOperations NatGateways { get; }
 
         /// <summary>
         /// Gets the INetworkInterfacesOperations.
@@ -326,6 +361,11 @@ namespace Microsoft.Azure.Management.Network
         IServiceEndpointPolicyDefinitionsOperations ServiceEndpointPolicyDefinitions { get; }
 
         /// <summary>
+        /// Gets the IServiceTagsOperations.
+        /// </summary>
+        IServiceTagsOperations ServiceTags { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -339,6 +379,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ISubnetsOperations.
         /// </summary>
         ISubnetsOperations Subnets { get; }
+
+        /// <summary>
+        /// Gets the IResourceNavigationLinksOperations.
+        /// </summary>
+        IResourceNavigationLinksOperations ResourceNavigationLinks { get; }
+
+        /// <summary>
+        /// Gets the IServiceAssociationLinksOperations.
+        /// </summary>
+        IServiceAssociationLinksOperations ServiceAssociationLinks { get; }
 
         /// <summary>
         /// Gets the IVirtualNetworkPeeringsOperations.
@@ -409,6 +459,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IP2sVpnGatewaysOperations.
         /// </summary>
         IP2sVpnGatewaysOperations P2sVpnGateways { get; }
+
+        /// <summary>
+        /// Gets the IWebApplicationFirewallPoliciesOperations.
+        /// </summary>
+        IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
 
         /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is

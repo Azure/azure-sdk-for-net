@@ -32,19 +32,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the PolicyContract class.
         /// </summary>
-        /// <param name="policyContent">Json escaped Xml Encoded contents of
-        /// the Policy.</param>
+        /// <param name="value">Contents of the Policy as defined by the
+        /// format.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        /// <param name="contentFormat">Format of the policyContent. Possible
-        /// values include: 'xml', 'xml-link', 'rawxml', 'rawxml-link'</param>
-        public PolicyContract(string policyContent, string id = default(string), string name = default(string), string type = default(string), string contentFormat = default(string))
+        /// <param name="format">Format of the policyContent. Possible values
+        /// include: 'xml', 'xml-link', 'rawxml', 'rawxml-link'</param>
+        public PolicyContract(string value, string id = default(string), string name = default(string), string type = default(string), string format = default(string))
             : base(id, name, type)
         {
-            PolicyContent = policyContent;
-            ContentFormat = contentFormat;
+            Value = value;
+            Format = format;
             CustomInit();
         }
 
@@ -54,17 +54,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets json escaped Xml Encoded contents of the Policy.
+        /// Gets or sets contents of the Policy as defined by the format.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.policyContent")]
-        public string PolicyContent { get; set; }
+        [JsonProperty(PropertyName = "properties.value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets format of the policyContent. Possible values include:
         /// 'xml', 'xml-link', 'rawxml', 'rawxml-link'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.contentFormat")]
-        public string ContentFormat { get; set; }
+        [JsonProperty(PropertyName = "properties.format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PolicyContent == null)
+            if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PolicyContent");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

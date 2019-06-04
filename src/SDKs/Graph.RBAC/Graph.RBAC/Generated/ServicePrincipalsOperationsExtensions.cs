@@ -93,6 +93,43 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Updates a service principal in the directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the service principal to delete.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update a service principal.
+            /// </param>
+            public static void Update(this IServicePrincipalsOperations operations, string objectId, ServicePrincipalUpdateParameters parameters)
+            {
+                operations.UpdateAsync(objectId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a service principal in the directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the service principal to delete.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to update a service principal.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateAsync(this IServicePrincipalsOperations operations, string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Deletes a service principal from the directory.
             /// </summary>
             /// <param name='operations'>
@@ -172,7 +209,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='objectId'>
             /// The object ID of the service principal for which to get owners.
             /// </param>
-            public static IEnumerable<DirectoryObject> ListOwners(this IServicePrincipalsOperations operations, string objectId)
+            public static IPage<DirectoryObject> ListOwners(this IServicePrincipalsOperations operations, string objectId)
             {
                 return operations.ListOwnersAsync(objectId).GetAwaiter().GetResult();
             }
@@ -193,7 +230,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<DirectoryObject>> ListOwnersAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DirectoryObject>> ListOwnersAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListOwnersWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -374,6 +411,48 @@ namespace Microsoft.Azure.Graph.RBAC
             public static async Task<IPage<ServicePrincipal>> ListNextAsync(this IServicePrincipalsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of this service principal.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DirectoryObject> ListOwnersNext(this IServicePrincipalsOperations operations, string nextPageLink)
+            {
+                return operations.ListOwnersNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of this service principal.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DirectoryObject>> ListOwnersNextAsync(this IServicePrincipalsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOwnersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="multiVmGroupName">The multi vm group name.</param>
         /// <param name="vmFriendlyName">The Vm Name.</param>
         /// <param name="runAsAccountId">The CS account Id.</param>
-        /// <param name="datastoreName">The target datastore name.</param>
+        /// <param name="datastoreName">The target data store name.</param>
         /// <param name="diskExclusionInput">The enable disk exclusion
         /// input.</param>
         /// <param name="disksToInclude">The disks to include list.</param>
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string MultiVmGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the target datastore name.
+        /// Gets or sets the target data store name.
         /// </summary>
         [JsonProperty(PropertyName = "datastoreName")]
         public string DatastoreName { get; set; }

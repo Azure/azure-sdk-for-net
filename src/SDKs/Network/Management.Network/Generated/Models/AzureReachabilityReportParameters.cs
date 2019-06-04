@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the AzureReachabilityReportParameters
         /// class.
         /// </summary>
+        /// <param name="providerLocation">Parameters that define a geographic
+        /// location.</param>
         /// <param name="startTime">The start time for the Azure reachability
         /// report.</param>
         /// <param name="endTime">The end time for the Azure reachability
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets parameters that define a geographic location.
         /// </summary>
         [JsonProperty(PropertyName = "providerLocation")]
         public AzureReachabilityReportLocation ProviderLocation { get; set; }

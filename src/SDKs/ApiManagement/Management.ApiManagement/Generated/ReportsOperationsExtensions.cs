@@ -209,10 +209,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists report records by GeoGraphy.
+            /// Lists report records by geography.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -220,35 +223,32 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<ReportRecordContract> ListByGeo(this IReportsOperations operations, string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>))
+            public static IPage<ReportRecordContract> ListByGeo(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName)
             {
-                return operations.ListByGeoAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByGeoAsync(odataQuery, resourceGroupName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists report records by GeoGraphy.
+            /// Lists report records by geography.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReportRecordContract>> ListByGeoAsync(this IReportsOperations operations, string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReportRecordContract>> ListByGeoAsync(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByGeoWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByGeoWithHttpMessagesAsync(odataQuery, resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -260,18 +260,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<ReportRecordContract> ListBySubscription(this IReportsOperations operations, string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>))
+            public static IPage<ReportRecordContract> ListBySubscription(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName)
             {
-                return operations.ListBySubscriptionAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync(odataQuery, resourceGroupName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,21 +280,21 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReportRecordContract>> ListBySubscriptionAsync(this IReportsOperations operations, string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReportRecordContract>> ListBySubscriptionAsync(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(odataQuery, resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -305,6 +305,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -317,14 +320,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// zero. The value should be in ISO  8601 format
             /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to
             /// convert TimeSpan to a valid interval string: XmlConvert.ToString(new
-            /// TimeSpan(hours, minutes, secconds))
+            /// TimeSpan(hours, minutes, seconds)).
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<ReportRecordContract> ListByTime(this IReportsOperations operations, string resourceGroupName, string serviceName, System.TimeSpan interval, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>))
+            public static IPage<ReportRecordContract> ListByTime(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, System.TimeSpan interval)
             {
-                return operations.ListByTimeAsync(resourceGroupName, serviceName, interval, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByTimeAsync(odataQuery, resourceGroupName, serviceName, interval).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -332,6 +332,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
@@ -344,17 +347,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// zero. The value should be in ISO  8601 format
             /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to
             /// convert TimeSpan to a valid interval string: XmlConvert.ToString(new
-            /// TimeSpan(hours, minutes, secconds))
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// TimeSpan(hours, minutes, seconds)).
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReportRecordContract>> ListByTimeAsync(this IReportsOperations operations, string resourceGroupName, string serviceName, System.TimeSpan interval, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReportRecordContract>> ListByTimeAsync(this IReportsOperations operations, ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, System.TimeSpan interval, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByTimeWithHttpMessagesAsync(resourceGroupName, serviceName, interval, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTimeWithHttpMessagesAsync(odataQuery, resourceGroupName, serviceName, interval, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists report records by GeoGraphy.
+            /// Lists report records by geography.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists report records by GeoGraphy.
+            /// Lists report records by geography.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

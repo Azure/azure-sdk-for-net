@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// Possible values include: 'Github',
         /// 'VisualStudioTeamService'</param>
         /// <param name="repositoryUrl">The full URL to the source code
-        /// respository</param>
+        /// repository</param>
         /// <param name="branch">The branch name of the source code.</param>
         /// <param name="sourceControlAuthProperties">The authorization
         /// properties for accessing the source code repository and to set up
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string SourceControlType { get; set; }
 
         /// <summary>
-        /// Gets or sets the full URL to the source code respository
+        /// Gets or sets the full URL to the source code repository
         /// </summary>
         [JsonProperty(PropertyName = "repositoryUrl")]
         public string RepositoryUrl { get; set; }

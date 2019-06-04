@@ -98,9 +98,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            public static bool CheckEntityExists(this IProductApiOperations operations, string resourceGroupName, string serviceName, string productId, string apiId)
+            public static void CheckEntityExists(this IProductApiOperations operations, string resourceGroupName, string serviceName, string productId, string apiId)
             {
-                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, productId, apiId).GetAwaiter().GetResult();
+                operations.CheckEntityExistsAsync(resourceGroupName, serviceName, productId, apiId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,12 +128,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckEntityExistsAsync(this IProductApiOperations operations, string resourceGroupName, string serviceName, string productId, string apiId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckEntityExistsAsync(this IProductApiOperations operations, string resourceGroupName, string serviceName, string productId, string apiId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, productId, apiId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, productId, apiId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

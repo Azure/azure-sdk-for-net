@@ -3,15 +3,16 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
-using System.Net;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -33,7 +34,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);                                
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
                 Assert.Equal("Echo API", echoApi.DisplayName);
@@ -337,6 +338,163 @@ namespace ApiManagement.Tests.ManagementApiTests
                         "*");
                 }
             }
+        }
+
+        [Fact]
+        public async Task CloneApiUsingSourceApiId()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var testBase = new ApiManagementTestBase(context);
+                testBase.TryCreateApiManagementService();
+
+                // add new api
+                const string swaggerPath = "./Resources/SwaggerPetStoreV2.json";
+                const string path = "swaggerApi";
+
+                string newApiAuthorizationServerId = TestUtilities.GenerateName("authorizationServerId");
+                string newApiId = TestUtilities.GenerateName("apiid");
+                string swaggerApiId = TestUtilities.GenerateName("swaggerApiId");
+
+                try
+                {
+                    // import API
+                    string swaggerApiContent;
+                    using (StreamReader reader = File.OpenText(swaggerPath))
+                    {
+                        swaggerApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        Format = ContentFormat.SwaggerJson,
+                        Value = swaggerApiContent
+                    };
+
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            swaggerApiId,
+                            apiCreateOrUpdate);
+
+                    Assert.NotNull(swaggerApiResponse);
+                    Assert.Null(swaggerApiResponse.SubscriptionRequired);
+                    Assert.Equal(path, swaggerApiResponse.Path);
+
+                    var swagerApiOperations = await testBase.client.ApiOperation.ListByApiAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        swaggerApiResponse.Name);
+
+                    var createAuthServerParams = new AuthorizationServerContract
+                    {
+                        DisplayName = TestUtilities.GenerateName("authName"),
+                        DefaultScope = TestUtilities.GenerateName("oauth2scope"),
+                        AuthorizationEndpoint = "https://contoso.com/auth",
+                        TokenEndpoint = "https://contoso.com/token",
+                        ClientRegistrationEndpoint = "https://contoso.com/clients/reg",
+                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.Implicit },
+                        AuthorizationMethods = new List<AuthorizationMethod?> { AuthorizationMethod.POST, AuthorizationMethod.GET },
+                        BearerTokenSendingMethods = new List<string> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
+                        ClientId = TestUtilities.GenerateName("clientid")
+                    };
+
+                    await testBase.client.AuthorizationServer.CreateOrUpdateAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiAuthorizationServerId,
+                        createAuthServerParams);
+
+                    string newApiName = TestUtilities.GenerateName("apiname");
+                    string newApiDescription = TestUtilities.GenerateName("apidescription");
+                    string newApiPath = "newapiPath";
+                    string newApiServiceUrl = "http://newechoapi.cloudapp.net/api";
+                    string subscriptionKeyParametersHeader = TestUtilities.GenerateName("header");
+                    string subscriptionKeyQueryStringParamName = TestUtilities.GenerateName("query");
+                    string newApiAuthorizationScope = TestUtilities.GenerateName("oauth2scope");
+                    var newApiAuthenticationSettings = new AuthenticationSettingsContract
+                    {
+                        OAuth2 = new OAuth2AuthenticationSettingsContract
+                        {
+                            AuthorizationServerId = newApiAuthorizationServerId,
+                            Scope = newApiAuthorizationScope
+                        }
+                    };
+
+                    var createdApiContract = testBase.client.Api.CreateOrUpdate(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new ApiCreateOrUpdateParameter
+                        {
+                            SourceApiId = swaggerApiResponse.Id, // create a clone of the Swagger API created above and override the following parameters
+                            DisplayName = newApiName,
+                            Description = newApiDescription,
+                            Path = newApiPath,
+                            ServiceUrl = newApiServiceUrl,
+                            Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
+                            SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
+                            {
+                                Header = subscriptionKeyParametersHeader,
+                                Query = subscriptionKeyQueryStringParamName
+                            },
+                            AuthenticationSettings = newApiAuthenticationSettings,
+                            SubscriptionRequired = true,
+                        });
+
+                    // get new api to check it was added
+                    var apiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
+
+                    Assert.NotNull(apiGetResponse);
+                    Assert.Equal(newApiId, apiGetResponse.Name);
+                    Assert.Equal(newApiName, apiGetResponse.DisplayName);
+                    Assert.Equal(newApiDescription, apiGetResponse.Description);
+                    Assert.Equal(newApiPath, apiGetResponse.Path);
+                    Assert.Equal(newApiServiceUrl, apiGetResponse.ServiceUrl);
+                    Assert.Equal(subscriptionKeyParametersHeader, apiGetResponse.SubscriptionKeyParameterNames.Header);
+                    Assert.Equal(subscriptionKeyQueryStringParamName, apiGetResponse.SubscriptionKeyParameterNames.Query);
+                    Assert.Equal(2, apiGetResponse.Protocols.Count);
+                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
+                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
+                    Assert.NotNull(apiGetResponse.AuthenticationSettings);
+                    Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
+                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
+                    Assert.True(apiGetResponse.SubscriptionRequired);
+
+                    var newApiOperations = await testBase.client.ApiOperation.ListByApiAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId);
+
+                    Assert.NotNull(newApiOperations);
+                    // make sure all operations got copied
+                    Assert.Equal(swagerApiOperations.Count(), newApiOperations.Count());
+                }
+                finally
+                {
+                    // delete api server
+                    testBase.client.Api.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        swaggerApiId,
+                        "*");
+
+                    // delete api server
+                    testBase.client.Api.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        "*");
+
+                    testBase.client.AuthorizationServer.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiAuthorizationServerId,
+                        "*");
+                }
+            }            
         }
     }
 }

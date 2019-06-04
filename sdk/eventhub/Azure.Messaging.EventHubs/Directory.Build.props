@@ -1,0 +1,19 @@
+﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+
+    <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+     <!-- Disable the custom analyzer for the prototype; it's impacting development speed. -->
+     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+
+     <!-- If there was no override specified, assume a project reference to Azure.Core -->
+     <UseProjectReferenceToAzureCore Condition="'$(UseProjectReferenceToAzureCore)' == ''">true</UseProjectReferenceToAzureCore>
+  </PropertyGroup>
+</Project>

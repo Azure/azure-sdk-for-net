@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datalake-analytics/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=A:\azure-sdk-for-net\src\SDKs
-2018-10-16 00:37:45 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datalake-analytics/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\code\AzureSDK\azure-sdk-for-net\src\SDKs
+2019-03-08 02:42:16 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      bad3cbbc7f3bd4f2ff018ff936be010a8fd2c4bb
+Commit:      6a18208aed692f02215a2ea50736c0a8d5ac7329
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283

@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.EventGrid
     public partial interface ITopicTypesOperations
     {
         /// <summary>
-        /// List topic types
+        /// List topic types.
         /// </summary>
         /// <remarks>
-        /// List all registered topic types
+        /// List all registered topic types.
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<TopicTypeInfo>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a topic type
+        /// Get a topic type.
         /// </summary>
         /// <remarks>
-        /// Get information about a topic type
+        /// Get information about a topic type.
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<TopicTypeInfo>> GetWithHttpMessagesAsync(string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List event types
+        /// List event types.
         /// </summary>
         /// <remarks>
-        /// List event types for a topic type
+        /// List event types for a topic type.
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

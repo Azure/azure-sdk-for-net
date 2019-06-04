@@ -31,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
 
@@ -61,7 +61,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(tagContract);
 
                     // list tag description
-                    var tagDescriptionList = await testBase.client.TagDescription.ListByApiAsync(
+                    var tagDescriptionList = await testBase.client.ApiTagDescription.ListByServiceAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name);
@@ -75,7 +75,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Description = TestUtilities.GenerateName("somedescription"),
                         ExternalDocsUrl = "http://somelog.content"
                     };
-                    var tagDescriptionContract = await testBase.client.TagDescription.CreateOrUpdateAsync(
+                    var tagDescriptionContract = await testBase.client.ApiTagDescription.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
@@ -86,7 +86,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(tagDescriptionCreateParams.Description, tagDescriptionContract.Description);
 
                     // get the tagdescription etag
-                    var tagDescriptionTag = await testBase.client.TagDescription.GetEntityStateAsync(
+                    var tagDescriptionTag = await testBase.client.ApiTagDescription.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
@@ -96,7 +96,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // update the tag description
                     tagDescriptionCreateParams.Description = TestUtilities.GenerateName("tag_update");
-                    tagDescriptionContract = await testBase.client.TagDescription.CreateOrUpdateAsync(
+                    tagDescriptionContract = await testBase.client.ApiTagDescription.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
@@ -108,7 +108,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(tagDescriptionCreateParams.Description, tagDescriptionContract.Description);
 
                     // get the entity
-                    tagDescriptionTag = await testBase.client.TagDescription.GetEntityStateAsync(
+                    tagDescriptionTag = await testBase.client.ApiTagDescription.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
@@ -117,7 +117,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(tagDescriptionTag.ETag);
 
                     // delete the tag description
-                    await testBase.client.TagDescription.DeleteAsync(
+                    await testBase.client.ApiTagDescription.DeleteAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
@@ -137,8 +137,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
-                        tagId,
-                        tagTag.ETag);
+                        tagId);
 
                     // get the entity tag
                     tagTag = await testBase.client.Tag.GetEntityStateAsync(
@@ -169,11 +168,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
-                        tagId,
-                        "*");
+                        tagId);
 
                     // delete the tag description
-                    testBase.client.TagDescription.Delete(
+                    testBase.client.ApiTagDescription.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,

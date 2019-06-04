@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.EventGrid
         public EventGridManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List available operations
+        /// List available operations.
         /// </summary>
         /// <remarks>
         /// List the available operations supported by the Microsoft.EventGrid resource
-        /// provider
+        /// provider.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

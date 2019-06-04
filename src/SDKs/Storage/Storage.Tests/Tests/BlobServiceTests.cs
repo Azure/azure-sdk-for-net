@@ -338,6 +338,56 @@ namespace Storage.Tests
             }
         }
 
+        //// Lease Blob Containers
+        //[Fact]
+        //public void BlobContainersLeaseTest()
+        //{
+        //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
+        //    {
+        //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+        //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+        //        //// Create resource group
+        //        //var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+        //        //// Create storage account
+        //        //string accountName = TestUtilities.GenerateName("sto");
+        //        //var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+        //        //parameters.Kind = Kind.StorageV2;
+        //        //var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+        //        //StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+
+        //        var rgName = "weitry";
+        //        string accountName = "weiacl3";
+        //        string containerName = TestUtilities.GenerateName("container");
+
+        //        // implement case
+        //        try
+        //        {
+        //            BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName);
+        //            Assert.Null(blobContainer.Metadata);
+        //            Assert.Null(blobContainer.PublicAccess);
+
+        //            //LeaseContainerResponse leaseResponse = storageMgmtClient.BlobContainers.Lease(rgName, accountName, containerName, new LeaseContainerRequest("Acquire", null, 40, 9));
+        //            LeaseContainerResponse leaseResponse = storageMgmtClient.BlobContainers.Lease(rgName, accountName, containerName);
+        //            Assert.NotNull(leaseResponse.LeaseId);
+
+
+        //            blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
+        //            Assert.Equal("Leased", blobContainer.LeaseState);
+        //        }
+        //        finally
+        //        {
+        //            storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
+        //            //// clean up
+        //            //storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+        //            //resourcesClient.ResourceGroups.Delete(rgName);
+        //        }
+        //    }
+        //}
+
         // create and delete immutability policies.
         [Fact]
         public void BlobContainersCreateDeleteImmutabilityPolicyTest()
@@ -379,7 +429,7 @@ namespace Storage.Tests
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(0, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
-                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                    Assert.Equal("Deleted", immutabilityPolicy.State);
                 }
                 finally
                 {
@@ -593,16 +643,19 @@ namespace Storage.Tests
                     Assert.Null(properties1.DeleteRetentionPolicy.Days);
                     Assert.Null(properties1.DefaultServiceVersion);
                     Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+                    //Assert.Null(properties1.AutomaticSnapshotPolicyEnabled);
                     BlobServiceProperties properties2 = properties1;
                     properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
                     properties2.DeleteRetentionPolicy.Enabled = true;
                     properties2.DeleteRetentionPolicy.Days = 300;
                     properties2.DefaultServiceVersion = "2017-04-17";
+                    //properties2.AutomaticSnapshotPolicyEnabled = true;
                     storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties2);
                     BlobServiceProperties properties3 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
                     Assert.True(properties3.DeleteRetentionPolicy.Enabled);
                     Assert.Equal(300, properties3.DeleteRetentionPolicy.Days);
                     Assert.Equal("2017-04-17", properties3.DefaultServiceVersion);
+                    //Assert.True(properties3.AutomaticSnapshotPolicyEnabled);
                 }
                 finally
                 {

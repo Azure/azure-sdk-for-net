@@ -107,7 +107,8 @@ namespace Compute.Tests
             string loadBalancerBackendPoolId = null,
             IList<string> zones = null,
             int? osDiskSizeInGB = null,
-            string machineSizeType = null)
+            string machineSizeType = null,
+            bool? enableUltraSSD = false)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -117,7 +118,7 @@ namespace Compute.Tests
 
             string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
 
-            return new VirtualMachineScaleSet()
+            var vmScaleSet = new VirtualMachineScaleSet()
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
@@ -196,6 +197,26 @@ namespace Compute.Tests
                     ExtensionProfile = new VirtualMachineScaleSetExtensionProfile(),
                 }
             };
+
+            if (enableUltraSSD == true)
+            {
+                vmScaleSet.AdditionalCapabilities = new AdditionalCapabilities
+                {
+                    UltraSSDEnabled = true
+                };
+
+                VirtualMachineScaleSetOSDisk osDisk = vmScaleSet.VirtualMachineProfile.StorageProfile.OsDisk;
+                osDisk.ManagedDisk = osDisk.ManagedDisk ?? new VirtualMachineScaleSetManagedDiskParameters();
+                osDisk.ManagedDisk.StorageAccountType = StorageAccountTypes.PremiumLRS;
+
+                foreach (VirtualMachineScaleSetDataDisk dataDisk in vmScaleSet.VirtualMachineProfile.StorageProfile.DataDisks)
+                {
+                    dataDisk.ManagedDisk = dataDisk.ManagedDisk ?? new VirtualMachineScaleSetManagedDiskParameters();
+                    dataDisk.ManagedDisk.StorageAccountType = StorageAccountTypes.UltraSSDLRS;
+                }
+            }
+
+            return vmScaleSet;
         }
 
         protected VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
@@ -213,7 +234,9 @@ namespace Compute.Tests
             Subnet subnet = null,
             IList<string> zones = null,
             int? osDiskSizeInGB = null,
-            string machineSizeType = null)
+            string ppgId = null,
+            string machineSizeType = null,
+            bool? enableUltraSSD = false)
         {
             try
             {
@@ -231,7 +254,9 @@ namespace Compute.Tests
                                                                                      subnet,
                                                                                      zones,
                                                                                      osDiskSizeInGB,
-                                                                                     machineSizeType: machineSizeType);
+                                                                                     ppgId: ppgId,
+                                                                                     machineSizeType: machineSizeType,
+                                                                                     enableUltraSSD: enableUltraSSD);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -239,6 +264,7 @@ namespace Compute.Tests
             }
             catch
             {
+                // TODO: It is better to issue Delete and forget.
                 m_ResourcesClient.ResourceGroups.Delete(rgName);
                 throw;
             }
@@ -308,7 +334,9 @@ namespace Compute.Tests
             Subnet subnet = null,
             IList<string> zones = null,
             int? osDiskSizeInGB = null,
-            string machineSizeType = null)
+            string ppgId = null,
+            string machineSizeType = null,
+            bool? enableUltraSSD = false)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -333,7 +361,8 @@ namespace Compute.Tests
             Assert.True(createWithManagedDisks || storageAccount != null);
             inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
-                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB, machineSizeType: machineSizeType);
+                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB,
+                machineSizeType: machineSizeType, enableUltraSSD: enableUltraSSD);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
@@ -350,12 +379,17 @@ namespace Compute.Tests
 
             inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
 
+            if (ppgId != null)
+            {
+                inputVMScaleSet.ProximityPlacementGroup = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = ppgId };
+            }
+
             var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
 
             Assert.True(createOrUpdateResponse.Name == vmssName);
             Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
 
-            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks);
+            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId);
 
             return createOrUpdateResponse;
         }
@@ -374,7 +408,7 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -581,6 +615,11 @@ namespace Compute.Tests
                 Assert.Null(vmScaleSetOut.Zones);
                 Assert.Null(vmScaleSetOut.ZoneBalance);
                 Assert.Null(vmScaleSetOut.PlatformFaultDomainCount);
+            }
+
+            if(ppgId != null)
+            {
+                Assert.Equal(ppgId, vmScaleSetOut.ProximityPlacementGroup.Id, StringComparer.OrdinalIgnoreCase);
             }
         }
 

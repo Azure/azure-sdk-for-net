@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse> BreakPairingWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string alias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// envokes GEO DR failover and reconfigure the alias to point to the
+        /// Invokes GEO DR failover and reconfigure the alias to point to the
         /// secondary namespace
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The Disaster Recovery configuration name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The Disaster Recovery configuration name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

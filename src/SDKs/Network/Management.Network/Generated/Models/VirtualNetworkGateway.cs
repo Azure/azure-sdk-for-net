@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// A common class for general resource information
+    /// A common class for general resource information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualNetworkGateway : Resource
@@ -42,14 +42,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ipConfigurations">IP configurations for virtual
         /// network gateway.</param>
         /// <param name="gatewayType">The type of this virtual network gateway.
-        /// Possible values are: 'Vpn' and 'ExpressRoute'. Possible values
-        /// include: 'Vpn', 'ExpressRoute'</param>
+        /// Possible values include: 'Vpn', 'ExpressRoute'</param>
         /// <param name="vpnType">The type of this virtual network gateway.
-        /// Possible values are: 'PolicyBased' and 'RouteBased'. Possible
-        /// values include: 'PolicyBased', 'RouteBased'</param>
+        /// Possible values include: 'PolicyBased', 'RouteBased'</param>
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
-        /// <param name="activeActive">ActiveActive flag</param>
+        /// <param name="activeActive">ActiveActive flag.</param>
         /// <param name="gatewayDefaultSite">The reference of the
         /// LocalNetworkGateway resource which represents local network site
         /// having default routes. Assign Null value in case of removing
@@ -62,6 +60,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// configurations.</param>
         /// <param name="bgpSettings">Virtual network gateway's BGP speaker
         /// settings.</param>
+        /// <param name="customRoutes">The reference of the address space
+        /// resource which represents the custom routes address space specified
+        /// by the the customer for virtual network gateway and
+        /// VpnClient.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// VirtualNetworkGateway resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -81,6 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Sku = sku;
             VpnClientConfiguration = vpnClientConfiguration;
             BgpSettings = bgpSettings;
+            CustomRoutes = customRoutes;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -100,16 +103,14 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the type of this virtual network gateway. Possible
-        /// values are: 'Vpn' and 'ExpressRoute'. Possible values include:
-        /// 'Vpn', 'ExpressRoute'
+        /// values include: 'Vpn', 'ExpressRoute'
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayType")]
         public string GatewayType { get; set; }
 
         /// <summary>
         /// Gets or sets the type of this virtual network gateway. Possible
-        /// values are: 'PolicyBased' and 'RouteBased'. Possible values
-        /// include: 'PolicyBased', 'RouteBased'
+        /// values include: 'PolicyBased', 'RouteBased'
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnType")]
         public string VpnType { get; set; }
@@ -122,7 +123,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary>
-        /// Gets or sets activeActive flag
+        /// Gets or sets activeActive flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeActive")]
         public bool? ActiveActive { get; set; }
@@ -154,6 +155,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the address space resource which
+        /// represents the custom routes address space specified by the the
+        /// customer for virtual network gateway and VpnClient.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customRoutes")]
+        public AddressSpace CustomRoutes { get; set; }
 
         /// <summary>
         /// Gets or sets the resource GUID property of the

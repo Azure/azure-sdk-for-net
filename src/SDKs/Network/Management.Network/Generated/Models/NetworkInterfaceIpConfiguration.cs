@@ -47,14 +47,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// LoadBalancerInboundNatRules.</param>
         /// <param name="privateIPAddress">Private IP address of the IP
         /// configuration.</param>
-        /// <param name="privateIPAllocationMethod">Defines how a private IP
-        /// address is assigned. Possible values are: 'Static' and 'Dynamic'.
-        /// Possible values include: 'Static', 'Dynamic'</param>
+        /// <param name="privateIPAllocationMethod">The private IP address
+        /// allocation method. Possible values include: 'Static',
+        /// 'Dynamic'</param>
         /// <param name="privateIPAddressVersion">Available from Api-Version
         /// 2016-03-30 onwards, it represents whether the specific
-        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
-        /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
-        /// 'IPv4', 'IPv6'</param>
+        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
+        /// values include: 'IPv4', 'IPv6'</param>
         /// <param name="subnet">Subnet bound to the IP configuration.</param>
         /// <param name="primary">Gets whether this is a primary customer
         /// address on the network interface.</param>
@@ -128,9 +127,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets defines how a private IP address is assigned. Possible
-        /// values are: 'Static' and 'Dynamic'. Possible values include:
-        /// 'Static', 'Dynamic'
+        /// Gets or sets the private IP address allocation method. Possible
+        /// values include: 'Static', 'Dynamic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
@@ -138,8 +136,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets available from Api-Version 2016-03-30 onwards, it
         /// represents whether the specific ipconfiguration is IPv4 or IPv6.
-        /// Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'.
-        /// Possible values include: 'IPv4', 'IPv6'
+        /// Default is taken as IPv4. Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }

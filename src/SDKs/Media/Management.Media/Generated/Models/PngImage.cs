@@ -33,6 +33,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the PngImage class.
         /// </summary>
+        /// <param name="start">The position in the input video from where to
+        /// start generating thumbnails. The value can be in absolute timestamp
+        /// (ISO 8601, e.g: PT05S), or a frame count (For example, 10 for the
+        /// 10th frame), or a relative value (For example, 1%). Also supports a
+        /// macro {Best}, which tells the encoder to select the best thumbnail
+        /// from the first few seconds of the video.</param>
         /// <param name="label">An optional label for the codec. The label can
         /// be used to control muxing behavior.</param>
         /// <param name="keyFrameInterval">The distance between two key frames,
@@ -43,12 +49,6 @@ namespace Microsoft.Azure.Management.Media.Models
         /// will be resized to fit the desired output resolution(s). Default is
         /// AutoSize. Possible values include: 'None', 'AutoSize',
         /// 'AutoFit'</param>
-        /// <param name="start">The position in the input video from where to
-        /// start generating thumbnails. The value can be in absolute timestamp
-        /// (ISO 8601, e.g: PT05S), or a frame count (For example, 10 for the
-        /// 10th frame), or a relative value (For example, 1%). Also supports a
-        /// macro {Best}, which tells the encoder to select the best thumbnail
-        /// from the first few seconds of the video.</param>
         /// <param name="step">The intervals at which thumbnails are generated.
         /// The value can be in absolute timestamp (ISO 8601, e.g: PT05S for
         /// one image every 5 seconds), or a frame count (For example, 30 for
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// relative value (For example, 100%).</param>
         /// <param name="layers">A collection of output PNG image layers to be
         /// produced by the encoder.</param>
-        public PngImage(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string start = default(string), string step = default(string), string range = default(string), IList<PngLayer> layers = default(IList<PngLayer>))
-            : base(label, keyFrameInterval, stretchMode, start, step, range)
+        public PngImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string step = default(string), string range = default(string), IList<PngLayer> layers = default(IList<PngLayer>))
+            : base(start, label, keyFrameInterval, stretchMode, step, range)
         {
             Layers = layers;
             CustomInit();
@@ -79,5 +79,15 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "layers")]
         public IList<PngLayer> Layers { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

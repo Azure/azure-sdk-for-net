@@ -339,6 +339,89 @@ namespace Microsoft.Azure.Management.HDInsight
             }
 
             /// <summary>
+            /// Gets the gateway settings for the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            public static GatewaySettings GetGatewaySettings(this IClustersOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.GetGatewaySettingsAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the gateway settings for the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GatewaySettings> GetGatewaySettingsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetGatewaySettingsWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Configures the gateway settings on the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void UpdateGatewaySettings(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters)
+            {
+                operations.UpdateGatewaySettingsAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Configures the gateway settings on the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpdateGatewaySettingsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpdateGatewaySettingsWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Executes script actions on the specified HDInsight cluster.
             /// </summary>
             /// <param name='operations'>
@@ -548,6 +631,49 @@ namespace Microsoft.Azure.Management.HDInsight
             public static async Task BeginRotateDiskEncryptionKeyAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterDiskEncryptionParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRotateDiskEncryptionKeyWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Configures the gateway settings on the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            public static void BeginUpdateGatewaySettings(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters)
+            {
+                operations.BeginUpdateGatewaySettingsAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Configures the gateway settings on the specified cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The cluster configurations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUpdateGatewaySettingsAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, UpdateGatewaySettingsParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUpdateGatewaySettingsWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

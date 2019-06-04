@@ -13,7 +13,7 @@ namespace Compute.Tests
 {
     public class VMIdentityTests : VMTestBase
     {
-        [Fact]
+        [Fact(Skip = "Need to re-record after creating identity")]
         public void TestVMIdentitySystemAssignedUserAssigned()
         {
             //

@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deviceName'>
-            /// The order details of a device.
+            /// The device name.
             /// </param>
             /// <param name='order'>
             /// The order to be created or updated.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deviceName'>
-            /// The order details of a device.
+            /// The device name.
             /// </param>
             /// <param name='order'>
             /// The order to be created or updated.
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deviceName'>
-            /// The order details of a device.
+            /// The device name.
             /// </param>
             /// <param name='order'>
             /// The order to be created or updated.
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
             /// The operations group for this extension method.
             /// </param>
             /// <param name='deviceName'>
-            /// The order details of a device.
+            /// The device name.
             /// </param>
             /// <param name='order'>
             /// The order to be created or updated.

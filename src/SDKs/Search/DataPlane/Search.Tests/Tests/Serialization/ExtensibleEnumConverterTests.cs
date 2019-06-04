@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Microsoft.Azure.Search.Serialization;
     using Models;
     using Newtonsoft.Json;
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             const string ExpectedJson = @"{""ID"":1,""Test"":""unknown""}";
 
-            var model = new Model() { ID = 1, Test = TestEnum.Create("unknown") };
+            var model = new Model() { ID = 1, Test = "unknown" };
             string actualJson = JsonConvert.SerializeObject(model);
 
             Assert.Equal(ExpectedJson, actualJson);
@@ -53,9 +55,6 @@ namespace Microsoft.Azure.Search.Tests
             Model actualModel = JsonConvert.DeserializeObject<Model>(Json);
 
             Assert.Equal(expectedModel.ID, actualModel.ID);
-
-            // Both reference equality and value equality should work.
-            Assert.Same(expectedModel.Test, actualModel.Test);
             Assert.Equal(expectedModel.Test, actualModel.Test);
         }
 
@@ -64,13 +63,10 @@ namespace Microsoft.Azure.Search.Tests
         {
             const string Json = @"{""ID"":0,""Test"":""unknown""}";
 
-            var expectedModel = new Model() { ID = 0, Test = TestEnum.Create("unknown") };
+            var expectedModel = new Model() { ID = 0, Test = "unknown" };
             Model actualModel = JsonConvert.DeserializeObject<Model>(Json);
 
             Assert.Equal(expectedModel.ID, actualModel.ID);
-
-            // Value equality should work, but reference equality shouldn't.
-            Assert.NotSame(expectedModel.Test, actualModel.Test);
             Assert.Equal(expectedModel.Test, actualModel.Test);
         }
 
@@ -90,27 +86,39 @@ namespace Microsoft.Azure.Search.Tests
         {
             public int ID { get; set; }
 
-            public TestEnum Test { get; set; }
+            public TestEnum? Test { get; set; }
         }
 
         [JsonConverter(typeof(ExtensibleEnumConverter<TestEnum>))]
-        private class TestEnum : ExtensibleEnum<TestEnum>
+        private struct TestEnum : IEquatable<TestEnum>
         {
+            private readonly string _value;
+
             public static readonly TestEnum One = new TestEnum("One");
 
             public static readonly TestEnum Two = new TestEnum("Two");
 
             public static readonly TestEnum Three = new TestEnum("Three");
 
-            private TestEnum(string name) : base(name)
+            private TestEnum(string name)
             {
-                // Do nothing.
+                Throw.IfArgumentNull(name, nameof(name));
+                _value = name;
             }
 
-            public static TestEnum Create(string name)
-            {
-                return Lookup(name) ?? new TestEnum(name);
-            }
+            public static implicit operator TestEnum(string name) => new TestEnum(name);
+
+            public static bool operator ==(TestEnum lhs, TestEnum rhs) => Equals(lhs, rhs);
+
+            public static bool operator !=(TestEnum lhs, TestEnum rhs) => !Equals(lhs, rhs);
+
+            public bool Equals(TestEnum other) => _value == other._value;
+
+            public override bool Equals(object obj) => obj is TestEnum ? Equals((TestEnum)obj) : false;
+
+            public override int GetHashCode() => _value.GetHashCode();
+
+            public override string ToString() => _value;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="pretaxCost">The amount of cost before tax.</param>
         /// <param name="isEstimated">The estimated usage is subject to
         /// change.</param>
-        /// <param name="meterId">The meter id.</param>
+        /// <param name="meterId">The meter id (GUID).</param>
         /// <param name="subscriptionGuid">Subscription guid.</param>
         /// <param name="subscriptionName">Subscription name.</param>
         /// <param name="accountName">Account name.</param>
@@ -72,7 +72,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// $expand.</param>
         /// <param name="publisherName">The name of publisher.</param>
         /// <param name="planName">The name of plan.</param>
-        public Marketplace(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? resourceRate = default(decimal?), string offerName = default(string), string resourceGroup = default(string), string orderNumber = default(string), string instanceName = default(string), string instanceId = default(string), string currency = default(string), decimal? consumedQuantity = default(decimal?), string unitOfMeasure = default(string), decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), string meterId = default(string), string subscriptionGuid = default(string), string subscriptionName = default(string), string accountName = default(string), string departmentName = default(string), string consumedService = default(string), string costCenter = default(string), string additionalProperties = default(string), string publisherName = default(string), string planName = default(string))
+        /// <param name="isRecurringCharge">Flag indicating whether this is a
+        /// recurring charge or not.</param>
+        public Marketplace(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingPeriodId = default(string), System.DateTime? usageStart = default(System.DateTime?), System.DateTime? usageEnd = default(System.DateTime?), decimal? resourceRate = default(decimal?), string offerName = default(string), string resourceGroup = default(string), string orderNumber = default(string), string instanceName = default(string), string instanceId = default(string), string currency = default(string), decimal? consumedQuantity = default(decimal?), string unitOfMeasure = default(string), decimal? pretaxCost = default(decimal?), bool? isEstimated = default(bool?), System.Guid? meterId = default(System.Guid?), System.Guid? subscriptionGuid = default(System.Guid?), string subscriptionName = default(string), string accountName = default(string), string departmentName = default(string), string consumedService = default(string), string costCenter = default(string), string additionalProperties = default(string), string publisherName = default(string), string planName = default(string), bool? isRecurringCharge = default(bool?))
             : base(id, name, type, tags)
         {
             BillingPeriodId = billingPeriodId;
@@ -99,6 +101,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
             AdditionalProperties = additionalProperties;
             PublisherName = publisherName;
             PlanName = planName;
+            IsRecurringCharge = isRecurringCharge;
             CustomInit();
         }
 
@@ -194,16 +197,16 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public bool? IsEstimated { get; private set; }
 
         /// <summary>
-        /// Gets the meter id.
+        /// Gets the meter id (GUID).
         /// </summary>
         [JsonProperty(PropertyName = "properties.meterId")]
-        public string MeterId { get; private set; }
+        public System.Guid? MeterId { get; private set; }
 
         /// <summary>
         /// Gets subscription guid.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionGuid")]
-        public string SubscriptionGuid { get; private set; }
+        public System.Guid? SubscriptionGuid { get; private set; }
 
         /// <summary>
         /// Gets subscription name.
@@ -254,6 +257,12 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.planName")]
         public string PlanName { get; private set; }
+
+        /// <summary>
+        /// Gets flag indicating whether this is a recurring charge or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isRecurringCharge")]
+        public bool? IsRecurringCharge { get; private set; }
 
     }
 }

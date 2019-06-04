@@ -11,9 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Management.BotService\Microsoft.Azure.Management.BotService.csproj" />
-    <PackageReference Include="Microsoft.Azure.Management.Fluent" Version="1.4.1" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.4.1" />
     
     <PackageReference Include="System.Runtime" Version="4.3.0" />
   </ItemGroup>

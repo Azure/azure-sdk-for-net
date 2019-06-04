@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ExpressRoutePort>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string expressRoutePortName, ExpressRoutePort parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update ExpressRoutePort tags
+        /// Update ExpressRoutePort tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<IPage<ExpressRoutePort>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified
-        /// subscription
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ExpressRoutePort>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string expressRoutePortName, ExpressRoutePort parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update ExpressRoutePort tags
+        /// Update ExpressRoutePort tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<IPage<ExpressRoutePort>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the ExpressRoutePort resources in the specified
-        /// subscription
+        /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

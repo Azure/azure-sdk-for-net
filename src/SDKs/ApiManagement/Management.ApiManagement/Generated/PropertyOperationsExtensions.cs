@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific property from the the API Management service instance.
+            /// Deletes specific property from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Deletes specific property from the the API Management service instance.
+            /// Deletes specific property from the API Management service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<DdosCustomPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a DDoS custom policy tags
+        /// Update a DDoS custom policy tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<DdosCustomPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a DDoS custom policy tags
+        /// Update a DDoS custom policy tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

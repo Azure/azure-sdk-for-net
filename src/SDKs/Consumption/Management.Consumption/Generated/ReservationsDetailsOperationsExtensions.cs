@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// Filter reservation details by date range. The properties/UsageDate for
             /// start date and end date. The filter supports 'le' and  'ge'
             /// </param>
-            public static IPage<ReservationDetails> ListByReservationOrder(this IReservationsDetailsOperations operations, string reservationOrderId, string filter)
+            public static IPage<ReservationDetail> ListByReservationOrder(this IReservationsDetailsOperations operations, string reservationOrderId, string filter)
             {
                 return operations.ListByReservationOrderAsync(reservationOrderId, filter).GetAwaiter().GetResult();
             }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationDetails>> ListByReservationOrderAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationDetail>> ListByReservationOrderAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string filter, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReservationOrderWithHttpMessagesAsync(reservationOrderId, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// Filter reservation details by date range. The properties/UsageDate for
             /// start date and end date. The filter supports 'le' and  'ge'
             /// </param>
-            public static IPage<ReservationDetails> ListByReservationOrderAndReservation(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter)
+            public static IPage<ReservationDetail> ListByReservationOrderAndReservation(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter)
             {
                 return operations.ListByReservationOrderAndReservationAsync(reservationOrderId, reservationId, filter).GetAwaiter().GetResult();
             }
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationDetails>> ListByReservationOrderAndReservationAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationDetail>> ListByReservationOrderAndReservationAsync(this IReservationsDetailsOperations operations, string reservationOrderId, string reservationId, string filter, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReservationOrderAndReservationWithHttpMessagesAsync(reservationOrderId, reservationId, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ReservationDetails> ListByReservationOrderNext(this IReservationsDetailsOperations operations, string nextPageLink)
+            public static IPage<ReservationDetail> ListByReservationOrderNext(this IReservationsDetailsOperations operations, string nextPageLink)
             {
                 return operations.ListByReservationOrderNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationDetails>> ListByReservationOrderNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationDetail>> ListByReservationOrderNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReservationOrderNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ReservationDetails> ListByReservationOrderAndReservationNext(this IReservationsDetailsOperations operations, string nextPageLink)
+            public static IPage<ReservationDetail> ListByReservationOrderAndReservationNext(this IReservationsDetailsOperations operations, string nextPageLink)
             {
                 return operations.ListByReservationOrderAndReservationNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationDetails>> ListByReservationOrderAndReservationNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationDetail>> ListByReservationOrderAndReservationNextAsync(this IReservationsDetailsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReservationOrderAndReservationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

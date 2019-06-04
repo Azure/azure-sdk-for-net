@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// not.</param>
         /// <param name="virtualHubs">List of VirtualHubs in the
         /// VirtualWAN.</param>
+        /// <param name="vpnSites">List of VpnSites in the VirtualWAN.</param>
         /// <param name="securityProviderName">The Security Provider
         /// name.</param>
         /// <param name="allowBranchToBranchTraffic">True if branch to branch
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="office365LocalBreakoutCategory">The office local
         /// breakout category. Possible values include: 'Optimize',
         /// 'OptimizeAndAllow', 'All', 'None'</param>
-        /// <param name="p2SVpnServerConfigurations">list of all
+        /// <param name="p2SVpnServerConfigurations">List of all
         /// P2SVpnServerConfigurations associated with the virtual wan.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
@@ -93,6 +94,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> VirtualHubs { get; private set; }
 
         /// <summary>
+        /// Gets list of VpnSites in the VirtualWAN.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnSites")]
         public IList<SubResource> VpnSites { get; private set; }

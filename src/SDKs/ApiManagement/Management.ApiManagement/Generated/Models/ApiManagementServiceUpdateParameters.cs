@@ -89,8 +89,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="certificates">List of Certificates that need to be
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
+        /// <param name="enableClientCertificate">Property only meant to be
+        /// used for Consumption SKU Service. This enforces a client
+        /// certificate to be presented on each request to the gateway. This
+        /// also enables the ability to authenticate the certificate in the
+        /// policy on the gateway.</param>
         /// <param name="virtualNetworkType">The type of VPN in which API
-        /// Managemet service needs to be configured in. None (Default Value)
+        /// Management service needs to be configured in. None (Default Value)
         /// means the API Management service is not part of any Virtual
         /// Network, External means the API Management deployment is set up
         /// inside a Virtual Network having an Internet Facing Endpoint, and
@@ -104,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="identity">Managed service identity of the Api
         /// Management service.</param>
         /// <param name="etag">ETag of the resource.</param>
-        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), string virtualNetworkType = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
+        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
             : base(id, name, type, tags)
         {
             NotificationSenderEmail = notificationSenderEmail;
@@ -123,6 +128,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             AdditionalLocations = additionalLocations;
             CustomProperties = customProperties;
             Certificates = certificates;
+            EnableClientCertificate = enableClientCertificate;
             VirtualNetworkType = virtualNetworkType;
             PublisherEmail = publisherEmail;
             PublisherName = publisherName;
@@ -259,7 +265,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<CertificateConfiguration> Certificates { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of VPN in which API Managemet service needs
+        /// Gets or sets property only meant to be used for Consumption SKU
+        /// Service. This enforces a client certificate to be presented on each
+        /// request to the gateway. This also enables the ability to
+        /// authenticate the certificate in the policy on the gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableClientCertificate")]
+        public bool? EnableClientCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of VPN in which API Management service needs
         /// to be configured in. None (Default Value) means the API Management
         /// service is not part of any Virtual Network, External means the API
         /// Management deployment is set up inside a Virtual Network having an

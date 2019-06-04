@@ -24,6 +24,68 @@ namespace Microsoft.Azure.Management.Subscription
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
+            /// Cancels the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static CanceledSubscriptionId Cancel(this ISubscriptionsOperations operations)
+            {
+                return operations.CancelAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CanceledSubscriptionId> CancelAsync(this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CancelWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Renames the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Subscription Name
+            /// </param>
+            public static RenamedSubscriptionId Rename(this ISubscriptionsOperations operations, SubscriptionName body)
+            {
+                return operations.RenameAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Renames the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Subscription Name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RenamedSubscriptionId> RenameAsync(this ISubscriptionsOperations operations, SubscriptionName body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RenameWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all available geo-locations.
             /// </summary>
             /// <remarks>

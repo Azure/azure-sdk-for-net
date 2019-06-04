@@ -129,7 +129,7 @@ namespace ManagedServiceIdentity.Tests.Tests
             Assert.Equal(location, identity.Location);
             Assert.Equal(identityName, identity.Name);
             Assert.NotNull(identity.ClientId);
-            Assert.NotNull(identity.ClientSecretUrl);
+            Assert.Null(identity.ClientSecretUrl);
             Assert.NotNull(identity.PrincipalId);
             Assert.NotNull(identity.TenantId);
             string firstTagValue, secondTagValue;

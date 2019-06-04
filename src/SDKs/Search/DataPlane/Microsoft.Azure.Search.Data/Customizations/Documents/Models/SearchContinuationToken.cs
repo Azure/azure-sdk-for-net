@@ -12,19 +12,24 @@ namespace Microsoft.Azure.Search.Models
     /// Encapsulates state required to continue fetching search results. This is necessary when Azure Search cannot
     /// fulfill a search request with a single response.
     /// </summary>
+    /// <remarks>
+    /// This class supports using <c cref="JsonConvert">JsonConvert</c> to convert to and from a JSON payload. This can be useful if you
+    /// call Azure Search from a web application and you need to exchange continuation tokens with a browser or mobile client while paging
+    /// through search results.
+    /// </remarks>
     [JsonConverter(typeof(SearchContinuationTokenConverter))]
     public class SearchContinuationToken
     {
-        internal SearchContinuationToken(string nextLink, SearchParametersPayload nextPageParameters)
+        internal SearchContinuationToken(string nextLink, SearchRequest nextPageParameters)
         {
-            Throw.IfArgumentNullOrEmpty(nextLink, "nextLink");
+            Throw.IfArgumentNullOrEmpty(nextLink, nameof(nextLink));
 
-            this.NextLink = nextLink;
-            this.NextPageParameters = nextPageParameters;    // Will be null for GET responses.
+            NextLink = nextLink;
+            NextPageParameters = nextPageParameters;    // Will be null for GET responses.
         }
 
-        internal string NextLink { get; private set; }
+        internal string NextLink { get; }
 
-        internal SearchParametersPayload NextPageParameters { get; private set; }
+        internal SearchRequest NextPageParameters { get; }
     }
 }

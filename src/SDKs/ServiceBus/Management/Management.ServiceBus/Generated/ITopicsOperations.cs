@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<IPage<SBAuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an authorizatio rule for the specified topic.
+        /// Creates an authorization rule for the specified topic.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720678.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The topic name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The topic name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The topic name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The topic name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The topic name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to regenerate the authorization rule.

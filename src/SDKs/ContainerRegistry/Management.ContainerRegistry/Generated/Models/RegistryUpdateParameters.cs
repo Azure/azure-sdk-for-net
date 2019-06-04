@@ -38,16 +38,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="sku">The SKU of the container registry.</param>
         /// <param name="adminUserEnabled">The value that indicates whether the
         /// admin user is enabled.</param>
-        /// <param name="storageAccount">The parameters of a storage account
-        /// for the container registry. Only applicable to Classic SKU. If
-        /// specified, the storage account must be in the same physical
-        /// location as the container registry.</param>
-        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties))
+        /// <param name="networkRuleSet">The network rule set for a container
+        /// registry.</param>
+        /// <param name="policies">The policies for a container
+        /// registry.</param>
+        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies))
         {
             Tags = tags;
             Sku = sku;
             AdminUserEnabled = adminUserEnabled;
-            StorageAccount = storageAccount;
+            NetworkRuleSet = networkRuleSet;
+            Policies = policies;
             CustomInit();
         }
 
@@ -76,13 +77,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public bool? AdminUserEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the parameters of a storage account for the container
-        /// registry. Only applicable to Classic SKU. If specified, the storage
-        /// account must be in the same physical location as the container
-        /// registry.
+        /// Gets or sets the network rule set for a container registry.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccount")]
-        public StorageAccountProperties StorageAccount { get; set; }
+        [JsonProperty(PropertyName = "properties.networkRuleSet")]
+        public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policies for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policies")]
+        public Policies Policies { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -96,9 +100,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             {
                 Sku.Validate();
             }
-            if (StorageAccount != null)
+            if (NetworkRuleSet != null)
             {
-                StorageAccount.Validate();
+                NetworkRuleSet.Validate();
             }
         }
     }

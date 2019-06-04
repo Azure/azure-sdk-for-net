@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualWan">The VirtualWAN to which the vpnSite
-        /// belongs</param>
-        /// <param name="deviceProperties">The device properties</param>
+        /// belongs.</param>
+        /// <param name="deviceProperties">The device properties.</param>
         /// <param name="ipAddress">The ip-address for the vpn-site.</param>
         /// <param name="siteKey">The key for vpn-site that can be used for
         /// connections.</param>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        /// <param name="isSecuritySite">IsSecuritySite flag</param>
+        /// <param name="isSecuritySite">IsSecuritySite flag.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
         public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), string etag = default(string))
@@ -75,13 +75,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the VirtualWAN to which the vpnSite belongs
+        /// Gets or sets the VirtualWAN to which the vpnSite belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualWan")]
         public SubResource VirtualWan { get; set; }
 
         /// <summary>
-        /// Gets or sets the device properties
+        /// Gets or sets the device properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deviceProperties")]
         public DeviceProperties DeviceProperties { get; set; }
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets isSecuritySite flag
+        /// Gets or sets isSecuritySite flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isSecuritySite")]
         public bool? IsSecuritySite { get; set; }

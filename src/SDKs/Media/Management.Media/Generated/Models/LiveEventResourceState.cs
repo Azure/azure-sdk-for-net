@@ -11,68 +11,101 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LiveEventResourceState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LiveEventResourceState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(LiveEventResourceStateConverter))]
+    public struct LiveEventResourceState : System.IEquatable<LiveEventResourceState>
     {
-        [EnumMember(Value = "Stopped")]
-        Stopped,
-        [EnumMember(Value = "Starting")]
-        Starting,
-        [EnumMember(Value = "Running")]
-        Running,
-        [EnumMember(Value = "Stopping")]
-        Stopping,
-        [EnumMember(Value = "Deleting")]
-        Deleting
-    }
-    internal static class LiveEventResourceStateEnumExtension
-    {
-        internal static string ToSerializedValue(this LiveEventResourceState? value)
+        private LiveEventResourceState(string underlyingValue)
         {
-            return value == null ? null : ((LiveEventResourceState)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this LiveEventResourceState value)
+        public static readonly LiveEventResourceState Stopped = "Stopped";
+
+        public static readonly LiveEventResourceState Starting = "Starting";
+
+        public static readonly LiveEventResourceState Running = "Running";
+
+        public static readonly LiveEventResourceState Stopping = "Stopping";
+
+        public static readonly LiveEventResourceState Deleting = "Deleting";
+
+
+        /// <summary>
+        /// Underlying value of enum LiveEventResourceState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for LiveEventResourceState
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case LiveEventResourceState.Stopped:
-                    return "Stopped";
-                case LiveEventResourceState.Starting:
-                    return "Starting";
-                case LiveEventResourceState.Running:
-                    return "Running";
-                case LiveEventResourceState.Stopping:
-                    return "Stopping";
-                case LiveEventResourceState.Deleting:
-                    return "Deleting";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static LiveEventResourceState? ParseLiveEventResourceState(this string value)
+        /// <summary>
+        /// Compares enums of type LiveEventResourceState
+        /// </summary>
+        public bool Equals(LiveEventResourceState e)
         {
-            switch( value )
-            {
-                case "Stopped":
-                    return LiveEventResourceState.Stopped;
-                case "Starting":
-                    return LiveEventResourceState.Starting;
-                case "Running":
-                    return LiveEventResourceState.Running;
-                case "Stopping":
-                    return LiveEventResourceState.Stopping;
-                case "Deleting":
-                    return LiveEventResourceState.Deleting;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to LiveEventResourceState
+        /// </summary>
+        public static implicit operator LiveEventResourceState(string value)
+        {
+            return new LiveEventResourceState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert LiveEventResourceState to string
+        /// </summary>
+        public static implicit operator string(LiveEventResourceState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum LiveEventResourceState
+        /// </summary>
+        public static bool operator == (LiveEventResourceState e1, LiveEventResourceState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum LiveEventResourceState
+        /// </summary>
+        public static bool operator != (LiveEventResourceState e1, LiveEventResourceState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for LiveEventResourceState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is LiveEventResourceState && Equals((LiveEventResourceState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode LiveEventResourceState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

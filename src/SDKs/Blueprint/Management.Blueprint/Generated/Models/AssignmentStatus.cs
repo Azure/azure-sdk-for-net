@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// The status of Blueprint assignment. This field is readonly.
+    /// The status of a blueprint assignment. This field is readonly.
     /// </summary>
     public partial class AssignmentStatus : BlueprintResourceStatusBase
     {
@@ -28,10 +28,11 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the AssignmentStatus class.
         /// </summary>
-        /// <param name="timeCreated">Creation time of this blueprint.</param>
-        /// <param name="lastModified">Last modified time of this
-        /// blueprint.</param>
-        public AssignmentStatus(string timeCreated = default(string), string lastModified = default(string))
+        /// <param name="timeCreated">Creation time of this blueprint
+        /// definition.</param>
+        /// <param name="lastModified">Last modified time of this blueprint
+        /// definition.</param>
+        public AssignmentStatus(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(timeCreated, lastModified)
         {
             CustomInit();

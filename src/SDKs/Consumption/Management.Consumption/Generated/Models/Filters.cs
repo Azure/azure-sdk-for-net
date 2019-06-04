@@ -35,13 +35,15 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="resourceGroups">The list of filters on resource
         /// groups, allowed at subscription level only.</param>
         /// <param name="resources">The list of filters on resources.</param>
-        /// <param name="meters">The list of filters on meters, mandatory for
-        /// budgets of usage category. </param>
-        public Filters(IList<string> resourceGroups = default(IList<string>), IList<string> resources = default(IList<string>), IList<string> meters = default(IList<string>))
+        /// <param name="meters">The list of filters on meters (GUID),
+        /// mandatory for budgets of usage category. </param>
+        /// <param name="tags">The dictionary of filters on tags.</param>
+        public Filters(IList<string> resourceGroups = default(IList<string>), IList<string> resources = default(IList<string>), IList<System.Guid?> meters = default(IList<System.Guid?>), IDictionary<string, IList<string>> tags = default(IDictionary<string, IList<string>>))
         {
             ResourceGroups = resourceGroups;
             Resources = resources;
             Meters = meters;
+            Tags = tags;
             CustomInit();
         }
 
@@ -64,11 +66,17 @@ namespace Microsoft.Azure.Management.Consumption.Models
         public IList<string> Resources { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of filters on meters, mandatory for budgets
-        /// of usage category.
+        /// Gets or sets the list of filters on meters (GUID), mandatory for
+        /// budgets of usage category.
         /// </summary>
         [JsonProperty(PropertyName = "meters")]
-        public IList<string> Meters { get; set; }
+        public IList<System.Guid?> Meters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dictionary of filters on tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, IList<string>> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

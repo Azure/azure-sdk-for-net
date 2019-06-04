@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// ('hello-world@sha256:abc123').</param>
         /// <param name="resourceId">The resource identifier of the source
         /// Azure Container Registry.</param>
-        /// <param name="registryUri">The address of the source
-        /// registry.</param>
-        public ImportSource(string sourceImage, string resourceId = default(string), string registryUri = default(string))
+        /// <param name="registryUri">The address of the source registry (e.g.
+        /// 'mcr.microsoft.com').</param>
+        /// <param name="credentials">Credentials used when importing from a
+        /// registry uri.</param>
+        public ImportSource(string sourceImage, string resourceId = default(string), string registryUri = default(string), ImportSourceCredentials credentials = default(ImportSourceCredentials))
         {
             ResourceId = resourceId;
             RegistryUri = registryUri;
+            Credentials = credentials;
             SourceImage = sourceImage;
             CustomInit();
         }
@@ -58,10 +61,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the address of the source registry.
+        /// Gets or sets the address of the source registry (e.g.
+        /// 'mcr.microsoft.com').
         /// </summary>
         [JsonProperty(PropertyName = "registryUri")]
         public string RegistryUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets credentials used when importing from a registry uri.
+        /// </summary>
+        [JsonProperty(PropertyName = "credentials")]
+        public ImportSourceCredentials Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets repository name of the source image.
@@ -85,6 +95,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             if (SourceImage == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SourceImage");
+            }
+            if (Credentials != null)
+            {
+                Credentials.Validate();
             }
         }
     }

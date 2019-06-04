@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='containerHostResourceId'>
             /// ARM ID of the Container Host resource
             /// </param>
-            public static object GetContainerHostMapping(this IContainerHostMappingsOperations operations, string resourceGroupName, string location, string containerHostResourceId = default(string))
+            public static ContainerHostMapping GetContainerHostMapping(this IContainerHostMappingsOperations operations, string resourceGroupName, string location, string containerHostResourceId = default(string))
             {
                 return operations.GetContainerHostMappingAsync(resourceGroupName, location, containerHostResourceId).GetAwaiter().GetResult();
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetContainerHostMappingAsync(this IContainerHostMappingsOperations operations, string resourceGroupName, string location, string containerHostResourceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContainerHostMapping> GetContainerHostMappingAsync(this IContainerHostMappingsOperations operations, string resourceGroupName, string location, string containerHostResourceId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetContainerHostMappingWithHttpMessagesAsync(resourceGroupName, location, containerHostResourceId, null, cancellationToken).ConfigureAwait(false))
                 {

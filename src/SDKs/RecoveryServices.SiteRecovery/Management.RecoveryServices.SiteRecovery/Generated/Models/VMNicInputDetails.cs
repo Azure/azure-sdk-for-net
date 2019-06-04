@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// address.</param>
         /// <param name="selectionType">Selection type for failover.</param>
         /// <param name="enableAcceleratedNetworkingOnRecovery">Whether the NIC
-        /// has accerated networking enabled.</param>
+        /// has accelerated networking enabled.</param>
         public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), bool? enableAcceleratedNetworkingOnRecovery = default(bool?))
         {
             NicId = nicId;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string SelectionType { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the NIC has accerated networking enabled.
+        /// Gets or sets whether the NIC has accelerated networking enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enableAcceleratedNetworkingOnRecovery")]
         public bool? EnableAcceleratedNetworkingOnRecovery { get; set; }

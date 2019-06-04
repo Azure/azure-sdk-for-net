@@ -188,7 +188,8 @@ namespace Management.HDInsight.Tests
             string storageAccountName,
             string location,
             out string storageAccountSuffix,
-            Kind kind = Kind.Storage)
+            Kind kind = Kind.Storage,
+            bool? isHnsEnabled = default(bool?))
         {
             var stoInput = new StorageAccountCreateParameters
             {
@@ -197,7 +198,8 @@ namespace Management.HDInsight.Tests
                 Sku = new Microsoft.Azure.Management.Storage.Models.Sku
                 {
                     Name = Microsoft.Azure.Management.Storage.Models.SkuName.StandardGRS
-                }
+                },
+                IsHnsEnabled = isHnsEnabled
             };
 
             // Retrieve the storage account

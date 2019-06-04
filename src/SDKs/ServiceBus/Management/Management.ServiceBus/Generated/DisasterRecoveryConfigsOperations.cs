@@ -1401,7 +1401,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// envokes GEO DR failover and reconfigure the alias to point to the secondary
+        /// Invokes GEO DR failover and reconfigure the alias to point to the secondary
         /// namespace
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1861,7 +1861,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The Disaster Recovery configuration name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2115,7 +2115,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The Disaster Recovery configuration name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

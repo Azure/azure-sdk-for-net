@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="accessedAt">Last time the message was sent, or a
         /// request was received, for this topic.</param>
         /// <param name="subscriptionCount">Number of subscriptions.</param>
-        /// <param name="countDetails">Message count deatils</param>
+        /// <param name="countDetails">Message count details</param>
         /// <param name="defaultMessageTimeToLive">ISO 8601 Default message
         /// timespan to live value. This is the duration after which the
         /// message expires, starting from when the message is sent to Service
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public int? SubscriptionCount { get; private set; }
 
         /// <summary>
-        /// Gets message count deatils
+        /// Gets message count details
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
         public MessageCountDetails CountDetails { get; private set; }

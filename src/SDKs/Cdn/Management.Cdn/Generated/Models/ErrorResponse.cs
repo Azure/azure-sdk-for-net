@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates CDN service is not able to process the incoming
-    /// request. The reason is provided in the error message.
+    /// Error response indicates CDN service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
     public partial class ErrorResponse
     {

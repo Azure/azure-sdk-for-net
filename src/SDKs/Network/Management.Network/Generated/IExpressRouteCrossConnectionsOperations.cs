@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the peering.
         /// </param>
         /// <param name='devicePath'>
-        /// The path of the device
+        /// The path of the device.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the peering.
         /// </param>
         /// <param name='devicePath'>
-        /// The path of the device
+        /// The path of the device.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

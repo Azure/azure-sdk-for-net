@@ -75,7 +75,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var globalPolicy = testBase.client.Policy.Get(testBase.rgName, testBase.serviceName);
 
                 // set policy
-                var policyDoc = XDocument.Parse(globalPolicy.PolicyContent);
+                var policyDoc = XDocument.Parse(globalPolicy.Value);
 
                 var policyContract = new PolicyContract(policyDoc.ToString());
 
@@ -90,10 +90,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // get policy to check it was added
                     var getPolicyResponse = await testBase.client.Policy.GetAsync(
                         testBase.rgName,
-                        testBase.serviceName);
+                        testBase.serviceName,
+                        PolicyExportFormat.Xml);
 
                     Assert.NotNull(getPolicyResponse);
-                    Assert.NotNull(getPolicyResponse.PolicyContent);
+                    Assert.NotNull(getPolicyResponse.Value);
 
                     // get the policy etag
                     var globalPolicyTag = await testBase.client.Policy.GetEntityTagAsync(
@@ -170,7 +171,18 @@ namespace ApiManagement.Tests.ManagementApiTests
                     api.Name);
 
                 Assert.NotNull(getApiPolicy);
-                Assert.NotNull(getApiPolicy.PolicyContent);
+                Assert.NotNull(getApiPolicy.Value);
+
+                // get policy in a blob link                
+                var getApiPolicyRawXml = await testBase.client.ApiPolicy.GetAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    api.Name,
+                    PolicyExportFormat.Rawxml);
+
+                Assert.NotNull(getApiPolicyRawXml);
+                Assert.Equal(PolicyExportFormat.Rawxml, getApiPolicyRawXml.Format);
+                Assert.NotNull(getApiPolicyRawXml.Value);
 
                 // get the api policy tag
                 var apiPolicyTag = await testBase.client.ApiPolicy.GetEntityTagAsync(
@@ -240,10 +252,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
-                    operation.Name);
+                    operation.Name,
+                    PolicyExportFormat.Xml);
 
                 Assert.NotNull(getOperationPolicy);
-                Assert.NotNull(getOperationPolicy.PolicyContent);
+                Assert.Equal(PolicyExportFormat.Xml, getOperationPolicy.Format);
+                Assert.NotNull(getOperationPolicy.Value);
 
                 // get operation policy tag
                 var operationPolicyTag = await testBase.client.ApiOperationPolicy.GetEntityTagAsync(
@@ -310,7 +324,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     product.Name,
-                    new PolicyContract(policyContent: policyDoc.ToString()));
+                    new PolicyContract(value: policyDoc.ToString()));
 
                 Assert.NotNull(setResponse);
 
@@ -321,7 +335,18 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name);
 
                 Assert.NotNull(getProductPolicy);
-                Assert.NotNull(getProductPolicy.PolicyContent);
+                Assert.NotNull(getProductPolicy.Value);
+
+                // get policy in a blob link                
+                var getProductPolicyXml = await testBase.client.ProductPolicy.GetAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    product.Name,
+                    PolicyExportFormat.Xml);
+
+                Assert.NotNull(getProductPolicyXml);
+                Assert.Equal(PolicyExportFormat.Xml, getProductPolicyXml.Format);
+                Assert.NotNull(getProductPolicyXml.Value);
 
                 // get product policy tag
                 var productPolicyTag = await testBase.client.ProductPolicy.GetEntityTagAsync(

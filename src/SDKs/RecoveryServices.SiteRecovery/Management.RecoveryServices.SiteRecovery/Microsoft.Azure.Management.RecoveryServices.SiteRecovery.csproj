@@ -6,13 +6,15 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-		<Version>1.2.1-preview</Version>
+		<Version>2.0.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
 		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-		        Updates in this release:
-			- Changes to support Azure Disk Encryption & Accelerated Networking are included.
+		  Updates in this release:
+			- Added new property for Azure Site Recovery (ASR) service:
+      * Incremental changes:
+      ** added new property in A2AReplicationDetails
 		      ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

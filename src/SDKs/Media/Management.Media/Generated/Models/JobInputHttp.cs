@@ -32,8 +32,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the JobInputHttp class.
         /// </summary>
-        /// <param name="files">List of files. Required for
-        /// JobInputHttp.</param>
+        /// <param name="files">List of files. Required for JobInputHttp.
+        /// Maximum of 4000 characters each.</param>
+        /// <param name="start">Defines a point on the timeline of the input
+        /// media at which processing will start. Defaults to the beginning of
+        /// the input media.</param>
+        /// <param name="end">Defines a point on the timeline of the input
+        /// media at which processing will end. Defaults to the end of the
+        /// input media.</param>
         /// <param name="label">A label that is assigned to a JobInputClip,
         /// that is used to satisfy a reference used in the Transform. For
         /// example, a Transform can be authored so as to take an image file
@@ -42,11 +48,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// the JobInputs should be the image file, and it should have the
         /// label 'xyz'.</param>
         /// <param name="baseUri">Base URI for HTTPS job input. It will be
-        /// concatenated with provided file names.   If no base uri is given,
-        /// then the provided file list is assumed to be fully qualified
-        /// uris.</param>
-        public JobInputHttp(IList<string> files = default(IList<string>), string label = default(string), string baseUri = default(string))
-            : base(files, label)
+        /// concatenated with provided file names. If no base uri is given,
+        /// then the provided file list is assumed to be fully qualified uris.
+        /// Maximum length of 4000 characters.</param>
+        public JobInputHttp(IList<string> files = default(IList<string>), ClipTime start = default(ClipTime), ClipTime end = default(ClipTime), string label = default(string), string baseUri = default(string))
+            : base(files, start, end, label)
         {
             BaseUri = baseUri;
             CustomInit();
@@ -59,8 +65,9 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets base URI for HTTPS job input. It will be concatenated
-        /// with provided file names.   If no base uri is given, then the
-        /// provided file list is assumed to be fully qualified uris.
+        /// with provided file names. If no base uri is given, then the
+        /// provided file list is assumed to be fully qualified uris. Maximum
+        /// length of 4000 characters.
         /// </summary>
         [JsonProperty(PropertyName = "baseUri")]
         public string BaseUri { get; set; }

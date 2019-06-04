@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualHub route
+    /// VirtualHub route.
     /// </summary>
     public partial class VirtualHubRoute
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualHubRoute class.
         /// </summary>
-        /// <param name="addressPrefixes">list of all addressPrefixes.</param>
+        /// <param name="addressPrefixes">List of all addressPrefixes.</param>
         /// <param name="nextHopIpAddress">NextHop ip address.</param>
         public VirtualHubRoute(IList<string> addressPrefixes = default(IList<string>), string nextHopIpAddress = default(string))
         {

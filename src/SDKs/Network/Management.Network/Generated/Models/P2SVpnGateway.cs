@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualHub">The VirtualHub to which the gateway
-        /// belongs</param>
+        /// belongs.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
@@ -52,11 +52,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vpnClientAddressPool">The reference of the address
         /// space resource which represents Address space for P2S
         /// VpnClient.</param>
+        /// <param name="customRoutes">The reference of the address space
+        /// resource which represents the custom routes specified by the
+        /// customer for P2SVpnGateway and P2S VpnClient.</param>
         /// <param name="vpnClientConnectionHealth">All P2S VPN clients'
         /// connection health status.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource p2SVpnServerConfiguration = default(SubResource), AddressSpace vpnClientAddressPool = default(AddressSpace), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), string etag = default(string))
+        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource p2SVpnServerConfiguration = default(SubResource), AddressSpace vpnClientAddressPool = default(AddressSpace), AddressSpace customRoutes = default(AddressSpace), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             P2SVpnServerConfiguration = p2SVpnServerConfiguration;
             VpnClientAddressPool = vpnClientAddressPool;
+            CustomRoutes = customRoutes;
             VpnClientConnectionHealth = vpnClientConnectionHealth;
             Etag = etag;
             CustomInit();
@@ -75,7 +79,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the VirtualHub to which the gateway belongs
+        /// Gets or sets the VirtualHub to which the gateway belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualHub")]
         public SubResource VirtualHub { get; set; }
@@ -106,6 +110,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientAddressPool")]
         public AddressSpace VpnClientAddressPool { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the address space resource which
+        /// represents the custom routes specified by the customer for
+        /// P2SVpnGateway and P2S VpnClient.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customRoutes")]
+        public AddressSpace CustomRoutes { get; set; }
 
         /// <summary>
         /// Gets all P2S VPN clients' connection health status.

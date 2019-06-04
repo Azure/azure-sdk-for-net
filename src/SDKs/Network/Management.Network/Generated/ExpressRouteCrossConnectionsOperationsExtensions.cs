@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the peering.
             /// </param>
             /// <param name='devicePath'>
-            /// The path of the device
+            /// The path of the device.
             /// </param>
             public static ExpressRouteCircuitsArpTableListResult ListArpTable(this IExpressRouteCrossConnectionsOperations operations, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath)
             {
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the peering.
             /// </param>
             /// <param name='devicePath'>
-            /// The path of the device
+            /// The path of the device.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -486,7 +486,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the peering.
             /// </param>
             /// <param name='devicePath'>
-            /// The path of the device
+            /// The path of the device.
             /// </param>
             public static ExpressRouteCircuitsArpTableListResult BeginListArpTable(this IExpressRouteCrossConnectionsOperations operations, string resourceGroupName, string crossConnectionName, string peeringName, string devicePath)
             {
@@ -510,7 +510,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the peering.
             /// </param>
             /// <param name='devicePath'>
-            /// The path of the device
+            /// The path of the device.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

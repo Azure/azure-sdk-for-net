@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
         /// <param name="addOnFeatures">The list of add-on features to enable
         /// in the cluster.</param>
         /// <param name="availableClusterVersions">The Service Fabric runtime
@@ -107,6 +108,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// 'AutoScale', 'Ready'</param>
         /// <param name="diagnosticsStorageAccountConfig">The storage account
         /// information for storing Service Fabric diagnostic logs.</param>
+        /// <param name="eventStoreServiceEnabled">Indicates if the event store
+        /// service is enabled.</param>
         /// <param name="fabricSettings">The list of custom fabric settings to
         /// configure the cluster.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -147,8 +150,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// . Possible values include: 'Automatic', 'Manual'</param>
         /// <param name="vmImage">The VM image VMSS has been configured with.
         /// Generic names such as Windows or Linux can be used.</param>
-        public Cluster(string location, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> addOnFeatures = default(IList<string>), IList<ClusterVersionDetails> availableClusterVersions = default(IList<ClusterVersionDetails>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), string clusterEndpoint = default(string), string clusterId = default(string), string clusterState = default(string), DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default(DiagnosticsStorageAccountConfig), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ServerCertificateCommonNames reverseProxyCertificateCommonNames = default(ServerCertificateCommonNames), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), string vmImage = default(string))
-            : base(location, id, name, type, tags)
+        public Cluster(string location, string managementEndpoint, IList<NodeTypeDescription> nodeTypes, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IList<string> addOnFeatures = default(IList<string>), IList<ClusterVersionDetails> availableClusterVersions = default(IList<ClusterVersionDetails>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), CertificateDescription certificate = default(CertificateDescription), ServerCertificateCommonNames certificateCommonNames = default(ServerCertificateCommonNames), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), string clusterCodeVersion = default(string), string clusterEndpoint = default(string), string clusterId = default(string), string clusterState = default(string), DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default(DiagnosticsStorageAccountConfig), bool? eventStoreServiceEnabled = default(bool?), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string reliabilityLevel = default(string), CertificateDescription reverseProxyCertificate = default(CertificateDescription), ServerCertificateCommonNames reverseProxyCertificateCommonNames = default(ServerCertificateCommonNames), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), string upgradeMode = default(string), string vmImage = default(string))
+            : base(location, id, name, type, tags, etag)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -162,6 +165,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ClusterId = clusterId;
             ClusterState = clusterState;
             DiagnosticsStorageAccountConfig = diagnosticsStorageAccountConfig;
+            EventStoreServiceEnabled = eventStoreServiceEnabled;
             FabricSettings = fabricSettings;
             ManagementEndpoint = managementEndpoint;
             NodeTypes = nodeTypes;
@@ -297,6 +301,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diagnosticsStorageAccountConfig")]
         public DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the event store service is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.eventStoreServiceEnabled")]
+        public bool? EventStoreServiceEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets the list of custom fabric settings to configure the

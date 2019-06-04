@@ -24,8 +24,20 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IEnrollmentAccountsOperations
     {
         /// <summary>
-        /// Lists the enrollment accounts the caller has access to.
+        /// Lists all Enrollment Accounts for a user which he has access to.
         /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='expand'>
+        /// May be used to expand the department.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
+        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
+        /// key value pair string where key and value is separated by a colon
+        /// (:).
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,12 +53,24 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccountListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EnrollmentAccountListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a enrollment account by name.
+        /// Get the enrollment account by id.
         /// </summary>
-        /// <param name='name'>
-        /// Enrollment Account name.
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='enrollmentAccountName'>
+        /// Enrollment Account Id.
+        /// </param>
+        /// <param name='expand'>
+        /// May be used to expand the Department.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
+        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
+        /// key value pair string where key and value is separated by a colon
+        /// (:).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,6 +87,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccount>> GetWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountIdWithHttpMessagesAsync(string billingAccountName, string enrollmentAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -17,7 +17,7 @@ namespace Management.HDInsight.Tests
         {
             TestInitialize();
 
-            string clusterName = TestUtilities.GenerateName("hdisdk-humboldt");
+            string clusterName = TestUtilities.GenerateName("hdisdk-configs");
             var createParams = CommonData.PrepareClusterCreateParamsForWasb();
             var hiveConfig = new Dictionary<string, string>
             {
@@ -54,41 +54,20 @@ namespace Management.HDInsight.Tests
             var yarn = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.YarnSite);
             Assert.Equal(yarnConfig, yarn);
 
-            var gateway = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.Gateway);
-            Assert.Equal(3, gateway.Count);
-
             var core = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.CoreSite);
             Assert.Equal(2, core.Count);
             Assert.True(core.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
             Assert.Contains(core, c => c.Key.StartsWith("fs.azure.account.key."));
-        }
 
-        [Fact]
-        public void TestHttpExtended()
-        {
-            TestInitialize();
-
-            string clusterName = TestUtilities.GenerateName("hdisdk-http");
-            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
-            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
-            ValidateCluster(clusterName, createParams, cluster);
-
-            string expectedUserName = CommonData.ClusterUserName;
-            string expectedPassword = CommonData.ClusterPassword;
-            var httpSettings = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.Gateway);
-            ValidateHttpSettings(expectedUserName, expectedPassword, httpSettings);
-
-            string newExpectedPassword = "NewPassword1!";
-            var updateParams = new Dictionary<string, string>
-            {
-                {  "restAuthCredential.isEnabled", "true" },
-                {  "restAuthCredential.username", expectedUserName },
-                {  "restAuthCredential.password", newExpectedPassword }
-            };
-
-            HDInsightClient.Configurations.Update(CommonData.ResourceGroupName, clusterName, ConfigurationKey.Gateway, updateParams);
-            httpSettings = HDInsightClient.Configurations.Get(CommonData.ResourceGroupName, clusterName, ConfigurationKey.Gateway);
-            ValidateHttpSettings(expectedUserName, newExpectedPassword, httpSettings);
+            var configs = HDInsightClient.Configurations.List(CommonData.ResourceGroupName, clusterName);
+            Assert.NotNull(configs);
+            Assert.Equal(hiveConfig, configs.Configurations[ConfigurationKey.HiveSite]);
+            Assert.Equal(mapredConfig, configs.Configurations[ConfigurationKey.MapRedSite]);
+            Assert.Equal(yarnConfig, configs.Configurations[ConfigurationKey.YarnSite]);
+            Assert.Equal(configurations[ConfigurationKey.Gateway], configs.Configurations[ConfigurationKey.Gateway]);
+            Assert.Equal(2, core.Count);
+            Assert.True(core.ContainsKey(Constants.StorageConfigurations.DefaultFsKey));
+            Assert.Contains(core, c => c.Key.StartsWith("fs.azure.account.key."));
         }
     }
 }

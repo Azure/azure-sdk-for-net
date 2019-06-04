@@ -36,14 +36,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="target">The ID of the targeted resource, only VM is
         /// currently supported.</param>
+        /// <param name="storageLocation">Describes the storage location for a
+        /// packet capture session.</param>
         /// <param name="name">Name of the packet capture session.</param>
         /// <param name="id">ID of the packet capture operation.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
         /// output.</param>
         /// <param name="timeLimitInSeconds">Maximum duration of the capture
         /// session in seconds.</param>
+        /// <param name="filters">A list of packet capture filters.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// packet capture session. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
@@ -80,6 +85,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Id { get; private set; }
 
         /// <summary>
+        /// Gets or sets a unique read-only string that changes whenever the
+        /// resource is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
@@ -111,11 +118,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? TimeLimitInSeconds { get; set; }
 
         /// <summary>
+        /// Gets or sets describes the storage location for a packet capture
+        /// session.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageLocation")]
         public PacketCaptureStorageLocation StorageLocation { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of packet capture filters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.filters")]
         public IList<PacketCaptureFilter> Filters { get; set; }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the link to a KeyVault.
+    /// Specifies the link to a Key Vault.
     /// </summary>
     public partial class KeyVaultReference
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultReference class.
         /// </summary>
-        /// <param name="id">Azure resource ID of the KeyVault.</param>
+        /// <param name="id">Azure resource ID of the Key Vault.</param>
         public KeyVaultReference(string id)
         {
             Id = id;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets azure resource ID of the KeyVault.
+        /// Gets or sets azure resource ID of the Key Vault.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

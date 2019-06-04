@@ -24,21 +24,41 @@ namespace Microsoft.Azure.Management.Consumption
     public partial interface IUsageDetailsOperations
     {
         /// <summary>
-        /// Lists the usage details for a scope by billing period. Usage
-        /// details are available via this API only for May 1, 2014 or later.
+        /// Lists the usage details for the defined scope. Usage details are
+        /// available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with usage details operations. This includes
+        /// '/subscriptions/{subscriptionId}/' for subscription scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// '/providers/Microsoft.Billing/departments/{departmentId}' for
+        /// Department scope,
+        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope and
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope. For subscription, billing account,
+        /// department, enrollment account and management group, you can also
+        /// add billing period to the scope using
+        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+        /// For e.g. to specify billing period at department scope use
+        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// </param>
         /// <param name='expand'>
-        /// May be used to expand the properties/additionalProperties or
+        /// May be used to expand the properties/additionalInfo or
         /// properties/meterDetails within a list of usage details. By default,
         /// these fields are not included when listing usage details.
         /// </param>
         /// <param name='filter'>
-        /// May be used to filter usageDetails by properties/usageEnd (Utc
-        /// time), properties/usageStart (Utc time), properties/resourceGroup,
-        /// properties/instanceName or properties/instanceId. The filter
+        /// May be used to filter usageDetails by properties/resourceGroup,
+        /// properties/resourceName, properties/resourceId,
+        /// properties/chargeType, properties/reservationId or tags. The filter
         /// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'.
+        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value
+        /// pair string where key and value is separated by a colon (:).
         /// </param>
         /// <param name='skiptoken'>
         /// Skiptoken is only used if a previous operation returned a partial
@@ -49,6 +69,11 @@ namespace Microsoft.Azure.Management.Consumption
         /// <param name='top'>
         /// May be used to limit the number of results to the most recent N
         /// usageDetails.
+        /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Possible
+        /// values include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+        /// 'UsageMetricType'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,36 +90,33 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<UsageDetail>>> ListWithHttpMessagesAsync(string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<UsageDetail>>> ListWithHttpMessagesAsync(string scope, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the usage details for a scope by billing period. Usage
-        /// details are available via this API only for May 1, 2014 or later.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Download usage details data.
         /// </summary>
-        /// <param name='billingPeriodName'>
-        /// Billing Period Name.
+        /// <param name='scope'>
+        /// The scope associated with usage details operations. This includes
+        /// '/subscriptions/{subscriptionId}/' for subscription scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// '/providers/Microsoft.Billing/departments/{departmentId}' for
+        /// Department scope,
+        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope and
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope. For subscription, billing account,
+        /// department, enrollment account and management group, you can also
+        /// add billing period to the scope using
+        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+        /// For e.g. to specify billing period at department scope use
+        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the properties/additionalProperties or
-        /// properties/meterDetails within a list of usage details. By default,
-        /// these fields are not included when listing usage details.
-        /// </param>
-        /// <param name='filter'>
-        /// May be used to filter usageDetails by properties/usageEnd (Utc
-        /// time), properties/usageStart (Utc time), properties/resourceGroup,
-        /// properties/instanceName or properties/instanceId. The filter
-        /// supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'.
-        /// </param>
-        /// <param name='skiptoken'>
-        /// Skiptoken is only used if a previous operation returned a partial
-        /// result. If a previous response contains a nextLink element, the
-        /// value of the nextLink element will include a skiptoken parameter
-        /// that specifies a starting point to use for subsequent calls.
-        /// </param>
-        /// <param name='top'>
-        /// May be used to limit the number of results to the most recent N
-        /// usageDetails.
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Possible
+        /// values include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+        /// 'UsageMetricType'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,10 +133,53 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<UsageDetail>>> ListByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsDownloadHeaders>> DownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the usage details for a scope by billing period. Usage
-        /// details are available via this API only for May 1, 2014 or later.
+        /// Download usage details data.
+        /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with usage details operations. This includes
+        /// '/subscriptions/{subscriptionId}/' for subscription scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'
+        /// for resourceGroup scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}'
+        /// for Billing Account scope,
+        /// '/providers/Microsoft.Billing/departments/{departmentId}' for
+        /// Department scope,
+        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}'
+        /// for EnrollmentAccount scope and
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}'
+        /// for Management Group scope. For subscription, billing account,
+        /// department, enrollment account and management group, you can also
+        /// add billing period to the scope using
+        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
+        /// For e.g. to specify billing period at department scope use
+        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Possible
+        /// values include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+        /// 'UsageMetricType'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the usage details for the defined scope. Usage details are
+        /// available via this API only for May 1, 2014 or later.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -136,29 +201,5 @@ namespace Microsoft.Azure.Management.Consumption
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<UsageDetail>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the usage details for a scope by billing period. Usage
-        /// details are available via this API only for May 1, 2014 or later.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<UsageDetail>>> ListByBillingPeriodNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

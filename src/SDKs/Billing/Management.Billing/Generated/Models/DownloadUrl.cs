@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// A secure URL that can be used to download a PDF invoice until the URL
+    /// A secure URL that can be used to download a an entity until the URL
     /// expires.
     /// </summary>
     public partial class DownloadUrl

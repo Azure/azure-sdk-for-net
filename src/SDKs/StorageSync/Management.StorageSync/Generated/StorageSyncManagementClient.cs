@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.StorageSync
         public virtual IWorkflowsOperations Workflows { get; private set; }
 
         /// <summary>
+        /// Gets the IOperationStatusOperations.
+        /// </summary>
+        public virtual IOperationStatusOperations OperationStatus { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the StorageSyncManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -357,8 +362,9 @@ namespace Microsoft.Azure.Management.StorageSync
             ServerEndpoints = new ServerEndpointsOperations(this);
             RegisteredServers = new RegisteredServersOperations(this);
             Workflows = new WorkflowsOperations(this);
+            OperationStatus = new OperationStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-10-01";
+            ApiVersion = "2019-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -47,6 +47,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// 'Succeeded', 'Failed'</param>
         /// <param name="endpoint">Endpoint of the created account.</param>
         /// <param name="internalId">The internal identifier.</param>
+        /// <param name="customSubDomainName">Optional subdomain name used for
+        /// token-based authentication.</param>
+        /// <param name="networkAcls">A collection of rules governing the
+        /// accessibility from specific network locations.</param>
         /// <param name="sku">The SKU of Cognitive Services account.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
@@ -55,7 +59,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
         /// <param name="type">Resource type</param>
-        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
         {
             Etag = etag;
             Id = id;
@@ -65,6 +69,8 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
             InternalId = internalId;
+            CustomSubDomainName = customSubDomainName;
+            NetworkAcls = networkAcls;
             Sku = sku;
             Tags = tags;
             Type = type;
@@ -125,6 +131,20 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.internalId")]
         public string InternalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional subdomain name used for token-based
+        /// authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customSubDomainName")]
+        public string CustomSubDomainName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a collection of rules governing the accessibility from
+        /// specific network locations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAcls")]
+        public NetworkRuleSet NetworkAcls { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of Cognitive Services account.

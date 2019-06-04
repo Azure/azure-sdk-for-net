@@ -22,24 +22,21 @@ namespace Microsoft.Azure.Search.Serialization
 
         private static IContractResolver DefaultResolver { get; } = new DefaultContractResolver();
 
-        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
-            JsonSerializerSettings baseSettings,
-            bool useCamelCase) where T : class =>
+        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(JsonSerializerSettings baseSettings, bool useCamelCase) =>
             CreateSerializerSettings<T>(baseSettings, useCamelCase);
 
-        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class =>
-            CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
+        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings) =>
+            CreateDeserializerSettings<T>(baseSettings);
 
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
             CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
 
         public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings) =>
-            CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
+            CreateDeserializerSettings<Document>(baseSettings);
 
         private static JsonSerializerSettings CreateSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
-            bool useCamelCase) where T : class
+            bool useCamelCase)
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());
@@ -60,19 +57,15 @@ namespace Microsoft.Azure.Search.Serialization
             return settings;
         }
 
-        private static JsonSerializerSettings CreateDeserializerSettings<TSearchResult, TSuggestResult, TDoc>(
-            JsonSerializerSettings baseSettings)
-            where TSearchResult : SearchResultBase<TDoc>, new()
-            where TSuggestResult : SuggestResultBase<TDoc>, new()
-            where TDoc : class
+        private static JsonSerializerSettings CreateDeserializerSettings<T>(JsonSerializerSettings baseSettings)
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());
             settings.Converters.Add(new DocumentConverter());
             settings.Converters.Add(new DateTimeConverter());
             settings.Converters.Add(new DoubleConverter());
-            settings.Converters.Add(new SearchResultConverter<TSearchResult, TDoc>());
-            settings.Converters.Add(new SuggestResultConverter<TSuggestResult, TDoc>());
+            settings.Converters.Add(new SearchResultConverter<T>());
+            settings.Converters.Add(new SuggestResultConverter<T>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;
 
             // Fail when deserializing null into a non-nullable type. This is to avoid silent data corruption issues.

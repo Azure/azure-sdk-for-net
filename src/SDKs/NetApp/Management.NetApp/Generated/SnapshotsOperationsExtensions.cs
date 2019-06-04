@@ -24,12 +24,15 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class SnapshotsOperationsExtensions
     {
             /// <summary>
-            /// List snapshots
+            /// Describe all snapshots
             /// </summary>
+            /// <remarks>
+            /// List all snapshots associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -41,18 +44,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static IEnumerable<Snapshot> List(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName)
+            public static IEnumerable<Snapshot> List(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
-                return operations.ListAsync(resourceGroup, accountName, poolName, volumeName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List snapshots
+            /// Describe all snapshots
             /// </summary>
+            /// <remarks>
+            /// List all snapshots associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -67,21 +73,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Snapshot>> ListAsync(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Snapshot>> ListAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get a snapshot
+            /// Describe a snapshot
             /// </summary>
+            /// <remarks>
+            /// Get details of the specified snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -96,18 +105,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static Snapshot Get(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static Snapshot Get(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                return operations.GetAsync(resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a snapshot
+            /// Describe a snapshot
             /// </summary>
+            /// <remarks>
+            /// Get details of the specified snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -125,9 +137,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Snapshot> GetAsync(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Snapshot> GetAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -136,13 +148,16 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -157,21 +172,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static Snapshot Create(this ISnapshotsOperations operations, Snapshot body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static Snapshot Create(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                return operations.CreateAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                return operations.CreateAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -189,24 +207,27 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Snapshot> CreateAsync(this ISnapshotsOperations operations, Snapshot body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Snapshot> CreateAsync(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
+            /// Update a snapshot
+            /// </summary>
+            /// <remarks>
             /// Patch a snapshot
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -221,21 +242,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static Snapshot Update(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static Snapshot Update(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                return operations.UpdateAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
+            /// Update a snapshot
+            /// </summary>
+            /// <remarks>
             /// Patch a snapshot
-            /// </summary>
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -253,21 +277,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Snapshot> UpdateAsync(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Snapshot> UpdateAsync(this ISnapshotsOperations operations, SnapshotPatch body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -282,18 +309,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static void Delete(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static void Delete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                operations.DeleteAsync(resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -311,21 +341,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -340,21 +373,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static Snapshot BeginCreate(this ISnapshotsOperations operations, Snapshot body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static Snapshot BeginCreate(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                return operations.BeginCreateAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='body'>
             /// Snapshot object supplied in the body of the operation.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -372,21 +408,24 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Snapshot> BeginCreateAsync(this ISnapshotsOperations operations, Snapshot body, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Snapshot> BeginCreateAsync(this ISnapshotsOperations operations, Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(body, resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -401,18 +440,21 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='snapshotName'>
             /// The name of the mount target
             /// </param>
-            public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName)
+            public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
             {
-                operations.BeginDeleteAsync(resourceGroup, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroup'>
+            /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
             /// <param name='accountName'>
@@ -430,9 +472,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroup, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroup, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

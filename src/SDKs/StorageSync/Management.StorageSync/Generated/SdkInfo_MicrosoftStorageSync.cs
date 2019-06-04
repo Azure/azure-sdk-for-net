@@ -19,26 +19,16 @@ namespace Microsoft.Azure.Management.StorageSync
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "Operations", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2018-10-01"),
-                new Tuple<string, string, string>("StorageSync", "Workflows", "2018-10-01"),
+                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "OperationStatus", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "Operations", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "Workflows", "2019-03-01"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=H:\\csharpsdk\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "445f0517ee92f440685bccb53af97fb1485890bb";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

@@ -3,6 +3,8 @@
 
 using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -22,8 +24,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
 
-        // Azure Instance Metadata Service (IDMS) endpoint
-        private const string AzureVmIdmsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+        // Azure Instance Metadata Service (IMDS) endpoint
+        private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+
+        // Timeout for Azure IMDS
+        internal const int AzureVmImdsTimeoutInSecs = 2;
+        internal readonly TimeSpan AzureVmImdsTimeout = TimeSpan.FromSeconds(AzureVmImdsTimeoutInSecs);
 
         internal MsiAccessTokenProvider(string managedIdentityClientId = default(string))
         {
@@ -37,14 +43,44 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _httpClient = httpClient;
         }
 
-        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
+            HttpClient httpClient = _httpClient ?? DefaultHttpClient;
+
             try
             {
                 // Check if App Services MSI is available. If both these environment variables are set, then it is. 
                 string msiEndpoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
+
+                // if App Service MSI is not available then Azure VM IMDS must be available, verify with a probe request
+                if (!isAppServicesMsiAvailable)
+                {
+                    using (var internalTokenSource = new CancellationTokenSource())
+                    using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalTokenSource.Token, cancellationToken))
+                    {
+                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
+
+                        try
+                        {
+                            internalTokenSource.CancelAfter(AzureVmImdsTimeout);
+                            await httpClient.SendAsync(imdsProbeRequest, linkedTokenSource.Token).ConfigureAwait(false);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // request to IMDS timed out (internal cancellation token cancelled), neither Azure VM IMDS nor App Services MSI are available
+                            if (internalTokenSource.Token.IsCancellationRequested)
+                            {
+                                throw new HttpRequestException();
+                            }
+
+                            throw;
+                        }
+                    }
+                }
 
                 // If managed identity is specified, include client ID parameter in request
                 string clientIdParameterName = isAppServicesMsiAvailable ? "clientid" : "client_id";
@@ -55,23 +91,25 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2017-09-01"
-                    : $"{AzureVmIdmsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
+                    : $"{AzureVmImdsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
-                // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
-                HttpClient httpClient = _httpClient ?? DefaultHttpClient;
-
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-
-                if (isAppServicesMsiAvailable)
+                Func<HttpRequestMessage> getRequestMessage = () =>
                 {
-                    request.Headers.Add("Secret", msiSecret);
-                }
-                else
-                {
-                    request.Headers.Add("Metadata", "true");
-                }
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
-                HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
+                    if (isAppServicesMsiAvailable)
+                    {
+                        request.Headers.Add("Secret", msiSecret);
+                    }
+                    else
+                    {
+                        request.Headers.Add("Metadata", "true");
+                    }
+
+                    return request;
+                };
+
+                HttpResponseMessage response = await httpClient.SendAsyncWithRetry(getRequestMessage, cancellationToken).ConfigureAwait(false);
 
                 // If the response is successful, it should have JSON response with an access_token field
                 if (response.IsSuccessStatusCode)
@@ -106,7 +144,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             catch (HttpRequestException)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.RetryFailure} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
             }
             catch (Exception exp)
             {

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Application gateway resource
+    /// Application gateway resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApplicationGateway : Resource
@@ -45,36 +45,55 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="operationalState">Operational state of the application
         /// gateway resource. Possible values include: 'Stopped', 'Starting',
         /// 'Running', 'Stopping'</param>
-        /// <param name="gatewayIPConfigurations">Subnets of application the
-        /// gateway resource.</param>
+        /// <param name="gatewayIPConfigurations">Subnets of the application
+        /// gateway resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="authenticationCertificates">Authentication
-        /// certificates of the application gateway resource.</param>
+        /// certificates of the application gateway resource. For default
+        /// limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="trustedRootCertificates">Trusted Root certificates of
-        /// the application gateway resource.</param>
+        /// the application gateway resource. For default limits, see
+        /// [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="sslCertificates">SSL certificates of the application
-        /// gateway resource.</param>
+        /// gateway resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="frontendIPConfigurations">Frontend IP addresses of the
-        /// application gateway resource.</param>
+        /// application gateway resource. For default limits, see [Application
+        /// Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="frontendPorts">Frontend ports of the application
-        /// gateway resource.</param>
+        /// gateway resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="probes">Probes of the application gateway
         /// resource.</param>
         /// <param name="backendAddressPools">Backend address pool of the
-        /// application gateway resource.</param>
+        /// application gateway resource. For default limits, see [Application
+        /// Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="backendHttpSettingsCollection">Backend http settings
-        /// of the application gateway resource.</param>
+        /// of the application gateway resource. For default limits, see
+        /// [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="httpListeners">Http listeners of the application
-        /// gateway resource.</param>
+        /// gateway resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="urlPathMaps">URL path map of the application gateway
-        /// resource.</param>
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="requestRoutingRules">Request routing rules of the
         /// application gateway resource.</param>
         /// <param name="rewriteRuleSets">Rewrite rules for the application
         /// gateway resource.</param>
         /// <param name="redirectConfigurations">Redirect configurations of the
-        /// application gateway resource.</param>
+        /// application gateway resource. For default limits, see [Application
+        /// Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="webApplicationFirewallConfiguration">Web application
         /// firewall configuration.</param>
+        /// <param name="firewallPolicy">Reference of the FirewallPolicy
+        /// resource.</param>
         /// <param name="enableHttp2">Whether HTTP2 is enabled on the
         /// application gateway resource.</param>
         /// <param name="enableFips">Whether FIPS is enabled on the application
@@ -94,7 +113,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource needs to come from.</param>
         /// <param name="identity">The identity of the application gateway, if
         /// configured.</param>
-        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(IList<ApplicationGatewayAuthenticationCertificate>), IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default(IList<ApplicationGatewayTrustedRootCertificate>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default(IList<ApplicationGatewayRewriteRuleSet>), IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default(IList<ApplicationGatewayRedirectConfiguration>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), bool? enableHttp2 = default(bool?), bool? enableFips = default(bool?), ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default(ApplicationGatewayAutoscaleConfiguration), string resourceGuid = default(string), string provisioningState = default(string), IList<ApplicationGatewayCustomError> customErrorConfigurations = default(IList<ApplicationGatewayCustomError>), string etag = default(string), IList<string> zones = default(IList<string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(IList<ApplicationGatewayAuthenticationCertificate>), IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default(IList<ApplicationGatewayTrustedRootCertificate>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default(IList<ApplicationGatewayRewriteRuleSet>), IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default(IList<ApplicationGatewayRedirectConfiguration>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), SubResource firewallPolicy = default(SubResource), bool? enableHttp2 = default(bool?), bool? enableFips = default(bool?), ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default(ApplicationGatewayAutoscaleConfiguration), string resourceGuid = default(string), string provisioningState = default(string), IList<ApplicationGatewayCustomError> customErrorConfigurations = default(IList<ApplicationGatewayCustomError>), string etag = default(string), IList<string> zones = default(IList<string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -115,6 +134,7 @@ namespace Microsoft.Azure.Management.Network.Models
             RewriteRuleSets = rewriteRuleSets;
             RedirectConfigurations = redirectConfigurations;
             WebApplicationFirewallConfiguration = webApplicationFirewallConfiguration;
+            FirewallPolicy = firewallPolicy;
             EnableHttp2 = enableHttp2;
             EnableFips = enableFips;
             AutoscaleConfiguration = autoscaleConfiguration;
@@ -153,40 +173,49 @@ namespace Microsoft.Azure.Management.Network.Models
         public string OperationalState { get; private set; }
 
         /// <summary>
-        /// Gets or sets subnets of application the gateway resource.
+        /// Gets or sets subnets of the application gateway resource. For
+        /// default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayIPConfigurations")]
         public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets authentication certificates of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.authenticationCertificates")]
         public IList<ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets trusted Root certificates of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.trustedRootCertificates")]
         public IList<ApplicationGatewayTrustedRootCertificate> TrustedRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets SSL certificates of the application gateway resource.
+        /// For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslCertificates")]
         public IList<ApplicationGatewaySslCertificate> SslCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets frontend IP addresses of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
         public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets frontend ports of the application gateway resource.
+        /// For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendPorts")]
         public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; set; }
@@ -199,26 +228,32 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets backend address pool of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPools")]
         public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets backend http settings of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettingsCollection")]
         public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets http listeners of the application gateway resource.
+        /// For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpListeners")]
         public IList<ApplicationGatewayHttpListener> HttpListeners { get; set; }
 
         /// <summary>
-        /// Gets or sets URL path map of the application gateway resource.
+        /// Gets or sets URL path map of the application gateway resource. For
+        /// default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.urlPathMaps")]
         public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; set; }
@@ -238,7 +273,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets redirect configurations of the application gateway
-        /// resource.
+        /// resource. For default limits, see [Application Gateway
+        /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
         /// </summary>
         [JsonProperty(PropertyName = "properties.redirectConfigurations")]
         public IList<ApplicationGatewayRedirectConfiguration> RedirectConfigurations { get; set; }
@@ -248,6 +284,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.webApplicationFirewallConfiguration")]
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets reference of the FirewallPolicy resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallPolicy")]
+        public SubResource FirewallPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets whether HTTP2 is enabled on the application gateway
@@ -320,13 +362,23 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (BackendHttpSettingsCollection != null)
+            if (Probes != null)
             {
-                foreach (var element in BackendHttpSettingsCollection)
+                foreach (var element in Probes)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (BackendHttpSettingsCollection != null)
+            {
+                foreach (var element1 in BackendHttpSettingsCollection)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

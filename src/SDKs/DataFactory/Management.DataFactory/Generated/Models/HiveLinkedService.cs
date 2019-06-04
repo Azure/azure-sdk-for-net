@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="port">The TCP port that the Hive server uses to listen
         /// for client connections.</param>
         /// <param name="serverType">The type of Hive server. Possible values

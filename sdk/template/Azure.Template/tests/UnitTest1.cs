@@ -1,14 +1,17 @@
+using Azure.Data;
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.Template.Tests
 {
     public class UnitTest1
     {
-        [Fact]
+        [Test]
         public void Test1()
         {
+            var c = new Class1();
 
+            Assert.NotNull(c);
         }
     }
 }

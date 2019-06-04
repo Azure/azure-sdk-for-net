@@ -34,15 +34,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the Snapshot class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="fileSystemId">fileSystemId</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="snapshotId">snapshotId</param>
+        /// <param name="fileSystemId">fileSystemId</param>
         /// <param name="creationDate">name</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public Snapshot(string location, string fileSystemId, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string snapshotId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
+        public Snapshot(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string snapshotId = default(string), string fileSystemId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
@@ -135,10 +135,6 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (FileSystemId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FileSystemId");
             }
             if (SnapshotId != null)
             {

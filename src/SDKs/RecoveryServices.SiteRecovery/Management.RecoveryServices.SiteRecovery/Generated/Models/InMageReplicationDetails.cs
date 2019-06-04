@@ -85,8 +85,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="azureStorageAccountId">A value indicating the
         /// underlying Azure storage account. If the VM is not running in
         /// Azure, this value shall be set to null.</param>
-        /// <param name="datastores">The datastores of the on-premise machine
-        /// Value can be list of strings that contain datastore names</param>
+        /// <param name="datastores">The data stores of the on-premise machine
+        /// Value can be list of strings that contain data store names</param>
         /// <param name="validationErrors">The validation errors of the
         /// on-premise machine Value can be list of validation errors</param>
         /// <param name="lastRpoCalculatedTime">The last RPO calculated
@@ -339,8 +339,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string AzureStorageAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the datastores of the on-premise machine Value can be
-        /// list of strings that contain datastore names
+        /// Gets or sets the data stores of the on-premise machine Value can be
+        /// list of strings that contain data store names
         /// </summary>
         [JsonProperty(PropertyName = "datastores")]
         public IList<string> Datastores { get; set; }

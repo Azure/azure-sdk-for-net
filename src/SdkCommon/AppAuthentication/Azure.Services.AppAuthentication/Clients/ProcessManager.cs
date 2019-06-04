@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// Invokes a process and returns the result from the standard output or error streams.
     /// This is used to invoke az account get-access-token to get a token for local development. 
     /// </summary>
-    class ProcessManager : IProcessManager
+    internal class ProcessManager : IProcessManager
     {
         // Timeout used such that if process does not respond in this time, it is killed. 
         private readonly TimeSpan _timeOutDuration = TimeSpan.FromSeconds(20);
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="process">The process to execute</param>
         /// <returns>Returns the process output from the standard output stream.</returns>
-        public Task<string> ExecuteAsync(Process process)
+        public Task<string> ExecuteAsync(Process process, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<string>();
             StringBuilder output = new StringBuilder();
@@ -67,31 +67,41 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 }
             };
 
-            // Used to kill the process if it doesn not respond for the given duration. 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(_timeOutDuration);
-
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            cancellationToken.Register(() =>
-            {
-                if (!tcs.Task.IsCompleted)
-                {
-                    if (!process.HasExited)
-                    {
-                        process.Kill();
-                    }
-
-                    tcs.TrySetException(new TimeoutException(TimeOutError));
-                }
-            });
-            
             process.Start();
 
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 
+            // Used to kill the process if it does not respond for the given duration or respond to caller request cancellation
+            using (var internalTokenSource = new CancellationTokenSource(_timeOutDuration))
+            using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalTokenSource.Token, cancellationToken))
+            {
+                var internalTimeoutToken = internalTokenSource.Token;
+                var externalCallerToken = cancellationToken;
+
+                linkedTokenSource.Token.Register(() =>
+                {
+                    if (!tcs.Task.IsCompleted)
+                    {
+                        if (!process.HasExited)
+                        {
+                            process.Kill();
+                        }
+
+                        if (internalTimeoutToken.IsCancellationRequested)
+                        {
+                            tcs.TrySetException(new TimeoutException(TimeOutError));
+                        }
+                        else if (externalCallerToken.IsCancellationRequested)
+                        {
+                            tcs.TrySetException(new OperationCanceledException(externalCallerToken));
+                        }
+                    }
+                });
+            }
+
             return tcs.Task;
         }
-        
+
     }
 }

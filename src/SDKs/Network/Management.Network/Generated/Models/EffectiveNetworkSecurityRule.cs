@@ -36,18 +36,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="name">The name of the security rule specified by the
         /// user (if created by the user).</param>
         /// <param name="protocol">The network protocol this rule applies to.
-        /// Possible values are: 'Tcp', 'Udp', and 'All'. Possible values
-        /// include: 'Tcp', 'Udp', 'All'</param>
+        /// Possible values include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="sourcePortRange">The source port or range.</param>
         /// <param name="destinationPortRange">The destination port or
         /// range.</param>
         /// <param name="sourcePortRanges">The source port ranges. Expected
         /// values include a single integer between 0 and 65535, a range using
-        /// '-' as separator (e.g. 100-400), or an asterisk (*)</param>
+        /// '-' as separator (e.g. 100-400), or an asterisk (*).</param>
         /// <param name="destinationPortRanges">The destination port ranges.
         /// Expected values include a single integer between 0 and 65535, a
         /// range using '-' as separator (e.g. 100-400), or an asterisk
-        /// (*)</param>
+        /// (*).</param>
         /// <param name="sourceAddressPrefix">The source address
         /// prefix.</param>
         /// <param name="destinationAddressPrefix">The destination address
@@ -65,12 +64,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="expandedDestinationAddressPrefix">Expanded destination
         /// address prefix.</param>
         /// <param name="access">Whether network traffic is allowed or denied.
-        /// Possible values are: 'Allow' and 'Deny'. Possible values include:
-        /// 'Allow', 'Deny'</param>
+        /// Possible values include: 'Allow', 'Deny'</param>
         /// <param name="priority">The priority of the rule.</param>
         /// <param name="direction">The direction of the rule. Possible values
-        /// are: 'Inbound and Outbound'. Possible values include: 'Inbound',
-        /// 'Outbound'</param>
+        /// include: 'Inbound', 'Outbound'</param>
         public EffectiveNetworkSecurityRule(string name = default(string), string protocol = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), IList<string> sourcePortRanges = default(IList<string>), IList<string> destinationPortRanges = default(IList<string>), string sourceAddressPrefix = default(string), string destinationAddressPrefix = default(string), IList<string> sourceAddressPrefixes = default(IList<string>), IList<string> destinationAddressPrefixes = default(IList<string>), IList<string> expandedSourceAddressPrefix = default(IList<string>), IList<string> expandedDestinationAddressPrefix = default(IList<string>), string access = default(string), int? priority = default(int?), string direction = default(string))
         {
             Name = name;
@@ -105,8 +102,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the network protocol this rule applies to. Possible
-        /// values are: 'Tcp', 'Udp', and 'All'. Possible values include:
-        /// 'Tcp', 'Udp', 'All'
+        /// values include: 'Tcp', 'Udp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }
@@ -126,7 +122,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the source port ranges. Expected values include a
         /// single integer between 0 and 65535, a range using '-' as separator
-        /// (e.g. 100-400), or an asterisk (*)
+        /// (e.g. 100-400), or an asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "sourcePortRanges")]
         public IList<string> SourcePortRanges { get; set; }
@@ -134,7 +130,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the destination port ranges. Expected values include a
         /// single integer between 0 and 65535, a range using '-' as separator
-        /// (e.g. 100-400), or an asterisk (*)
+        /// (e.g. 100-400), or an asterisk (*).
         /// </summary>
         [JsonProperty(PropertyName = "destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; set; }
@@ -181,8 +177,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets whether network traffic is allowed or denied. Possible
-        /// values are: 'Allow' and 'Deny'. Possible values include: 'Allow',
-        /// 'Deny'
+        /// values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "access")]
         public string Access { get; set; }
@@ -194,9 +189,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the direction of the rule. Possible values are:
-        /// 'Inbound and Outbound'. Possible values include: 'Inbound',
-        /// 'Outbound'
+        /// Gets or sets the direction of the rule. Possible values include:
+        /// 'Inbound', 'Outbound'
         /// </summary>
         [JsonProperty(PropertyName = "direction")]
         public string Direction { get; set; }

@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "AutoProvisioningSettings", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "ComplianceResults", "2017-08-01"),
                 new Tuple<string, string, string>("Security", "Compliances", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2015-06-01-preview"),
@@ -31,24 +32,16 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Pricings", "2018-06-01"),
+                new Tuple<string, string, string>("Security", "RegulatoryComplianceAssessments", "2019-01-01-preview"),
+                new Tuple<string, string, string>("Security", "RegulatoryComplianceControls", "2019-01-01-preview"),
+                new Tuple<string, string, string>("Security", "RegulatoryComplianceStandards", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
-                new Tuple<string, string, string>("Security", "Settings", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "Settings", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Topology", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Gits\\github\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ab1285505bd5770e891498ec48890314bcb9b69e";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

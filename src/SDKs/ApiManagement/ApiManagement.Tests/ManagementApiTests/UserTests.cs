@@ -101,22 +101,15 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(Uri.TryCreate(genrateSsoResponse.Value, UriKind.Absolute, out uri));
 
                     // generate token for user
-                    var userTokenParameters = new UserTokenParameters(KeyType.Primary, DateTime.UtcNow.AddDays(10)); 
-                        var genrateTokenResponse = testBase.client.User.GetSharedAccessToken(
+                    var userTokenParameters = new UserTokenParameters(KeyType.Primary, DateTime.UtcNow.AddDays(10));
+                    var generateTokenResponse = testBase.client.User.GetSharedAccessToken(
                         testBase.rgName,
                         testBase.serviceName,
                         userId,
                         userTokenParameters);
 
-                    Assert.NotNull(genrateTokenResponse);
-                    Assert.NotNull(genrateTokenResponse.Value);
-
-                    // get the useridentity 
-                    var currentUserIdentity = await testBase.client.User.GetIdentityAsync(
-                        testBase.rgName,
-                        testBase.serviceName);
-                    Assert.NotNull(currentUserIdentity);
-                    Assert.NotNull(currentUserIdentity.Id);
+                    Assert.NotNull(generateTokenResponse);
+                    Assert.NotNull(generateTokenResponse.Value);
 
                     // remove the user
                     testBase.client.User.Delete(
@@ -332,7 +325,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(listResponse);
                 Assert.True(listResponse.Count() >= 2);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 // list paged
                 listResponse = testBase.client.UserSubscription.List(
@@ -350,7 +343,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
             }
         }
     }

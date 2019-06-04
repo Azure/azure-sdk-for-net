@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="description">A description for this rule. Restricted
         /// to 140 chars.</param>
-        /// <param name="service">service endpoint name.</param>
+        /// <param name="service">Service endpoint name.</param>
         /// <param name="serviceResources">A list of service resources.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// service end point policy definition. Possible values are:

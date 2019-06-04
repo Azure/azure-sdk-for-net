@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="refreshToken">The refresh token obtained from Google
         /// for authorizing access to AdWords for UserAuthentication.</param>
         /// <param name="clientId">The client id of the google application used

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ApiIssueAttachmentOperationsExtensions
     {
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all attachments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all attachments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,9 +240,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             public static IssueAttachmentContract CreateOrUpdate(this IApiIssueAttachmentOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, IssueAttachmentContract parameters, string ifMatch = default(string))
             {
@@ -277,9 +276,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -316,8 +314,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Attachment identifier within an Issue. Must be unique in the current Issue.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             public static void Delete(this IApiIssueAttachmentOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, string ifMatch)
@@ -349,8 +347,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Attachment identifier within an Issue. Must be unique in the current Issue.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             /// <param name='cancellationToken'>
@@ -362,7 +360,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all attachments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -376,7 +374,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all attachments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

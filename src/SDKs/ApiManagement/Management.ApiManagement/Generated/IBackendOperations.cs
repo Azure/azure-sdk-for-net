@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<BackendGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<BackendGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of the backend specified by its identifier.
         /// </summary>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackendContract,BackendGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackendContract,BackendGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or Updates a backend.
         /// </summary>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackendContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackendContract,BackendCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing backend.
         /// </summary>
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified backend.
         /// </summary>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Notifies the APIM proxy to create a new connection to the backend
         /// after the specified timeout. If no timeout was specified, timeout
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='backendid'>
+        /// <param name='backendId'>
         /// Identifier of the Backend entity. Must be unique in the current API
         /// Management service instance.
         /// </param>
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ReconnectWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendid, BackendReconnectContract parameters = default(BackendReconnectContract), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReconnectWithHttpMessagesAsync(string resourceGroupName, string serviceName, string backendId, BackendReconnectContract parameters = default(BackendReconnectContract), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists a collection of backends in the specified service instance.
         /// </summary>

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// VirtualHub route table
+    /// VirtualHub route table.
     /// </summary>
     public partial class VirtualHubRouteTable
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualHubRouteTable class.
         /// </summary>
-        /// <param name="routes">list of all routes.</param>
+        /// <param name="routes">List of all routes.</param>
         public VirtualHubRouteTable(IList<VirtualHubRoute> routes = default(IList<VirtualHubRoute>))
         {
             Routes = routes;

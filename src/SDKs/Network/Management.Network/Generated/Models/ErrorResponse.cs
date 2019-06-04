@@ -44,6 +44,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets error
         /// </summary>
+        /// <remarks>
+        /// The error details object.
+        /// </remarks>
         [JsonProperty(PropertyName = "error")]
         public ErrorDetails Error { get; set; }
 

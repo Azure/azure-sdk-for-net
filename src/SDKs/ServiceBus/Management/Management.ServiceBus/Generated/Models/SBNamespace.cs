@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">Porperties of Sku</param>
+        /// <param name="sku">Properties of Sku</param>
         /// <param name="provisioningState">Provisioning state of the
         /// namespace.</param>
         /// <param name="createdAt">The time the namespace was created.</param>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets porperties of Sku
+        /// Gets or sets properties of Sku
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public SBSku Sku { get; set; }

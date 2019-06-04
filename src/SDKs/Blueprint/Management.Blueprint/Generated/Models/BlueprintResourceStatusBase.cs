@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Shared status properties between all Blueprint resources.
+    /// Shared status properties between all blueprint resources.
     /// </summary>
     public partial class BlueprintResourceStatusBase
     {
@@ -31,10 +31,11 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Initializes a new instance of the BlueprintResourceStatusBase
         /// class.
         /// </summary>
-        /// <param name="timeCreated">Creation time of this blueprint.</param>
-        /// <param name="lastModified">Last modified time of this
-        /// blueprint.</param>
-        public BlueprintResourceStatusBase(string timeCreated = default(string), string lastModified = default(string))
+        /// <param name="timeCreated">Creation time of this blueprint
+        /// definition.</param>
+        /// <param name="lastModified">Last modified time of this blueprint
+        /// definition.</param>
+        public BlueprintResourceStatusBase(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
         {
             TimeCreated = timeCreated;
             LastModified = lastModified;
@@ -47,16 +48,16 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets creation time of this blueprint.
+        /// Gets creation time of this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "timeCreated")]
-        public string TimeCreated { get; private set; }
+        public System.DateTime? TimeCreated { get; private set; }
 
         /// <summary>
-        /// Gets last modified time of this blueprint.
+        /// Gets last modified time of this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
-        public string LastModified { get; private set; }
+        public System.DateTime? LastModified { get; private set; }
 
     }
 }

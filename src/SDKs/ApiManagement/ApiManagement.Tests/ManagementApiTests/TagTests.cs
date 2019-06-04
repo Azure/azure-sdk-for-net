@@ -37,7 +37,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
 
@@ -120,8 +120,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         echoApi.Name,
-                        tagId,
-                        tagEtagByApi.ETag);
+                        tagId);
                     
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Tag.GetByApi(
@@ -153,7 +152,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 finally
                 {
                     testBase.client.Tag.DetachFromApi(
-                        testBase.rgName, testBase.serviceName, echoApi.Name, tagId, "*");
+                        testBase.rgName, testBase.serviceName, echoApi.Name, tagId);
                     testBase.client.Tag.Delete(
                         testBase.rgName, testBase.serviceName, tagId, "*");
                 }
@@ -181,7 +180,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Equal(2, listResponse.GetEnumerator().ToIEnumerable().Count());
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var starterProduct = listResponse.First();
 
@@ -254,8 +253,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName,
                         starterProduct.Name,
-                        tagId,
-                        tagEtagByProduct.ETag);
+                        tagId);
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Tag.GetByProduct(
@@ -287,7 +285,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 finally
                 {
                     testBase.client.Tag.DetachFromProduct(
-                        testBase.rgName, testBase.serviceName, starterProduct.Name, tagId, "*");
+                        testBase.rgName, testBase.serviceName, starterProduct.Name, tagId);
                     testBase.client.Tag.Delete(
                         testBase.rgName, testBase.serviceName, tagId, "*");
                 }
@@ -400,8 +398,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         api.Name,
                         firstOperation.Name,
-                        tagId,
-                        tagEtagByOperation.ETag);
+                        tagId);
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Tag.GetByOperation(
@@ -438,8 +435,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         api.Name,
                         firstOperation.Name,
-                        tagId,
-                        "*");
+                        tagId);
+
                     testBase.client.Tag.Delete(
                         testBase.rgName, testBase.serviceName, tagId, "*");
                 }

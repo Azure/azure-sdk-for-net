@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='objectId'>
             /// The object ID of the group whose members should be retrieved.
             /// </param>
-            public static IPage<AADObject> GetGroupMembers(this IGroupsOperations operations, string objectId)
+            public static IPage<DirectoryObject> GetGroupMembers(this IGroupsOperations operations, string objectId)
             {
                 return operations.GetGroupMembersAsync(objectId).GetAwaiter().GetResult();
             }
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AADObject>> GetGroupMembersAsync(this IGroupsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DirectoryObject>> GetGroupMembersAsync(this IGroupsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetGroupMembersWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -346,6 +346,124 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Directory objects that are owners of the group.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the group for which to get owners.
+            /// </param>
+            public static IPage<DirectoryObject> ListOwners(this IGroupsOperations operations, string objectId)
+            {
+                return operations.ListOwnersAsync(objectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of the group.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the group for which to get owners.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DirectoryObject>> ListOwnersAsync(this IGroupsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOwnersWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Add an owner to a group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the application to which to add the owner.
+            /// </param>
+            /// <param name='parameters'>
+            /// The URL of the owner object, such as
+            /// https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd.
+            /// </param>
+            public static void AddOwner(this IGroupsOperations operations, string objectId, AddOwnerParameters parameters)
+            {
+                operations.AddOwnerAsync(objectId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add an owner to a group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the application to which to add the owner.
+            /// </param>
+            /// <param name='parameters'>
+            /// The URL of the owner object, such as
+            /// https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AddOwnerAsync(this IGroupsOperations operations, string objectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AddOwnerWithHttpMessagesAsync(objectId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove a member from owners.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the group from which to remove the owner.
+            /// </param>
+            /// <param name='ownerObjectId'>
+            /// Owner object id
+            /// </param>
+            public static void RemoveOwner(this IGroupsOperations operations, string objectId, string ownerObjectId)
+            {
+                operations.RemoveOwnerAsync(objectId, ownerObjectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove a member from owners.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of the group from which to remove the owner.
+            /// </param>
+            /// <param name='ownerObjectId'>
+            /// Owner object id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveOwnerAsync(this IGroupsOperations operations, string objectId, string ownerObjectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RemoveOwnerWithHttpMessagesAsync(objectId, ownerObjectId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets a list of groups for the current tenant.
             /// </summary>
             /// <param name='operations'>
@@ -388,7 +506,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='nextLink'>
             /// Next link for the list operation.
             /// </param>
-            public static IPage<AADObject> GetGroupMembersNext(this IGroupsOperations operations, string nextLink)
+            public static IPage<DirectoryObject> GetGroupMembersNext(this IGroupsOperations operations, string nextLink)
             {
                 return operations.GetGroupMembersNextAsync(nextLink).GetAwaiter().GetResult();
             }
@@ -405,9 +523,51 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AADObject>> GetGroupMembersNextAsync(this IGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DirectoryObject>> GetGroupMembersNextAsync(this IGroupsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetGroupMembersNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of the group.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DirectoryObject> ListOwnersNext(this IGroupsOperations operations, string nextPageLink)
+            {
+                return operations.ListOwnersNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of the group.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DirectoryObject>> ListOwnersNextAsync(this IGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOwnersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -6,17 +6,15 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>2.0.1</Version>
+        <Version>2.0.3</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-        Updates from the GA release of the V3 API include:
+        Updates to the V3 API include:
         
-        * The PresentationTimeRange properties are no longer 'required' for AssetFilters and AccountFilters. 
-        * The $top and $skip query options for Jobs and Transforms have been removed and $orderby was added. As part of adding the new ordering functionality, it was discovered that the $top and $skip options had accidentally been exposed previously even though they are not implemented.
-        * Enumeration extensibility was re-enabled. This feature was enabled in the preview versions of the SDK and got accidentally disabled in the GA version.
-        * Two predefined streaming policies have been renamed. SecureStreaming is now MultiDrmCencStreaming. SecureStreamingWithFairPlay is now Predefined_MultiDrmStreaming.
+        * Ability to subclip when encoding a video - specify that only a portion of the input video's timeline should be processed
+        * Introducing the Premium Live Encoder, enables you to use live encoding at resolutions up to 1080p at 30 frames/sec. This feature of Live Events can be accessed via the encoding type of Premium1080p
             ]]>
     </PackageReleaseNotes>
     </PropertyGroup>

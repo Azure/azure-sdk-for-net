@@ -2,14 +2,14 @@
   <PropertyGroup>
     <Description>Microsoft.Rest.ClientRuntime.Azure.TestFramework</Description>
     <AssemblyTitle>Test framework for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>1.7.6</Version>
+    <Version>1.7.7</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.TestFramework</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Azure.TestFramework</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST TestFramework</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Adding support to target .NET 461 and .NET Standard 2.0 framework
-        2) Verify acquired graph token
+        1) Provided Environemnt moniker was being compared case-sensitve way.
+        Now comparing case-insensitve way.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

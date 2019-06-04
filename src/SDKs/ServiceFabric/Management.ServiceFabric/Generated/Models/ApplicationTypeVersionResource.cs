@@ -43,13 +43,15 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Azure resource location.</param>
+        /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response</param>
         /// <param name="defaultParameterList">List of application type
         /// parameters that can be overridden when creating or updating the
         /// application.</param>
-        public ApplicationTypeVersionResource(string appPackageUrl, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), IDictionary<string, string> defaultParameterList = default(IDictionary<string, string>))
-            : base(id, name, type, location)
+        public ApplicationTypeVersionResource(string appPackageUrl, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string), IDictionary<string, string> defaultParameterList = default(IDictionary<string, string>))
+            : base(id, name, type, location, tags, etag)
         {
             ProvisioningState = provisioningState;
             AppPackageUrl = appPackageUrl;

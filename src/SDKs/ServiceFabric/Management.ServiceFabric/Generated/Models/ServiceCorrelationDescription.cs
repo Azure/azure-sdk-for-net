@@ -56,14 +56,14 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// ServiceName. Possible values include: 'Invalid', 'Affinity',
         /// 'AlignedAffinity', 'NonAlignedAffinity'
         /// </summary>
-        [JsonProperty(PropertyName = "Scheme")]
+        [JsonProperty(PropertyName = "scheme")]
         public string Scheme { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the service that the correlation
         /// relationship is established with.
         /// </summary>
-        [JsonProperty(PropertyName = "ServiceName")]
+        [JsonProperty(PropertyName = "serviceName")]
         public string ServiceName { get; set; }
 
         /// <summary>
