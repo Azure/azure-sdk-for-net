@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys
     public class EcKeyCreateOptions : KeyCreateOptions
     {
         public string Name { get; set; }
-        public KeyType KeyType { get; set; }
+        public KeyType KeyType { get; private set; }
         public KeyCurveName Curve { get; set; }
         public bool Hsm { get; set; }
 

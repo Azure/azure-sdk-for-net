@@ -121,86 +121,108 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public byte[] T { get; set; }
 
+        private const string KeyIdPropertyName = "kid";
+        private const string KeyTypePropertyName = "kty";
+        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private const string KeyOpsPropertyName = "key_ops";
+        private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private const string CurveNamePropertyName = "curveName";
+        private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private const string NPropertyName = "n";
+        private static readonly JsonEncodedText NPropertyNameBytes = JsonEncodedText.Encode(NPropertyName);
+        private const string EPropertyName = "e";
+        private static readonly JsonEncodedText EPropertyNameBytes = JsonEncodedText.Encode(EPropertyName);
+        private const string DPPropertyName = "dp";
+        private static readonly JsonEncodedText DPPropertyNameBytes = JsonEncodedText.Encode(DPPropertyName);
+        private const string DQPropertyName = "dq";
+        private static readonly JsonEncodedText DQPropertyNameBytes = JsonEncodedText.Encode(DQPropertyName);
+        private const string QIPropertyName = "qi";
+        private static readonly JsonEncodedText QIPropertyNameBytes = JsonEncodedText.Encode(QIPropertyName);
+        private const string PPropertyName = "p";
+        private static readonly JsonEncodedText PPropertyNameBytes = JsonEncodedText.Encode(PPropertyName);
+        private const string QPropertyName = "q";
+        private static readonly JsonEncodedText QPropertyNameBytes = JsonEncodedText.Encode(QPropertyName);
+        private const string XPropertyName = "x";
+        private static readonly JsonEncodedText XPropertyNameBytes = JsonEncodedText.Encode(XPropertyName);
+        private const string YPropertyName = "y";
+        private static readonly JsonEncodedText YPropertyNameBytes = JsonEncodedText.Encode(YPropertyName);
+        private const string DPropertyName = "d";
+        private static readonly JsonEncodedText DPropertyNameBytes = JsonEncodedText.Encode(DPropertyName);
+        private const string KPropertyName = "k";
+        private static readonly JsonEncodedText KPropertyNameBytes = JsonEncodedText.Encode(KPropertyName);
+        private const string TPropertyName = "t";
+        private static readonly JsonEncodedText TPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
+
         internal override void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("kid", out JsonElement kid))
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                KeyId = kid.GetString();
-            }
-            if (json.TryGetProperty("kty", out JsonElement kty))
-            {
-                KeyType = KeyTypeExtensions.ParseFromString(kty.GetString());
-            }
-            if (json.TryGetProperty("key_ops", out JsonElement key_ops))
-            {
-                foreach (var element in key_ops.EnumerateObject())
+                switch (prop.Name)
                 {
-                    KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.Value.ToString()));
+                    case KeyIdPropertyName:
+                        KeyId = prop.Value.GetString();
+                        break;
+                    case KeyTypePropertyName:
+                        KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
+                        break;
+                    case KeyOpsPropertyName:
+                        foreach (var element in prop.Value.EnumerateObject())
+                        {
+                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.Value.ToString()));
+                        }
+                        break;
+                    case CurveNamePropertyName:
+                        CurveName = prop.Value.GetString();
+                        break;
+                    case NPropertyName:
+                        N = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case EPropertyName:
+                        E = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case DPPropertyName:
+                        DP = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case DQPropertyName:
+                        DQ = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case QIPropertyName:
+                        QI = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case PPropertyName:
+                        P = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case QPropertyName:
+                        Q = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case XPropertyName:
+                        X = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case YPropertyName:
+                        Y = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case DPropertyName:
+                        D = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case KPropertyName:
+                        K = Base64Url.Decode(prop.Value.GetString());
+                        break;
+                    case TPropertyName:
+                        T = Base64Url.Decode(prop.Value.GetString());
+                        break;
                 }
-            }
-            if (json.TryGetProperty("curveName", out JsonElement curveName))
-            {
-                CurveName = curveName.GetString();
-            }
-            if (json.TryGetProperty("n", out JsonElement n))
-            {
-                N = Encoding.ASCII.GetBytes(n.GetString());
-            }
-            if (json.TryGetProperty("e", out JsonElement e))
-            {
-                E = Encoding.ASCII.GetBytes(e.GetString());
-            }
-            if (json.TryGetProperty("dp", out JsonElement dp))
-            {
-                DP = Encoding.ASCII.GetBytes(dp.GetString());
-            }
-            if (json.TryGetProperty("dq", out JsonElement dq))
-            {
-                DQ = Encoding.ASCII.GetBytes(dq.GetString());
-            }
-            if (json.TryGetProperty("qi", out JsonElement qi))
-            {
-                QI = Encoding.ASCII.GetBytes(qi.GetString());
-            }
-            if (json.TryGetProperty("p", out JsonElement p))
-            {
-                P = Encoding.ASCII.GetBytes(p.GetString());
-            }
-            if (json.TryGetProperty("q", out JsonElement q))
-            {
-                Q = Encoding.ASCII.GetBytes(q.GetString());
-            }
-            if (json.TryGetProperty("x", out JsonElement x))
-            {
-                X = Encoding.ASCII.GetBytes(x.GetString());
-            }
-            if (json.TryGetProperty("y", out JsonElement y))
-            {
-                Y = Encoding.ASCII.GetBytes(y.GetString());
-            }
-            if (json.TryGetProperty("d", out JsonElement d))
-            {
-                D = Encoding.ASCII.GetBytes(d.GetString());
-            }
-            if (json.TryGetProperty("k", out JsonElement k))
-            {
-                K = Encoding.ASCII.GetBytes(k.GetString());
-            }
-            if (json.TryGetProperty("t", out JsonElement t))
-            {
-                T = Encoding.ASCII.GetBytes(t.GetString());
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
             {
-                json.WriteString("kty", KeyTypeExtensions.ParseToString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.ParseToString(KeyType));
             }
             if (KeyOps != null)
             {
-                json.WriteStartArray("key_ops");
+                json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach (var operation in KeyOps)
                 {
                     json.WriteStringValue(KeyOperationsExtensions.ParseToString(operation));
@@ -209,161 +231,58 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (!string.IsNullOrEmpty(CurveName))
             {
-                json.WriteString("crv", CurveName);
+                json.WriteString(CurveNamePropertyNameBytes, CurveName);
             }
             if (N != null)
             {
-                json.WriteString("n", Encoding.ASCII.GetString(N));
+                
+                json.WriteString(NPropertyNameBytes, Base64Url.Encode(N));
             }
             if (E != null)
             {
-                json.WriteString("e", Encoding.ASCII.GetString(E));
+                json.WriteString(EPropertyNameBytes, Base64Url.Encode(E));
             }
             if (DP != null)
             {
-                json.WriteString("dp", Encoding.ASCII.GetString(DP));
+                json.WriteString(DPPropertyNameBytes, Base64Url.Encode(DP));
             }
             if (DQ != null)
             {
-                json.WriteString("dq", Encoding.ASCII.GetString(DQ));
+                json.WriteString(DQPropertyNameBytes, Base64Url.Encode(DQ));
             }
             if (QI != null)
             {
-                json.WriteString("qi", Encoding.ASCII.GetString(QI));
+                json.WriteString(QIPropertyNameBytes, Base64Url.Encode(QI));
             }
             if (P != null)
             {
-                json.WriteString("p", Encoding.ASCII.GetString(P));
+                json.WriteString(PPropertyNameBytes, Base64Url.Encode(P));
             }
             if (Q != null)
             {
-                json.WriteString("q", Encoding.ASCII.GetString(Q));
+                json.WriteString(QPropertyNameBytes, Base64Url.Encode(Q));
             }
             if (X != null)
             {
-                json.WriteString("x", Encoding.ASCII.GetString(X));
+                json.WriteString(XPropertyNameBytes, Base64Url.Encode(X));
             }
             if (Y != null)
             {
-                json.WriteString("y", Encoding.ASCII.GetString(Y));
+                json.WriteString(YPropertyNameBytes, Base64Url.Encode(Y));
             }
             if (D != null)
             {
-                json.WriteString("d", Encoding.ASCII.GetString(D));
+                json.WriteString(DPropertyNameBytes, Base64Url.Encode(D));
             }
             if (K != null)
             {
-                json.WriteString("k", Encoding.ASCII.GetString(K));
+                json.WriteString(KPropertyNameBytes, Base64Url.Encode(K));
             }
             if (T != null)
             {
-                json.WriteString("t", Encoding.ASCII.GetString(T));
+                json.WriteString(TPropertyNameBytes, Base64Url.Encode(T));
             }
         }
-
-        public bool Equals(JsonWebKey other)
-        {
-            if (other == this)
-                return true;
-
-            if (other == null)
-                return false;
-
-            if (!string.Equals(KeyId, other.KeyId))
-                return false;
-
-            if (!string.Equals(KeyType, other.KeyType))
-                return false;
-
-            if (KeyOps != other.KeyOps)
-                return false;
-
-            if (!string.Equals(CurveName, other.CurveName))
-                return false;
-
-            if (!AreEqual(K, other.K))
-                return false;
-
-            // Public parameters
-            if (!AreEqual(N, other.N))
-                return false;
-
-            if (!AreEqual(E, other.E))
-                return false;
-
-            if (!AreEqual(X, other.X))
-                return false;
-
-            if (!AreEqual(Y, other.Y))
-                return false;
-
-            // Private parameters
-            if (!AreEqual(D, other.D))
-                return false;
-
-            if (!AreEqual(DP, other.DP))
-                return false;
-
-            if (!AreEqual(DQ, other.DQ))
-                return false;
-
-            if (!AreEqual(QI, other.QI))
-                return false;
-
-            if (!AreEqual(P, other.P))
-                return false;
-
-            if (!AreEqual(Q, other.Q))
-                return false;
-
-            // HSM token
-            if (!AreEqual(T, other.T))
-                return false;
-
-            return true;
-        }
-
-        private static bool AreEqual(byte[] a, byte[] b)
-        {
-            if (a == b)
-                return true;
-
-            if (a == null)
-                // b can't be null because otherwise we would return true above.
-                return b.Length == 0;
-
-            if (b == null)
-                // Likewise, a can't be null.
-                return a.Length == 0;
-
-            if (a.Length != b.Length)
-                return false;
-
-            for (var i = 0; i < a.Length; ++i)
-                if (a[i] != b[i])
-                    return false;
-
-            return true;
-        }
-
-        private static bool AreEqual(IList<string> a, IList<string> b)
-        {
-            if (a == b)
-                return true;
-
-            if ((a == null) != (b == null))
-                return false;
-
-            if (a.Count != b.Count)
-                return false;
-
-            for (var i = 0; i < a.Count; ++i)
-                if (a[i] != b[i])
-                    return false;
-
-            return true;
-        }
-
     }
 }
 

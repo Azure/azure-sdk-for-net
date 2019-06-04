@@ -9,7 +9,6 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Supported JsonWebKey key types (kty)
     /// </summary>
-    [Flags]
     public enum KeyType : uint
     {
         EllipticCurve = 0x0001,
@@ -18,8 +17,6 @@ namespace Azure.Security.KeyVault.Keys
         RsaHsm = 0x0008,
         Octet = 0x0010,
         Other = 0x0020,
-
-        All = uint.MaxValue
     }
 
     public static class KeyTypeExtensions

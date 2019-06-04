@@ -38,6 +38,11 @@ namespace Azure.Security.KeyVault.Keys
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
+        private const string KeyIdPropertyName = "kid";
+        private const string ManagedPropertyName = "managed";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
         private void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute); ;
@@ -54,32 +59,30 @@ namespace Azure.Security.KeyVault.Keys
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json) { }
+        internal override void WriteProperties(Utf8JsonWriter json) { }
         
         internal override void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("kid", out JsonElement kid))
+            foreach(JsonProperty prop in json.EnumerateObject())
             {
-                ParseId(kid.GetString());
-            }
-
-            if (json.TryGetProperty("managed", out JsonElement managed))
-            {
-                Managed = managed.GetBoolean();
-            }
-
-            if (json.TryGetProperty("attributes", out JsonElement attributes))
-            {
-                _attributes.ReadProperties(attributes);
-            }
-
-            if (json.TryGetProperty("tags", out JsonElement tags))
-            {
-                Tags = new Dictionary<string, string>();
-
-                foreach (var prop in tags.EnumerateObject())
+                switch (prop.Name)
                 {
-                    Tags[prop.Name] = prop.Value.GetString();
+                    case KeyIdPropertyName:
+                        ParseId(prop.Value.GetString());
+                        break;
+                    case ManagedPropertyName:
+                        Managed = prop.Value.GetBoolean();
+                        break;
+                    case AttributesPropertyName:
+                        _attributes.ReadProperties(prop.Value);
+                        break;
+                    case TagsPropertyName:
+                        Tags = new Dictionary<string, string>();
+                        foreach (var tagProp in prop.Value.EnumerateObject())
+                        {
+                            Tags[tagProp.Name] = tagProp.Value.GetString();
+                        }
+                        break;
                 }
             }
         }

@@ -18,36 +18,49 @@ namespace Azure.Security.KeyVault.Keys
             KeyMaterial = keyMaterial;
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        private const string AttributesPropertyName = "attributes";
+        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private const string EnabledPropertyName = "enabled";
+        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private const string NotBeforePropertyName = "nbf";
+        private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private const string ExpiresPropertyName = "exp";
+        private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+        private const string TagsPropertyName = "tags";
+        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+        private const string HsmPropertyName = "hsm";
+        private static readonly JsonEncodedText HsmPropertyNameBytes = JsonEncodedText.Encode(HsmPropertyName);
+
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if (KeyMaterial != default)
             {
-                KeyMaterial.WriteProperties(ref json);
+                KeyMaterial.WriteProperties(json);
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
-                json.WriteStartObject("attributes");
+                json.WriteStartObject(AttributesPropertyNameBytes);
 
                 if (Enabled.HasValue)
                 {
-                    json.WriteBoolean("enabled", Enabled.Value);
+                    json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
                 }
 
                 if (NotBefore.HasValue)
                 {
-                    json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeMilliseconds());
+                    json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeMilliseconds());
                 }
 
                 if (Expires.HasValue)
                 {
-                    json.WriteNumber("exp", Expires.Value.ToUnixTimeMilliseconds());
+                    json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeMilliseconds());
                 }
 
                 json.WriteEndObject();
             }
             if (Tags != null && Tags.Count > 0)
             {
-                json.WriteStartObject("tags");
+                json.WriteStartObject(TagsPropertyNameBytes);
 
                 foreach (var kvp in Tags)
                 {
@@ -58,7 +71,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Hsm.HasValue)
             {
-                json.WriteBoolean("hsm", Hsm.Value);
+                json.WriteBoolean(HsmPropertyNameBytes, Hsm.Value);
             }
         }
     }

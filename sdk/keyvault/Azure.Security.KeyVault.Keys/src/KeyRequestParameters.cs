@@ -86,23 +86,36 @@ namespace Azure.Security.KeyVault.Keys
             KeySize = rsaKey.KeySize;
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        private const string KeyTypePropertyName = "kty";
+        private static readonly JsonEncodedText KeyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private const string KeySizePropertyName = "key_size";
+        private static readonly JsonEncodedText KeySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
+        private const string KeyOpsPropertyName = "key_ops";
+        private static readonly JsonEncodedText KeyOpsPropertyNameBytes = JsonEncodedText.Encode(KeyOpsPropertyName);
+        private const string CurveNamePropertyName = "curveName";
+        private static readonly JsonEncodedText CurveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private const string AttributesPropertyName = "attributes";
+        private static readonly JsonEncodedText AttributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private const string TagsPropertyName = "tags";
+        private static readonly JsonEncodedText TagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
+
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
             if(KeyType != default)
             {
-                json.WriteString("kty", KeyTypeExtensions.ParseToString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.ParseToString(KeyType));
             }
             if(KeySize.HasValue)
             {
-                json.WriteNumber("key_size", KeySize.Value);
+                json.WriteNumber(KeySizePropertyNameBytes, KeySize.Value);
             }
             if (Curve != default)
             {
-                json.WriteString("crv", KeyCurveNameExtensions.ParseToString(Curve.Value));
+                json.WriteString(CurveNamePropertyNameBytes, KeyCurveNameExtensions.ParseToString(Curve.Value));
             }
             if (Enabled.HasValue || NotBefore.HasValue || Expires.HasValue)
             {
-                json.WriteStartObject("attributes");
+                json.WriteStartObject(AttributesPropertyNameBytes);
 
                 _attributes.WriteProperties(ref json);
 
@@ -110,7 +123,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (KeyOperations != null)
             {
-                json.WriteStartArray("key_ops");
+                json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach(var operation in KeyOperations)
                 {
                     json.WriteStringValue(KeyOperationsExtensions.ParseToString(operation));
@@ -119,7 +132,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (Tags != null && Tags.Count > 0)
             {
-                json.WriteStartObject("tags");
+                json.WriteStartObject(TagsPropertyNameBytes);
 
                 foreach (var kvp in Tags)
                 {

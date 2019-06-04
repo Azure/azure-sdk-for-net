@@ -9,7 +9,6 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
-    [Flags]
     public enum KeyCurveName : uint
     {
         P256 = 0x0001,
@@ -17,8 +16,6 @@ namespace Azure.Security.KeyVault.Keys
         P521 = 0x0004,
         P256K = 0x0008,
         Other = 0x0010,
-
-        All = uint.MaxValue
     }
 
     public static class KeyCurveNameExtensions

@@ -10,17 +10,20 @@ namespace Azure.Security.KeyVault.Keys
     {
         public byte[] Value { get; set; }
 
+        private const string ValuePropertyName = "value";
+        private static readonly JsonEncodedText ValuePropertyNameBytes = JsonEncodedText.Encode(ValuePropertyName);
+
         internal override void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("value", out JsonElement value))
+            if (json.TryGetProperty(ValuePropertyName, out JsonElement value))
             {
                 Value = Base64Url.Decode(value.GetString());
             }
         }
 
-        internal override void WriteProperties(ref Utf8JsonWriter json)
+        internal override void WriteProperties(Utf8JsonWriter json)
         {
-            json.WriteString("value", Base64Url.Encode(Value));
+            json.WriteString(ValuePropertyNameBytes, Base64Url.Encode(Value));
         }
     }
 }

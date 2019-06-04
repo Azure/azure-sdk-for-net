@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Keys
     public class RsaKeyCreateOptions : KeyCreateOptions
     {
         public string Name { get; set; }
-        public KeyType KeyType { get; set; }
+        public KeyType KeyType { get; private set; }
         public int KeySize { get; set; }
         public bool Hsm { get; set; }
 
-        public RsaKeyCreateOptions(bool hsm) 
+        public RsaKeyCreateOptions(string name, bool hsm) 
         {
-            Name = Name;
+            Name = name;
 
             if(hsm)
             {

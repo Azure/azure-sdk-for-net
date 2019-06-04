@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys
 
             json.WriteStartObject();
 
-            WriteProperties(ref json);
+            WriteProperties(json);
 
             json.WriteEndObject();
             json.Flush();
@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys
             return writer.WrittenMemory;
         }
 
-        internal abstract void WriteProperties(ref Utf8JsonWriter json);
+        internal abstract void WriteProperties(Utf8JsonWriter json);
 
         internal abstract void ReadProperties(JsonElement json);
     }

@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public static string ParseToString(KeyOperations keyType)
         {
-            return (keyType).ToString().ToLower();
+            return (keyType).ToString();
         }
     }
 }
