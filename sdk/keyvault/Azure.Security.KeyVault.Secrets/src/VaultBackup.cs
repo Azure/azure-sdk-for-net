@@ -22,10 +22,5 @@ namespace Azure.Security.KeyVault.Secrets
         {
             json.WriteString("value", Base64Url.Encode(Value));
         }
-
-        protected override byte[] CreateSerializationBuffer()
-        {
-            return Value != null ? new byte[Value.Length * 2] : base.CreateSerializationBuffer();
-        }
     }
 }

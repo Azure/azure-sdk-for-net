@@ -20,8 +20,8 @@ namespace Azure.Security.KeyVault.Test
         internal SecretClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
-            // Uncomment InstrumentClient to enable sync tests
-            return //InstrumentClient
+
+            return InstrumentClient
                 (new SecretClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(AzureCredential.Default),
