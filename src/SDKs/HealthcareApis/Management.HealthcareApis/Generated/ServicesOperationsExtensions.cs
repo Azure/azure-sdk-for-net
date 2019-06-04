@@ -285,45 +285,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
             }
 
             /// <summary>
-            /// Moves resources to another subscription and/or resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the service instance.
-            /// </param>
-            /// <param name='moveResourcesInputs'>
-            /// Set the move resource structure to the name of the service instance to
-            /// check.
-            /// </param>
-            public static void MoveResources(this IServicesOperations operations, string resourceGroupName, MoveResourcesParameters moveResourcesInputs)
-            {
-                operations.MoveResourcesAsync(resourceGroupName, moveResourcesInputs).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Moves resources to another subscription and/or resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the service instance.
-            /// </param>
-            /// <param name='moveResourcesInputs'>
-            /// Set the move resource structure to the name of the service instance to
-            /// check.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task MoveResourcesAsync(this IServicesOperations operations, string resourceGroupName, MoveResourcesParameters moveResourcesInputs, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.MoveResourcesWithHttpMessagesAsync(resourceGroupName, moveResourcesInputs, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Create or update the metadata of a service instance.
             /// </summary>
             /// <param name='operations'>
@@ -450,45 +411,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
             public static async Task BeginDeleteAsync(this IServicesOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Moves resources to another subscription and/or resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the service instance.
-            /// </param>
-            /// <param name='moveResourcesInputs'>
-            /// Set the move resource structure to the name of the service instance to
-            /// check.
-            /// </param>
-            public static void BeginMoveResources(this IServicesOperations operations, string resourceGroupName, MoveResourcesParameters moveResourcesInputs)
-            {
-                operations.BeginMoveResourcesAsync(resourceGroupName, moveResourcesInputs).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Moves resources to another subscription and/or resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the service instance.
-            /// </param>
-            /// <param name='moveResourcesInputs'>
-            /// Set the move resource structure to the name of the service instance to
-            /// check.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginMoveResourcesAsync(this IServicesOperations operations, string resourceGroupName, MoveResourcesParameters moveResourcesInputs, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginMoveResourcesWithHttpMessagesAsync(resourceGroupName, moveResourcesInputs, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

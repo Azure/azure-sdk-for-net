@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 new Tuple<string, string, string>("HealthcareApis", "OperationResults", "2018-08-20-preview"),
                 new Tuple<string, string, string>("HealthcareApis", "Operations", "2018-08-20-preview"),
                 new Tuple<string, string, string>("HealthcareApis", "Services", "2018-08-20-preview"),
-                new Tuple<string, string, string>("HealthcareApisManagementClient", "Services", "2018-08-20-preview"),
               }.AsEnumerable();
           }
       }

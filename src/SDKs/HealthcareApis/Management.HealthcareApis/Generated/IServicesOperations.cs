@@ -187,29 +187,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </exception>
         Task<AzureOperationResponse<ServicesNameAvailabilityInfo>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityParameters checkNameAvailabilityInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Moves resources to another subscription and/or resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the service instance.
-        /// </param>
-        /// <param name='moveResourcesInputs'>
-        /// Set the move resource structure to the name of the service instance
-        /// to check.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorDetailsException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> MoveResourcesWithHttpMessagesAsync(string resourceGroupName, MoveResourcesParameters moveResourcesInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Create or update the metadata of a service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -287,29 +264,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Moves resources to another subscription and/or resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the service instance.
-        /// </param>
-        /// <param name='moveResourcesInputs'>
-        /// Set the move resource structure to the name of the service instance
-        /// to check.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorDetailsException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginMoveResourcesWithHttpMessagesAsync(string resourceGroupName, MoveResourcesParameters moveResourcesInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all the service instances in a subscription.
         /// </summary>
