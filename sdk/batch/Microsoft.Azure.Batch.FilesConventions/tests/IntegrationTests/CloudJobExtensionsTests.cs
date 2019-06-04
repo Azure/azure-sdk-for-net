@@ -14,6 +14,7 @@
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
+using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             protected override string TestId { get; } = "cloudjobext";
         }
 
+        [LiveTest]
         [Fact]
         public async Task CloudJobOutputStorageExtensionSavesToCorrectContainer()
         {
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             }
         }
 
+        [LiveTest]
         [Fact]
         public async Task CloudJobGetStorageContainerUrlExtensionSasPermitsWritingToJobOutputContainer()
         {
@@ -98,6 +101,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             protected override bool AutoCreateContainer { get; } = false;
         }
 
+        [LiveTest]
         [Fact]
         public async Task CloudJobPrepareOutputStorageExtensionCreatesCorrectContainer()
         {

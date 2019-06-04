@@ -8,8 +8,7 @@
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
-    <SignAssembly>false</SignAssembly>
-    <DelaySign>false</DelaySign>
+    <SignAssembly>true</SignAssembly>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -33,13 +32,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Batch.Conventions.Files.IntegrationTests</PackageId>
+    <AssemblyTitle>Microsoft.Azure.Batch.FileConventions.Integration.Tests</AssemblyTitle>
     <Description>Azure Batch File conventions IntegrationTests tests class library</Description>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <!--Do not remove until VS Test Tools fixes #472-->
@@ -48,7 +47,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\AzureBatchFileConventions\AzureBatchFileConventions.csproj" />
+    <ProjectReference Include="..\..\src\Microsoft.Azure.Batch.FileConventions.csproj" />
   </ItemGroup>
   
   <ItemGroup>

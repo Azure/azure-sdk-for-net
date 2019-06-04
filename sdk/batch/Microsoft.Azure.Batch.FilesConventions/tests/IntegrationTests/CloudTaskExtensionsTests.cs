@@ -13,6 +13,7 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
+using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             protected override string TestId { get; } = "cloudtaskext";
         }
 
+        [LiveTest]
         [Fact]
         public async Task CloudJobOutputStorageExtensionSavesToCorrectContainer()
         {

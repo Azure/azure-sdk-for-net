@@ -23,6 +23,7 @@ using Xunit.Abstractions;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Xunit;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             protected override string TestId { get; } = "joboutput";
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSaved_ThenItAppearsInTheList()
         {
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/TestText1.txt"));
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSaved_UsingThePublicMethod_ThenTheCurrentDirectoryIsInferred()
         {
@@ -69,6 +72,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSavedWithAnExplicitPath_ThenItAppearsInTheList()
         {
@@ -80,6 +84,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/RenamedTestText1.txt"));
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileWithAMultiLevelPathIsSaved_ThenItAppearsInTheList()
         {
@@ -91,6 +96,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/Under/TestText2.txt"));
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSavedWithAnExplicitMultiLevelPath_ThenItAppearsInTheList()
         {
@@ -102,6 +108,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/In/The/Depths/TestText3.txt"));
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSaved_ThenItCanBeGot()
         {
@@ -116,6 +123,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Equal(originalContent, blobContent);
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfAFileIsSavedWithAMultiLevelPath_ThenItCanBeGot()
         {
@@ -130,6 +138,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.Equal(originalContent, blobContent);
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfARetryPolicyIsSpecifiedInTheStorageAccountConstructor_ThenItIsUsed()
         {
@@ -142,6 +151,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
         }
 
+        [LiveTest]
         [Fact]
         public async Task IfARetryPolicyIsSpecifiedInTheContainerUrlConstructor_ThenItIsUsed()
         {

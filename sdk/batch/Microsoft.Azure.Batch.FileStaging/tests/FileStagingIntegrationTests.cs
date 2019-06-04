@@ -29,6 +29,7 @@ namespace Batch.FileStaging.Tests
     using IntegrationTestUtilities;
     using Xunit;
     using Xunit.Abstractions;
+    using Microsoft.Azure.Batch.FileStaging.Tests.Infrastructure;
     using Constants = Microsoft.Azure.Batch.Constants;
 
     [Collection("SharedPoolCollection")]
@@ -43,6 +44,7 @@ namespace Batch.FileStaging.Tests
             this.poolFixture = poolFixture;
         }
 
+        [LiveTest]
         [Fact]
         public void CanAddTaskWithFilesToStage()
         {
@@ -151,6 +153,7 @@ namespace Batch.FileStaging.Tests
             }
         }
 
+        [LiveTest]
         [Theory, InlineData(false), InlineData(true)]
         public async Task CanBulkAddTasksWithFilesToStage(bool useJobOperations)
         {
