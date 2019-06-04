@@ -86,11 +86,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
         public virtual IOperationResultsOperations OperationResults { get; private set; }
 
         /// <summary>
-        /// Gets the IMoveResourcesStatusOperations.
-        /// </summary>
-        public virtual IMoveResourcesStatusOperations MoveResourcesStatus { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the HealthcareApisManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -334,7 +329,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
             Services = new ServicesOperations(this);
             Operations = new Operations(this);
             OperationResults = new OperationResultsOperations(this);
-            MoveResourcesStatus = new MoveResourcesStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-08-20-preview";
             AcceptLanguage = "en-US";

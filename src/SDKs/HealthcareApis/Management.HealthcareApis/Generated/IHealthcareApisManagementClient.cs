@@ -80,10 +80,5 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </summary>
         IOperationResultsOperations OperationResults { get; }
 
-        /// <summary>
-        /// Gets the IMoveResourcesStatusOperations.
-        /// </summary>
-        IMoveResourcesStatusOperations MoveResourcesStatus { get; }
-
     }
 }
