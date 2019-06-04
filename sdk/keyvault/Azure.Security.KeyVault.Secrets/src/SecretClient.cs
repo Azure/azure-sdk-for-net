@@ -126,7 +126,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (secret.Name == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Name)}");
 
-            if (secret.Value == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Value)}"); ;
+            if (secret.Value == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Value)}");
 
             return SendRequest(HttpPipelineMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name);
         }
@@ -391,8 +391,8 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Headers.Add("Content-Type", "application/json");
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Headers.Add(HttpHeader.Names.Accept, "application/json");
             request.Method = method;
             request.UriBuilder.Uri = uri;
 
