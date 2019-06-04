@@ -8,9 +8,9 @@ namespace Microsoft.Azure.EventHubs
     using Azure.Services.AppAuthentication;
 
     /// <summary>
-    /// Represents the Azure Active Directory token provider for Azure Managed Service Identity integration.
+    /// Represents the Azure Active Directory token provider for Azure Managed Identity integration.
     /// </summary>
-    public class ManagedServiceIdentityTokenProvider : TokenProvider
+    public class ManagedIdentityTokenProvider : TokenProvider
     {
         static readonly AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
 
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.AadEventHubsAudience);
+            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.EventHubsAudience);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

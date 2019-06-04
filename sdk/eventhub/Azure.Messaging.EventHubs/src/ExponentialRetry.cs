@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs
     ///
     /// <seealso cref="Retry" />
     ///
-    public sealed class ExponentialRetry : Retry
+    public sealed class ExponentialRetry : Retry, IEquatable<ExponentialRetry>
     {
         /// <summary>The minimum time period permissible for backing off between retries.</summary>
         private readonly TimeSpan _minimumBackoff;
@@ -50,13 +50,53 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
+        ///   Determines whether the two <see cref="ExponentialRetry" /> instances are equal.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="Retry" />.</returns>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
         ///
-        internal override Retry Clone() =>
-            new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
+        /// <returns><c>true</c> if the specified instances are equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator ==(ExponentialRetry left,
+                                       ExponentialRetry right) => left?.Equals(right) ?? ReferenceEquals(left, right);
+
+        /// <summary>
+        ///   Determines whether the two <see cref="ExponentialRetry" /> instances are not equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        ///
+        /// <returns><c>true</c> if the specified instances are not equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator !=(ExponentialRetry left,
+                                       ExponentialRetry right) => !(left == right);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="ExponentialRetry" />, is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="other">The <see cref="ExponentialRetry" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="ExponentialRetry" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Equals(ExponentialRetry other)
+        {
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            return (other._minimumBackoff == _minimumBackoff)
+                && (other._maximumBackoff == _maximumBackoff)
+                && (other._maximumRetryCount == _maximumRetryCount);
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -67,7 +107,8 @@ namespace Azure.Messaging.EventHubs
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            ((obj is ExponentialRetry other) && (Equals(other)));
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -76,7 +117,19 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            int hash = 17;
+
+            unchecked
+            {
+                hash = (hash * 23) + _minimumBackoff.GetHashCode();
+                hash = (hash * 23) + _maximumBackoff.GetHashCode();
+                hash = (hash * 23) + _maximumRetryCount.GetHashCode();
+
+                return hash;
+            }
+        }
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -86,6 +139,15 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="Retry" />.</returns>
+        ///
+        internal override Retry Clone() =>
+            new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in
@@ -104,12 +166,12 @@ namespace Azure.Messaging.EventHubs
         ///   <see cref="Retry.GetNextRetryInterval" /> implementation.
         /// </remarks>
         ///
-        protected override TimeSpan? OnGetNextRetryInterval(Exception lastException,
-                                                            TimeSpan  remainingTime,
-                                                            int       baseWaitSeconds,
-                                                            int       retryCount)
+        protected override TimeSpan? CalculateNextRetryInterval(Exception lastException,
+                                                                TimeSpan  remainingTime,
+                                                                int       baseWaitSeconds,
+                                                                int       retryCount)
         {
-            if ((!Retry.IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
+            if ((!IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
             {
                 return null;
             }

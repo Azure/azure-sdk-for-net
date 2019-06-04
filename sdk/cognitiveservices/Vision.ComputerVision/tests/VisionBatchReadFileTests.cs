@@ -44,7 +44,7 @@ namespace ComputerVisionSDK.Tests
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
-                    BatchReadFileHeaders headers = client.BatchReadFileAsync(imageUrl, TextRecognitionMode.Printed).Result;
+                    BatchReadFileHeaders headers = client.BatchReadFileAsync(imageUrl).Result;
 
                     Assert.NotNull(headers.OperationLocation);
 
@@ -61,6 +61,7 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal(1, recognitionResult.Page);
                     Assert.Equal(250, recognitionResult.Width);
                     Assert.Equal(258, recognitionResult.Height);
+                    Assert.Equal(TextRecognitionResultDimensionUnit.Pixel, recognitionResult.Unit);
 
                     Assert.Equal(
                         new string[] { "520", "WEST", "Seattle" }.OrderBy(t => t),
@@ -83,7 +84,7 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
                 {
-                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream, TextRecognitionMode.Printed).Result;
+                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream).Result;
 
                     Assert.NotNull(headers.OperationLocation);
 
@@ -100,13 +101,49 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal(1, recognitionResult.Page);
                     Assert.Equal(1000, recognitionResult.Width);
                     Assert.Equal(664, recognitionResult.Height);
+                    Assert.Equal(TextRecognitionResultDimensionUnit.Pixel, recognitionResult.Unit);
 
                     Assert.Equal(
-                        new string[] { "you must be the change", "you want to see in the world !" }.OrderBy(t => t),
+                        new string[] { "you must be the change", "you want to see in the world!" }.OrderBy(t => t),
                         recognitionResult.Lines.Select(line => line.Text).OrderBy(t => t));
                     Assert.Equal(2, recognitionResult.Lines.Count);
                     Assert.Equal(5, recognitionResult.Lines[0].Words.Count);
-                    Assert.Equal(8, recognitionResult.Lines[1].Words.Count);
+                    Assert.Equal(7, recognitionResult.Lines[1].Words.Count);
+                }
+            }
+        }
+
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        public void BatchReadPdfFileInStreamTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "BatchReadPdfFileInStreamTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (FileStream stream = new FileStream(GetTestImagePath("menu.pdf"), FileMode.Open))
+                {
+                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream).Result;
+
+                    Assert.NotNull(headers.OperationLocation);
+
+                    ReadOperationResult readOperationResult = GetRecognitionResultWithPolling(client, headers.OperationLocation);
+
+                    Assert.NotNull(readOperationResult);
+                    Assert.Equal(TextOperationStatusCodes.Succeeded, readOperationResult.Status);
+
+                    Assert.NotNull(readOperationResult.RecognitionResults);
+                    Assert.Equal(1, readOperationResult.RecognitionResults.Count);
+
+                    var recognitionResult = readOperationResult.RecognitionResults[0];
+
+                    Assert.Equal(1, recognitionResult.Page);
+                    Assert.Equal(8.5, recognitionResult.Width);
+                    Assert.Equal(11, recognitionResult.Height);
+                    Assert.Equal(TextRecognitionResultDimensionUnit.Inch, recognitionResult.Unit);
+
+                    Assert.Equal(28, recognitionResult.Lines.Count);
+                    Assert.Equal("Microsoft", recognitionResult.Lines[0].Text);
                 }
             }
         }

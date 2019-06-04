@@ -13,6 +13,12 @@ namespace Azure.Messaging.EventHubs
     ///
     public class SenderOptions
     {
+        /// <summary>The retry policy to apply to operations.</summary>
+        protected Retry _retry = Retry.Default;
+
+        /// <summary>The timeout that will be used by default for sending events.</summary>
+        protected TimeSpan? _timeout = TimeSpan.FromMinutes(1);
+
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventSender" /> will be bound to,
         ///   limiting it to sending events to only that partition.
@@ -42,7 +48,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the retry policy configured on the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public Retry Retry { get; set; } = Retry.Default;
+        public Retry Retry { get; set; }
 
         /// <summary>
         ///   The default timeout to apply when sending events.  If the timeout is reached, before the Event Hub
@@ -52,7 +58,23 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the operation timeout requested for the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan? Timeout
+        {
+            get => _timeout;
+
+            set
+            {
+                ValidateTimeout(value);
+                _timeout = value;
+            }
+        }
+
+        /// <summary>
+        ///   Normalizes the specified timeout value, returning the timeout period or the
+        ///   a <c>null</c> value if no timeout was specified.
+        /// </summary>
+        ///
+        internal TimeSpan? TimeoutOrDefault => (_timeout == TimeSpan.Zero) ? null : _timeout;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -82,5 +104,34 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="SenderOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="SenderOptions" />.</returns>
+        ///
+        internal SenderOptions Clone() =>
+            new SenderOptions
+            {
+                PartitionId = this.PartitionId,
+                Retry = this.Retry?.Clone(),
+                Timeout = this.Timeout
+            };
+
+        /// <summary>
+        ///   Validates the time period specified as the timeout to use when sending vents, throwing an <see cref="ArgumentException" /> if
+        ///   it is not valid.
+        /// </summary>
+        ///
+        /// <param name="timeout">The time period to validate.</param>
+        ///
+        protected virtual void ValidateTimeout(TimeSpan? timeout)
+        {
+            if (timeout < TimeSpan.Zero)
+            {
+                throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(Timeout));
+            }
+        }
     }
 }

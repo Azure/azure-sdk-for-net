@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Secrets
                     options.ResponseClassifier,
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.Default"),
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"),
                     options.LoggingPolicy,
                     BufferResponsePolicy.Singleton);
         }
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
-            Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions");
+            Uri firstPageUri = new Uri(_vaultUri, $"{SecretsPath}{name}/versions?api-version={ApiVersion}");
 
             return new AsyncEnumerator<SecretBase>(firstPageUri, () => new SecretBase(), this.GetPageAsync<SecretBase>, cancellationToken);
         }
@@ -73,7 +73,8 @@ namespace Azure.Security.KeyVault.Secrets
 
         public virtual AsyncEnumerator<SecretBase> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(_vaultUri, SecretsPath);
+            Uri firstPageUri = new Uri(_vaultUri, SecretsPath + $"?api-version={ApiVersion}");
+
 
             return new AsyncEnumerator<SecretBase>(firstPageUri, () => new SecretBase(), this.GetPageAsync<SecretBase>, cancellationToken);
         }
@@ -89,7 +90,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
-            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, secret.Version);
+            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
         }
 
         public virtual Response<SecretBase> Update(SecretBase secret, CancellationToken cancellationToken = default)
@@ -153,7 +154,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         public virtual AsyncEnumerator<DeletedSecret> GetAllDeletedAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(_vaultUri, DeletedSecretsPath);
+            Uri firstPageUri = new Uri(_vaultUri, DeletedSecretsPath + $"?api-version={ApiVersion}");
 
             return new AsyncEnumerator<DeletedSecret>(firstPageUri, () => new DeletedSecret(), this.GetPageAsync<DeletedSecret>, cancellationToken);
         }
@@ -191,7 +192,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
-            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "backup");
+            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup");
 
             return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
@@ -201,11 +202,11 @@ namespace Azure.Security.KeyVault.Secrets
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Secret>> RestoreAsync(byte[] backup, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretBase>> RestoreAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new Secret(), cancellationToken, SecretsPath, "restore");
+            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "/restore");
         }
 
         public virtual Response<Secret> Restore(byte[] backup, CancellationToken cancellationToken = default)
@@ -217,7 +218,7 @@ namespace Azure.Security.KeyVault.Secrets
             where TContent : Model
             where TResult : Model
         {
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, path))
+            using (Request request = CreateRequest(method, path))
             {
                 request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
@@ -230,7 +231,7 @@ namespace Azure.Security.KeyVault.Secrets
         private async Task<Response<TResult>> SendRequestAsync<TResult>(HttpPipelineMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : Model
         {
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, path))
+            using (Request request = CreateRequest(method, path))
             {
                 Response response = await SendRequestAsync(request, cancellationToken);
 
@@ -239,7 +240,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
         private async Task<Response> SendRequestAsync(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, path))
+            using (Request request = CreateRequest(method, path))
             {
                 return await SendRequestAsync(request, cancellationToken);
             }
@@ -263,7 +264,7 @@ namespace Azure.Security.KeyVault.Secrets
         private async Task<Response<Page<T>>> GetPageAsync<T>(Uri pageUri, Func<T> itemFactory, CancellationToken cancellationToken)
             where T : Model
         {
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, pageUri))
+            using (Request request = CreateRequest(HttpPipelineMethod.Get, pageUri, addAPIVersion:false))
             {
                 Response response = await SendRequestAsync(request, cancellationToken);
 
@@ -271,30 +272,38 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private Request CreateRequest(HttpPipelineMethod method, Uri uri)
+        private Request CreateRequest(HttpPipelineMethod method, Uri uri, bool addAPIVersion = true)
         {
             Request request = _pipeline.CreateRequest();
 
+            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             request.Method = method;
             request.UriBuilder.Uri = uri;
 
-            request.UriBuilder.AppendQuery("api-version", ApiVersion);
+            if (addAPIVersion)
+            {
+                request.UriBuilder.AppendQuery("api-version", ApiVersion);
+            }
 
             return request;
         }
 
         private Request CreateRequest(HttpPipelineMethod method, params string[] path)
         {
-            Request request = CreateRequest(method, _vaultUri);
+            Request request = _pipeline.CreateRequest();
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Headers.Add(HttpHeader.Names.Accept, "application/json");
+            request.Method = method;
+            request.UriBuilder.Uri = _vaultUri;
 
             foreach (var p in path)
             {
-                if (!string.IsNullOrEmpty(p))
-                {
-                    request.UriBuilder.AppendPath(p);
-                }
+                request.UriBuilder.AppendPath(p);
             }
+
+            request.UriBuilder.AppendQuery("api-version", ApiVersion);
 
             return request;
         }

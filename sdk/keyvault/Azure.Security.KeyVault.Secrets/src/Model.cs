@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core;
 using System;
 using System.Buffers;
 using System.IO;
@@ -22,19 +23,20 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal ReadOnlyMemory<byte> Serialize()
         {
-            byte[] buffer = CreateSerializationBuffer();
+            Utf8JsonWriter json;
+            var writer = new ArrayBufferWriter<byte>();
+            using (json = new Utf8JsonWriter(writer))
+            {
+                json.WriteStartObject();
 
-            var writer = new FixedSizedBufferWriter(buffer);
+                WriteProperties(ref json);
 
-            var json = new Utf8JsonWriter(writer);
+                json.WriteEndObject();
 
-            json.WriteStartObject();
+                json.Flush();
 
-            WriteProperties(ref json);
-
-            json.WriteEndObject();
-
-            return buffer.AsMemory(0, (int)json.BytesWritten);
+                return writer.WrittenMemory;
+            }
         }
 
         internal abstract void WriteProperties(ref Utf8JsonWriter json);
