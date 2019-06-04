@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -75,50 +77,18 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        public async Task ListVersionEnumeratorMoveNext()
+        public async Task GetAllVersionsAsyncEnumerator()
         {
             int actVersionCount = 0;
 
-            await foreach (var secret in _client.GetAllVersionsAsync(_secretName))
+            IAsyncEnumerator<Response<SecretBase>> enumerator = _client.GetAllVersionsAsync(_secretName).GetAsyncEnumerator();
+            while (await enumerator.MoveNextAsync())
             {
+                var secret = enumerator.Current;
+
                 Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
-                AssertSecretsEqual(exp, secret.Value);
-
-                actVersionCount++;
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-
-        [Test]
-        public async Task GetAllVersionsByPageAsyncForEach()
-        {
-            int actVersionCount = 0;
-
-            await foreach (Response<SecretBase> secret in _client.GetAllVersionsAsync(_secretName))
-            {
-                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
-
-                AssertSecretsEqual(exp, secret.Value);
-
-                actVersionCount++;
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-        [Test]
-        public async Task ListVersionByPageEnumeratorMoveNext()
-        {
-            int actVersionCount = 0;
-
-            await foreach (Response<SecretBase> secret in _client.GetAllVersionsAsync(_secretName))
-            {
-                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
-
-                AssertSecretsEqual(exp, secret.Value);
+                AssertSecretsEqual(exp, secret);
 
                 actVersionCount++;
             }
