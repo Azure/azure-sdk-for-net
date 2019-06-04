@@ -352,7 +352,7 @@ namespace Azure.Security.KeyVault.Secrets
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri, addAPIVersion: false))
+            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
             {
                 Response response = await SendRequestAsync(request, cancellationToken);
 
@@ -374,7 +374,7 @@ namespace Azure.Security.KeyVault.Secrets
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri, addAPIVersion: false))
+            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
             {
                 Response response = SendRequest(request, cancellationToken);
 
@@ -387,7 +387,7 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private Request CreateRequest(HttpPipelineMethod method, Uri uri, bool addAPIVersion = true)
+        private Request CreateRequest(HttpPipelineMethod method, Uri uri)
         {
             Request request = _pipeline.CreateRequest();
 
@@ -395,11 +395,6 @@ namespace Azure.Security.KeyVault.Secrets
             request.Headers.Add(HttpHeader.Names.Accept, "application/json");
             request.Method = method;
             request.UriBuilder.Uri = uri;
-
-            if (addAPIVersion)
-            {
-                request.UriBuilder.AppendQuery("api-version", ApiVersion);
-            }
 
             return request;
         }
