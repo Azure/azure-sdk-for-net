@@ -271,7 +271,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Namespace connection string</returns>
         public string GetNamespaceConnectionString()
         {
-            validate();
             var connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
@@ -417,23 +416,6 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     ConnectionStringProperties[key] = value;
                 }
-            }
-        }
-
-        void validate()
-        {
-            bool hasAuthentication = this.Authentication != null;
-            bool hasSharedAccessKeyName = !string.IsNullOrWhiteSpace(this.SasKeyName);
-            bool hasSharedAccessSignature = !string.IsNullOrWhiteSpace(this.SasToken);
-
-            if (hasAuthentication && hasSharedAccessKeyName)
-            {
-                throw Fx.Exception.Argument("Authentication, SharedAccessKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessKeyName"));
-            }
-
-            if (hasAuthentication && hasSharedAccessSignature)
-            {
-                throw Fx.Exception.Argument("Authentication, SharedAccessSignature", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessSignature"));
             }
         }
     }

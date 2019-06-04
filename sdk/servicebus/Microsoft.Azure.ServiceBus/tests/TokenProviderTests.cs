@@ -11,8 +11,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TokenProviderTests : SenderReceiverClientTestBase
     {
-        static readonly Uri ServiceBusAudience = new Uri("https://servicebus.azure.net");
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -37,6 +35,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await receiver.CloseAsync().ConfigureAwait(false);
                 }
             });
+        }
+
+        [Fact]
+        public async Task AadAuthCallback()
+        {
+            string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
+            string ServiceBusAudience = "https://servicebus.azure.net";
+
+            var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
+                (audience, authority, state) =>
+                {
+                    Assert.Equal(ServiceBusAudience, audience);
+                    return Task.FromResult(TestToken);
+                },
+                null);
+
+            var token = await aadTokenProvider.GetTokenAsync(ServiceBusAudience, TimeSpan.FromSeconds(60));
+            Assert.Equal(TestToken, token.TokenValue);
+            Assert.Equal(typeof(JsonSecurityToken), token.GetType());
         }
     }
 }
