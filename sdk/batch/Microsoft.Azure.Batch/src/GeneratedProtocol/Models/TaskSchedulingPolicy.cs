@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'spread', 'pack'
+        /// If not specified, the default is spread. Possible values include:
+        /// 'spread', 'pack'
         /// </remarks>
         [JsonProperty(PropertyName = "nodeFillType")]
         public ComputeNodeFillType NodeFillType { get; set; }

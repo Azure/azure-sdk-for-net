@@ -294,8 +294,8 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the maximum number of tasks that can run concurrently on a single compute node in the pool.
         /// </summary>
         /// <remarks>
-        /// The default value is 1. The maximum value of this setting depends on the size of the compute nodes in the pool 
-        /// (the <see cref="VirtualMachineSize"/> property).
+        /// The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref="VirtualMachineSize"/> 
+        /// of the pool or 256.
         /// </remarks>
         public int? MaxTasksPerComputeNode
         {

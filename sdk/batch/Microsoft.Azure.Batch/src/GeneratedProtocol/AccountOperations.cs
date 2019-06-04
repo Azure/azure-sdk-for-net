@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Batch.Protocol
         public BatchServiceClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all node agent SKUs supported by the Azure Batch service.
+        /// Lists all Virtual Machine Images supported by the Azure Batch service.
         /// </summary>
-        /// <param name='accountListNodeAgentSkusOptions'>
+        /// <param name='accountListSupportedImagesOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesWithHttpMessagesAsync(AccountListSupportedImagesOptions accountListSupportedImagesOptions = default(AccountListSupportedImagesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
             {
@@ -89,34 +89,34 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string filter = default(string);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                filter = accountListNodeAgentSkusOptions.Filter;
+                filter = accountListSupportedImagesOptions.Filter;
             }
             int? maxResults = default(int?);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                maxResults = accountListNodeAgentSkusOptions.MaxResults;
+                maxResults = accountListSupportedImagesOptions.MaxResults;
             }
             int? timeout = default(int?);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                timeout = accountListNodeAgentSkusOptions.Timeout;
+                timeout = accountListSupportedImagesOptions.Timeout;
             }
             System.Guid? clientRequestId = default(System.Guid?);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                clientRequestId = accountListNodeAgentSkusOptions.ClientRequestId;
+                clientRequestId = accountListSupportedImagesOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                returnClientRequestId = accountListNodeAgentSkusOptions.ReturnClientRequestId;
+                returnClientRequestId = accountListSupportedImagesOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (accountListNodeAgentSkusOptions != null)
+            if (accountListSupportedImagesOptions != null)
             {
-                ocpDate = accountListNodeAgentSkusOptions.OcpDate;
+                ocpDate = accountListSupportedImagesOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -132,11 +132,11 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNodeAgentSkus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSupportedImages", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "nodeagentskus";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "supportedimages";
             _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>();
+            var _result = new AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<NodeAgentSku>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ImageInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<AccountListNodeAgentSkusHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<AccountListSupportedImagesHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -574,12 +574,12 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Lists all node agent SKUs supported by the Azure Batch service.
+        /// Lists all Virtual Machine Images supported by the Azure Batch service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='accountListNodeAgentSkusNextOptions'>
+        /// <param name='accountListSupportedImagesNextOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -603,26 +603,26 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusNextWithHttpMessagesAsync(string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesNextWithHttpMessagesAsync(string nextPageLink, AccountListSupportedImagesNextOptions accountListSupportedImagesNextOptions = default(AccountListSupportedImagesNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
             System.Guid? clientRequestId = default(System.Guid?);
-            if (accountListNodeAgentSkusNextOptions != null)
+            if (accountListSupportedImagesNextOptions != null)
             {
-                clientRequestId = accountListNodeAgentSkusNextOptions.ClientRequestId;
+                clientRequestId = accountListSupportedImagesNextOptions.ClientRequestId;
             }
             bool? returnClientRequestId = default(bool?);
-            if (accountListNodeAgentSkusNextOptions != null)
+            if (accountListSupportedImagesNextOptions != null)
             {
-                returnClientRequestId = accountListNodeAgentSkusNextOptions.ReturnClientRequestId;
+                returnClientRequestId = accountListSupportedImagesNextOptions.ReturnClientRequestId;
             }
             System.DateTime? ocpDate = default(System.DateTime?);
-            if (accountListNodeAgentSkusNextOptions != null)
+            if (accountListSupportedImagesNextOptions != null)
             {
-                ocpDate = accountListNodeAgentSkusNextOptions.OcpDate;
+                ocpDate = accountListSupportedImagesNextOptions.OcpDate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 tracingParameters.Add("returnClientRequestId", returnClientRequestId);
                 tracingParameters.Add("ocpDate", ocpDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNodeAgentSkusNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSupportedImagesNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -754,7 +754,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>();
+            var _result = new AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -767,7 +767,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<NodeAgentSku>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ImageInformation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -781,7 +781,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<AccountListNodeAgentSkusHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<AccountListSupportedImagesHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {

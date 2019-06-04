@@ -29,14 +29,17 @@ namespace Microsoft.Azure.Batch
         /// <param name='priority'>The priority for this rule.</param>
         /// <param name='access'>The action that should be taken for a specified IP address, subnet range or tag.</param>
         /// <param name='sourceAddressPrefix'>The source address prefix or tag to match for the rule.</param>
+        /// <param name='sourcePortRanges'>The source port ranges to match for the rule.</param>
         public NetworkSecurityGroupRule(
             int priority,
             Common.NetworkSecurityGroupRuleAccess access,
-            string sourceAddressPrefix)
+            string sourceAddressPrefix,
+            IReadOnlyList<string> sourcePortRanges = default(IReadOnlyList<string>))
         {
             this.Priority = priority;
             this.Access = access;
             this.SourceAddressPrefix = sourceAddressPrefix;
+            this.SourcePortRanges = sourcePortRanges;
         }
 
         internal NetworkSecurityGroupRule(Models.NetworkSecurityGroupRule protocolObject)
@@ -44,6 +47,7 @@ namespace Microsoft.Azure.Batch
             this.Access = UtilitiesInternal.MapEnum<Models.NetworkSecurityGroupRuleAccess, Common.NetworkSecurityGroupRuleAccess>(protocolObject.Access);
             this.Priority = protocolObject.Priority;
             this.SourceAddressPrefix = protocolObject.SourceAddressPrefix;
+            this.SourcePortRanges = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SourcePortRanges, o => o.ToList().AsReadOnly());
         }
 
         #endregion Constructors
@@ -73,6 +77,17 @@ namespace Microsoft.Azure.Batch
         /// all addresses).
         /// </remarks>
         public string SourceAddressPrefix { get; }
+
+        /// <summary>
+        /// Gets the source port ranges to match for the rule.
+        /// </summary>
+        /// <remarks>
+        /// Valid values are '*' (for all ports 0 - 65535), a specific port (i.e. 22), or a port range (i.e. 100-200). The 
+        /// ports must be in the range of 0 to 65535. Each entry in this collection must not overlap any other entry (either 
+        /// a range or an individual port). If any other values are provided the request fails with HTTP status code 400. 
+        /// The default value is '*'
+        /// </remarks>
+        public IReadOnlyList<string> SourcePortRanges { get; }
 
         #endregion // NetworkSecurityGroupRule
 
@@ -108,6 +123,7 @@ namespace Microsoft.Azure.Batch
                 Access = UtilitiesInternal.MapEnum<Common.NetworkSecurityGroupRuleAccess, Models.NetworkSecurityGroupRuleAccess>(this.Access),
                 Priority = this.Priority,
                 SourceAddressPrefix = this.SourceAddressPrefix,
+                SourcePortRanges = UtilitiesInternal.CreateObjectWithNullCheck(this.SourcePortRanges, o => o.ToList()),
             };
 
             return result;

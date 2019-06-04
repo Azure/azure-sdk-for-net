@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    public partial class AccountListNodeAgentSkusOptions : ITimeoutOptions, IODataFilter { }
-    public partial class AccountListNodeAgentSkusNextOptions : IOptions { }
+    public partial class AccountListSupportedImagesOptions : ITimeoutOptions, IODataFilter { }
+    public partial class AccountListSupportedImagesNextOptions : IOptions { }
     public partial class AccountListPoolNodeCountsOptions : ITimeoutOptions, IODataFilter { }
     public partial class AccountListPoolNodeCountsNextOptions : IOptions { }
     public partial class ApplicationGetOptions : ITimeoutOptions { }

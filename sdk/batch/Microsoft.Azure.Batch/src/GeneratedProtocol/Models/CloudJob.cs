@@ -72,9 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="executionInfo">The execution information for the
         /// job.</param>
         /// <param name="stats">Resource usage statistics for the entire
-        /// lifetime of the job. The statistics may not be immediately
-        /// available. The Batch service performs periodic roll-up of
-        /// statistics. The typical delay is about 30 minutes.</param>
+        /// lifetime of the job.</param>
         public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
             Id = id;
@@ -317,10 +315,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets resource usage statistics for the entire lifetime of
-        /// the job. The statistics may not be immediately available. The Batch
+        /// the job.
+        /// </summary>
+        /// <remarks>
+        /// This property is populated only if the CloudJob was retrieved with
+        /// an expand clause including the 'stats' attribute; otherwise it is
+        /// null. The statistics may not be immediately available. The Batch
         /// service performs periodic roll-up of statistics. The typical delay
         /// is about 30 minutes.
-        /// </summary>
+        /// </remarks>
         [JsonProperty(PropertyName = "stats")]
         public JobStatistics Stats { get; set; }
 

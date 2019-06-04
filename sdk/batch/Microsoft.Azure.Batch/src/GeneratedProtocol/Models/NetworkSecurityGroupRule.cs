@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,11 +36,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// specified IP address, subnet range or tag.</param>
         /// <param name="sourceAddressPrefix">The source address prefix or tag
         /// to match for the rule.</param>
-        public NetworkSecurityGroupRule(int priority, NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix)
+        /// <param name="sourcePortRanges">The source port ranges to match for
+        /// the rule.</param>
+        public NetworkSecurityGroupRule(int priority, NetworkSecurityGroupRuleAccess access, string sourceAddressPrefix, IList<string> sourcePortRanges = default(IList<string>))
         {
             Priority = priority;
             Access = access;
             SourceAddressPrefix = sourceAddressPrefix;
+            SourcePortRanges = sourcePortRanges;
             CustomInit();
         }
 
@@ -84,6 +89,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source port ranges to match for the rule.
+        /// </summary>
+        /// <remarks>
+        /// Valid values are '*' (for all ports 0 - 65535), a specific port
+        /// (i.e. 22), or a port range (i.e. 100-200). The ports must be in the
+        /// range of 0 to 65535. Each entry in this collection must not overlap
+        /// any other entry (either a range or an individual port). If any
+        /// other values are provided the request fails with HTTP status code
+        /// 400. The default value is '*'.
+        /// </remarks>
+        [JsonProperty(PropertyName = "sourcePortRanges")]
+        public IList<string> SourcePortRanges { get; set; }
 
     }
 }
