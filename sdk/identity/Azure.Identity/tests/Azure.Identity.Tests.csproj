@@ -13,6 +13,9 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
   </ItemGroup>
 
+  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+
+    
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
   </ItemGroup>
