@@ -127,11 +127,11 @@ namespace Azure.Security.KeyVault.Test
         {
             string secretName = Recording.GenerateId();
 
-            Response<Secret> secret = await Client.SetAsync(secretName, "value");
+            Secret secret = await Client.SetAsync(secretName, "value");
 
             RegisterForCleanup(secret, delete: false);
 
-            Response<DeletedSecret> deletedSecret = await Client.DeleteAsync(secretName);
+            DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
             AssertSecretsEqual(secret, deletedSecret);
 
@@ -143,16 +143,21 @@ namespace Azure.Security.KeyVault.Test
         {
             string secretName = Recording.GenerateId();
 
-            Response<Secret> secret = await Client.SetAsync(secretName, "value");
+            Secret secret = await Client.SetAsync(secretName, "value");
 
             RegisterForCleanup(secret, delete: false);
 
-            Response<DeletedSecret> deletedSecret = await Client.DeleteAsync(secretName);
+            DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
             await WaitForDeletedSecret(secretName);
 
-            Response<DeletedSecret> polledSecret = await Client.GetDeletedAsync(secretName);
+            DeletedSecret polledSecret = await Client.GetDeletedAsync(secretName);
 
+            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.RecoveryId);
+            Assert.NotNull(deletedSecret.ScheduledPurgeDate);
+
+            AssertSecretsEqual(deletedSecret, polledSecret);
             AssertSecretsEqual(secret, polledSecret);
         }
 
@@ -252,6 +257,56 @@ namespace Azure.Security.KeyVault.Test
                 SecretBase returnedSecret = allSecrets.Single(s => s.Value.Name == deletedSecret.Name);
                 AssertSecretsEqual(deletedSecret, returnedSecret, compareId: false);
             }
+        }
+
+        [Test]
+        public void SetArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null, "value"));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync("name", null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null));
+        }
+
+        [Test]
+        public void UpdateArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(null));
+        }
+
+        [Test]
+        public void PurgeDeletedArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedAsync(null));
+        }
+
+        [Test]
+        public void GetArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetAsync(null));
+        }
+
+        [Test]
+        public void DeleteArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteAsync(null));
+        }
+
+        [Test]
+        public void GetDeletedArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedAsync(null));
+        }
+
+        [Test]
+        public void RecoverDeletedArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedAsync(null));
+        }
+
+        [Test]
+        public void GetAllVersionsArgumentValidation()
+        {
+            Assert.Throws<ArgumentNullException>(() => Client.GetAllVersionsAsync(null));
         }
     }
 }
