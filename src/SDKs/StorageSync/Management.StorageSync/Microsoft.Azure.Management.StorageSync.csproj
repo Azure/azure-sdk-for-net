@@ -6,7 +6,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>3.0.0</Version>
+        <Version>3.1.0.0</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
