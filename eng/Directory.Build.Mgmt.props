@@ -31,6 +31,10 @@
     <!-- Has Errors -->
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) datalake-store</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) operationalinsights\Microsoft.Azure.Management.OperationalInsights</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) monitor</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) billing</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) consumption</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) subscription</DefaultPathTokenToIgnore>
 
     <!--Ignore DataPlane Libraries -->
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) applicationinsights\Microsoft.Azure.ApplicationInsights</DefaultPathTokenToIgnore>
