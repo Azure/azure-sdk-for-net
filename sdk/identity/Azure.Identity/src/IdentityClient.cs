@@ -34,7 +34,7 @@ namespace Azure.Identity
                     BufferResponsePolicy.Singleton);
         }
 
-        public async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -51,7 +51,7 @@ namespace Azure.Identity
             }
         }
 
-        public AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -68,7 +68,7 @@ namespace Azure.Identity
             }
         }
 
-        public async Task<AccessToken> AuthenticateManagedIdentityAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<AccessToken> AuthenticateManagedIdentityAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
             {
@@ -85,7 +85,7 @@ namespace Azure.Identity
             }
         }
 
-        public AccessToken AuthenticateManagedIdentity(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        public virtual AccessToken AuthenticateManagedIdentity(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
             {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Xunit;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -15,16 +15,11 @@ namespace Azure.Identity.Tests
         }
     }
 
-    [CollectionDefinition("EnvironmentTests", DisableParallelization = true)]
-    public class EnvironmentTestsCollection
-    {
-    }
 
-
-    [Collection("EnvironmentTests")]
     public class EnvironmentCredentialProviderTests
     {
-        [Fact]
+        [NonParallelizable]
+        [Test]
         public void CredentialConstruction()
         {
             string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
@@ -45,11 +40,11 @@ namespace Azure.Identity.Tests
 
                 Assert.NotNull(cred);
 
-                Assert.Equal("mockclientid", cred.ClientId);
+                Assert.AreEqual("mockclientid", cred.ClientId);
 
-                Assert.Equal("mocktenantid", cred.TenantId);
+                Assert.AreEqual("mocktenantid", cred.TenantId);
 
-                Assert.Equal("mockclientsecret", cred.ClientSecret);
+                Assert.AreEqual("mockclientsecret", cred.ClientSecret);
             }
             finally
             {
