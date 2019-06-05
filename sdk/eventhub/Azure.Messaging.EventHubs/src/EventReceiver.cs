@@ -23,21 +23,21 @@ namespace Azure.Messaging.EventHubs
     ///   sometimes referred to as "Non-Epoch Receivers."
     /// </summary>
     ///
-    public class PartitionReceiver
+    public class EventReceiver : IAsyncDisposable
     {
         /// <summary>
         ///   The identifier of the Event Hub partition that this receiver is associated with.  Events will be read
         ///   only from this partition.
         /// </summary>
         ///
-        public string PartitionId { get; }
+        public string PartitionId { get; protected set; }
 
         /// <summary>
         ///   The name of the consumer group that this receiver is associated with.  Events will be read
         ///   only in the context of this group.
         /// </summary>
         ///
-        public string ConsumerGroup { get; }
+        public string ConsumerGroup { get; protected set; }
 
         /// <summary>
         ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value will be <c>null</c>.</value>
         ///
-        public long? ExclusiveReceiverPriority { get; }
+        public long? ExclusiveReceiverPriority { get; protected set; }
 
         /// <summary>
         ///   The position of the event in the partition where the receiver should begin reading.
@@ -63,10 +63,10 @@ namespace Azure.Messaging.EventHubs
         ///   The set of event receiver options used for creation of this receiver.
         /// </summary>
         ///
-        protected ReceiverOptions Options { get; }
+        protected ReceiverOptions Options { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionType">The type of connection used for communicating with the Event Hubs service.</param>
@@ -84,16 +84,16 @@ namespace Azure.Messaging.EventHubs
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        protected internal PartitionReceiver(ConnectionType connectionType,
-                                             string eventHubPath,
-                                             string partitionId,
-                                             ReceiverOptions receiverOptions)
+        internal EventReceiver(TransportType connectionType,
+                               string eventHubPath,
+                               string partitionId,
+                               ReceiverOptions receiverOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(receiverOptions), receiverOptions);
 
-            //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpPartitionReceiver.
+            //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpEventReceiver.
 
             PartitionId = partitionId;
             StartingPosition = receiverOptions.BeginReceivingAt;
@@ -102,10 +102,10 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
         /// </summary>
         ///
-        protected PartitionReceiver()
+        protected EventReceiver()
         {
         }
 
@@ -140,6 +140,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
         public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="EventHubClient" />,
+        ///   including ensuring that the client itself has been closed.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

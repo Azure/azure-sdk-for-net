@@ -4,11 +4,11 @@
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   Specifies the type of connection what will be used for communicating with
+    ///   Specifies the type of protocol and transport that will be used for communicating with
     ///   Azure Event Hubs.
     /// </summary>
     ///
-    public enum ConnectionType
+    public enum TransportType
     {
         /// <summary>The connection uses the AMQP prototcol over TCP.</summary>
         AmqpTcp,

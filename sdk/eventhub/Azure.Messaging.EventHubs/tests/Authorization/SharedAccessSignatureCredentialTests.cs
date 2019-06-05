@@ -34,10 +34,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTime.UtcNow;
-            var audience = "the-audience";
             var value = "TOkEn!";
-            var signature = new SettablePropertiesMock("keyName", "key", expiration, audience, value);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
             Assert.That(credential.SharedAccessSignature, Is.SameAs(signature), "The credential should allow the signature to be accessed.");
@@ -51,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetTokenReturnsTheSignatureValue()
         {
             var value = "TOkEn!";
-            var signature = new SettablePropertiesMock(value: value);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
             Assert.That(credential.GetToken(null, default), Is.SameAs(signature.Value), "The credential should return the signature as the token.");
@@ -65,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetTokenIgnoresScopeAndCancellationToken()
         {
             var value = "TOkEn!";
-            var signature = new SettablePropertiesMock(value: value);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
             Assert.That(credential.GetToken(new[] { "test", "this" }, CancellationToken.None), Is.SameAs(signature.Value), "The credential should return the signature as the token.");
@@ -79,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetTokenAsyncReturnsTheSignatureValue()
         {
             var value = "TOkEn!";
-            var signature = new SettablePropertiesMock(value: value);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
             var cancellation = new CancellationTokenSource();
             var token = await credential.GetTokenAsync(null, cancellation.Token);
@@ -95,33 +93,12 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetTokenAsyncIgnoresScopeAndCancellationToken()
         {
             var value = "TOkEn!";
-            var signature = new SettablePropertiesMock(value: value);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
             var cancellation = new CancellationTokenSource();
             var token = await credential.GetTokenAsync(new string[0], cancellation.Token);
 
             Assert.That(token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
-        }
-
-        /// <summary>
-        ///   Allows for the properties of the shared access signature to be manually set for
-        ///   testing purposes.
-        /// </summary>
-        ///
-        private class SettablePropertiesMock : SharedAccessSignature
-        {
-            public SettablePropertiesMock(string sharedAccessKeyName = default,
-                                          string sharedAccessKey = default,
-                                          DateTime expirationUtc = default,
-                                          string resource = default,
-                                          string value = default) : base()
-            {
-                SharedAccessKeyName = sharedAccessKeyName;
-                SharedAccessKey = sharedAccessKey;
-                ExpirationUtc = expirationUtc;
-                Resource = resource;
-                Value = value;
-            }
         }
     }
 }

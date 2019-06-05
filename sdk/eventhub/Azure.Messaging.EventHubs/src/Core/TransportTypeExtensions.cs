@@ -7,10 +7,10 @@ using System.Globalization;
 namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
-    ///   The set of extension methods for the <see cref="ConnectionType" /> enumeration.
+    ///   The set of extension methods for the <see cref="TransportType" /> enumeration.
     /// </summary>
     ///
-    internal static class ConnectionTypeExtensions
+    internal static class TransportTypeExtensions
     {
         /// <summary>The URI scheme used for an AMQP-based connection.</summary>
         private const string AmqpUriScheme = "amqps";
@@ -23,16 +23,16 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The scheme that should be used for the given connection type when forming an associated URI.</returns>
         ///
-        public static string GetUriScheme(this ConnectionType instance)
+        public static string GetUriScheme(this TransportType instance)
         {
             switch (instance)
             {
-                case ConnectionType.AmqpTcp:
-                case ConnectionType.AmqpWebSockets:
+                case TransportType.AmqpTcp:
+                case TransportType.AmqpWebSockets:
                     return AmqpUriScheme;
 
                 default:
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidConnectionString, instance.ToString(), nameof(instance)));
+                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, instance.ToString(), nameof(instance)));
             }
         }
     }

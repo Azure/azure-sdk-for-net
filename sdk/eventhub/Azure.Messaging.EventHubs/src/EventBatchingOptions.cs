@@ -21,35 +21,35 @@ namespace Azure.Messaging.EventHubs
         ///   an exception will be thrown and the send operation will fail.
         /// </summary>
         ///
-        public int MaximumSizeInBytes
+        private int MaximumSizeInBytes
         {
             get => _maximumSizeInBytes;
 
-            protected set
+            set
             {
-                //TODO: Expose this when splitting of batches is supported.
-
                 Guard.ArgumentInRange(nameof(MaximumSizeInBytes), value, EventSender.MinimumBatchSizeLimit, EventSender.MaximumBatchSizeLimit);
                 _maximumSizeInBytes = value;
             }
-        }
+        }  //TODO: Expose this when splitting of batches is supported.
 
         /// <summary>
-        ///   Allows a batch to be identified as part of a group, which hints to the
-        ///   Event Hubs service that reasonable efforts should be made to use the same
-        ///   partition for events belonging to that group.
+        ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
+        ///   service map this key to a specific partition but allowing the service to choose an arbitrary,
+        ///   partition for this batch of events and any other batches using the same partition hashing key.
         ///
-        ///   This should be specified only when there is a need to try and group events by partition, but
-        ///   there is flexibility in allowing them to appear in other partitions at the discretion of the service,
-        ///   such as when a partition is unavailable.
+        ///   The selection of a partition is stable for a given partition hashing key.  Should any other
+        ///   batches of events be sent using the same exact partition hashing key, the Event Hubs service will
+        ///   route them all to the same partition.
         ///
-        ///   If ensuring that a batch of events is sent only to a specific partition, it is recommended that the
-        ///   identifier of the position be specified directly when sending the batch.
+        ///   This should be specified only when there is a need to group events by partition, but there is
+        ///   flexibility into which partition they are routed. If ensuring that a batch of events is sent
+        ///   only to a specific partition, it is recommended that the identifier of the position be
+        ///   specified directly when sending the batch.
         /// </summary>
         ///
-        /// <value>The label for the group to which the batch is associated; if the batch is not</value>
+        /// <value>The partition hashing key to associate with the event batch.</value>
         ///
-        public string BatchLabel { get; set; }
+        public string PartitionKey { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

@@ -58,14 +58,7 @@ namespace Azure.Messaging.EventHubs
         ///   </code>
         /// </example>
         ///
-        public IDictionary<string, object> Properties { get; protected set; } = new Dictionary<string, object>();
-
-        /// <summary>
-        ///   The set of event properties which are owned and populated by the Event Hubs service during
-        ///   operations.
-        /// </summary>
-        ///
-        public SystemEventProperties SystemProperties { get; protected internal set; }
+        public IDictionary<string, object> Properties { get; internal set; } = new Dictionary<string, object>();
 
         /// <summary>
         ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
@@ -86,10 +79,17 @@ namespace Azure.Messaging.EventHubs
         public DateTime EnqueuedTimeUtc => SystemProperties.EnqueuedTimeUtc;
 
         /// <summary>
-        ///   The date and time, in UTC, that this event data was retrieved from the Event Hub partition.
+        ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
         /// </summary>
         ///
-        public DateTime RetrievalTimeUtc { get; protected internal set; }
+        public string PartitionKey => SystemProperties.PartitionKey;
+
+        /// <summary>
+        ///   The set of event properties which are owned and populated by the Event Hubs service during
+        ///   operations.
+        /// </summary>
+        ///
+        internal SystemEventProperties SystemProperties { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs
         ///   The set of event properties which are owned and populated by the Event Hubs service.
         /// </summary>
         ///
-        public sealed class SystemEventProperties : Dictionary<string, object>
+        internal sealed class SystemEventProperties : Dictionary<string, object>
         {
             /// <summary>
             ///   Initializes a new instance of the <see cref="SystemEventProperties"/> class.
@@ -141,24 +141,24 @@ namespace Azure.Messaging.EventHubs
             /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
             /// <param name="enqueuedTimeUtc">The date and time, in UTC, that the event was received by the partition.</param>
             /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
-            /// <param name="batchLabel">The label associated with the batch that the event was grouped with when sent.</param>
+            /// <param name="partitionKey">The partition hashing key associated with the batch that the event was grouped with when sent.</param>
             ///
             internal SystemEventProperties(long sequenceNumber,
                                            DateTime enqueuedTimeUtc,
                                            string offset,
-                                           string batchLabel)
+                                           string partitionKey)
             {
                 this[MessagePropertyName.SequenceNumber] = sequenceNumber;
                 this[MessagePropertyName.EnqueuedTimeUtc] = enqueuedTimeUtc;
                 this[MessagePropertyName.Offset] = offset;
-                this[MessagePropertyName.BatchLabel] = batchLabel;
+                this[MessagePropertyName.PartitionKey] = partitionKey;
             }
 
             /// <summary>
             ///   The logical sequence number of the <see cref="EventData" /> within the partition stream of the Event Hub.
             /// </summary>
             ///
-            public long SequenceNumber
+            internal long SequenceNumber
             {
                 get
                 {
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs
             ///   The date and time, in UTC, that the <see cref="EventData" /> was received by the partition.
             /// </summary>
             ///
-            public DateTime EnqueuedTimeUtc
+            internal DateTime EnqueuedTimeUtc
             {
                 get
                 {
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs
             ///   identifier is unique within a partition of the Event Hubs stream.
             /// </remarks>
             ///
-            public int Offset
+            internal int Offset
             {
                 get
                 {
@@ -219,14 +219,14 @@ namespace Azure.Messaging.EventHubs
             }
 
             /// <summary>
-            ///   The label applied to the batch that the associated <see cref="EventData"/>, was sent with.
+            ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
             /// </summary>
             ///
-            public string BatchLabel
+            internal string PartitionKey
             {
                 get
                 {
-                    if (this.TryGetValue(MessagePropertyName.BatchLabel, out var value))
+                    if (this.TryGetValue(MessagePropertyName.PartitionKey, out var value))
                     {
                         return (string)value;
                     }

@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("  ")]
         [TestCase(3)]
         [TestCase(typeof(Guard))]
-        [TestCase(ConnectionType.AmqpTcp)]
+        [TestCase(TransportType.AmqpTcp)]
         [TestCase(new[] { 1, 3, 4 })]
         public void ArgumentNotNullAllowsValidValues(object value)
         {
