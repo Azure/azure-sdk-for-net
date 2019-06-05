@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys
         public string Name { get; set; }
         public KeyType KeyType { get; private set; }
         public int KeySize { get; set; }
-        public bool Hsm { get; set; }
+        public bool Hsm { get; private set; }
 
         public RsaKeyCreateOptions(string name, bool hsm) 
         {

@@ -38,7 +38,23 @@ namespace Azure.Security.KeyVault.Keys
 
         public static string AsString(KeyOperations keyType)
         {
-            return (keyType).ToString();
+            switch (keyType)
+            {
+                case KeyOperations.Encrypt:
+                    return "encrypt";
+                case KeyOperations.Decrypt:
+                    return "decrypt";
+                case KeyOperations.Sign:
+                    return "sign";
+                case KeyOperations.Verify:
+                    return "verify";
+                case KeyOperations.Wrap:
+                    return "wrapKey";
+                case KeyOperations.Unwrap:
+                    return "unwrapKey";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }
