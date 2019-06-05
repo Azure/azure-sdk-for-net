@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        public static string ParseToString(KeyOperations keyType)
+        public static string AsString(KeyOperations keyType)
         {
             return (keyType).ToString();
         }

@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        public static string ParseToString(KeyCurveName curve)
+        public static string AsString(KeyCurveName curve)
         {
             switch (curve)
             {

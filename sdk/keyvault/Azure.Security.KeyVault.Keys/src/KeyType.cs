@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        public static string ParseToString(KeyType keyType)
+        public static string AsString(KeyType keyType)
         {
             switch (keyType)
             {

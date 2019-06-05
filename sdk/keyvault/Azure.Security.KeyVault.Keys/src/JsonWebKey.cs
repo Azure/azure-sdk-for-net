@@ -218,14 +218,14 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.ParseToString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
             }
             if (KeyOps != null)
             {
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach (var operation in KeyOps)
                 {
-                    json.WriteStringValue(KeyOperationsExtensions.ParseToString(operation));
+                    json.WriteStringValue(KeyOperationsExtensions.AsString(operation));
                 }
                 json.WriteEndArray();
             }
