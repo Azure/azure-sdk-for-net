@@ -31,16 +31,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentExtended class.
         /// </summary>
-        /// <param name="id">The ID of the deployment.</param>
         /// <param name="name">The name of the deployment.</param>
-        /// <param name="type">The type of the deployment.</param>
+        /// <param name="id">The ID of the deployment.</param>
         /// <param name="location">the location of the deployment.</param>
         /// <param name="properties">Deployment properties.</param>
-        public DeploymentExtended(string id = default(string), string name = default(string), string type = default(string), string location = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
+        public DeploymentExtended(string name, string id = default(string), string location = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
         {
             Id = id;
             Name = name;
-            Type = type;
             Location = location;
             Properties = properties;
             CustomInit();
@@ -58,16 +56,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the deployment.
+        /// Gets or sets the name of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the deployment.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the deployment.
@@ -89,6 +81,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
             if (Properties != null)
             {
                 Properties.Validate();

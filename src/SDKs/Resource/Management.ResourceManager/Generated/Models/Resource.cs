@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Specified resource.
+    /// Resource.
     /// </summary>
     public partial class Resource : IResource
     {

@@ -38,16 +38,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// must be one of the supported Azure locations.</param>
         /// <param name="id">The ID of the resource group.</param>
         /// <param name="name">The name of the resource group.</param>
-        /// <param name="type">The type of the resource group.</param>
-        /// <param name="properties">The resource group properties.</param>
         /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
-        public ResourceGroup(string location, string id = default(string), string name = default(string), string type = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ResourceGroup(string location, string id = default(string), string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
-            Type = type;
             Properties = properties;
             Location = location;
             ManagedBy = managedBy;
@@ -67,19 +64,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the resource group.
+        /// Gets or sets the name of the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets the type of the resource group.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the resource group properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ResourceGroupProperties Properties { get; set; }

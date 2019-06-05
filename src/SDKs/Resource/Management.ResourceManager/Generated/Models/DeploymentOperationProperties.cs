@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="provisioningState">The state of the
         /// provisioning.</param>
         /// <param name="timestamp">The date and time of the operation.</param>
-        /// <param name="duration">The duration of the operation.</param>
         /// <param name="serviceRequestId">Deployment operation service request
         /// id.</param>
         /// <param name="statusCode">Operation status code.</param>
@@ -42,11 +41,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="targetResource">The target resource.</param>
         /// <param name="request">The HTTP request message.</param>
         /// <param name="response">The HTTP response message.</param>
-        public DeploymentOperationProperties(string provisioningState = default(string), System.DateTime? timestamp = default(System.DateTime?), string duration = default(string), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
+        public DeploymentOperationProperties(string provisioningState = default(string), System.DateTime? timestamp = default(System.DateTime?), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
         {
             ProvisioningState = provisioningState;
             Timestamp = timestamp;
-            Duration = duration;
             ServiceRequestId = serviceRequestId;
             StatusCode = statusCode;
             StatusMessage = statusMessage;
@@ -72,12 +70,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public System.DateTime? Timestamp { get; private set; }
-
-        /// <summary>
-        /// Gets the duration of the operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "duration")]
-        public string Duration { get; private set; }
 
         /// <summary>
         /// Gets deployment operation service request id.

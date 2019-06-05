@@ -63,9 +63,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to create or update. Can include
-            /// alphanumeric, underscore, parentheses, hyphen, period (except at end), and
-            /// Unicode characters that match the allowed characters.
+            /// The name of the resource group to create or update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create or update a resource group.
@@ -82,9 +80,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to create or update. Can include
-            /// alphanumeric, underscore, parentheses, hyphen, period (except at end), and
-            /// Unicode characters that match the allowed characters.
+            /// The name of the resource group to create or update.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create or update a resource group.
