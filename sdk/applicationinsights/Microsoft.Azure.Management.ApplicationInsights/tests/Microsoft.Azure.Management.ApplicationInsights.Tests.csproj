@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>ApplicationInsights.Tests</PackageId>
     <Description>ApplicationInsights.Tests Class library</Description>
@@ -23,6 +23,6 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.ApplicationInsights.csproj" />
   </ItemGroup>
 </Project>

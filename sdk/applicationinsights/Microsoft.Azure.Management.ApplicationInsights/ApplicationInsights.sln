@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationInsights.Tests", "Management\ApplicationInsights.Tests\ApplicationInsights.Tests.csproj", "{6ECF131B-7B54-48EC-BC33-100AA82C4206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights.Tests", "tests\Microsoft.Azure.Management.ApplicationInsights.Tests.csproj", "{6ECF131B-7B54-48EC-BC33-100AA82C4206}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights", "Management\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj", "{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights", "src\Microsoft.Azure.Management.ApplicationInsights.csproj", "{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

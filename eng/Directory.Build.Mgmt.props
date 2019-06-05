@@ -22,22 +22,58 @@
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) LocationBasedServices</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) BotService</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) TestFramework\TestFramework.Net45Tests</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) batch</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) appconfiguration</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) applicationinsights</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) core</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventgrid</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) hdinsight</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) identity</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) operationalinsights</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) servicebus</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) storage</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Template</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) containerregistry</DefaultPathTokenToIgnore>
+    
+    <!-- Has Errors -->
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) datalake-store</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) operationalinsights\Microsoft.Azure.Management.OperationalInsights</DefaultPathTokenToIgnore>
+
+    <!--Ignore DataPlane Libraries -->
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) applicationinsights\Microsoft.Azure.ApplicationInsights</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) batch\Microsoft.Azure.Batch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\AnomalyDetector</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Knowledge.QnAMaker</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Language.LUIS.Authoring</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Language.LUIS.Runtime</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Language.SpellCheck</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Language.TextAnalytics</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Personalizer</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingAutoSuggest</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingCustomImageSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingCustomSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingEntitySearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingImageSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingLocalSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingNewsSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingVideoSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingVisualSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Search.BingWebSearch</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.ComputerVision</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.ContentModerator</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.CustomVision.Prediction</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.CustomVision.Training</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.Face</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) cognitiveservices\Vision.FormRecognizer</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) containerregistry\Microsoft.Azure.ContainerRegistry</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventgrid\Microsoft.Azure.EventGrid</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub\Azure.Messaging.EventHubs</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub\Microsoft.Azure.EventHubs</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub\Microsoft.Azure.EventHubs.Processor</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) eventhub\Microsoft.Azure.EventHubs.ServiceFabricProcessor</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) hdinsight\Microsoft.Azure.HDInsight.Job</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Azure.Security.Keyvault.Keys</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Azure.Security.KeyVault.Secrets</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Microsoft.Azure.KeyVault</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Microsoft.Azure.KeyVault.Core</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Microsoft.Azure.KeyVault.Cryptography</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Microsoft.Azure.KeyVault.Extensions</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) keyvault\Microsoft.Azure.KeyVault.WebKey</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) operationalinsights\Microsoft.Azure.OperationalInsights</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) servicebus\Microsoft.Azure.ServiceBus</DefaultPathTokenToIgnore>
   </PropertyGroup>
 
   <!-- Ignore all data plane libraries following the "data-plane" naming convention -->
