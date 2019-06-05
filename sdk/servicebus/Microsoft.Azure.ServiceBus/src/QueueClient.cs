@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
             }
             
             this.OwnsConnection = true;
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (string.IsNullOrWhiteSpace(entityPath))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(entityPath));
             }
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
