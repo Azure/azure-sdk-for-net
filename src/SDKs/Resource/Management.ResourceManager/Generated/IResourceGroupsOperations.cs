@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Creates or updates a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to create or update.
+        /// The name of the resource group to create or update. Can include
+        /// alphanumeric, underscore, parentheses, hyphen, period (except at
+        /// end), and Unicode characters that match the allowed characters.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the create or update a resource group.

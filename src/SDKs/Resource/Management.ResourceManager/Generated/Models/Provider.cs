@@ -35,14 +35,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="namespaceProperty">The namespace of the resource
         /// provider.</param>
         /// <param name="registrationState">The registration state of the
-        /// provider.</param>
+        /// resource provider.</param>
+        /// <param name="registrationPolicy">The registration policy of the
+        /// resource provider.</param>
         /// <param name="resourceTypes">The collection of provider resource
         /// types.</param>
-        public Provider(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), IList<ProviderResourceType> resourceTypes = default(IList<ProviderResourceType>))
+        public Provider(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), string registrationPolicy = default(string), IList<ProviderResourceType> resourceTypes = default(IList<ProviderResourceType>))
         {
             Id = id;
             NamespaceProperty = namespaceProperty;
             RegistrationState = registrationState;
+            RegistrationPolicy = registrationPolicy;
             ResourceTypes = resourceTypes;
             CustomInit();
         }
@@ -65,10 +68,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets the registration state of the provider.
+        /// Gets the registration state of the resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "registrationState")]
         public string RegistrationState { get; private set; }
+
+        /// <summary>
+        /// Gets the registration policy of the resource provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "registrationPolicy")]
+        public string RegistrationPolicy { get; private set; }
 
         /// <summary>
         /// Gets the collection of provider resource types.
