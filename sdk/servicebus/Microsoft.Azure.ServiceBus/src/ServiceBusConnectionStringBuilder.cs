@@ -29,11 +29,11 @@ namespace Microsoft.Azure.ServiceBus
         const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-        AuthenticationType? authType;
+        string authType;
 
-        public enum AuthenticationType
+        public static class AuthenticationType
         {
-            ManagedIdentity
+            public const string ManagedIdentity = "Managed Identity";
         }
 
         /// <summary>
@@ -243,9 +243,9 @@ namespace Microsoft.Azure.ServiceBus
         public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
 
         /// <summary>
-        /// Enables Azure Active Directory Managed Identity authentication when set to 'Managed Identity'
+        /// Enables Azure Active Directory Managed Identity authentication when set to AuthenticationType.ManagedIdentity
         /// </summary>
-        public AuthenticationType? Authentication
+        public string Authentication
         {
             get => this.authType;
             set
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (this.Authentication != null)
             {
-                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication.ToString()}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -407,10 +407,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (Enum.TryParse(value, true, out AuthenticationType authType))
-                    {
-                        this.Authentication = authType;
-                    }
+                    this.Authentication = value;
                 }
                 else
                 {
