@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
+=======
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />	
+	
+>>>>>>> Moved ref files into mgmt directory
   <PropertyGroup>
 		<TargetFrameworks>netcoreapp2.0</TargetFrameworks>
 	</PropertyGroup>
@@ -6,10 +12,16 @@
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.6, 2.0.0)" />
     <PackageReference Include="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
+<<<<<<< HEAD
     <PackageReference Include="xunit" Version="2.3.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
+=======
+    
+    <!-- This is needed for discovering tests in test explorer -->
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
+>>>>>>> Moved ref files into mgmt directory
   </ItemGroup>
 </Project>
