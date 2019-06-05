@@ -1,5 +1,5 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
     
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>

@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>CostManagement.Tests</PackageId>
     <Description>CostManagement.Tests class library</Description>

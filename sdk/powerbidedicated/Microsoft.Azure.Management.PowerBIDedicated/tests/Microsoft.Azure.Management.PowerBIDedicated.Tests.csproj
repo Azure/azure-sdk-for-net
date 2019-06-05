@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />  
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />  
   <PropertyGroup>
     <PackageId>PowerBIDedicated.Tests</PackageId>
     <Version>1.0.0</Version>

@@ -1,5 +1,5 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>Automation.Tests</PackageId>
     <AssemblyName>Automation.Tests</AssemblyName>

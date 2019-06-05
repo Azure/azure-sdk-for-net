@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>RecoveryServices.Backup.Tests</PackageId>
     <Description>RecoveryServices.Backup.Tests Class Library</Description>

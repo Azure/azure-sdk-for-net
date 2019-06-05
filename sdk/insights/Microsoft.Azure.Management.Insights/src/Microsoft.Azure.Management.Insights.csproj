@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(RepoEngPath)/AzSdk.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Insights</PackageId>
     <Description>Microsoft Azure Insights Library</Description>

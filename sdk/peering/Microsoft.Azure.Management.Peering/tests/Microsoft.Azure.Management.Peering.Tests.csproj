@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>Peering.Tests</PackageId>
     <Description>Peering.Tests class library</Description>

@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$(RepoEngPath)/AzSdk.test.reference.props" />
+    <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>ServiceFabric.Test</PackageId>
     <Description>ServiceFabric Tests Class Library</Description>

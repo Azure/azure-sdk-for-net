@@ -1,6 +1,6 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
-	<Import Project="$(RepoEngPath)/AzSdk.reference.props" />
+	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
 	<!-- Please do not move/edit code below this line -->
 
 	<PropertyGroup>
