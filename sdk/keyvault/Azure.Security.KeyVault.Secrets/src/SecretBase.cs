@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
 
         internal override void ReadProperties(JsonElement json)
         {

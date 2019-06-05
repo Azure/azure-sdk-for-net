@@ -46,6 +46,8 @@ namespace Azure.Core.Testing
 
         public RecordedTestMode Mode { get; }
 
+        private readonly AsyncLocal<bool> _disableRecording = new AsyncLocal<bool>();
+
         private readonly string _sessionFile;
 
         private readonly RecordedTestSanitizer _sanitizer;
@@ -102,9 +104,9 @@ namespace Azure.Core.Testing
             return RecordSession.Deserialize(jsonDocument.RootElement);
         }
 
-        public void Dispose()
+        public void Dispose(bool save)
         {
-            if (Mode == RecordedTestMode.Record)
+            if (Mode == RecordedTestMode.Record && save)
             {
                 var directory = Path.GetDirectoryName(_sessionFile);
                 Directory.CreateDirectory(directory);
@@ -120,6 +122,11 @@ namespace Azure.Core.Testing
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
         public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
@@ -133,7 +140,7 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Live:
                     return currentTransport;
                 case RecordedTestMode.Record:
-                    return new RecordTransport(_session, currentTransport, Random);
+                    return new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random);
                 case RecordedTestMode.Playback:
                     return new PlaybackTransport(_session, _matcher);
                 default:
@@ -218,6 +225,27 @@ namespace Azure.Core.Testing
             public override string GetToken(string[] scopes, CancellationToken cancellationToken)
             {
                 return "TEST TOKEN " + string.Join(",", scopes);
+            }
+        }
+
+        public DisableRecordingScope DisableRecording()
+        {
+            return new DisableRecordingScope(this);
+        }
+
+        public struct DisableRecordingScope: IDisposable
+        {
+            private readonly TestRecording _testRecording;
+
+            public DisableRecordingScope(TestRecording testRecording)
+            {
+                _testRecording = testRecording;
+                _testRecording._disableRecording.Value = true;
+            }
+
+            public void Dispose()
+            {
+                _testRecording._disableRecording.Value = false;
             }
         }
     }

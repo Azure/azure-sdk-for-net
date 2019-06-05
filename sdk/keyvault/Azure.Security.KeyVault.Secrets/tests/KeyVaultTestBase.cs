@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -13,7 +15,13 @@ namespace Azure.Security.KeyVault.Test
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
-        protected KeyVaultTestBase(bool isAsync) : base(isAsync)
+        public SecretClient Client { get; set; }
+
+        public Uri VaultUri { get; set; }
+
+        private readonly Queue<(SecretBase Secret, bool Delete)> _secretsToCleanup = new Queue<(SecretBase, bool)>();
+
+        protected KeyVaultTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,15 +36,66 @@ namespace Azure.Security.KeyVault.Test
                     recording.InstrumentClientOptions(new SecretClientOptions())));
         }
 
+        public override void StartTestRecording()
+        {
+            base.StartTestRecording();
+
+            Client = GetClient();
+            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+        }
+
+        [TearDown]
+        public async Task Cleanup()
+        {
+            try
+            {
+                foreach (var cleanupItem in _secretsToCleanup)
+                {
+                    if (cleanupItem.Delete)
+                    {
+                        await Client.DeleteAsync(cleanupItem.Secret.Name);
+                    }
+                }
+
+                foreach (var cleanupItem in _secretsToCleanup)
+                {
+                    await WaitForDeletedSecret(cleanupItem.Secret.Name);
+                }
+
+                foreach (var cleanupItem in _secretsToCleanup)
+                {
+                    await Client.PurgeDeletedAsync(cleanupItem.Secret.Name);
+                }
+
+                foreach (var cleanupItem in _secretsToCleanup)
+                {
+                    await WaitForPurgedSecret(cleanupItem.Secret.Name);
+                }
+            }
+            finally
+            {
+                _secretsToCleanup.Clear();
+            }
+        }
+
+        protected void RegisterForCleanup(SecretBase secret, bool delete = true)
+        {
+            _secretsToCleanup.Enqueue((secret, delete));
+        }
+
         protected void AssertSecretsEqual(Secret exp, Secret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
             AssertSecretsEqual((SecretBase)exp, (SecretBase)act);
         }
 
-        protected void AssertSecretsEqual(SecretBase exp, SecretBase act)
+        protected void AssertSecretsEqual(SecretBase exp, SecretBase act, bool compareId = true)
         {
-            Assert.AreEqual(exp.Id, act.Id);
+            if (compareId)
+            {
+                Assert.AreEqual(exp.Id, act.Id);
+            }
+
             Assert.AreEqual(exp.ContentType, act.ContentType);
             Assert.AreEqual(exp.KeyId, act.KeyId);
             Assert.AreEqual(exp.Managed, act.Managed);
@@ -44,6 +103,55 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.Enabled, act.Enabled);
             Assert.AreEqual(exp.Expires, act.Expires);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
+        }
+
+        protected Task WaitForDeletedSecret(string name, SecretClient client = null, TestRecording recording = null)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using ((recording ?? Recording).DisableRecording())
+            {
+                return TestRetryHelper.RetryAsync(async () => await (client ?? Client).GetDeletedAsync(name));
+            }
+        }
+
+        protected Task WaitForPurgedSecret(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using (Recording.DisableRecording())
+            {
+                return TestRetryHelper.RetryAsync(async () => {
+                    try
+                    {
+                        await Client.GetDeletedAsync(name);
+                        throw new InvalidOperationException("Secret still exists");
+                    }
+                    catch
+                    {
+                        return (Response)null;
+                    }
+                });
+            }
+        }
+
+        protected Task PollForSecret(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return Task.CompletedTask;
+            }
+
+            using (Recording.DisableRecording())
+            {
+                return TestRetryHelper.RetryAsync(async () => await Client.GetAsync(name));
+            }
         }
     }
 }

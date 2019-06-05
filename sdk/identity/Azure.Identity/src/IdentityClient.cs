@@ -70,7 +70,7 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = HttpPipelineMethod.Post;
 
             request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
 
@@ -88,7 +88,7 @@ namespace Azure.Identity
 
             return request;
         }
-        
+
         private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))

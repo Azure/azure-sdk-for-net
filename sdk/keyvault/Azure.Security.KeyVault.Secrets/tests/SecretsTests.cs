@@ -3,108 +3,254 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Security.KeyVault.Secrets;
+using Azure.Core.Testing;
 
 namespace Azure.Security.KeyVault.Test
 {
     public class SecretTests : KeyVaultTestBase
     {
+        private const int PagedSecretCount = 50;
+
         public SecretTests(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task CredentialProvider()
-        {
-            var client = GetClient();
-
-            Secret setResult = await client.SetAsync("CrudBasic", "CrudBasicValue1");
-
-            Secret getResult = await client.GetAsync("CrudBasic");
-
-            AssertSecretsEqual(setResult, getResult);
-
-            DeletedSecret deleteResult = await client.DeleteAsync("CrudBasic");
-
-            AssertSecretsEqual(setResult, deleteResult);
-        }
-
-        [Test]
-        public async Task CrudBasic()
-        {
-            var client = GetClient();
-
-            Secret setResult = await client.SetAsync("CrudBasic", "CrudBasicValue1");
-
-            Secret getResult = await client.GetAsync("CrudBasic");
-
-            Assert.AreEqual("CrudBasic", setResult.Name);
-            Assert.AreEqual("CrudBasicValue1", setResult.Value);
-            //Assert.AreEqual(VaultUri, setResult.Vault);
-
-            AssertSecretsEqual(setResult, getResult);
-
-            getResult.Enabled = false;
-            SecretBase updateResult = await client.UpdateAsync(getResult);
-
-            AssertSecretsEqual(getResult, updateResult);
-
-            DeletedSecret deleteResult = await client.DeleteAsync("CrudBasic");
-
-            AssertSecretsEqual(updateResult, deleteResult);
-        }
-
-        [Test]
         public async Task CrudWithExtendedProps()
         {
-            var exp = new DateTime(637027248124480000, DateTimeKind.Utc);
-            var nbf = exp.AddDays(-30);
+            string secretName = Recording.GenerateId();
 
-            var client = GetClient();
+            Secret setResult = null;
 
-            var secret = new Secret("CrudWithExtendedProps", "CrudWithExtendedPropsValue1")
+            try
             {
-                ContentType = "password",
-                NotBefore = nbf,
-                Expires = exp
-            };
+                var exp = new DateTime(637027248124480000, DateTimeKind.Utc);
+                var nbf = exp.AddDays(-30);
 
-            Secret setResult = await client.SetAsync(secret);
+                var secret = new Secret(secretName, "CrudWithExtendedPropsValue1")
+                {
+                    ContentType = "password",
+                    NotBefore = nbf,
+                    Expires = exp,
+                    Tags =
+                    {
+                        {"tag1", "value1"},
+                        {"tag2", "value2"}
+                    },
+                };
 
-            Assert.AreEqual("password", setResult.ContentType);
-            Assert.AreEqual(nbf, setResult.NotBefore);
-            Assert.AreEqual(exp, setResult.Expires);
+                setResult = await Client.SetAsync(secret);
 
-            Secret getResult = await client.GetAsync("CrudWithExtendedProps");
+                RegisterForCleanup(secret, delete: false);
 
-            AssertSecretsEqual(setResult, getResult);
+                Assert.IsNotEmpty(setResult.Version);
+                Assert.AreEqual("password", setResult.ContentType);
+                Assert.AreEqual(nbf, setResult.NotBefore);
+                Assert.AreEqual(exp, setResult.Expires);
+                Assert.AreEqual(2, setResult.Tags.Count);
+                Assert.AreEqual("value1", setResult.Tags["tag1"]);
+                Assert.AreEqual("value2", setResult.Tags["tag2"]);
+                Assert.AreEqual(secretName, setResult.Name);
+                Assert.AreEqual("CrudWithExtendedPropsValue1", setResult.Value);
+                Assert.AreEqual(VaultUri, setResult.Vault);
+                Assert.AreEqual("Recoverable+Purgeable", setResult.RecoveryLevel);
+                Assert.NotNull(setResult.Created);
+                Assert.NotNull(setResult.Updated);
 
-            DeletedSecret deleteResult = await client.DeleteAsync("CrudWithExtendedProps");
+                Secret getResult = await Client.GetAsync(secretName);
 
-            AssertSecretsEqual(setResult, deleteResult);
+                AssertSecretsEqual(setResult, getResult);
+            }
+            finally
+            {
+                DeletedSecret deleteResult = await Client.DeleteAsync(secretName);
+
+                AssertSecretsEqual(setResult, deleteResult);
+            }
+        }
+
+        [Test]
+        public async Task UpdateEnabled()
+        {
+            string secretName = Recording.GenerateId();
+
+            Secret secret = await Client.SetAsync(secretName, "CrudBasicValue1");
+
+            RegisterForCleanup(secret);
+
+            secret.Enabled = false;
+
+            SecretBase updateResult = await Client.UpdateAsync(secret);
+
+            AssertSecretsEqual(secret, updateResult);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
+
+            secret.Enabled = true;
+
+            await Client.UpdateAsync(secret);
         }
 
         [Test]
         public async Task BackupRestore()
         {
-            var client = GetClient();
+            string secretName = Recording.GenerateId();
 
-            Secret setResult = await client.SetAsync("BackupRestore", "BackupRestore");
+            Secret secret = await Client.SetAsync(secretName, "BackupRestore");
 
-            byte[] backup = await client.BackupAsync("BackupRestore");
+            RegisterForCleanup(secret);
 
-            await client.DeleteAsync("BackupRestore");
+            byte[] backup = await Client.BackupAsync(secretName);
 
-            SecretBase restoreResult = await client.RestoreAsync(backup);
+            await Client.DeleteAsync(secretName);
+            await WaitForDeletedSecret(secretName);
 
-            AssertSecretsEqual(setResult, restoreResult);
+            await Client.PurgeDeletedAsync(secretName);
+            await WaitForPurgedSecret(secretName);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedAsync(secretName));
+
+            SecretBase restoreResult = await Client.RestoreAsync(backup);
+
+            AssertSecretsEqual(secret, restoreResult);
         }
 
-        private DateTime UtcNowMs()
+        [Test]
+        public async Task DeleteSecret()
         {
-            return DateTime.MinValue.ToUniversalTime() + TimeSpan.FromMilliseconds(new TimeSpan(DateTime.UtcNow.Ticks).TotalMilliseconds);
+            string secretName = Recording.GenerateId();
+
+            Response<Secret> secret = await Client.SetAsync(secretName, "value");
+
+            RegisterForCleanup(secret, delete: false);
+
+            Response<DeletedSecret> deletedSecret = await Client.DeleteAsync(secretName);
+
+            AssertSecretsEqual(secret, deletedSecret);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
+        }
+
+        [Test]
+        public async Task GetDeletedSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            Response<Secret> secret = await Client.SetAsync(secretName, "value");
+
+            RegisterForCleanup(secret, delete: false);
+
+            Response<DeletedSecret> deletedSecret = await Client.DeleteAsync(secretName);
+
+            await WaitForDeletedSecret(secretName);
+
+            Response<DeletedSecret> polledSecret = await Client.GetDeletedAsync(secretName);
+
+            AssertSecretsEqual(secret, polledSecret);
+        }
+
+        [Test]
+        public async Task RecoverSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            Secret secret = await Client.SetAsync(secretName, "value");
+
+            RegisterForCleanup(secret);
+
+            DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
+
+            await WaitForDeletedSecret(secretName);
+
+            SecretBase recoverSecretResult = await Client.RecoverDeletedAsync(secretName);
+
+            await PollForSecret(secretName);
+
+            Secret recoveredSecret = await Client.GetAsync(secretName);
+
+            AssertSecretsEqual(secret, deletedSecret);
+            AssertSecretsEqual(secret, recoverSecretResult);
+            AssertSecretsEqual(secret, recoveredSecret);
+        }
+
+        [Test]
+        public async Task GetSecrets()
+        {
+            string secretName = Recording.GenerateId();
+
+            List<Secret> createdSecrets = new List<Secret>();
+            for (int i = 0; i < PagedSecretCount; i++)
+            {
+                Secret secret = await Client.SetAsync(secretName + i, i.ToString());
+                createdSecrets.Add(secret);
+                RegisterForCleanup(secret);
+            }
+
+            List<Response<SecretBase>> allSecrets = await Client.GetAllAsync().ToEnumerableAsync();
+
+            foreach (Secret createdSecret in createdSecrets)
+            {
+                SecretBase returnedSecret = allSecrets.Single(s => s.Value.Name == createdSecret.Name);
+                AssertSecretsEqual(createdSecret, returnedSecret, compareId: false);
+            }
+        }
+
+        [Test]
+        public async Task GetSecretsVersions()
+        {
+            string secretName = Recording.GenerateId();
+
+            List<Secret> createdSecrets = new List<Secret>();
+            for (int i = 0; i < PagedSecretCount; i++)
+            {
+                Secret secret = await Client.SetAsync(secretName, i.ToString());
+                createdSecrets.Add(secret);
+            }
+
+            RegisterForCleanup(createdSecrets.First());
+
+            List<Response<SecretBase>> allSecrets = await Client.GetAllVersionsAsync(secretName).ToEnumerableAsync();
+
+            foreach (Secret createdSecret in createdSecrets)
+            {
+                SecretBase returnedSecret = allSecrets.Single(s => s.Value.Id == createdSecret.Id);
+                AssertSecretsEqual(createdSecret, returnedSecret);
+            }
+        }
+
+        [Test]
+        public async Task GetDeletedSecrets()
+        {
+            string secretName = Recording.GenerateId();
+
+            List<Secret> deletedSecrets = new List<Secret>();
+            for (int i = 0; i < PagedSecretCount; i++)
+            {
+                Secret secret = await Client.SetAsync(secretName + i, i.ToString());
+                deletedSecrets.Add(secret);
+                await Client.DeleteAsync(secret.Name);
+
+                RegisterForCleanup(secret, delete: false);
+            }
+
+            foreach (Secret deletedSecret in deletedSecrets)
+            {
+                await WaitForDeletedSecret(deletedSecret.Name);
+            }
+
+            List<Response<DeletedSecret>> allSecrets = await Client.GetAllDeletedAsync().ToEnumerableAsync();
+
+            foreach (Secret deletedSecret in deletedSecrets)
+            {
+                SecretBase returnedSecret = allSecrets.Single(s => s.Value.Name == deletedSecret.Name);
+                AssertSecretsEqual(deletedSecret, returnedSecret, compareId: false);
+            }
         }
     }
 }

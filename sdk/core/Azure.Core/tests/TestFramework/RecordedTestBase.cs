@@ -69,7 +69,7 @@ namespace Azure.Core.Testing
         [TearDown]
         public virtual void StopTestRecording()
         {
-            Recording.Dispose();
+            Recording?.Dispose(TestContext.CurrentContext.Result.FailCount == 0);
         }
     }
 }
