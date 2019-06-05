@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("tokenA", await provider.GetTokenAsync(new string[] { "scopeA" }));
             Assert.AreEqual("tokenB", await provider.GetTokenAsync(new string[] { "scopeB" }));
             Assert.AreEqual("tokenC", await provider.GetTokenAsync(new string[] { "scopeC" }));
-            // await Assert.ThrowsAsync<InvalidOperationException>(async () => await provider.GetTokenAsync(new string[] { "scopeD" }));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await provider.GetTokenAsync(new string[] { "scopeD" }));
         }
 
         [Test]
@@ -86,8 +86,8 @@ namespace Azure.Identity.Tests
             var provider = new AggregateCredential(cred1, cred2, cred3);
 
             Assert.AreEqual("tokenA", await provider.GetTokenAsync(new string[] { "scopeA" }));
-            // await Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeB" }));
-            // await Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeC" }));
+            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeB" }));
+            Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeC" }));
         }
     }
 }
