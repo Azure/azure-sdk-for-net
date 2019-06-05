@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Azure Virtual Machine image. To get the list of all Azure Marketplace image references verified by Azure Batch, see 
-    /// <see cref="PoolOperations.ListNodeAgentSkus"/> and <see cref="NodeAgentSku.VerifiedImageReferences"/>.
+    /// A reference to an Azure Virtual Machines Marketplace Image or a custom Azure Virtual Machine Image. To get the list 
+    /// of all Azure Marketplace Image references verified by Azure Batch, see <see cref="PoolOperations.ListSupportedImages"/>.
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Batch
         #region ImageReference
 
         /// <summary>
-        /// Gets the offer type of the Azure Virtual Machines Marketplace image.
+        /// Gets the offer type of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch
         public string Offer { get; }
 
         /// <summary>
-        /// Gets the publisher of the Azure Virtual Machines Marketplace image.
+        /// Gets the publisher of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch
         public string Publisher { get; }
 
         /// <summary>
-        /// Gets the SKU of the Azure Virtual Machines Marketplace image.
+        /// Gets the SKU of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Batch
         public string Sku { get; }
 
         /// <summary>
-        /// Gets the version of the Azure Virtual Machines Marketplace image.
+        /// Gets the version of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// If this property is not specified, it defaults to 'latest', which is the latest version of the image.
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Batch
         public string Version { get; }
 
         /// <summary>
-        /// Gets the ARM resource identifier of the virtual machine image. Computes nodes of the pool will be created using 
+        /// Gets the ARM resource identifier of the Virtual Machine Image. Computes nodes of the pool will be created using 
         /// this custom image. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
         /// </summary>
         /// <remarks>
         /// This property is mutually exclusive with other ImageReference properties. The virtual machine image must be in 
         /// the same region and subscription as the Azure Batch account. For information about the firewall settings for 
-        /// the Batch node agent to communicate with Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// the Batch Node Agent to communicate with Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         public string VirtualMachineImageId { get; }
 

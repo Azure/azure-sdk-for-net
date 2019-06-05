@@ -16,21 +16,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for ListNodeAgentSkus operation.
+    /// Defines headers for ListSupportedImages operation.
     /// </summary>
-    public partial class AccountListNodeAgentSkusHeaders
+    public partial class AccountListSupportedImagesHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the AccountListNodeAgentSkusHeaders
+        /// Initializes a new instance of the AccountListSupportedImagesHeaders
         /// class.
         /// </summary>
-        public AccountListNodeAgentSkusHeaders()
+        public AccountListSupportedImagesHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AccountListNodeAgentSkusHeaders
+        /// Initializes a new instance of the AccountListSupportedImagesHeaders
         /// class.
         /// </summary>
         /// <param name="clientRequestId">The client-request-id provided by the
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If-None-Match headers.</param>
         /// <param name="lastModified">The time at which the resource was last
         /// modified.</param>
-        public AccountListNodeAgentSkusHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
+        public AccountListSupportedImagesHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
         {
             ClientRequestId = clientRequestId;
             RequestId = requestId;

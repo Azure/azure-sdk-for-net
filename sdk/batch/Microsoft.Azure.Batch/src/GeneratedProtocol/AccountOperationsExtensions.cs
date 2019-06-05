@@ -22,34 +22,34 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class AccountOperationsExtensions
     {
             /// <summary>
-            /// Lists all node agent SKUs supported by the Azure Batch service.
+            /// Lists all Virtual Machine Images supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='accountListNodeAgentSkusOptions'>
+            /// <param name='accountListSupportedImagesOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeAgentSku> ListNodeAgentSkus(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions))
+            public static IPage<ImageInformation> ListSupportedImages(this IAccountOperations operations, AccountListSupportedImagesOptions accountListSupportedImagesOptions = default(AccountListSupportedImagesOptions))
             {
-                return operations.ListNodeAgentSkusAsync(accountListNodeAgentSkusOptions).GetAwaiter().GetResult();
+                return operations.ListSupportedImagesAsync(accountListSupportedImagesOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all node agent SKUs supported by the Azure Batch service.
+            /// Lists all Virtual Machine Images supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='accountListNodeAgentSkusOptions'>
+            /// <param name='accountListSupportedImagesOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeAgentSku>> ListNodeAgentSkusAsync(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ImageInformation>> ListSupportedImagesAsync(this IAccountOperations operations, AccountListSupportedImagesOptions accountListSupportedImagesOptions = default(AccountListSupportedImagesOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNodeAgentSkusWithHttpMessagesAsync(accountListNodeAgentSkusOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSupportedImagesWithHttpMessagesAsync(accountListSupportedImagesOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all node agent SKUs supported by the Azure Batch service.
+            /// Lists all Virtual Machine Images supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,16 +98,16 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='accountListNodeAgentSkusNextOptions'>
+            /// <param name='accountListSupportedImagesNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeAgentSku> ListNodeAgentSkusNext(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions))
+            public static IPage<ImageInformation> ListSupportedImagesNext(this IAccountOperations operations, string nextPageLink, AccountListSupportedImagesNextOptions accountListSupportedImagesNextOptions = default(AccountListSupportedImagesNextOptions))
             {
-                return operations.ListNodeAgentSkusNextAsync(nextPageLink, accountListNodeAgentSkusNextOptions).GetAwaiter().GetResult();
+                return operations.ListSupportedImagesNextAsync(nextPageLink, accountListSupportedImagesNextOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all node agent SKUs supported by the Azure Batch service.
+            /// Lists all Virtual Machine Images supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -115,15 +115,15 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='accountListNodeAgentSkusNextOptions'>
+            /// <param name='accountListSupportedImagesNextOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeAgentSku>> ListNodeAgentSkusNextAsync(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ImageInformation>> ListSupportedImagesNextAsync(this IAccountOperations operations, string nextPageLink, AccountListSupportedImagesNextOptions accountListSupportedImagesNextOptions = default(AccountListSupportedImagesNextOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNodeAgentSkusNextWithHttpMessagesAsync(nextPageLink, accountListNodeAgentSkusNextOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSupportedImagesNextWithHttpMessagesAsync(nextPageLink, accountListSupportedImagesNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

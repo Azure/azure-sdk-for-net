@@ -57,7 +57,7 @@
           "Key": {
             "Type": "WindowsConfiguration",
             "Name": "WindowsConfiguration",
-            "SummaryComment": "Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference property specifies a Linux OS image.",
+            "SummaryComment": "Windows operating system settings on the Virtual Machine. This property must not be specified if the ImageReference property specifies a Linux OS image.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"

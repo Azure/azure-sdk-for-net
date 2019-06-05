@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     {
         /// <summary>The environment variable value for the event hubs connection string, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsConnectionStringInstance =
-            new Lazy<string>( () => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"), LazyThreadSafetyMode.PublicationOnly);
 
         /// <summary>
         ///   The connection string for the Event Hubs namespace instance to be used for

@@ -1,8 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -62,7 +66,7 @@ namespace Azure.Security.KeyVault.Test
 
             await foreach (var secret in _client.GetAllVersionsAsync(_secretName))
             {
-                Assert.True(_versions.TryGetValue(secret.Id.ToString(), out Secret exp));
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
 
                 AssertSecretsEqual(exp, secret);
 
@@ -73,64 +77,20 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        public async Task ListVersionEnumeratorMoveNext()
+        public async Task GetAllVersionsAsyncEnumerator()
         {
             int actVersionCount = 0;
 
-            var enumerator = _client.GetAllVersionsAsync(_secretName);
-
+            IAsyncEnumerator<Response<SecretBase>> enumerator = _client.GetAllVersionsAsync(_secretName).GetAsyncEnumerator();
             while (await enumerator.MoveNextAsync())
             {
-                Assert.True(_versions.TryGetValue(enumerator.Current.Id.ToString(), out Secret exp));
+                var secret = enumerator.Current;
 
-                AssertSecretsEqual(exp, enumerator.Current);
+                Assert.True(_versions.TryGetValue(secret.Value.Id.ToString(), out Secret exp));
+
+                AssertSecretsEqual(exp, secret);
 
                 actVersionCount++;
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-
-        [Test]
-        public async Task GetAllVersionsByPageAsyncForEach()
-        {
-            int actVersionCount = 0;
-
-            await foreach (Page<SecretBase> currentPage in _client.GetAllVersionsAsync(_secretName).ByPage())
-            {
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
-
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
-
-                    actVersionCount++;
-                }
-            }
-
-            Assert.AreEqual(VersionCount, actVersionCount);
-        }
-
-        [Test]
-        public async Task ListVersionByPageEnumeratorMoveNext()
-        {
-            int actVersionCount = 0;
-
-            var enumerator = _client.GetAllVersionsAsync(_secretName).ByPage();
-
-            while (await enumerator.MoveNextAsync())
-            {
-                Page<SecretBase> currentPage = enumerator.Current;
-
-                for (int i = 0; i < currentPage.Items.Length; i++)
-                {
-                    Assert.True(_versions.TryGetValue(currentPage.Items[i].Id.ToString(), out Secret exp));
-
-                    AssertSecretsEqual(exp, currentPage.Items[i]);
-
-                    actVersionCount++;
-                }
             }
 
             Assert.AreEqual(VersionCount, actVersionCount);

@@ -1,5 +1,22 @@
 # Microsoft.Azure.Batch release notes
 
+## Changes in 11.0.0
+### Features
+ - Added `maxBackoff` parameter to `RetryPolicyProvider.ExponentialRetryProvider`. This option was already available on the `ExponentialRetry` constructor, 
+   but adding it on `RetryPolicyProvider.ExponentialRetryProvider` makes it easier to use.
+ - **[Breaking]** Replaced `PoolOperations.ListNodeAgentSKUs` with `PoolOperations.ListSupportedImages`. `ListSupportedImages` contains all of the same information originally available in 
+   `ListNodeAgentSKUs` but in a clearer format. New non-verified images are also now returned. Additional information about `Capabilities` and `BatchSupportEndOfLife` is accessible on the 
+   `ImageInformation` object returned by `ListSupportedImages`.
+ - Now support network security rules blocking network access to a `CloudPool` based on the source port of the traffic. This is done via the `SourcePortRanges` property on `NetworkSecurityGroupRule`.
+ - When running a container, Batch now supports executing the task in the container working directory or in the Batch task working directory. This is controlled by the 
+   `WorkingDirectory` property on `TaskContainerSettings`.
+
+### Bug fixes
+ - Improved various confusing or incomplete documentation.
+
+### REST API version
+This version of the Batch .NET client library targets version 2019-06-01.9.0 of the Azure Batch REST API.
+
 ## Changes in 10.1.0
 - Added `net461` and `netstandard2.0` target frameworks.
 - Updated `Microsoft.AspNetCore.WebUtilities` to `1.1.2` for the `netstandard1.4` target framework.

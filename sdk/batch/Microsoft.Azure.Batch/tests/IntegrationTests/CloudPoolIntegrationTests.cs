@@ -433,8 +433,8 @@ namespace BatchClientIntegrationTests
                 using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
                 {
                     string poolId = "Bug1432812-" + TestUtilities.GetMyName();
-                    const string poolASFormulaOrig = "$TargetDedicatedNodes = 1;";
-                    const string poolASFormula2 = "$TargetDedicatedNodes=2;";
+                    const string poolASFormulaOrig = "$TargetDedicatedNodes=0;";
+                    const string poolASFormula2 = "$TargetDedicatedNodes=1;";
                     // craft exactly how it would be returned by Evaluate so indexof can work
 
                     try
@@ -447,6 +447,8 @@ namespace BatchClientIntegrationTests
                             unboundPool.AutoScaleFormula = poolASFormulaOrig;
 
                             unboundPool.Commit();
+
+                            TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
                         }
 
                         // EvaluteAutoScale
@@ -470,15 +472,7 @@ namespace BatchClientIntegrationTests
                         Assert.False(boundPool.AutoScaleEnabled.Value);
 
                         // EnableAutoScale
-
-                        while (AllocationState.Steady != boundPool.AllocationState)
-                        {
-                            this.testOutputHelper.WriteLine("Bug1432812SetAutoScaleMissingOnPoolPoolMgr waiting for pool to be steady before EnableAutoScale call.");
-
-                            System.Threading.Thread.Sleep(5000);
-
-                            boundPool.Refresh();
-                        }
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromMinutes(5)).Wait();
 
                         boundPool.EnableAutoScale(poolASFormula2);
 
@@ -619,8 +613,9 @@ namespace BatchClientIntegrationTests
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: targetDedicated);
                         pool.Commit();
 
-                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
 
+                        this.testOutputHelper.WriteLine($"Created pool {poolId}");
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
@@ -670,6 +665,8 @@ namespace BatchClientIntegrationTests
                         //Create a pool
                         CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
                         pool.Commit();
+
+                        TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromSeconds(20)).Wait();
 
                         CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
 
@@ -855,7 +852,7 @@ namespace BatchClientIntegrationTests
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 imageDetails.ImageReference,
-                                imageDetails.NodeAgentSku.Id)
+                                imageDetails.NodeAgentSkuId)
                             {
                                 LicenseType = "Windows_Server"
                             },
@@ -900,7 +897,7 @@ namespace BatchClientIntegrationTests
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 imageDetails.ImageReference,
-                                imageDetails.NodeAgentSku.Id)
+                                imageDetails.NodeAgentSkuId)
                             {
                                 DataDisks =  new List<DataDisk>
                                 {
@@ -949,7 +946,7 @@ namespace BatchClientIntegrationTests
                             new VirtualMachineConfiguration(
                                 new ImageReference(
                                     $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.BatchAccountResourceGroup}/providers/Microsoft.Compute/images/FakeImage"),
-                                imageDetails.NodeAgentSku.Id),
+                                imageDetails.NodeAgentSkuId),
                             targetDedicated);
                         var exception = Assert.Throws<BatchException>(() => pool.Commit());
 
@@ -1046,6 +1043,35 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void ListSupportedImages()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
+                {
+                    var supportedImages = batchCli.PoolOperations.ListSupportedImages().ToList();
+
+                    Assert.True(supportedImages.Count > 0);
+
+                    foreach (ImageInformation imageInfo in supportedImages)
+                    {
+                        this.testOutputHelper.WriteLine("ImageInformation:");
+                        this.testOutputHelper.WriteLine("   skuid: " + imageInfo.NodeAgentSkuId);
+                        this.testOutputHelper.WriteLine("   OSType: " + imageInfo.OSType);
+                        this.testOutputHelper.WriteLine("   publisher: " + imageInfo.ImageReference.Publisher);
+                        this.testOutputHelper.WriteLine("   offer: " + imageInfo.ImageReference.Offer);
+                        this.testOutputHelper.WriteLine("   sku: " + imageInfo.ImageReference.Sku);
+                        this.testOutputHelper.WriteLine("   version: " + imageInfo.ImageReference.Version);
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
         }
 
         #region Test helpers
@@ -1586,40 +1612,6 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
-        }
-
-        [Fact]
-        [LiveTest]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void ListNodeAgentSkus()
-        {
-            Action test = () =>
-            {
-                using (BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment()))
-                {
-                    var nas = batchCli.PoolOperations.ListNodeAgentSkus().ToList();
-
-                    Assert.True(nas.Count > 0);
-
-                    foreach (NodeAgentSku curNAS in nas)
-                    {
-                        this.testOutputHelper.WriteLine("NAS:");
-                        this.testOutputHelper.WriteLine("   skuid: " + curNAS.Id);
-                        this.testOutputHelper.WriteLine("   OSType: " + curNAS.OSType);
-
-                        foreach (ImageReference verifiedImageReference in curNAS.VerifiedImageReferences)
-                        {
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs publisher: " + verifiedImageReference.Publisher);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs offer: " + verifiedImageReference.Offer);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs sku: " + verifiedImageReference.Sku);
-                            this.testOutputHelper.WriteLine("   verifiedImageRefs version: " + verifiedImageReference.Version);
-                        }
-                            
-                    }
-                }
-            };
-
-            SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
         }
     }
 }

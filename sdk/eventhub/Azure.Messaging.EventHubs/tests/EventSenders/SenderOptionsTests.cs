@@ -9,7 +9,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class SenderOptionsTests
     {
         /// <summary>
@@ -33,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.PartitionId, Is.EqualTo(options.PartitionId), "The partition identifier of the clone should match.");
             Assert.That(clone.Timeout, Is.EqualTo(options.Timeout), "The  timeout of the clone should match.");
 
-            Assert.That(clone.Retry, Is.EqualTo(options.Retry), "The retry of the clone should be considered equal.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)clone.Retry, (ExponentialRetry)options.Retry), "The retry of the clone should be considered equal.");
             Assert.That(clone.Retry, Is.Not.SameAs(options.Retry), "The retry of the clone should be a copy, not the same instance.");
         }
 
@@ -45,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void DefaultTimeoutIsValidated()
         {
-            Assert.That(() => new SenderOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new SenderOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>

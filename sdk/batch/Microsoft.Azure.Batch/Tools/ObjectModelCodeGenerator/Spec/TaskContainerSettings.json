@@ -42,6 +42,22 @@
         "HideSetter": true
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.ContainerWorkingDirectory?",
+        "Name": "WorkingDirectory",
+        "SummaryComment": "The location of the container task working directory.",
+        "RemarksComment": "If not specified, the default is <see cref=\"Common.ContainerWorkingDirectory.TaskWorkingDirectory\"/>.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional",
+        "HideSetter": true
+      },
+      "Value": {
+        "Type": "Models.ContainerWorkingDirectory?",
+        "Name": "WorkingDirectory"
+      }
     }
   ]
 }

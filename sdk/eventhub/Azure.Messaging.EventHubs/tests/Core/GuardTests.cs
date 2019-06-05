@@ -14,7 +14,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class GuardTests
     {
         /// <summary>
@@ -50,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ArgumentNotNullEnforcesInvariants()
         {
-            Assert.That(() => Guard.ArgumentNotNull("argument", null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => Guard.ArgumentNotNull("argument", null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ArgumentNotNullOrEmptyEnforcesInvariants(string value)
         {
-            Assert.That(() => Guard.ArgumentNotNullOrEmpty(nameof(value), value), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => Guard.ArgumentNotNullOrEmpty(nameof(value), value), Throws.ArgumentException);
         }
 
         /// <summary>
@@ -105,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("         ")]
         public void ArgumentNotNullOrWhitespaceEnforcesInvariants(string value)
         {
-            Assert.That(() => Guard.ArgumentNotNullOrWhitespace(nameof(value), value), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => Guard.ArgumentNotNullOrWhitespace(nameof(value), value), Throws.ArgumentException);
         }
 
         /// <summary>
@@ -174,6 +173,40 @@ namespace Azure.Messaging.EventHubs.Tests
                                                      int maxValue)
         {
             Assert.That(() => Guard.ArgumentInRange(nameof(value), value, minValue, maxValue), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotTooLong" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("1", 0)]
+        [TestCase("1", -1)]
+        [TestCase("Hello", 3)]
+        [TestCase("Hello There I am a very long argument that is typed", 10)]
+        public void ArgumentNotTooLongEnforcesInvariants(string value,
+                                                         int maxLength)
+        {
+            Assert.That(() => Guard.ArgumentNotTooLong(nameof(value), value, maxLength), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotTooLong" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null, 0)]
+        [TestCase(null, 10)]
+        [TestCase("", 0)]
+        [TestCase("", 1)]
+        [TestCase("1", 1)]
+        [TestCase("Hello", 5)]
+        [TestCase("Hello", 7)]
+        [TestCase("This is a really long argument that I am typing.", 500)]
+        public void ArgumentNotTooLongAllowsValidValues(string value,
+                                                        int maxLength)
+        {
+            Assert.That(() => Guard.ArgumentNotTooLong(nameof(value), value, maxLength), Throws.Nothing);
         }
     }
 }

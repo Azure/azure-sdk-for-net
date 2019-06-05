@@ -9,7 +9,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class ReceiverOptionsTests
     {
         /// <summary>
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The default maximum wait time of the clone should match.");
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
 
-            Assert.That(clone.Retry, Is.EqualTo(options.Retry), "The retry of the clone should be considered equal.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)clone.Retry, (ExponentialRetry)options.Retry), "The retry of the clone should be considered equal.");
             Assert.That(clone.Retry, Is.Not.SameAs(options.Retry), "The retry of the clone should be a copy, not the same instance.");
         }
 
@@ -66,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new MockOptions();
             var tooLongIdentifier = new String('x', (options.MaxIdentifierLength + 1));
 
-            Assert.That(() => options.Identifier = tooLongIdentifier, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => options.Identifier = tooLongIdentifier, Throws.ArgumentException);
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void DefaultMaximumReceiveWaitTimeIsValidated()
         {
-            Assert.That(() => new ReceiverOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new ReceiverOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>

@@ -36,16 +36,17 @@ namespace Microsoft.Azure.Batch
         {
             return new RetryPolicyProvider(new LinearRetry(deltaBackoff, maxRetries));
         }
-        
+
         /// <summary>
         /// Creates a new <see cref="RetryPolicyProvider"/> using the <see cref="ExponentialRetry"/> policy.
         /// </summary>
         /// <param name="deltaBackoff">The backoff interval between retries, where the resulting backoff is 2^n * deltaBackoff (where n is the number of retries)</param>
         /// <param name="maxRetries">The maximum number of retry attempts.</param>
+        /// <param name="maxBackoff">The maximum amount of time to back off between attempts.</param>
         /// <returns>A provider configured to perform exponential retries using the specified backoff and max retries.</returns>
-        public static RetryPolicyProvider ExponentialRetryProvider(TimeSpan deltaBackoff, int maxRetries)
+        public static RetryPolicyProvider ExponentialRetryProvider(TimeSpan deltaBackoff, int maxRetries, TimeSpan? maxBackoff = null)
         {
-            return new RetryPolicyProvider(new ExponentialRetry(deltaBackoff, maxRetries));
+            return new RetryPolicyProvider(new ExponentialRetry(deltaBackoff, maxRetries, maxBackoff));
         }
 
         /// <summary>

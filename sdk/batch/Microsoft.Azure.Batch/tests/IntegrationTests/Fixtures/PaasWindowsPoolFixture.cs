@@ -43,9 +43,13 @@
 
                 // used for tests of StartTask(info)
                 st.EnvironmentSettings = new List<EnvironmentSetting>
-                    {
-                        new EnvironmentSetting("key", "value")
-                    };
+                {
+                    new EnvironmentSetting("key", "value")
+                };
+                st.UserIdentity = new UserIdentity(
+                    autoUserSpecification: new AutoUserSpecification(
+                        scope: AutoUserScope.Pool,
+                        elevationLevel: ElevationLevel.NonAdmin));
                 currentPool.StartTask = st;
 
                 currentPool.Commit();
