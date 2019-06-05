@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task CrudWithExtendedProps()
         {
-            var exp = new DateTime(637027248124480000, DateTimeKind.Utc);
+            var exp = new DateTimeOffset(new DateTime(637027248124480000, DateTimeKind.Utc));
             var nbf = exp.AddDays(-30);
 
             var client = GetClient();
