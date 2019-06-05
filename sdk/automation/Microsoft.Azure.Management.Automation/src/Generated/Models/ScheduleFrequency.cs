@@ -21,5 +21,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Hour = "Hour";
         public const string Week = "Week";
         public const string Month = "Month";
+        /// <summary>
+        /// The minimum allowed interval for Minute schedules is 15 minutes.
+        /// </summary>
+        public const string Minute = "Minute";
     }
 }
