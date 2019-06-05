@@ -7,273 +7,209 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1034df94-f8b7-432b-9751-20fcad9929c8"
+          "068d9828-b306-4963-8b19-a95665b915c5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"77cd0469-e5c0-487f-873d-b6df74bdd7e9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/DefaultResourceGroup-EUS\",\r\n      \"name\": \"DefaultResourceGroup-EUS\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2\",\r\n      \"name\": \"demo-4657310011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6653292210052018-paasv2\",\r\n      \"name\": \"demo-6653292210052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6921270011052018-paasv2\",\r\n      \"name\": \"demo-6921270011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-8646340811052018-paasv2\",\r\n      \"name\": \"demo-8646340811052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"9a37bae7-98fa-4aa8-9089-d6b9fbcfa705\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NewTestRG\",\r\n      \"name\": \"NewTestRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"b37f33c9-4882-4f7d-99e6-063175856fcc\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest06385\",\r\n      \"name\": \"RG-ADETest06385\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest52113\",\r\n      \"name\": \"RG-ADETest52113\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest76180\",\r\n      \"name\": \"RG-ADETest76180\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"fbb85567-9a42-4601-8dbe-61ea49afa392\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RGMigrateSKU6333323140518\",\r\n      \"name\": \"RGMigrateSKU6333323140518\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm130306\",\r\n      \"name\": \"testadm130306\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"5a74891d-f21f-4e0c-b8fe-89bea53ad9ad\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm150433\",\r\n      \"name\": \"testadm150433\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testwatchdog-15200052\",\r\n      \"name\": \"testwatchdog-15200052\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"4aaa939d-6c31-4b67-be1b-f950dd769df7\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:36 GMT"
+          "Wed, 05 Jun 2019 01:05:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "c6e398dd-5f35-4782-a8ee-31b2c4ace525"
+          "b514959d-9ac9-43ff-b129-96783ba1aab5"
         ],
         "x-ms-correlation-request-id": [
-          "c6e398dd-5f35-4782-a8ee-31b2c4ace525"
+          "b514959d-9ac9-43ff-b129-96783ba1aab5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203136Z:c6e398dd-5f35-4782-a8ee-31b2c4ace525"
+          "WESTUS:20190605T010501Z:b514959d-9ac9-43ff-b129-96783ba1aab5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "2d7528ff-a816-4b09-84cc-aa0dfe39a99c"
         ],
-        "accept-language": [
-          "en-US"
+        "Content-Length": [
+          "4407"
         ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1\",\r\n      \"name\": \"alsantamrg1\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-0109590504062019-paasv2\",\r\n      \"name\": \"demo-0109590504062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-0609282304062019-paasv2\",\r\n      \"name\": \"demo-0609282304062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-1941370603062019-paasv2\",\r\n      \"name\": \"demo-1941370603062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-3023420604062019-paasv2\",\r\n      \"name\": \"demo-3023420604062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-5906400702062019-paasv2\",\r\n      \"name\": \"demo-5906400702062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6009030702062019-paasv2\",\r\n      \"name\": \"demo-6009030702062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-7549562301062019-paasv2\",\r\n      \"name\": \"demo-7549562301062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-8324401503062019-paasv2\",\r\n      \"name\": \"demo-8324401503062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-9504381403062019-paasv2\",\r\n      \"name\": \"demo-9504381403062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-9631330504062019-paasv2\",\r\n      \"name\": \"demo-9631330504062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-9914540601062019-paasv2\",\r\n      \"name\": \"demo-9914540601062019-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NetworkWatcherRG\",\r\n      \"name\": \"NetworkWatcherRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/rmsfe2etest40603145541\",\r\n      \"name\": \"rmsfe2etest40603145541\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"8153c398-97be-4686-a442-bdb8dae3e256\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtcmcxL3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2368c259-516f-4628-9d40-20e5b036a3ed"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:39 GMT"
+          "Wed, 05 Jun 2019 01:05:01 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11999"
         ],
         "x-ms-request-id": [
-          "b8294ae4-3a61-4f78-ac51-42f7ca4085e3"
+          "5e975481-9f29-4c87-bf7d-47688d1d37a6"
         ],
         "x-ms-correlation-request-id": [
-          "b8294ae4-3a61-4f78-ac51-42f7ca4085e3"
+          "5e975481-9f29-4c87-bf7d-47688d1d37a6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203139Z:b8294ae4-3a61-4f78-ac51-42f7ca4085e3"
+          "WESTUS:20190605T010501Z:5e975481-9f29-4c87-bf7d-47688d1d37a6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/DefaultResourceGroup-EUS/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRSZXNvdXJjZUdyb3VwLUVVUy9yZXNvdXJjZXM/JGZpbHRlcj1yZXNvdXJjZVR5cGUlMjBlcSUyMCdNaWNyb3NvZnQuU2VydmljZUZhYnJpYyUyRmNsdXN0ZXJzJyZhcGktdmVyc2lvbj0yMDE1LTExLTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "11cd9429-a98a-4ff5-9e0c-d0e13d66d01f"
         ],
-        "accept-language": [
-          "en-US"
+        "Content-Length": [
+          "306"
         ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1\",\r\n      \"name\": \"alsantamrg1\",\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"resourceType\": \"Service Fabric\",\r\n        \"clusterName\": \"alsantamrg1\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtcmcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9hbHNhbnRhbXJnMT9hcGktdmVyc2lvbj0yMDE5LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "94c201fc-0e48-49a8-abff-945a17c5a843"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:42 GMT"
+          "Wed, 05 Jun 2019 01:05:01 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "51b181be-ff8f-4e3a-9983-ca56683aa9f8"
-        ],
-        "x-ms-correlation-request-id": [
-          "51b181be-ff8f-4e3a-9983-ca56683aa9f8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203142Z:51b181be-ff8f-4e3a-9983-ca56683aa9f8"
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcmVzb3VyY2VzPyRmaWx0ZXI9cmVzb3VyY2VUeXBlJTIwZXElMjAnTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMlMkZjbHVzdGVycycmYXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "8c8e3db4-8c26-45b0-ba36-351e99e4e4d6"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n      \"name\": \"demo465731001105201\",\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"resourceType\": \"Service Fabric\",\r\n        \"clusterName\": \"demo465731001105201\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 15 May 2018 20:31:45 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "a2c03b8f-020f-42de-8003-0f8dab2a81a2"
+          "55d81a3b-8e78-42b8-8d45-ebce0d300323"
         ],
         "x-ms-correlation-request-id": [
-          "a2c03b8f-020f-42de-8003-0f8dab2a81a2"
+          "55d81a3b-8e78-42b8-8d45-ebce0d300323"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203145Z:a2c03b8f-020f-42de-8003-0f8dab2a81a2"
+          "WESTUS:20190605T010501Z:55d81a3b-8e78-42b8-8d45-ebce0d300323"
         ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+        "Content-Length": [
+          "2425"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201?api-version=2018-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzL2RlbW80NjU3MzEwMDExMDUyMDE/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4d623c70-3187-4e0a-a7a4-c96f3a042d4f"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"SouthCentralUs\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n  \"name\": \"demo465731001105201\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636616207780864997\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"clusterCodeVersion\": \"6.2.191.1\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://demo4657310011052018.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"A18681648A06235860B773289191F13AB6AF6A94\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"supplog4657310011052018\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://supplog4657310011052018.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://supplog4657310011052018.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://supplog4657310011052018.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Linux\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"NodeType0\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Silver\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.2.191.1\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Ubuntu\"\r\n      }\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"westus\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1\",\r\n  \"name\": \"alsantamrg1\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952719768526176\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"clusterCodeVersion\": \"6.4.658.9590\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://alsantamrg1.westus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://westus.servicefabric.azure.com/runtime/clusters/7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"CECD2795068B319125E809D9A911BD8D8F91CAF7\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"qotzqezmie7n22\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://qotzqezmie7n22.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://qotzqezmie7n22.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://qotzqezmie7n22.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"nt1vm\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtcmcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9hbHNhbnRhbXJnMT9hcGktdmVyc2lvbj0yMDE5LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:45 GMT"
+          "Wed, 05 Jun 2019 01:05:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
-          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -282,120 +218,62 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11997"
         ],
         "x-ms-request-id": [
-          "9fcfef9e-e86c-44bb-9ce1-06ca6e9112ae"
+          "6eea17ce-ce08-4fc8-9eeb-a98f1a934cbb"
         ],
         "x-ms-correlation-request-id": [
-          "9fcfef9e-e86c-44bb-9ce1-06ca6e9112ae"
+          "6eea17ce-ce08-4fc8-9eeb-a98f1a934cbb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203146Z:9fcfef9e-e86c-44bb-9ce1-06ca6e9112ae"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201?api-version=2018-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzL2RlbW80NjU3MzEwMDExMDUyMDE/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"SouthCentralUs\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n  \"name\": \"demo465731001105201\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636616207780864998\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"clusterCodeVersion\": \"6.2.191.1\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://demo4657310011052018.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"A18681648A06235860B773289191F13AB6AF6A94\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"supplog4657310011052018\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://supplog4657310011052018.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://supplog4657310011052018.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://supplog4657310011052018.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Linux\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"NodeType0\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Silver\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.2.191.1\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Ubuntu\"\r\n      }\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
+          "WESTUS:20190605T010532Z:6eea17ce-ce08-4fc8-9eeb-a98f1a934cbb"
+        ],
+        "Content-Length": [
+          "2425"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 15 May 2018 20:31:56 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "120f1866-c839-4e1a-8878-c4208a55b1df"
-        ],
-        "x-ms-correlation-request-id": [
-          "120f1866-c839-4e1a-8878-c4208a55b1df"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203157Z:120f1866-c839-4e1a-8878-c4208a55b1df"
         ]
       },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"westus\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1\",\r\n  \"name\": \"alsantamrg1\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952719768526177\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"clusterCodeVersion\": \"6.4.658.9590\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://alsantamrg1.westus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://westus.servicefabric.azure.com/runtime/clusters/7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"CECD2795068B319125E809D9A911BD8D8F91CAF7\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"qotzqezmie7n22\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://qotzqezmie7n22.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://qotzqezmie7n22.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://qotzqezmie7n22.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"nt1vm\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201?api-version=2018-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzL2RlbW80NjU3MzEwMDExMDUyMDE/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtcmcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9hbHNhbnRhbXJnMT9hcGktdmVyc2lvbj0yMDE5LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6b7f740e-6876-4c3e-bbf3-e1dec0ca1a73"
+          "a99b0b5c-2e7e-4b54-8cac-c2c0b47711b5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"SouthCentralUs\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n  \"name\": \"demo465731001105201\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636616207780864998\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"clusterCodeVersion\": \"6.2.191.1\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://demo4657310011052018.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"A18681648A06235860B773289191F13AB6AF6A94\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"supplog4657310011052018\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://supplog4657310011052018.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://supplog4657310011052018.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://supplog4657310011052018.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Linux\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"NodeType0\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Silver\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.2.191.1\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Ubuntu\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:56 GMT"
+          "Wed, 05 Jun 2019 01:05:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
-          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -404,74 +282,76 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "11996"
         ],
         "x-ms-request-id": [
-          "c8c7347d-906b-45e2-bc5a-588a89d6682f"
+          "4fcb28d5-6773-425c-bc65-345bf44a900b"
         ],
         "x-ms-correlation-request-id": [
-          "c8c7347d-906b-45e2-bc5a-588a89d6682f"
+          "4fcb28d5-6773-425c-bc65-345bf44a900b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203157Z:c8c7347d-906b-45e2-bc5a-588a89d6682f"
+          "WESTUS:20190605T010532Z:4fcb28d5-6773-425c-bc65-345bf44a900b"
+        ],
+        "Content-Length": [
+          "2425"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"westus\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1\",\r\n  \"name\": \"alsantamrg1\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952719768526177\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"clusterCodeVersion\": \"6.4.658.9590\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://alsantamrg1.westus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://westus.servicefabric.azure.com/runtime/clusters/7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"CECD2795068B319125E809D9A911BD8D8F91CAF7\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"qotzqezmie7n22\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://qotzqezmie7n22.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://qotzqezmie7n22.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://qotzqezmie7n22.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"nt1vm\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201?api-version=2018-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzL2RlbW80NjU3MzEwMDExMDUyMDE/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2Fsc2FudGFtcmcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9hbHNhbnRhbXJnMT9hcGktdmVyc2lvbj0yMDE5LTAzLTAxLXByZXZpZXc=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4fb99288-64e0-4855-b3e3-e1f94958fb23"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "247"
-        ],
-        "x-ms-client-request-id": [
-          "76b345e1-ee3c-40c2-9e1d-5dc8d8076e5a"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"SouthCentralUs\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n  \"name\": \"demo465731001105201\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636616207780864998\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"clusterCodeVersion\": \"6.2.191.1\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://demo4657310011052018.southcentralus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"A18681648A06235860B773289191F13AB6AF6A94\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"supplog4657310011052018\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://supplog4657310011052018.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://supplog4657310011052018.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://supplog4657310011052018.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Linux\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"NodeType0\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Silver\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.2.191.1\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Ubuntu\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "2383"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:46 GMT"
+          "Wed, 05 Jun 2019 01:05:01 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/SouthCentralUs/operationResults/28ea3a15-7a75-4068-a8cd-d9c043d96ba8?api-version=2018-02-01&Experiment=local"
+          "https://management.azure.com/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/westus/operationResults/7351ba3e-b5e0-4b7c-85b2-57a59de6d51b?api-version=2019-03-01-preview"
         ],
         "Retry-After": [
-          "10"
+          "30"
         ],
         "Server": [
-          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/SouthCentralUs/operations/28ea3a15-7a75-4068-a8cd-d9c043d96ba8?api-version=2018-02-01&Experiment=local"
+          "https://management.azure.com/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/westus/operations/7351ba3e-b5e0-4b7c-85b2-57a59de6d51b?api-version=2019-03-01-preview"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -483,53 +363,53 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "02430b7c-7fcb-4790-b6f0-bfcc551c4c3d"
+          "3e6303d3-d626-48d0-96c0-b803925773d8"
         ],
         "x-ms-correlation-request-id": [
-          "02430b7c-7fcb-4790-b6f0-bfcc551c4c3d"
+          "3e6303d3-d626-48d0-96c0-b803925773d8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203147Z:02430b7c-7fcb-4790-b6f0-bfcc551c4c3d"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/SouthCentralUs/operations/28ea3a15-7a75-4068-a8cd-d9c043d96ba8?api-version=2018-02-01&Experiment=local",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvU291dGhDZW50cmFsVXMvb3BlcmF0aW9ucy8yOGVhM2ExNS03YTc1LTQwNjgtYThjZC1kOWMwNDNkOTZiYTg/YXBpLXZlcnNpb249MjAxOC0wMi0wMSZFeHBlcmltZW50PWxvY2Fs",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/SouthCentralUs/operations/28ea3a15-7a75-4068-a8cd-d9c043d96ba8\",\r\n  \"name\": \"28ea3a15-7a75-4068-a8cd-d9c043d96ba8\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2018-05-15T20:31:47.189606Z\",\r\n  \"endTime\": \"2018-05-15T20:31:47.2677324Z\",\r\n  \"percentComplete\": 100.0\r\n}",
-      "ResponseHeaders": {
+          "WESTUS:20190605T010502Z:3e6303d3-d626-48d0-96c0-b803925773d8"
+        ],
+        "Content-Length": [
+          "2425"
+        ],
         "Content-Type": [
           "application/json"
         ],
         "Expires": [
           "-1"
-        ],
+        ]
+      },
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n  \"location\": \"westus\",\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/alsantamrg1/providers/Microsoft.ServiceFabric/clusters/alsantamrg1\",\r\n  \"name\": \"alsantamrg1\",\r\n  \"tags\": {},\r\n  \"etag\": \"W/\\\"636952719768526177\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterId\": \"7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"clusterCodeVersion\": \"6.4.658.9590\",\r\n    \"clusterState\": \"Ready\",\r\n    \"managementEndpoint\": \"https://alsantamrg1.westus.cloudapp.azure.com:19080\",\r\n    \"clusterEndpoint\": \"https://westus.servicefabric.azure.com/runtime/clusters/7a55a15c-4b29-490e-b093-1cf1ff530508\",\r\n    \"certificate\": {\r\n      \"thumbprint\": \"CECD2795068B319125E809D9A911BD8D8F91CAF7\",\r\n      \"x509StoreName\": \"My\"\r\n    },\r\n    \"clientCertificateThumbprints\": [],\r\n    \"clientCertificateCommonNames\": [],\r\n    \"fabricSettings\": [\r\n      {\r\n        \"name\": \"NamingService\",\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"MaxOperationTimeout\",\r\n            \"value\": \"1000\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"diagnosticsStorageAccountConfig\": {\r\n      \"storageAccountName\": \"qotzqezmie7n22\",\r\n      \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n      \"blobEndpoint\": \"https://qotzqezmie7n22.blob.core.windows.net/\",\r\n      \"queueEndpoint\": \"https://qotzqezmie7n22.queue.core.windows.net/\",\r\n      \"tableEndpoint\": \"https://qotzqezmie7n22.table.core.windows.net/\"\r\n    },\r\n    \"vmImage\": \"Windows\",\r\n    \"reliabilityLevel\": \"Silver\",\r\n    \"nodeTypes\": [\r\n      {\r\n        \"name\": \"nt1vm\",\r\n        \"vmInstanceCount\": 5,\r\n        \"clientConnectionEndpointPort\": 19000,\r\n        \"httpGatewayEndpointPort\": 19080,\r\n        \"applicationPorts\": {\r\n          \"startPort\": 20000,\r\n          \"endPort\": 30000\r\n        },\r\n        \"ephemeralPorts\": {\r\n          \"startPort\": 49152,\r\n          \"endPort\": 65534\r\n        },\r\n        \"isPrimary\": true,\r\n        \"durabilityLevel\": \"Bronze\"\r\n      }\r\n    ],\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"addonFeatures\": [],\r\n    \"availableClusterVersions\": [\r\n      {\r\n        \"codeVersion\": \"6.4.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      },\r\n      {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/westus/operations/7351ba3e-b5e0-4b7c-85b2-57a59de6d51b?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvbnMvNzM1MWJhM2UtYjVlMC00YjdjLTg1YjItNTdhNTlkZTZkNTFiP2FwaS12ZXJzaW9uPTIwMTktMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:31:56 GMT"
+          "Wed, 05 Jun 2019 01:05:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
-          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -538,18 +418,28 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11998"
         ],
         "x-ms-request-id": [
-          "84951ba8-5ae7-418c-9143-f87bcbaa2150"
+          "63c0238b-bfcf-4602-9454-aea552893db2"
         ],
         "x-ms-correlation-request-id": [
-          "84951ba8-5ae7-418c-9143-f87bcbaa2150"
+          "63c0238b-bfcf-4602-9454-aea552893db2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203157Z:84951ba8-5ae7-418c-9143-f87bcbaa2150"
+          "WESTUS:20190605T010532Z:63c0238b-bfcf-4602-9454-aea552893db2"
+        ],
+        "Content-Length": [
+          "366"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/westus/operations/7351ba3e-b5e0-4b7c-85b2-57a59de6d51b\",\r\n  \"name\": \"7351ba3e-b5e0-4b7c-85b2-57a59de6d51b\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2019-06-05T01:05:02.1421366Z\",\r\n  \"endTime\": \"2019-06-05T01:05:02.2046348Z\",\r\n  \"percentComplete\": 100.0\r\n}",
       "StatusCode": 200
     }
   ],
