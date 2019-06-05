@@ -171,4 +171,7 @@
   <data name="ResourceMustMatchSharedAccessSignature" xml:space="preserve">
     <value>The reqested resource, '{0}', does not match the resource of the shared access signature, '{1}'.   A token cannot be issued.</value>
   </data>
+  <data name="InvalidTransportType" xml:space="preserve">
+    <value>The requested transport type, '{0}' is not supported.</value>
+  </data>
 </root>

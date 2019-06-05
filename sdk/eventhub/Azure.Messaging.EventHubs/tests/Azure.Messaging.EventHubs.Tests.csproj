@@ -13,8 +13,9 @@
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Include="Moq" Version="4.11.0" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.2.1" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
   </ItemGroup>
 
   <ItemGroup>

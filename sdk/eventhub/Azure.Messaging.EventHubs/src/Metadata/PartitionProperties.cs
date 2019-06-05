@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// </summary>
         ///
         /// <param name="path">The path of the Event Hub that contains the partitions.</param>
-        /// <param name="key">The identifier of the partition.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
         internal PartitionProperties(string path,
-                                      string key,
+                                      string partitionId,
                                       long beginningSequenceNumber,
                                       long lastSequenceNumber,
                                       string lastOffset,
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Metadata
                                       DateTime? retrievalTimeUtc = null)
         {
             EventHubPath = path;
-            Id = key;
+            Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
