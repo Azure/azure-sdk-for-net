@@ -9,7 +9,8 @@
     },
     "advanced_options": {
       "create_sdk_pull_requests": false,
-      "sdk_generation_pull_request_base": "main_branch"
+      "sdk_generation_pull_request_base": "main_branch",
+      "main_branch": "nugtools"
     },
     "version": "0.2.0"
   }
