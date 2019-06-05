@@ -249,7 +249,9 @@
             batchErrorException.Response.Headers.Add(InternalConstants.RetryAfterHeader, new List<string> { retryAfterString });
             BatchException batchException = new BatchException(batchErrorException);
 
-            Assert.True(TimeSpan.FromSeconds(9) <= batchException.RequestInformation.RetryAfter && batchException.RequestInformation.RetryAfter <= TimeSpan.FromSeconds(10));
+            this.testOutputHelper.WriteLine($"RetryAfter: {batchException.RequestInformation.RetryAfter}");
+            // Give some wiggle room in case tests are running slow
+            Assert.True(batchException.RequestInformation.RetryAfter <= TimeSpan.FromSeconds(10));
         }
 
         #endregion
