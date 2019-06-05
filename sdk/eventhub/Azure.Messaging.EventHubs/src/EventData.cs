@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventHubs
             ///   The label applied to the batch that the associated <see cref="EventData"/>, was sent with.
             /// </summary>
             ///
-            public string Batchabe
+            public string BatchLabel
             {
                 get
                 {
