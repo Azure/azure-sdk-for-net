@@ -992,13 +992,19 @@ namespace Microsoft.Azure.ServiceBus.Management
             {
                 return new SharedAccessSignatureTokenProvider(builder.SasToken);
             }
-
-            if (builder.SasKeyName != null && builder.SasKey != null)
+            else if (builder.SasKeyName != null && builder.SasKey != null)
             {
                 return new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
+            else if (!string.IsNullOrEmpty(builder.Authentication))
+            {
+                if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity, StringComparison.OrdinalIgnoreCase))
+                {
+                    return new ManagedIdentityTokenProvider();
+                }
+            }
 
-            throw new Exception("Could not create token provider. Either ITokenProvider has to be passed into constructor or connection string should contain information such as SAS token / SAS key name and SAS key.");
+            throw new Exception("Could not create token provider. Either ITokenProvider has to be passed into constructor or connection string should contain SAS token OR SAS key name and SAS key OR Authentication = Managed Identity.");
         }
 
         private Task<string> GetToken(Uri requestUri)
