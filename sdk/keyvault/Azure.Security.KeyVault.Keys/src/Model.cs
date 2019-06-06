@@ -23,14 +23,15 @@ namespace Azure.Security.KeyVault.Keys
         {
             var writer = new ArrayBufferWriter<byte>();
 
-            var json = new Utf8JsonWriter(writer);
+            using (var json = new Utf8JsonWriter(writer))
+            {
+                json.WriteStartObject();
 
-            json.WriteStartObject();
+                WriteProperties(json);
 
-            WriteProperties(json);
-
-            json.WriteEndObject();
-            json.Flush();
+                json.WriteEndObject();
+                json.Flush();
+            }
 
             return writer.WrittenMemory;
         }
