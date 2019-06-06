@@ -35,6 +35,7 @@
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) billing</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) consumption</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) subscription</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) azurestack\Microsoft.AzureStack.Management.Fabric.Admin</DefaultPathTokenToIgnore>
 
     <!--Ignore DataPlane Libraries -->
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) applicationinsights\Microsoft.Azure.ApplicationInsights</DefaultPathTokenToIgnore>

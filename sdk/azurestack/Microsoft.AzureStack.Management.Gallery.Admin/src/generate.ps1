@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/gallery" -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot
