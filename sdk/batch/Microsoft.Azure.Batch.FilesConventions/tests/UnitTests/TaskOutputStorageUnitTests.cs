@@ -46,13 +46,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             Assert.Equal("relativePath", ex.ParamName);
         }
 
+#if Windows
         [Fact]
         public async Task CannotPassAnAbsoluteFilePathWhenSaving()
         {
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => _storage.SaveAsync(TaskOutputKind.TaskLog, @"c:\temp\test.txt"));
             Assert.Equal("relativePath", ex.ParamName);
         }
-
+#endif
         [Fact]
         public async Task CannotPassANullKindWhenSavingToDestination()
         {
@@ -102,13 +103,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             Assert.Equal("relativePath", ex.ParamName);
         }
 
+#if Window
         [Fact]
         public async Task CannotPassAnAbsoluteFilePathWhenSavingTracked()
         {
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => _storage.SaveTrackedAsync(@"c:\test.txt"));
             Assert.Equal("relativePath", ex.ParamName);
         }
-
+#endif
         [Fact]
         public async Task CannotPassANullKindWhenSavingTrackedToDestination()
         {

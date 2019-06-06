@@ -38,6 +38,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants Condition="'$(OS)' == 'Windows_NT'">$(DefineConstants)Windows</DefineConstants>
   </PropertyGroup>
 
   <!--Do not remove until VS Test Tools fixes #472-->
