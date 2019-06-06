@@ -31,14 +31,14 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                string smartGroupId = "9587da05-0fb6-44a0-a757-e242968c7c57";
+                string smartGroupId = "04219a26-3c24-4bbc-88a8-41bfb608ba10";
 
                 // Get smart group by ID
                 SmartGroup actualSmartGroup = alertsManagementClient.SmartGroups.GetById(smartGroupId);
 
                 if (!this.IsRecording)
                 {
-                    Assert.Equal(AlertState.New, actualSmartGroup.Properties.SmartGroupState);
+                    Assert.Equal(AlertState.New, actualSmartGroup.SmartGroupState);
                 }
 
                 // Perform state change operation
@@ -48,7 +48,7 @@ namespace AlertsManagement.Tests.ScenarioTests
                 // Verify the state change operation was successful
                 if (!this.IsRecording)
                 {
-                    Assert.Equal(updatedState, smartGroupPostStateChange.Properties.SmartGroupState);
+                    Assert.Equal(updatedState, smartGroupPostStateChange.SmartGroupState);
                 }
 
                 // Get History of smart group

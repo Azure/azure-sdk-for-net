@@ -43,7 +43,6 @@ namespace AlertsManagement.Tests.ScenarioTests
 
         private static void CheckListedOperations(IPage<Operation> operationListResult)
         {
-            /*
             List<String> supportedOperations = new List<String>
             {
                 "Microsoft.AlertsManagement/register/action",
@@ -60,9 +59,12 @@ namespace AlertsManagement.Tests.ScenarioTests
                 "Microsoft.AlertsManagement/alerts/diagnostics/read",
                 "Microsoft.AlertsManagement/smartDetectorAlertRules/write",
                 "Microsoft.AlertsManagement/smartDetectorAlertRules/read",
-                "Microsoft.AlertsManagement/smartDetectorAlertRules/delete"
+                "Microsoft.AlertsManagement/smartDetectorAlertRules/delete",
+                "Microsoft.AlertsManagement/actionRules/read",
+                "Microsoft.AlertsManagement/actionRules/write",
+                "Microsoft.AlertsManagement/actionRules/delete",
+                "Microsoft.AlertsManagement/Operations/read"
             };
-            */
 
             string expectedProvider = "Microsoft.AlertsManagement";
 
@@ -70,7 +72,7 @@ namespace AlertsManagement.Tests.ScenarioTests
             while (enumerator.MoveNext())
             {
                 Operation current = enumerator.Current;
-                // Assert.Contains(current.Name, supportedOperations);
+                Assert.Contains(current.Name, supportedOperations);
                 Assert.Equal(expectedProvider, current.Display.Provider);
             }
         }

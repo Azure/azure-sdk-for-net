@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
          public string NextPageLink { get; private set; }
 
          [JsonProperty("value")]
-         public IList<T> Items{ get; set; }
+         private IList<T> Items{ get; set; }
 
          /// <summary>
          /// Returns an enumerator that iterates through the collection.

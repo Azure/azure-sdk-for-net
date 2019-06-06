@@ -124,7 +124,7 @@ namespace AlertsManagement.Tests.Helpers
             {
                 AreEqual(exp.Value, act.Value);
             }
-        }*/
+        }
 
         public static void AreEqual(IList<SmartGroup> exp, IList<SmartGroup> act)
         {
@@ -173,6 +173,7 @@ namespace AlertsManagement.Tests.Helpers
                 Assert.Equal(exp.OldValue, act.OldValue);
             }
         }
+        */
         #endregion
 
         #region Operations Tests

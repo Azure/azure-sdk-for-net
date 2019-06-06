@@ -1,33 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57?api-version=2018-05-05",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy85NTg3ZGEwNS0wZmI2LTQ0YTAtYTc1Ny1lMjQyOTY4YzdjNTc/YXBpLXZlcnNpb249MjAxOC0wNS0wNQ==",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10?api-version=2018-05-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy8wNDIxOWEyNi0zYzI0LTRiYmMtODhhOC00MWJmYjYwOGJhMTA/YXBpLXZlcnNpb249MjAxOC0wNS0wNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "abe25a61-592a-4550-9f4d-3607372dc010"
+          "c9f86063-d363-4727-abf6-11e7d43710b6"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
-          "no-cache"
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Thu, 06 Jun 2019 07:16:12 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6fd1ecc0-5fc8-4dd5-ad62-27ceda41f70d"
+          "b259be07-225b-485d-b4f9-d73e36b9cf9c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -39,16 +42,13 @@
           "999"
         ],
         "x-ms-correlation-request-id": [
-          "623478c8-527d-4b0e-a4e6-b0ec1b573a2b"
+          "0a49d92f-5e17-4076-ae03-7d45aebe41dc"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20190526T191711Z:623478c8-527d-4b0e-a4e6-b0ec1b573a2b"
-        ],
-        "Date": [
-          "Sun, 26 May 2019 19:17:11 GMT"
+          "SOUTHINDIA:20190606T071612Z:0a49d92f-5e17-4076-ae03-7d45aebe41dc"
         ],
         "Content-Length": [
-          "1011"
+          "1015"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,37 +57,40 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertsCount\": 3,\r\n    \"smartGroupState\": \"New\",\r\n    \"severity\": \"Sev4\",\r\n    \"startDateTime\": \"2019-05-26T16:51:09.8298955Z\",\r\n    \"lastModifiedDateTime\": \"2019-05-26T17:25:06.2889132Z\",\r\n    \"lastAlertAddedDateTime\": \"2019-05-26T17:25:06.2889132Z\",\r\n    \"lastModifiedUserName\": \"System\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertsingestiongatewaygroup/providers/microsoft.storage/storageaccounts/aigapiresponse\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"resourceTypes\": [\r\n      {\r\n        \"name\": \"microsoft.storage/storageaccounts\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"resourceGroups\": [\r\n      {\r\n        \"name\": \"alertsingestiongatewaygroup\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"monitorSources\": [\r\n      {\r\n        \"name\": \"ActivityLog Administrative\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"monitorConditions\": [\r\n      {\r\n        \"name\": \"Fired\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"alertStates\": [\r\n      {\r\n        \"name\": \"New\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"alertSeverities\": [\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 3\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57\",\r\n  \"type\": \"Microsoft.AlertsManagement/smartGroups\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertsCount\": 10,\r\n    \"smartGroupState\": \"New\",\r\n    \"severity\": \"Sev4\",\r\n    \"startDateTime\": \"2019-06-06T04:08:27.0566709Z\",\r\n    \"lastModifiedDateTime\": \"2019-06-06T04:09:29.9140925Z\",\r\n    \"lastAlertAddedDateTime\": \"2019-06-06T04:09:29.9140925Z\",\r\n    \"lastModifiedUserName\": \"System\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertsmgmtresourcegroup/providers/microsoft.storage/storageaccounts/alertblobforbackup\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"resourceTypes\": [\r\n      {\r\n        \"name\": \"microsoft.storage/storageaccounts\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"resourceGroups\": [\r\n      {\r\n        \"name\": \"alertsmgmtresourcegroup\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"monitorSources\": [\r\n      {\r\n        \"name\": \"ActivityLog Administrative\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"monitorConditions\": [\r\n      {\r\n        \"name\": \"Fired\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"alertStates\": [\r\n      {\r\n        \"name\": \"New\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"alertSeverities\": [\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 10\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10\",\r\n  \"type\": \"Microsoft.AlertsManagement/smartGroups\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57/changeState?api-version=2018-05-05&newState=Closed",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy85NTg3ZGEwNS0wZmI2LTQ0YTAtYTc1Ny1lMjQyOTY4YzdjNTcvY2hhbmdlU3RhdGU/YXBpLXZlcnNpb249MjAxOC0wNS0wNSZuZXdTdGF0ZT1DbG9zZWQ=",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10/changeState?api-version=2018-05-05&newState=Closed",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy8wNDIxOWEyNi0zYzI0LTRiYmMtODhhOC00MWJmYjYwOGJhMTAvY2hhbmdlU3RhdGU/YXBpLXZlcnNpb249MjAxOC0wNS0wNSZuZXdTdGF0ZT1DbG9zZWQ=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e722f3d4-c52d-4477-9265-b90d778d1e15"
+          "56195d8a-788e-48ec-84a8-85bba9cc0a61"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
-          "no-cache"
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Thu, 06 Jun 2019 07:16:13 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b5317409-56b5-46c7-9e8e-1f32b5f43349"
+          "7d3cb3cf-8a3a-496d-95de-f77c4bf838b8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -99,16 +102,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "680d66cd-1ef9-4fe7-9017-dc830304a5c7"
+          "10c86aae-3377-46de-ba1e-47db85ff1d8a"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20190526T191713Z:680d66cd-1ef9-4fe7-9017-dc830304a5c7"
-        ],
-        "Date": [
-          "Sun, 26 May 2019 19:17:13 GMT"
+          "SOUTHINDIA:20190606T071613Z:10c86aae-3377-46de-ba1e-47db85ff1d8a"
         ],
         "Content-Length": [
-          "1012"
+          "1016"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -117,37 +117,40 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertsCount\": 3,\r\n    \"smartGroupState\": \"Closed\",\r\n    \"severity\": \"Sev4\",\r\n    \"startDateTime\": \"2019-05-26T16:51:09.8298955Z\",\r\n    \"lastModifiedDateTime\": \"2019-05-26T19:17:12.4330763Z\",\r\n    \"lastAlertAddedDateTime\": \"2019-05-26T17:25:06.2889132Z\",\r\n    \"lastModifiedUserName\": \"User\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertsingestiongatewaygroup/providers/microsoft.storage/storageaccounts/aigapiresponse\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"resourceTypes\": [\r\n      {\r\n        \"name\": \"microsoft.storage/storageaccounts\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"resourceGroups\": [\r\n      {\r\n        \"name\": \"alertsingestiongatewaygroup\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"monitorSources\": [\r\n      {\r\n        \"name\": \"ActivityLog Administrative\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"monitorConditions\": [\r\n      {\r\n        \"name\": \"Fired\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"alertStates\": [\r\n      {\r\n        \"name\": \"New\",\r\n        \"count\": 3\r\n      }\r\n    ],\r\n    \"alertSeverities\": [\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 3\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57\",\r\n  \"type\": \"Microsoft.AlertsManagement/smartGroups\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertsCount\": 10,\r\n    \"smartGroupState\": \"Closed\",\r\n    \"severity\": \"Sev4\",\r\n    \"startDateTime\": \"2019-06-06T04:08:27.0566709Z\",\r\n    \"lastModifiedDateTime\": \"2019-06-06T07:16:12.8625387Z\",\r\n    \"lastAlertAddedDateTime\": \"2019-06-06T04:09:29.9140925Z\",\r\n    \"lastModifiedUserName\": \"User\",\r\n    \"resources\": [\r\n      {\r\n        \"name\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertsmgmtresourcegroup/providers/microsoft.storage/storageaccounts/alertblobforbackup\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"resourceTypes\": [\r\n      {\r\n        \"name\": \"microsoft.storage/storageaccounts\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"resourceGroups\": [\r\n      {\r\n        \"name\": \"alertsmgmtresourcegroup\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"monitorSources\": [\r\n      {\r\n        \"name\": \"ActivityLog Administrative\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"monitorConditions\": [\r\n      {\r\n        \"name\": \"Fired\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"alertStates\": [\r\n      {\r\n        \"name\": \"New\",\r\n        \"count\": 10\r\n      }\r\n    ],\r\n    \"alertSeverities\": [\r\n      {\r\n        \"name\": \"Sev4\",\r\n        \"count\": 10\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10\",\r\n  \"type\": \"Microsoft.AlertsManagement/smartGroups\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57/history?api-version=2018-05-05",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy85NTg3ZGEwNS0wZmI2LTQ0YTAtYTc1Ny1lMjQyOTY4YzdjNTcvaGlzdG9yeT9hcGktdmVyc2lvbj0yMDE4LTA1LTA1",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10/history?api-version=2018-05-05",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9zbWFydEdyb3Vwcy8wNDIxOWEyNi0zYzI0LTRiYmMtODhhOC00MWJmYjYwOGJhMTAvaGlzdG9yeT9hcGktdmVyc2lvbj0yMDE4LTA1LTA1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ed0c871b-ed7a-4cf3-b31d-60c20dd931b6"
+          "812da383-3f82-4953-a66e-9293db1c87e4"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.AlertsManagement.AlertsManagementClient/27.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
-          "no-cache"
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Thu, 06 Jun 2019 07:16:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6c28463b-dea2-4646-9eee-1ab383c80adc"
+          "f7413b24-958e-4c30-a6fa-c9d1b9483e1a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -156,16 +159,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "6d280383-782c-4caa-a1f5-c4bed2eade2d"
+          "d733c82f-0d46-483e-9820-63f20cf5c9cb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALINDIA:20190526T191713Z:6d280383-782c-4caa-a1f5-c4bed2eade2d"
-        ],
-        "Date": [
-          "Sun, 26 May 2019 19:17:13 GMT"
+          "SOUTHINDIA:20190606T071614Z:d733c82f-0d46-483e-9820-63f20cf5c9cb"
         ],
         "Content-Length": [
           "711"
@@ -177,7 +177,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"smartGroupId\": \"9587da05-0fb6-44a0-a757-e242968c7c57\",\r\n    \"modifications\": [\r\n      {\r\n        \"modificationEvent\": \"StateChange\",\r\n        \"oldValue\": \"New\",\r\n        \"newValue\": \"Closed\",\r\n        \"modifiedAt\": \"2019-05-26T19:17:12.6674548Z\",\r\n        \"modifiedBy\": \"User\",\r\n        \"comments\": \"\",\r\n        \"description\": \"State changed from 'New' to 'Closed'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"SmartGroupCreated\",\r\n        \"oldValue\": \"\",\r\n        \"newValue\": \"\",\r\n        \"modifiedAt\": \"2019-05-26T16:51:09.8298955Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"comments\": \"\",\r\n        \"description\": \"New Smart Group is created\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/9587da05-0fb6-44a0-a757-e242968c7c57/history/default\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"smartGroupId\": \"04219a26-3c24-4bbc-88a8-41bfb608ba10\",\r\n    \"modifications\": [\r\n      {\r\n        \"modificationEvent\": \"StateChange\",\r\n        \"oldValue\": \"New\",\r\n        \"newValue\": \"Closed\",\r\n        \"modifiedAt\": \"2019-06-06T07:16:13.0813032Z\",\r\n        \"modifiedBy\": \"User\",\r\n        \"comments\": \"\",\r\n        \"description\": \"State changed from 'New' to 'Closed'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"SmartGroupCreated\",\r\n        \"oldValue\": \"\",\r\n        \"newValue\": \"\",\r\n        \"modifiedAt\": \"2019-06-06T04:08:27.0566709Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"comments\": \"\",\r\n        \"description\": \"New Smart Group is created\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/smartGroups/04219a26-3c24-4bbc-88a8-41bfb608ba10/history/default\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
       "StatusCode": 200
     }
   ],

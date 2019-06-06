@@ -75,7 +75,6 @@ namespace AlertsManagement.Tests.Helpers
             else
             {
                 // Generate mock response for unit tests
-                MockServer mockServer = new MockServer();
                 if (_response != null && counter == 1)
                 {
                     return _response;
@@ -86,7 +85,7 @@ namespace AlertsManagement.Tests.Helpers
                     if (counter > 1)
                         statusCode = SubsequentStatusCodeToReturn;
                     HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent(mockServer.GenerateMockResponse(request.RequestUri));
+                    response.Content = new StringContent("");
                     return response;
                 }
             }

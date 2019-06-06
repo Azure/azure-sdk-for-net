@@ -31,7 +31,7 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                string alertId = "a2c9dbe6-9e60-43b7-b88a-47558a325dc3";
+                string alertId = "f928fcb7-edbd-42e9-a87e-1b2851affcff";
 
                 // Get alert by ID
                 Alert actualAlert = alertsManagementClient.Alerts.GetById(alertId);
@@ -59,14 +59,33 @@ namespace AlertsManagement.Tests.ScenarioTests
                 {
                     CheckHistoryContainsStateChangeEvent(alertHistory);
                 }
+            }
+        }
 
-                // Fetch all alerts
-                IPage<Alert> allAlerts = alertsManagementClient.Alerts.GetAll();
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void FilterByParametersGetAlertsTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                // Verify that all alerts contain the updated alert instance
+                // Get alerts filtered for particular target resource
+                string targetResource = "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertslab/providers/microsoft.apimanagement/service/aig-test";
+                string severity = Severity.Sev3;
+                string monitorService = MonitorService.Platform;
+                IPage<Alert> alerts = alertsManagementClient.Alerts.GetAll(targetResource: targetResource, severity: severity, monitorService: monitorService);
+
                 if (!this.IsRecording)
                 {
-                    CheckAllAlertsContainsUpdatedAlertObject(allAlerts, alertPostStateChange);
+                    IEnumerator<Alert> enumerator = alerts.GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        Alert current = enumerator.Current;
+                        Assert.Equal(targetResource, current.Properties.Essentials.TargetResource);
+                        Assert.Equal(monitorService, current.Properties.Essentials.MonitorService);
+                        Assert.Equal(severity, current.Properties.Essentials.Severity);
+                    }
                 }
             }
         }
