@@ -9,6 +9,7 @@
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);8002</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
@@ -21,7 +22,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FsCheck.Xunit" Version="2.11.0" />
+    <PackageReference Include="FsCheck.Xunit" Version="2.14.0" />
     <PackageReference Include="NSubstitute" Version="3.1.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
         // new instance each time because a shared instance would not be thread-safe
 #if FullNetFx
         private static readonly Func<HashAlgorithm> hasher = () => new SHA1CryptoServiceProvider();
-#elif netstandard14
+#else
         private static readonly Func<HashAlgorithm> hasher = () => SHA1.Create();
 #endif
         private static readonly int MaxJobIdLengthInMungedContainerName = 15;  // must be <= 63 - "job-".Length - 1 (hyphen before hash) - length of hash string (40 for SHA1)

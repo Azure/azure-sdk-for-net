@@ -8,7 +8,6 @@
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
-    <SignAssembly>true</SignAssembly>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
 #if FullNetFx
             await CloudBlob.DownloadToFileAsync(path, mode, cancellationToken);
-#elif netstandard14
+#else
             await CloudBlob.DownloadToFileAsync(path, mode);
 #endif
 
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
 #if FullNetFx
             await CloudBlob.DownloadToStreamAsync(target, cancellationToken);
-#elif netstandard14
+#else
             await CloudBlob.DownloadToStreamAsync(target);
 #endif
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
 #if FullNetFx
             return await CloudBlob.DownloadToByteArrayAsync(target, index, cancellationToken);
-#elif netstandard14
+#else
             return await CloudBlob.DownloadToByteArrayAsync(target, index);
 #endif
         }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
 #if FullNetFx
             await CloudBlob.DeleteAsync(cancellationToken);
-#elif netstandard14
+#else
             await CloudBlob.DeleteAsync();
 #endif
         }
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
 #if FullNetFx
             return await CloudBlob.OpenReadAsync(cancellationToken);
-#elif netstandard14
+#else
             return await CloudBlob.OpenReadAsync(null, null, null);
 #endif
         }
