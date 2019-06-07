@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponse.cs" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
   </ItemGroup>
   
 </Project>
