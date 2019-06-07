@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/TestText1.txt"));
+            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/{FileBase.Name}/TestText1.txt"));
         }
 
         [LiveTest]

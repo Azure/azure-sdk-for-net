@@ -16,7 +16,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
     <PackageReference Update="Microsoft.Azure.Amqp" Version="[2.4.2, 3.0.0)" />
-    <PackageReference Update="Microsoft.Azure.Batch" Version="[10.0.0, 11.0.0)" />
+    <PackageReference Update="Microsoft.Azure.Batch" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageReference Update="Microsoft.Azure.Management.Batch" Version="4.2.0" />
