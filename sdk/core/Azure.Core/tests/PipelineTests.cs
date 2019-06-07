@@ -30,6 +30,33 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, response.Status);
         }
 
+        [Test]
+        public void TryGetPropertyReturnsFalseIfNotExist()
+        {
+            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+
+            Assert.False(message.TryGetProperty("someName", out _));
+        }
+
+        [Test]
+        public void TryGetPropertyReturnsValueIfSet()
+        {
+            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            message.SetProperty("someName", "value");
+
+            Assert.True(message.TryGetProperty("someName", out object value));
+            Assert.AreEqual("value", value);
+        }
+
+        [Test]
+        public void TryGetPropertyIsCaseSensitive()
+        {
+            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            message.SetProperty("someName", "value");
+
+            Assert.False(message.TryGetProperty("SomeName", out object value));
+        }
+
         class CustomResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(Response response)
