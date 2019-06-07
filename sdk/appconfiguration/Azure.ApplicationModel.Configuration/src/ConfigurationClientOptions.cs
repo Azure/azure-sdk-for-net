@@ -7,7 +7,7 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    public class ConfigurationClientOptions: HttpClientOptions
+    public class ConfigurationClientOptions: ClientOptions
     {
 
         public FixedRetryPolicy RetryPolicy { get; set; }

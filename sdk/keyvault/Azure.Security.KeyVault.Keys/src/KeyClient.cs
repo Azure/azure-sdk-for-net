@@ -33,13 +33,12 @@ namespace Azure.Security.KeyVault.Keys
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new KeyClientOptions();
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
+            _pipeline = HttpPipelineBuilder.Build(options,
                     options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
+                    ClientRequestIdPolicy.Shared,
                     new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.default"),
                     options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+                    BufferResponsePolicy.Shared);
         }
 
         public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
@@ -53,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys
             if (keyType == default) throw new ArgumentNullException(nameof(keyType));
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
-            
+
             return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name);
         }
 

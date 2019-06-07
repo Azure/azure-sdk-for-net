@@ -12,7 +12,7 @@ namespace Azure.Storage
     /// Provides the client configuration options for connecting to Azure
     /// Storage
     /// </summary>
-    public abstract class StorageConnectionOptions : HttpClientOptions
+    public abstract class StorageConnectionOptions : ClientOptions
     {
         /// <summary>
         /// Optional credentials for authenticating requests to the service
@@ -75,16 +75,15 @@ namespace Azure.Storage
         /// An HttpPipeline used to make requests to Azure Storage
         /// </returns>
         internal virtual HttpPipeline Build()
-            => HttpPipeline.Build(
+            => HttpPipelineBuilder.Build(
                 this,
-                this.ResponseClassifier,
-                ClientRequestIdPolicy.Singleton,
+                ClientRequestIdPolicy.Shared,
                 this.RetryPolicy,
                 this.GetAuthenticationPipelinePolicy(this.Credentials),
                 // TODO: PageBlob's UploadPagesAsync test currently fails
                 // without buffered responses, so I'm leaving this on for now.
                 // It'd be a great perf win to remove it soon.
-                BufferResponsePolicy.Singleton);
+                BufferResponsePolicy.Shared);
 
         /// <summary>
         /// Create an authentication HttpPipelinePolicy to sign requests

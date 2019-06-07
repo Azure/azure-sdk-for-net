@@ -8,7 +8,7 @@ using System;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    public class KeyClientOptions : HttpClientOptions
+    public class KeyClientOptions : ClientOptions
     {
         public RetryPolicy RetryPolicy { get; set; }
 

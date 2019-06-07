@@ -120,7 +120,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions) where T: ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
             return clientOptions;
