@@ -56,15 +56,20 @@ namespace Microsoft.Azure.ServiceBus
 
         static void CancelAndDisposeCancellationTokenSource(CancellationTokenSource renewLockCancellationTokenSource)
         {
-            renewLockCancellationTokenSource?.Cancel();
-            renewLockCancellationTokenSource?.Dispose();
+            try
+            {
+                renewLockCancellationTokenSource?.Cancel();
+                renewLockCancellationTokenSource?.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+                // just ignore - token source might be already disposed by timer callback
+            }
         }
 
         static void OnUserCallBackTimeout(object state)
         {
-            var renewCancellationTokenSource = (CancellationTokenSource)state;
-            renewCancellationTokenSource?.Cancel();
-            renewCancellationTokenSource?.Dispose();
+            CancelAndDisposeCancellationTokenSource((CancellationTokenSource)state);
         }
 
         bool ShouldRenewSessionLock()
@@ -151,7 +156,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false);
                         }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
@@ -205,7 +210,7 @@ namespace Microsoft.Azure.ServiceBus
 
                         if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
                         {
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                         }
                         break;
                     }
@@ -321,7 +326,7 @@ namespace Microsoft.Azure.ServiceBus
                     MessagingEventSource.Log.SessionReceivePumpSessionRenewLockException(this.clientId, session.SessionId, exception);
 
                     // TaskCanceled is expected here as renewTasks will be cancelled after the Complete call is made.
-                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point 
+                    // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException) && !(exception is ObjectDisposedException))
                     {
