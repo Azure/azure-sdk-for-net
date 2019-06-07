@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys
             Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Headers.Add(HttpHeader.Names.Accept, "application/json");
+            request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
             request.UriBuilder.Uri = _vaultUri;
 
@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Keys
             Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Headers.Add(HttpHeader.Names.Accept, "application/json");
+            request.Headers.Add(HttpHeader.Common.JsonAccept);
             request.Method = method;
             request.UriBuilder.Uri = uri;
 
