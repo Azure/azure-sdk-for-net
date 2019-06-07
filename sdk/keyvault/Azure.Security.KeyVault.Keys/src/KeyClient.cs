@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name);
+            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name, "create");
         }
 
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
             
-            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name);
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name, "create");
         }
 
         public virtual Response<Key> CreateEcKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKey);
 
-            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name);
+            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "create");
         }
 
         public virtual async Task<Response<Key>> CreateEcKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKey);
 
-            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name);
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "create");
         }
 
         public virtual Response<Key> CreateRsaKey(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
@@ -85,7 +85,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKey);
 
-            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name);
+            return SendRequest(HttpPipelineMethod.Put, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "create");
         }
 
         public virtual async Task<Response<Key>> CreateRsaKeyAsync(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKey);
 
-            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name);
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "create");
         }
 
         public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
@@ -149,8 +149,8 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            Uri firstPageUri = CreateFirstPageUri(KeysPath);
-
+            Uri firstPageUri = CreateFirstPageUri($"{KeysPath}{name}/versions");
+            
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetPage(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            Uri firstPageUri = CreateFirstPageUri(KeysPath);
+            Uri firstPageUri = CreateFirstPageUri($"{KeysPath}{name}/versions");
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
