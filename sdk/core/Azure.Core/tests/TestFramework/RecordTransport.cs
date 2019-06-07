@@ -105,13 +105,16 @@ namespace Azure.Core.Testing
 
         private byte[] ReadToEnd(Response response)
         {
-            if (response.ContentStream == null)
+            Stream responseContentStream = response.ContentStream;
+            if (responseContentStream == null)
             {
                 return null;
             }
 
             var memoryStream = new NonSeekableMemoryStream();
-            response.ContentStream.CopyTo(memoryStream);
+            responseContentStream.CopyTo(memoryStream);
+            responseContentStream.Dispose();
+
             memoryStream.Reset();
             response.ContentStream = memoryStream;
             return memoryStream.ToArray();

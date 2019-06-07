@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Test
             {
                 try
                 {
-                    return await operation();
+                    return await operation().ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {

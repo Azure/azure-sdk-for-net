@@ -94,8 +94,6 @@ namespace Azure.Security.KeyVault.Secrets
 
         public virtual async Task<Response<SecretBase>> UpdateAsync(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret?.Name == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Name)}");
-
             if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
             return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
@@ -103,8 +101,6 @@ namespace Azure.Security.KeyVault.Secrets
 
         public virtual Response<SecretBase> Update(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret?.Name == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Name)}");
-
             if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
             return SendRequest(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
@@ -114,10 +110,6 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (secret == null) throw new ArgumentNullException(nameof(secret));
 
-            if (secret.Name == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Name)}");
-
-            if (secret.Value == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Value)}"); ;
-
             return await SendRequestAsync(HttpPipelineMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name);
         }
 
@@ -125,28 +117,16 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (secret == null) throw new ArgumentNullException(nameof(secret));
 
-            if (secret.Name == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Name)}");
-
-            if (secret.Value == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Value)}");
-
             return SendRequest(HttpPipelineMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name);
         }
 
         public virtual async Task<Response<Secret>> SetAsync(string name, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
-
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-
             return await SetAsync(new Secret(name, value), cancellationToken);
         }
 
         public virtual Response<Secret> Set(string name, string value, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
-
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
-
             return Set(new Secret(name, value), cancellationToken);
         }
 
@@ -154,7 +134,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name);
+            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name).ConfigureAwait(false);
         }
 
         public virtual Response<DeletedSecret> Delete(string name, CancellationToken cancellationToken = default)
@@ -285,7 +265,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             using (Request request = CreateRequest(method, path))
             {
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return CreateResponse(response, resultFactory());
             }
@@ -319,7 +299,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             switch (response.Status)
             {
@@ -328,7 +308,7 @@ namespace Azure.Security.KeyVault.Secrets
                 case 204:
                     return response;
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync();
+                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
             }
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)

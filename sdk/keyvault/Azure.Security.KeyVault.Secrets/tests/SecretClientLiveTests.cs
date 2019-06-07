@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Security.KeyVault.Secrets;
@@ -12,11 +13,11 @@ using Azure.Core.Testing;
 
 namespace Azure.Security.KeyVault.Test
 {
-    public class SecretTests : KeyVaultTestBase
+    public class SecretClientLiveTests : KeyVaultTestBase
     {
         private const int PagedSecretCount = 50;
 
-        public SecretTests(bool isAsync) : base(isAsync)
+        public SecretClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -125,6 +126,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task DeleteSecret()
         {
+            var syncC = SynchronizationContext.Current;
             string secretName = Recording.GenerateId();
 
             Secret secret = await Client.SetAsync(secretName, "value");
@@ -230,6 +232,7 @@ namespace Azure.Security.KeyVault.Test
             }
         }
 
+
         [Test]
         public async Task GetDeletedSecrets()
         {
@@ -257,56 +260,6 @@ namespace Azure.Security.KeyVault.Test
                 SecretBase returnedSecret = allSecrets.Single(s => s.Value.Name == deletedSecret.Name);
                 AssertSecretsEqual(deletedSecret, returnedSecret, compareId: false);
             }
-        }
-
-        [Test]
-        public void SetArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null, "value"));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync("name", null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetAsync(null));
-        }
-
-        [Test]
-        public void UpdateArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(null));
-        }
-
-        [Test]
-        public void PurgeDeletedArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.PurgeDeletedAsync(null));
-        }
-
-        [Test]
-        public void GetArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetAsync(null));
-        }
-
-        [Test]
-        public void DeleteArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteAsync(null));
-        }
-
-        [Test]
-        public void GetDeletedArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetDeletedAsync(null));
-        }
-
-        [Test]
-        public void RecoverDeletedArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedAsync(null));
-        }
-
-        [Test]
-        public void GetAllVersionsArgumentValidation()
-        {
-            Assert.Throws<ArgumentNullException>(() => Client.GetAllVersionsAsync(null));
         }
     }
 }
