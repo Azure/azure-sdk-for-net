@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         public async Task SetsHeaders()
         {
             var mockTransport = new MockTransport();
-            Task<Response> task = SendGetRequest(mockTransport, ClientRequestIdPolicy.Singleton);
+            Task<Response> task = SendGetRequest(mockTransport, ClientRequestIdPolicy.Shared);
             MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
             await task;
 

@@ -8,7 +8,7 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Security.KeyVault.Secrets
 {
-    public class SecretClientOptions : HttpClientOptions
+    public class SecretClientOptions : ClientOptions
     {
         public RetryPolicy RetryPolicy { get; set; }
 
