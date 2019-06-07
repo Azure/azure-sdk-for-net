@@ -1,9 +1,6 @@
 ﻿using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +8,7 @@ namespace Azure.Security.KeyVault.Keys
 {
     public partial class KeyClient
     {
+        private const string ApiVersion = "7.0";
         private const string KeysPath = "/keys/";
         private const string DeletedKeysPath = "/deletedkeys/";
 
@@ -97,6 +95,16 @@ namespace Azure.Security.KeyVault.Keys
             request.UriBuilder.Uri = uri;
 
             return request;
+        }
+
+        private Uri CreateFirstPageUri(string path)
+        {
+            var firstPage = new HttpPipelineUriBuilder();
+            firstPage.Uri = _vaultUri;
+            firstPage.AppendPath(path);
+            firstPage.AppendQuery("api-version", ApiVersion);
+
+            return firstPage.Uri;
         }
 
         private Response<T> CreateResponse<T>(Response response, T result)

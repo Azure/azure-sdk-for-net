@@ -29,15 +29,15 @@ namespace Azure.Security.KeyVault.Keys
             {
                 _items = new T[value.GetArrayLength()];
 
-                int i = 0;
+                int index = 0;
 
                 foreach (var elem in value.EnumerateArray())
                 {
-                    _items[i] = _itemFactory();
+                    _items[index] = _itemFactory();
 
-                    _items[i].ReadProperties(elem);
+                    _items[index].ReadProperties(elem);
 
-                    i++;
+                    index++;
                 }
             }
 

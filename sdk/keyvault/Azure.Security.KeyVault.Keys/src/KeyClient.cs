@@ -15,7 +15,6 @@ namespace Azure.Security.KeyVault.Keys
     public partial class KeyClient
     {
         private readonly Uri _vaultUri;
-        private const string ApiVersion = "7.0";
         private readonly HttpPipeline _pipeline;
 
         protected KeyClient()
@@ -49,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
             if (keyType == default) throw new ArgumentNullException(nameof(keyType));
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
@@ -92,8 +91,8 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
-            if (key?.Name == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Name)}");
-            if (key?.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");
+            if (string.IsNullOrEmpty(key?.Name)) throw new ArgumentException($"{nameof(key.Name)} can't be empty or null");
+            if (string.IsNullOrEmpty(key?.Version)) throw new ArgumentException($"{nameof(key.Version)} can't be empty or null");
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
@@ -107,7 +106,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> GetKeyAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             return await SendRequestAsync(HttpPipelineMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, version);
         }
@@ -119,7 +118,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<KeyBase>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(_vaultUri, KeysPath + $"?api-version={ApiVersion}");
+            Uri firstPageUri = CreateFirstPageUri(KeysPath);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
@@ -131,9 +130,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<KeyBase>> GetKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            Uri firstPageUri = new Uri(_vaultUri, $"{KeysPath}{name}/versions?api-version={ApiVersion}");
+            Uri firstPageUri = CreateFirstPageUri(KeysPath);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
@@ -145,7 +144,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<DeletedKey>> GetDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             return await SendRequestAsync(HttpPipelineMethod.Get, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
@@ -157,7 +156,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
@@ -169,7 +168,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual IAsyncEnumerable<Response<DeletedKey>> GetDeletedKeysAsync(CancellationToken cancellationToken = default)
         {
-            Uri firstPageUri = new Uri(_vaultUri, DeletedKeysPath + $"?api-version={ApiVersion}");
+            Uri firstPageUri = CreateFirstPageUri(DeletedKeysPath);
 
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), cancellationToken));
         }
@@ -181,7 +180,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response> PurgeDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedKeysPath, name);
         }
@@ -204,7 +203,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<byte[]>> BackupKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "backup");
 
@@ -230,7 +229,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
             if (keyMaterial == default) throw new ArgumentNullException(nameof(keyMaterial));
 
             var keyImportOptions = new KeyImportOptions(name, keyMaterial);
