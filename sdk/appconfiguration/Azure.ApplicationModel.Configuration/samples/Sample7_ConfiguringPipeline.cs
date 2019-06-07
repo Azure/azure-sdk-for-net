@@ -28,8 +28,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.LoggingPolicy = null;
 
             // specify custom retry policy options
-            options.RetryPolicy = new FixedRetryPolicy()
+            options.RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Fixed,
                 MaxRetries = 10,
                 Delay = TimeSpan.FromSeconds(1)
             };

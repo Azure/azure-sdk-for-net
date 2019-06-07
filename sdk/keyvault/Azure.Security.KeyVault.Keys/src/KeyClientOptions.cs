@@ -14,8 +14,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public KeyClientOptions()
         {
-            RetryPolicy = new ExponentialRetryPolicy()
+            RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Exponential,
                 Delay = TimeSpan.FromMilliseconds(800),
                 MaxRetries = 3
             };
