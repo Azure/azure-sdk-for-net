@@ -31,6 +31,13 @@
 
     public partial class FormRecognizerClient : ServiceClient<FormRecognizerClient>, IFormRecognizerClient
     {
+        partial void CustomInitialize()
+        {
+            // Disable metadata property handling when de/serializing models so we can properly support "$ref" in ElementReference.
+            SerializationSettings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
+            DeserializationSettings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
+        }
+
         public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeWithCustomModelWithHttpMessagesAsync2(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), string contentType = "application/pdf")
         {
             if (Endpoint == null)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Xunit;
+using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Fact]
+        [Test]
         public async Task RefreshLogicDefaultAsync()
         {
             TimeSpan refreshBuffer = new IdentityClientOptions().RefreshBuffer;
@@ -56,9 +56,9 @@ namespace Azure.Identity.Tests
                 await cred.GetTokenAsync(new string[] { "mockscope" });
             }
 
-            Assert.Equal(2, refreshCred1.AuthCount);
-            Assert.Equal(2, refreshCred2.AuthCount);
-            Assert.Equal(1, notRefreshCred1.AuthCount);
+            Assert.AreEqual(2, refreshCred1.AuthCount);
+            Assert.AreEqual(2, refreshCred2.AuthCount);
+            Assert.AreEqual(1, notRefreshCred1.AuthCount);
         }
     }
 }

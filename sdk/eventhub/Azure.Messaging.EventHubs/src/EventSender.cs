@@ -45,7 +45,13 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If <c>null</c>, the sender is not specific to a partition and events will be automatically routed; otherwise, the identifier of the partition events will be sent to.</value>
         ///
-        public string PartitionId { get; protected set; }
+        public string PartitionId { get; }
+
+        /// <summary>
+        ///   The set of options used for creation of this sender.
+        /// </summary>
+        ///
+        protected SenderOptions Options { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventSender"/> class.
@@ -55,15 +61,22 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
         /// <param name="senderOptions">The set of options to use for this receiver.</param>
         ///
+        /// <remarks>
+        ///   Because this is a non-public constructor, it is assumed that the <paramref name="senderOptions" /> passed are
+        ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
+        ///   caller to ensure that any needed cloning of options is performed.
+        /// </remarks>
+        ///
         protected internal EventSender(ConnectionType connectionType,
-                                       string         eventHubPath,
-                                       SenderOptions  senderOptions)
+                                       string eventHubPath,
+                                       SenderOptions senderOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNull(nameof(senderOptions), senderOptions);
 
             PartitionId = senderOptions?.PartitionId;
+            Options = senderOptions;
 
-            //TODO: Validate and clone the options (to avoid any changes on the options being carried over)
             //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpEventSender.
         }
 
@@ -88,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, EventBatchingOptions, CancellationToken)"/>
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      CancellationToken      cancellationToken = default) => throw new NotImplementedException();
+                                      CancellationToken cancellationToken = default) => SendAsync(events, null, cancellationToken);
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -104,8 +117,8 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
-                                      EventBatchingOptions   batchOptions,
-                                      CancellationToken      cancellationToken = default) => throw new NotImplementedException();
+                                      EventBatchingOptions batchOptions,
+                                      CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
         ///   Closes the sender.

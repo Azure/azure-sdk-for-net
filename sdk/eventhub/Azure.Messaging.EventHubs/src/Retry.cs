@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns><c>true</c> if the operation that produced the exception may be retried; otherwise, <c>false</c>.</returns>
         ///
-        internal static bool IsRetriableException(Exception exception) => false;
+        internal virtual bool IsRetriableException(Exception exception) => throw new NotImplementedException();
 
         /// <summary>
         ///   Calculates the amount of time to delay before the next retry attempt.
@@ -62,10 +62,9 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The amount of time to delay before retrying the associated operation; if <c>null</c>, then the operation is no longer eligible to be retried.</returns>
         ///
-        public TimeSpan? GetNextRetryInterval(Exception lastException,
-                                              TimeSpan  remainingTime,
-                                              int       retryCount) => null;
-
+        internal TimeSpan? GetNextRetryInterval(Exception lastException,
+                                                TimeSpan remainingTime,
+                                                int retryCount) => throw new NotImplementedException();
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>
@@ -120,9 +119,9 @@ namespace Azure.Messaging.EventHubs
         ///   <see cref="Retry.GetNextRetryInterval" /> implementation.
         /// </remarks>
         ///
-        protected abstract TimeSpan? OnGetNextRetryInterval(Exception lastException,
-                                                            TimeSpan  remainingTime,
-                                                            int       baseWaitSeconds,
-                                                            int       retryCount);
+        protected abstract TimeSpan? CalculateNextRetryInterval(Exception lastException,
+                                                                TimeSpan remainingTime,
+                                                                int baseWaitSeconds,
+                                                                int retryCount);
     }
 }

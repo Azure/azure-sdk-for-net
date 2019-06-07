@@ -246,7 +246,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -388,10 +388,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// URL that you must use for your 'GetReadOperationResult' operation
         /// to access OCR results.​
         /// </summary>
-        /// <param name='mode'>
-        /// Type of text to recognize. Possible values include: 'Handwritten',
-        /// 'Printed'
-        /// </param>
         /// <param name='url'>
         /// Publicly reachable URL of an image.
         /// </param>
@@ -401,7 +397,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<BatchReadFileHeaders>> BatchReadFileWithHttpMessagesAsync(string url, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<BatchReadFileHeaders>> BatchReadFileWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This interface is used for getting OCR results of Read operation.
@@ -651,7 +647,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages? language = default(OcrLanguages?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -720,17 +716,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='mode'>
-        /// Type of text to recognize. Possible values include: 'Handwritten',
-        /// 'Printed'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -6,7 +6,6 @@ namespace Microsoft.Azure.EventHubs
     using System;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
@@ -76,62 +75,27 @@ namespace Microsoft.Azure.EventHubs
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive, tokenScope);
         }
 
-
-#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>Creates an Azure Active Directory token provider.</summary>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientCredential">The app credential.</param>
+        /// <param name="authCallback">The authentication delegate to provide access token.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
+        /// <param name="state">State to be delivered to callback.</param>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientCredential clientCredential)
+        public static TokenProvider CreateAzureActiveDirectoryTokenProvider(
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
+            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
+            object state = null)
         {
-            Guard.ArgumentNotNull(nameof(authContext), authContext);
-            Guard.ArgumentNotNull(nameof(clientCredential), clientCredential);
+            Guard.ArgumentNotNull(nameof(authCallback), authCallback);
+            Guard.ArgumentNotNullOrWhiteSpace(nameof(authority), authority);
 
-            return new AzureActiveDirectoryTokenProvider(authContext, clientCredential);
-        }
-#endif
-
-        /// <summary>Creates an Azure Active Directory token provider.</summary>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientId">ClientId for AAD.</param>
-        /// <param name="redirectUri">The redirectUri on Client App.</param>
-        /// <param name="platformParameters">Platform parameters</param>
-        /// <param name="userIdentifier">User Identifier</param>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(
-            AuthenticationContext authContext,
-            string clientId,
-            Uri redirectUri,
-            IPlatformParameters platformParameters,
-            UserIdentifier userIdentifier = null)
-        {
-            Guard.ArgumentNotNull(nameof(authContext), authContext);
-            Guard.ArgumentNotNullOrWhiteSpace(nameof(clientId), clientId);
-            Guard.ArgumentNotNull(nameof(redirectUri), redirectUri);
-            Guard.ArgumentNotNull(nameof(platformParameters), platformParameters);
-
-            return new AzureActiveDirectoryTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier);
+            return new AzureActiveDirectoryTokenProvider(authCallback, authority, state);
         }
 
-#if ALLOW_CERTIFICATE_IDENTITY
-        /// <summary>Creates an Azure Active Directory token provider.</summary>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientAssertionCertificate">The client assertion certificate credential.</param>
+        /// <summary>Creates Azure Managed Identity token provider.</summary>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(AuthenticationContext authContext, ClientAssertionCertificate clientAssertionCertificate)
+        public static TokenProvider CreateManagedIdentityTokenProvider()
         {
-            Guard.ArgumentNotNull(nameof(authContext), authContext);
-            Guard.ArgumentNotNull(nameof(clientAssertionCertificate), clientAssertionCertificate);
-
-            return new AzureActiveDirectoryTokenProvider(authContext, clientAssertionCertificate);
-        }
-#endif
-
-        /// <summary>Creates Azure Managed Service Identity token provider.</summary>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateManagedServiceIdentityTokenProvider()
-        {
-            return new ManagedServiceIdentityTokenProvider();
+            return new ManagedIdentityTokenProvider();
         }
 
         /// <summary>

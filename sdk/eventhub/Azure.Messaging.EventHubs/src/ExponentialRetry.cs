@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public ExponentialRetry(TimeSpan minimumBackoff,
                                 TimeSpan maximumBackoff,
-                                int      maximumRetryCount)
+                                int maximumRetryCount)
         {
             Guard.ArgumentNotNegative(nameof(minimumBackoff), minimumBackoff);
             Guard.ArgumentNotNegative(nameof(maximumBackoff), maximumBackoff);
@@ -48,15 +48,6 @@ namespace Azure.Messaging.EventHubs
             _maximumRetryCount = maximumRetryCount;
             _retryFactor = ComputeRetryFactor(minimumBackoff, maximumBackoff, maximumRetryCount);
         }
-
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="Retry" />.</returns>
-        ///
-        internal override Retry Clone() =>
-            new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -88,6 +79,41 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   Creates a new copy of the current <see cref="Retry" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="Retry" />.</returns>
+        ///
+        internal override Retry Clone() =>
+            new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="ExponentialRetry" />, is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="ExponentialRetry" /> to consider.</param>
+        /// <param name="second">The second <see cref="ExponentialRetry" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="ExponentialRetry" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        internal static bool HaveSameConfiguration(ExponentialRetry first, ExponentialRetry second)
+        {
+            if (ReferenceEquals(first, second))
+            {
+                return true;
+            }
+
+            if ((first == null) || (second == null))
+            {
+                return false;
+            }
+
+            return (first._minimumBackoff == second._minimumBackoff)
+                && (first._maximumBackoff == second._maximumBackoff)
+                && (first._maximumRetryCount == second._maximumRetryCount);
+        }
+
+        /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in
         ///   the calculations performed by <see cref="Retry.GetNextRetryInterval" />.
         /// </summary>
@@ -104,12 +130,12 @@ namespace Azure.Messaging.EventHubs
         ///   <see cref="Retry.GetNextRetryInterval" /> implementation.
         /// </remarks>
         ///
-        protected override TimeSpan? OnGetNextRetryInterval(Exception lastException,
-                                                            TimeSpan  remainingTime,
-                                                            int       baseWaitSeconds,
-                                                            int       retryCount)
+        protected override TimeSpan? CalculateNextRetryInterval(Exception lastException,
+                                                                TimeSpan remainingTime,
+                                                                int baseWaitSeconds,
+                                                                int retryCount)
         {
-            if ((!Retry.IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
+            if ((!IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
             {
                 return null;
             }
@@ -135,7 +161,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private double ComputeRetryFactor(TimeSpan minimumBackoff,
                                           TimeSpan maximumBackoff,
-                                          int      maximumRetryCount)
+                                          int maximumRetryCount)
         {
             double deltaBackoff = maximumBackoff.Subtract(minimumBackoff).TotalSeconds;
 

@@ -30,7 +30,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             return InstrumentClient(
                 new ConfigurationClient(
                     Recording.GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
-                    InstrumentClientOptions(new ConfigurationClientOptions())));
+                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
         }
 
         private ConfigurationSetting CreateSetting()

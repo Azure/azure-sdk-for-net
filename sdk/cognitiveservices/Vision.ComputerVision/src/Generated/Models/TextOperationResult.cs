@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Initializes a new instance of the TextOperationResult class.
         /// </summary>
         /// <param name="status">Status of the text operation. Possible values
-        /// include: 'Not Started', 'Running', 'Failed', 'Succeeded'</param>
+        /// include: 'NotStarted', 'Running', 'Failed', 'Succeeded'</param>
         /// <param name="recognitionResult">Text recognition result of the text
         /// operation.</param>
         public TextOperationResult(TextOperationStatusCodes status = default(TextOperationStatusCodes), TextRecognitionResult recognitionResult = default(TextRecognitionResult))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 
         /// <summary>
         /// Gets or sets status of the text operation. Possible values include:
-        /// 'Not Started', 'Running', 'Failed', 'Succeeded'
+        /// 'NotStarted', 'Running', 'Failed', 'Succeeded'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public TextOperationStatusCodes Status { get; set; }

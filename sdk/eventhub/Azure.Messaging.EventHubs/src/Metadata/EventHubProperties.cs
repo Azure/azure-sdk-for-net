@@ -22,13 +22,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The date and time, in UTC, at which the Event Hub was created.
         /// </summary>
         ///
-        public DateTime CreatedDateUtc { get; }
-
-        /// <summary>
-        ///   The number of partitions in the Event Hub.
-        /// </summary>
-        ///
-        public int PartitionCount { get; }
+        public DateTime CreatedAtUtc { get; }
 
         /// <summary>
         ///   The set of unique identifiers for each partition in the Event Hub.
@@ -49,19 +43,16 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///
         /// <param name="path">The path of the Event Hub.</param>
         /// <param name="createdUtc">The date and time at which the Event Hub was created.</param>
-        /// <param name="partitionCount">The number of partitions in the Event Hub.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
-        internal EventHubProperties(string    path,
-                                    DateTime  createdUtc,
-                                    int       partitionCount,
-                                    string[]  partitionIds,
+        internal EventHubProperties(string path,
+                                    DateTime createdUtc,
+                                    string[] partitionIds,
                                     DateTime? retrievalTimeUtc = null)
         {
             Path = path;
-            CreatedDateUtc = createdUtc;
-            PartitionCount = partitionCount;
+            CreatedAtUtc = createdUtc;
             PartitionIds = partitionIds;
             PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
         }

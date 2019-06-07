@@ -8,10 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Azure.Messaging.EventHubs {
-    using System;
-    
-    
+namespace Azure.Messaging.EventHubs
+{
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,202 +20,246 @@ namespace Azure.Messaging.EventHubs {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
-        
+    internal class Resources
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Resources()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.EventHubs.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link..
-        /// </summary>
-        internal static string AmqpMessageSizeExceeded {
-            get {
-                return ResourceManager.GetString("AmqpMessageSizeExceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please make sure either all or none of the following arguments are defined: &apos;{0},{1}&apos;..
-        /// </summary>
-        internal static string ArgumentInvalidCombination {
-            get {
-                return ResourceManager.GetString("ArgumentInvalidCombination", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty..
         /// </summary>
-        internal static string ArgumentNullOrEmpty {
-            get {
+        internal static string ArgumentNullOrEmpty
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentNullOrEmpty", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or white space..
         /// </summary>
-        internal static string ArgumentNullOrWhiteSpace {
-            get {
+        internal static string ArgumentNullOrWhiteSpace
+        {
+            get
+            {
                 return ResourceManager.GetString("ArgumentNullOrWhiteSpace", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters..
         /// </summary>
-        internal static string ArgumentStringTooBig {
-            get {
-                return ResourceManager.GetString("ArgumentStringTooBig", resourceCulture);
+        internal static string ArgumentStringTooLong
+        {
+            get
+            {
+                return ResourceManager.GetString("ArgumentStringTooLong", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Sending empty {0} is not a valid operation..
+        ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens..
         /// </summary>
-        internal static string CannotSendAnEmptyEvent {
-            get {
-                return ResourceManager.GetString("CannotSendAnEmptyEvent", resourceCulture);
+        internal static string InvalidConnectionString
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidConnectionString", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There are no event data supplied. Please make sure input events are not empty..
-        /// </summary>
-        internal static string EventDataListIsNullOrEmpty {
-            get {
-                return ResourceManager.GetString("EventDataListIsNullOrEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
-        /// </summary>
-        internal static string FailedToSerializeUnsupportedType {
-            get {
-                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
-        internal static string InvalidEncoding {
-            get {
+        internal static string InvalidEncoding
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidEncoding", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded..
+        /// </summary>
+        internal static string InvalidSharedAccessSignature
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidSharedAccessSignature", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to The time period may not be Zero or Infinite..
         /// </summary>
-        internal static string InvalidTimePeriod {
-            get {
+        internal static string InvalidTimePeriod
+        {
+            get
+            {
                 return ResourceManager.GetString("InvalidTimePeriod", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, the path to an Event Hub, and a Shared Access Signature (both the name and value) to be valid..
+        /// </summary>
+        internal static string MalformedEventHubClientConnectionString
+        {
+            get
+            {
+                return ResourceManager.GetString("MalformedEventHubClientConnectionString", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
         /// </summary>
-        internal static string MissingSystemProperty {
-            get {
+        internal static string MissingSystemProperty
+        {
+            get
+            {
                 return ResourceManager.GetString("MissingSystemProperty", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to A proxy may only be used for a websockets connection..
+        /// </summary>
+        internal static string ProxyMustUseWebsockets
+        {
+            get
+            {
+                return ResourceManager.GetString("ProxyMustUseWebsockets", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
-        internal static string ReceiverIdentifierOverMaxValue {
-            get {
+        internal static string ReceiverIdentifierOverMaxValue
+        {
+            get
+            {
                 return ResourceManager.GetString("ReceiverIdentifierOverMaxValue", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request..
+        ///   Looks up a localized string similar to The reqested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;.   A token cannot be issued..
         /// </summary>
-        internal static string SasTokenShouldBeAlone {
-            get {
-                return ResourceManager.GetString("SasTokenShouldBeAlone", resourceCulture);
+        internal static string ResourceMustMatchSharedAccessSignature
+        {
+            get
+            {
+                return ResourceManager.GetString("ResourceMustMatchSharedAccessSignature", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Argument {0} must be a positive timeout value. The provided value was {1}..
+        ///   Looks up a localized string similar to A retry must be set for the options; if no retry is desired, please set the value to Retry.NoRetry.
         /// </summary>
-        internal static string TimeoutMustBePositive {
-            get {
+        internal static string RetryMustBeSet
+        {
+            get
+            {
+                return ResourceManager.GetString("RetryMustBeSet", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
+        /// </summary>
+        internal static string SharedAccessKeyIsRequired
+        {
+            get
+            {
+                return ResourceManager.GetString("SharedAccessKeyIsRequired", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A timeout value must be positive.  To request using the default timeout, please use TimeSpan.Zero or null..
+        /// </summary>
+        internal static string TimeoutMustBePositive
+        {
+            get
+            {
                 return ResourceManager.GetString("TimeoutMustBePositive", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Argument {0} must be a non-negative timespan value. The provided value was {1}..
         /// </summary>
-        internal static string TimeSpanMustBeNonNegative {
-            get {
+        internal static string TimeSpanMustBeNonNegative
+        {
+            get
+            {
                 return ResourceManager.GetString("TimeSpanMustBeNonNegative", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;Audience&apos; value..
+        ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
         /// </summary>
-        internal static string TokenMissingAudience {
-            get {
-                return ResourceManager.GetString("TokenMissingAudience", resourceCulture);
+        internal static string UnknownConnectionType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownConnectionType", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The provided token does not specify the &apos;ExpiresOn&apos; value..
-        /// </summary>
-        internal static string TokenMissingExpiresOn {
-            get {
-                return ResourceManager.GetString("TokenMissingExpiresOn", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The value supplied must be between {0} and {1}..
         /// </summary>
-        internal static string ValueOutOfRange {
-            get {
+        internal static string ValueOutOfRange
+        {
+            get
+            {
                 return ResourceManager.GetString("ValueOutOfRange", resourceCulture);
             }
         }

@@ -11,50 +11,95 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LiveEventInputProtocol.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LiveEventInputProtocol
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(LiveEventInputProtocolConverter))]
+    public struct LiveEventInputProtocol : System.IEquatable<LiveEventInputProtocol>
     {
-        [EnumMember(Value = "FragmentedMP4")]
-        FragmentedMP4,
-        [EnumMember(Value = "RTMP")]
-        RTMP
-    }
-    internal static class LiveEventInputProtocolEnumExtension
-    {
-        internal static string ToSerializedValue(this LiveEventInputProtocol? value)
+        private LiveEventInputProtocol(string underlyingValue)
         {
-            return value == null ? null : ((LiveEventInputProtocol)value).ToSerializedValue();
+            UnderlyingValue=underlyingValue;
         }
 
-        internal static string ToSerializedValue(this LiveEventInputProtocol value)
+        public static readonly LiveEventInputProtocol FragmentedMP4 = "FragmentedMP4";
+
+        public static readonly LiveEventInputProtocol RTMP = "RTMP";
+
+
+        /// <summary>
+        /// Underlying value of enum LiveEventInputProtocol
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for LiveEventInputProtocol
+        /// </summary>
+        public override string ToString()
         {
-            switch( value )
-            {
-                case LiveEventInputProtocol.FragmentedMP4:
-                    return "FragmentedMP4";
-                case LiveEventInputProtocol.RTMP:
-                    return "RTMP";
-            }
-            return null;
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
-        internal static LiveEventInputProtocol? ParseLiveEventInputProtocol(this string value)
+        /// <summary>
+        /// Compares enums of type LiveEventInputProtocol
+        /// </summary>
+        public bool Equals(LiveEventInputProtocol e)
         {
-            switch( value )
-            {
-                case "FragmentedMP4":
-                    return LiveEventInputProtocol.FragmentedMP4;
-                case "RTMP":
-                    return LiveEventInputProtocol.RTMP;
-            }
-            return null;
+            return UnderlyingValue.Equals(e.UnderlyingValue);
         }
+
+        /// <summary>
+        /// Implicit operator to convert string to LiveEventInputProtocol
+        /// </summary>
+        public static implicit operator LiveEventInputProtocol(string value)
+        {
+            return new LiveEventInputProtocol(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert LiveEventInputProtocol to string
+        /// </summary>
+        public static implicit operator string(LiveEventInputProtocol e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum LiveEventInputProtocol
+        /// </summary>
+        public static bool operator == (LiveEventInputProtocol e1, LiveEventInputProtocol e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum LiveEventInputProtocol
+        /// </summary>
+        public static bool operator != (LiveEventInputProtocol e1, LiveEventInputProtocol e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for LiveEventInputProtocol
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is LiveEventInputProtocol && Equals((LiveEventInputProtocol)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode LiveEventInputProtocol
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

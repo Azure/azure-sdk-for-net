@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -31,14 +30,14 @@ namespace Azure.Messaging.EventHubs
         ///   only from this partition.
         /// </summary>
         ///
-        public string PartitionId { get; protected set; }
+        public string PartitionId { get; }
 
         /// <summary>
         ///   The name of the consumer group that this receiver is associated with.  Events will be read
         ///   only in the context of this group.
         /// </summary>
         ///
-        public string ConsumerGroupName { get; protected set; }
+        public string ConsumerGroup { get; }
 
         /// <summary>
         ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
@@ -52,7 +51,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value will be <c>null</c>.</value>
         ///
-        public long? ExclusiveReceiverPriority { get; protected set; }
+        public long? ExclusiveReceiverPriority { get; }
 
         /// <summary>
         ///   The position of the event in the partition where the receiver should begin reading.
@@ -64,7 +63,7 @@ namespace Azure.Messaging.EventHubs
         ///   The set of event receiver options used for creation of this receiver.
         /// </summary>
         ///
-        protected ReceiverOptions ReceiverOptions { get; }
+        protected ReceiverOptions Options { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
@@ -79,26 +78,27 @@ namespace Azure.Messaging.EventHubs
         ///   If the starting event position is not specified in the <paramref name="receiverOptions"/>, the receiver will
         ///   default to ignoring events in the partition that were queued prior to the receiver being created and read only
         ///   events which appear after that point.
+        ///
+        ///   Because this is a non-public constructor, it is assumed that the <paramref name="receiverOptions" /> passed are
+        ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
+        ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        protected internal PartitionReceiver(ConnectionType  connectionType,
-                                             string          eventHubPath,
-                                             string          partitionId,
+        protected internal PartitionReceiver(ConnectionType connectionType,
+                                             string eventHubPath,
+                                             string partitionId,
                                              ReceiverOptions receiverOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Guard.ArgumentNotNull(nameof(receiverOptions), receiverOptions);
 
-            //TODO: Validate and clone the options (to avoid any changes on the options being carried over)
             //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpPartitionReceiver.
-
-            //TODO: Remove this line.
-            receiverOptions = receiverOptions ?? new ReceiverOptions();
 
             PartitionId = partitionId;
             StartingPosition = receiverOptions.BeginReceivingAt;
-            ReceiverOptions = receiverOptions;
             ExclusiveReceiverPriority = receiverOptions.ExclusiveReceiverPriority;
+            Options = receiverOptions.Clone();
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this receiver is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public virtual Task<IEnumerable<EventData>> ReceiveAsync(int               maximumMessageCount,
-                                                                 TimeSpan?         maximumWaitTime = null,
+        public virtual Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                 TimeSpan? maximumWaitTime = null,
                                                                  CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
         /// <summary>
