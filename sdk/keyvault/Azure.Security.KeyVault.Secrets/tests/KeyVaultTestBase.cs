@@ -105,16 +105,16 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
 
-        protected Task WaitForDeletedSecret(string name, SecretClient client = null, TestRecording recording = null)
+        protected Task WaitForDeletedSecret(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {
                 return Task.CompletedTask;
             }
 
-            using ((recording ?? Recording).DisableRecording())
+            using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await (client ?? Client).GetDeletedAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedAsync(name));
             }
         }
 
