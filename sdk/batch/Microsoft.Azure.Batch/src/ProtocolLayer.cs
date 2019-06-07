@@ -1556,26 +1556,26 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<IPage<Models.NodeAgentSku>, Models.AccountListNodeAgentSkusHeaders>> ListNodeAgentSkus(
+        public Task<AzureOperationResponse<IPage<Models.ImageInformation>, Models.AccountListSupportedImagesHeaders>> ListSupportedImages(
             string skipToken,
             BehaviorManager bhMgr,
             DetailLevel detailLevel,
             CancellationToken cancellationToken)
         {
-            Task<AzureOperationResponse<IPage<Models.NodeAgentSku>, Models.AccountListNodeAgentSkusHeaders>> asyncTask;
+            Task<AzureOperationResponse<IPage<Models.ImageInformation>, Models.AccountListSupportedImagesHeaders>> asyncTask;
 
             if (string.IsNullOrEmpty(skipToken))
             {
-                var request = new AccountListNodeAgentSkusBatchRequest(this._client, cancellationToken);
+                var request = new AccountListSupportedImagesBatchRequest(this._client, cancellationToken);
 
                 if (request.Options == null)
                 {
-                    request.Options = new Models.AccountListNodeAgentSkusOptions();
+                    request.Options = new Models.AccountListSupportedImagesOptions();
                 }
 
                 bhMgr = bhMgr.CreateBehaviorManagerWithDetailLevel(detailLevel);
 
-                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListNodeAgentSkusWithHttpMessagesAsync(
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListSupportedImagesWithHttpMessagesAsync(
                     request.Options,
                     request.CustomHeaders,
                     lambdaCancelToken);
@@ -1584,9 +1584,10 @@
             }
             else
             {
-                var request = new AccountListNodeAgentSkusNextBatchRequest(this._client, cancellationToken);
+                var request = new AccountListSupportedImagesNextBatchRequest(this._client, cancellationToken);
 
-                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListNodeAgentSkusNextWithHttpMessagesAsync(skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListSupportedImagesNextWithHttpMessagesAsync(
+                    skipToken, request.Options, request.CustomHeaders, lambdaCancelToken);
 
                 asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
             }

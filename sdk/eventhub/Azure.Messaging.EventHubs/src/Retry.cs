@@ -63,8 +63,8 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The amount of time to delay before retrying the associated operation; if <c>null</c>, then the operation is no longer eligible to be retried.</returns>
         ///
         internal TimeSpan? GetNextRetryInterval(Exception lastException,
-                                                TimeSpan  remainingTime,
-                                                int       retryCount) => throw new NotImplementedException();
+                                                TimeSpan remainingTime,
+                                                int retryCount) => throw new NotImplementedException();
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>
@@ -120,8 +120,8 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         protected abstract TimeSpan? CalculateNextRetryInterval(Exception lastException,
-                                                                TimeSpan  remainingTime,
-                                                                int       baseWaitSeconds,
-                                                                int       retryCount);
+                                                                TimeSpan remainingTime,
+                                                                int baseWaitSeconds,
+                                                                int retryCount);
     }
 }

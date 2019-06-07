@@ -4,11 +4,13 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public class TestRecording
+    public class TestRecording: IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
 
@@ -18,6 +20,28 @@ namespace Azure.Core.Testing
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
+
+
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session = new RecordSession();
+                    if (File.Exists(_sessionFile))
+                    {
+                        try
+                        {
+                            _previousSession = Load();
+                        }
+                        catch (Exception)
+                        {
+                            // ignore
+                        }
+                    }
+                    break;
+                case RecordedTestMode.Playback:
+                    _session = Load();
+                    break;
+            }
         }
 
         public RecordedTestMode Mode { get; }
@@ -78,31 +102,7 @@ namespace Azure.Core.Testing
             return RecordSession.Deserialize(jsonDocument.RootElement);
         }
 
-        public void Start()
-        {
-            switch (Mode)
-            {
-                case RecordedTestMode.Record:
-                    _session = new RecordSession();
-                    if (File.Exists(_sessionFile))
-                    {
-                        try
-                        {
-                            _previousSession = Load();
-                        }
-                        catch (Exception)
-                        {
-                            // ignore
-                        }
-                    }
-                    break;
-                case RecordedTestMode.Playback:
-                    _session = Load();
-                    break;
-            }
-        }
-
-        public void Stop()
+        public void Dispose()
         {
             if (Mode == RecordedTestMode.Record)
             {
@@ -119,6 +119,13 @@ namespace Azure.Core.Testing
                 utf8JsonWriter.Flush();
             }
         }
+
+        public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
+        {
+            clientOptions.Transport = CreateTransport(clientOptions.Transport);
+            return clientOptions;
+        }
+
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
             switch (Mode)
@@ -136,7 +143,7 @@ namespace Azure.Core.Testing
 
         public string GenerateId()
         {
-            return Random .Next().ToString();
+            return Random.Next().ToString();
         }
 
         public string GetConnectionStringFromEnvironment(string variableName)
@@ -175,9 +182,43 @@ namespace Azure.Core.Testing
             }
         }
 
+        public string GetVariable(string variableName, string defaultValue)
+        {
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session.Variables[variableName] = defaultValue;
+                    return defaultValue;
+                case RecordedTestMode.Live:
+                    return defaultValue;
+                case RecordedTestMode.Playback:
+                    return _session.Variables[variableName];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public TokenCredential GetCredential(TokenCredential defaultCredential)
+        {
+            return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;
+        }
+
         public void DisableIdReuse()
         {
             _previousSession = null;
+        }
+
+        private class TestCredential : TokenCredential
+        {
+            public override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            {
+                return new ValueTask<string>(GetToken(scopes, cancellationToken));
+            }
+
+            public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+            {
+                return "TEST TOKEN " + string.Join(",", scopes);
+            }
         }
     }
 }

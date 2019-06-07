@@ -1232,7 +1232,7 @@
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
                                 imageDetails.ImageReference,
-                                imageDetails.NodeAgentSku.Id)
+                                imageDetails.NodeAgentSkuId)
                             {
                                 ContainerConfiguration = new ContainerConfiguration()
                                 {

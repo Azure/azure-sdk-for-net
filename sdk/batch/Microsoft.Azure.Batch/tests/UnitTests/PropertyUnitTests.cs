@@ -153,6 +153,9 @@ namespace Azure.Batch.Unit.Tests
 
                 new ComparerPropertyMapping(typeof(PoolEndpointConfiguration), typeof(Protocol.Models.PoolEndpointConfiguration), "InboundNatPools", "InboundNATPools"),
                 new ComparerPropertyMapping(typeof(InboundEndpoint), typeof(Protocol.Models.InboundEndpoint), "PublicFqdn", "PublicFQDN"),
+
+                new ComparerPropertyMapping(typeof(ImageInformation), typeof(Protocol.Models.ImageInformation), "NodeAgentSkuId", "NodeAgentSKUId"),
+                new ComparerPropertyMapping(typeof(ImageInformation), typeof(Protocol.Models.ImageInformation), "OSType", "OsType"),
             };
 
             Random rand = new Random();
@@ -433,6 +436,24 @@ namespace Azure.Batch.Unit.Tests
                     Certificate boundCertificate = new Certificate(client, certificateModel, client.CustomBehaviors);
 
                     ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundCertificate, certificateModel);
+                    Assert.True(result.Equal, result.Message);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestRandomBoundImageInformationProperties()
+        {
+            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
+            {
+                for (int i = 0; i < TestRunCount; i++)
+                {
+                    Protocol.Models.ImageInformation imageModel = 
+                        this.customizedObjectFactory.GenerateNew<Protocol.Models.ImageInformation>();
+
+                    ImageInformation boundImageInfo = new ImageInformation(imageModel);
+                    ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(boundImageInfo, imageModel);
                     Assert.True(result.Equal, result.Message);
                 }
             }

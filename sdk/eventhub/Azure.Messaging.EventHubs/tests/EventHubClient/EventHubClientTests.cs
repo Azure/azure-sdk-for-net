@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,7 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class EventHubClientTests
     {
         /// <summary>
@@ -65,8 +63,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ConnectionType = ConnectionType.AmqpWebSockets,
                 DefaultTimeout = TimeSpan.FromHours(2),
-                Retry          = new ExponentialRetry(TimeSpan.FromMinutes(10), TimeSpan.FromHours(1), 24),
-                Proxy          = Mock.Of<IWebProxy>()
+                Retry = new ExponentialRetry(TimeSpan.FromMinutes(10), TimeSpan.FromHours(1), 24),
+                Proxy = Mock.Of<IWebProxy>()
             };
 
             yield return new object[] { new EventHubClient(fakeConnection, options), options, "connection string" };
@@ -83,8 +81,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresConnectionString(string connectionString)
         {
-            Assert.That(() => new EventHubClient(connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without options should perform validation.");
-            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString), Throws.ArgumentException, "The constructor without options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), Throws.ArgumentException, "The constructor with options should perform validation.");
         }
 
         /// <summary>
@@ -111,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
         public void ConstructorValidatesConnectionString(string connectionString)
         {
-            Assert.That(() => new EventHubClient(connectionString), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClient(connectionString), Throws.ArgumentException);
         }
 
         /// <summary>
@@ -121,8 +119,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
-        public void ConstructorValidatesExpandedArguments(string          host,
-                                                          string          eventHubPath,
+        public void ConstructorValidatesExpandedArguments(string host,
+                                                          string eventHubPath,
                                                           TokenCredential credential)
         {
             Assert.That(() => new EventHubClient(host, eventHubPath, credential), Throws.InstanceOf<ArgumentException>());
@@ -136,20 +134,20 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ConstructorCreatesDefaultOptionsCases))]
         public void ConstructorCreatesDefaultOptions(EventHubClient client,
-                                                     string         constructorDescription)
+                                                     string constructorDescription)
         {
-           var defaultOptions = new EventHubClientOptions();
+            var defaultOptions = new EventHubClientOptions();
 
             var options = (EventHubClientOptions)typeof(EventHubClient)
                 .GetProperty("ClientOptions", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(client);
 
-           Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
-           Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-           Assert.That(options.ConnectionType, Is.EqualTo(defaultOptions.ConnectionType), $"The { constructorDescription } constructor should have the correct connection type.");
-           Assert.That(options.DefaultTimeout, Is.EqualTo(defaultOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
-           Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-           Assert.That(options.Retry, Is.EqualTo(defaultOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
+            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
+            Assert.That(options.ConnectionType, Is.EqualTo(defaultOptions.ConnectionType), $"The { constructorDescription } constructor should have the correct connection type.");
+            Assert.That(options.DefaultTimeout, Is.EqualTo(defaultOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
+            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)defaultOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
         }
 
         /// <summary>
@@ -159,20 +157,20 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(ConstructorClonesOptionsCases))]
-        public void ConstructorClonesOptions(EventHubClient        client,
+        public void ConstructorClonesOptions(EventHubClient client,
                                              EventHubClientOptions constructorOptions,
-                                             string                constructorDescription)
+                                             string constructorDescription)
         {
             var options = (EventHubClientOptions)typeof(EventHubClient)
                 .GetProperty("ClientOptions", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(client);
 
-           Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
-           Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-           Assert.That(options.ConnectionType, Is.EqualTo(constructorOptions.ConnectionType), $"The { constructorDescription } constructor should have the correct connection type.");
-           Assert.That(options.DefaultTimeout, Is.EqualTo(constructorOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
-           Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
-           Assert.That(options.Retry, Is.EqualTo(constructorOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
+            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
+            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
+            Assert.That(options.ConnectionType, Is.EqualTo(constructorOptions.ConnectionType), $"The { constructorDescription } constructor should have the correct connection type.");
+            Assert.That(options.DefaultTimeout, Is.EqualTo(constructorOptions.DefaultTimeout), $"The { constructorDescription } constructor should have the correct default timeout.");
+            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)options.Retry, (ExponentialRetry)constructorOptions.Retry), $"The { constructorDescription } constructor should have the correct retry.");
         }
 
         /// <summary>
@@ -217,9 +215,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithConnectionStringValidatesOptions()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            var invalidOptions =  new EventHubClientOptions { ConnectionType = ConnectionType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var invalidOptions = new EventHubClientOptions { ConnectionType = ConnectionType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
 
-            Assert.That(() => new EventHubClient(fakeConnection, invalidOptions), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate client options");
+            Assert.That(() => new EventHubClient(fakeConnection, invalidOptions), Throws.ArgumentException, "The connection string constructor should validate client options");
         }
 
         /// <summary>
@@ -230,8 +228,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorWithExpandedArgumentsValidatesOptions()
         {
-            var invalidOptions =  new EventHubClientOptions { ConnectionType = ConnectionType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
-            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The cexpanded argument onstructor should validate client options");
+            var invalidOptions = new EventHubClientOptions { ConnectionType = ConnectionType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            Assert.That(() => new EventHubClient("host", "path", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The cexpanded argument onstructor should validate client options");
         }
 
         /// <summary>
@@ -272,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(actual, Is.Not.Null, "The sender options should have been set.");
             Assert.That(actual.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
-            Assert.That(actual.Retry, Is.EqualTo(expected.Retry), "The retries should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actual.Retry, (ExponentialRetry)expected.Retry), "The retries should match.");
             Assert.That(actual.TimeoutOrDefault, Is.EqualTo(expected.TimeoutOrDefault), "The timeouts should match.");
         }
 
@@ -292,9 +290,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var senderOptions = new SenderOptions
             {
-               PartitionId = "123",
-               Retry = null,
-               Timeout = TimeSpan.Zero
+                PartitionId = "123",
+                Retry = null,
+                Timeout = TimeSpan.Zero
             };
 
             var expected = new SenderOptions
@@ -323,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actual, Is.Not.Null, "The sender options should have been set.");
             Assert.That(actual, Is.Not.SameAs(senderOptions), "The options should have been cloned.");
             Assert.That(actual.PartitionId, Is.EqualTo(expected.PartitionId), "The partition identifiers should match.");
-            Assert.That(actual.Retry, Is.EqualTo(expected.Retry), "The retries should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actual.Retry, (ExponentialRetry)expected.Retry), "The retries should match.");
             Assert.That(actual.TimeoutOrDefault, Is.EqualTo(expected.TimeoutOrDefault), "The timeouts should match.");
         }
 
@@ -373,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions.ExclusiveReceiverPriority, Is.EqualTo(expectedOptions.ExclusiveReceiverPriority), "The exclusive priorities should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.Retry, Is.EqualTo(expectedOptions.Retry), "The retries should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
         }
 
@@ -429,7 +427,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions.ExclusiveReceiverPriority, Is.EqualTo(expectedOptions.ExclusiveReceiverPriority), "The exclusive priorities should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
-            Assert.That(actualOptions.Retry, Is.EqualTo(expectedOptions.Retry), "The retries should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
             Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
         }
 
@@ -442,7 +440,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task GetPartitionIdsAsyncDelegatesToGetProperties()
         {
             var date = DateTimeOffset.Parse("2015-10-27T12:00:00Z").DateTime;
-            var partitionIds = new [] { "first", "second", "third" };
+            var partitionIds = new[] { "first", "second", "third" };
             var properties = new EventHubProperties("dummy", date, partitionIds, date);
             var mockClient = new Mock<EventHubClient> { CallBase = true };
 

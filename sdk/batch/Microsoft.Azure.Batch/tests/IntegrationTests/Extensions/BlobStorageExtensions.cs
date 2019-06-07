@@ -17,7 +17,14 @@ namespace Microsoft.Azure.Batch.Integration.Tests.Extensions
             var blobs = new List<IListBlobItem>();
             do
             {
-                var blobsSegment = await container.ListBlobsSegmentedAsync(null, useFlatBlobListing, BlobListingDetails.All, null, blobContinuationToken, new BlobRequestOptions(), new WindowsAzure.Storage.OperationContext());
+                var blobsSegment = await container.ListBlobsSegmentedAsync(
+                    null,
+                    useFlatBlobListing,
+                    BlobListingDetails.None | BlobListingDetails.Metadata,
+                    null,
+                    blobContinuationToken,
+                    new BlobRequestOptions(),
+                    new WindowsAzure.Storage.OperationContext());
                 blobContinuationToken = blobsSegment.ContinuationToken;
                 foreach (IListBlobItem blobItem in blobsSegment.Results)
                 {

@@ -8,7 +8,7 @@
             "Type": "Common.ComputeNodeFillType",
             "Name": "ComputeNodeFillType",
             "SummaryComment": "The fill type of scheduling policy.",
-            "RemarksComment": null,
+            "RemarksComment": "If not specified, the default is <see cref=\"Common.ComputeNodeFillType.Spread\"/>.",
             "BoundAccess": "read",
             "UnboundAccess": "read,write",
             "HideSetter": true,

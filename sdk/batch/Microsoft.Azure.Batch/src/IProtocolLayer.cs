@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationResponse<IPage<Models.CloudPool>, Models.PoolListHeaders>> ListPools(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
 
-        Task<AzureOperationResponse<IPage<Models.NodeAgentSku>, Models.AccountListNodeAgentSkusHeaders>> ListNodeAgentSkus(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
+        Task<AzureOperationResponse<IPage<Models.ImageInformation>, Models.AccountListSupportedImagesHeaders>> ListSupportedImages(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.CloudPool, Models.PoolGetHeaders>> GetPool(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 

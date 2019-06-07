@@ -1887,20 +1887,19 @@ namespace Microsoft.Azure.Batch
         /// <param name="detailLevel">A <see cref="DetailLevel"/> used for filtering the list and for controlling which properties are retrieved from the service.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/> and <paramref name="detailLevel"/>.</param>
         /// <returns>An <see cref="IPagedEnumerable{NodeAgentSku}"/> that can be used to enumerate node agent sku values asynchronously or synchronously.</returns>
-        public IPagedEnumerable<NodeAgentSku> ListNodeAgentSkus(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        public IPagedEnumerable<ImageInformation> ListSupportedImages(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             // craft the behavior manager for this call
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
 
-            PagedEnumerable<NodeAgentSku> enumerable = new PagedEnumerable<NodeAgentSku>( // the lamda will be the enumerator factory
+            PagedEnumerable<ImageInformation> enumerable = new PagedEnumerable<ImageInformation>( // the lamda will be the enumerator factory
                 () =>
                 {
                     // here is the actual strongly typed enumerator
-                    AsyncListNodeAgentSkusEnumerator typedEnumerator = new AsyncListNodeAgentSkusEnumerator(this, bhMgr, detailLevel);
+                    var typedEnumerator = new AsyncListSupportedImagesEnumerator(this, bhMgr, detailLevel);
 
                     // here is the base
-                    PagedEnumeratorBase<NodeAgentSku> enumeratorBase = typedEnumerator;
-
+                    PagedEnumeratorBase<ImageInformation> enumeratorBase = typedEnumerator;
                     return enumeratorBase;
                 });
 

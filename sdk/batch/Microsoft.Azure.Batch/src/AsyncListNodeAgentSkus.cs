@@ -8,7 +8,7 @@
     using System.Threading;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
 
-    internal class AsyncListNodeAgentSkusEnumerator : PagedEnumeratorBase<NodeAgentSku>
+    internal class AsyncListSupportedImagesEnumerator : PagedEnumeratorBase<ImageInformation>
     {
         private readonly PoolOperations _parentPoolOps;
         private readonly BehaviorManager _behaviorMgr;
@@ -16,10 +16,10 @@
 
         #region // constructors
 
-        internal AsyncListNodeAgentSkusEnumerator(
-                PoolOperations parentPoolOps,
-                BehaviorManager behaviorMgr,
-                DetailLevel detailLevel)
+        internal AsyncListSupportedImagesEnumerator(
+            PoolOperations parentPoolOps,
+            BehaviorManager behaviorMgr,
+            DetailLevel detailLevel)
         {
             _parentPoolOps = parentPoolOps;
             _behaviorMgr = behaviorMgr;
@@ -28,7 +28,7 @@
 
         #endregion // constructors
 
-        public override NodeAgentSku Current  // for IPagedEnumerator<T> and IEnumerator<T>
+        public override ImageInformation Current  // for IPagedEnumerator<T> and IEnumerator<T>
         {
             get
             {
@@ -36,12 +36,12 @@
                 object curObj = base._currentBatch[base._currentIndex];
 
                 // it must be a protocol object from previous call
-                Models.NodeAgentSku protocolObj = curObj as Models.NodeAgentSku;
+                Models.ImageInformation protocolObj = curObj as Models.ImageInformation;
 
                 Debug.Assert(null != protocolObj);
 
                 // wrap protocol object
-                NodeAgentSku wrapped = new NodeAgentSku(protocolObj);
+                ImageInformation wrapped = new ImageInformation(protocolObj);
 
                 return wrapped;
             }
@@ -55,7 +55,7 @@
             do
             {
                 // start the protocol layer call
-                var asyncTask = _parentPoolOps.ParentBatchClient.ProtocolLayer.ListNodeAgentSkus(
+                var asyncTask = _parentPoolOps.ParentBatchClient.ProtocolLayer.ListSupportedImages(
                     skipHandler.SkipToken,
                     _behaviorMgr,
                     _detailLevel,

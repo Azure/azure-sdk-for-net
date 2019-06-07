@@ -91,7 +91,7 @@ namespace BatchClientIntegrationTests
 
             VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
                 ubuntuImageDetails.ImageReference,
-                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSku.Id);
+                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
             return batchCli.PoolOperations.CreatePool(
                 poolId: poolId,
@@ -134,6 +134,15 @@ namespace BatchClientIntegrationTests
             Assert.Equal(expectedNetworkSecurityGroupRule.Priority, actualNetworkSecurityGroupRule.Priority);
             Assert.Equal(expectedNetworkSecurityGroupRule.Access, actualNetworkSecurityGroupRule.Access);
             Assert.Equal(expectedNetworkSecurityGroupRule.SourceAddressPrefix, actualNetworkSecurityGroupRule.SourceAddressPrefix);
+            if(expectedNetworkSecurityGroupRule.SourcePortRanges == null)
+            {
+                // the default is "*"
+                Assert.Equal(new List<string> { "*" }, actualNetworkSecurityGroupRule.SourcePortRanges);
+            }
+            else
+            {
+                Assert.Equal(expectedNetworkSecurityGroupRule.SourcePortRanges, actualNetworkSecurityGroupRule.SourcePortRanges);
+            }
         }
     }
 }

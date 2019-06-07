@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the fill type of scheduling policy.
         /// </summary>
+        /// <remarks>
+        /// If not specified, the default is <see cref="Common.ComputeNodeFillType.Spread"/>.
+        /// </remarks>
         public Common.ComputeNodeFillType ComputeNodeFillType { get; }
 
         #endregion // TaskSchedulingPolicy

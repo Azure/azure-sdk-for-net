@@ -30,7 +30,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// should be idempotent. This means tasks need to tolerate being
     /// interrupted and restarted without causing any corruption or duplicate
     /// data. The best practice for long running tasks is to use some form of
-    /// checkpointing.
+    /// checkpointing. In some cases the start task may be re-run even though
+    /// the node was not rebooted. Special care should be taken to avoid start
+    /// tasks which create breakaway process or install/launch services from
+    /// the start task working directory, as this will block Batch from being
+    /// able to re-run the start task.
     /// </remarks>
     public partial class StartTask
     {
@@ -110,7 +114,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
         /// node) are mapped into the container, all task environment variables
         /// are mapped into the container, and the task command line is
-        /// executed in the container.
+        /// executed in the container. Files produced in the container outside
+        /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
+        /// meaning that Batch file APIs will not be able to access those
+        /// files.
         /// </remarks>
         [JsonProperty(PropertyName = "containerSettings")]
         public TaskContainerSettings ContainerSettings { get; set; }

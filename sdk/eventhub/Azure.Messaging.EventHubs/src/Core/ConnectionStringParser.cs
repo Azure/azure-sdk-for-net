@@ -10,28 +10,28 @@ namespace Azure.Messaging.EventHubs.Core
     ///   Allows for parsing Event Hubs connection strings.
     /// </summary>
     ///
-    internal class ConnectionStringParser
+    internal static class ConnectionStringParser
     {
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
-        protected const char TokenValueSeparator = '=';
+        private const char TokenValueSeparator = '=';
 
         /// <summary>The character used to mark the beginning of a new token/value pair in the connection string.</summary>
-        protected const char TokenValuePairDelimiter = ';';
+        private const char TokenValuePairDelimiter = ';';
 
         /// <summary>The formatted protocol used by an Event Hubs endpoint. </summary>
-        protected const string EventHubsEndpointScheme = "sb://";
+        private const string EventHubsEndpointScheme = "sb://";
 
         /// <summary>The token that identifies the endpoint address for the Event Hubs namespace.</summary>
-        protected const string EndpointToken = "Endpoint";
+        private const string EndpointToken = "Endpoint";
 
         /// <summary>The token that identifies the path to a specific Event Hub under the namespace.</summary>
-        protected const string EventHubPathToken = "EntityPath";
+        private const string EventHubPathToken = "EntityPath";
 
         /// <summary>The token that identifies the name of a shared access key.</summary>
-        protected const string SharedAccessKeyNameToken = "SharedAccessKeyName";
+        private const string SharedAccessKeyNameToken = "SharedAccessKeyName";
 
         /// <summary>The token that identifies the value of a shared access key.</summary>
-        protected const string SharedAccessKeyValueToken = "SharedAccessKey";
+        private const string SharedAccessKeyValueToken = "SharedAccessKey";
 
         /// <summary>
         ///   Parses the specified Event Hubs connection string into its component properties.
@@ -58,10 +58,10 @@ namespace Azure.Messaging.EventHubs.Core
 
             var parsedValues =
             (
-                EndpointToken : default(UriBuilder),
-                EventHubPathToken : default(string),
-                SharedAccessKeyNameToken : default(string),
-                SharedAccessKeyValueToken : default(string)
+                EndpointToken: default(UriBuilder),
+                EventHubPathToken: default(string),
+                SharedAccessKeyNameToken: default(string),
+                SharedAccessKeyValueToken: default(string)
             );
 
             while (currentPosition != -1)
@@ -92,12 +92,12 @@ namespace Azure.Messaging.EventHubs.Core
 
                     if ((!String.IsNullOrEmpty(token)) && (Char.IsWhiteSpace(token[0])) || Char.IsWhiteSpace(token[token.Length - 1]))
                     {
-                       token = token.Trim();
+                        token = token.Trim();
                     }
 
                     if ((!String.IsNullOrEmpty(value)) && (Char.IsWhiteSpace(value[0]) || Char.IsWhiteSpace(value[value.Length - 1])))
                     {
-                       value = value.Trim();
+                        value = value.Trim();
                     }
 
                     // If there was no value for a key, then consider the connection string to
@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Core
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
                 {
-                    // This wasn't a legal pair it is not simply a trailing delmieter; consider
+                    // This wasn't a legal pair and it is not simply a trailing delmieter; consider
                     // the connection string to be malformed.
 
                     throw new FormatException(Resources.InvalidConnectionString);

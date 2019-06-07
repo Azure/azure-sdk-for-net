@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -11,14 +10,13 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class ExponentialRetryTests
     {
         /// <summary>
-        ///   Provides the invalid test cases for the <see cref="ExponentialRetry.Equals" /> tests.
+        ///   Provides the invalid test cases for the <see cref="ExponentialRetry.HaveSameConfiguration" /> tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> InequalityCases()
+        public static IEnumerable<object[]> DifferentConfigurationCases()
         {
             yield return new object[] { null, new ExponentialRetry(TimeSpan.Zero, TimeSpan.Zero, 0), "the first operand is null" };
             yield return new object[] { new ExponentialRetry(TimeSpan.Zero, TimeSpan.Zero, 0), null, "the second operand is null" };
@@ -28,10 +26,10 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Provides the invalid test cases for the <see cref="ExponentialRetry.Equals" /> tests.
+        ///   Provides the invalid test cases for the <see cref="ExponentialRetry.HaveSameConfiguration" /> tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> EqualityCases()
+        public static IEnumerable<object[]> SameConfigurationCases()
         {
             yield return new object[]
             {
@@ -40,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 "the attributes of the retries are the same"
             };
 
-            var instance =  new ExponentialRetry(TimeSpan.Zero, TimeSpan.Zero, 0);
+            var instance = new ExponentialRetry(TimeSpan.Zero, TimeSpan.Zero, 0);
             yield return new object[] { instance, instance, "the operands are the same instance" };
             yield return new object[] { null, null, "both operands are null" };
         }
@@ -62,18 +60,12 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(EqualityCases))]
-        public void EqualityIsRecognized(ExponentialRetry first,
-                                         ExponentialRetry second,
-                                         string           description)
+        [TestCaseSource(nameof(SameConfigurationCases))]
+        public void HaveSameConfigurationRecognizesEquivilentConfiguration(ExponentialRetry first,
+                                                                           ExponentialRetry second,
+                                                                           string description)
         {
-            if (first != null)
-            {
-                Assert.That(first.Equals(second), Is.True, $"The method call should recognize the following as true:  [{ description }]");
-            }
-
-            Assert.That((first == second), Is.True, $"The equality operator should recognize the following as true: [{ description }]");
-            Assert.That((first != second), Is.False, $"The inequality operator should recognize the following as false: [{ description }]");
+            Assert.That(ExponentialRetry.HaveSameConfiguration(first, second), Is.True, $"{ description } should be considered the same configuration.");
         }
 
         /// <summary>
@@ -82,79 +74,12 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(InequalityCases))]
-        public void InequalityIsRecognized(ExponentialRetry first,
-                                           ExponentialRetry second,
-                                           string           description)
+        [TestCaseSource(nameof(DifferentConfigurationCases))]
+        public void HaveSameConfigurationRecognizesDifferentConfiguration(ExponentialRetry first,
+                                                                          ExponentialRetry second,
+                                                                          string description)
         {
-            if (first != null)
-            {
-                Assert.That(first.Equals(second), Is.False, $"The method call should recognize the following as false:  [{ description }]");
-            }
-
-            Assert.That((first == second), Is.False, $"The equality operator should recognize the following as false: [{ description }]");
-            Assert.That((first != second), Is.True, $"The inequality operator should recognize the following as true: [{ description }]");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="ExponentialRetry.GetHashCode" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void GetHashCodeIsStable()
-        {
-            var codes = new List<int>();
-            var retry = new ExponentialRetry(TimeSpan.FromMinutes(1), TimeSpan.FromHours(1), 22);
-
-            for (var index = 0; index < 10; ++index)
-            {
-                codes.Add(retry.GetHashCode());
-            }
-
-            Assert.That(codes.Distinct().Count(), Is.EqualTo(1));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="ExponentialRetry.GetHashCode" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void GetHashCodeIsTheSameWhenPropertiesMatch()
-        {
-            ExponentialRetry retry;
-            var codes = new List<int>();
-
-            for (var index = 0; index < 10; ++index)
-            {
-                retry = new ExponentialRetry(TimeSpan.FromMinutes(1), TimeSpan.FromHours(1), 22);
-                codes.Add(retry.GetHashCode());
-            }
-
-            Assert.That(codes.Distinct().Count(), Is.EqualTo(1));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="ExponentialRetry.GetHashCode" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void GetHashCodeDiffersWhenPropertiesDoNotMatch()
-        {
-            ExponentialRetry retry;
-
-            var count = 10;
-            var codes = new List<int>();
-
-            for (var index = 0; index < count; ++index)
-            {
-                retry = new ExponentialRetry(TimeSpan.FromMinutes(index), TimeSpan.FromMilliseconds(index + 1), (index + 22));
-                codes.Add(retry.GetHashCode());
-            }
-
-            Assert.That(codes.Distinct().Count(), Is.EqualTo(count));
+            Assert.That(ExponentialRetry.HaveSameConfiguration(first, second), Is.False, $"{ description } should be considered different configurations.");
         }
 
         /// <summary>
@@ -166,10 +91,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloneProducesACopy()
         {
             var retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(2), 123);
-            var clone = retry.Clone();
+            var clone = retry.Clone() as ExponentialRetry;
 
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
-            Assert.That(clone, Is.EqualTo(retry), "The clone should be considered equal.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration(clone, retry), Is.True, "The clone should be considered equal.");
             Assert.That(clone, Is.Not.SameAs(retry), "The clone should be a copy, not the same instance.");
         }
     }

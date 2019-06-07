@@ -84,7 +84,8 @@ namespace Azure.Identity
 
         protected abstract AccessToken GetTokenCore(string[] scopes, CancellationToken cancellationToken);
 
-        internal IdentityClient Client => _client;
+        internal IdentityClient Client { get => _client; set => _client = value; }
+
 
         public static TokenCredential Default { get; set; }
 
