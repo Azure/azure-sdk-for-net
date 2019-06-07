@@ -77,13 +77,19 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyRequestParameters(EcKeyCreateOptions ecKey)
             : this(ecKey.KeyType, ecKey)
         {
-            Curve = ecKey.Curve;
+            if(ecKey.Curve != default)
+            {
+                Curve = ecKey.Curve;
+            }
         }
 
         internal KeyRequestParameters(RsaKeyCreateOptions rsaKey)
             : this(rsaKey.KeyType, rsaKey)
         {
-            KeySize = rsaKey.KeySize;
+            if(rsaKey.KeySize != default)
+            {
+                KeySize = rsaKey.KeySize;
+            }
         }
 
         private const string KeyTypePropertyName = "kty";

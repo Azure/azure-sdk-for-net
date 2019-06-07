@@ -13,6 +13,6 @@ namespace Azure.Security.KeyVault.Keys
         public DateTimeOffset? NotBefore { get; set; }
         public DateTimeOffset? Expires { get; set; }
         public bool? Enabled { get; set; }
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string> ();
     }
 }

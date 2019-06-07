@@ -1,0 +1,214 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/keys/547724241/create?api-version=7.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "cb1f09a11e28a27c2444e90b9a17ed35",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kty": "RSA"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "659",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Jun 2019 23:18:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "11e53ad6-a53b-4a48-bca8-0304395153d4",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "key": {
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/547724241/3f7012ae8b1d43b496570386334e222e",
+          "kty": "RSA",
+          "key_ops": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify",
+            "wrapKey",
+            "unwrapKey"
+          ],
+          "n": "qB1yjZKMinU-zJcgll7319tX8AMU8VjcqU4KHEcERbZTUBpQAI50uGJ-yWfFMx2VrXHrQWineNozcq9GwSK1cGqNfMF0bitubg6L7AJ-Vunk3Q0MxdE-xHOSnupdjKBRjZKpNpMS5MY5NSJk_b1c4hLnvlCwthrfkYtLlpqXgVZHdsF7Yx6FQc90pRd_0nr5--VYJCexfbQGkP7JAjhQCWCvADCGKw4hx00IcSxw1zZfsZCDGKfRVe0FA_gshySXHGfooHSrPXxBtG9hVAcMHkDX-44SpP9MBIa2tYPCY4bMN6yh3R6w0NfhJ6qP12xdm9NQvTcPRkw3j0oUYXP7jw",
+          "e": "AQAB"
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1560381523,
+          "updated": 1560381523,
+          "recoveryLevel": "Recoverable\u002bPurgeable"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/keys/547724241?api-version=7.0",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "351acd7a23298ee08e6fc0d09cea5ec7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "659",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Jun 2019 23:18:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "dc8f427f-b4a3-4601-b18b-5cc8c5bd4cf2",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "key": {
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/547724241/3f7012ae8b1d43b496570386334e222e",
+          "kty": "RSA",
+          "key_ops": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify",
+            "wrapKey",
+            "unwrapKey"
+          ],
+          "n": "qB1yjZKMinU-zJcgll7319tX8AMU8VjcqU4KHEcERbZTUBpQAI50uGJ-yWfFMx2VrXHrQWineNozcq9GwSK1cGqNfMF0bitubg6L7AJ-Vunk3Q0MxdE-xHOSnupdjKBRjZKpNpMS5MY5NSJk_b1c4hLnvlCwthrfkYtLlpqXgVZHdsF7Yx6FQc90pRd_0nr5--VYJCexfbQGkP7JAjhQCWCvADCGKw4hx00IcSxw1zZfsZCDGKfRVe0FA_gshySXHGfooHSrPXxBtG9hVAcMHkDX-44SpP9MBIa2tYPCY4bMN6yh3R6w0NfhJ6qP12xdm9NQvTcPRkw3j0oUYXP7jw",
+          "e": "AQAB"
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1560381523,
+          "updated": 1560381523,
+          "recoveryLevel": "Recoverable\u002bPurgeable"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/keys/547724241?api-version=7.0",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "0b558d98ab3fe7c0e68a841f4864d20a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "793",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 Jun 2019 23:18:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "9ddabaa8-00e9-4021-b02a-b6ab524e8f11",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "recoveryId": "https://pakrym-keyvault.vault.azure.net/deletedkeys/547724241",
+        "deletedDate": 1560381524,
+        "scheduledPurgeDate": 1568157524,
+        "key": {
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/547724241/3f7012ae8b1d43b496570386334e222e",
+          "kty": "RSA",
+          "key_ops": [
+            "encrypt",
+            "decrypt",
+            "sign",
+            "verify",
+            "wrapKey",
+            "unwrapKey"
+          ],
+          "n": "qB1yjZKMinU-zJcgll7319tX8AMU8VjcqU4KHEcERbZTUBpQAI50uGJ-yWfFMx2VrXHrQWineNozcq9GwSK1cGqNfMF0bitubg6L7AJ-Vunk3Q0MxdE-xHOSnupdjKBRjZKpNpMS5MY5NSJk_b1c4hLnvlCwthrfkYtLlpqXgVZHdsF7Yx6FQc90pRd_0nr5--VYJCexfbQGkP7JAjhQCWCvADCGKw4hx00IcSxw1zZfsZCDGKfRVe0FA_gshySXHGfooHSrPXxBtG9hVAcMHkDX-44SpP9MBIa2tYPCY4bMN6yh3R6w0NfhJ6qP12xdm9NQvTcPRkw3j0oUYXP7jw",
+          "e": "AQAB"
+        },
+        "attributes": {
+          "enabled": true,
+          "created": 1560381523,
+          "updated": 1560381523,
+          "recoveryLevel": "Recoverable\u002bPurgeable"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://pakrym-keyvault.vault.azure.net/deletedkeys/547724241?api-version=7.0",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-keyvault-secret/1.0.0.0",
+          "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "27394a84c5f1b64956cdb7eb2008de68",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Wed, 12 Jun 2019 23:18:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.866",
+        "x-ms-request-id": "0811969f-be4d-4505-81d7-52e038a7fe26",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://pakrym-keyvault.vault.azure.net/",
+    "RandomSeed": "981873268"
+  }
+}
