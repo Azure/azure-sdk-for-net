@@ -24,17 +24,14 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum length, in characters, for the identifier assigned to a receiver.</summary>
         protected const int MaximumIdentifierLength = 64;
 
-        /// <summary>The retry policy to apply to operations.</summary>
-        protected Retry _retry = Retry.Default;
-
         /// <summary>The amount of time to wait for messages when receiving.</summary>
-        protected TimeSpan? _maximumReceiveWaitTime = TimeSpan.FromMinutes(1);
+        private TimeSpan? _maximumReceiveWaitTime = TimeSpan.FromMinutes(1);
 
         /// <summary>The prefetch count to use for the receiver.</summary>
-        protected int _prefetchCount = 300;
+        private int _prefetchCount = 300;
 
         /// <summary>The identifier to use for the receiver.</summary>
-        protected string _identifier = null;
+        private string _identifier = null;
 
         /// <summary>
         ///   The name of the consumer group that an event receiver should be associated with.  Events read
@@ -94,8 +91,8 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-               ValidateMaximumReceiveWaitTime(value);
-               _maximumReceiveWaitTime = value;
+                ValidateMaximumReceiveWaitTime(value);
+                _maximumReceiveWaitTime = value;
             }
         }
 

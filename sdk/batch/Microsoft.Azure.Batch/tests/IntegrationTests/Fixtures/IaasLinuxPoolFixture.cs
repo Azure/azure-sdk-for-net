@@ -10,18 +10,6 @@
     using Microsoft.Azure.Batch;
     using Xunit;
 
-    public struct IaasPoolProvisioningDetails
-    {
-        public IaasPoolProvisioningDetails(ImageReference imageReference, NodeAgentSku nodeAgentSku)
-        {
-            this.ImageReference = imageReference;
-            this.NodeAgentSku = nodeAgentSku;
-        }
-
-        public ImageReference ImageReference { get; }
-        public NodeAgentSku NodeAgentSku { get; }
-    }
-
     public class IaasLinuxPoolFixture : PoolFixture
     {
         public IaasLinuxPoolFixture() : base(TestUtilities.GetMyName() + "-pooltest-linux")
@@ -29,21 +17,18 @@
             this.Pool = this.CreatePool();
         }
 
-        public static IaasPoolProvisioningDetails GetUbuntuImageDetails(BatchClient client)
+        public static ImageInformation GetUbuntuImageDetails(BatchClient client)
         {
-            List<NodeAgentSku> nodeAgentSkus = client.PoolOperations.ListNodeAgentSkus().ToList();
+            List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
 
-            Func<ImageReference, bool> ubuntuImageScanner = imageRef =>
-                imageRef.Publisher == "Canonical" &&
-                imageRef.Offer == "UbuntuServer" &&
-                imageRef.Sku.Contains("14.04");
+            Func<ImageInformation, bool> ubuntuImageScanner = imageInfo =>
+                imageInfo.ImageReference.Publisher == "canonical" &&
+                imageInfo.ImageReference.Offer == "ubuntuserver" &&
+                imageInfo.ImageReference.Sku.Contains("16.04");
 
-            NodeAgentSku ubuntuSku =
-                nodeAgentSkus.First(sku => sku.VerifiedImageReferences.FirstOrDefault(ubuntuImageScanner) != null);
+            ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 
-            ImageReference imageReference = ubuntuSku.VerifiedImageReferences.First(ubuntuImageScanner);
-
-            return new IaasPoolProvisioningDetails(imageReference, ubuntuSku);
+            return ubuntuImage;
         }
 
         protected CloudPool CreatePool()
@@ -57,7 +42,7 @@
 
                 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
                     ubuntuImageDetails.ImageReference,
-                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSku.Id);
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
 
                 currentPool = this.client.PoolOperations.CreatePool(
                     poolId: this.PoolId,

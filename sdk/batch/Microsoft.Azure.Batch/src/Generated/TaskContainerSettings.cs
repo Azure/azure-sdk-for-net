@@ -29,14 +29,17 @@ namespace Microsoft.Azure.Batch
         /// <param name='imageName'>The image to use to create the container in which the task will run.</param>
         /// <param name='containerRunOptions'>Additional options to the container create command.</param>
         /// <param name='registry'>The private registry which contains the container image.</param>
+        /// <param name='workingDirectory'>The location of the container task working directory.</param>
         public TaskContainerSettings(
             string imageName,
             string containerRunOptions = default(string),
-            ContainerRegistry registry = default(ContainerRegistry))
+            ContainerRegistry registry = default(ContainerRegistry),
+            Common.ContainerWorkingDirectory? workingDirectory = default(Common.ContainerWorkingDirectory?))
         {
             this.ImageName = imageName;
             this.ContainerRunOptions = containerRunOptions;
             this.Registry = registry;
+            this.WorkingDirectory = workingDirectory;
         }
 
         internal TaskContainerSettings(Models.TaskContainerSettings protocolObject)
@@ -44,6 +47,7 @@ namespace Microsoft.Azure.Batch
             this.ContainerRunOptions = protocolObject.ContainerRunOptions;
             this.ImageName = protocolObject.ImageName;
             this.Registry = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Registry, o => new ContainerRegistry(o).Freeze());
+            this.WorkingDirectory = UtilitiesInternal.MapNullableEnum<Models.ContainerWorkingDirectory, Common.ContainerWorkingDirectory>(protocolObject.WorkingDirectory);
         }
 
         #endregion Constructors
@@ -75,6 +79,14 @@ namespace Microsoft.Azure.Batch
         /// This setting can be omitted if was already provided at pool creation.
         /// </remarks>
         public ContainerRegistry Registry { get; }
+
+        /// <summary>
+        /// Gets the location of the container task working directory.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, the default is <see cref="Common.ContainerWorkingDirectory.TaskWorkingDirectory"/>.
+        /// </remarks>
+        public Common.ContainerWorkingDirectory? WorkingDirectory { get; }
 
         #endregion // TaskContainerSettings
 
@@ -110,6 +122,7 @@ namespace Microsoft.Azure.Batch
                 ContainerRunOptions = this.ContainerRunOptions,
                 ImageName = this.ImageName,
                 Registry = UtilitiesInternal.CreateObjectWithNullCheck(this.Registry, (o) => o.GetTransportObject()),
+                WorkingDirectory = UtilitiesInternal.MapNullableEnum<Common.ContainerWorkingDirectory, Models.ContainerWorkingDirectory>(this.WorkingDirectory),
             };
 
             return result;

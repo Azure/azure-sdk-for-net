@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Reflection;
 using Moq;
 using NUnit.Framework;
 
@@ -12,7 +11,6 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Category(TestCategory.BuildVerification)]
     public class EventHubClientOptionsTests
     {
         /// <summary>
@@ -38,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.DefaultTimeout, Is.EqualTo(options.DefaultTimeout), "The default timeout of the clone should match.");
             Assert.That(clone.Proxy, Is.EqualTo(options.Proxy), "The proxy of the clone should match.");
 
-            Assert.That(clone.Retry, Is.EqualTo(options.Retry), "The retry of the clone should be considered equal.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)clone.Retry, (ExponentialRetry)options.Retry), Is.True, "The retry of the clone should be considered equal.");
             Assert.That(clone.Retry, Is.Not.SameAs(options.Retry), "The retry of the clone should be a copy, not the same instance.");
         }
 
@@ -50,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void RetryIsValidated()
         {
-            Assert.That(() => new EventHubClientOptions { Retry = null }, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClientOptions { Retry = null }, Throws.ArgumentException);
         }
 
         /// <summary>
@@ -61,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void DefaultTimeoutIsValidated()
         {
-            Assert.That(() => new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMilliseconds(-1) }, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>

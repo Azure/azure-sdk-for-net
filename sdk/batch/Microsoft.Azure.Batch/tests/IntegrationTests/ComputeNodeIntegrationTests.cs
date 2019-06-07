@@ -520,8 +520,8 @@ namespace BatchClientIntegrationTests
 
                         Assert.Equal(poolStartTask.CommandLine, computeNode.StartTask.CommandLine);
                         Assert.Equal(poolStartTask.MaxTaskRetryCount, computeNode.StartTask.MaxTaskRetryCount);
-                        Assert.Equal(AutoUserScope.Task, poolStartTask.UserIdentity.AutoUser.Scope);
-                        Assert.Equal(AutoUserScope.Task, computeNode.StartTask.UserIdentity.AutoUser.Scope);
+                        Assert.Equal(AutoUserScope.Pool, poolStartTask.UserIdentity.AutoUser.Scope);
+                        Assert.Equal(AutoUserScope.Pool, computeNode.StartTask.UserIdentity.AutoUser.Scope);
                         Assert.Equal(poolStartTask.WaitForSuccess, computeNode.StartTask.WaitForSuccess);
 
                         if (poolStartTask.EnvironmentSettings != null)

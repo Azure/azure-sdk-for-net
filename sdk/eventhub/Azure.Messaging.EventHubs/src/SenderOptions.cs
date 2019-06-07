@@ -13,11 +13,8 @@ namespace Azure.Messaging.EventHubs
     ///
     public class SenderOptions
     {
-        /// <summary>The retry policy to apply to operations.</summary>
-        protected Retry _retry = Retry.Default;
-
         /// <summary>The timeout that will be used by default for sending events.</summary>
-        protected TimeSpan? _timeout = TimeSpan.FromMinutes(1);
+        private TimeSpan? _timeout = TimeSpan.FromMinutes(1);
 
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventSender" /> will be bound to,

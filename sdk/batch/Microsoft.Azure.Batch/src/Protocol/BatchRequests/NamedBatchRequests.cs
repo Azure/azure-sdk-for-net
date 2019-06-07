@@ -11,16 +11,16 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// <summary>
     /// An <see cref="IBatchRequest"/> for the AccountListNodeAgentSkus operation.
     /// </summary>
-    public class AccountListNodeAgentSkusBatchRequest : Protocol.BatchRequest<
-        AccountListNodeAgentSkusOptions,
-        AzureOperationResponse<IPage<NodeAgentSku>, AccountListNodeAgentSkusHeaders>>
+    public class AccountListSupportedImagesBatchRequest : Protocol.BatchRequest<
+        AccountListSupportedImagesOptions,
+        AzureOperationResponse<IPage<ImageInformation>, AccountListSupportedImagesHeaders>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountListNodeAgentSkusBatchRequest" /> class.
+        /// Initializes a new instance of the <see cref="AccountListSupportedImagesBatchRequest " /> class.
         /// </summary>
         /// <param name="serviceClient">The service client to use.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public AccountListNodeAgentSkusBatchRequest(
+        public AccountListSupportedImagesBatchRequest(
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {
@@ -30,16 +30,16 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// <summary>
     /// An <see cref="IBatchRequest"/> for the AccountListNodeAgentSkusNext operation.
     /// </summary>
-    public class AccountListNodeAgentSkusNextBatchRequest : Protocol.BatchRequest<
-        AccountListNodeAgentSkusNextOptions,
-        AzureOperationResponse<IPage<NodeAgentSku>, AccountListNodeAgentSkusHeaders>>
+    public class AccountListSupportedImagesNextBatchRequest : Protocol.BatchRequest<
+        AccountListSupportedImagesNextOptions,
+        AzureOperationResponse<IPage<ImageInformation>, AccountListSupportedImagesHeaders>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountListNodeAgentSkusNextBatchRequest" /> class.
+        /// Initializes a new instance of the <see cref="AccountListSupportedImagesNextBatchRequest" /> class.
         /// </summary>
         /// <param name="serviceClient">The service client to use.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public AccountListNodeAgentSkusNextBatchRequest(
+        public AccountListSupportedImagesNextBatchRequest(
             BatchServiceClient serviceClient,
             CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {

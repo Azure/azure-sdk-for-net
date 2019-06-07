@@ -24,7 +24,7 @@
         /// <summary>The name of the entity that published a message.</summary>
         public const string Publisher = "x-opt-publisher";
 
-        /// <summary>The identifier associated with a given partition.</summary>
-        public const string PartitionName = "x-opt-partition-key";
+        /// <summary>The label used for grouping a bacth of events together with the intent of routing to a single partition.</summary>
+        public const string BatchLabel = "x-opt-partition-key";
     }
 }

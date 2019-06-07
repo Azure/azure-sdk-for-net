@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the WindowsUserConfiguration class.
         /// </summary>
-        /// <param name="loginMode">The login mode for the user.</param>
+        /// <param name="loginMode">The login mode for the user</param>
         public WindowsUserConfiguration(LoginMode? loginMode = default(LoginMode?))
         {
             LoginMode = loginMode;
@@ -42,11 +42,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the login mode for the user.
+        /// Gets or sets the login mode for the user
         /// </summary>
         /// <remarks>
-        /// The default value for VirtualMachineConfiguration pools is batch
-        /// and for CloudServiceConfiguration pools is interactive. Possible
+        /// The default value for VirtualMachineConfiguration pools is 'batch'
+        /// and for CloudServiceConfiguration pools is 'interactive'. Possible
         /// values include: 'batch', 'interactive'
         /// </remarks>
         [JsonProperty(PropertyName = "loginMode")]

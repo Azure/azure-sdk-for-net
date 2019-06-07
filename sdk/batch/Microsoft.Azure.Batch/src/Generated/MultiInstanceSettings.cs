@@ -19,7 +19,9 @@ namespace Microsoft.Azure.Batch
 
     /// <summary>
     /// Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. 
-    /// For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.
+    /// In the MPI case, if any of the subtasks fail (for example due to exiting with a non-zero exit code) the entire multi-instance 
+    /// task fails. The multi-instance task is then terminated and retried, up to its retry limit. For more information see 
+    /// https://azure.microsoft.com/documentation/articles/batch-mpi/.
     /// </summary>
     public partial class MultiInstanceSettings : ITransportObjectProvider<Models.MultiInstanceSettings>, IPropertyMetadata
     {

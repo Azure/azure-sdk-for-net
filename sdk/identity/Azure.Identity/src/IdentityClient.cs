@@ -20,6 +20,8 @@ namespace Azure.Identity
     {
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
+        private readonly Uri ImdsEndptoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private readonly string MsiApiVersion = "2018-02-01";
 
         public IdentityClient(IdentityClientOptions options = null)
         {
@@ -32,7 +34,7 @@ namespace Azure.Identity
                     BufferResponsePolicy.Singleton);
         }
 
-        public async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -49,7 +51,7 @@ namespace Azure.Identity
             }
         }
 
-        public AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -64,6 +66,66 @@ namespace Azure.Identity
 
                 throw response.CreateRequestFailedException();
             }
+        }
+
+        public virtual async Task<AccessToken> AuthenticateManagedIdentityAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
+            {
+                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+
+                    return new Response<AccessToken>(response, result);
+                }
+
+                throw response.CreateRequestFailedException();
+            }
+        }
+
+        public virtual AccessToken AuthenticateManagedIdentity(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
+            {
+                var response = _pipeline.SendRequest(request, cancellationToken);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    var result = Deserialize(response.ContentStream);
+
+                    return new Response<AccessToken>(response, result);
+                }
+
+                throw response.CreateRequestFailedException();
+            }
+        }
+
+        private Request CreateManagedIdentityAuthRequest(string[] scopes, string clientId = null)
+        {
+            // covert the scopes to a resource string
+            string resource = ScopeUtilities.ScopesToResource(scopes);
+
+            Request request = _pipeline.CreateRequest();
+
+            request.Method = HttpPipelineMethod.Get;
+
+            request.Headers.Add("Metadata", "true");
+
+            // TODO: support MSI for hosted services
+            request.UriBuilder.Uri = ImdsEndptoint;
+
+            request.UriBuilder.AppendQuery("api-version", MsiApiVersion);
+
+            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+
+            if (!string.IsNullOrEmpty(clientId))
+            {
+                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+            }
+
+            return request;
         }
 
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)

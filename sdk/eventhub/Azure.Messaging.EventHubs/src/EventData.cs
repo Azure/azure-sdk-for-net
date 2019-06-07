@@ -141,17 +141,17 @@ namespace Azure.Messaging.EventHubs
             /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
             /// <param name="enqueuedTimeUtc">The date and time, in UTC, that the event was received by the partition.</param>
             /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
-            /// <param name="partitionId">The identifier of the partition responsible for the event.</param>
+            /// <param name="batchLabel">The label associated with the batch that the event was grouped with when sent.</param>
             ///
-            internal SystemEventProperties(long     sequenceNumber,
+            internal SystemEventProperties(long sequenceNumber,
                                            DateTime enqueuedTimeUtc,
-                                           string   offset,
-                                           string   partitionId)
+                                           string offset,
+                                           string batchLabel)
             {
                 this[MessagePropertyName.SequenceNumber] = sequenceNumber;
                 this[MessagePropertyName.EnqueuedTimeUtc] = enqueuedTimeUtc;
                 this[MessagePropertyName.Offset] = offset;
-                this[MessagePropertyName.PartitionName] = partitionId;
+                this[MessagePropertyName.BatchLabel] = batchLabel;
             }
 
             /// <summary>
@@ -219,15 +219,14 @@ namespace Azure.Messaging.EventHubs
             }
 
             /// <summary>
-            ///   The identifier of the partition responsible for the <see cref="EventData"/>, unique to
-            ///   the Event Hub which contains it.
+            ///   The label applied to the batch that the associated <see cref="EventData"/>, was sent with.
             /// </summary>
             ///
-            public string partitionId
+            public string BatchLabel
             {
                 get
                 {
-                    if (this.TryGetValue(MessagePropertyName.PartitionName, out var value))
+                    if (this.TryGetValue(MessagePropertyName.BatchLabel, out var value))
                     {
                         return (string)value;
                     }

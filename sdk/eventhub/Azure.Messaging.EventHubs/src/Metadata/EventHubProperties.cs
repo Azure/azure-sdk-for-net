@@ -46,9 +46,9 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
-        internal EventHubProperties(string    path,
-                                    DateTime  createdUtc,
-                                    string[]  partitionIds,
+        internal EventHubProperties(string path,
+                                    DateTime createdUtc,
+                                    string[] partitionIds,
                                     DateTime? retrievalTimeUtc = null)
         {
             Path = path;

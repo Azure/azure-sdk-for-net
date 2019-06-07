@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Net;
 
 namespace Azure.Messaging.EventHubs
@@ -19,10 +18,10 @@ namespace Azure.Messaging.EventHubs
         protected static readonly TimeSpan DefaultTimeoutValue = TimeSpan.FromMinutes(1);
 
         /// <summary>The retry policy to apply to operations.</summary>
-        protected Retry _retry = Retry.Default;
+        private Retry _retry = Retry.Default;
 
         /// <summary>the timeout that will be used by default for operations.</summary>
-        protected TimeSpan _defaultTimeout = DefaultTimeoutValue;
+        private TimeSpan _defaultTimeout = DefaultTimeoutValue;
 
         /// <summary>
         ///   The type of connection that will be used for communicating with the Event Hubs

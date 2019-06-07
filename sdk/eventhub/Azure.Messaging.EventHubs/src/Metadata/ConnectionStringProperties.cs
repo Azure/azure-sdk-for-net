@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Metadata
     ///   Azure portal.
     /// </summary>
     ///
-    public struct ConnectionStringProperties
+    internal struct ConnectionStringProperties
     {
         /// <summary>
         ///   The endpoint to be used for connecting to the Event Hubs namespace.
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
         ///
-        public ConnectionStringProperties(Uri    endpoint,
+        public ConnectionStringProperties(Uri endpoint,
                                           string eventHubPath,
                                           string sharedAccessKeyName,
                                           string sharedAccessKey)

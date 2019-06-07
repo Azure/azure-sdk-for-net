@@ -71,11 +71,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         public string ChangeDetectionMode { get; set; }
 
         /// <summary>
-        /// Gets array of relative paths on the Azure File share to be included
-        /// in the change detection. Can be files and directories.
+        /// Gets or sets array of relative paths on the Azure File share to be
+        /// included in the change detection. Can be files and directories.
         /// </summary>
         [JsonProperty(PropertyName = "paths")]
-        public IList<string> Paths { get; private set; }
+        public IList<string> Paths { get; set; }
 
     }
 }

@@ -24,9 +24,10 @@ namespace Microsoft.Azure.Batch.Protocol
     public partial interface IAccountOperations
     {
         /// <summary>
-        /// Lists all node agent SKUs supported by the Azure Batch service.
+        /// Lists all Virtual Machine Images supported by the Azure Batch
+        /// service.
         /// </summary>
-        /// <param name='accountListNodeAgentSkusOptions'>
+        /// <param name='accountListSupportedImagesOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusWithHttpMessagesAsync(AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesWithHttpMessagesAsync(AccountListSupportedImagesOptions accountListSupportedImagesOptions = default(AccountListSupportedImagesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the number of nodes in each state, grouped by pool.
         /// </summary>
@@ -68,12 +69,13 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationResponse<IPage<PoolNodeCounts>,AccountListPoolNodeCountsHeaders>> ListPoolNodeCountsWithHttpMessagesAsync(AccountListPoolNodeCountsOptions accountListPoolNodeCountsOptions = default(AccountListPoolNodeCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all node agent SKUs supported by the Azure Batch service.
+        /// Lists all Virtual Machine Images supported by the Azure Batch
+        /// service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='accountListNodeAgentSkusNextOptions'>
+        /// <param name='accountListSupportedImagesNextOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -91,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>> ListNodeAgentSkusNextWithHttpMessagesAsync(string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ImageInformation>,AccountListSupportedImagesHeaders>> ListSupportedImagesNextWithHttpMessagesAsync(string nextPageLink, AccountListSupportedImagesNextOptions accountListSupportedImagesNextOptions = default(AccountListSupportedImagesNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the number of nodes in each state, grouped by pool.
         /// </summary>

@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets windows operating system settings on the virtual machine. This property must not be specified if 
+        /// Gets or sets windows operating system settings on the Virtual Machine. This property must not be specified if 
         /// the ImageReference property specifies a Linux OS image.
         /// </summary>
         public WindowsConfiguration WindowsConfiguration

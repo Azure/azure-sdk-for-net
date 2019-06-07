@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="imageReference">A reference to the Azure Virtual
-        /// Machines Marketplace image or the custom Virtual Machine image to
+        /// Machines Marketplace image or the custom Virtual Machine Image to
         /// use.</param>
         /// <param name="nodeAgentSKUId">The SKU of the Batch node agent to be
         /// provisioned on compute nodes in the pool.</param>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace
-        /// image or the custom Virtual Machine image to use.
+        /// image or the custom Virtual Machine Image to use.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    public class KeyClient
+    public partial class KeyClient
     {
         private readonly Uri _vaultUri;
         private const string ApiVersion = "7.0";
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys
                     options.ResponseClassifier,
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.Default"),
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.default"),
                     options.LoggingPolicy,
                     BufferResponsePolicy.Singleton);
         }
@@ -49,8 +49,12 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (keyType == default) throw new ArgumentNullException(nameof(keyType));
+
+            var parameters = new KeyRequestParameters(keyType, keyOptions);
+            
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(name), cancellationToken, KeysPath, name);
         }
 
         public virtual Response<Key> CreateEcKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
@@ -60,8 +64,11 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> CreateEcKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (ecKey == default) throw new ArgumentNullException(nameof(ecKey));
+
+            var parameters = new KeyRequestParameters(ecKey);
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name);
         }
 
         public virtual Response<Key> CreateRsaKey(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
@@ -71,19 +78,26 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> CreateRsaKeyAsync(RsaKeyCreateOptions rsaKey, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (rsaKey == default) throw new ArgumentNullException(nameof(rsaKey));
+
+            var parameters = new KeyRequestParameters(rsaKey);
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name);
         }
 
-        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperations> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperations> keyOperations = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (key?.Name == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Name)}");
+            if (key?.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");
+
+            var parameters = new KeyRequestParameters(key, keyOperations);
+
+            return await SendRequestAsync(HttpPipelineMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, key.Version);
         }
 
         public virtual Response<Key> GetKey(string name, string version = null, CancellationToken cancellationToken = default)
@@ -93,8 +107,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> GetKeyAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, version);
         }
 
         public virtual IEnumerable<Response<KeyBase>> GetKeys(CancellationToken cancellationToken = default)
@@ -135,8 +150,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
 
         public virtual IEnumerable<Response<DeletedKey>> GetDeletedKeys(CancellationToken cancellationToken = default)
@@ -156,8 +172,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response> PurgeDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedKeysPath, name);
         }
 
         public virtual Response<Key> RecoverDeletedKey(string name, CancellationToken cancellationToken = default)
@@ -178,8 +195,11 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<byte[]>> BackupKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+
+            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "backup");
+
+            return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
 
         public virtual Response<Key> RestoreKey(byte[] backup, CancellationToken cancellationToken = default)
@@ -189,8 +209,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> RestoreKeyAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (backup == null) throw new ArgumentNullException(nameof(backup));
+
+            return await SendRequestAsync(HttpPipelineMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "restore");
         }
 
         public virtual Response<Key> ImportKey(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
@@ -200,8 +221,12 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (keyMaterial == default) throw new ArgumentNullException(nameof(keyMaterial));
+
+            var keyImportOptions = new KeyImportOptions(name, keyMaterial);
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name);
         }
 
         public virtual Response<Key> ImportKey(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
@@ -211,8 +236,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> ImportKeyAsync(KeyImportOptions keyImportOptions, CancellationToken cancellationToken = default)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (keyImportOptions == default) throw new ArgumentNullException(nameof(keyImportOptions));
+
+            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
         }
     }
 }
