@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "storage/resource-manager" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated"
