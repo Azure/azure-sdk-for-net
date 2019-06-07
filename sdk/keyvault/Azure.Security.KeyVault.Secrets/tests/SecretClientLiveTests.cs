@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        [Ignore("Restore doesn't seem to work correctly")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6514")]
         public async Task BackupRestore()
         {
             string secretName = Recording.GenerateId();
