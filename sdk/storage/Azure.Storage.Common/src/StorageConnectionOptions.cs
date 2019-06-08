@@ -39,8 +39,9 @@ namespace Azure.Storage
 
             // TODO: Decide if these are good default options for an Azure
             // Queue Storage retry policy
-            this.RetryPolicy = new FixedRetryPolicy()
+            this.RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Fixed,
                 Delay = TimeSpan.Zero,
                 MaxRetries = Constants.MaxReliabilityRetries
             };

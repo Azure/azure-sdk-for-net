@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -16,7 +18,11 @@ namespace Azure.Core.Tests
 {
     public abstract class RetryPolicyTestBase: SyncAsyncPolicyTestBase
     {
-        protected RetryPolicyTestBase(bool isAsync) : base(isAsync) { }
+        private readonly RetryMode _mode;
+
+        protected RetryPolicyTestBase(RetryMode mode, bool isAsync) : base(isAsync) {
+            _mode = mode;
+        }
 
         [Test]
         public async Task DoesNotExceedRetryCount()
@@ -288,7 +294,34 @@ namespace Azure.Core.Tests
             Assert.AreEqual(request.ClientRequestId, e.GetProperty<string>("requestId"));
         }
 
-        protected abstract (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3);
+        protected (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
+        {
+            var policy = new RetryPolicyMock(_mode, maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
+            return (policy, policy.DelayGate);
+        }
+
+        protected class RetryPolicyMock: RetryPolicy
+        {
+            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+            {
+                MaxRetries = maxRetries;
+                Delay = delay;
+                MaxDelay = maxDelay;
+                Mode = mode;
+            }
+
+            public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
+
+            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            {
+                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
+            }
+
+            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+            {
+                return DelayGate.WaitForRelease(time);
+            }
+        }
 
         protected class MockResponseClassifier: ResponseClassifier
         {

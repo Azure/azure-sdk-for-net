@@ -22,8 +22,9 @@ namespace Azure.Identity
         {
             AuthorityHost = DefaultAuthorityHost;
             RefreshBuffer = DefaultRefreshBuffer;
-            RetryPolicy = new ExponentialRetryPolicy()
+            RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Exponential,
                 Delay = TimeSpan.FromMilliseconds(800),
                 MaxRetries = 3
             };
