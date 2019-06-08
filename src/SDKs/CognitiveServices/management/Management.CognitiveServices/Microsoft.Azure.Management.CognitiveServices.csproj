@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>5.3.0</Version>
+		<Version>6.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
