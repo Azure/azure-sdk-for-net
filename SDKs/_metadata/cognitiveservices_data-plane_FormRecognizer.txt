@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/FormRecognizer/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\temp\cognitiveservices\Vision.FormRecognizer\src
-2019-05-31 12:25:41 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/FormRecognizer/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\SD\azure-sdk-for-net\sdk\cognitiveservices\Vision.FormRecognizerReceipt
+2019-06-09 06:02:21 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      1e497e5bc4f055f1e890001f254f4c9892f2287b
+Commit:      54555f336edfa3f79b616735f1646e412f04ea28
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
