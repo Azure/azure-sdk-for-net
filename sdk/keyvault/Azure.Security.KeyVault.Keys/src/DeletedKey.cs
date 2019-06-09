@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Keys
 
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
+        public DeletedKey() { }
         public DeletedKey(string name) : base(name) { }
 
         public DeletedKey (string name, string recoveryId, DateTimeOffset? deletedDate, DateTimeOffset? scheduledPurge)

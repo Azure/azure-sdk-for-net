@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
             mockResponse.ContentStream = readTrackingStream;
 
             var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
+            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
             var ms = (MemoryStream)response.ContentStream;
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             };
 
             var mockTransport = CreateMockTransport(mockResponse);
-            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton));
+            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Shared));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
             MockResponse mockResponse = new MockResponse(200);
 
             var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
+            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
             Assert.Null(response.ContentStream);
         }
 

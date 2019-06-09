@@ -36,13 +36,12 @@ namespace Azure.Security.KeyVault.Secrets
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new SecretClientOptions();
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
+            _pipeline = HttpPipelineBuilder.Build(options,
                     options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
+                    ClientRequestIdPolicy.Shared,
                     new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"),
                     options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+                    BufferResponsePolicy.Shared);
         }
 
         public virtual async Task<Response<Secret>> GetAsync(string name, string version = null, CancellationToken cancellationToken = default)

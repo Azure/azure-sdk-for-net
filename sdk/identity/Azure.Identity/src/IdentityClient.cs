@@ -27,11 +27,10 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipeline.Build(_options,
-                    _options.ResponseClassifier,
+            _pipeline = HttpPipelineBuilder.Build(_options,
                     _options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
-                    BufferResponsePolicy.Singleton);
+                    ClientRequestIdPolicy.Shared,
+                    BufferResponsePolicy.Shared);
         }
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
@@ -150,7 +149,7 @@ namespace Azure.Identity
 
             return request;
         }
-        
+
         private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))

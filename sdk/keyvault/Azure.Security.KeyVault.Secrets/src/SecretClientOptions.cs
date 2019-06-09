@@ -8,14 +8,15 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Security.KeyVault.Secrets
 {
-    public class SecretClientOptions : HttpClientOptions
+    public class SecretClientOptions : ClientOptions
     {
         public RetryPolicy RetryPolicy { get; set; }
 
         public SecretClientOptions()
         {
-            RetryPolicy = new ExponentialRetryPolicy()
+            RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Exponential,
                 Delay = TimeSpan.FromMilliseconds(800),
                 MaxRetries = 3
             };
