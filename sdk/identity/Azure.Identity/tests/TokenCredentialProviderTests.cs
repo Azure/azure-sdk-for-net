@@ -17,34 +17,34 @@ namespace Azure.Identity.Tests
         {
             private string _scope;
             private string _token;
-            private ValueTask<string> _tokenTask;
 
             public SimpleMockTokenCredential(string scope, string token)
             {
                 _scope = scope;
                 _token = token;
-                _tokenTask = new ValueTask<string>(token);
             }
 
-            public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
             {
-                return _scope == scopes[0] ? _token : null;
+                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
             }
 
-            public override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
             {
-                return _scope == scopes[0] ? _tokenTask : default;
+                await Task.CompletedTask;
+
+                return _scope == scopes[0] ? new AccessToken(_token, DateTimeOffset.MaxValue) : default(AccessToken);
             }
         }
 
         public class ExceptionalMockTokenCredential : TokenCredential
         {
-            public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
             {
                 throw new MockException();
             }
 
-            public override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
             {
                 throw new MockException();
             }
@@ -71,10 +71,10 @@ namespace Azure.Identity.Tests
             var cred4 = new SimpleMockTokenCredential("scopeC", "tokenC");
             var provider = new AggregateCredential(cred1, cred2, cred3, cred4);
 
-            Assert.AreEqual("tokenA", await provider.GetTokenAsync(new string[] { "scopeA" }));
-            Assert.AreEqual("tokenB", await provider.GetTokenAsync(new string[] { "scopeB" }));
-            Assert.AreEqual("tokenC", await provider.GetTokenAsync(new string[] { "scopeC" }));
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await provider.GetTokenAsync(new string[] { "scopeD" }));
+            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
+            Assert.AreEqual("tokenB", (await provider.GetTokenAsync(new string[] { "scopeB" })).Token);
+            Assert.AreEqual("tokenC", (await provider.GetTokenAsync(new string[] { "scopeC" })).Token);
+            Assert.IsNull((await provider.GetTokenAsync(new string[] { "scopeD" })).Token);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB");
             var provider = new AggregateCredential(cred1, cred2, cred3);
 
-            Assert.AreEqual("tokenA", await provider.GetTokenAsync(new string[] { "scopeA" }));
+            Assert.AreEqual("tokenA", (await provider.GetTokenAsync(new string[] { "scopeA" })).Token);
             Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeB" }));
             Assert.ThrowsAsync<MockException>(async () => await provider.GetTokenAsync(new string[] { "ScopeC" }));
         }

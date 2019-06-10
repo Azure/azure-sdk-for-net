@@ -1,12 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Azure.Identity
-{
-    public class AccessToken
+namespace Azure.Core
+{    public struct AccessToken
     {
         public AccessToken(string accessToken, DateTimeOffset expiresOn)
         {

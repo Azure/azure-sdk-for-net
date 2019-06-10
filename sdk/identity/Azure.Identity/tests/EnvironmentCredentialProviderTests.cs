@@ -40,11 +40,11 @@ namespace Azure.Identity.Tests
 
                 Assert.NotNull(cred);
 
-                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.AreEqual("mockclientid", cred._clientId());
 
-                Assert.AreEqual("mocktenantid", cred.TenantId);
+                Assert.AreEqual("mocktenantid", cred._tenantId());
 
-                Assert.AreEqual("mockclientsecret", cred.ClientSecret);
+                Assert.AreEqual("mockclientsecret", cred._clientSecret());
             }
             finally
             {
