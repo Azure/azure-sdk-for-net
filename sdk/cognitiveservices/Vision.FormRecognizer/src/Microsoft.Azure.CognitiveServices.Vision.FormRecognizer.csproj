@@ -2,11 +2,17 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services Form Recognizer SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Form Recognizer APIs.</Description>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <VersionPrefix>0.9.0</VersionPrefix>
     <PackageTags>FormRecognizer;Form Recognizer;</PackageTags>
     <PackageReleaseNotes>
 <![CDATA[
 This is a public preview release of the Cognitive Services Form Recognizer SDK.
+This release also contains Cognitive Services Form Recognizer Receipt SDK.
+
+  Form Recognizer API Changes:
+    TrainRequest::TrainRequest() constructor: Added new optional parameter(s):
+        TrainSourceFilter: To set filter to further search the source path for content.
+
 ]]>
 	</PackageReleaseNotes>
   </PropertyGroup>

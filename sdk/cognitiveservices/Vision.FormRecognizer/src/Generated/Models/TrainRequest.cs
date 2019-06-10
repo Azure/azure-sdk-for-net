@@ -31,9 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer.Models
         /// Initializes a new instance of the TrainRequest class.
         /// </summary>
         /// <param name="source">Get or set source path.</param>
-        public TrainRequest(string source)
+        /// <param name="sourceFilter">Get or set filter to further search the
+        /// source path for content.</param>
+        public TrainRequest(string source, TrainSourceFilter sourceFilter = default(TrainSourceFilter))
         {
             Source = source;
+            SourceFilter = sourceFilter;
             CustomInit();
         }
 
@@ -47,6 +50,13 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer.Models
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public string Source { get; set; }
+
+        /// <summary>
+        /// Gets or sets get or set filter to further search the
+        /// source path for content.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceFilter")]
+        public TrainSourceFilter SourceFilter { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -70,6 +80,10 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer.Models
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Source", 0);
                 }
+            }
+            if (SourceFilter != null)
+            {
+                SourceFilter.Validate();
             }
         }
     }
