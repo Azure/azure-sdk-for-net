@@ -29,12 +29,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.2" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.0.5" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="[4.5.1, 4.9.9)" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
   </ItemGroup>
 

@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="id">Full resource id of a vnet subnet, such as
         /// '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.</param>
         /// <param name="state">Gets the state of virtual network rule.</param>
-        public VirtualNetworkRule(string id, string state = default(string))
+        /// <param name="ignoreMissingVnetServiceEndpoint">Ignore missing vnet
+        /// service endpoint or not.</param>
+        public VirtualNetworkRule(string id, string state = default(string), bool? ignoreMissingVnetServiceEndpoint = default(bool?))
         {
             Id = id;
             State = state;
+            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
+
+        /// <summary>
+        /// Gets or sets ignore missing vnet service endpoint or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "ignoreMissingVnetServiceEndpoint")]
+        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
 
         /// <summary>
         /// Validate the object.

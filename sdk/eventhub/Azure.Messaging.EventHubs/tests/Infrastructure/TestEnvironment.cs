@@ -28,6 +28,15 @@ namespace Azure.Messaging.EventHubs.Tests
         public static string EventHubsConnectionString => EventHubsConnectionStringInstance.Value;
 
         /// <summary>
+        ///   Builds a connection string for a specific Event Hub instance under the Event Hubs namespace used for
+        ///   Live tests.
+        /// </summary>
+        ///
+        /// <value>The namepsace connection string is read from the "EVENT_HUBS_CONNECTION_STRING" environment variable.</value>
+        ///
+        public static string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={eventHubName}";
+
+        /// <summary>
         ///   Reads an environment variable, ensuring that it is populated.
         /// </summary>
         ///

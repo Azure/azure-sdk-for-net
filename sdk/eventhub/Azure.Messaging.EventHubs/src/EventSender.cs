@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs
     ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
     /// </remarks>
     ///
-    public class EventSender
+    public class EventSender : IAsyncDisposable
     {
         /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MinimumBatchSizeLimit = 24;
@@ -51,13 +51,13 @@ namespace Azure.Messaging.EventHubs
         ///   The set of options used for creation of this sender.
         /// </summary>
         ///
-        protected SenderOptions Options { get; }
+        protected SenderOptions Options { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventSender"/> class.
         /// </summary>
         ///
-        /// <param name="connectionType">The type of connection used for communicating with the Event Hubs service.</param>
+        /// <param name="transportType">The type of protocol and transport used for communicating with the Event Hubs service.</param>
         /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
         /// <param name="senderOptions">The set of options to use for this receiver.</param>
         ///
@@ -67,9 +67,9 @@ namespace Azure.Messaging.EventHubs
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        protected internal EventSender(ConnectionType connectionType,
-                                       string eventHubPath,
-                                       SenderOptions senderOptions)
+        internal EventSender(TransportType transportType,
+                             string eventHubPath,
+                             SenderOptions senderOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNull(nameof(senderOptions), senderOptions);
@@ -137,6 +137,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
         ///
         public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="EventHubClient" />,
+        ///   including ensuring that the client itself has been closed.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.

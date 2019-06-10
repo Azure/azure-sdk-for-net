@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions
             {
                 Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2), 3),
-                ConnectionType = ConnectionType.AmqpWebSockets,
+                TransportType = TransportType.AmqpWebSockets,
                 DefaultTimeout = TimeSpan.FromDays(1),
                 Proxy = Mock.Of<IWebProxy>()
             };
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.ConnectionType, Is.EqualTo(options.ConnectionType), "The connection type of the clone should match.");
+            Assert.That(clone.TransportType, Is.EqualTo(options.TransportType), "The connection type of the clone should match.");
             Assert.That(clone.DefaultTimeout, Is.EqualTo(options.DefaultTimeout), "The default timeout of the clone should match.");
             Assert.That(clone.Proxy, Is.EqualTo(options.Proxy), "The proxy of the clone should match.");
 
