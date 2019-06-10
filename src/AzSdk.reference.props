@@ -1,5 +1,4 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<<<<<<< HEAD
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
@@ -7,12 +6,6 @@
 		<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.19, 4.0.0)" /> 
 		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.19, 3.0.0)" />
 		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
-=======
-	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.19, 4.0.0)" /> 
-		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.19, 3.0.0)" />
->>>>>>> Moved ref files into mgmt directory
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -43,8 +36,5 @@
 		<EnablePreBuildTarget Condition=" '$(EnablePreBuildTarget)' == '' ">true</EnablePreBuildTarget>
 		<EnablePostBuildTarget Condition=" '$(EnablePostBuildTarget)' == '' ">true</EnablePostBuildTarget>
 	</PropertyGroup>
-<<<<<<< HEAD
  
-=======
->>>>>>> Moved ref files into mgmt directory
 </Project>
