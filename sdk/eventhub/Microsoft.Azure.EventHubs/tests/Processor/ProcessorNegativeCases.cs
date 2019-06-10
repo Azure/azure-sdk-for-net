@@ -96,7 +96,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             Assert.Throws<ArgumentException>(() =>
             {
                 TestUtility.Log("Setting lease duration outside of allowed range should fail.");
-                pmo.LeaseDuration = TimeSpan.FromSeconds(65);
+                pmo.LeaseDuration = TimeSpan.FromSeconds(1565);
             });
         }
     }

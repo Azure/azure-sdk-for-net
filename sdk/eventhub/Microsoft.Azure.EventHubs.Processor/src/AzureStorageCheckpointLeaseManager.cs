@@ -29,6 +29,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         CloudBlobContainer eventHubContainer;
         CloudBlobDirectory consumerGroupDirectory;
 
+
         internal AzureStorageCheckpointLeaseManager(string storageConnectionString, string leaseContainerName, string storageBlobPrefix)
             : this(CloudStorageAccount.Parse(storageConnectionString), leaseContainerName, storageBlobPrefix)
         {
@@ -139,7 +140,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         public async Task UpdateCheckpointAsync(Lease lease, Checkpoint checkpoint)
         {
-            AzureBlobLease newLease = new AzureBlobLease((AzureBlobLease) lease)
+            AzureBlobLease newLease = new AzureBlobLease((AzureBlobLease) lease,this.LeaseDuration)
             {
                 Offset = checkpoint.Offset,
                 SequenceNumber = checkpoint.SequenceNumber
@@ -159,6 +160,9 @@ namespace Microsoft.Azure.EventHubs.Processor
         public TimeSpan LeaseRenewInterval => this.leaseRenewInterval;
 
         public TimeSpan LeaseDuration => this.leaseDuration;
+
+        //This flag will be used in this class while renewing/acquiring new lease.
+        public bool IsInfiniteLease => this.LeaseDuration > TimeSpan.FromSeconds(60);
 
         public Task<bool> LeaseStoreExistsAsync()
         {
@@ -255,7 +259,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                     // Discover partition id from URI path of the blob.
                     var partitionId = leaseBlob.Uri.AbsolutePath.Split('/').Last();
 
-                    leaseList.Add(new AzureBlobLease(partitionId, owner, leaseBlob));
+                    leaseList.Add(new AzureBlobLease(partitionId, owner, leaseBlob,this.LeaseDuration));
                 }
 
                 continuationToken = leaseBlobsResult.ContinuationToken;
@@ -271,7 +275,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             try
             {
                 CloudBlockBlob leaseBlob = GetBlockBlobReference(partitionId);
-                returnLease = new AzureBlobLease(partitionId, leaseBlob);
+                returnLease = new AzureBlobLease(partitionId, leaseBlob,this.LeaseDuration);
                 string jsonLease = JsonConvert.SerializeObject(returnLease);
 
                 ProcessorEventSource.Log.AzureStorageManagerInfo(
@@ -348,18 +352,29 @@ namespace Microsoft.Azure.EventHubs.Processor
                     }
 
                     ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, lease.PartitionId, "Need to ChangeLease");
-                    renewLease = true;
-                    newToken = await leaseBlob.ChangeLeaseAsync(
-                        newLeaseId,
-                        AccessCondition.GenerateLeaseCondition(lease.Token),
-                        null,
-                        this.operationContext).ConfigureAwait(false);
+                    if (IsInfiniteLease)
+                    {
+                        //Incase of inifinite lease. we need to break the lease and acquire it again.
+                        TimeSpan? breakReleaseTime = TimeSpan.FromSeconds(3);
+                        await leaseBlob.BreakLeaseAsync(breakReleaseTime);
+                        newToken = await leaseBlob.AcquireLeaseAsync(this.GetEffectiveLeaseDurationForBlob() /* infinite lease */, newLeaseId);
+                    }
+                    else
+                    {
+                        renewLease = true;
+                        newToken = await leaseBlob.ChangeLeaseAsync(
+                            newLeaseId,
+                            AccessCondition.GenerateLeaseCondition(lease.Token),
+                            null,
+                            this.operationContext).ConfigureAwait(false);
+                    }
+
                 }
                 else
                 {
                     ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, lease.PartitionId, "Need to AcquireLease");
                     newToken = await leaseBlob.AcquireLeaseAsync(
-                        leaseDuration,
+                        this.GetEffectiveLeaseDurationForBlob(),
                         newLeaseId,
                         null,
                         null,
@@ -374,7 +389,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 // ChangeLease doesn't renew so we should avoid lease expiring before next renew interval.
                 if (renewLease)
                 {
-                    await this.RenewLeaseCoreAsync(lease).ConfigureAwait(false);
+                    await this.RenewLeaseAsync(lease).ConfigureAwait(false);
                 }
 
                 await leaseBlob.UploadTextAsync(
@@ -401,6 +416,10 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         public Task<bool> RenewLeaseAsync(Lease lease)
         {
+            if (IsInfiniteLease)
+            {
+                return Task.FromResult<bool>(true);
+            }
             return RenewLeaseCoreAsync((AzureBlobLease)lease);
         }
 
@@ -439,7 +458,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             try
             {
                 string leaseId = lease.Token;
-                AzureBlobLease releasedCopy = new AzureBlobLease(lease)
+                AzureBlobLease releasedCopy = new AzureBlobLease(lease,this.LeaseDuration)
                 {
                     Token = string.Empty,
                     Owner = string.Empty
@@ -518,7 +537,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
             ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, partitionId, "Raw JSON downloaded: " + jsonLease);
             AzureBlobLease rehydrated = (AzureBlobLease)JsonConvert.DeserializeObject(jsonLease, typeof(AzureBlobLease));
-            AzureBlobLease blobLease = new AzureBlobLease(rehydrated, blob);
+            AzureBlobLease blobLease = new AzureBlobLease(rehydrated, blob,this.LeaseDuration);
             return blobLease;
         }
 
@@ -548,6 +567,18 @@ namespace Microsoft.Azure.EventHubs.Processor
         CloudBlockBlob GetBlockBlobReference(string partitionId)
         {
             return this.consumerGroupDirectory.GetBlockBlobReference(partitionId);
+        }
+
+
+
+        //This function will be used to get the lease duration which will be passed to azure storage library.
+        //If lease is infinite than while acquiring we need to pass null.
+        TimeSpan? GetEffectiveLeaseDurationForBlob()
+        {
+            TimeSpan? effectiveLeaseDuration = null;
+            if (!IsInfiniteLease)
+                effectiveLeaseDuration = this.LeaseDuration;
+            return effectiveLeaseDuration;
         }
     }
 }

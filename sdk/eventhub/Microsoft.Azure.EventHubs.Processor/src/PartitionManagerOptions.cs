@@ -11,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     public class PartitionManagerOptions
     {
         const int MinLeaseDurationInSeconds = 15;
-        const int MaxLeaseDurationInSeconds = 60;
+        const int MaxLeaseDurationInSeconds = 1500;
 
         TimeSpan renewInterval = TimeSpan.FromSeconds(10);
         TimeSpan leaseDuration = TimeSpan.FromSeconds(30);
