@@ -21,11 +21,12 @@ jobs:
       LoggingArgs: '/flp:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp1:warningsonly;logfile=msbuild.wrn /flp2:errorsonly;logfile=msbuild.err'
 
     steps:
-      - task: CmdLine@1
-        inputs:
-          filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
-          arguments: -Vr *,31bf3856ad364e35
-        displayName: 'Disable strong name verification'
+      # - task: CmdLine@1
+      #   inputs:
+      #     filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
+      #     arguments: -Vr *,31bf3856ad364e35
+      #   displayName: 'Disable strong name verification'
+
       - task: MSBuild@1
         inputs:
           solution: build.proj
@@ -33,7 +34,7 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:UseLegacyDirStructure=true /p:SkipTests=true
         displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -52,8 +53,13 @@ jobs:
           displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
           inputs:
             version: '$(DotNetCoreVersion)'
-        - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
-          displayName: 'Build and test on Non-windows machine'
+        
+        - task: DotNetCoreCLI@1
+          inputs:
+            command: msbuild
+            solution: build.proj
+            arguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:UseLegacyDirStructure=true /p:SkipTests=true
+          displayName: 'Ubuntu Build and Run tests'        
         - task: PublishTestResults@2
           condition: succeededOrFailed()
           inputs:
@@ -61,3 +67,22 @@ jobs:
             testRunTitle: 'Ubuntu Test Results'
             testResultsFormat: 'VSTest'
             mergeTestResults: true
+
+  # - job: Ubuntu_Build
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  
+  #   steps:
+  #       - task: DotNetCoreInstaller@0
+  #         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+  #         inputs:
+  #           version: '$(DotNetCoreVersion)'
+  #       - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
+  #         displayName: 'Build and test on Non-windows machine'
+  #       - task: PublishTestResults@2
+  #         condition: succeededOrFailed()
+  #         inputs:
+  #           testResultsFiles: '**/*.trx'
+  #           testRunTitle: 'Ubuntu Test Results'
+  #           testResultsFormat: 'VSTest'
+  #           mergeTestResults: true
