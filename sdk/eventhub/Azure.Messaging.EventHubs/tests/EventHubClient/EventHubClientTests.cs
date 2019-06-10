@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -147,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                      string constructorDescription)
         {
             var defaultOptions = new EventHubClientOptions();
-            var options = client.Options;
+            var options = client.ClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
@@ -168,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                              EventHubClientOptions constructorOptions,
                                              string constructorDescription)
         {
-            var options = client.Options;
+            var options = client.ClientOptions;
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
@@ -191,7 +192,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new EventHubClient(fakeConnection);
 
             Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
-            Assert.That(client.Credential, Is.Null);
+            Assert.That(GetCredential(client), Is.Null);
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new EventHubClient(host, entityPath, credential);
 
             Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
-            Assert.That(client.Credential, Is.EqualTo(credential));
+            Assert.That(GetCredential(client), Is.EqualTo(credential));
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
 
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            Assert.That(client.InnerClient, Is.Not.Null);
+            Assert.That(GetTransportClient(client), Is.Not.Null);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(options.TransportType, host, path, keyName, key);
             var client = new EventHubClient(host, path, new SharedAccessSignatureCredential(signature), options);
 
-            Assert.That(client.InnerClient, Is.Not.Null);
+            Assert.That(GetTransportClient(client), Is.Not.Null);
         }
 
         /// <summary>
@@ -367,7 +368,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 DefaultTimeout = TimeSpan.FromHours(24)
             };
 
-            var expected = new SenderOptions
+            var expected = new EventSenderOptions
             {
                 Retry = clientOptions.Retry,
                 Timeout = clientOptions.DefaultTimeout
@@ -398,14 +399,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 DefaultTimeout = TimeSpan.FromHours(24)
             };
 
-            var senderOptions = new SenderOptions
+            var senderOptions = new EventSenderOptions
             {
                 PartitionId = "123",
                 Retry = null,
                 Timeout = TimeSpan.Zero
             };
 
-            var expected = new SenderOptions
+            var expected = new EventSenderOptions
             {
                 PartitionId = senderOptions.PartitionId,
                 Retry = clientOptions.Retry,
@@ -438,7 +439,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 DefaultTimeout = TimeSpan.FromHours(24)
             };
 
-            var expectedOptions = new ReceiverOptions
+            var expectedOptions = new EventReceiverOptions
             {
                 Retry = clientOptions.Retry,
                 DefaultMaximumReceiveWaitTime = clientOptions.DefaultTimeout
@@ -476,7 +477,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 DefaultTimeout = TimeSpan.FromHours(24)
             };
 
-            var expectedOptions = new ReceiverOptions
+            var expectedOptions = new EventReceiverOptions
             {
                 BeginReceivingAt = EventPosition.FromOffset(65),
                 ConsumerGroup = "SomeGroup",
@@ -631,16 +632,49 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Provides a test shim for retrieving the credential that a client was
+        ///   created with.
+        /// </summary>
+        ///
+        /// <param name="client">The client to retrieve the credential for.</param>
+        ///
+        /// <returns>The credential with which the client was created.</returns>
+        ///
+        private TokenCredential GetCredential(EventHubClient client) =>
+                    typeof(EventHubClient)
+                        .GetProperty("Credential", BindingFlags.Instance | BindingFlags.NonPublic)
+                        .GetValue(client) as TokenCredential;
+
+        /// <summary>
+        ///   Provides a test shim for retrieving the transport client contained by an
+        ///   Event Hub client instance.
+        /// </summary>
+        ///
+        /// <param name="client">The client to retrieve the transport client of.</param>
+        ///
+        /// <returns>The transport client contained by the Event Hub client.</returns>
+        ///
+        private TransportEventHubClient GetTransportClient(EventHubClient client) =>
+            typeof(EventHubClient)
+                .GetProperty("InnerClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(client) as TransportEventHubClient;
+
+        /// <summary>
         ///   Allows for the options used by the client to be exposed for testing purposes.
         /// </summary>
         ///
         public class ReadableOptionsMock : EventHubClient
         {
-            public EventHubClientOptions Options => base.ClientOptions;
+            public EventHubClientOptions ClientOptions =>
+                typeof(EventHubClient)
+                   .GetProperty(nameof(ClientOptions), BindingFlags.Instance | BindingFlags.NonPublic)
+                   .GetValue(this) as EventHubClientOptions;
 
             public EventHubClientOptions TransportClientOptions;
-            public SenderOptions SenderOptions;
-            public ReceiverOptions ReceiverOptions;
+            public EventSenderOptions SenderOptions => _transportClient.CreateSenderCalledWithOptions;
+            public EventReceiverOptions ReceiverOptions;
+
+            private ObservableTransportClientMock _transportClient;
 
             public ReadableOptionsMock(string connectionString,
                                        EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
@@ -657,16 +691,11 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options)
             {
                 TransportClientOptions = options;
-                return base.BuildTransportClient(host, eventHubPath, credential, options);
+                _transportClient = new ObservableTransportClientMock();
+                return _transportClient;
             }
 
-            internal override EventSender BuildEventSender(TransportType connectionType, string eventHubPath, SenderOptions options)
-            {
-                SenderOptions = options;
-                return base.BuildEventSender(connectionType, eventHubPath, options);
-            }
-
-            internal override EventReceiver BuildEventReceiver(TransportType connectionType, string eventHubPath, string partitionId, ReceiverOptions options)
+            internal override EventReceiver BuildEventReceiver(TransportType connectionType, string eventHubPath, string partitionId, EventReceiverOptions options)
             {
                 ReceiverOptions = options;
                 return base.BuildEventReceiver(connectionType, eventHubPath, partitionId, options);
@@ -714,7 +743,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                  EventHubClientOptions clientOptions = default) : base(connectionString, clientOptions)
             {
                 TransportClient = transportClient;
-                InnerClient = transportClient;
+                SetTransportClient(transportClient);
+
             }
 
             public InjectableTransportClientMock(TransportEventHubClient transportClient,
@@ -724,10 +754,16 @@ namespace Azure.Messaging.EventHubs.Tests
                                                  EventHubClientOptions clientOptions = default) : base(host, eventHubPath, credential, clientOptions)
             {
                 TransportClient = transportClient;
-                InnerClient = transportClient;
+                SetTransportClient(transportClient);
             }
 
             internal override TransportEventHubClient BuildTransportClient(string host, string eventHubPath, TokenCredential credential, EventHubClientOptions options) => TransportClient;
+
+            private void SetTransportClient(TransportEventHubClient transportClient) =>
+                typeof(EventHubClient)
+                    .GetProperty("InnerClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(this, transportClient);
+
         }
 
         /// <summary>
@@ -736,6 +772,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportEventHubClient
         {
+            public EventSenderOptions CreateSenderCalledWithOptions = default;
             public string GetPartitionPropertiesCalledForId = default;
             public bool WasGetPropertiesCalled = false;
             public bool WasCloseCalled = false;
@@ -751,6 +788,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 GetPartitionPropertiesCalledForId = partitionId;
                 return Task.FromResult(default(PartitionProperties));
+            }
+
+            public override EventSender CreateSender(EventSenderOptions senderOptions = default)
+            {
+                CreateSenderCalledWithOptions = senderOptions;
+                return default(EventSender);
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)

@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ReceiverOptions
+    public class EventReceiverOptions
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroup = "$Default";
@@ -166,13 +166,13 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ReceiverOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="EventReceiverOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ReceiverOptions" />.</returns>
+        /// <returns>A new copy of <see cref="EventReceiverOptions" />.</returns>
         ///
-        internal ReceiverOptions Clone() =>
-            new ReceiverOptions
+        internal EventReceiverOptions Clone() =>
+            new EventReceiverOptions
             {
                 ConsumerGroup = this.ConsumerGroup,
                 BeginReceivingAt = this.BeginReceivingAt,

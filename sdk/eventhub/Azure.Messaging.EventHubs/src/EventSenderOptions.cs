@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class SenderOptions
+    public class EventSenderOptions
     {
         /// <summary>The timeout that will be used by default for sending events.</summary>
         private TimeSpan? _timeout = TimeSpan.FromMinutes(1);
@@ -103,13 +103,13 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="SenderOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="EventSenderOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="SenderOptions" />.</returns>
+        /// <returns>A new copy of <see cref="EventSenderOptions" />.</returns>
         ///
-        internal SenderOptions Clone() =>
-            new SenderOptions
+        internal EventSenderOptions Clone() =>
+            new EventSenderOptions
             {
                 PartitionId = this.PartitionId,
                 Retry = this.Retry?.Clone(),

@@ -174,4 +174,7 @@
   <data name="InvalidTransportType" xml:space="preserve">
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
+  <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
+    <value>A sender created for a specific partition cannot send events using a partition key.  This sender is associated with partition '{0}'.</value>
+  </data>
 </root>

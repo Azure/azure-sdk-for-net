@@ -380,6 +380,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Allows for observation of operations performed by the client for testing purposes.
+        /// </summary>
+        ///
         private class ObservableClientMock : TrackOne.EventHubClient
         {
             public bool WasCloseAsyncInvoked;

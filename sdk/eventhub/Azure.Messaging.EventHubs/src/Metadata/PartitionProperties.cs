@@ -16,25 +16,25 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; private set; }
+        public string EventHubPath { get; }
 
         /// <summary>
         ///   The identifier of the partition, unique to the Event Hub which contains it.
         /// </summary>
         ///
-        public string Id { get; private set; }
+        public string Id { get; }
 
         /// <summary>
         ///   The first sequence number available for events in the partition.
         /// </summary>
         ///
-        public long BeginningSequenceNumber { get; private set; }
+        public long BeginningSequenceNumber { get; }
 
         /// <summary>
         ///   The sequence number observed the last event to be enqueued in the partition.
         /// </summary>
         ///
-        public long LastEnqueuedSequenceNumber { get; private set; }
+        public long LastEnqueuedSequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the last event to be enqueued in the partition.
@@ -46,13 +46,13 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public string LastEnqueuedOffset { get; private set; }
+        public string LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTime LastEnqueuedTimeUtc { get; private set; }
+        public DateTime LastEnqueuedTimeUtc { get; }
 
         /// <summary>
         ///   Indicates whether or not the partition is currently empty.
@@ -62,14 +62,14 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   <c>true</c> if the partition is empty; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsEmpty { get; private set; }
+        public bool IsEmpty { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the information was retrieved from the
         ///   Event Hub.
         /// </summary>
         ///
-        public DateTime PropertyRetrievalTimeUtc { get; private set; }
+        public DateTime PropertyRetrievalTimeUtc { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.

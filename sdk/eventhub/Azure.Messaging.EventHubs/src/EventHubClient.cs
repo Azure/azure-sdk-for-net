@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs
         ///   to the Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; private set; }
+        public string EventHubPath { get; }
 
         /// <summary>
         ///   The credential provided for use in authorization with the Azure Event Hubs connection.  This credential
@@ -37,19 +37,19 @@ namespace Azure.Messaging.EventHubs
         ///   will be performed.
         /// </summary>
         ///
-        internal TokenCredential Credential { get; private set; }
+        private TokenCredential Credential { get; set; }
 
         /// <summary>
         ///   An abstracted Event Hub Client specific to the active protocol and transport intended to perform delegated operations.
         /// </summary>
         ///
-        internal TransportEventHubClient InnerClient { get; set; }
+        private TransportEventHubClient InnerClient { get; set; }
 
         /// <summary>
         ///   The set of client options used for creation of this client.
         /// </summary>
         ///
-        internal EventHubClientOptions ClientOptions { get; private set; }
+        private EventHubClientOptions ClientOptions { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
@@ -225,14 +225,14 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        public virtual EventSender CreateSender(SenderOptions senderOptions = default)
+        public virtual EventSender CreateSender(EventSenderOptions senderOptions = default)
         {
-            var options = senderOptions?.Clone() ?? new SenderOptions { Retry = null, Timeout = null };
+            var options = senderOptions?.Clone() ?? new EventSenderOptions { Retry = null, Timeout = null };
 
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.Timeout = options.TimeoutOrDefault ?? ClientOptions.DefaultTimeout;
 
-            return BuildEventSender(ClientOptions.TransportType, EventHubPath, options);
+            return InnerClient.CreateSender(options);
         }
 
         /// <summary>
@@ -263,11 +263,11 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public virtual EventReceiver CreateReceiver(string partitionId,
-                                                    ReceiverOptions receiverOptions = default)
+                                                    EventReceiverOptions receiverOptions = default)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
 
-            var options = receiverOptions?.Clone() ?? new ReceiverOptions { Retry = null, DefaultMaximumReceiveWaitTime = null };
+            var options = receiverOptions?.Clone() ?? new EventReceiverOptions { Retry = null, DefaultMaximumReceiveWaitTime = null };
 
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.DefaultMaximumReceiveWaitTime = options.MaximumReceiveWaitTimeOrDefault ?? ClientOptions.DefaultTimeout;
@@ -368,21 +368,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Builds an event sender instance using the provided options.
-        /// </summary>
-        ///
-        /// <param name="connectionType">The type of connection being used for communication with the EventHubs servcie.</param>
-        /// <param name="eventHubPath">The path to a specific Event Hub.</param>
-        /// <param name="options">The set of options to use for the sender.</param>
-        ///
-        /// <returns>The fully constructed sender.</returns>
-        ///
-        internal virtual EventSender BuildEventSender(TransportType connectionType,
-                                                      string eventHubPath,
-                                                      SenderOptions options) =>
-            new EventSender(connectionType, eventHubPath, options);
-
-        /// <summary>
         ///   Builds a partition receiver instance using the provided options.
         /// </summary>
         ///
@@ -396,7 +381,7 @@ namespace Azure.Messaging.EventHubs
         internal virtual EventReceiver BuildEventReceiver(TransportType connectionType,
                                                           string eventHubPath,
                                                           string partitionId,
-                                                          ReceiverOptions options) =>
+                                                          EventReceiverOptions options) =>
             new EventReceiver(connectionType, eventHubPath, partitionId, options);
 
         /// <summary>
@@ -412,7 +397,7 @@ namespace Azure.Messaging.EventHubs
         ///   is not permissible, an appropriate exception will be thrown.
         /// </remarks>
         ///
-        internal static void ValidateConnectionStringProperties(ConnectionStringProperties properties,
+        private static void ValidateConnectionStringProperties(ConnectionStringProperties properties,
                                                                 string connectionStringArgumentName)
         {
             if ((String.IsNullOrEmpty(properties.Endpoint?.Host))
@@ -432,7 +417,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The component properties parsed from the connection string.</returns>
         ///
-        internal static ConnectionStringProperties ParseConnectionString(string connectionString) =>
+        private static ConnectionStringProperties ParseConnectionString(string connectionString) =>
             ConnectionStringParser.Parse(connectionString);
 
         /// <summary>
@@ -447,7 +432,7 @@ namespace Azure.Messaging.EventHubs
         ///   is not permissible, an appropriate exception will be thrown.
         /// </remarks>
         ///
-        internal static void ValidateClientOptions(EventHubClientOptions clientOptions)
+        private static void ValidateClientOptions(EventHubClientOptions clientOptions)
         {
             // If there were no options passed, they cannot be in an invalid state.
 
