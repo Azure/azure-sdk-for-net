@@ -56,7 +56,26 @@ namespace Azure.Messaging.EventHubs.Compatibility
             Guard.ArgumentNotNullOrEmpty(nameof(resource), resource);
             Guard.ArgumentNotNegative(nameof(tokenValidityDuration), tokenValidityDuration);
 
-            if (!String.Equals(resource, SharedAccessSignature.Resource, StringComparison.InvariantCultureIgnoreCase))
+            // The resource of a token is assigned at the Event Hub level.  The resource being requested may be a child
+            // of the Event Hub, such as a partition.  Ensure that the resource being requested is the same Event Hub associated
+            // with the token or one of its children.
+            //
+            // Do not issue the token for a request that is a different Event Hub, or for a scope that is less restrictive than
+            // an Event Hub, such as a top-level namespace.
+            //
+            // For example, if the token resource is: "amqps://myeventhubs.servicebus.net/someHub"
+            //
+            //    Allow:
+            //      amqps://myeventhubs.servicebus.net/someHub
+            //      amqps://myeventhubs.servicebus.net/someHub/partitions/0
+            //
+            //    Disallow:
+            //      amqps://myeventhubs.servicebus.net
+            //      https://my.eventhubs.servicebus.net/someHub
+            //      amqps://myeventhubs.servicebus.net/otherHub
+            //      amqps://notmine.servicebus.net/SomeHub
+
+            if (resource.IndexOf(SharedAccessSignature.Resource, StringComparison.InvariantCultureIgnoreCase) != 0)
             {
                 throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, SharedAccessSignature.Resource), nameof(resource));
             }

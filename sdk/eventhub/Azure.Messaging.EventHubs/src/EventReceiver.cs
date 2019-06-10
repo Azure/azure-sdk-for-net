@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs
         ///   The set of event receiver options used for creation of this receiver.
         /// </summary>
         ///
-        protected ReceiverOptions Options { get; set; }
+        protected EventReceiverOptions Options { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs
         internal EventReceiver(TransportType connectionType,
                                string eventHubPath,
                                string partitionId,
-                               ReceiverOptions receiverOptions)
+                               EventReceiverOptions receiverOptions)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="SenderOptions" />
+    ///   The suite of tests for the <see cref="EventSenderOptions" />
     ///   class.
     /// </summary>
     ///
@@ -12,14 +12,14 @@ namespace Azure.Messaging.EventHubs.Tests
     public class SenderOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="SenderOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventSenderOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new SenderOptions
+            var options = new EventSenderOptions
             {
                 PartitionId = "some_partition_id_123",
                 Retry = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(5), 6),
@@ -37,18 +37,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
         [Test]
         public void DefaultTimeoutIsValidated()
         {
-            Assert.That(() => new SenderOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
+            Assert.That(() => new EventSenderOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0)]
         public void DefaultTimeoutUsesDefaultValueIfNormalizesValueINotSpecified(int? noTimeoutValue)
         {
-            var options = new SenderOptions();
+            var options = new EventSenderOptions();
             var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
 
             options.Timeout = timeoutValue;

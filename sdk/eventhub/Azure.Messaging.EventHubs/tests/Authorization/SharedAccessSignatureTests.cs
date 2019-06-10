@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 
@@ -299,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -309,11 +310,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&")]
         public void ParseSignatureFailsWhenComponentsAreMissing(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.ArgumentException);
+            Assert.That(() => ParseSignature(signature), Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -325,11 +326,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn")]
         public void ParseSignatureFailsWhenValuesAreMissing(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.ArgumentException);
+            Assert.That(() => ParseSignature(signature), Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -339,11 +340,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=hello&skn=keykeykey")]
         public void ParseSignatureFailsWhenExpirationIsInvalid(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.ArgumentException);
+            Assert.That(() => ParseSignature(signature), Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -355,11 +356,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F  &sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D& se=1562258488&skn=keykeykey")]
         public void ParseToleratesExtraSpacing(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.Nothing);
+            Assert.That(() => ParseSignature(signature), Throws.Nothing);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -368,11 +369,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
         public void ParseToleratesTrailingDelimiters(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.Nothing);
+            Assert.That(() => ParseSignature(signature), Throws.Nothing);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -381,11 +382,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&fale=test&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
         public void ParseToleratesExtraTokens(string signature)
         {
-            Assert.That(() => SharedAccessSignature.ParseSignature(signature), Throws.Nothing);
+            Assert.That(() => ParseSignature(signature), Throws.Nothing);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -393,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ParseExtractsValues()
         {
             var signature = "SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey";
-            var parsed = SharedAccessSignature.ParseSignature(signature);
+            var parsed = ParseSignature(signature);
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsed.Resource, Is.Not.Null.Or.Empty, "The resource should have been parsed.");
@@ -465,7 +466,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SharedAccessSignature.ParseSignature" />
+        ///   Verifies functionality of the <see cref="ParseSignature" />
         ///   method.
         /// </summary>
         ///
@@ -479,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var validFor = TimeSpan.FromMinutes(30);
             var expiration = DateTime.UtcNow.Add(validFor);
             var signature = new SharedAccessSignature(TransportType.AmqpTcp, host, path, keyName, key, validFor);
-            var parsed = SharedAccessSignature.ParseSignature(signature.ToString());
+            var parsed = ParseSignature(signature.ToString());
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsed.Resource, Contains.Substring(host.ToLower()), "The resource should contain the host.");
@@ -510,6 +511,30 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             Assert.That(clone.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The key name should match.");
             Assert.That(clone.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The key should match.");
             Assert.That(clone.ExpirationUtc, Is.EqualTo(signature.ExpirationUtc), "The expiration should match.");
+        }
+
+        /// <summary>
+        ///  A test shim to allow direct access to the implementation of signature parsing
+        ///  within the <see cref="SharedAccessSignature" />.
+        /// </summary>
+        ///
+        /// <param name="sharedAccessSignature">The shared access signature to parse.</param>
+        ///
+        /// <returns>The set of composite properties parsed from the signature.</returns>
+        ///
+        private static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
+        {
+            try
+            {
+                return ((string KeyName, string Resource, DateTime ExpirationUtc))
+                    typeof(SharedAccessSignature)
+                        .GetMethod(nameof(ParseSignature), BindingFlags.Static | BindingFlags.NonPublic)
+                        .Invoke(null, new object[] { sharedAccessSignature });
+            }
+            catch (TargetInvocationException ex) when (ex.InnerException != null)
+            {
+                throw ex.InnerException;
+            }
         }
     }
 }

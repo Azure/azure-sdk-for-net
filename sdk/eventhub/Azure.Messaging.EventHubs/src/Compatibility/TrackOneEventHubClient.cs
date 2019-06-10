@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requeseted Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
-        /// <returns>The <see cref="TrackOne.EventHubClient" /> to use</returns>
+        /// <returns>The <see cref="TrackOne.EventHubClient" /> to use.</returns>
         ///
         internal static TrackOne.EventHubClient CreateClient(string host,
                                                              string eventHubPath,
@@ -205,6 +205,37 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 runtimeInformation.LastEnqueuedTimeUtc,
                 runtimeInformation.IsEmpty,
                 DateTime.UtcNow
+            );
+        }
+
+        /// <summary>
+        ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
+        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   partition or specific to a partition.
+        /// </summary>
+        ///
+        /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
+        ///
+        /// <returns>An event sender configured in the requested manner.</returns>
+        ///
+        public override EventSender CreateSender(EventSenderOptions senderOptions)
+        {
+            (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)senderOptions.Retry).GetProperties();
+
+            TrackOne.EventDataSender CreateSenderFactory()
+            {
+                var sender = TrackOneClient.CreateEventSender(senderOptions.PartitionId);
+                sender.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
+
+                return sender;
+            }
+
+            return new EventSender
+            (
+                new TrackOneEventSender(CreateSenderFactory),
+                TrackOneClient.EventHubName,
+                senderOptions
             );
         }
 

@@ -38,6 +38,19 @@ namespace Azure.Messaging.EventHubs.Core
                                                                               CancellationToken cancellationToken);
 
         /// <summary>
+        ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
+        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   partition or specific to a partition.
+        /// </summary>
+        ///
+        /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
+        ///
+        /// <returns>An event sender configured in the requested manner.</returns>
+        ///
+        public abstract EventSender CreateSender(EventSenderOptions senderOptions = default);
+
+        /// <summary>
         ///   Closes the connection to the transport client instance.
         /// </summary>
         ///

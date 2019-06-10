@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="ReceiverOptions" />
+    ///   The suite of tests for the <see cref="EventReceiverOptions" />
     ///   class.
     /// </summary>
     ///
@@ -12,14 +12,14 @@ namespace Azure.Messaging.EventHubs.Tests
     public class ReceiverOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="ReceiverOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventReceiverOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new ReceiverOptions
+            var options = new EventReceiverOptions
             {
                 ConsumerGroup = "custom$consumer",
                 BeginReceivingAt = EventPosition.FromOffset(65),
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="ReceiverOptions.PrefetchCount" /> is
+        ///  Verifies that setting the <see cref="EventReceiverOptions.PrefetchCount" /> is
         ///  validated.
         /// </summary>
         ///
@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="ReceiverOptions.Identifier" /> is
+        ///  Verifies that setting the <see cref="EventReceiverOptions.Identifier" /> is
         ///  validated.
         /// </summary>
         ///
@@ -69,18 +69,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ReceiverOptions.DefaultMaximumReceiveWaitTime" />
+        ///   Verifies functionality of the <see cref="EventReceiverOptions.DefaultMaximumReceiveWaitTime" />
         ///   property.
         /// </summary>
         ///
         [Test]
         public void DefaultMaximumReceiveWaitTimeIsValidated()
         {
-            Assert.That(() => new ReceiverOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
+            Assert.That(() => new EventReceiverOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="SenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0)]
         public void DefaultMaximumReceiveWaitTimeUsesNormalizesValueINotSpecified(int? noTimeoutValue)
         {
-            var options = new ReceiverOptions();
+            var options = new EventReceiverOptions();
             var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
 
             options.DefaultMaximumReceiveWaitTime = timeoutValue;
@@ -98,14 +98,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   A mock of the <see cref="ReceiverOptions" /> to allow the protected validation
+        ///   A mock of the <see cref="EventReceiverOptions" /> to allow the protected validation
         ///   constants to be referenced.
         /// </summary>
         ///
-        private class MockOptions : ReceiverOptions
+        private class MockOptions : EventReceiverOptions
         {
-            public int MinPrefixCount => ReceiverOptions.MinimumPrefetchCount;
-            public int MaxIdentifierLength => ReceiverOptions.MaximumIdentifierLength;
+            public int MinPrefixCount => EventReceiverOptions.MinimumPrefetchCount;
+            public int MaxIdentifierLength => EventReceiverOptions.MaximumIdentifierLength;
         }
     }
 }

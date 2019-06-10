@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   or the Event Hub.
         /// </summary>
         ///
-        public string SharedAccessKey { get; private set;}
+        public string SharedAccessKey { get; private set; }
 
         /// <summary>
         ///   The date and time that the shared access signature expires, in UTC.
@@ -144,6 +144,16 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
+        /// </summary>
+        ///
+        /// <param name="sharedAccessSignature">The shared access signature that will be parsed as the basis of this instance.</param>
+        ///
+        public SharedAccessSignature(string sharedAccessSignature) : this(sharedAccessSignature, null)
+        {
+        }
+
+        /// <summary>
         ///   nitializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
@@ -169,16 +179,6 @@ namespace Azure.Messaging.EventHubs.Authorization
             SharedAccessKey = sharedAccessKey;
             Value = value;
             ExpirationUtc = expirationUtc;
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
-        /// </summary>
-        ///
-        /// <param name="sharedAccessSignature">The shared access signature that will be parsed as the basis of this instance.</param>
-        ///
-        public SharedAccessSignature(string sharedAccessSignature) : this(sharedAccessSignature, null)
-        {
         }
 
         /// <summary>
@@ -241,7 +241,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         internal SharedAccessSignature Clone() =>
             new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, ExpirationUtc);
 
-
         /// <summary>
         ///   Parses a shared access signature into its component parts.
         /// </summary>
@@ -250,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The set of composite properties parsed from the signature.</returns>
         ///
-        internal static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
+        private static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
         {
             int tokenPositionModifier = (sharedAccessSignature[0] == TokenValuePairDelimiter) ? 0 : 1;
             int lastPosition = 0;

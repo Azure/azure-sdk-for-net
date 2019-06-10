@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
@@ -35,6 +36,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The maximum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MaximumBatchSizeLimit = 4 * 1024 * 1024;
 
+        /// <summary>The set of default batching options to use when no specific options are requested.</summary>
+        private static readonly EventBatchingOptions DefaultBatchOptions = new EventBatchingOptions();
+
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventSender" /> is bound to, indicating
         ///   that it will send events to only that partition.
@@ -48,16 +52,29 @@ namespace Azure.Messaging.EventHubs
         public string PartitionId { get; }
 
         /// <summary>
+        ///   The path of the specific Event Hub that the client is connected to, relative
+        ///   to the Event Hubs namespace that contains it.
+        /// </summary>
+        ///
+        public string EventHubPath { get; }
+
+        /// <summary>
         ///   The set of options used for creation of this sender.
         /// </summary>
         ///
-        protected SenderOptions Options { get; set; }
+        private EventSenderOptions Options { get; }
+
+        /// <summary>
+        ///   An abstracted Event Sender specific to the active protocol and transport intended to perform delegated operations.
+        /// </summary>
+        ///
+        private TransportEventSender InnerSender { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventSender"/> class.
         /// </summary>
         ///
-        /// <param name="transportType">The type of protocol and transport used for communicating with the Event Hubs service.</param>
+        /// <param name="transportSender">The type of protocol and transport used for communicating with the Event Hubs service.</param>
         /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
         /// <param name="senderOptions">The set of options to use for this receiver.</param>
         ///
@@ -67,17 +84,18 @@ namespace Azure.Messaging.EventHubs
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        internal EventSender(TransportType transportType,
+        internal EventSender(TransportEventSender transportSender,
                              string eventHubPath,
-                             SenderOptions senderOptions)
+                             EventSenderOptions senderOptions)
         {
+            Guard.ArgumentNotNull(nameof(transportSender), transportSender);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNull(nameof(senderOptions), senderOptions);
 
-            PartitionId = senderOptions?.PartitionId;
+            PartitionId = senderOptions.PartitionId;
+            EventHubPath = eventHubPath;
             Options = senderOptions;
-
-            //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpEventSender.
+            InnerSender = transportSender;
         }
 
         /// <summary>
@@ -118,7 +136,19 @@ namespace Azure.Messaging.EventHubs
         ///
         public virtual Task SendAsync(IEnumerable<EventData> events,
                                       EventBatchingOptions batchOptions,
-                                      CancellationToken cancellationToken = default) => throw new NotImplementedException();
+                                      CancellationToken cancellationToken = default)
+        {
+            Guard.ArgumentNotNull(nameof(events), events);
+
+            batchOptions = batchOptions ?? DefaultBatchOptions;
+
+            if ((!String.IsNullOrEmpty(PartitionId)) && (!String.IsNullOrEmpty(batchOptions.PartitionKey)))
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, PartitionId));
+            }
+
+            return InnerSender.SendAsync(events, batchOptions, cancellationToken);
+        }
 
         /// <summary>
         ///   Closes the sender.
@@ -128,7 +158,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerSender.CloseAsync(cancellationToken);
 
         /// <summary>
         ///   Closes the sender.
