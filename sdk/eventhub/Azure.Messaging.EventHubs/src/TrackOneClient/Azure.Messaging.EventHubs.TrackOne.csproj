@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="4.5.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" PrivateAssets="All" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" PrivateAssets="All" />
     <PackageReference Include="System.Net.Http" PrivateAssets="All" />
     <PackageReference Include="System.Reflection.TypeExtensions" PrivateAssets="All" />

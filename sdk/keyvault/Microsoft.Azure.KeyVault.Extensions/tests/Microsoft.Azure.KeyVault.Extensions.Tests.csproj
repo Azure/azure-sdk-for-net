@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="3.14.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true'">

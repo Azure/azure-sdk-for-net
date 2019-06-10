@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WindowsAzure.Storage" VersionOverride="8.1.4" />
+    <PackageReference Include="WindowsAzure.Storage" />
     <PackageReference Include="Microsoft.Azure.Batch" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

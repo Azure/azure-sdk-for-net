@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Batch" />
-    <PackageReference Include="WindowsAzure.Storage" VersionOverride="8.1.4" />
+    <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">

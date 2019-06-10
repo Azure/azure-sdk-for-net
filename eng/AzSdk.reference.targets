@@ -2,16 +2,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Net.Http" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="6.0.8" />
   </ItemGroup>
 </Project>

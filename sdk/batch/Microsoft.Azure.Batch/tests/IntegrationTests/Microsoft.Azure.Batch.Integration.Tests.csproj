@@ -35,8 +35,8 @@
   </PropertyGroup>-->
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Batch" />
-    <PackageReference Include="WindowsAzure.Storage" VersionOverride="8.1.4" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="3.14.0" />
+    <PackageReference Include="WindowsAzure.Storage" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -13,9 +13,9 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Portable.BouncyCastle" />
     <PackageReference Include="System.IO.Compression" />
-    <PackageReference Include="WindowsAzure.Storage" VersionOverride="8.1.4" />
+    <PackageReference Include="WindowsAzure.Storage" />
     <PackageReference Include="Microsoft.Azure.Management.Batch" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="3.14.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" />
   </ItemGroup>
   
   <ItemGroup>
