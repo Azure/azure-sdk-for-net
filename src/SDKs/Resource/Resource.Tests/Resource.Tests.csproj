@@ -31,6 +31,9 @@
     <None Update="ScenarioTests\simple-storage-account.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ScenarioTests\management_group_level_template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ScenarioTests\subscription_level_template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
