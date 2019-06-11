@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return SendRequest(HttpPipelineMethod.Get, () => new Secret(), cancellationToken, SecretsPath, name, version);
+            return SendRequest(HttpPipelineMethod.Get, () => new Secret(), cancellationToken, SecretsPath, name, "/", version);
         }
 
         public virtual IAsyncEnumerable<Response<SecretBase>> GetAllVersionsAsync(string name, CancellationToken cancellationToken = default)

@@ -141,7 +141,6 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task DeleteSecret()
         {
-            var syncC = SynchronizationContext.Current;
             string secretName = Recording.GenerateId();
 
             Secret secret = await Client.SetAsync(secretName, "value");

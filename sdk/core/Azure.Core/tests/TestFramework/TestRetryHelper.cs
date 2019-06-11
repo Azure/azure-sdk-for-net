@@ -9,11 +9,11 @@ namespace Azure.Core.Testing
 {
     public static class TestRetryHelper
     {
-        public static async Task<T> RetryAsync<T>(Func<Task<T>> operation, int maxIterations = 10, TimeSpan delay = default)
+        public static async Task<T> RetryAsync<T>(Func<Task<T>> operation, int maxIterations = 20, TimeSpan delay = default)
         {
             if (delay == default)
             {
-                delay = TimeSpan.FromSeconds(1);
+                delay = TimeSpan.FromSeconds(5);
             }
 
             List<Exception> exceptions = null;
