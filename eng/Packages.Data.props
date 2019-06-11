@@ -96,7 +96,7 @@
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
-    <PackageReference Update="WindowsAzure.Storage" Version="8.1.4" />
+    <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
   </ItemGroup>
