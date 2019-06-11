@@ -81,7 +81,6 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 // Create Action Rule
                 ActionRule actionRule = new ActionRule(
-                    actionRuleType: ActionRuleType.Suppression,
                     location: "global",
                     scope: new Scope(
                         type: ScopeType.ResourceGroup,
@@ -134,7 +133,6 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 // Create Action Rule
                 ActionRule actionRule = new ActionRule(
-                    actionRuleType: ActionRuleType.Suppression,
                     location: "global",
                     scope: new Scope(
                         type: ScopeType.ResourceGroup,

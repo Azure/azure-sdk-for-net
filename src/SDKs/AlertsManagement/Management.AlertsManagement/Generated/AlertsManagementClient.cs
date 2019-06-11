@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// API version.
+        /// client API version
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// Gets the ISmartGroupsOperations.
         /// </summary>
         public virtual ISmartGroupsOperations SmartGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IActionRulesOperations.
+        /// </summary>
+        public virtual IActionRulesOperations ActionRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AlertsManagementClient class.
@@ -335,8 +340,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             Operations = new Operations(this);
             Alerts = new AlertsOperations(this);
             SmartGroups = new SmartGroupsOperations(this);
+            ActionRules = new ActionRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-05-05";
+            ApiVersion = "2019-05-05-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -366,6 +372,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("actionRuleType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("actionRuleType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
