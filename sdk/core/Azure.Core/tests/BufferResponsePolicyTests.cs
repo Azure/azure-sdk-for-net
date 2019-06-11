@@ -68,7 +68,7 @@ namespace Azure.Core.Tests
             };
 
             var mockTransport = CreateMockTransport(mockResponse);
-            await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
+            await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.True(readTrackingStream.IsClosed);
         }
