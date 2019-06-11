@@ -26,11 +26,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Batch" Version="[10.0.0, 11.0.0)" />
-    <PackageReference Include="WindowsAzure.Storage" Version="[8.1.1, 10.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 </Project>
