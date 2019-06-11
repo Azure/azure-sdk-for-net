@@ -202,16 +202,64 @@ namespace AlertsManagement.Tests.Helpers
         }
         #endregion
 
-        #region Extraction Methods
+        #region Action Rule Tests
 
-        public static string ExtractIdFromLocalPath(string localPath)
+        public static void AreEqual(ActionRule exp, ActionRule act)
         {
-            return localPath.Split("/")[6];
+            if (exp != null)
+            {
+                if (exp.Description != null && act.Description != null)
+                {
+                    Assert.Equal(exp.Description, act.Description);
+                }
+
+                if (exp.Status != null && act.Status != null)
+                {
+                    Assert.Equal(exp.Status, act.Status);
+                }
+
+                AreEqual(exp.Scope, act.Scope);
+                AreEqual(exp.Conditions, act.Conditions);
+            }
         }
 
-        public static string ExtractStateFromQuery(string query)
+        public static void AreEqual(Scope exp, Scope act)
         {
-            return query.Split("&")[1].Split("=")[1];
+            if (exp != null)
+            {
+                Assert.Equal(exp.Type, act.Type);
+
+                foreach (var value in exp.Values)
+                {
+                    Assert.Contains(value, act.Values);
+                }
+            }
+        }
+
+        public static void AreEqual(Conditions exp, Conditions act)
+        {
+            if (exp != null)
+            {
+                AreEqual(exp.Severity, act.Severity);
+                AreEqual(exp.MonitorService, act.MonitorService);
+                AreEqual(exp.MonitorCondition, act.MonitorCondition);
+                AreEqual(exp.TargetResourceType, act.TargetResourceType);
+                AreEqual(exp.AlertRuleId, act.AlertRuleId);
+                AreEqual(exp.Description, act.Description);
+                AreEqual(exp.AlertContext, act.AlertContext);
+            }
+        }
+
+        public static void AreEqual(Condition exp, Condition act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+                foreach (var value in exp.Values)
+                {
+                    Assert.Contains(value, act.Values);
+                }
+            }
         }
         #endregion
     }
