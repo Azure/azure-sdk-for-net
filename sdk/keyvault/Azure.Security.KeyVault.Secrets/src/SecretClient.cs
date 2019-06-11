@@ -265,7 +265,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             using (Request request = CreateRequest(method, path))
             {
-                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                Response response = await SendRequestAsync(request, cancellationToken);
 
                 return CreateResponse(response, resultFactory());
             }
@@ -299,7 +299,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            var response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
             switch (response.Status)
             {
@@ -308,7 +308,7 @@ namespace Azure.Security.KeyVault.Secrets
                 case 204:
                     return response;
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                    throw await response.CreateRequestFailedExceptionAsync();
             }
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
