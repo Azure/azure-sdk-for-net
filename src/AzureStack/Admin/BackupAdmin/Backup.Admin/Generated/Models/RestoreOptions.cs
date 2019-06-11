@@ -29,13 +29,16 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <summary>
         /// Initializes a new instance of the RestoreOptions class.
         /// </summary>
+        /// <param name="roleName">The Azure Stack role name for restore, use
+        /// "-" for infrastructure role</param>
         /// <param name="decryptionCertBase64">The certificate file raw data in
         /// Base64 string. This should be the .pfx file with the private
         /// key.</param>
         /// <param name="decryptionCertPassword">The password for the
         /// decryption certificate.</param>
-        public RestoreOptions(string decryptionCertBase64 = default(string), string decryptionCertPassword = default(string))
+        public RestoreOptions(string roleName = default(string), string decryptionCertBase64 = default(string), string decryptionCertPassword = default(string))
         {
+            RoleName = roleName;
             DecryptionCertBase64 = decryptionCertBase64;
             DecryptionCertPassword = decryptionCertPassword;
             CustomInit();
@@ -45,6 +48,13 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Azure Stack role name for restore, use "-" for
+        /// infrastructure role
+        /// </summary>
+        [JsonProperty(PropertyName = "RoleName")]
+        public string RoleName { get; set; }
 
         /// <summary>
         /// Gets or sets the certificate file raw data in Base64 string. This
