@@ -69,7 +69,7 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          AZURE_TEST_MODE: "Live"
+          AZURE_TEST_MODE: "None"
           ${{ each envvar in parameters.envvars }}:
             ${{ envvar.key }}: ${{ envvar.value }}
 
