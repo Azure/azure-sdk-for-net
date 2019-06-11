@@ -2,16 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
     public static class HttpPipelineBuilder
     {
-        public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(ClientOptions options, bool bufferResponse = true, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();
 
             policies.AddRange(options.PerCallPolicies);
+
+            policies.Add(ClientRequestIdPolicy.Shared);
 
             policies.Add(options.TelemetryPolicy);
 
@@ -20,6 +23,11 @@ namespace Azure.Core.Pipeline
             policies.AddRange(options.PerRetryPolicies);
 
             policies.Add(options.LoggingPolicy);
+
+            if (bufferResponse)
+            {
+                policies.Add(BufferResponsePolicy.Shared);
+            }
 
             policies.RemoveAll(policy => policy == null);
 

@@ -12,19 +12,11 @@ namespace Azure.Identity
         private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
         private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
 
-        public RetryPolicy RetryPolicy { get; set; }
-
         public Uri AuthorityHost { get; set; }
 
         public IdentityClientOptions()
         {
             AuthorityHost = DefaultAuthorityHost;
-            RetryPolicy = new RetryPolicy()
-            {
-                Mode = RetryMode.Exponential,
-                Delay = TimeSpan.FromMilliseconds(800),
-                MaxRetries = 3
-            };
         }
     }
 }

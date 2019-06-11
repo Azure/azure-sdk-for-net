@@ -18,7 +18,7 @@ namespace Azure.Identity
 {
     internal class IdentityClient
     {
-        private static Lazy<IdentityClient> s_sharedClient = new Lazy<IdentityClient>(() => new IdentityClient()); 
+        private static Lazy<IdentityClient> s_sharedClient = new Lazy<IdentityClient>(() => new IdentityClient());
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
@@ -29,10 +29,7 @@ namespace Azure.Identity
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(_options,
-                    _options.RetryPolicy,
-                    ClientRequestIdPolicy.Shared,
-                    BufferResponsePolicy.Shared);
+            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
         }
 
         public static IdentityClient SharedClient { get { return s_sharedClient.Value; } }

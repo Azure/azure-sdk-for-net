@@ -52,11 +52,8 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Shared,
-                    new AuthenticationPolicy(credential, secret),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Shared);
+                    bufferResponse: true,
+                    new AuthenticationPolicy(credential, secret));
         }
 
         /// <summary>

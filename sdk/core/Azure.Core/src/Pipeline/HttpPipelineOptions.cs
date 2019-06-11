@@ -30,6 +30,8 @@ namespace Azure.Core.Pipeline
 
         public LoggingPolicy LoggingPolicy { get; set; }
 
+        public RetryPolicy RetryPolicy { get; set; }
+
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
         public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();

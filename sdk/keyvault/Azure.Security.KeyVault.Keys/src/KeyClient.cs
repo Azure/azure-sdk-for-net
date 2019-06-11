@@ -33,11 +33,8 @@ namespace Azure.Security.KeyVault.Keys
             options = options ?? new KeyClientOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Shared,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.default"),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Shared);
+                    bufferResponse: true,
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.default"));
         }
 
         public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
@@ -149,7 +146,7 @@ namespace Azure.Security.KeyVault.Keys
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
             Uri firstPageUri = CreateFirstPageUri($"{KeysPath}{name}/versions");
-            
+
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetPage(firstPageUri, nextLink, () => new KeyBase(), cancellationToken));
         }
 
