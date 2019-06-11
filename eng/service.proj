@@ -4,7 +4,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" />
+    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj" />
+    <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(ExcludeMgmtLib)"/>
   </ItemGroup>
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 

@@ -1,0 +1,87 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "datasetName": "exampleDataset",
+    "ifMatch": null,
+    "dataset": {
+      "properties": {
+        "type": "AzureBlob",
+        "typeProperties": {
+          "folderPath": {
+            "value": "@dataset().MyFolderPath",
+            "type": "Expression"
+          },
+          "fileName": {
+            "value": "@dataset().MyFileName",
+            "type": "Expression"
+          },
+          "format": {
+            "type": "TextFormat"
+          }
+        },
+        "description": "Example description",
+        "linkedServiceName": {
+          "referenceName": "exampleLinkedService",
+          "type": "LinkedServiceReference"
+        },
+        "parameters": {
+          "MyFolderPath": {
+            "type": "String"
+          },
+          "MyFileName": {
+            "type": "String"
+          }
+        }
+      }
+    },
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Sat, 16 Jun 2018 00:37:39 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "e2e7f6be-e7ee-4aae-943f-6ff799e034f2",
+        "x-ms-correlation-request-id": "e2e7f6be-e7ee-4aae-943f-6ff799e034f2"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/datasets/exampleDataset",
+        "name": "exampleDataset",
+        "type": "Microsoft.DataFactory/factories/datasets",
+        "properties": {
+          "type": "AzureBlob",
+          "typeProperties": {
+            "folderPath": {
+              "value": "@dataset().MyFolderPath",
+              "type": "Expression"
+            },
+            "fileName": {
+              "value": "@dataset().MyFileName",
+              "type": "Expression"
+            },
+            "format": {
+              "type": "TextFormat"
+            }
+          },
+          "description": "Example description",
+          "linkedServiceName": {
+            "referenceName": "exampleLinkedService",
+            "type": "LinkedServiceReference"
+          },
+          "parameters": {
+            "MyFolderPath": {
+              "type": "String"
+            },
+            "MyFileName": {
+              "type": "String"
+            }
+          }
+        },
+        "etag": "0a0068d4-0000-0000-0000-5b245bd30000"
+      }
+    }
+  }
+}
