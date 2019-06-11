@@ -7,6 +7,8 @@ namespace Azure.Core.Testing
     {
         Live,
         Record,
-        Playback
+        Playback,
+        // Backcompat with Track 1
+        None = Live
     }
 }
