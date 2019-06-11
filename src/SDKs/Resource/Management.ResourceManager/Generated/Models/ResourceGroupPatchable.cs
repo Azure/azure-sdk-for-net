@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the ResourceGroupPatchable class.
         /// </summary>
         /// <param name="name">The name of the resource group.</param>
+        /// <param name="properties">The resource group properties.</param>
         /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
@@ -56,6 +57,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the resource group properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ResourceGroupProperties Properties { get; set; }
