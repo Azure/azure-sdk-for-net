@@ -35,9 +35,24 @@ namespace Azure.Core.Pipeline
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
-        public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+        public void AddPolicy(HttpPipelinePolicyPosition position, HttpPipelinePolicy policy)
+        {
+            switch (position)
+            {
+                case HttpPipelinePolicyPosition.PerCall:
+                    PerCallPolicies.Add(policy);
+                    break;
+                case HttpPipelinePolicyPosition.PerRetry:
+                    PerRetryPolicies.Add(policy);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(position), position, null);
+            }
+        }
 
-        public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
+        internal IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+
+        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
 
         private (string ComponentName, string ComponentVersion) GetComponentNameAndVersion()
         {
