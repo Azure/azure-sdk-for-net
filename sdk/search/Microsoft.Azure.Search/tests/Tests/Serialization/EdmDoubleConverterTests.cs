@@ -2,23 +2,22 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.IO;
+using Microsoft.Azure.Search.Serialization.Internal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using Microsoft.Azure.Search.Serialization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Xunit;
-
-    public sealed class DoubleConverterTests
+    public sealed class EdmDoubleConverterTests
     {
         private readonly JsonSerializerSettings _serializerSettings =
-            new JsonSerializerSettings() { Converters = new List<JsonConverter>() { new DoubleConverter() } };
+            new JsonSerializerSettings() { Converters = new[] { CustomJsonConverters.CreateDoubleConverter() } };
 
         private readonly JsonSerializerSettings _deserializerSettings =
-            new JsonSerializerSettings() { Converters = new List<JsonConverter>() { new DoubleConverter() } };
+            new JsonSerializerSettings() { Converters = new[] { CustomJsonConverters.CreateDoubleConverter() } };
 
         private readonly Tuple<double, string>[] _writeTestCases =
             new[]

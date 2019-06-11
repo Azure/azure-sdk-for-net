@@ -2,10 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,9 +10,9 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Search.Serialization
 {
     /// <summary>
-    /// Serializes Microsoft.Spatial.GeographyPoint objects to Geo-JSON and vice-versa.
+    /// Defines extension methods for various JSON.NET types that make it easier to recognize and read Geo-JSON.
     /// </summary>
-    internal class GeographyPointConverter : JsonConverter
+    public static class GeoJsonExtensions
     {
         private const string Coordinates = "coordinates";
         private const string Crs = "crs";
@@ -30,10 +27,12 @@ namespace Microsoft.Azure.Search.Serialization
         private static readonly IEnumerable<string> TypeAndCoordinates = new[] { Type, Coordinates };
         private static readonly IEnumerable<string> TypeAndProperties = new[] { Type, Properties };
 
-        public override bool CanConvert(Type objectType) =>
-            typeof(GeographyPoint).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
-
-        public static bool IsGeoJson(JObject obj) =>
+        /// <summary>
+        /// Determines whether the given <c cref="JObject">JObject</c> is a valid Geo-JSON point.
+        /// </summary>
+        /// <param name="obj">The JSON object to test.</param>
+        /// <returns><c>true</c> if the JSON object is not null and is a valid Geo-JSON point, <c>false</c> otherwise.</returns>
+        public static bool IsGeoJsonPoint(this JObject obj) =>
             obj?.IsValid(
                 requiredProperties: TypeAndCoordinates,
                 isPropertyValid: property =>
@@ -54,7 +53,14 @@ namespace Microsoft.Azure.Search.Serialization
                     }
                 }) ?? false;
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        /// <summary>
+        /// Reads a Geo-JSON point into a <c cref="GeographyPoint">GeographyPoint</c> instance, or throws
+        /// <c cref="JsonSerializationException">JsonSerializationException</c> if the reader is not positioned on the
+        /// beginning of a valid Geo-JSON point.
+        /// </summary>
+        /// <param name="reader">The JSON reader from which to read a Geo-JSON point.</param>
+        /// <returns>A <c cref="GeographyPoint">GeographyPoint</c> instance.</returns>
+        public static GeographyPoint ReadGeoJsonPoint(this JsonReader reader)
         {
             // Check for null first.
             if (reader.TokenType == JsonToken.Null)
@@ -88,9 +94,13 @@ namespace Microsoft.Azure.Search.Serialization
             return result;
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        /// <summary>
+        /// Writes a <c cref="GeographyPoint">GeographyPoint</c> instance as Geo-JSON format.
+        /// </summary>
+        /// <param name="writer">The JSON writer to which to write the Geo-JSON point.</param>
+        /// <param name="point">The <c cref="GeographyPoint">GeographyPoint</c> instance to write.</param>
+        public static void WriteGeoJsonPoint(this JsonWriter writer, GeographyPoint point)
         {
-            var point = (GeographyPoint)value;
             writer.WriteStartObject();
             writer.WritePropertyName(Type);
             writer.WriteValue(Point);

@@ -2,17 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Globalization;
+using System.Reflection;
+using Newtonsoft.Json;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Globalization;
-    using System.Reflection;
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// Serializes doubles to and from the OData wire format.
+    /// Serializes doubles to and from the OData EDM wire format.
     /// </summary>
-    internal class DoubleConverter : JsonConverter
+    /// <remarks>
+    /// This JSON converter treats all but three <c cref="System.Double">System.Double</c> values as JSON numbers. The three exceptions
+    /// are <c cref="System.Double.NaN">NaN</c>, which converts to and from the JSON string "NaN",
+    /// <c cref="System.Double.PositiveInfinity">PositiveInfinity</c>, which converts to and from the JSON string "INF", and
+    /// <c cref="System.Double.NegativeInfinity">NegativeInfinity</c>, which converts to and from the JSON string "-INF".
+    /// </remarks>
+    internal class EdmDoubleConverter : JsonConverter
     {
         private const string ODataNegativeInfinity = "-INF";
         private const string ODataPositiveInfinity = "INF";

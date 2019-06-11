@@ -2,16 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Reflection;
+using Newtonsoft.Json;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Reflection;
-    using Newtonsoft.Json;
-
     /// <summary>
-    /// Converts System.DateTime objects to System.DateTimeOffset before serialization.
+    /// Converts between dates serialized in ISO 8601 format in JSON strings and <c cref="System.DateTime">System.DateTime</c> instances.
     /// </summary>
-    internal class DateTimeConverter : JsonConverter
+    /// <remarks>
+    /// This JSON converter ensures that <c cref="System.DateTime">System.DateTime</c> instances are serialized to have the UTC timezone
+    /// explicitly included in the JSON. It also ensures that any time zone information in the JSON is taken into account when
+    /// deserializing to a new <c cref="System.DateTime">System.DateTime</c> instance. For example, if the JSON value's time component
+    /// is noon and its time zone is UTC-8, the deserialized <c cref="System.DateTime">System.DateTime</c> instance's time will be 8 PM
+    /// and its <c cref="System.DateTime.Kind">Kind</c> will be <c cref="System.DateTimeKind.Utc">DateTimeKind.Utc</c>.
+    /// </remarks>
+    internal class Iso8601DateTimeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
