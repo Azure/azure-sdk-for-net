@@ -18,23 +18,23 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// A rule governing the accessibility from a specific ip address or ip
     /// range.
     /// </summary>
-    public partial class IpRule
+    public partial class IPRule
     {
         /// <summary>
-        /// Initializes a new instance of the IpRule class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        public IpRule()
+        public IPRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IpRule class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
         /// <param name="value">An IPv4 address range in CIDR notation, such as
         /// '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all
         /// addresses that start with 124.56.78).</param>
-        public IpRule(string value)
+        public IPRule(string value)
         {
             Value = value;
             CustomInit();

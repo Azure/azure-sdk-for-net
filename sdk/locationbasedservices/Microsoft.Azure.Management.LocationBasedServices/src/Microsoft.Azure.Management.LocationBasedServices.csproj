@@ -23,7 +23,10 @@
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
   <!-- Please do not move/edit code above this line -->
 </Project>

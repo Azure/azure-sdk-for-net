@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using System.Linq;
 
     /// <summary>
-    /// A set of rules governing the network accessibility.
+    /// A set of rules governing the network accessibility of a vault.
     /// </summary>
     public partial class NetworkRuleSet
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="ipRules">The list of IP address rules.</param>
         /// <param name="virtualNetworkRules">The list of virtual network
         /// rules.</param>
-        public NetworkRuleSet(string bypass = default(string), string defaultAction = default(string), IList<IpRule> ipRules = default(IList<IpRule>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>))
+        public NetworkRuleSet(string bypass = default(string), string defaultAction = default(string), IList<IPRule> ipRules = default(IList<IPRule>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>))
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Gets or sets the list of IP address rules.
         /// </summary>
         [JsonProperty(PropertyName = "ipRules")]
-        public IList<IpRule> IpRules { get; set; }
+        public IList<IPRule> IpRules { get; set; }
 
         /// <summary>
         /// Gets or sets the list of virtual network rules.

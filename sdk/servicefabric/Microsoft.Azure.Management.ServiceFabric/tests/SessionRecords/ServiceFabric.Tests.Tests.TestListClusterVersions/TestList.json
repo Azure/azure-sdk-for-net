@@ -1,47 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions?api-version=2018-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvZW52aXJvbm1lbnRzL1dpbmRvd3MvY2x1c3RlclZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions?api-version=2019-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9sb2NhdGlvbnMvc291dGhjZW50cmFsdXMvZW52aXJvbm1lbnRzL1dpbmRvd3MvY2x1c3RlclZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMTktMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4fb6d679-8d38-44f6-8714-3752650d8a44"
+          "2dcc0316-5630-4290-b487-f2eded42aa59"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.445.9494\",\r\n      \"name\": \"6.1.445.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.445.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.450.9494\",\r\n      \"name\": \"6.1.450.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.450.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.456.9494\",\r\n      \"name\": \"6.1.456.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.456.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.467.9494\",\r\n      \"name\": \"6.1.467.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.467.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.472.9494\",\r\n      \"name\": \"6.1.472.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.472.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.1.480.9494\",\r\n      \"name\": \"6.1.480.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.1.480.9494\",\r\n        \"supportExpiryUtc\": \"2018-07-15T00:00:00\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.2.274.9494\",\r\n      \"name\": \"6.2.274.9494\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.2.274.9494\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 15 May 2018 20:32:36 GMT"
+          "Wed, 05 Jun 2019 01:04:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,18 +39,28 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11999"
         ],
         "x-ms-request-id": [
-          "9bb62a4e-897b-4b72-94f0-1bdc919d410b"
+          "c1b42a8c-8ab0-4850-bbb1-e5abfe2cced7"
         ],
         "x-ms-correlation-request-id": [
-          "9bb62a4e-897b-4b72-94f0-1bdc919d410b"
+          "c1b42a8c-8ab0-4850-bbb1-e5abfe2cced7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180515T203237Z:9bb62a4e-897b-4b72-94f0-1bdc919d410b"
+          "CENTRALUS:20190605T010449Z:c1b42a8c-8ab0-4850-bbb1-e5abfe2cced7"
+        ],
+        "Content-Length": [
+          "3305"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.617.9590\",\r\n      \"name\": \"6.4.617.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.617.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.622.9590\",\r\n      \"name\": \"6.4.622.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.622.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.637.9590\",\r\n      \"name\": \"6.4.637.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.637.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.644.9590\",\r\n      \"name\": \"6.4.644.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.644.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.654.9590\",\r\n      \"name\": \"6.4.654.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.654.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.658.9590\",\r\n      \"name\": \"6.4.658.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.658.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/providers/Microsoft.ServiceFabric/locations/southcentralus/environments/Windows/clusterVersions/6.4.664.9590\",\r\n      \"name\": \"6.4.664.9590\",\r\n      \"type\": \"Microsoft.ServiceFabric/locations/environments/clusterVersions\",\r\n      \"properties\": {\r\n        \"codeVersion\": \"6.4.664.9590\",\r\n        \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n        \"environment\": \"Windows\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

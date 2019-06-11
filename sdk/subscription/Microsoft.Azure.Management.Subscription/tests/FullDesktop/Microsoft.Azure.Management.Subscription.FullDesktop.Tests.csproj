@@ -7,7 +7,10 @@
     <AssemblyName>FullDesktop.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.Management.Subscription.csproj" />
   </ItemGroup>

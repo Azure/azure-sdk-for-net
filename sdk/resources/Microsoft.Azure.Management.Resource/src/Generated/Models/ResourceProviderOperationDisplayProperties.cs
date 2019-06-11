@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="publisher">Operation description.</param>
         /// <param name="provider">Operation provider.</param>
         /// <param name="resource">Operation resource.</param>
-        /// <param name="operation">Operation.</param>
+        /// <param name="operation">Resource provider operation.</param>
         /// <param name="description">Operation description.</param>
         public ResourceProviderOperationDisplayProperties(string publisher = default(string), string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets operation.
+        /// Gets or sets resource provider operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
