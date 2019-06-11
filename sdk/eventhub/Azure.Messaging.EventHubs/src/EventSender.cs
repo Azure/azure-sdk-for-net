@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventSender"/> class.
         /// </summary>
         ///
-        /// <param name="transportSender">The type of protocol and transport used for communicating with the Event Hubs service.</param>
+        /// <param name="transportSender">An abstracted Event Sender specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub to which events will be sent.</param>
         /// <param name="senderOptions">The set of options to use for this receiver.</param>
         ///
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="events">The set of event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="events">The set of event data to send.</param>
         /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -154,7 +154,7 @@ namespace Azure.Messaging.EventHubs
         ///   Closes the sender.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs
         ///   Closes the sender.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 

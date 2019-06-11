@@ -10,7 +10,7 @@ namespace TrackOne
 
     /// <summary>
     /// Represents options can be set during the creation of a event hub receiver.
-    /// </summary> 
+    /// </summary>
     /// <summary>
     /// Defines a position of an <see cref="EventData" /> in the event hub partition.
     /// The position can be one of <see cref="EventData.SystemPropertiesCollection.Offset"/>, <see cref="EventData.SystemPropertiesCollection.SequenceNumber"/>
@@ -21,7 +21,7 @@ namespace TrackOne
         const string StartOfStream = "-1";
         const string EndOfStream = "@latest";
 
-        EventPosition() { }
+        internal EventPosition() { }
 
         /// <summary>
         /// Returns the position for the start of a stream. Provide this position in receiver creation
@@ -50,7 +50,7 @@ namespace TrackOne
         public static EventPosition FromOffset(string offset, bool inclusive = false)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(offset), offset);
-          
+
             return new EventPosition { Offset = offset, IsInclusive = inclusive };
         }
 

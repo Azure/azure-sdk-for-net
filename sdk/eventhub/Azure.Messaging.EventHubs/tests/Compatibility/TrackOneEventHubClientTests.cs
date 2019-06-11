@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CreateClienCreatesTheProperClientType()
+        public async Task CreateClientCreatesTheProperClientType()
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
@@ -325,7 +325,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.GetPropertiesAsync" />
         ///   method.
         /// </summary>
         ///
@@ -381,6 +381,77 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateSender" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateSenderDelegatesToTheClient()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubPath = "some-path";
+            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+
+            try
+            {
+                var senderOptions = new EventSenderOptions { PartitionId = "45345" };
+
+                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // receiver from within the mock client, that operation will fail with a null reference exception.
+
+                Assert.That(async () => await client.CreateSender(senderOptions)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
+                Assert.That(mock.CreateSenderInvokedWith, Is.EqualTo(senderOptions.PartitionId));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateReceiver" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateReceiverDelegatesToTheClient()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubPath = "some-path";
+            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+
+            try
+            {
+                var partitionId = "32234";
+                var receiverOptions = new EventReceiverOptions { ConsumerGroup = "Test", BeginReceivingAt = EventPosition.FromOffset(34) };
+
+                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // receiver from within the mock client, that operation will fail with a null reference exception.
+
+                Assert.That(async () => await client.CreateReceiver(partitionId, receiverOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
+
+                (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReiverInvokedWith;
+
+                Assert.That(calledConsumerGroup, Is.EqualTo(receiverOptions.ConsumerGroup), "The consumer group should match.");
+                Assert.That(calledPartition, Is.EqualTo(partitionId), "The partition should match.");
+                Assert.That(calledPosition.Offset, Is.EqualTo(receiverOptions.BeginReceivingAt.Offset), "The event position offset should match.");
+                Assert.That(calledOptions.Identifier, Is.EqualTo(receiverOptions.Identifier), "The options should match.");
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
         ///   Allows for observation of operations performed by the client for testing purposes.
         /// </summary>
         ///
@@ -417,7 +488,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    receiverOptions
                 );
 
-                return Mock.Of<PartitionReceiver>();
+                return default(PartitionReceiver);
             }
 
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId)
@@ -435,7 +506,7 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override EventDataSender OnCreateEventSender(string partitionId)
             {
                 CreateSenderInvokedWith = partitionId;
-                return Mock.Of<EventDataSender>();
+                return default(EventDataSender);
             }
         }
     }

@@ -57,19 +57,25 @@ namespace Azure.Messaging.EventHubs
         ///   The position of the event in the partition where the receiver should begin reading.
         /// </summary>
         ///
-        protected EventPosition StartingPosition { get; set; }
+        public EventPosition StartingPosition { get; protected set; }
 
         /// <summary>
         ///   The set of event receiver options used for creation of this receiver.
         /// </summary>
         ///
-        protected EventReceiverOptions Options { get; set; }
+        private EventReceiverOptions Options { get; }
+
+        /// <summary>
+        ///   An abstracted Event Receiver specific to the active protocol and transport intended to perform delegated operations.
+        /// </summary>
+        ///
+        private TransportEventReceiver InnerReceiver { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
         /// </summary>
         ///
-        /// <param name="connectionType">The type of connection used for communicating with the Event Hubs service.</param>
+        /// <param name="transportReceiver">An abstracted Event Receiver specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="receiverOptions">The set of options to use for this receiver.</param>
@@ -84,21 +90,22 @@ namespace Azure.Messaging.EventHubs
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        internal EventReceiver(TransportType connectionType,
+        internal EventReceiver(TransportEventReceiver transportReceiver,
                                string eventHubPath,
                                string partitionId,
                                EventReceiverOptions receiverOptions)
         {
+            Guard.ArgumentNotNull(nameof(transportReceiver), transportReceiver);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(receiverOptions), receiverOptions);
 
-            //TODO: Connection Type drives the contained receiver used for service operations. For example, an AmqpEventReceiver.
-
             PartitionId = partitionId;
             StartingPosition = receiverOptions.BeginReceivingAt;
             ExclusiveReceiverPriority = receiverOptions.ExclusiveReceiverPriority;
-            Options = receiverOptions.Clone();
+            ConsumerGroup = receiverOptions.ConsumerGroup;
+            Options = receiverOptions;
+            InnerReceiver = transportReceiver;
         }
 
         /// <summary>
@@ -115,29 +122,37 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the receiver was created will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this receiver is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public virtual Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                 TimeSpan? maximumWaitTime = null,
-                                                                 CancellationToken cancellationToken = default) => throw new NotImplementedException();
+                                                                 TimeSpan? maximumWaitTime = default,
+                                                                 CancellationToken cancellationToken = default)
+        {
+            maximumWaitTime = maximumWaitTime ?? Options.DefaultMaximumReceiveWaitTime;
+
+            Guard.ArgumentInRange(nameof(maximumMessageCount), maximumMessageCount, 1, Int32.MaxValue);
+            Guard.ArgumentNotNegative(nameof(maximumWaitTime), maximumWaitTime.Value);
+
+            return InnerReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
+        }
 
         /// <summary>
         ///   Closes the receiver.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerReceiver.CloseAsync(cancellationToken);
 
         /// <summary>
         ///   Closes the receiver.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 
