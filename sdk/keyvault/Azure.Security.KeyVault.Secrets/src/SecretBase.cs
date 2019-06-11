@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         public SecretBase(string name)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
             _identifier.Name = name;
         }
