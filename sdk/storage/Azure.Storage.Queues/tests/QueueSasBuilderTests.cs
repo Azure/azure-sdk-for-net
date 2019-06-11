@@ -5,18 +5,18 @@
 using System;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestClass]
+    [TestFixture]
     public class QueueSasBuilderTests
     {
         private const string Permissions = "raup";
         private static readonly string QueueName = TestHelper.GetNewQueueName();
 
-        [TestMethod]
+        [Test]
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange
@@ -40,7 +40,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
@@ -64,15 +64,14 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "sharedKeyCredential")]
+        [Test]
         public void QueueSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
             var queueSasBuilder = this.BuildQueueSasBuilder(includeVersion: true);
 
             // Act
-            queueSasBuilder.ToSasQueryParameters(null);
+            Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
         private QueueSasBuilder BuildQueueSasBuilder(bool includeVersion)

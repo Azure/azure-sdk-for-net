@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ServiceClientTests
     {
-        [TestMethod]
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -37,8 +37,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
@@ -54,8 +54,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync_Marker()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -83,8 +83,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -103,8 +103,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync_Prefix()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -126,8 +126,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
         
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync_Metadata()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -149,8 +149,8 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange
@@ -162,8 +162,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccountInfoAsync()
         {
             // Arrange
@@ -176,8 +176,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
@@ -191,8 +191,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -205,8 +205,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(String.IsNullOrWhiteSpace(response.Value.DefaultServiceVersion));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -220,9 +220,9 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [TestMethod]
-        [DoNotParallelize]
-        [TestCategory("Live")]
+        [Test]
+        [NonParallelizable]
+        [Category("Live")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -257,8 +257,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -275,8 +275,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetStatisticsAsync()
         {
             // Arrange
@@ -292,8 +292,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetUserDelegationKey()
         {
             // Arrange
@@ -306,8 +306,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
@@ -319,8 +319,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange

@@ -4,19 +4,19 @@
 
 using System;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
+    [TestFixture]
     public class FileSasBuilderTests
     {
         private static readonly string ShareName = TestHelper.GetNewShareName();
         private static readonly string FilePath = TestHelper.GetNewDirectoryName();
         private const string Permissions = "rcwd";
 
-        [TestMethod]
+        [Test]
         public void FileSasBuilder_ToSasQueryParameters_FilePathTest()
         {
             // Arrange
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void FileSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
@@ -64,15 +64,14 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "sharedKeyCredential")]
+        [Test]
         public void FileSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
             var fileSasBuilder = this.BuildFileSasBuilder(includeVersion: true, includeFilePath: true);
 
             // Act
-            fileSasBuilder.ToSasQueryParameters(null);
+            Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
         private FileSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath)

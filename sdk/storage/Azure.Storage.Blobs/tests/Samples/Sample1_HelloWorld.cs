@@ -11,7 +11,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -19,11 +19,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Azure.Storage.Samples
 {
-    [TestClass]
+    [TestFixture]
     public partial class BlobSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ContainerSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -46,8 +46,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task BlockBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -86,8 +86,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task PageBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -131,8 +131,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task AppendBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.

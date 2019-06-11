@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ServiceClientTests
     {
-        [TestMethod]
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -37,8 +37,8 @@ namespace Azure.Storage.Files.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -51,8 +51,8 @@ namespace Azure.Storage.Files.Test
             Assert.IsNotNull(properties);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -69,9 +69,9 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [DoNotParallelize]
-        [TestCategory("Live")]
+        [Test]
+        [NonParallelizable]
+        [Category("Live")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -98,8 +98,8 @@ namespace Azure.Storage.Files.Test
             Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -118,8 +118,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListSharesSegmentAsync()
         {
             // Arrange
@@ -149,8 +149,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange

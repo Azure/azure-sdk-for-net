@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -17,11 +17,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Azure.Storage.Samples
 {
 
-    [TestClass]
+    [TestFixture]
     public partial class FileSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ShareSample()
         {
             // Instantiate a new FileServiceClient using a connection string.
@@ -44,8 +44,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DirectorySample()
         {
             // Instantiate a new FileServiceClient using a connection string.
@@ -86,8 +86,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task FileSample()
         {
             // Instantiate a new FileServiceClient using a connection string.

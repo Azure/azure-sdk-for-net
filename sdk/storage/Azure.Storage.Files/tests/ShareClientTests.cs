@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ShareClientTests
     {
-        [TestMethod]
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
+        [Test]
         public void WithSnapshot()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -60,8 +60,8 @@ namespace Azure.Storage.Files.Test
         }
 
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync()
         {
             // Arrange
@@ -83,8 +83,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Metadata()
         {
             // Arrange
@@ -104,8 +104,8 @@ namespace Azure.Storage.Files.Test
             await share.DeleteAsync();
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -124,8 +124,8 @@ namespace Azure.Storage.Files.Test
             await share.DeleteAsync();
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithAccountSas()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -144,8 +144,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithFileServiceSas()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -174,8 +174,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -188,8 +188,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -203,8 +203,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -221,8 +221,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
@@ -237,8 +237,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccessPolicyAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -261,8 +261,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -276,8 +276,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetAccessPolicyAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -293,8 +293,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -309,8 +309,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetStatisticsAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -323,8 +323,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetStatisticsAsync_Error()
         {
             // Arrange
@@ -339,8 +339,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateSnapshotAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -353,8 +353,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateSnapshotAsync_Error()
         {
             // Arrange
@@ -368,8 +368,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetQuotaAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -383,8 +383,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetQuotaAsync_Error()
         {
             // Arrange
@@ -398,8 +398,8 @@ namespace Azure.Storage.Files.Test
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -415,8 +415,8 @@ namespace Azure.Storage.Files.Test
             Assert.IsNotNull(response.Headers.RequestId);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task Delete_Error()
         {
             // Arrange

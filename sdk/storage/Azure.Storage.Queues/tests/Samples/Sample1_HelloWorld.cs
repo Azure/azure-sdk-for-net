@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -16,11 +16,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Azure.Storage.Samples
 {
-    [TestClass]
+    [TestFixture]
     public partial class QueueSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task QueueSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.
@@ -43,8 +43,8 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task MessageSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.

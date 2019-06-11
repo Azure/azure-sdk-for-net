@@ -7,12 +7,12 @@ using System.Security.Cryptography;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestClass]
+    [TestFixture]
     public class BlobSasBuilderTests
     {
         private const string Permissions = "rwd";
@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
             Value = TestConstants.Sas.KeyValue
         };
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_ContainerTest()
         {
             // Arrange
@@ -55,7 +55,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_BlobTest()
         {
             // Arrange
@@ -109,7 +109,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
@@ -139,7 +139,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_SnapshotTest()
         {
             // Arrange
@@ -163,7 +163,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
+        [Test]
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
             // Arrange
@@ -193,15 +193,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "sharedKeyCredential")]
+        [Test]
         public void ToSasQueryParameters_NullSharedKeyCredentialTest()
         {
             // Arrange
             var blobSasBuilder = this.BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true);
 
             // Act
-            blobSasBuilder.ToSasQueryParameters(null);
+            Assert.Throws<ArgumentNullException>(() => blobSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
         private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot)

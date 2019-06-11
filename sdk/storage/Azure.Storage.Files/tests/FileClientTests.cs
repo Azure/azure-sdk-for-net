@@ -11,15 +11,15 @@ using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
+    [TestFixture]
     public class FileClientTests
     {
-        [TestMethod]
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -43,8 +43,8 @@ namespace Azure.Storage.Files.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -60,8 +60,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Metadata()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -81,8 +81,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Headers()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -116,8 +116,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -133,8 +133,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -151,8 +151,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -168,8 +168,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -182,8 +182,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_ShareSAS()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -205,8 +205,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_FileSAS()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -228,8 +228,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -248,8 +248,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetHttpHeadersAsync()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -279,8 +279,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -305,8 +305,8 @@ namespace Azure.Storage.Files.Test
         }
 
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DeleteAsync()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -319,8 +319,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DeleteAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -335,8 +335,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task StartCopyAsync()
         {
             using (TestHelper.GetNewFile(out var source))
@@ -361,8 +361,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task StartCopyAsync_Metata()
         {
             using (TestHelper.GetNewFile(out var source))
@@ -395,8 +395,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task StartCopyAsync_Error()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -408,8 +408,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task AbortCopyAsync()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -446,8 +446,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task AbortCopyAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -463,7 +463,7 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void WithSnapshot()
         {
             var shareName = TestHelper.GetNewShareName();
@@ -495,8 +495,8 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("", builder.Snapshot);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DownloadAsync()
         {
             // Arrange
@@ -522,8 +522,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DownloadAsync_WithUnreliableConnection()
         {
             var fileSize = 2 * Constants.MB;
@@ -567,8 +567,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetRangeListAsync()
         {
             using (TestHelper.GetNewFile(out var file))
@@ -579,8 +579,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetRangeListAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -595,8 +595,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task UploadRangeAsync()
         {
             var data = TestHelper.GetRandomBuffer(Constants.KB);
@@ -613,8 +613,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task UploadRangeAsync_Error()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -636,8 +636,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task UploadRangeAsync_WithUnreliableConnection()
         {
             var fileSize = 2 * Constants.MB;
@@ -696,8 +696,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListHandles()
         {
             // Arrange
@@ -712,8 +712,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListHandles_Min()
         {
             // Arrange
@@ -728,8 +728,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ListHandles_Error()
         {
             // Arrange
@@ -745,8 +745,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
@@ -760,8 +760,8 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ForceCloseHandles_Error()
         {
             // Arrange

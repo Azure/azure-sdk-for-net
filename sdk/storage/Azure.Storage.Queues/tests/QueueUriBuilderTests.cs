@@ -4,14 +4,14 @@
 
 using System;
 using Azure.Storage.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestClass]
+    [TestFixture]
     public class QueueUriBuilderTests
     {
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_AccountTest()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_QueueTest()
         {
             // Arrange
@@ -61,7 +61,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_MessagesTest()
         {
             // Arrange
@@ -86,7 +86,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_MessageIdTest()
         {
             // Arrange
@@ -111,7 +111,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_PortTest()
         {
             // Arrange
@@ -136,7 +136,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
@@ -173,7 +173,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_AccountTest()
         {
             // Arrange
@@ -198,7 +198,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_QueueTest()
         {
             // Arrange
@@ -223,7 +223,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_MessagesTest()
         {
             // Arrange
@@ -248,7 +248,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_MessageIdTest()
         {
             // Arrange
@@ -273,7 +273,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
@@ -298,7 +298,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_AccountOnlyTest()
         {
             // Arrange
@@ -323,7 +323,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void QueueUriBuilder_IPStyleUrl_SasTest()
         {
             // Arrange

@@ -8,14 +8,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestClass]
+    [TestFixture]
     public class QueueClientTests
     {
-        [TestMethod]
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -37,8 +37,8 @@ namespace Azure.Storage.Queues.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -60,8 +60,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
@@ -83,8 +83,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
@@ -106,8 +106,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_WithQueueServiceSas()
         {
             // Arrange
@@ -138,8 +138,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -155,8 +155,8 @@ namespace Azure.Storage.Queues.Test
         }
 
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -170,8 +170,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -185,8 +185,8 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync_OnCreate()
         {
             // Arrange
@@ -200,8 +200,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync_Metadata()
         {
             // Arrange
@@ -219,8 +219,8 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
@@ -235,8 +235,8 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccessPolicyAsync()
         {
             // Arrange
@@ -260,8 +260,8 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -275,8 +275,8 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetAccessPolicyAsync()
         {
             using (TestHelper.GetNewQueue(out var queue))
@@ -288,8 +288,8 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -304,8 +304,8 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -322,8 +322,8 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DeleteAsync_Error()
         {
             // Arrange

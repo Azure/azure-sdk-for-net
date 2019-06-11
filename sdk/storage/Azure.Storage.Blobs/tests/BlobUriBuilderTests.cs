@@ -6,15 +6,15 @@ using System;
 using System.Net;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestClass]
+    [TestFixture]
     public class BlobUriBuilderTests
     {
         //TODO address the flakiness of this test.
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RoundTrip()
         {
             var service = TestHelper.GetServiceClient_AccountSas();
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_AccountTest()
         {
             // Arrange
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_ContainerTest()
         {
             // Arrange
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_BlobTest()
         {
             // Arrange
@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_PortTest()
         {
             // Arrange
@@ -124,7 +124,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_SnapshotTest()
         {
             // Arrange
@@ -148,7 +148,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_AccountTest()
         {
             // Arrange
@@ -209,7 +209,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_ContainerTest()
         {
             // Arrange
@@ -234,7 +234,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_BlobTest()
         {
             // Arrange
@@ -259,7 +259,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
@@ -284,7 +284,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_SnapshotTest()
         {
             // Arrange
@@ -309,7 +309,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void BlobUriBuilder_IPStyleUrl_SasTest()
         {
             // Arrange

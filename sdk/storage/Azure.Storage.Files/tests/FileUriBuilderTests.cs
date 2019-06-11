@@ -6,15 +6,15 @@ using System;
 using System.Net;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
+    [TestFixture]
     public class FileUriBuilderTests
     {
         //TODO address the flakiness of this test.
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_RoundTrip()
         {
             var serviceUri = TestHelper.GetServiceClient_AccountSas();
@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_AccountTest()
         {
             // Arrange
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
@@ -74,7 +74,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_PathTest()
         {
             // Arrange
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [TestMethod]
+        [Test]
         public void FileUriBuilder_SasTest()
         {
             // Arrange
