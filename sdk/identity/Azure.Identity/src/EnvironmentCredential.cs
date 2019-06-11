@@ -29,14 +29,14 @@ namespace Azure.Identity
             }
         }
 
-        public override string GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return _credential?.GetToken(scopes, cancellationToken);
+            return (_credential != null) ? _credential.GetToken(scopes, cancellationToken) : default;
         }
 
-        public async override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public async override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken) : null;
+            return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken) : default;
         }
     }
 }

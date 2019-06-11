@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
-            Assert.That(credential.GetToken(null, default), Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(credential.GetToken(null, default).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature(String.Empty, "keyName", "key", value, DateTime.UtcNow.AddHours(4));
             var credential = new SharedAccessSignatureCredential(signature);
 
-            Assert.That(credential.GetToken(new[] { "test", "this" }, CancellationToken.None), Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(credential.GetToken(new[] { "test", "this" }, CancellationToken.None).Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellation = new CancellationTokenSource();
             var token = await credential.GetTokenAsync(null, cancellation.Token);
 
-            Assert.That(token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(token.Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellation = new CancellationTokenSource();
             var token = await credential.GetTokenAsync(new string[0], cancellation.Token);
 
-            Assert.That(token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
+            Assert.That(token.Token, Is.SameAs(signature.Value), "The credential should return the signature as the token.");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Test
             return InstrumentClient
                 (new SecretClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(AzureCredential.Default),
+                    recording.GetCredential(new SystemCredential()),
                     recording.InstrumentClientOptions(new SecretClientOptions())));
         }
 

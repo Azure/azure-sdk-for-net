@@ -16,12 +16,9 @@ namespace Azure.Identity
 
         public Uri AuthorityHost { get; set; }
 
-        public TimeSpan RefreshBuffer { get; set; }
-
         public IdentityClientOptions()
         {
             AuthorityHost = DefaultAuthorityHost;
-            RefreshBuffer = DefaultRefreshBuffer;
             RetryPolicy = new RetryPolicy()
             {
                 Mode = RetryMode.Exponential,
