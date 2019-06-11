@@ -9,7 +9,7 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
+      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
