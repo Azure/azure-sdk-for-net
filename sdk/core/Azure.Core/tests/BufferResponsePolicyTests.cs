@@ -58,6 +58,21 @@ namespace Azure.Core.Tests
             Assert.Null(response.ContentStream);
         }
 
+        [Test]
+        public async Task ClosesStreamAfterCopying()
+        {
+            ReadTrackingStream readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = readTrackingStream
+            };
+
+            var mockTransport = CreateMockTransport(mockResponse);
+            await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
+
+            Assert.True(readTrackingStream.IsClosed);
+        }
+
         private class ReadTrackingStream : Stream
         {
             public const int ContentByteValue = 233;
@@ -119,6 +134,14 @@ namespace Azure.Core.Tests
             {
                 throw new System.NotImplementedException();
             }
+
+            public override void Close()
+            {
+                IsClosed = true;
+                base.Close();
+            }
+
+            public bool IsClosed { get; set; }
 
             public override bool CanRead { get; } = true;
             public override bool CanSeek { get; }

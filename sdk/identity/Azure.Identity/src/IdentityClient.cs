@@ -136,7 +136,7 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = HttpPipelineMethod.Post;
 
             request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
 
