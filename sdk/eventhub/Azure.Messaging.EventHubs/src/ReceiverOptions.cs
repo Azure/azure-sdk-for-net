@@ -9,7 +9,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="PartitionReceiver" />
+    ///   The baseline set of options that can be specified when creating a <see cref="EventReceiver" />
     ///   to configure its behavior.
     /// </summary>
     ///
@@ -19,10 +19,10 @@ namespace Azure.Messaging.EventHubs
         public const string DefaultConsumerGroup = "$Default";
 
         /// <summary>The minimum value allowed for the prefetch count of the receiver.</summary>
-        protected const int MinimumPrefetchCount = 10;
+        internal const int MinimumPrefetchCount = 10;
 
         /// <summary>The maximum length, in characters, for the identifier assigned to a receiver.</summary>
-        protected const int MaximumIdentifierLength = 64;
+        internal const int MaximumIdentifierLength = 64;
 
         /// <summary>The amount of time to wait for messages when receiving.</summary>
         private TimeSpan? _maximumReceiveWaitTime = TimeSpan.FromMinutes(1);
@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, the operation timeout requested for the associated <see cref="EventHubClient" /> will be used.</value>
         ///
-        public TimeSpan? DefaultMaximumReceiveWaitTime
+        internal TimeSpan? DefaultMaximumReceiveWaitTime
         {
             get => _maximumReceiveWaitTime;
 
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs
         internal TimeSpan? MaximumReceiveWaitTimeOrDefault => (_maximumReceiveWaitTime == TimeSpan.Zero) ? null : _maximumReceiveWaitTime;
 
         /// <summary>
-        ///     An optional text-based identifierlabel to assign to an event receiver.
+        ///     An optional text-based identifier label to assign to an event receiver.
         /// </summary>
         ///
         /// <value>The identifier is used for informational purposes only.  If not specified, the reaciever will have no assigned identifier label.</value>
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="identifier">The identifier to validae.</param>
         ///
-        protected virtual void ValidateIdentifier(string identifier)
+        private void ValidateIdentifier(string identifier)
         {
             if ((!String.IsNullOrEmpty(identifier)) && (identifier.Length > MaximumIdentifierLength))
             {
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="maximumWaitTime">The time period to validae.</param>
         ///
-        protected virtual void ValidateMaximumReceiveWaitTime(TimeSpan? maximumWaitTime)
+        private void ValidateMaximumReceiveWaitTime(TimeSpan? maximumWaitTime)
         {
             if (maximumWaitTime < TimeSpan.Zero)
             {

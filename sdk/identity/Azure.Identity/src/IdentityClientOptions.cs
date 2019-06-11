@@ -7,7 +7,7 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Identity
 {
-    public class IdentityClientOptions : HttpClientOptions
+    public class IdentityClientOptions : ClientOptions
     {
         private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
         private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
@@ -16,14 +16,12 @@ namespace Azure.Identity
 
         public Uri AuthorityHost { get; set; }
 
-        public TimeSpan RefreshBuffer { get; set; }
-
         public IdentityClientOptions()
         {
             AuthorityHost = DefaultAuthorityHost;
-            RefreshBuffer = DefaultRefreshBuffer;
-            RetryPolicy = new ExponentialRetryPolicy()
+            RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Exponential,
                 Delay = TimeSpan.FromMilliseconds(800),
                 MaxRetries = 3
             };

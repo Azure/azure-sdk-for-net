@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="ConnectionTypeExtensions" />
+    ///   The suite of tests for the <see cref="TransportTypeExtensions" />
     ///   class.
     /// </summary>
     ///
@@ -16,14 +16,14 @@ namespace Azure.Messaging.EventHubs.Tests
     public class ConnectionTypeExtensionTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="ConnectionTypeExtensions.GetUriScheme" />
+        ///   Verifies functionality of the <see cref="TransportTypeExtensions.GetUriScheme" />
         ///   method;
         /// </summary>
         ///
         [Test]
-        [TestCase(ConnectionType.AmqpTcp)]
-        [TestCase(ConnectionType.AmqpWebSockets)]
-        public void GetUriSchemeUnderstandsAmqpConnectionTypes(ConnectionType connectionType)
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public void GetUriSchemeUnderstandsAmqpConnectionTypes(TransportType connectionType)
         {
             var scheme = connectionType.GetUriScheme();
 
@@ -32,14 +32,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="ConnectionTypeExtensions.GetUriScheme" />
+        ///   Verifies functionality of the <see cref="TransportTypeExtensions.GetUriScheme" />
         ///   method;
         /// </summary>
         ///
         [Test]
         public void GetUriSchemeUDisallowsUnknownConnectionTypes()
         {
-            var invalidConnectionType = (ConnectionType)Int32.MinValue;
+            var invalidConnectionType = (TransportType)Int32.MinValue;
             Assert.That(() => invalidConnectionType.GetUriScheme(), Throws.ArgumentException);
         }
     }

@@ -446,5 +446,44 @@ namespace ResourceGroups.Tests
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
             }
         }
+
+        [Fact]
+        public void ManagementGroupLevelDeployment()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupId = "tiano-mgtest01";
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'tianosatestgl'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US"
+                };
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtManagementGroupScope(groupId, deploymentName, parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtManagementGroupScope(groupId, deploymentName, parameters);
+
+                var deployment = client.Deployments.GetAtManagementGroupScope(groupId, deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+            }
+        }
     }
 }

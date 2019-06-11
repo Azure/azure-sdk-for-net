@@ -10,6 +10,10 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />

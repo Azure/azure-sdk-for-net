@@ -51,13 +51,12 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
+            _pipeline = HttpPipelineBuilder.Build(options,
                     options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
+                    ClientRequestIdPolicy.Shared,
                     new AuthenticationPolicy(credential, secret),
                     options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+                    BufferResponsePolicy.Shared);
         }
 
         /// <summary>

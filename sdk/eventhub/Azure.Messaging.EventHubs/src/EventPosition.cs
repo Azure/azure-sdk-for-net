@@ -12,13 +12,13 @@ namespace Azure.Messaging.EventHubs
     ///   an <see cref="EventSender" />.
     /// </summary>
     ///
-    public class EventPosition
+    public sealed class EventPosition
     {
         /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
-        protected const string StartOfStreamOffset = "-1";
+        private const string StartOfStreamOffset = "-1";
 
         /// <summary>The token that represents the last event in the stream of a partition.</summary>
-        protected const string EndOfStreamOffset = "@latest";
+        private const string EndOfStreamOffset = "@latest";
 
         /// <summary>
         ///   Corresponds to the location of the the first event present in the partition.  Use
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="PartitionReceiver"/>
+        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventReceiver"/>
         ///   is created with this position.
         /// </summary>
         ///
@@ -74,20 +74,6 @@ namespace Azure.Messaging.EventHubs
         /// <value>Excpected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
         internal long? SequenceNumber { get; set; }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventPosition"/> class.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   Limit construction to only derrived classes, as the rules for legal value combinations
-        ///   would be intimidating for consumers; the factory methods provide a more intuitive means of
-        ///   creation.
-        /// </remarks>
-        ///
-        protected EventPosition()
-        {
-        }
 
         /// <summary>
         ///   Corresponds to the event in the partition at the provided offset, inclusive of that event.

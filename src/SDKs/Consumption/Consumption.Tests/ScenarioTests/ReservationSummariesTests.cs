@@ -91,7 +91,7 @@ namespace Consumption.Tests.ScenarioTests
             }
         }
 
-        private static void ValidateProperties(ReservationSummaries item)
+        private static void ValidateProperties(ReservationSummary item)
         {
             Assert.NotNull(item);
             Assert.NotNull(item.Id);

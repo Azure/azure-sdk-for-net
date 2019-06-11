@@ -7,6 +7,10 @@
     <Version>1.0.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Management.SecurityCenter\Microsoft.Azure.Management.SecurityCenter.csproj" />
   </ItemGroup>

@@ -13,7 +13,7 @@ namespace Azure.Core.Pipeline.Policies
         {
         }
 
-        public static HttpPipelinePolicy Singleton { get; set; } = new BufferResponsePolicy();
+        public static HttpPipelinePolicy Shared { get; set; } = new BufferResponsePolicy();
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {

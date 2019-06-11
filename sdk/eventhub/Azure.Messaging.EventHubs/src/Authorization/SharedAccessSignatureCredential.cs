@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The token representating the shared access signatuer for this credential.</returns>
         ///
-        public override string GetToken(string[] scopes, CancellationToken cancellationToken) => SharedAccessSignature.Value;
+        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken) => new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.ExpirationUtc);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -58,6 +58,6 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The token representating the shared access signatuer for this credential.</returns>
         ///
-        public override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => new ValueTask<string>(SharedAccessSignature.Value);
+        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => Task<AccessToken>.FromResult(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.ExpirationUtc));
     }
 }
