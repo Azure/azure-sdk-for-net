@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventHubs
         ///   and their identifiers.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventHubs
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
         ///
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
@@ -272,14 +272,14 @@ namespace Azure.Messaging.EventHubs
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.DefaultMaximumReceiveWaitTime = options.MaximumReceiveWaitTimeOrDefault ?? ClientOptions.DefaultTimeout;
 
-            return BuildEventReceiver(ClientOptions.TransportType, EventHubPath, partitionId, options);
+            return InnerClient.CreateReceiver(partitionId, options);
         }
 
         /// <summary>
         ///   Closes the connection to the Event Hub instance.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs
         ///   Closes the connection to the Event Hub instance.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 
@@ -366,23 +366,6 @@ namespace Azure.Messaging.EventHubs
                     throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
             }
         }
-
-        /// <summary>
-        ///   Builds a partition receiver instance using the provided options.
-        /// </summary>
-        ///
-        /// <param name="connectionType">The type of connection being used for communication with the EventHubs servcie.</param>
-        /// <param name="eventHubPath">The path to a specific Event Hub.</param>
-        /// <param name="partitionId">The identifier of the partition to receive from.</param>
-        /// <param name="options">The set of options to use for the receiver.</param>
-        ///
-        /// <returns>The fully constructed receiver.</returns>
-        ///
-        internal virtual EventReceiver BuildEventReceiver(TransportType connectionType,
-                                                          string eventHubPath,
-                                                          string partitionId,
-                                                          EventReceiverOptions options) =>
-            new EventReceiver(connectionType, eventHubPath, partitionId, options);
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ConnectionStringProperties" /> associated

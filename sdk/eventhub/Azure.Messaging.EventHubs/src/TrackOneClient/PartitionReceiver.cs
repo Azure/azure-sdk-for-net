@@ -15,7 +15,7 @@ namespace TrackOne
     /// <para>
     /// A PartitionReceiver is tied to a ConsumerGroup + Partition combination. If you are creating an epoch based
     /// PartitionReceiver (i.e. PartitionReceiver.Epoch != 0) you cannot have more than one active receiver per
-    /// ConsumerGroup + Partition combo. You can have multiple receivers per ConsumerGroup + Partition combination with 
+    /// ConsumerGroup + Partition combo. You can have multiple receivers per ConsumerGroup + Partition combination with
     /// non-epoch receivers.
     /// </para>
     /// </summary>
@@ -117,7 +117,7 @@ namespace TrackOne
         /// <summary></summary>
         protected EventPosition EventPosition { get; set; }
 
-        /// <summary>Gets the identifier of a receiver which was set during the creation of the receiver.</summary> 
+        /// <summary>Gets the identifier of a receiver which was set during the creation of the receiver.</summary>
         /// <value>A string representing the identifier of a receiver. It will return null if the identifier is not set.</value>
         public string Identifier { get; private set; }
 
@@ -130,7 +130,7 @@ namespace TrackOne
         /// EventHubClient client = EventHubClient.Create("__connectionString__");
         /// PartitionReceiver receiver = client.CreateReceiver("ConsumerGroup1", "1");
         /// IEnumerable&lt;EventData&gt; receivedEvents = await receiver.ReceiveAsync(BatchSize);
-        ///      
+        ///
         /// while (true)
         /// {
         ///     int batchSize = 0;
@@ -139,14 +139,14 @@ namespace TrackOne
         ///         foreach (EventData receivedEvent in receivedEvents)
         ///         {
         ///             Console.WriteLine("Message Payload: {0}", Encoding.UTF8.GetString(receivedEvent.Body));
-        ///             Console.WriteLine("Offset: {0}, SeqNo: {1}, EnqueueTime: {2}", 
-        ///                 receivedEvent.SystemProperties.Offset, 
-        ///                 receivedEvent.SystemProperties.SequenceNumber, 
+        ///             Console.WriteLine("Offset: {0}, SeqNo: {1}, EnqueueTime: {2}",
+        ///                 receivedEvent.SystemProperties.Offset,
+        ///                 receivedEvent.SystemProperties.SequenceNumber,
         ///                 receivedEvent.SystemProperties.EnqueuedTime);
         ///             batchSize++;
         ///         }
         ///     }
-        ///          
+        ///
         ///     Console.WriteLine("ReceivedBatch Size: {0}", batchSize);
         ///     receivedEvents = await receiver.ReceiveAsync();
         /// }
@@ -162,8 +162,10 @@ namespace TrackOne
         /// Receive a batch of <see cref="EventData"/>'s from an EventHub partition by allowing wait time on each individual call.
         /// </summary>
         /// <returns>A Task that will yield a batch of <see cref="EventData"/> from the partition on which this receiver is created. Returns 'null' if no EventData is present.</returns>
-        public async Task<IEnumerable<EventData>> ReceiveAsync(int maxMessageCount, TimeSpan waitTime)
+        public async Task<IEnumerable<EventData>> ReceiveAsync(int maxMessageCount, TimeSpan? waitTime = default)
         {
+            waitTime = waitTime ?? this.EventHubClient.ConnectionStringBuilder.OperationTimeout;
+
             EventHubsEventSource.Log.EventReceiveStart(this.ClientId);
             Activity activity = EventHubsDiagnosticSource.StartReceiveActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, this.ConsumerGroupName, this.EventPosition);
 
@@ -173,7 +175,7 @@ namespace TrackOne
 
             try
             {
-                receiveTask = this.OnReceiveAsync(maxMessageCount, waitTime);
+                receiveTask = this.OnReceiveAsync(maxMessageCount, waitTime.Value);
                 events = await receiveTask.ConfigureAwait(false);
                 count = events?.Count ?? 0;
                 EventData lastEvent = events?[count - 1];

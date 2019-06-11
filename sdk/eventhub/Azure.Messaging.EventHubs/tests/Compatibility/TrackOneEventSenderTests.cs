@@ -32,6 +32,24 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SenderIsConstructedCorrectly()
+        {
+            var partition = "123";
+            var mock = new ObservableSenderMock(new ClientMock(), partition);
+            var sender = new TrackOneEventSender(() => mock);
+
+            // Invoke an operation to force the sender to be lazily instantiated.  Otherwise,
+            // construction does not happen.
+
+            await sender.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new EventBatchingOptions(), default);
+            Assert.That(mock.ConstructedWithPartition, Is.EqualTo(partition));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="TrackOneEventSender.SendAsync" />
         ///   method.
         /// </summary>
@@ -84,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {
-                Assert.That(CompareEventData(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
+                Assert.That(TrackOneComparer.IsEventDataEquivalent(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
             }
         }
 
@@ -124,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {
-                Assert.That(CompareEventData(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
+                Assert.That(TrackOneComparer.IsEventDataEquivalent(sentEvents[index], sourceEvents[index]), Is.True, $"The sequence of events sent should match; they differ at index: { index }");
             }
         }
 
@@ -143,8 +161,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
         }
 
-        /// <summaryTrackOneEventSender
-        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CloseAsync" />
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventSender.CloseAsync" />
         ///   method.
         /// </summary>
         ///
@@ -160,110 +178,6 @@ namespace Azure.Messaging.EventHubs.Tests
             await sender.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new EventBatchingOptions(), default);
             await sender.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="CompareEventData" /> test
-        ///   helper.
-        /// </summary>
-        ///
-        [Test]
-        public void CompareEventDataDetectsDifferentBodies()
-        {
-            var trackOneEvent = new TrackOne.EventData(new byte[] { 0x22, 0x44 });
-            var trackTwoEvent = new EventData(new byte[] { 0x11, 0x33 });
-
-            Assert.That(CompareEventData(trackOneEvent, trackTwoEvent), Is.False);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="CompareEventData" /> test
-        ///   helper.
-        /// </summary>
-        ///
-        [Test]
-        public void CompareEventDataDetectsDifferentProperties()
-        {
-            var body = new byte[] { 0x22, 0x44, 0x88 };
-            var trackOneEvent = new TrackOne.EventData((byte[])body.Clone());
-            var trackTwoEvent = new EventData((byte[])body.Clone());
-
-            trackOneEvent.Properties["test"] = "trackOne";
-            trackTwoEvent.Properties["test"] = "trackTwo";
-
-            Assert.That(CompareEventData(trackOneEvent, trackTwoEvent), Is.False);
-        }
-
-        /// <summary>
-        ///   Compares event data between its representations in track one and
-        ///   track two to determine if the instances represent the same event.
-        /// </summary>
-        ///
-        /// <param name="trackOneEvent">The track one event to consider.</param>
-        /// <param name="trackTwoEvent">The track two event to consider.</param>
-        ///
-        /// <returns><c>true</c>, if the two events are structurally equivilent; otherwise, <c>false</c>.</returns>
-        ///
-        private bool CompareEventData(TrackOne.EventData trackOneEvent,
-                                      EventData trackTwoEvent)
-        {
-            // If the events are the same instance, they're equal.  This should only happen
-            // if both are null, since the types differ.
-
-            if (Object.ReferenceEquals(trackOneEvent, trackTwoEvent))
-            {
-                return true;
-            }
-
-            // If one or the other is null, then they cannot be equal, since we know that
-            // they are not both null.
-
-            if ((trackOneEvent == null) || (trackTwoEvent == null))
-            {
-                return false;
-            }
-
-            // If the contents of each body is not equal, the events are not
-            // equal.
-
-            var trackOneBody = trackOneEvent.Body.ToArray();
-            var trackTwoBody = trackTwoEvent.Body.ToArray();
-
-            if (trackOneBody.Length != trackTwoBody.Length)
-            {
-                return false;
-            }
-
-            if (!Enumerable.SequenceEqual(trackOneBody, trackTwoBody))
-            {
-                return false;
-            }
-
-            // Since we know that the event bodies are equal, if the property sets are the same instance,
-            // then we know that the events are equal.  This should only happen if both are null.
-
-            if (Object.ReferenceEquals(trackOneEvent.Properties, trackTwoEvent.Properties))
-            {
-                return true;
-            }
-
-            // If either property is null, then the events are not equal, since we know that they are
-            // not both null.
-
-            if ((trackOneEvent.Properties == null) || (trackTwoEvent.Properties == null))
-            {
-                return false;
-            }
-
-            // The only meaningful comparison left is to ensure that the property sets are equivilent,
-            // the outcome of this check is the final word on equality.
-
-            if (trackOneEvent.Properties.Count != trackTwoEvent.Properties.Count)
-            {
-                return false;
-            }
-
-            return trackOneEvent.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.Properties.OrderBy(kvp => kvp.Key));
         }
 
         /// <summary>
