@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -34,6 +35,7 @@ namespace Azure.Core.Testing
             .GetMethods(BindingFlags.Static | BindingFlags.Public)
             .Single(m => m.Name == "FromException" && m.IsGenericMethod);
 
+        [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
             var parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();

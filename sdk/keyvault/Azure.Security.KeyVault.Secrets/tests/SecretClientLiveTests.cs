@@ -22,7 +22,22 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        public async Task CrudWithExtendedProps()
+        public async Task SetSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            SecretBase version1 = await Client.SetAsync(secretName, "value1");
+            RegisterForCleanup(version1);
+            SecretBase version2 = await Client.SetAsync(secretName, "value2");
+            await Client.SetAsync(secretName, "value3");
+
+            Secret secret = await Client.GetAsync(secretName, version2.Version);
+
+            Assert.AreEqual("value2", secret.Value);
+        }
+
+        [Test]
+        public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
 
