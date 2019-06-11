@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
 
             policies.Add(options.TelemetryPolicy);
 
+            policies.Add(options.RetryPolicy);
+
             policies.AddRange(clientPolicies);
 
             policies.AddRange(options.PerRetryPolicies);

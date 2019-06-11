@@ -19,6 +19,7 @@ namespace Azure.Core.Pipeline
 
             TelemetryPolicy = new TelemetryPolicy(name, version);
             LoggingPolicy = LoggingPolicy.Shared;
+            RetryPolicy = new RetryPolicy();
         }
 
         public HttpPipelineTransport Transport {
