@@ -36,10 +36,10 @@ namespace Azure.ApplicationModel.Configuration.Samples
             };
 
             // add a policy (custom behavior) that executes once per client call
-            options.PerCallPolicies.Add(new AddHeaderPolicy());
+            options.AddPolicy(HttpPipelinePolicyPosition.PerCall, new AddHeaderPolicy());
 
             // add a policy that executes once per retry
-            options.PerRetryPolicies.Add(new CustomLogPolicy());
+            options.AddPolicy(HttpPipelinePolicyPosition.PerRetry, new CustomLogPolicy());
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             // pass the policy options to the client
