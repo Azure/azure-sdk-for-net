@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "msi/resource-manager" -AutoRestVersion "2.0.4283"
