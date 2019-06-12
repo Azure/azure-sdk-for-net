@@ -195,7 +195,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         public void InvalidAadConnectionStringTest()
         {
-            String connectionString = "Endpoint=sb://test.servicebus.windows.net/;authentication=Managed Identity;SHAREDACCESSKEYNAME=val";
+            var connectionString = "Endpoint=sb://test.servicebus.windows.net/;authentication=Managed Identity;SHAREDACCESSKEYNAME=val";
             Assert.Throws<ArgumentException>(() => new ServiceBusConnectionStringBuilder(connectionString));
 
             connectionString = "Endpoint=sb://test.servicebus.windows.net/;AUTHENTICATION=Managed Identity;SharedAccessSignature=sig";

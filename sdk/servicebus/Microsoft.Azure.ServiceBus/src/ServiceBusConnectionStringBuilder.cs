@@ -274,37 +274,37 @@ namespace Microsoft.Azure.ServiceBus
             var connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
-                connectionStringBuilder.Append($"{EndpointConfigName}{KeyValueSeparator}{this.Endpoint}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(EndpointConfigName).Append(KeyValueSeparator).Append(this.Endpoint).Append(KeyValuePairDelimiter);
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasKeyName))
             {
-                connectionStringBuilder.Append($"{SharedAccessKeyNameConfigName}{KeyValueSeparator}{this.SasKeyName}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(SharedAccessKeyNameConfigName).Append(KeyValueSeparator).Append(this.SasKeyName).Append(KeyValuePairDelimiter);
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasKey))
             {
-                connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(SharedAccessKeyConfigName).Append(KeyValueSeparator).Append(this.SasKey).Append(KeyValuePairDelimiter);
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasToken))
             {
-                connectionStringBuilder.Append($"{SharedAccessSignatureConfigName}{KeyValueSeparator}{this.SasToken}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(SharedAccessSignatureConfigName).Append(KeyValueSeparator).Append(this.SasToken).Append(KeyValuePairDelimiter);
             }
 
             if (this.TransportType != TransportType.Amqp)
             {
-                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(TransportTypeConfigName).Append(KeyValueSeparator).Append(this.TransportType).Append(KeyValuePairDelimiter);
             }
 
             if (this.OperationTimeout != Constants.DefaultOperationTimeout)
             {
-                connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(OperationTimeoutConfigName).Append(KeyValueSeparator).Append(this.OperationTimeout).Append(KeyValuePairDelimiter);
             }
 
             if (this.Authentication != null)
             {
-                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append(this.Authentication).Append(KeyValuePairDelimiter);
             }
 
             return connectionStringBuilder.ToString().Trim(';');
