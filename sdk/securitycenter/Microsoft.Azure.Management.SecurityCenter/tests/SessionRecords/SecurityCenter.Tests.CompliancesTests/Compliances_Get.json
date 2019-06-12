@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/%2Fsubscriptions%2F487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/compliances/2018-07-05Z?api-version=2017-08-01-preview",
+      "EncodedRequestUri": "LyUyRnN1YnNjcmlwdGlvbnMlMkY0ODdiYjQ4NS1iNWIwLTQ3MWUtOWMwZC0xMDcxNzYxMmY4NjkvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWN1cml0eS9jb21wbGlhbmNlcy8yMDE4LTA3LTA1Wj9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c84d3966-c57a-4716-855c-dde4bfeaaebc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/compliances/2018-07-05Z\",\r\n  \"name\": \"2018-07-05Z\",\r\n  \"type\": \"Microsoft.Security/compliances\",\r\n  \"properties\": {\r\n    \"scope\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869\",\r\n    \"assessmentResult\": [\r\n      {\r\n        \"type\": \"Compliant\",\r\n        \"percentage\": 0.33333333333333331\r\n      }\r\n    ],\r\n    \"resourceCount\": 6,\r\n    \"assessmentTimestampUtcDate\": \"2018-07-05T00:00:00Z\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "9495a773-9366-4806-add5-92c05ac99eaf"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-correlation-request-id": [
+          "4c71a832-61bc-41e3-8de9-a41f452e0ce8"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125242Z:4c71a832-61bc-41e3-8de9-a41f452e0ce8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

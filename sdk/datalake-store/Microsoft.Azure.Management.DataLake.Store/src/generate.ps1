@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "datalake-store/resource-manager" -AutoRestVersion "latest"

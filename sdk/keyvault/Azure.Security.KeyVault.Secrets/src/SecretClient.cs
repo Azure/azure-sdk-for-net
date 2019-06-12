@@ -38,11 +38,8 @@ namespace Azure.Security.KeyVault.Secrets
             options = options ?? new SecretClientOptions();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Shared,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Shared);
+                    bufferResponse: true,
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
         }
 
         public virtual async Task<Response<Secret>> GetAsync(string name, string version = null, CancellationToken cancellationToken = default)

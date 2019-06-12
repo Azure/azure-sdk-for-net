@@ -19,6 +19,7 @@ namespace Azure.Core.Pipeline
 
             TelemetryPolicy = new TelemetryPolicy(name, version);
             LoggingPolicy = LoggingPolicy.Shared;
+            RetryPolicy = new RetryPolicy();
         }
 
         public HttpPipelineTransport Transport {
@@ -29,6 +30,8 @@ namespace Azure.Core.Pipeline
         public TelemetryPolicy TelemetryPolicy { get; set; }
 
         public LoggingPolicy LoggingPolicy { get; set; }
+
+        public RetryPolicy RetryPolicy { get; set; }
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 

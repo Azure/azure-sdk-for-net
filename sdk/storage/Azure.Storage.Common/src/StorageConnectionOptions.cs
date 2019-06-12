@@ -20,11 +20,6 @@ namespace Azure.Storage
         public IStorageCredentials Credentials { get; set; }
 
         /// <summary>
-        /// HttpPipelinePolicy for automatically retrying failed requests
-        /// </summary>
-        public RetryPolicy RetryPolicy { get; set; }
-
-        /// <summary>
         /// Construct the default options for making service requests that
         /// don't require authentication.
         /// </summary>
@@ -78,13 +73,11 @@ namespace Azure.Storage
         internal virtual HttpPipeline Build()
             => HttpPipelineBuilder.Build(
                 this,
-                ClientRequestIdPolicy.Shared,
-                this.RetryPolicy,
-                this.GetAuthenticationPipelinePolicy(this.Credentials),
                 // TODO: PageBlob's UploadPagesAsync test currently fails
                 // without buffered responses, so I'm leaving this on for now.
                 // It'd be a great perf win to remove it soon.
-                BufferResponsePolicy.Shared);
+                bufferResponse: true,
+                this.GetAuthenticationPipelinePolicy(this.Credentials));
 
         /// <summary>
         /// Create an authentication HttpPipelinePolicy to sign requests
