@@ -13,9 +13,9 @@ namespace Azure.Core.Tests
     public class HttpPipelineBuilderTest: PolicyTestBase
     {
         [Theory]
-        [TestCase(HttpPipelinePolicyPosition.PerCall, 1)]
-        [TestCase(HttpPipelinePolicyPosition.PerRetry, 2)]
-        public async Task CanAddCustomPolicy(HttpPipelinePolicyPosition position, int expectedCount)
+        [TestCase(HttpPipelinePosition.PerCall, 1)]
+        [TestCase(HttpPipelinePosition.PerRetry, 2)]
+        public async Task CanAddCustomPolicy(HttpPipelinePosition position, int expectedCount)
         {
             var policy = new CounterPolicy();
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));

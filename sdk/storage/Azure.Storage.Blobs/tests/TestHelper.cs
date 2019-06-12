@@ -36,7 +36,7 @@ namespace Azure.Storage.Test
         {
             raise = raise ?? new Exception("Simulated connection fault");
             var options = GetOptions<BlobConnectionOptions>(credentials);
-            options.AddPolicy(HttpPipelinePolicyPosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
         

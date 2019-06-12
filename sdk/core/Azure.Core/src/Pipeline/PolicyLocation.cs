@@ -3,7 +3,7 @@
 
 namespace Azure.Core.Pipeline
 {
-    public enum HttpPipelinePolicyPosition
+    public enum HttpPipelinePosition
     {
         PerCall,
         PerRetry

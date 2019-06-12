@@ -35,14 +35,14 @@ namespace Azure.Core.Pipeline
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
-        public void AddPolicy(HttpPipelinePolicyPosition position, HttpPipelinePolicy policy)
+        public void AddPolicy(HttpPipelinePosition position, HttpPipelinePolicy policy)
         {
             switch (position)
             {
-                case HttpPipelinePolicyPosition.PerCall:
+                case HttpPipelinePosition.PerCall:
                     PerCallPolicies.Add(policy);
                     break;
-                case HttpPipelinePolicyPosition.PerRetry:
+                case HttpPipelinePosition.PerRetry:
                     PerRetryPolicies.Add(policy);
                     break;
                 default:
