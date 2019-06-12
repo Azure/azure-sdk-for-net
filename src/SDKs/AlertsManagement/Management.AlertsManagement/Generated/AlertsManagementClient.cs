@@ -372,8 +372,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("actionRuleType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("actionRuleType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -42,8 +42,15 @@ namespace AlertsManagement.Tests.ScenarioTests
                     while (enumerator.MoveNext())
                     {
                         ActionRule current = enumerator.Current;
-                        Assert.Contains(monitorService, current.Conditions.MonitorService.Values);
-                        Assert.Contains(severity, current.Conditions.Severity.Values);
+                        if (current.Properties.Conditions?.MonitorService != null)
+                        {
+                            Assert.Contains(monitorService, current.Properties.Conditions.MonitorService.Values);
+                        }
+
+                        if (current.Properties.Conditions?.Severity != null)
+                        {
+                            Assert.Contains(severity, current.Properties.Conditions.Severity.Values);
+                        }
                     }
                 }
             }
@@ -81,22 +88,36 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 // Create Action Rule
                 ActionRule actionRule = new ActionRule(
-                    location: "global",
-                    scope: new Scope(
-                        type: ScopeType.ResourceGroup,
-                        values: new List<string>
-                        {
-                            "ActionRuleResourceGroup",
-                            "Test-VMs"
-                        }
-                    ), 
-                    conditions: new Conditions(
-                        severity: new Condition(
-                        operatorProperty: "Equals",
+                    location: "Global",
+                    tags: new Dictionary<string, string>(),
+                    properties: new Suppression (
+                        scope: new Scope(
+                            type: ScopeType.ResourceGroup,
                             values: new List<string>
                             {
-                                "Sev2"
-                            })
+                                "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/alertslab",
+                                "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/Test-VMs"
+                            }
+                        ),
+                        conditions: new Conditions(
+                            severity: new Condition(
+                            operatorProperty: "Equals",
+                                values: new List<string>
+                                {
+                                    "Sev2"
+                                })
+                        ),
+                        suppressionConfig: new SuppressionConfig(
+                            recurrenceType: "Once",
+                            schedule: new SuppressionSchedule(
+                                startDate: "12/09/2018",
+                                endDate: "12/18/2018",
+                                startTime: "06:00:00",
+                                endTime: "14:00:00"
+                            )
+                        ),
+                        description: "Test Supression Rule",
+                        status: "Enabled"
                     )
                 );
                  
@@ -133,33 +154,31 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 // Create Action Rule
                 ActionRule actionRule = new ActionRule(
-                    location: "global",
-                    scope: new Scope(
-                        type: ScopeType.ResourceGroup,
-                        values: new List<string>
-                        {
-                            "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/ActionRuleResourceGroup",
-                            "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/Test-VMs"
-                        }
-                    ),
-                    conditions: new Conditions(
-                        severity: new Condition(
+                    location: "Global",
+                    tags: new Dictionary<string, string>(),
+                    properties: new ActionGroup(
+                        scope: new Scope(
+                            type: ScopeType.ResourceGroup,
+                            values: new List<string>
+                            {
+                                "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/alertslab",
+                                "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/Test-VMs"
+                            }
+                        ),
+                        conditions: new Conditions(
+                            severity: new Condition(
                             operatorProperty: "Equals",
-                            values: new List<string>
-                            {
-                                "Sev2"
-                            }),
-                        targetResourceType: new Condition(
-                            operatorProperty: "NotEquals",
-                            values: new List<string>
-                            {
-                                "Microsoft.Compute/VirtualMachines"
-                            })
-                    ),
-                    status: "Enabled"
+                                values: new List<string>
+                                {
+                                    "Sev2"
+                                })
+                        ),
+                        actionGroupId: "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/actionrules-powershell-test/providers/microsoft.insights/actionGroups/powershell-test-ag",
+                        description: "Test Supression Rule",
+                        status: "Enabled"
+                    )
                 );
 
-                Suppression s = new Suppression();
                 var createdActionRule = alertsManagementClient.ActionRules.CreateUpdate(resourceGroupName: resourceGroupName, actionRuleName: actionRuleName, actionRule: actionRule);
 
                 // Update Action Rule
@@ -173,7 +192,7 @@ namespace AlertsManagement.Tests.ScenarioTests
 
                 if (!this.IsRecording)
                 {
-                    Assert.Equal("Disabled", fetchedActionRule.Status);
+                    Assert.Equal("Disabled", fetchedActionRule.Properties.Status);
                 }
             }
         }

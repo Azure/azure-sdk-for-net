@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -21,7 +19,6 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// Action rule object containing target scope, conditions and suppression
     /// logic
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class ActionRule : ManagedResource
     {
         /// <summary>
@@ -37,29 +34,11 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="scope">scope on which action rule will apply</param>
-        /// <param name="conditions">conditions on which alerts will be
-        /// filtered</param>
-        /// <param name="description">Description of action rule</param>
-        /// <param name="createdAt">Creation time of action rule. Date-Time in
-        /// ISO-8601 format.</param>
-        /// <param name="lastModifiedAt">Last updated time of action rule.
-        /// Date-Time in ISO-8601 format.</param>
-        /// <param name="createdBy">Created by user name.</param>
-        /// <param name="lastModifiedBy">Last modified by user name.</param>
-        /// <param name="status">Indicates if the given action rule is enabled
-        /// or disabled. Possible values include: 'Enabled', 'Disabled'</param>
-        public ActionRule(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Scope scope = default(Scope), Conditions conditions = default(Conditions), string description = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? lastModifiedAt = default(System.DateTime?), string createdBy = default(string), string lastModifiedBy = default(string), string status = default(string))
+        /// <param name="properties">action rule properties</param>
+        public ActionRule(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), ActionRuleProperties properties = default(ActionRuleProperties))
             : base(location, tags)
         {
-            Scope = scope;
-            Conditions = conditions;
-            Description = description;
-            CreatedAt = createdAt;
-            LastModifiedAt = lastModifiedAt;
-            CreatedBy = createdBy;
-            LastModifiedBy = lastModifiedBy;
-            Status = status;
+            Properties = properties;
             CustomInit();
         }
 
@@ -69,59 +48,15 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets scope on which action rule will apply
+        /// Gets or sets action rule properties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.scope")]
-        public Scope Scope { get; set; }
-
-        /// <summary>
-        /// Gets or sets conditions on which alerts will be filtered
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.conditions")]
-        public Conditions Conditions { get; set; }
-
-        /// <summary>
-        /// Gets or sets description of action rule
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets creation time of action rule. Date-Time in ISO-8601 format.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; private set; }
-
-        /// <summary>
-        /// Gets last updated time of action rule. Date-Time in ISO-8601
-        /// format.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastModifiedAt")]
-        public System.DateTime? LastModifiedAt { get; private set; }
-
-        /// <summary>
-        /// Gets created by user name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
-
-        /// <summary>
-        /// Gets last modified by user name.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastModifiedBy")]
-        public string LastModifiedBy { get; private set; }
-
-        /// <summary>
-        /// Gets or sets indicates if the given action rule is enabled or
-        /// disabled. Possible values include: 'Enabled', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ActionRuleProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()

@@ -208,18 +208,18 @@ namespace AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                if (exp.Description != null && act.Description != null)
+                if (exp.Properties.Description != null && act.Properties.Description != null)
                 {
-                    Assert.Equal(exp.Description, act.Description);
+                    Assert.Equal(exp.Properties.Description, act.Properties.Description);
                 }
 
-                if (exp.Status != null && act.Status != null)
+                if (exp.Properties.Status != null && act.Properties.Status != null)
                 {
-                    Assert.Equal(exp.Status, act.Status);
+                    Assert.Equal(exp.Properties.Status, act.Properties.Status);
                 }
 
-                AreEqual(exp.Scope, act.Scope);
-                AreEqual(exp.Conditions, act.Conditions);
+                AreEqual(exp.Properties.Scope, act.Properties.Scope);
+                AreEqual(exp.Properties.Conditions, act.Properties.Conditions);
             }
         }
 

@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Gets or sets type of target scope. Possible values include:
         /// 'ResourceGroup', 'Resource'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [JsonProperty(PropertyName = "scopeType")]
         public string Type { get; set; }
 
         /// <summary>
