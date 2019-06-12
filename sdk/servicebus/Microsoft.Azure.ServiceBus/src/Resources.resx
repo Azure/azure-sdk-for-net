@@ -216,4 +216,7 @@
   <data name="TimeoutMustBePositiveNonZero" xml:space="preserve">
     <value>Argument {0} must be a positive non-zero timeout value. The provided value was {1}.</value>
   </data>
+  <data name="ArgumentInvalidCombination" xml:space="preserve">
+    <value>The following arguments must all be provided or none at all: {0}.</value>
+  </data>
 </root>

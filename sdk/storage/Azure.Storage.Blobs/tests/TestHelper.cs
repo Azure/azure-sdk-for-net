@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -35,7 +36,7 @@ namespace Azure.Storage.Test
         {
             raise = raise ?? new Exception("Simulated connection fault");
             var options = GetOptions<BlobConnectionOptions>(credentials);
-            options.PerCallPolicies.Add(new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
         
