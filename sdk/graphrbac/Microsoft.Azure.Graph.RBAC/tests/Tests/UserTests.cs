@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class UserTests : GraphTestBase
     {
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
         public void CreateDeleteUserTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

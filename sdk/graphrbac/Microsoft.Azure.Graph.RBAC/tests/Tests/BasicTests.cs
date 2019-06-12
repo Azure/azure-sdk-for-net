@@ -8,6 +8,7 @@ using Microsoft.Azure.Graph.RBAC.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using Microsoft.Rest.Azure.OData;
+using Microsoft.Graph.RBAC.Tests.Infrastructure;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
 
         [Fact]
+        [LiveTest]
         public void GetUserUsingSignInNameTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -149,6 +151,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
 
         [Fact]
+        [LiveTest]
         public void GroupTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

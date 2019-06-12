@@ -8,12 +8,13 @@ using System.Linq;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
+using Microsoft.Graph.RBAC.Tests.Infrastructure;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class GroupTests : GraphTestBase
     {
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
         public void CreateDeleteGroupTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
         public void AddRemoveMemberTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

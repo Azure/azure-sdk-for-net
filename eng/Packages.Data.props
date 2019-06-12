@@ -92,6 +92,7 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19259.10" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
