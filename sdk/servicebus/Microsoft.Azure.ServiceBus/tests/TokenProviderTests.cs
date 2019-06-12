@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
             string ServiceBusAudience = "https://servicebus.azure.net";
 
-            var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
+            var aadTokenProvider = TokenProvider.CreateAadTokenProvider(
                 (audience, authority, state) =>
                 {
                     Assert.Equal(ServiceBusAudience, audience);
