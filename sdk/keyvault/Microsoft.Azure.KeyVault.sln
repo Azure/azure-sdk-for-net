@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.462
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault", "Microsoft.Azure.KeyVault\src\Microsoft.Azure.KeyVault.csproj", "{F0FBD614-4B4B-445B-B562-235CDB3844B7}"
 EndProject
@@ -18,11 +18,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.Extensions.Tests", "Microsoft.Azure.KeyVault.Extensions\tests\Microsoft.Azure.KeyVault.Extensions.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault\tests\TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault.TestFramework\src\Microsoft.Azure.KeyVault.TestFramework.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault.TestFramework\src\Microsoft.Azure.KeyVault.TestFramework.csproj", "{424F477A-5470-4FC9-B74F-233B671F6A77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.WebKey", "Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj", "{643372AD-2DBC-4395-95B9-61183D3F2904}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.WebKey.Tests", "Microsoft.Azure.KeyVault.WebKey\tests\Microsoft.Azure.KeyVault.WebKey.Tests.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Tests", "Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{FE4C57FD-0D75-485D-9FBE-622DDBCEF30C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,8 +73,15 @@ Global
 		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE4C57FD-0D75-485D-9FBE-622DDBCEF30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE4C57FD-0D75-485D-9FBE-622DDBCEF30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE4C57FD-0D75-485D-9FBE-622DDBCEF30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE4C57FD-0D75-485D-9FBE-622DDBCEF30C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B253D49D-B936-4956-ABC1-1770796B26B7}
 	EndGlobalSection
 EndGlobal
