@@ -40,7 +40,7 @@ namespace Azure.Core.Tests
         {
             public TestOptions()
             {
-                RetryPolicy.Delay = TimeSpan.Zero;
+                Retry.Delay = TimeSpan.Zero;
             }
         }
 

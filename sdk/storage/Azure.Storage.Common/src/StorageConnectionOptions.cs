@@ -30,16 +30,13 @@ namespace Azure.Storage
             this.ResponseClassifier = new ResponseClassifier();
 
             // Log request details to the AzureSDK event source
-            this.LoggingPolicy = default; // Azure.Core.Pipeline.Policies.LoggingPolicy.Shared;
+            this.Diagnostics.DisableLogging = true;
 
             // TODO: Decide if these are good default options for an Azure
             // Queue Storage retry policy
-            this.RetryPolicy = new RetryPolicy()
-            {
-                Mode = RetryMode.Fixed,
-                Delay = TimeSpan.Zero,
-                MaxRetries = Constants.MaxReliabilityRetries
-            };
+            this.Retry.Mode = RetryMode.Fixed;
+            this.Retry.Delay = TimeSpan.Zero;
+            this.Retry.MaxRetries = Constants.MaxReliabilityRetries;
         }
 
         /// <summary>

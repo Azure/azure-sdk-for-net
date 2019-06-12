@@ -105,15 +105,14 @@ namespace Azure.Storage.Test
                 {
                     Credentials = credentials,
                     ResponseClassifier = new TestResponseClassifier(),
-                    LoggingPolicy = LoggingPolicy.Shared,
-                    RetryPolicy =
-                        new RetryPolicy()
-                        {
-                            Mode = RetryMode.Exponential,
-                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                            Delay = TimeSpan.FromSeconds(0.5),
-                            MaxDelay = TimeSpan.FromSeconds(10)
-                        }
+                    Diagnostics = { DisableLogging = false },
+                    Retry =
+                    {
+                        Mode = RetryMode.Exponential,
+                        MaxRetries = Storage.Constants.MaxReliabilityRetries,
+                        Delay = TimeSpan.FromSeconds(0.5),
+                        MaxDelay = TimeSpan.FromSeconds(10)
+                    }
             };
     }
 }

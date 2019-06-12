@@ -16,12 +16,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             // specify retry policy options
             var options = new ConfigurationClientOptions();
-            options.RetryPolicy = new RetryPolicy()
-            {
-                Mode = RetryMode.Fixed,
-                MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1)
-            };
+            options.Retry.Mode = RetryMode.Fixed;
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
