@@ -1,0 +1,152 @@
+{
+    "Entries": [
+        {
+            "RequestUri": "/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration/customerSubscriptions/TestSubscription?api-version=2017-06-01",
+            "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2VhMWM3ZjEtZmJiNS00ZjRlLTlmNmMtYjMzMzE3YTVhMjZiL3Jlc291cmNlR3JvdXBzL0F6c0dyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXp1cmVTdGFjay9yZWdpc3RyYXRpb25zL1Rlc3RSZWdpc3RyYXRpb24vY3VzdG9tZXJTdWJzY3JpcHRpb25zL1Rlc3RTdWJzY3JpcHRpb24/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+            "RequestMethod": "PUT",
+            "RequestBody": "{\r\n  \"properties\": {\r\n    \"tenantId\": \"BF792B6C-F171-4BFC-9EED-FFD19ACBC951\"\r\n  }\r\n}",
+            "RequestHeaders": {
+                "x-ms-client-request-id": [
+                    "f020b37c-15e2-4e7f-a5e1-51dcaf6fa517"
+                ],
+                "Accept-Language": [
+                    "en-US"
+                ],
+                "User-Agent": [
+                    "FxVersion/4.6.27617.04",
+                    "OSName/Windows",
+                    "OSVersion/Microsoft.Windows.10.0.14393.",
+                    "Microsoft.Azure.Management.AzureStack.AzureStackManagementClient/1.0.0.0"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Content-Length": [
+                    "84"
+                ]
+            },
+            "ResponseHeaders": {
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "x-ms-request-id": [
+                    "9b579456-a644-48d8-a9fd-a89c2e4241a8"
+                ],
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "x-ms-ratelimit-remaining-subscription-writes": [
+                    "1199"
+                ],
+                "x-ms-correlation-request-id": [
+                    "873bc0f4-41be-44f6-869b-c00398eaa7c9"
+                ],
+                "x-ms-routing-request-id": [
+                    "SOUTHEASTASIA:20190613T111159Z:873bc0f4-41be-44f6-869b-c00398eaa7c9"
+                ],
+                "Strict-Transport-Security": [
+                    "max-age=31536000; includeSubDomains"
+                ],
+                "X-Content-Type-Options": [
+                    "nosniff"
+                ],
+                "Date": [
+                    "Thu, 13 Jun 2019 11:11:59 GMT"
+                ],
+                "Connection": [
+                    "close"
+                ],
+                "Content-Length": [
+                    "406"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Expires": [
+                    "-1"
+                ]
+            },
+            "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration/customerSubscriptions/TestSubscription\",\r\n  \"name\": \"TestRegistration/TestSubscription\",\r\n  \"properties\": {\r\n    \"tenantId\": \"BF792B6C-F171-4BFC-9EED-FFD19ACBC951\"\r\n  },\r\n  \"type\": \"Microsoft.AzureStack/registrations/customerSubscriptions\"\r\n}",
+            "StatusCode": 200
+        },
+        {
+            "RequestUri": "/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration/customerSubscriptions/TestSubscription?api-version=2017-06-01",
+            "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2VhMWM3ZjEtZmJiNS00ZjRlLTlmNmMtYjMzMzE3YTVhMjZiL3Jlc291cmNlR3JvdXBzL0F6c0dyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXp1cmVTdGFjay9yZWdpc3RyYXRpb25zL1Rlc3RSZWdpc3RyYXRpb24vY3VzdG9tZXJTdWJzY3JpcHRpb25zL1Rlc3RTdWJzY3JpcHRpb24/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+            "RequestMethod": "DELETE",
+            "RequestBody": "",
+            "RequestHeaders": {
+                "x-ms-client-request-id": [
+                    "f020b37c-15e2-4e7f-a5e1-51dcaf6fa517"
+                ],
+                "Accept-Language": [
+                    "en-US"
+                ],
+                "User-Agent": [
+                    "FxVersion/4.6.27617.04",
+                    "OSName/Windows",
+                    "OSVersion/Microsoft.Windows.10.0.14393.",
+                    "Microsoft.Azure.Management.AzureStack.AzureStackManagementClient/1.0.0.0"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Content-Length": [
+                    "84"
+                ]
+            },
+            "ResponseHeaders": {
+                "Cache-Control": [
+                    "no-cache"
+                ],
+                "Pragma": [
+                    "no-cache"
+                ],
+                "x-ms-request-id": [
+                    "9b579456-a644-48d8-a9fd-a89c2e4241a8"
+                ],
+                "Server": [
+                    "Microsoft-HTTPAPI/2.0"
+                ],
+                "x-ms-ratelimit-remaining-subscription-writes": [
+                    "1199"
+                ],
+                "x-ms-correlation-request-id": [
+                    "873bc0f4-41be-44f6-869b-c00398eaa7c9"
+                ],
+                "x-ms-routing-request-id": [
+                    "SOUTHEASTASIA:20190613T111159Z:873bc0f4-41be-44f6-869b-c00398eaa7c9"
+                ],
+                "Strict-Transport-Security": [
+                    "max-age=31536000; includeSubDomains"
+                ],
+                "X-Content-Type-Options": [
+                    "nosniff"
+                ],
+                "Date": [
+                    "Thu, 13 Jun 2019 11:11:59 GMT"
+                ],
+                "Connection": [
+                    "close"
+                ],
+                "Content-Length": [
+                    "406"
+                ],
+                "Content-Type": [
+                    "application/json; charset=utf-8"
+                ],
+                "Expires": [
+                    "-1"
+                ]
+            },
+            "ResponseBody": "",
+            "StatusCode": 200
+        }
+    ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b"
+  }
+}

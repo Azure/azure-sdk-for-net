@@ -1,0 +1,134 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2VhMWM3ZjEtZmJiNS00ZjRlLTlmNmMtYjMzMzE3YTVhMjZiL3Jlc291cmNlR3JvdXBzL0F6c0dyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXp1cmVTdGFjay9yZWdpc3RyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a3a41f12-d8c2-4484-abde-3776f4ce401f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.AzureStack.AzureStackManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a8933c68-0fed-42ce-b549-3c2a77111944"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "ecfc38d9-d781-4372-a0ed-3661e187a14a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20190613T050111Z:ecfc38d9-d781-4372-a0ed-3661e187a14a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 Jun 2019 05:01:10 GMT"
+        ],
+        "Content-Length": [
+          "411"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration\",\r\n      \"name\": \"TestRegistration\",\r\n      \"type\": \"Microsoft.AzureStack/registrations\",\r\n      \"etag\": \"\\\"040091c4-0000-0600-0000-5cf50ddf0000\\\"\",\r\n      \"location\": \"global\",\r\n      \"properties\": {\r\n        \"cloudId\": \"cloud1\",\r\n        \"objectId\": \"cfcaef15-bb27-4b6e-9752-c332532a8802\",\r\n        \"billingModel\": \"Development\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2VhMWM3ZjEtZmJiNS00ZjRlLTlmNmMtYjMzMzE3YTVhMjZiL3Jlc291cmNlR3JvdXBzL0F6c0dyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXp1cmVTdGFjay9yZWdpc3RyYXRpb25zL1Rlc3RSZWdpc3RyYXRpb24/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "93ac1da6-6956-4bba-95a1-9398a4460fcc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.14393.",
+          "Microsoft.Azure.Management.AzureStack.AzureStackManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "89a2afcd-4f15-4ff3-8b44-bec901700532"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "58c683e7-4073-44f1-8685-99cd7f894647"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHEASTASIA:20190613T050111Z:58c683e7-4073-44f1-8685-99cd7f894647"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 13 Jun 2019 05:01:11 GMT"
+        ],
+        "Content-Length": [
+          "399"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b/resourceGroups/AzsGroup/providers/Microsoft.AzureStack/registrations/TestRegistration\",\r\n  \"name\": \"TestRegistration\",\r\n  \"type\": \"Microsoft.AzureStack/registrations\",\r\n  \"etag\": \"\\\"040091c4-0000-0600-0000-5cf50ddf0000\\\"\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"cloudId\": \"cloud1\",\r\n    \"objectId\": \"cfcaef15-bb27-4b6e-9752-c332532a8802\",\r\n    \"billingModel\": \"Development\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "cea1c7f1-fbb5-4f4e-9f6c-b33317a5a26b"
+  }
+}
