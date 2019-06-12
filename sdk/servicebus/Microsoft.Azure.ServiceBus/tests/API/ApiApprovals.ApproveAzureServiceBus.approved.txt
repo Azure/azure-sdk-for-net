@@ -92,6 +92,7 @@ namespace Microsoft.Azure.ServiceBus
         string ClientId { get; }
         bool IsClosedOrClosing { get; }
         System.TimeSpan OperationTimeout { get; set; }
+        bool OwnsConnection { get; }
         string Path { get; }
         System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         Microsoft.Azure.ServiceBus.ServiceBusConnection ServiceBusConnection { get; }
