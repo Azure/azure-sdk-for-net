@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Xunit;
@@ -16,7 +15,6 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class SynonymMapTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
-        [LiveTest]
         public void CreateSynonymMapReturnsCorrectDefinition()
         {
             Run(() =>
@@ -27,7 +25,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSynonymMapFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -45,7 +42,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetSynonymMapReturnsCorrectDefinition()
         {
             Run(() =>
@@ -56,7 +52,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetSynonymMapThrowsOnNotFound()
         {
             Run(() =>
@@ -70,7 +65,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUpdateSynonymMap()
         {
             Run(() =>
@@ -92,7 +86,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateCreatesWhenSynonymMapDoesNotExist()
         {
             Run(() =>
@@ -108,7 +101,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateSynonymMapIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -121,7 +113,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateSynonymMapIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -133,7 +124,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateSynonymMapIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -146,7 +136,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateSynonymMapIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -158,7 +147,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateSynonymMapIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -171,7 +159,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateSynonymMapIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -184,7 +171,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteSynonymMapIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -202,7 +188,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteSynonymMapIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -219,7 +204,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteSynonymMapIsIdempotent()
         {
             Run(() =>
@@ -245,7 +229,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanCreateAndListSynonymMaps()
         {
             Run(() =>
@@ -269,7 +252,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ExistsReturnsTrueForExistingSynonymMap()
         {
             Run(() =>
@@ -283,7 +265,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ExistsReturnsFalseForNonExistingSynonymMap()
         {
             Run(() =>

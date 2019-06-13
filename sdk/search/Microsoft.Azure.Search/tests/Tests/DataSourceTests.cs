@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Xunit;
@@ -19,14 +18,12 @@ namespace Microsoft.Azure.Search.Tests
         private const string FakeDescription = "Some data source";
 
         [Fact]
-        [LiveTest]
         public void CreateDataSourceReturnsCorrectDefinition()
         {
             Run(() => TestAllDataSourceTypes(CreateAndValidateDataSource));
         }
 
         [Fact]
-        [LiveTest]
         public void CreateDataSourceFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -44,14 +41,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetDataSourceReturnsCorrectDefinition()
         {
             Run(() => TestAllDataSourceTypes(CreateAndGetDataSource));
         }
 
         [Fact]
-        [LiveTest]
         public void GetDataSourceThrowsOnNotFound()
         {
             Run(() =>
@@ -65,7 +60,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUpdateDataSource()
         {
             Run(() =>
@@ -91,7 +85,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateCreatesWhenDataSourceDoesNotExist()
         {
             Run(() =>
@@ -107,7 +100,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateDataSourceIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -120,7 +112,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateDataSourceIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -132,7 +123,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateDataSourceIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -145,7 +135,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateDataSourceIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -157,7 +146,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateDataSourceIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -170,7 +158,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void UpdateDataSourceIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -183,7 +170,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -201,7 +187,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -243,7 +228,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanCreateAndListDataSources()
         {
             Run(() =>
@@ -267,7 +251,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ExistsReturnsTrueForExistingDataSource()
         {
             Run(() =>

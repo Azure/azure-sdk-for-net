@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
@@ -20,7 +19,6 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class IndexingTests : SearchTestBase<IndexFixture>
     {
         [Fact]
-        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexDynamicDocuments()
         {
@@ -170,7 +168,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexStaticallyTypedDocuments()
         {
@@ -320,7 +317,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexDocumentsMappedFromStructs()
         {
@@ -470,7 +466,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexDoesNotThrowWhenAllActionsSucceed()
         {
             Run(() =>
@@ -487,7 +482,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexDoesNotThrowWhenDeletingDocumentWithExtraFields()
         {
             Run(() =>
@@ -516,7 +510,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexDoesNotThrowWhenDeletingDynamicDocumentWithExtraFields()
         {
             Run(() =>
@@ -545,7 +538,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanDeleteBatchByKeys()
         {
             Run(() =>
@@ -579,7 +571,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexWithPascalCaseFields()
         {
             Run(() =>
@@ -613,7 +604,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void StaticallyTypedDateTimesRoundTripAsUtc()
         {
             Run(() =>
@@ -648,7 +638,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DynamicDocumentDateTimesRoundTripAsUtc()
         {
             Run(() =>
@@ -683,7 +672,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexWithInvalidDocumentThrowsException()
         {
             Run(() =>
@@ -700,7 +688,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CountingDocsOfNewIndexGivesZero()
         {
             Run(() =>
@@ -712,7 +699,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeDynamicDocuments()
         {
@@ -856,7 +842,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeStaticallyTypedDocuments()
         {
@@ -999,7 +984,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanSetExplicitNullsInStaticallyTypedDocuments()
         {
             Run(() =>
@@ -1147,7 +1131,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexAndRetrieveModelWithExtraProperties()
         {
             Run(() =>
@@ -1194,7 +1177,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexAndRetrieveWithCustomContractResolver()
         {
             Run(() =>
@@ -1269,7 +1251,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexAndRetrieveWithCamelCaseContractResolver()
         {
             Run(() =>
@@ -1306,14 +1287,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexAndRetrieveWithCustomConverter()
         {
             Run(() => TestCanIndexAndRetrieveWithCustomConverter<CustomBookWithConverter, CustomAuthorWithConverter>());
         }
 
         [Fact]
-        [LiveTest]
         public void CanIndexAndRetrieveWithCustomConverterViaSettings()
         {
             void CustomizeSettings(SearchIndexClient client)
@@ -1329,7 +1308,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUseIndexWithReservedName()
         {
             Run(() =>
@@ -1358,7 +1336,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanRoundtripBoundaryValues()
         {
             Run(() =>

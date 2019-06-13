@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Serialization;
     using Xunit;
@@ -311,7 +310,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void FieldBuilderCreatesIndexEquivalentToManuallyDefinedIndex()
         {
             Run(() =>

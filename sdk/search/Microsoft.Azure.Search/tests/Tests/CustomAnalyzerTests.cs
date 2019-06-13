@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Search.Tests
     using System.Reflection;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Xunit;
 
     public sealed class CustomAnalyzerTests : SearchTestBase<IndexFixture>
     {
         [Fact]
-        [LiveTest]
         public void CanSearchWithCustomAnalyzer()
         {
             Run(() =>
@@ -66,7 +64,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUseAllAnalyzerNamesInIndexDefinition()
         {
             Run(() =>
@@ -116,7 +113,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanAnalyze()
         {
             Run(() =>
@@ -156,7 +152,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanAnalyzeWithAllPossibleNames()
         {
             Run(() =>
@@ -198,7 +193,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void AddingCustomAnalyzerThrowsCloudExceptionByDefault()
         {
             Run(() =>
@@ -217,7 +211,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanAddCustomAnalyzerWithIndexDowntime()
         {
             Run(() =>
@@ -238,7 +231,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanCreateAllAnalysisComponents()
         {
             Run(() =>
@@ -509,7 +501,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUseAllAnalysisComponentNames()
         {
             Run(() => 
@@ -532,7 +523,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUseAllRegexFlags()
         {
             Run(() =>
@@ -550,7 +540,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanUseAllAnalysisComponentOptions()
         {
             Run(() =>

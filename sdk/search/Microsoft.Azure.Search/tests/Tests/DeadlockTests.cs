@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System.Linq;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Xunit;
 
@@ -18,7 +17,6 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class DeadlockTests : SearchTestBase<DocumentsFixture>
     {
         [Fact]
-        [LiveTest]
         public void AutocompleteWillNotDeadlock()
         {
             Run(() =>
@@ -35,7 +33,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ContinueSearchWillNotDeadlock()
         {
             Run(() =>
@@ -57,7 +54,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CountWillNotDeadlock()
         {
             Run(() =>
@@ -68,7 +64,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetWillNotDeadlock()
         {
             Run(() =>
@@ -83,7 +78,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexingWillNotDeadlock()
         {
             Run(() =>
@@ -96,7 +90,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void SearchWillNotDeadlock()
         {
             Run(() =>
@@ -113,7 +106,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void SuggestWillNotDeadlock()
         {
             Run(() =>

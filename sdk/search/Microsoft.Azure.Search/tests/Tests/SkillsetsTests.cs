@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Xunit;
@@ -27,7 +26,6 @@ namespace Microsoft.Azure.Search.Tests
         public const string RootPathString = "/document";
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
         {
             Run(() =>
@@ -40,7 +38,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionWithDefaultSettings()
         {
             Run(() =>
@@ -57,7 +54,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionOcrHandwritingSentiment()
         {
             Run(() =>
@@ -70,7 +66,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetThrowsExceptionWithInvalidLanguageSelection()
         {
             Run(() =>
@@ -83,7 +78,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionImageAnalysisKeyPhrase()
         {
             Run(() =>
@@ -94,7 +88,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionLanguageDetection()
         {
             Run(() =>
@@ -105,7 +98,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionMergeText()
         {
             Run(() =>
@@ -116,7 +108,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionOcrEntity()
         {
             Run(() =>
@@ -128,7 +119,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionOcrShaper()
         {
             Run(() =>
@@ -139,7 +129,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionOcrSplitText()
         {
             Run(() =>
@@ -153,7 +142,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateCreatesWhenSkillsetDoesNotExist()
         {
             Run(() =>
@@ -169,7 +157,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateSkillsetReturnsCorrectDefinitionWithCognitiveServicesDefault()
         {
             Run(() =>
@@ -180,7 +167,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CreateOrUpdateUpdatesWhenSkillsetExists()
         {
             Run(() =>
@@ -201,7 +187,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetOcrSkillsetReturnsCorrectDefinition()
         {
             Run(() =>
@@ -212,7 +197,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetOcrSkillsetWithShouldDetectOrientationReturnsCorrectDefinition()
         {
             Run(() =>
@@ -223,7 +207,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void GetSkillsetThrowsOnNotFound()
         {
             Run(() =>
@@ -237,7 +220,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void DeleteSkillsetIsIdempotent()
         {
             Run(() =>
@@ -263,7 +245,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ExistsReturnsFalseForNonExistingSkillset()
         {
             Run(() =>
@@ -274,7 +255,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void ExistsReturnsTrueForExistingSkillset()
         {
             Run(() =>

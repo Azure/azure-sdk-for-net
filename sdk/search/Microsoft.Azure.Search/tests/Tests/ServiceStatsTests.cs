@@ -5,14 +5,12 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Xunit;
 
     public sealed class ServiceStatsTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
-        [LiveTest]
         public void GetServiceStatsReturnsCorrectDefinition()
         {
             Run(() =>

@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using System.Net.Http;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
     using Xunit;
@@ -16,7 +15,6 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class SearchIndexClientTests : SearchTestBase<IndexFixture>
     {
         [Fact]
-        [LiveTest]
         public void RequestIdIsReturnedInResponse()
         {
             Run(() =>
@@ -50,7 +48,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanChangeIndexAfterConstructionWithoutServiceName()
         {
             Run(() =>

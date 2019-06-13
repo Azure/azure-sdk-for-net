@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using System.Net.Http;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Infrastructure;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -18,7 +17,6 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class SearchServiceClientTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
-        [LiveTest]
         public void RequestIdIsReturnedInResponse()
         {
             Run(() =>
@@ -37,7 +35,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanGetAnIndexClient()
         {
             Run(() =>
@@ -66,7 +63,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void IndexClientHasSameTimeoutAsSearchClient()
         {
             Run(() =>
@@ -105,7 +101,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        [LiveTest]
         public void CanGetAnIndexClientAfterUsingServiceClient()
         {
             Run(() =>
