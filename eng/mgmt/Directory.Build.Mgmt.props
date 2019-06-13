@@ -1,0 +1,10 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(RepoRoot)\tools\bootstrapTools\bootstrap.targets" />
+  <Import Project="CI.Bootstrap.targets" Sdk="Microsoft.Internal.NetSdkBuild.Mgmt.Tools" Version="0.10.0" />
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(pkg_root_RepoToolsDir)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+</Project>

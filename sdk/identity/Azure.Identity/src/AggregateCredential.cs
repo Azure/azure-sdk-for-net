@@ -30,35 +30,25 @@ namespace Azure.Identity
             _sources = sources;
         }
 
-        public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            string token = null;
+            AccessToken token = new AccessToken();
 
-            for (int i = 0; i < _sources.Length && token == null; i++)
+            for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
                 token = _sources[i].GetToken(scopes, cancellationToken);
-            }
-
-            if (token == null)
-            {
-                throw new InvalidOperationException("No valid credentials were found, please check the supplied credential sources and your configuration.");
             }
 
             return token;
         }
 
-        public override async ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            string token = null;
+            AccessToken token = new AccessToken();
 
-            for(int i = 0; i < _sources.Length && token == null; i++)
+            for(int i = 0; i < _sources.Length && token.Token == null; i++)
             {
                 token = await _sources[i].GetTokenAsync(scopes, cancellationToken);
-            }
-
-            if (token == null)
-            {
-                throw new InvalidOperationException("No valid credentials were found, please check the supplied credential sources and your configuration.");
             }
 
             return token;

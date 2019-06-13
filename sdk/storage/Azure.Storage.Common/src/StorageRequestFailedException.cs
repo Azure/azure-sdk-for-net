@@ -70,7 +70,7 @@ namespace Azure.Storage
         /// <returns>A new StorageRequestFailedException.</returns>
         public static async Task<StorageRequestFailedException> CreateAsync(Response response, string message)
         {
-            message = await ResponseExceptionExtensionsExtensions.CreateRequestFailedMessageAsync(message, response, true).ConfigureAwait(false);
+            message = await ResponseExceptionExtensions.CreateRequestFailedMessageAsync(message, response, true).ConfigureAwait(false);
             return new StorageRequestFailedException(response.Status, message, GetRequestId(response));
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Storage
         /// <param name="message">Summary of the failure.</param>
         /// <returns>The request failure message.</returns>
         private static string CreateMessage(Response response, string message)
-            => ResponseExceptionExtensionsExtensions.CreateRequestFailedMessageAsync(message, response, false).GetAwaiter().GetResult();
+            => ResponseExceptionExtensions.CreateRequestFailedMessageAsync(message, response, false).GetAwaiter().GetResult();
 
         /// <summary>
         /// Gets the x-ms-request-id header that uniquely identifies the

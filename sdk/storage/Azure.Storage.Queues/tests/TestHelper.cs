@@ -57,7 +57,7 @@ namespace Azure.Storage.Test
 
             service = service ?? GetServiceClient_SharedKey();
 
-            var result = new DisposingQueue(service.GetQueueClient(containerName), metadata ?? new Dictionary<string, string>());
+            var result = new DisposingQueue(service.GetQueueClient(containerName), metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
 
             queue = result.QueueClient;
 

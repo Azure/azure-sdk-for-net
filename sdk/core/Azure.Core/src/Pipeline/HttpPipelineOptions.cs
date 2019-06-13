@@ -4,18 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
-    public class HttpClientOptions
+    public abstract class ClientOptions
     {
         private HttpPipelineTransport _transport = HttpClientTransport.Shared;
 
-        public HttpClientOptions()
+        protected ClientOptions()
         {
-            TelemetryPolicy = new TelemetryPolicy(GetType().Assembly);
+            (string name, string version)= GetComponentNameAndVersion();
+
+            TelemetryPolicy = new TelemetryPolicy(name, version);
             LoggingPolicy = LoggingPolicy.Shared;
+            RetryPolicy = new RetryPolicy();
         }
 
         public HttpPipelineTransport Transport {
@@ -27,24 +31,40 @@ namespace Azure.Core.Pipeline
 
         public LoggingPolicy LoggingPolicy { get; set; }
 
+        public RetryPolicy RetryPolicy { get; set; }
+
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
-        public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
-
-        public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
-
-        public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
-
-        public void AddService(object service, Type type = null)
+        public void AddPolicy(HttpPipelinePosition position, HttpPipelinePolicy policy)
         {
-            if (service == null) throw new ArgumentNullException(nameof(service));
-
-            if (!(ServiceProvider is DictionaryServiceProvider dictionaryServiceProvider))
+            switch (position)
             {
-                ServiceProvider = dictionaryServiceProvider = new DictionaryServiceProvider();
+                case HttpPipelinePosition.PerCall:
+                    PerCallPolicies.Add(policy);
+                    break;
+                case HttpPipelinePosition.PerRetry:
+                    PerRetryPolicies.Add(policy);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(position), position, null);
+            }
+        }
+
+        internal IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+
+        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
+
+        private (string ComponentName, string ComponentVersion) GetComponentNameAndVersion()
+        {
+            Assembly clientAssembly = GetType().Assembly;
+            AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
             }
 
-            dictionaryServiceProvider.Add(service, type != null ? type : service.GetType());
+            return (componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString());
         }
 
         #region nobody wants to see these
@@ -57,28 +77,6 @@ namespace Azure.Core.Pipeline
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
         #endregion
-
-        private sealed class DictionaryServiceProvider : IServiceProvider
-        {
-            Dictionary<Type, object> _services = new Dictionary<Type, object>();
-
-            public object GetService(Type serviceType)
-            {
-                _services.TryGetValue(serviceType, out var service);
-                return service;
-            }
-
-            internal void Add(object service, Type type)
-                => _services.Add(type, service);
-        }
-
-        internal sealed class EmptyServiceProvider : IServiceProvider
-        {
-            public static IServiceProvider Singleton { get; } = new EmptyServiceProvider();
-            private EmptyServiceProvider() { }
-
-            public object GetService(Type serviceType) => null;
-        }
     }
 }
 

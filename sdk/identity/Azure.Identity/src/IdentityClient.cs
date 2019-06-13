@@ -9,6 +9,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,23 +18,24 @@ namespace Azure.Identity
 {
     internal class IdentityClient
     {
+        private static Lazy<IdentityClient> s_sharedClient = new Lazy<IdentityClient>(() => new IdentityClient());
+
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
-        
+        private readonly Uri ImdsEndptoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private readonly string MsiApiVersion = "2018-02-01";
 
         public IdentityClient(IdentityClientOptions options = null)
         {
             _options = options ?? new IdentityClientOptions();
 
-            _pipeline = HttpPipeline.Build(_options,
-                    _options.ResponseClassifier,
-                    _options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
-                    _options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+            _pipeline = HttpPipelineBuilder.Build(_options, bufferResponse: true);
         }
 
-        public async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public static IdentityClient SharedClient { get { return s_sharedClient.Value; } }
+
+
+        public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -50,7 +52,7 @@ namespace Azure.Identity
             }
         }
 
-        public AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -67,11 +69,73 @@ namespace Azure.Identity
             }
         }
 
+        public virtual async Task<AccessToken> AuthenticateManagedIdentityAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
+            {
+                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+
+                    return new Response<AccessToken>(response, result);
+                }
+
+                throw response.CreateRequestFailedException();
+            }
+        }
+
+        public virtual AccessToken AuthenticateManagedIdentity(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateManagedIdentityAuthRequest(scopes, clientId))
+            {
+                var response = _pipeline.SendRequest(request, cancellationToken);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    var result = Deserialize(response.ContentStream);
+
+                    return new Response<AccessToken>(response, result);
+                }
+
+                throw response.CreateRequestFailedException();
+            }
+        }
+
+        private Request CreateManagedIdentityAuthRequest(string[] scopes, string clientId = null)
+        {
+            // covert the scopes to a resource string
+            string resource = ScopeUtilities.ScopesToResource(scopes);
+
+            Request request = _pipeline.CreateRequest();
+
+            request.Method = HttpPipelineMethod.Get;
+
+            request.Headers.Add("Metadata", "true");
+
+            // TODO: support MSI for hosted services
+            request.UriBuilder.Uri = ImdsEndptoint;
+
+            request.UriBuilder.AppendQuery("api-version", MsiApiVersion);
+
+            request.UriBuilder.AppendQuery("resource", Uri.EscapeDataString(resource));
+
+            if (!string.IsNullOrEmpty(clientId))
+            {
+                request.UriBuilder.AppendQuery("client_id", Uri.EscapeDataString(clientId));
+            }
+
+            return request;
+        }
+
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
         {
             Request request = _pipeline.CreateRequest();
 
             request.Method = HttpPipelineMethod.Post;
+
+            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
 
             request.UriBuilder.Uri = _options.AuthorityHost;
 
@@ -79,36 +143,13 @@ namespace Azure.Identity
 
             request.UriBuilder.AppendPath("/oauth2/v2.0/token");
 
-            ReadOnlyMemory<byte> content = Serialize(
-                ("response_type", "token"),
-                ("grant_type", "client_credentials"),
-                ("client_id", clientId),
-                ("client_secret", clientSecret),
-                ("scopes", string.Join(" ", scopes)));
+            var bodyStr = $"response_type=token&grant_type=client_credentials&client_id={Uri.EscapeDataString(clientId)}&client_secret={Uri.EscapeDataString(clientSecret)}&scope={Uri.EscapeDataString(string.Join(" ", scopes))}";
+
+            ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
 
             request.Content = HttpPipelineRequestContent.Create(content);
 
             return request;
-        }
-
-        private ReadOnlyMemory<byte> Serialize(params (string, string)[] bodyArgs)
-        {
-            var buff = new byte[1024];
-
-            var writer = new FixedSizedBufferWriter(buff);
-
-            var json = new Utf8JsonWriter(writer);
-
-            json.WriteStartObject();
-
-            foreach (var prop in bodyArgs)
-            {
-                json.WriteString(prop.Item1, prop.Item2);
-            }
-
-            json.WriteEndObject();
-
-            return buff.AsMemory(0, (int)json.BytesWritten);
         }
 
         private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
@@ -144,33 +185,6 @@ namespace Azure.Identity
             }
 
             return new AccessToken(accessToken, expiresOn);
-        }
-
-        // TODO (pri 3): CoreFx will soon have a type like this. We should remove this one then.
-        internal class FixedSizedBufferWriter : IBufferWriter<byte>
-        {
-            private readonly byte[] _buffer;
-            private int _count;
-
-            public FixedSizedBufferWriter(byte[] buffer)
-            {
-                _buffer = buffer;
-            }
-
-            public Memory<byte> GetMemory(int minimumLength = 0) => _buffer.AsMemory(_count);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public Span<byte> GetSpan(int minimumLength = 0) => _buffer.AsSpan(_count);
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public void Advance(int bytes)
-            {
-                _count += bytes;
-                if (_count > _buffer.Length)
-                {
-                    throw new InvalidOperationException("Cannot advance past the end of the buffer.");
-                }
-            }
         }
     }
 }

@@ -10,6 +10,6 @@
 
   <!-- Package references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'!='true'">
-    <PackageReference Include="Azure.Core" Version="1.0.0-preview.5" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 </Project>

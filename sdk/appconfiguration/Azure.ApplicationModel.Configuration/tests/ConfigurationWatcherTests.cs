@@ -17,8 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Helpers()
         {
-            ConfigurationClient client = TestEnvironment.GetClient();
-            var source = new CancellationTokenSource();
+            ConfigurationClient client = new ConfigurationClient(TestEnvironment.GetClientConnectionString());
 
             const int numberOfSettings = 2;
 
@@ -63,7 +62,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.AreEqual(numberOfSettings, changed.Count);
             }
             finally {
-                // delete settings from the service store 
+                // delete settings from the service store
                 foreach (var setting in addedSettings) {
                     var response = await client.DeleteAsync(setting.Key);
                     if (response.Status != 200) {
@@ -76,7 +75,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task WatcherSample()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 

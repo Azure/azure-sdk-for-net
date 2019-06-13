@@ -58,6 +58,7 @@ namespace Microsoft.Azure.EventHubs
         static readonly string OperationTimeoutConfigName = "OperationTimeout";
         static readonly string TransportTypeConfigName = "TransportType";
         static readonly string SharedAccessSignatureConfigName = "SharedAccessSignature";
+        static readonly string AuthenticationConfigName = "Authentication";
 
         /// <summary>
         /// Build a connection string consumable by <see cref="EventHubClient.CreateFromConnectionString(string)"/>
@@ -195,6 +196,11 @@ namespace Microsoft.Azure.EventHubs
         public TransportType TransportType { get; set; }
 
         /// <summary>
+        /// Enables Azure Active Directory Managed Identity authentication when set to 'Managed Identity'
+        /// </summary>
+        public string Authentication { get; set; }
+
+        /// <summary>
         /// Creates a cloned object of the current <see cref="EventHubsConnectionStringBuilder"/>.
         /// </summary>
         /// <returns>A new <see cref="EventHubsConnectionStringBuilder"/></returns>
@@ -248,6 +254,11 @@ namespace Microsoft.Azure.EventHubs
                 connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
             }
 
+            if (!string.IsNullOrWhiteSpace(this.Authentication))
+            {
+                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
+            }
+
             return connectionStringBuilder.ToString();
         }
 
@@ -270,14 +281,14 @@ namespace Microsoft.Azure.EventHubs
                 {
                     throw Fx.Exception.Argument(
                         string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName));
+                        Resources.AuthKeyShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName));
                 }
 
                 if (hasSasKey)
                 {
                     throw Fx.Exception.Argument(
                         string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyConfigName));
+                        Resources.AuthKeyShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyConfigName));
                 }
             }
 
@@ -286,6 +297,21 @@ namespace Microsoft.Azure.EventHubs
                 throw Fx.Exception.Argument(
                     string.Format("{0},{1}", SharedAccessKeyNameConfigName, SharedAccessKeyConfigName),
                     Resources.ArgumentInvalidCombination.FormatForUser(SharedAccessKeyNameConfigName, SharedAccessKeyConfigName));
+            }
+
+            var hasAuthentication = !string.IsNullOrWhiteSpace(this.Authentication);
+            if (hasAuthentication && hasSharedAccessSignature)
+            {
+                throw Fx.Exception.Argument(
+                    string.Format("{0},{1}", AuthenticationConfigName, SharedAccessSignatureConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessSignatureConfigName));
+            }
+
+            if (hasAuthentication && hasSasKeyName)
+            {
+                throw Fx.Exception.Argument(
+                    string.Format("{0},{1}", AuthenticationConfigName, SharedAccessKeyNameConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessKeyNameConfigName));
             }
         }
 
@@ -331,6 +357,10 @@ namespace Microsoft.Azure.EventHubs
                 else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.TransportType = (TransportType)Enum.Parse(typeof(TransportType), value);
+                }
+                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.Authentication = value;
                 }
                 else
                 {

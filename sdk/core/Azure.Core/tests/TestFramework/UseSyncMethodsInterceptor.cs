@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
@@ -32,6 +35,7 @@ namespace Azure.Core.Testing
             .GetMethods(BindingFlags.Static | BindingFlags.Public)
             .Single(m => m.Name == "FromException" && m.IsGenericMethod);
 
+        [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
             var parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
@@ -68,14 +72,16 @@ namespace Azure.Core.Testing
                                                     + "Make sure both methods have the same signature including the cancellationToken parameter");
             }
 
+            var returnType = methodInfo.ReturnType;
+            bool returnsIEnumerable = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+
             try
             {
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
-                var returnType = methodInfo.ReturnType;
 
                 // Map IEnumerable to IAsyncEnumerable
-                if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                if (returnsIEnumerable)
                 {
                     invocation.ReturnValue = Activator.CreateInstance(
                         typeof(AsyncEnumerableWrapper<>).MakeGenericType(returnType.GenericTypeArguments), new[] { result });
@@ -87,7 +93,14 @@ namespace Azure.Core.Testing
             }
             catch (TargetInvocationException exception)
             {
-                invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new [] { exception.InnerException });
+                if (returnsIEnumerable)
+                {
+                    ExceptionDispatchInfo.Capture(exception.InnerException).Throw();
+                }
+                else
+                {
+                    invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new [] { exception.InnerException });
+                }
             }
         }
 

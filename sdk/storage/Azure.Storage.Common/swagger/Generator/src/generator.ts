@@ -426,7 +426,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`${valueName}.${naming.property(response.bodyClientName)} = ${responseName}.ContentStream; // You should manually wrap with RetriableStream!`);
             } else if (operation.produces === `xml`) {
                 // Deserialize XML
-                w.line(`System.Xml.Linq.XDocument ${xmlName} = System.Xml.Linq.XDocument.Load(${responseName}.ContentStream);`);
+                w.line(`System.Xml.Linq.XDocument ${xmlName} = System.Xml.Linq.XDocument.Load(${responseName}.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);`);
                 if (isObjectType(model) && model.deserialize) {
                     w.line(`${types.getName(model)} ${valueName} = ${types.getName(model)}.FromXml(${xmlName}.Root);`);
                 } else {
@@ -496,7 +496,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             for (const header of headers) {
                 if (isPrimitiveType(header.model) && header.model.type === 'dictionary') {
                     const prefix = header.model.dictionaryPrefix || `x-ms-meta-`;
-                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>();`);
+                    w.line(`${valueName}.${naming.pascalCase(header.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
                     w.line(`foreach (Azure.Core.Pipeline.HttpHeader ${pairName} in ${responseName}.Headers)`);
                     w.scope(`{`, `}`, () => {
                         w.line(`if (${pairName}.Name.StartsWith("${prefix}", System.StringComparison.InvariantCulture))`);
@@ -744,7 +744,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         if (isObjectType(property.model)) {
                             w.line(`new ${types.getName(property.model)}();`);
                         } else if (property.model.type === `dictionary`) {
-                            w.line(`new System.Collections.Generic.Dictionary<string, string>();`);
+                            w.line(`new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
                         } else if (isPrimitiveType(property.model) && property.model.itemType) {
                             w.line(`new System.Collections.Generic.List<${types.getName(property.model.itemType)}>();`);
                         } else if (isPrimitiveType(property.model) && property.model.type === `byte`) {
@@ -945,7 +945,7 @@ function generateDeserialize(w: IndentWriter, service: IService, type: IObjectTy
                     throw `Only string dictionaries are supported for the moment`;
                 }
                 const pairName = `_pair`;
-                w.line(`${valueName}.${naming.property(property.clientName)} = new System.Collections.Generic.Dictionary<string, string>();`);
+                w.line(`${valueName}.${naming.property(property.clientName)} = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);`);
                 w.line(`${target} = ${element};`);
                 w.line(`if (${target} != null)`);
                 w.scope('{', '}', () => {
