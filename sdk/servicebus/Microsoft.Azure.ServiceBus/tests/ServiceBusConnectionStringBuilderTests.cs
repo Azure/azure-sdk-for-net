@@ -192,13 +192,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        public void InvalidAadConnectionStringTest()
+        [Theory]
+        [InlineData("Endpoint=sb://test.servicebus.windows.net/;authentication=Managed Identity;SHAREDACCESSKEYNAME=val")]
+        [InlineData("Endpoint=sb://test.servicebus.windows.net/;AUTHENTICATION=Managed Identity;SharedAccessSignature=sig")]
+        public void InvalidAzureActiveDirectoryTokenProviderConnectionStringTest(string connectionString)
         {
-            var connectionString = "Endpoint=sb://test.servicebus.windows.net/;authentication=Managed Identity;SHAREDACCESSKEYNAME=val";
-            Assert.Throws<ArgumentException>(() => new ServiceBusConnectionStringBuilder(connectionString));
-
-            connectionString = "Endpoint=sb://test.servicebus.windows.net/;AUTHENTICATION=Managed Identity;SharedAccessSignature=sig";
             Assert.Throws<ArgumentException>(() => new ServiceBusConnectionStringBuilder(connectionString));
         }
     }
