@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class SynonymMapTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateSynonymMapReturnsCorrectDefinition()
         {
             Run(() =>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateSynonymMapFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetSynonymMapReturnsCorrectDefinition()
         {
             Run(() =>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetSynonymMapThrowsOnNotFound()
         {
             Run(() =>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUpdateSynonymMap()
         {
             Run(() =>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateCreatesWhenSynonymMapDoesNotExist()
         {
             Run(() =>
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateSynonymMapIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateSynonymMapIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateSynonymMapIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateSynonymMapIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateSynonymMapIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateSynonymMapIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteSynonymMapIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteSynonymMapIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteSynonymMapIsIdempotent()
         {
             Run(() =>
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanCreateAndListSynonymMaps()
         {
             Run(() =>
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsTrueForExistingSynonymMap()
         {
             Run(() =>
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsFalseForNonExistingSynonymMap()
         {
             Run(() =>

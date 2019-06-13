@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class IndexingTests : SearchTestBase<IndexFixture>
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexDynamicDocuments()
         {
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexStaticallyTypedDocuments()
         {
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanIndexDocumentsMappedFromStructs()
         {
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void IndexDoesNotThrowWhenAllActionsSucceed()
         {
             Run(() =>
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void IndexDoesNotThrowWhenDeletingDocumentWithExtraFields()
         {
             Run(() =>
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void IndexDoesNotThrowWhenDeletingDynamicDocumentWithExtraFields()
         {
             Run(() =>
@@ -545,14 +545,14 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanDeleteBatchByKeys()
         {
             Run(() =>
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
 
-                var uploadBatch = 
+                var uploadBatch =
                     IndexBatch.Upload(
                         new[]
                         {
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexWithPascalCaseFields()
         {
             Run(() =>
@@ -591,8 +591,8 @@ namespace Microsoft.Azure.Search.Tests
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
                 var batch =
-                    IndexBatch.Upload(new[] 
-                    { 
+                    IndexBatch.Upload(new[]
+                    {
                         new Book()
                         {
                             ISBN = "123",
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void StaticallyTypedDateTimesRoundTripAsUtc()
         {
             Run(() =>
@@ -630,8 +630,8 @@ namespace Microsoft.Azure.Search.Tests
 
                 var batch =
                     IndexBatch.Upload(
-                        new[] 
-                        { 
+                        new[]
+                        {
                             new Book() { ISBN = "1", PublishDate = utcDateTime },
                             new Book() { ISBN = "2", PublishDate = unspecifiedDateTime }
                         });
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DynamicDocumentDateTimesRoundTripAsUtc()
         {
             Run(() =>
@@ -665,8 +665,8 @@ namespace Microsoft.Azure.Search.Tests
 
                 var batch =
                     IndexBatch.Upload(
-                        new[] 
-                        { 
+                        new[]
+                        {
                             new Document() { ["ISBN"] = "1", ["PublishDate"] = utcDateTime },
                             new Document() { ["ISBN"] = "2", ["PublishDate"] = unspecifiedDateTime }
                         });
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void IndexWithInvalidDocumentThrowsException()
         {
             Run(() =>
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CountingDocsOfNewIndexGivesZero()
         {
             Run(() =>
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeDynamicDocuments()
         {
@@ -856,7 +856,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeStaticallyTypedDocuments()
         {
@@ -999,7 +999,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSetExplicitNullsInStaticallyTypedDocuments()
         {
             Run(() =>
@@ -1147,7 +1147,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexAndRetrieveModelWithExtraProperties()
         {
             Run(() =>
@@ -1172,7 +1172,7 @@ namespace Microsoft.Azure.Search.Tests
     },
     ""Rating"": 5
 }";
-                
+
                 // Real customers would just use JsonConvert, but that would break the test.
                 var expectedBook = SafeJsonConvert.DeserializeObject<ReviewedBook>(BookJson);
 
@@ -1194,7 +1194,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexAndRetrieveWithCustomContractResolver()
         {
             Run(() =>
@@ -1269,7 +1269,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexAndRetrieveWithCamelCaseContractResolver()
         {
             Run(() =>
@@ -1306,14 +1306,14 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexAndRetrieveWithCustomConverter()
         {
             Run(() => TestCanIndexAndRetrieveWithCustomConverter<CustomBookWithConverter, CustomAuthorWithConverter>());
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanIndexAndRetrieveWithCustomConverterViaSettings()
         {
             void CustomizeSettings(SearchIndexClient client)
@@ -1329,7 +1329,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUseIndexWithReservedName()
         {
             Run(() =>
@@ -1358,7 +1358,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanRoundtripBoundaryValues()
         {
             Run(() =>
@@ -1474,11 +1474,11 @@ namespace Microsoft.Azure.Search.Tests
                 for (int i = 0; i < actualDocs.Length; i++)
                 {
                     Assert.Equal(expectedDocs[i], actualDocs[i]);
-                }                
+                }
             });
         }
 
-        private void TestCanIndexAndRetrieveWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null) 
+        private void TestCanIndexAndRetrieveWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
             where TBook : CustomBookBase<TAuthor>, new()
             where TAuthor : CustomAuthor, new()
         {
@@ -1537,9 +1537,9 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         private static void AssertIndexActionFailed(
-            string key, 
-            IndexingResult result, 
-            string expectedMessage, 
+            string key,
+            IndexingResult result,
+            string expectedMessage,
             int expectedStatusCode)
         {
             Assert.Equal(key, result.Key);

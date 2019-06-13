@@ -11,147 +11,147 @@ namespace Microsoft.Azure.Search.Tests
     public class PostSearchTests : SearchTests
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchStaticallyTypedDocuments()
         {
             Run(TestCanSearchStaticallyTypedDocuments);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchDynamicDocuments()
         {
             Run(TestCanSearchDynamicDocuments);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SearchThrowsWhenRequestIsMalformed()
         {
             Run(TestSearchThrowsWhenRequestIsMalformed);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DefaultSearchModeIsAny()
         {
             Run(TestDefaultSearchModeIsAny);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithSearchModeAll()
         {
             Run(TestCanSearchWithSearchModeAll);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetResultCountInSearch()
         {
             Run(TestCanGetResultCountInSearch);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanFilter()
         {
             Run(TestCanFilter);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUseHitHighlighting()
         {
             Run(TestCanUseHitHighlighting);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void OrderByProgressivelyBreaksTies()
         {
             Run(TestOrderByProgressivelyBreaksTies);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SearchWithoutOrderBySortsByScore()
         {
             Run(TestSearchWithoutOrderBySortsByScore);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithSelectedFields()
         {
             Run(TestCanSearchWithSelectedFields);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithLuceneSyntax()
         {
             Run(TestCanSearchWithLuceneSyntax);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithRegex()
         {
             Run(TestCanSearchWithRegex);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithSynonyms()
         {
             Run(TestCanSearchWithSynonyms);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithSpecialCharsInRegex()
         {
             Run(TestCanSearchWithEscapedSpecialCharsInRegex);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SearchThrowsWhenSpecialCharInRegexIsUnescaped()
         {
             Run(TestSearchThrowsWhenSpecialCharInRegexIsUnescaped);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUseTopAndSkipForClientSidePaging()
         {
             Run(TestCanUseTopAndSkipForClientSidePaging);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SearchWithScoringProfileBoostsScore()
         {
             Run(TestSearchWithScoringProfileBoostsScore);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithRangeFacets()
         {
             Run(TestCanSearchWithRangeFacets);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithValueFacets()
         {
             Run(TestCanSearchWithValueFacets);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanContinueSearchForStaticallyTypedDocuments()
         {
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanContinueSearchForDynamicDocuments()
         {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanContinueSearchWithoutTop()
         {
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanSearchWithMinimumCoverage()
         {
@@ -183,49 +183,49 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithDateTimeInStaticModel()
         {
             Run(TestCanSearchWithDateTimeInStaticModel);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanRoundTripNonNullableValueTypes()
         {
             Run(TestCanRoundTripNonNullableValueTypes);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void NullCannotBeConvertedToValueType()
         {
             Run(TestNullCannotBeConvertedToValueType);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanFilterNonNullableType()
         {
             Run(TestCanFilterNonNullableType);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithCustomContractResolver()
         {
             Run(TestCanSearchWithCustomContractResolver);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithCustomConverterViaSettings()
         {
             Run(TestCanSearchWithCustomConverterViaSettings);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSearchWithCustomConverter()
         {
             Run(TestCanSearchWithCustomConverter);

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class LookupTests : SearchTestBase<IndexFixture>
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanGetDynamicDocument()
         {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetDynamicDocumentWithNullOrEmptyValues()
         {
             Run(() =>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetDynamicDocumentWithEmptyObjectsReturnsObjectsFullOfNulls()
         {
             Run(() =>
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void EmptyDynamicObjectsOmittedFromCollectionOnGetWhenSubFieldsSelected()
         {
             Run(() =>
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void EmptyDynamicObjectsInCollectionExpandedOnGetWhenCollectionFieldSelected()
         {
             Run(() =>
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetDynamicDocumentCannotAlwaysDetermineCorrectType()
         {
             Run(() =>
@@ -336,14 +336,14 @@ namespace Microsoft.Azure.Search.Tests
 
                 // Select only the fields set in the test case so we don't get superfluous data back.
                 IEnumerable<string> selectedFields = SelectPopulatedFields(indexedDoc);
-                
+
                 Document actualDoc = client.Documents.Get("1", selectedFields);
                 Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanGetStaticallyTypedDocument()
         {
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanGetDocumentMappedToStruct()
         {
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetDocumentWithBase64EncodedKey()
         {
             Run(() =>
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void RoundTrippingDateTimeOffsetNormalizesToUtc()
         {
             Run(() =>
@@ -525,7 +525,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetStaticallyTypedDocumentWithNullOrEmptyValues()
         {
             Run(() =>
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetStaticallyTypedDocumentWithPascalCaseFields()
         {
             Run(() =>
@@ -595,7 +595,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetStaticallyTypedDocumentSetsUnselectedFieldsToNull()
         {
             Run(() =>
@@ -683,7 +683,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetDocumentThrowsWhenDocumentNotFound()
         {
             Run(() =>
@@ -694,7 +694,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetDocumentThrowsWhenRequestIsMalformed()
         {
             Run(() =>
@@ -721,7 +721,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanRoundtripStaticallyTypedPrimitiveCollections()
         {
             Run(() =>
@@ -768,7 +768,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DynamicallyTypedPrimitiveCollectionsDoNotAllRoundtripCorrectly()
         {
             Run(() =>
@@ -838,7 +838,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void EmptyDynamicallyTypedPrimitiveCollectionsRoundtripAsObjectArrays()
         {
             Run(() =>

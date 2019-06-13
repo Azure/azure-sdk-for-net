@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Tests
     public class GetSuggestTests : SuggestTests
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanSuggestStaticallyTypedDocuments()
         {
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanSuggestDynamicDocuments()
         {
@@ -27,77 +27,77 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SuggestThrowsWhenRequestIsMalformed()
         {
             Run(TestSuggestThrowsWhenRequestIsMalformed);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SuggestThrowsWhenGivenBadSuggesterName()
         {
             Run(TestSuggestThrowsWhenGivenBadSuggesterName);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void FuzzyIsOffByDefault()
         {
             Run(TestFuzzyIsOffByDefault);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanGetFuzzySuggestions()
         {
             Run(TestCanGetFuzzySuggestions);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanFilter()
         {
             Run(TestCanFilter);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUseHitHighlighting()
         {
             Run(TestCanUseHitHighlighting);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void OrderByProgressivelyBreaksTies()
         {
             Run(TestOrderByProgressivelyBreaksTies);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void TopTrimsResults()
         {
             Run(TestTopTrimsResults);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSuggestWithSelectedFields()
         {
             Run(TestCanSuggestWithSelectedFields);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void SearchFieldsExcludesFieldsFromSuggest()
         {
             Run(TestSearchFieldsExcludesFieldsFromSuggest);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanSuggestWithMinimumCoverage()
         {
@@ -105,28 +105,28 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSuggestWithDateTimeInStaticModel()
         {
             Run(TestCanSuggestWithDateTimeInStaticModel);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSuggestWithCustomContractResolver()
         {
             Run(TestCanSuggestWithCustomContractResolver);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSuggestWithCustomConverterViaSettings()
         {
             Run(TestCanSuggestWithCustomConverterViaSettings);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanSuggestWithCustomConverter()
         {
             Run(TestCanSuggestWithCustomConverter);

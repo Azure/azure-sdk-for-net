@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateIndexReturnsCorrectDefinition()
         {
             Run(() =>
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Search.Tests
                 Index index = CreateTestIndex();
 
                 Index createdIndex = searchClient.Indexes.Create(index);
-                
+
                 AssertIndexesEqual(index, createdIndex);
             });
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateIndexReturnsCorrectDefaultValues()
         {
             Run(() =>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 Index inputIndex = CreateTestIndex();
-                
+
                 // Default values for field properties are tested elsewhere.
                 inputIndex.CorsOptions = new CorsOptions() { AllowedOrigins = new[] { "*" } };
                 inputIndex.ScoringProfiles = new[]
@@ -180,9 +180,9 @@ namespace Microsoft.Azure.Search.Tests
                         Functions = new ScoringFunction[]
                         {
                             new MagnitudeScoringFunction(
-                                "rating", 
-                                boost: 2.0, 
-                                boostingRangeStart: 1, 
+                                "rating",
+                                boost: 2.0,
+                                boostingRangeStart: 1,
                                 boostingRangeEnd: 4)
                         }
                     }
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateIndexFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetIndexReturnsCorrectDefinition()
         {
             Run(() =>
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetIndexThrowsOnNotFound()
         {
             Run(() =>
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanUpdateIndexDefinition()
         {
@@ -286,13 +286,13 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanAddSynonymFieldProperty()
         {
             Run(() =>
             {
-                string synonymMapName = "names"; 
+                string synonymMapName = "names";
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 var synonymMap = new SynonymMap(name: synonymMapName, synonyms: "hotel,motel");
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanUpdateSynonymFieldProperty()
         {
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Search.Tests
                 searchClient.Indexes.Create(index);
 
                 // update an index                
-                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new string [] { };
+                index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new string[] { };
                 Index updateIndex = searchClient.Indexes.CreateOrUpdate(index);
 
                 AssertIndexesEqual(index, updateIndex);
@@ -334,49 +334,49 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateIndexIfNotExistsFailsOnExistingResource()
         {
             Run(() => AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(CreateOrUpdateIndex, CreateTestIndex, MutateIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateIndexIfNotExistsSucceedsOnNoResource()
         {
             Run(() => AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(CreateOrUpdateIndex, CreateTestIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexIfExistsSucceedsOnExistingResource()
         {
             Run(() => AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(CreateOrUpdateIndex, CreateTestIndex, MutateIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexIfExistsFailsOnNoResource()
         {
             Run(() => AccessConditionTests.UpdateIfExistsFailsOnNoResource(CreateOrUpdateIndex, CreateTestIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() => AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(CreateOrUpdateIndex, CreateTestIndex, MutateIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexIfNotChangedFailsWhenResourceChanged()
         {
             Run(() => AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(CreateOrUpdateIndex, CreateTestIndex, MutateIndex));
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteIndexIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteIndexIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateCreatesWhenIndexDoesNotExist()
         {
             Run(() =>
@@ -420,14 +420,14 @@ namespace Microsoft.Azure.Search.Tests
 
                 Index index = CreateTestIndex();
 
-                AzureOperationResponse<Index> createOrUpdateResponse = 
+                AzureOperationResponse<Index> createOrUpdateResponse =
                     searchClient.Indexes.CreateOrUpdateWithHttpMessagesAsync(index).Result;
                 Assert.Equal(HttpStatusCode.Created, createOrUpdateResponse.Response.StatusCode);
             });
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void DeleteIndexIsIdempotent()
         {
@@ -438,11 +438,11 @@ namespace Microsoft.Azure.Search.Tests
                 Index index = CreateTestIndex();
 
                 // Try delete before the index even exists.
-                AzureOperationResponse deleteResponse = 
+                AzureOperationResponse deleteResponse =
                     searchClient.Indexes.DeleteWithHttpMessagesAsync(index.Name).Result;
                 Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
-                AzureOperationResponse<Index> createResponse = 
+                AzureOperationResponse<Index> createResponse =
                     searchClient.Indexes.CreateWithHttpMessagesAsync(index).Result;
                 Assert.Equal(HttpStatusCode.Created, createResponse.Response.StatusCode);
 
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanCreateAndGetIndexStats()
         {
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanCreateAndDeleteIndex()
         {
             Run(() =>
@@ -486,13 +486,13 @@ namespace Microsoft.Azure.Search.Tests
                 searchClient.Indexes.Create(index);
 
                 searchClient.Indexes.Delete(index.Name);
-                
+
                 Assert.False(searchClient.Indexes.Exists(index.Name));
             });
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanCreateAndListIndexes()
         {
             Run(() =>
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsTrueForExistingIndex()
         {
             Run(() =>
@@ -534,7 +534,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsFalseForNonExistingIndex()
         {
             Run(() =>

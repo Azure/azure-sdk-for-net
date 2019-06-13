@@ -10,126 +10,126 @@ namespace Microsoft.Azure.Search.Tests
     public class PostAutocompleteTests : AutocompleteTests
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteStaticallyTypedDocuments()
         {
             Run(TestAutocompleteStaticallyTypedDocuments);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteThrowsWhenRequestIsMalformed()
         {
             Run(TestAutocompleteThrowsWhenRequestIsMalformed);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutcompleteThrowsWhenGivenBadSuggesterName()
         {
             Run(TestAutcompleteThrowsWhenGivenBadSuggesterName);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteFuzzyIsOffByDefault()
         {
             Run(TestAutocompleteFuzzyIsOffByDefault);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteOneTerm()
         {
             Run(TestAutocompleteOneTerm);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteDefaultsToOneTermMode()
         {
             Run(TestAutocompleteDefaultsToOneTermMode);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteTwoTerms()
         {
             Run(TestAutocompleteTwoTerms);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteOneTermWithContext()
         {
             Run(TestAutocompleteOneTermWithContext);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteOneTermWithFuzzy()
         {
             Run(TestAutocompleteOneTermWithFuzzy);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteTwoTermsWithFuzzy()
         {
             Run(TestAutocompleteTwoTermsWithFuzzy);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteOneTermWithContextWithFuzzy()
         {
             Run(TestAutocompleteOneTermWithContextWithFuzzy);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteCanUseHitHighlighting()
         {
             Run(TestAutocompleteCanUseHitHighlighting);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteTopTrimsResults()
         {
             Run(TestAutocompleteTopTrimsResults);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteWithSelectedFields()
         {
             Run(TestAutocompleteWithSelectedFields);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteWithMultipleSelectedFields()
         {
             Run(TestAutocompleteWithMultipleSelectedFields);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteExcludesFieldsNotInSuggester()
         {
             Run(TestAutocompleteExcludesFieldsNotInSuggester);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteWithFilter()
         {
             Run(TestAutocompleteWithFilter);
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanAutocompleteWithFilterAndFuzzy()
         {
             Run(TestAutocompleteWithFilterAndFuzzy);

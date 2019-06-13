@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class IndexerTests : SearchTestBase<IndexerFixture>
     {
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateIndexerReturnsCorrectDefinition()
         {
             Run(() =>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateIndexerFailsWithUsefulMessageOnUserError()
         {
             Run(() =>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void GetIndexerThrowsOnNotFound()
         {
             Run(() =>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanUpdateIndexer()
         {
             Run(() =>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateCreatesWhenIndexerDoesNotExist()
         {
             Run(() =>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateCreatesWhenIndexerWithSkillsetDoesNotExist()
         {
             Run(() =>
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateIndexerIfNotExistsFailsOnExistingResource()
         {
             Run(() =>
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CreateOrUpdateIndexerIfNotExistsSucceedsOnNoResource()
         {
             Run(() =>
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexerIfExistsSucceedsOnExistingResource()
         {
             Run(() =>
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexerIfExistsFailsOnNoResource()
         {
             Run(() =>
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexerIfNotChangedSucceedsWhenResourceUnchanged()
         {
             Run(() =>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void UpdateIndexerIfNotChangedFailsWhenResourceChanged()
         {
             Run(() =>
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteIndexerIfNotChangedWorksOnlyOnCurrentResource()
         {
             Run(() =>
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteIndexerIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void DeleteIndexerIsIdempotent()
         {
             Run(() =>
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanCreateAndListIndexers()
         {
             Run(() =>
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanRunIndexerAndGetIndexerStatus()
         {
             Run(() =>
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanResetIndexerAndGetIndexerStatus()
         {
             Run(() =>
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsTrueForExistingIndexer()
         {
             Run(() =>
@@ -391,7 +391,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void ExistsReturnsFalseForNonExistingIndexer()
         {
             Run(() =>
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanCreateBlobIndexerWithConfigurationParameters()
         {
             Run(() =>
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-		[LiveTest]
+        [LiveTest]
         public void CanRoundtripIndexerWithFieldMappingFunctions() =>
             Run(() =>
             {
