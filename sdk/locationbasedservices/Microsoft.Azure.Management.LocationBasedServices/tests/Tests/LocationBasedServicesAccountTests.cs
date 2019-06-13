@@ -13,7 +13,7 @@ using System.Linq;
 using System.Net;
 using Xunit;
 
-namespace LocationBasedServicesServices.Tests
+namespace LBS.Tests
 {
     // aad tenant id:   72f988bf-86f1-41af-91ab-2d7cd011db47
     // aad application identity:  26ba1730-4c7c-4099-84b8-ec115a357455

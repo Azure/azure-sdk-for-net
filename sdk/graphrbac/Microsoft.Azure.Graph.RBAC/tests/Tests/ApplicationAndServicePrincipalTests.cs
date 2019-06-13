@@ -10,12 +10,14 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
+using Microsoft.Graph.RBAC.Tests.Infrastructure;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class ApplicationAndServicePrincipalTests : GraphTestBase
     {
         [Fact]
+        [LiveTest]
         public void CRUDApplicationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
 
         [Fact]
+        [LiveTest]
         public void CreateDeleteAppCredentialTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -170,6 +173,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
 
         [Fact]
+        [LiveTest]
         public void GetServicePrincipalsIdByAppIdTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -202,6 +206,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
         }
 
         [Fact]
+        [LiveTest]
         public void CreateDeleteSpCredentialTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -298,6 +303,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
 
         [Fact]
+        [LiveTest]
         public void NegativeCredentialTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -325,7 +331,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
         public void CreateDeleteServicePrincipalTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

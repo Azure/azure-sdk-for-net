@@ -152,6 +152,8 @@ known_presence_issues:
   - ['sdk/frontdoor/Microsoft.Azure.Management.FrontDoor','#5499']
   - ['sdk/mixedreality/Microsoft.Azure.Management.MixedReality','#5499']
   - ['sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics','#5499']
+  - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
+  
 
 known_content_issues:
   - ['README.md','Root readme']
