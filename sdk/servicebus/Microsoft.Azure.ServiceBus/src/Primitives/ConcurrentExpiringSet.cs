@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Concurrent;
     using System.Threading;
     using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     sealed class ConcurrentExpiringSet<TKey>
     {
         readonly ConcurrentDictionary<TKey, DateTime> dictionary;
+        readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
         readonly object cleanupSynObject = new object();
         CancellationTokenSource tokenSource = new CancellationTokenSource(); // doesn't need to be disposed because it doesn't own a timer
         bool cleanupScheduled;
@@ -19,6 +21,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public ConcurrentExpiringSet()
         {
             this.dictionary = new ConcurrentDictionary<TKey, DateTime>();
+            this.dictionaryAsCollection = dictionary;
         }
 
         public void AddOrUpdate(TKey key, DateTime expiration)
@@ -73,10 +76,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             foreach (var kvp in this.dictionary)
             {
-                var key = kvp.Key;
-                if (DateTime.UtcNow > this.dictionary[key])
+                var expiration = kvp.Value;
+                if (DateTime.UtcNow > expiration)
                 {
-                    this.dictionary.TryRemove(key, out _);
+                    this.dictionaryAsCollection.Remove(kvp);
                 }
             }
 
