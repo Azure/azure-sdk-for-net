@@ -37,9 +37,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public void Clear()
         {
-            tokenSource.Cancel();
-            dictionary.Clear();
-            tokenSource = new CancellationTokenSource();
+            this.tokenSource.Cancel();
+            this.dictionary.Clear();
+            this.tokenSource = new CancellationTokenSource();
         }
 
         void ScheduleCleanup(CancellationToken token)
