@@ -25,8 +25,14 @@
         {
             this.testOutputHelper = testOutputHelper;
 
-            this.sourceLocation = @"../../../../../sdk/batch/Microsoft.Azure.Batch/src";
+            this.sourceLocation = GetSourceDirectory();
             this.proxySourceLocation = Path.Combine(this.sourceLocation, GeneratedProtocolFolder);
+        }
+
+        private string GetSourceDirectory([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+        {
+            System.Console.WriteLine($"SFP2: {sourceFilePath}");
+            return Path.Combine(Path.GetDirectoryName(sourceFilePath), "..", "..", "src");
         }
 
         [Fact]
@@ -140,7 +146,7 @@
             //Remove the two we expect
             results.Remove(results.First(r => r.File.Contains("UtilitiesInternal.cs")));
             results.Remove(results.First(r => r.File.Contains("SynchronousMethodExceptionBehavior.cs")));
-            
+
             foreach (SourceParserResult parserResult in results)
             {
                 this.testOutputHelper.WriteLine("Found .Wait or .Result in {0} at {1} -- {2}", parserResult.File, parserResult.LineNumber, parserResult.Match);
@@ -161,7 +167,7 @@
             //\\s+(?<{0}>\\w+?)\\( - find everything after the "new" in the previous part of the expression which is a
             //                       "word" character (alphanumeric), and comes before the next "(" character
             //                       and store it in the group named "ExceptionName"
-                                        
+
             string pattern = string.Format("(?<!//.*?)(throw\\s+?new\\s+(\\w+\\.)*(?<{0}>\\w+?)\\()", exceptionNameCaptureGroup);
 
             return pattern;
