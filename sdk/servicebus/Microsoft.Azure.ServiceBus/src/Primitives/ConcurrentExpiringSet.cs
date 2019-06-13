@@ -5,14 +5,16 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Threading;
     using System.Threading.Tasks;
 
     sealed class ConcurrentExpiringSet<TKey>
     {
         readonly ConcurrentDictionary<TKey, DateTime> dictionary;
         readonly object cleanupSynObject = new object();
+        CancellationTokenSource tokenSource = new CancellationTokenSource(); // doesn't need to be disposed because it doesn't own a timer
         bool cleanupScheduled;
-        static TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
+        static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public void AddOrUpdate(TKey key, DateTime expiration)
         {
             this.dictionary[key] = expiration;
-            this.ScheduleCleanup();
+            this.ScheduleCleanup(tokenSource.Token);
         }
 
         public bool Contains(TKey key)
@@ -30,7 +32,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
         }
 
-        void ScheduleCleanup()
+        public void Clear()
+        {
+            tokenSource.Cancel();
+            dictionary.Clear();
+            tokenSource = new CancellationTokenSource();
+        }
+
+        void ScheduleCleanup(CancellationToken token)
         {
             lock (this.cleanupSynObject)
             {
@@ -40,17 +49,26 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 }
 
                 this.cleanupScheduled = true;
-                Task.Run(async () => await this.CollectExpiredEntriesAsync().ConfigureAwait(false));
+                _ = this.CollectExpiredEntriesAsync(token);
             }
         }
 
-        async Task CollectExpiredEntriesAsync()
+        async Task CollectExpiredEntriesAsync(CancellationToken token)
         {
-            await Task.Delay(delayBetweenCleanups);
-
-            lock (this.cleanupSynObject)
+            try
             {
-                this.cleanupScheduled = false;
+                await Task.Delay(delayBetweenCleanups, token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+            finally
+            {
+                lock (this.cleanupSynObject)
+                {
+                    this.cleanupScheduled = false;
+                }
             }
 
             foreach (var key in this.dictionary.Keys)
@@ -61,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 }
             }
 
-            this.ScheduleCleanup();
+            this.ScheduleCleanup(token);
         }
     }
 }

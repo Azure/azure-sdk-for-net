@@ -27,5 +27,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Primitives
             set.AddOrUpdate("testKey", DateTime.UtcNow - TimeSpan.FromSeconds(5));
             Assert.False(set.Contains("testKey"), "The set should return false for an expired entry.");
         }
+
+        [Fact]
+        public void Contains_returns_false_after_clear()
+        {
+            var set = new ConcurrentExpiringSet<string>();
+            set.AddOrUpdate("testKey", DateTime.UtcNow + TimeSpan.FromSeconds(5));
+            set.Clear();
+
+            Assert.False(set.Contains("testKey"), "The set should return false after clear.");
+        }
+
+        [Fact]
+        public void Contains_returns_false_after_clear_for_added_expired_keys()
+        {
+            var set = new ConcurrentExpiringSet<string>();
+            set.AddOrUpdate("testKey1", DateTime.UtcNow + TimeSpan.FromSeconds(5));
+            set.Clear();
+            set.AddOrUpdate("testKey2", DateTime.UtcNow - TimeSpan.FromSeconds(5));
+
+            Assert.False(set.Contains("testKey1"), "The set should return false after clear.");
+            Assert.False(set.Contains("testKey2"), "The set should return false for an expired entry.");
+        }
     }
 }
