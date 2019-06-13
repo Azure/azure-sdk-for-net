@@ -33,7 +33,7 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens) /p:SkipTests=true"
+          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:SkipTests=true
         displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -57,7 +57,7 @@ jobs:
           inputs:
             command: msbuild
             solution: build.proj
-            arguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens) /p:SkipTests=true"
+            arguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)" /p:SkipTests=true
           displayName: 'Ubuntu Build and Run tests'        
         - task: PublishTestResults@2
           condition: succeededOrFailed()
