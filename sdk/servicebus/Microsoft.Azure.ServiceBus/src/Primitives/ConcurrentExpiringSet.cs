@@ -13,21 +13,21 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         readonly ConcurrentDictionary<TKey, DateTime> dictionary;
         readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
-        readonly object cleanupSynObject = new object();
         CancellationTokenSource tokenSource = new CancellationTokenSource(); // doesn't need to be disposed because it doesn't own a timer
-        bool cleanupScheduled;
+        volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
             this.dictionary = new ConcurrentDictionary<TKey, DateTime>();
             this.dictionaryAsCollection = dictionary;
+            _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
         public void AddOrUpdate(TKey key, DateTime expiration)
         {
             this.dictionary[key] = expiration;
-            this.ScheduleCleanup(tokenSource.Token);
+            this.cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
@@ -39,51 +39,48 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             this.tokenSource.Cancel();
             this.dictionary.Clear();
+            this.cleanupTaskCompletionSource.TrySetCanceled();
+            this.ResetTaskCompletionSource();
             this.tokenSource = new CancellationTokenSource();
+            _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
-        void ScheduleCleanup(CancellationToken token)
+        void ResetTaskCompletionSource()
         {
-            lock (this.cleanupSynObject)
+            while (true)
             {
-                if (this.cleanupScheduled || this.dictionary.Count <= 0)
+                var tcs = this.cleanupTaskCompletionSource;
+                if (!tcs.Task.IsCompleted || Interlocked.CompareExchange(ref this.cleanupTaskCompletionSource, new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously), tcs) == tcs)
                 {
                     return;
                 }
-
-                this.cleanupScheduled = true;
-                _ = this.CollectExpiredEntriesAsync(token);
             }
         }
 
         async Task CollectExpiredEntriesAsync(CancellationToken token)
         {
-            try
+            while (!token.IsCancellationRequested)
             {
-                await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                return;
-            }
-            finally
-            {
-                lock (this.cleanupSynObject)
+                try
                 {
-                    this.cleanupScheduled = false;
+                    await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    ResetTaskCompletionSource();
+                    await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+
+                foreach (var kvp in this.dictionary)
+                {
+                    var expiration = kvp.Value;
+                    if (DateTime.UtcNow > expiration)
+                    {
+                        this.dictionaryAsCollection.Remove(kvp);
+                    }
                 }
             }
-
-            foreach (var kvp in this.dictionary)
-            {
-                var expiration = kvp.Value;
-                if (DateTime.UtcNow > expiration)
-                {
-                    this.dictionaryAsCollection.Remove(kvp);
-                }
-            }
-
-            this.ScheduleCleanup(token);
         }
     }
 }
