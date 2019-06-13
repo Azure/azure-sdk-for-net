@@ -12,4 +12,7 @@
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
   </ItemGroup>
+  <ItemGroup> 
+	   <Compile Include="$(RepoRoot)\tools\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
+	</ItemGroup>
 </Project>
