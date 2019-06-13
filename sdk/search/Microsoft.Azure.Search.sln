@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search", "Microsoft.Azure.Search\src\Microsoft.Azure.Search.csproj", "{BC85E0D3-05D6-478D-B4CB-CD35EDFA9551}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Data", "Microsoft.Azure.Search.Data\src\Microsoft.Azure.Search.Data.csproj", "{0FE986A5-210E-4CBC-A46E-BA4DF089C7D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Service", "Microsoft.Azure.Search.Service\src\Microsoft.Azure.Search.Service.csproj", "{8232097F-F599-41CD-881A-BCCD09C5D59A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search.Tests", "Microsoft.Azure.Management.Search\tests\Microsoft.Azure.Management.Search.Tests.csproj", "{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8232097F-F599-41CD-881A-BCCD09C5D59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8232097F-F599-41CD-881A-BCCD09C5D59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8232097F-F599-41CD-881A-BCCD09C5D59A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
