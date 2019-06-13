@@ -60,7 +60,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             try
             {
-                await Task.Delay(delayBetweenCleanups, token);
+                await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
