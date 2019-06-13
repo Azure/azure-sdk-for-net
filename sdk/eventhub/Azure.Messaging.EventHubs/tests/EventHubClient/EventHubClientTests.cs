@@ -93,7 +93,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorRequiresConnectionString(string connectionString)
         {
             Assert.That(() => new EventHubClient(connectionString), Throws.ArgumentException, "The constructor without options should perform validation.");
-            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), Throws.ArgumentException, "The constructor with options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, "eventHub"), Throws.ArgumentException, "The constructor with the event hub without options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, "eventHub", new EventHubClientOptions()), Throws.ArgumentException, "The constructor with the event hub and options should perform validation.");
+            Assert.That(() => new EventHubClient(connectionString, new EventHubClientOptions()), Throws.ArgumentException, "The constructor with options and no event hub should perform validation.");
         }
 
         /// <summary>
@@ -105,7 +107,21 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorDoesNotRequireOptionsWithConnectionString()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            Assert.That(() => new EventHubClient(fakeConnection, null), Throws.Nothing);
+            Assert.That(() => new EventHubClient(fakeConnection, default(EventHubClientOptions)), Throws.Nothing, "The constructor without the event hub should not require options");
+            Assert.That(() => new EventHubClient(fakeConnection, null, default(EventHubClientOptions)), Throws.Nothing, "The constructor with the event hub should not require options");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorDoesNotRequireEventHubInConnectionStringWhenPassedSeparate()
+        {
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.Nothing, "The constructor without options should not require the conection string event hub");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.Nothing, "The constructor with options should not require the conection string event hub");
         }
 
         /// <summary>
@@ -121,6 +137,19 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesConnectionString(string connectionString)
         {
             Assert.That(() => new EventHubClient(connectionString), Throws.ArgumentException);
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructoNotAllowTheEventHubToBePassedTwice()
+        {
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor without options should detect multiple Event Hubs");
+            Assert.That(() => new EventHubClient(fakeConnection, "eventHub", new EventHubClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should detect multiple Event Hubs");
         }
 
         /// <summary>
@@ -185,14 +214,28 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorWithConnectionStringInitializesProperties()
+        public void ConstructorWithFullConnectionStringInitializesProperties()
         {
             var entityPath = "somePath";
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityPath }";
             var client = new EventHubClient(fakeConnection);
 
             Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
-            Assert.That(GetCredential(client), Is.Null);
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithConnectionStringAndEventHubInitializesProperties()
+        {
+            var entityPath = "somePath";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            var client = new EventHubClient(fakeConnection, entityPath);
+
+            Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
         }
 
         /// <summary>
@@ -209,7 +252,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new EventHubClient(host, entityPath, credential);
 
             Assert.That(client.EventHubPath, Is.EqualTo(entityPath));
-            Assert.That(GetCredential(client), Is.EqualTo(credential));
         }
 
         /// <summary>
@@ -247,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ContructorWithConnectionStringCreatesTheTransportClient()
         {
 
-            var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
             Assert.That(GetTransportClient(client), Is.Not.Null);
         }
 
@@ -263,8 +305,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
+            var resource = $"amqps://{ host }/{ path }";
             var options = new EventHubClientOptions { TransportType = TransportType.AmqpTcp };
-            var signature = new SharedAccessSignature(options.TransportType, host, path, keyName, key);
+            var signature = new SharedAccessSignature(resource, keyName, key);
             var client = new EventHubClient(host, path, new SharedAccessSignatureCredential(signature), options);
 
             Assert.That(GetTransportClient(client), Is.Not.Null);
@@ -325,8 +368,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
+            var resource = $"amqps://{ host }/{ path }";
             var options = new EventHubClientOptions { TransportType = connectionType };
-            var signature = new SharedAccessSignature(connectionType, host, path, keyName, key);
+            var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
             var client = new EventHubClient(host, path, credential);
 
@@ -345,9 +389,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
+            var resource = $"amqps://{ host }/{ path }";
             var connectionType = (TransportType)Int32.MinValue;
             var options = new EventHubClientOptions { TransportType = connectionType };
-            var signature = new SharedAccessSignature(TransportType.AmqpTcp, host, path, keyName, key);
+            var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessSignatureCredential(signature);
             var client = new EventHubClient(host, path, credential);
 
@@ -679,6 +724,52 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsClient.BuildResource" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void BuildResourceNormalizesTheResource()
+        {
+            var host = "my.eventhub.com";
+            var path = "someHub/";
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var resource = BuildResource(client, TransportType.AmqpWebSockets, host, path);
+
+            Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
+            Assert.That(resource, Is.EqualTo(resource.ToLowerInvariant()), "The resource should have been normalized to lower case.");
+
+            var uri = new Uri(resource, UriKind.Absolute);
+
+            Assert.That(uri.AbsolutePath.StartsWith("/"), Is.True, "The resource path have been normalized to begin with a trailing slash.");
+            Assert.That(uri.AbsolutePath.EndsWith("/"), Is.False, "The resource path have been normalized to not end with a trailing slash.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsClient.BuildResource" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void BuildResourceConstructsFromHostAndPath()
+        {
+            var host = "my.eventhub.com";
+            var path = "someHub";
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var expectedPath = $"/{ path.ToLowerInvariant() }";
+            var resource = BuildResource(client, TransportType.AmqpTcp, host, path);
+
+            Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");
+
+            var uri = new Uri(resource, UriKind.Absolute);
+
+            Assert.That(uri.Host, Is.EqualTo(host), "The resource should match the host.");
+            Assert.That(uri.AbsolutePath, Is.EqualTo(expectedPath), "The resource path should match the Event Hub path.");
+        }
+
+        /// <summary>
         ///   Provides a test shim for retrieving the credential that a client was
         ///   created with.
         /// </summary>
@@ -687,10 +778,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The credential with which the client was created.</returns>
         ///
-        private TokenCredential GetCredential(EventHubClient client) =>
-                    typeof(EventHubClient)
-                        .GetProperty("Credential", BindingFlags.Instance | BindingFlags.NonPublic)
-                        .GetValue(client) as TokenCredential;
+        private string BuildResource(EventHubClient client,
+                                     TransportType transportType,
+                                     string host,
+                                     string eventHubPath) =>
+             typeof(EventHubClient)
+                 .GetMethod("BuildResource", BindingFlags.Static | BindingFlags.NonPublic)
+                 .Invoke(client, new object[] { transportType, host, eventHubPath }) as string;
 
         /// <summary>
         ///   Provides a test shim for retrieving the transport client contained by an

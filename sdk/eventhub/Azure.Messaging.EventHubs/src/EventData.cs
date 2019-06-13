@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         /// <example>
         ///   <code>
         ///     var eventData = new EventData(serializedTelemetryData);
-        ///     eventData.Properties["eventType"] = "com.microsoft.azure.monitoring.EtlEvent";
+        ///     eventData.Properties["eventType"] = "com.microsoft.Azure.monitoring.EtlEvent";
         ///   </code>
         /// </example>
         ///

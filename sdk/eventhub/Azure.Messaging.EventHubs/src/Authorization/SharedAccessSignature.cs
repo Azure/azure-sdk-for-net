@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private const char TokenValuePairDelimiter = '&';
 
         /// <summary>The default length of time to consider a signature valid, if not otherwise specified.</summary>
-        private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(20);
+        private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Represents the Unix epoch time value, January 1, 1970 12:00:00, UTC.</summary>
         private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -92,24 +92,19 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
         /// </summary>
         ///
-        /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
-        public SharedAccessSignature(TransportType transportType,
-                                     string host,
-                                     string eventHubPath,
+        public SharedAccessSignature(string eventHubResource,
                                      string sharedAccessKeyName,
                                      string sharedAccessKey,
                                      TimeSpan? signatureValidityDuration = default)
         {
             signatureValidityDuration = signatureValidityDuration ?? DefaultSignatureValidityDuration;
 
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubResource), eventHubResource);
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKeyName), sharedAccessKeyName);
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKey), sharedAccessKey);
 
@@ -120,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
             ExpirationUtc = DateTime.UtcNow.Add(signatureValidityDuration.Value);
-            Resource = BuildAudience(transportType, host, eventHubPath);
+            Resource = eventHubResource;
             Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, ExpirationUtc);
         }
 
@@ -157,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   nitializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
-        /// <param name="resource">The resource to which this signature applies.</param>
+        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
@@ -168,13 +163,13 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///     allowing for direct setting of the property values without validation or adjustment.
         /// </remarks>
         ///
-        internal SharedAccessSignature(string resource,
+        internal SharedAccessSignature(string eventHubResource,
                                        string sharedAccessKeyName,
                                        string sharedAccessKey,
                                        string value,
                                        DateTime expirationUtc)
         {
-            Resource = resource;
+            Resource = eventHubResource;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
             Value = value;
@@ -386,38 +381,6 @@ namespace Azure.Messaging.EventHubs.Authorization
                     SignedExpiryToken, WebUtility.UrlEncode(expiration),
                     SignedKeyNameToken, WebUtility.UrlEncode(sharedAccessKeyName));
             }
-        }
-
-        /// <summary>
-        ///   Builds the audience for use in the signature.
-        /// </summary>
-        ///
-        /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
-        ///
-        /// <returns>The value to use as the audience of the signature.</returns>
-        ///
-        private static string BuildAudience(TransportType transportType,
-                                            string host,
-                                            string eventHubPath)
-        {
-            var builder = new UriBuilder(host)
-            {
-                Scheme = transportType.GetUriScheme(),
-                Path = eventHubPath,
-                Port = -1,
-                Fragment = String.Empty,
-                Password = String.Empty,
-                UserName = String.Empty,
-            };
-
-            if (builder.Path.EndsWith("/"))
-            {
-                builder.Path = builder.Path.TrimEnd('/');
-            }
-
-            return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
 
         /// <summary>

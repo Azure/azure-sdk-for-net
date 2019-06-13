@@ -34,13 +34,53 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanConnectToEventHubsUsingConnectionString()
+        public async Task ClientCanConnectToEventHubsUsingFullConnectionString()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
+                {
+                    Assert.That(() => client.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubClient" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectToEventHubsUsingConnectionStringAndEventHub()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.EventHubsConnectionString;
+
+                await using (var client = new EventHubClient(connectionString, scope.EventHubName))
+                {
+                    Assert.That(() => client.GetPropertiesAsync(), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubClient" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCanConnectToEventHubsUsingSharedKeyCredential()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var properties = ConnectionStringParser.Parse(connectionString);
+                var credential = new EventHubSharedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+
+                await using (var client = new EventHubClient(properties.Endpoint.Host, scope.EventHubName, credential))
                 {
                     Assert.That(() => client.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -65,9 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        clientOptions.TransportType,
-                        connectionProperties.Endpoint.Host,
-                        connectionProperties.EventHubPath,
+                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubPath }".ToLowerInvariant(),
                         connectionProperties.SharedAccessKeyName,
                         connectionProperties.SharedAccessKey,
                         TimeSpan.FromHours(4)
@@ -93,9 +131,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (var scope = await EventHubScope.CreateAsync(partitionCount))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = TestEnvironment.EventHubsConnectionString;
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, scope.EventHubName))
                 {
                     var properties = await client.GetPropertiesAsync();
 
@@ -128,9 +166,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        clientOptions.TransportType,
-                        connectionProperties.Endpoint.Host,
-                        connectionProperties.EventHubPath,
+                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubPath }".ToLowerInvariant(),
                         connectionProperties.SharedAccessKeyName,
                         connectionProperties.SharedAccessKey,
                         TimeSpan.FromHours(4)
