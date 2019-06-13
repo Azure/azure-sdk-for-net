@@ -298,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(ConstructorClonesOptionsCases))]
-        public void TransportClientReceivesClonesOptions(ReadableOptionsMock client,
+        public void TransportClientReceivesClonedOptions(ReadableOptionsMock client,
                                                          EventHubClientOptions constructorOptions,
                                                          string constructorDescription)
         {
@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventSenderCreatesDefaultWhenNoOptionsArePassed()
+        public void CreateSenderCreatesDefaultWhenNoOptionsArePassed()
         {
             var clientOptions = new EventHubClientOptions
             {
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateEventSenderCreatesDefaultWhenOptionsAreNotSet()
+        public void CreateSenderCreatesDefaultWhenOptionsAreNotSet()
         {
             var clientOptions = new EventHubClientOptions
             {
@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreatePartitionReceiverCreatesDefaultWhenNoOptionsArePassed()
+        public void CreateReceiverCreatesDefaultWhenNoOptionsArePassed()
         {
             var clientOptions = new EventHubClientOptions
             {
@@ -449,10 +449,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "56767";
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
-            var receiver = mockClient.CreateReceiver(expectedPartition);
+
+            mockClient.CreateReceiver(expectedPartition);
             var actualOptions = mockClient.ReceiverOptions;
 
-            Assert.That(receiver.PartitionId, Is.EqualTo(expectedPartition), "The partition should match.");
             Assert.That(actualOptions, Is.Not.Null, "The receiver options should have been set.");
             Assert.That(actualOptions.BeginReceivingAt.Offset, Is.EqualTo(expectedOptions.BeginReceivingAt.Offset), "The beginning position to receive should match.");
             Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
@@ -469,7 +469,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreatePartitionReceiverCreatesDefaultWhenOptionsAreNotSet()
+        public void CreateReceiverCreatesDefaultWhenOptionsAreNotSet()
         {
             var clientOptions = new EventHubClientOptions
             {
@@ -492,10 +492,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "56767";
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
-            var receiver = mockClient.CreateReceiver(expectedPartition, expectedOptions);
+
+            mockClient.CreateReceiver(expectedPartition, expectedOptions);
             var actualOptions = mockClient.ReceiverOptions;
 
-            Assert.That(receiver.PartitionId, Is.EqualTo(expectedPartition), "The partition should match.");
             Assert.That(actualOptions, Is.Not.Null, "The receiver options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
             Assert.That(actualOptions.BeginReceivingAt.Offset, Is.EqualTo(expectedOptions.BeginReceivingAt.Offset), "The beginning position to receive should match.");
@@ -516,7 +516,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseDelegatesToCloseAsync()
         {
             var client = new ObservableOperationsMock("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-
             client.Close();
 
             Assert.That(client.WasCloseAsyncCalled, Is.True);
@@ -600,6 +599,54 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubClient.CreateSender" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateSenderInvokesTheTransportClient()
+        {
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var expectedOptions = new EventSenderOptions { Retry = Retry.Default };
+
+            client.CreateSender(expectedOptions);
+            var actualOptions = transportClient.CreateSenderCalledWithOptions;
+
+            Assert.That(actualOptions, Is.Not.Null, "The sender options should have been set.");
+            Assert.That(actualOptions.PartitionId, Is.EqualTo(expectedOptions.PartitionId), "The partition identifiers should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
+            Assert.That(actualOptions.TimeoutOrDefault, Is.EqualTo(expectedOptions.TimeoutOrDefault), "The timeouts should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubClient.CreateReceiver" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateReceiverInvokesTheTransportClient()
+        {
+            var transportClient = new ObservableTransportClientMock();
+            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
+            var expectedOptions = new EventReceiverOptions { Retry = Retry.Default };
+            var expectedPartition = "2123";
+
+            client.CreateReceiver(expectedPartition, expectedOptions);
+            (var actualPartition, var actualOptions) = transportClient.CreateReceiverCalledWith;
+
+            Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
+            Assert.That(actualOptions, Is.Not.Null, "The receiver options should have been set.");
+            Assert.That(actualOptions.BeginReceivingAt.Offset, Is.EqualTo(expectedOptions.BeginReceivingAt.Offset), "The beginning position to receive should match.");
+            Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
+            Assert.That(actualOptions.ExclusiveReceiverPriority, Is.EqualTo(expectedOptions.ExclusiveReceiverPriority), "The exclusive priorities should match.");
+            Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
+            Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
+            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
+            Assert.That(actualOptions.MaximumReceiveWaitTimeOrDefault, Is.EqualTo(expectedOptions.MaximumReceiveWaitTimeOrDefault), "The wait times should match.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubClient.CloseAsync" />
         ///   method.
         /// </summary>
@@ -672,7 +719,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public EventHubClientOptions TransportClientOptions;
             public EventSenderOptions SenderOptions => _transportClient.CreateSenderCalledWithOptions;
-            public EventReceiverOptions ReceiverOptions;
+            public EventReceiverOptions ReceiverOptions => _transportClient.CreateReceiverCalledWith.Options;
 
             private ObservableTransportClientMock _transportClient;
 
@@ -693,12 +740,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
                 return _transportClient;
-            }
-
-            internal override EventReceiver BuildEventReceiver(TransportType connectionType, string eventHubPath, string partitionId, EventReceiverOptions options)
-            {
-                ReceiverOptions = options;
-                return base.BuildEventReceiver(connectionType, eventHubPath, partitionId, options);
             }
         }
 
@@ -772,10 +813,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportEventHubClient
         {
-            public EventSenderOptions CreateSenderCalledWithOptions = default;
-            public string GetPartitionPropertiesCalledForId = default;
-            public bool WasGetPropertiesCalled = false;
-            public bool WasCloseCalled = false;
+            public (string Partition, EventReceiverOptions Options) CreateReceiverCalledWith;
+            public EventSenderOptions CreateSenderCalledWithOptions;
+            public string GetPartitionPropertiesCalledForId;
+            public bool WasGetPropertiesCalled;
+            public bool WasCloseCalled;
 
             public override Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
             {
@@ -794,6 +836,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 CreateSenderCalledWithOptions = senderOptions;
                 return default(EventSender);
+            }
+
+            public override EventReceiver CreateReceiver(string partitionId, EventReceiverOptions receiverOptions)
+            {
+                CreateReceiverCalledWith = (partitionId, receiverOptions);
+                return default(EventReceiver);
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)

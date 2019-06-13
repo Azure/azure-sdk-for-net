@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         /// <param name="events">The set of event data to send.</param>
         /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public override Task SendAsync(IEnumerable<EventData> events,
                                        EventBatchingOptions batchOptions,
@@ -69,14 +69,14 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     Properties = eventData.Properties
                 };
 
-            return TrackOneSender.SendAsync(events.Select(evt => TransformEvent(evt)), batchOptions?.PartitionKey);
+            return TrackOneSender.SendAsync(events.Select(TransformEvent), batchOptions?.PartitionKey);
         }
 
         /// <summary>
         ///   Closes the connection to the transport client instance.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///

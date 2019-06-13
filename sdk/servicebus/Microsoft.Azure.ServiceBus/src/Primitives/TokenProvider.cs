@@ -77,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="authority">URL of the Azure Active Directory instance to issue token.</param>
         /// <param name="state">Custom parameters that may be passed into the authentication delegate.</param>
         /// <returns>The <see cref="Microsoft.ServiceBus.TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(
+        public static TokenProvider CreateAzureActiveDirectoryTokenProvider(
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
             string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
             object state = null)
