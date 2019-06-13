@@ -227,7 +227,7 @@ namespace AlertsManagement.Tests.Helpers
         {
             if (exp != null)
             {
-                Assert.Equal(exp.Type, act.Type);
+                Assert.Equal(exp.ScopeType, act.ScopeType);
 
                 foreach (var value in exp.Values)
                 {

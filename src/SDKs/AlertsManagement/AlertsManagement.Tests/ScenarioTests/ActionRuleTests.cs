@@ -92,7 +92,7 @@ namespace AlertsManagement.Tests.ScenarioTests
                     tags: new Dictionary<string, string>(),
                     properties: new Suppression (
                         scope: new Scope(
-                            type: ScopeType.ResourceGroup,
+                            scopeType: ScopeType.ResourceGroup,
                             values: new List<string>
                             {
                                 "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/alertslab",
@@ -158,7 +158,7 @@ namespace AlertsManagement.Tests.ScenarioTests
                     tags: new Dictionary<string, string>(),
                     properties: new ActionGroup(
                         scope: new Scope(
-                            type: ScopeType.ResourceGroup,
+                            scopeType: ScopeType.ResourceGroup,
                             values: new List<string>
                             {
                                 "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/alertslab",
