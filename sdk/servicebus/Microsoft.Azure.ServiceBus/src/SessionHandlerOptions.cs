@@ -4,8 +4,10 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Core;
     using Primitives;
 
     /// <summary>Provides options associated with session pump processing using
@@ -27,6 +29,22 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         public SessionHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+            : this(async args => { await exceptionReceivedHandler(args); return null; })
+        {
+        }
+        
+        /// <summary>Initializes a new instance of the <see cref="SessionHandlerOptions" /> class.
+        /// Default Values:
+        ///     <see cref="MaxConcurrentSessions"/> = 2000
+        ///     <see cref="AutoComplete"/> = true
+        ///     <see cref="MessageWaitTimeout"/> = 1 minute
+        ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
+        /// </summary>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// When the exception happens during user callback, the returned dictionary is passed to <see cref="IReceiverClient.AbandonAsync"/>.
+        /// For other actions, the returned dictionary is ignored. 
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
+        public SessionHandlerOptions(Func<ExceptionReceivedEventArgs, Task<IDictionary<string, object>>> exceptionReceivedHandler)
         {
             // These are default values
             this.AutoComplete = true;
@@ -38,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the session pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
+        public Func<ExceptionReceivedEventArgs, Task<IDictionary<string, object>>> ExceptionReceivedHandler { get; }
 
         /// <summary>Gets or sets the duration for which the session lock will be renewed automatically.</summary>
         /// <value>The duration for which the session renew its state.</value>
@@ -92,15 +110,16 @@ namespace Microsoft.Azure.ServiceBus
 
         internal int MaxConcurrentAcceptSessionCalls { get; set; }
 
-        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
+        internal async Task<IDictionary<string, object>> RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {
             try
             {
-                await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+                return await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
+                return null;
             }
         }
     }

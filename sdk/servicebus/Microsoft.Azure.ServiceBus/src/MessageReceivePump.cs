@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.ServiceBus
                 this.registerHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, string action)
+        Task<IDictionary<string, object>> RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.messageReceiver.Path, this.messageReceiver.ClientId);
             return this.registerHandlerOptions.RaiseExceptionReceived(eventArgs);
@@ -147,12 +148,12 @@ namespace Microsoft.Azure.ServiceBus
             catch (Exception exception)
             {
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackException(this.messageReceiver.ClientId, message, exception);
-                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
+                var propertiesToModify = await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
 
                 // Nothing much to do if UserCallback throws, Abandon message and Release semaphore.
                 if (!(exception is MessageLockLostException))
                 {
-                    await this.AbandonMessageIfNeededAsync(message).ConfigureAwait(false);
+                    await this.AbandonMessageIfNeededAsync(message, propertiesToModify).ConfigureAwait(false);
                 }
 
                 if (ServiceBusDiagnosticSource.IsEnabled())
@@ -191,13 +192,13 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(Message message)
+        async Task AbandonMessageIfNeededAsync(Message message, IDictionary<string, object> propertiesToModify)
         {
             try
             {
                 if (this.messageReceiver.ReceiveMode == ReceiveMode.PeekLock)
                 {
-                    await this.messageReceiver.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+                    await this.messageReceiver.AbandonAsync(message.SystemProperties.LockToken, propertiesToModify).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)

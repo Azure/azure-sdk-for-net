@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
@@ -74,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, string action)
+        Task<IDictionary<string, object>> RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath, this.clientId);
             return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
@@ -96,13 +97,13 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(IMessageSession session, Message message)
+        async Task AbandonMessageIfNeededAsync(IMessageSession session, Message message, IDictionary<string, object> propertiesToModify)
         {
             try
             {
                 if (session.ReceiveMode == ReceiveMode.PeekLock)
                 {
-                    await session.AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+                    await session.AbandonAsync(message.SystemProperties.LockToken, propertiesToModify).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -239,11 +240,11 @@ namespace Microsoft.Azure.ServiceBus
                             }
 
                             MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
+                            var propertiesToModify = await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
                             callbackExceptionOccurred = true;
                             if (!(exception is MessageLockLostException || exception is SessionLockLostException))
                             {
-                                await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
+                                await this.AbandonMessageIfNeededAsync(session, message, propertiesToModify).ConfigureAwait(false);
                             }
                         }
                         finally
