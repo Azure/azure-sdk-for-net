@@ -71,8 +71,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 }
             }
 
-            foreach (var key in this.dictionary.Keys)
+            foreach (var kvp in this.dictionary)
             {
+                var key = kvp.Key;
                 if (DateTime.UtcNow > this.dictionary[key])
                 {
                     this.dictionary.TryRemove(key, out _);
