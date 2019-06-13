@@ -40,21 +40,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             this.tokenSource.Cancel();
             this.dictionary.Clear();
             this.cleanupTaskCompletionSource.TrySetCanceled();
-            this.ResetTaskCompletionSource();
+            this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             this.tokenSource = new CancellationTokenSource();
             _ = CollectExpiredEntriesAsync(tokenSource.Token);
-        }
-
-        void ResetTaskCompletionSource()
-        {
-            while (true)
-            {
-                var tcs = this.cleanupTaskCompletionSource;
-                if (!tcs.Task.IsCompleted || Interlocked.CompareExchange(ref this.cleanupTaskCompletionSource, new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously), tcs) == tcs)
-                {
-                    return;
-                }
-            }
         }
 
         async Task CollectExpiredEntriesAsync(CancellationToken token)
@@ -64,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 try
                 {
                     await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
-                    ResetTaskCompletionSource();
+                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                     await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
