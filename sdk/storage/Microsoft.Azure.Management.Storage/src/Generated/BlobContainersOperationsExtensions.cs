@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only container names starting with the filter
             /// will be listed.
             /// </param>
-            public static ListContainerItems List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
+            public static IPage<ListContainerItem> List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
             {
                 return operations.ListAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter).GetAwaiter().GetResult();
             }
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListContainerItems> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ListContainerItem>> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -939,6 +939,42 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task<LeaseContainerResponse> LeaseAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = default(LeaseContainerRequest), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.LeaseWithHttpMessagesAsync(resourceGroupName, accountName, containerName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all containers and does not support a prefix like data plane. Also
+            /// SRP today does not return continuation token.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ListContainerItem> ListNext(this IBlobContainersOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all containers and does not support a prefix like data plane. Also
+            /// SRP today does not return continuation token.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ListContainerItem>> ListNextAsync(this IBlobContainersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1768,7 +1768,7 @@ namespace Storage.Tests
                         break;
                     }
                 }
-                Assert.True(ruleFound, string.Format("The set rule {0} should be found in the output.", rule1.Name));
+                Assert.True(ruleFound, String.Format("The set rule {0} should be found in the output.", rule1.Name));
             }
         }
 
@@ -1899,28 +1899,28 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardGRS },
                     Kind = Kind.StorageV2,
-                    EnableAzureFilesAadIntegration = true,
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.AADDS),
                     Location = StorageManagementTestUtilities.DefaultLocation
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
-                Assert.True(account.EnableAzureFilesAadIntegration);
+                Assert.Equal(DirectoryServiceOptions.AADDS, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.True(account.EnableAzureFilesAadIntegration);
+                Assert.Equal(DirectoryServiceOptions.AADDS, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
                 // Update storage account 
                 var updateParameters = new StorageAccountUpdateParameters
                 {
-                    EnableAzureFilesAadIntegration = false,
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.None),
                     EnableHttpsTrafficOnly = true
                 };
                 account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
-                Assert.False(account.EnableAzureFilesAadIntegration);
+                Assert.Equal(DirectoryServiceOptions.None, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-                Assert.False(account.EnableAzureFilesAadIntegration);
+                Assert.Equal(DirectoryServiceOptions.None, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             }
         }
 
