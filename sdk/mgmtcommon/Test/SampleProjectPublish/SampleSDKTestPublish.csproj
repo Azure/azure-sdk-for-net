@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
   <PropertyGroup>
     <Description>Sample Project for testing project publishing.</Description>
     <AssemblyName>Microsoft.Azure.Management.SampleProjectPublish</AssemblyName>

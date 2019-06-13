@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
     <PropertyGroup>
         <TargetFrameworks>net472;net452;net461;netcoreapp2.0;netcoreapp1.1</TargetFrameworks>
     </PropertyGroup>
