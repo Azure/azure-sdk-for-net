@@ -13,6 +13,6 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup> 
-	   <Compile Include="$(RepoRoot)\tools\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
+	   <Compile Include="DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" /> 
 	</ItemGroup>
 </Project>
