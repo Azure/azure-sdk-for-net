@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A440EAF-0500-476E-83EE-C3AF80AB253A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.AzureStack", "Management.AzureStack\Microsoft.Azure.Management.AzureStack.csproj", "{1EC06268-BF25-4860-8DE7-D1A5CD6AF980}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.AzureStack", "src\Microsoft.Azure.Management.AzureStack.csproj", "{1EC06268-BF25-4860-8DE7-D1A5CD6AF980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.AzureStack.Tests", "Management.AzureStack.Tests\Microsoft.Azure.Management.AzureStack.Tests.csproj", "{E87A71DE-AEE5-4E2F-82C7-97BFC7E2A72C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.AzureStack.Tests", "tests\Microsoft.Azure.Management.AzureStack.Tests.csproj", "{E87A71DE-AEE5-4E2F-82C7-97BFC7E2A72C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

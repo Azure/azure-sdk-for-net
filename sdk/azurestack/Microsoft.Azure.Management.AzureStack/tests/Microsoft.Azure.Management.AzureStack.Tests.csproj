@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.AzureStack.Tests</PackageId>
     <Description>Azure Microsoft.AzureStack Tests Class Library</Description>
@@ -10,7 +10,7 @@
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>-->
   <ItemGroup>
-    <ProjectReference Include="..\Management.AzureStack\Microsoft.Azure.Management.AzureStack.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.AzureStack.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
