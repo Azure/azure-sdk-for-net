@@ -1,11 +1,9 @@
 trigger: none
 
-variables:
-  ProjectFile: sdk/storage/Azure.Storage.sln
-
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
+    ServiceDirectory: storage
     PreSteps:
       - powershell: |
           $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"

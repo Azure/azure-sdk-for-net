@@ -1,10 +1,9 @@
 trigger: none
 
-variables:
-  ProjectFile: sdk/appconfiguration/Azure.ApplicationModel.Configuration/Azure.ApplicationModel.Configuration.sln
-
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
+    MaxParallel: 1
+    ServiceDirectory: appconfiguration
     EnvVars:
       APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
