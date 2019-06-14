@@ -9,54 +9,32 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// Supported JsonWebKey key types (kty)
     /// </summary>
-    public enum KeyType : uint
+    public struct KeyType
     {
-        EllipticCurve = 0x0001,
-        EllipticCurveHsm = 0x0002,
-        Rsa = 0x0004,
-        RsaHsm = 0x0008,
-        Octet = 0x0010,
-        Other = 0x0020,
-    }
-
-    public static class KeyTypeExtensions
-    {
-        public static KeyType ParseFromString(string value)
+        /// <summary>
+        /// Supported JsonWebKey key types (kty) as enum
+        /// </summary>
+        public enum KeyTypeValues : uint
         {
-            switch (value)
-            {
-                case "EC":
-                    return KeyType.EllipticCurve;
-                case "EC-HSM":
-                    return KeyType.EllipticCurveHsm;
-                case "RSA":
-                    return KeyType.Rsa;
-                case "RSA-HSM":
-                    return KeyType.RsaHsm;
-                case "oct":
-                    return KeyType.Octet;
-                default:
-                    return KeyType.Other;
-            }
+            EllipticCurve = 0x0001,
+            EllipticCurveHsm = 0x0002,
+            Rsa = 0x0004,
+            RsaHsm = 0x0008,
+            Octet = 0x0010
+            // When a new entry is added, make sure to expose it as a field below.
         }
 
-        public static string AsString(KeyType keyType)
+        public string StringValue { get; private set; }
+
+        public KeyType(string keyType)
         {
-            switch (keyType)
-            {
-                case KeyType.EllipticCurve:
-                    return "EC";
-                case KeyType.EllipticCurveHsm:
-                    return "EC-HSM";
-                case KeyType.Rsa:
-                    return "RSA";
-                case KeyType.RsaHsm:
-                    return "RSA-HSM";
-                case KeyType.Octet:
-                    return "oct";
-                default:
-                    return string.Empty;
-            }
+            StringValue = keyType;
         }
+
+        public static readonly KeyType Rsa = new KeyType("RSA");
+        public static readonly KeyType RsaHsm = new KeyType("RSA-HSM");
+        public static readonly KeyType EllipticCurve = new KeyType("EC");
+        public static readonly KeyType EllipticCurveHsm = new KeyType("EC-HSM");
+        public static readonly KeyType Octet = new KeyType("Octet");
     }
 }

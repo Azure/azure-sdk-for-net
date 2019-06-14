@@ -107,9 +107,9 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if(KeyType != default)
+            if(!string.IsNullOrEmpty(KeyType.StringValue) != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType.StringValue);
             }
             if(KeySize.HasValue)
             {
