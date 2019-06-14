@@ -5,3 +5,8 @@ jobs:
   parameters:
     MaxParallel: 1
     ServiceDirectory: keyvault
+    EnvVars:
+      AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
+      AZURE_CLIENT_ID: $(net-keyvault-azure-client-id)
+      AZURE_CLIENT_SECRET: $(net-keyvault-azure-client-secret)
+      AZURE_KEYVAULT_URL: $(net-keyvault-azure-keyvault-url)
