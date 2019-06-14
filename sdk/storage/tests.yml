@@ -4,13 +4,13 @@ variables:
   ProjectFile: sdk/storage/Azure.Storage.sln
 
 jobs:
-- template: ../../eng/pipelines/templates/jobs/tests.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    presteps:
+    PreSteps:
       - powershell: |
           $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
           '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
           Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
 
-    envvars:
+    EnvVars:
       AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)

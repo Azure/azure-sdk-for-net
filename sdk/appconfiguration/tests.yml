@@ -4,7 +4,7 @@ variables:
   ProjectFile: sdk/appconfiguration/Azure.ApplicationModel.Configuration/Azure.ApplicationModel.Configuration.sln
 
 jobs:
-- template: ../../eng/pipelines/templates/jobs/tests.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    envvars:
+    EnvVars:
       APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
