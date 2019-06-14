@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for CopyBehaviorType.
+    /// Defines values for IntegrationRuntimeEntityReferenceType.
     /// </summary>
-    public static class CopyBehaviorType
+    public static class IntegrationRuntimeEntityReferenceType
     {
-        public const string PreserveHierarchy = "PreserveHierarchy";
-        public const string FlattenHierarchy = "FlattenHierarchy";
-        public const string MergeFiles = "MergeFiles";
+        public const string IntegrationRuntimeReference = "IntegrationRuntimeReference";
+        public const string LinkedServiceReference = "LinkedServiceReference";
     }
 }

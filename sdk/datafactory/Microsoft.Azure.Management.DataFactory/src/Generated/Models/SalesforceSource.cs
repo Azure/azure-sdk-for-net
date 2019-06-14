@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="query">Database query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="readBehavior">The read behavior for the operation.
-        /// Default is Query. Possible values include: 'Query',
-        /// 'QueryAll'</param>
-        public SalesforceSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string readBehavior = default(string))
+        /// Default is Query.</param>
+        public SalesforceSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object readBehavior = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
@@ -68,10 +67,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the read behavior for the operation. Default is Query.
-        /// Possible values include: 'Query', 'QueryAll'
         /// </summary>
         [JsonProperty(PropertyName = "readBehavior")]
-        public string ReadBehavior { get; set; }
+        public object ReadBehavior { get; set; }
 
     }
 }

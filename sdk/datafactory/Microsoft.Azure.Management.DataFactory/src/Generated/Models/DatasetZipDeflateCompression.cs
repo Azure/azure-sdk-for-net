@@ -36,9 +36,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="level">The ZipDeflate compression level. Possible
-        /// values include: 'Optimal', 'Fastest'</param>
-        public DatasetZipDeflateCompression(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string level = default(string))
+        /// <param name="level">The ZipDeflate compression level.</param>
+        public DatasetZipDeflateCompression(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object level = default(object))
             : base(additionalProperties)
         {
             Level = level;
@@ -51,11 +50,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ZipDeflate compression level. Possible values
-        /// include: 'Optimal', 'Fastest'
+        /// Gets or sets the ZipDeflate compression level.
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public string Level { get; set; }
+        public object Level { get; set; }
 
     }
 }

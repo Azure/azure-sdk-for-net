@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string).</param>
         /// <param name="filePattern">File pattern of JSON. To be more
         /// specific, the way of separating a collection of JSON objects. The
-        /// default value is 'setOfObjects'. It is case-sensitive. Possible
-        /// values include: 'setOfObjects', 'arrayOfObjects'</param>
+        /// default value is 'setOfObjects'. It is case-sensitive.</param>
         /// <param name="nestingSeparator">The character used to separate
         /// nesting levels. Default value is '.' (dot). Type: string (or
         /// Expression with resultType string).</param>
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the array element. Example: {"Column1": "$.Column1Path", "Column2":
         /// "Column2PathInArray"}. Type: object (or Expression with resultType
         /// object).</param>
-        public JsonFormat(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object serializer = default(object), object deserializer = default(object), string filePattern = default(string), object nestingSeparator = default(object), object encodingName = default(object), object jsonNodeReference = default(object), object jsonPathDefinition = default(object))
+        public JsonFormat(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object serializer = default(object), object deserializer = default(object), object filePattern = default(object), object nestingSeparator = default(object), object encodingName = default(object), object jsonNodeReference = default(object), object jsonPathDefinition = default(object))
             : base(additionalProperties, serializer, deserializer)
         {
             FilePattern = filePattern;
@@ -80,11 +79,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets file pattern of JSON. To be more specific, the way of
         /// separating a collection of JSON objects. The default value is
-        /// 'setOfObjects'. It is case-sensitive. Possible values include:
-        /// 'setOfObjects', 'arrayOfObjects'
+        /// 'setOfObjects'. It is case-sensitive.
         /// </summary>
         [JsonProperty(PropertyName = "filePattern")]
-        public string FilePattern { get; set; }
+        public object FilePattern { get; set; }
 
         /// <summary>
         /// Gets or sets the character used to separate nesting levels. Default
