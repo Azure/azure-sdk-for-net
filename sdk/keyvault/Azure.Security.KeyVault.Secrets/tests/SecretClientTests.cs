@@ -76,10 +76,10 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
-        public void GetAllVersionsArgumentValidation()
+        public void GetSecretVersionsArgumentValidation()
         {
-            Assert.Throws<ArgumentException>(() => Client.GetAllVersionsAsync(null));
-            Assert.Throws<ArgumentException>(() => Client.GetAllVersionsAsync(""));
+            Assert.Throws<ArgumentException>(() => Client.GetSecretVersionsAsync(null));
+            Assert.Throws<ArgumentException>(() => Client.GetSecretVersionsAsync(""));
         }
     }
 }
