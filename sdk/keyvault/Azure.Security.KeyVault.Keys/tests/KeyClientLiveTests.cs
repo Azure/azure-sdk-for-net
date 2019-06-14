@@ -3,13 +3,18 @@
 // license information.
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     public class KeyClientLiveTests : KeysTestBase
     {
+        private const int PagedKeyCount = 2;
+
         public KeyClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -139,7 +144,37 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             AssertKeysEqual(keyReturned, updateResult);
         }
-        
+
+        [Test]
+        public async Task GetKey()
+        {
+            string keyName = Recording.GenerateId();
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            RegisterForCleanup(key);
+
+            Key keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeysEqual(key, keyReturned);
+        }
+
+        [Test]
+        public void GetKeyNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(Recording.GenerateId()));
+        }
+
+        [Test]
+        public async Task GetKeyWithVersion()
+        {
+            string keyName = Recording.GenerateId();
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+            RegisterForCleanup(key);
+
+            Key keyReturned = await Client.GetKeyAsync(keyName, key.Version);
+
+            AssertKeysEqual(key, keyReturned);
+        }
+
         [Test]
         public async Task DeleteKey()
         {
@@ -158,7 +193,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
-        
+
+        [Test]
+        public void DeleteKeyNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.DeleteKeyAsync(Recording.GenerateId()));
+        }
+
         [Test]
         public async Task GetDeletedKey()
         {
@@ -180,6 +221,180 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             AssertKeysEqual(deletedKey, polledSecret);
             AssertKeysEqual(key, polledSecret);
+        }
+
+        [Test]
+        public void GetDeletedKeyNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedKeyAsync(Recording.GenerateId()));
+        }
+
+        [Test]
+        public async Task RecoverDeletedKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+
+            DeletedKey deletedKey = await Client.DeleteKeyAsync(keyName);
+
+            await WaitForDeletedKey(keyName);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
+
+            KeyBase recoverKeyResult = await Client.RecoverDeletedKeyAsync(keyName);
+
+            await PollForKey(keyName);
+
+            Key recoveredKey = await Client.GetKeyAsync(keyName);
+
+            RegisterForCleanup(recoveredKey);
+
+            AssertKeysEqual(key, deletedKey);
+            AssertKeysEqual(key, recoverKeyResult);
+            AssertKeysEqual(key, recoveredKey);
+        }
+
+        [Test]
+        public void RecoverDeletedKeyNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.RecoverDeletedKeyAsync(Recording.GenerateId()));
+        }
+
+        [Test]
+        public async Task BackupKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+
+            RegisterForCleanup(key);
+
+            byte[] backup = await Client.BackupKeyAsync(keyName);
+
+            Assert.NotNull(backup);
+        }
+
+        [Test]
+        public void BackupKeyNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupKeyAsync(Recording.GenerateId()));
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6514")]
+        public async Task RestoreKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            Key key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+
+            byte[] backup = await Client.BackupKeyAsync(keyName);
+
+            await Client.DeleteKeyAsync(keyName);
+            await WaitForDeletedKey(keyName);
+
+            await Client.PurgeDeletedKeyAsync(keyName);
+            await WaitForPurgedKey(keyName);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
+            
+            Key restoredResult = await Client.RestoreKeyAsync(backup);
+            RegisterForCleanup(restoredResult);
+
+            AssertKeysEqual(key, restoredResult);
+        }
+
+        [Test]
+        public void RestoreKeyNonExisting()
+        {
+            byte[] backupMalformed = Encoding.ASCII.GetBytes("non-existing");
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreKeyAsync(backupMalformed));
+        }
+
+        [Test]
+        public async Task GetKeys()
+        {
+            string keyName = Recording.GenerateId();
+
+            List<Key> createdKeys = new List<Key>();
+            for (int i = 0; i < PagedKeyCount; i++)
+            {
+                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.EllipticCurve);
+                createdKeys.Add(Key);
+                RegisterForCleanup(Key);
+            }
+
+            List<Response<KeyBase>> allKeys = await Client.GetKeysAsync().ToEnumerableAsync();
+
+            foreach (Key createdKey in createdKeys)
+            {
+                KeyBase returnedKey = allKeys.Single(s => s.Value.Name == createdKey.Name);
+                AssertKeysEqual(createdKey, returnedKey);
+            }
+        }
+
+        [Test]
+        public async Task GetDeletedKeys()
+        {
+            string keyName = Recording.GenerateId();
+
+            List<Key> createdKeys = new List<Key>();
+            for (int i = 0; i < PagedKeyCount; i++)
+            {
+                Key Key = await Client.CreateKeyAsync(keyName + i, KeyType.EllipticCurve);
+                createdKeys.Add(Key);
+                await Client.DeleteKeyAsync(keyName + i);
+
+                RegisterForCleanup(Key, delete: false);
+            }
+
+            foreach (Key deletedKey in createdKeys)
+            {
+                await WaitForDeletedKey(deletedKey.Name);
+            }
+
+            List<Response<DeletedKey>> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
+
+            foreach (Key createdKey in createdKeys)
+            {
+                KeyBase returnedKey = allKeys.Single(s => s.Value.Name == createdKey.Name);
+                AssertKeysEqual(createdKey, returnedKey);
+            }
+        }
+
+        [Test]
+        public async Task GetKeysVersions()
+        {
+            string keyName = Recording.GenerateId();
+
+            List<Key> createdKeys = new List<Key>();
+            for (int i = 0; i < PagedKeyCount; i++)
+            {
+                Key Key = await Client.CreateKeyAsync(keyName, KeyType.EllipticCurve);
+                createdKeys.Add(Key);
+            }
+            RegisterForCleanup(createdKeys.First());
+
+            List<Response<KeyBase>> allKeys = await Client.GetKeyVersionsAsync(keyName).ToEnumerableAsync();
+
+            foreach (Key createdKey in createdKeys)
+            {
+                KeyBase returnedKey = allKeys.Single(s => s.Value.Version == createdKey.Version);
+                AssertKeysEqual(createdKey, returnedKey);
+            }
+        }
+
+        [Test]
+        public async Task GetKeysVersionsNonExisting()
+        {
+            int count = 0;
+            List<Response<KeyBase>> allKeys = await Client.GetKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            foreach (KeyBase key in allKeys)
+            {
+                count++;
+            }
+            Assert.AreEqual(0, count);
         }
     }
 }

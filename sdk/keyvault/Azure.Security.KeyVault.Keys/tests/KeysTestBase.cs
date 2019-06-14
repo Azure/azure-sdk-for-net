@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private readonly Queue<(KeyBase Key, bool Delete)> _keysToCleanup = new Queue<(KeyBase, bool)>();
 
-        protected KeysTestBase(bool isAsync) : base(isAsync)
+        protected KeysTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -108,13 +108,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.T, act.T);
         }
 
-        protected void AssertKeysEqual(KeyBase exp, KeyBase act, bool compareId = true)
+        protected void AssertKeysEqual(KeyBase exp, KeyBase act)
         {
-            if (compareId)
-            {
-                Assert.AreEqual(exp.Name, act.Name);
-            }
-
             Assert.AreEqual(exp.Managed, act.Managed);
             Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
             Assert.AreEqual(exp.Expires, act.Expires);

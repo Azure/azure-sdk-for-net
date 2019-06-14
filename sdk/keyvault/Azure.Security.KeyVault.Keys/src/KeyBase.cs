@@ -68,6 +68,9 @@ namespace Azure.Security.KeyVault.Keys
             {
                 switch (prop.Name)
                 {
+                    case KeyIdPropertyName:
+                        ParseId(prop.Value.GetString());
+                        break;
                     case ManagedPropertyName:
                         Managed = prop.Value.GetBoolean();
                         break;
