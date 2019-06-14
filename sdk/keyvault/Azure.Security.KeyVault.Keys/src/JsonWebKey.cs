@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Keys
                         KeyId = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
-                        KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
+                        KeyType = new KeyType(prop.Value.GetString());
                         break;
                     case KeyOpsPropertyName:
                         foreach (var element in prop.Value.EnumerateObject())
@@ -216,9 +216,9 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if (KeyType != default)
+            if (!string.IsNullOrEmpty(KeyType.StringValue) != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType.StringValue);
             }
             if (KeyOps != null)
             {
@@ -235,7 +235,7 @@ namespace Azure.Security.KeyVault.Keys
             }
             if (N != null)
             {
-                
+
                 json.WriteString(NPropertyNameBytes, Base64Url.Encode(N));
             }
             if (E != null)

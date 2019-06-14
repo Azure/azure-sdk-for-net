@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys
         public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
-            if (keyType == default) throw new ArgumentNullException(nameof(keyType));
+            if (string.IsNullOrEmpty(keyType.StringValue)) throw new ArgumentNullException(nameof(keyType));
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Keys
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
-            if (keyType == default) throw new ArgumentNullException(nameof(keyType));
+            if (string.IsNullOrEmpty(keyType.StringValue)) throw new ArgumentNullException(nameof(keyType));
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
