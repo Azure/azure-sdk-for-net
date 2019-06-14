@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="writeBehavior">The write behavior for the operation.
-        /// Default is Insert. Possible values include: 'Insert',
-        /// 'Upsert'</param>
+        /// Default is Insert.</param>
         /// <param name="externalIdFieldName">The name of the external ID field
         /// for upsert operation. Default value is 'Id' column. Type: string
         /// (or Expression with resultType string).</param>
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// destination object to NULL when doing upsert/update operation and
         /// insert NULL value when doing insert operation. Type: boolean (or
         /// Expression with resultType boolean).</param>
-        public SalesforceSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string writeBehavior = default(string), object externalIdFieldName = default(object), object ignoreNullValues = default(object))
+        public SalesforceSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object writeBehavior = default(object), object externalIdFieldName = default(object), object ignoreNullValues = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             WriteBehavior = writeBehavior;
@@ -77,10 +76,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the write behavior for the operation. Default is
-        /// Insert. Possible values include: 'Insert', 'Upsert'
+        /// Insert.
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
-        public string WriteBehavior { get; set; }
+        public object WriteBehavior { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the external ID field for upsert

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="value">Stored procedure parameter value. Type: string
         /// (or Expression with resultType string).</param>
         /// <param name="type">Stored procedure parameter type. Possible values
-        /// include: 'String', 'Int', 'Decimal', 'Guid', 'Boolean',
+        /// include: 'String', 'Int', 'Int64', 'Decimal', 'Guid', 'Boolean',
         /// 'Date'</param>
         public StoredProcedureParameter(object value = default(object), string type = default(string))
         {
@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets stored procedure parameter type. Possible values
-        /// include: 'String', 'Int', 'Decimal', 'Guid', 'Boolean', 'Date'
+        /// include: 'String', 'Int', 'Int64', 'Decimal', 'Guid', 'Boolean',
+        /// 'Date'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
