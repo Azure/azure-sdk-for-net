@@ -11,6 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.ContainerService.csproj" />
   </ItemGroup>
+  <PropertyGroup>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
