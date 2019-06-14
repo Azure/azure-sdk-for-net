@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Test
                 RegisterForCleanup(secret);
             }
 
-            List<Response<SecretBase>> allSecrets = await Client.GetAllAsync().ToEnumerableAsync();
+            List<Response<SecretBase>> allSecrets = await Client.GetSecretsAsync().ToEnumerableAsync();
 
             foreach (Secret createdSecret in createdSecrets)
             {
@@ -237,7 +237,7 @@ namespace Azure.Security.KeyVault.Test
 
             RegisterForCleanup(createdSecrets.First());
 
-            List<Response<SecretBase>> allSecrets = await Client.GetAllVersionsAsync(secretName).ToEnumerableAsync();
+            List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(secretName).ToEnumerableAsync();
 
             foreach (Secret createdSecret in createdSecrets)
             {
@@ -267,7 +267,7 @@ namespace Azure.Security.KeyVault.Test
                 await WaitForDeletedSecret(deletedSecret.Name);
             }
 
-            List<Response<DeletedSecret>> allSecrets = await Client.GetAllDeletedAsync().ToEnumerableAsync();
+            List<Response<DeletedSecret>> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
 
             foreach (Secret deletedSecret in deletedSecrets)
             {
