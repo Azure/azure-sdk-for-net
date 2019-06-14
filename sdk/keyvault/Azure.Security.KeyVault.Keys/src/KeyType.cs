@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -24,6 +25,12 @@ namespace Azure.Security.KeyVault.Keys
             // When a new entry is added, make sure to expose it as a field below.
         }
 
+        public static readonly KeyType Rsa = new KeyType("RSA");
+        public static readonly KeyType RsaHsm = new KeyType("RSA-HSM");
+        public static readonly KeyType EllipticCurve = new KeyType("EC");
+        public static readonly KeyType EllipticCurveHsm = new KeyType("EC-HSM");
+        public static readonly KeyType Octet = new KeyType("Octet");
+
         public string StringValue { get; private set; }
 
         public KeyType(string keyType)
@@ -31,10 +38,25 @@ namespace Azure.Security.KeyVault.Keys
             StringValue = keyType;
         }
 
-        public static readonly KeyType Rsa = new KeyType("RSA");
-        public static readonly KeyType RsaHsm = new KeyType("RSA-HSM");
-        public static readonly KeyType EllipticCurve = new KeyType("EC");
-        public static readonly KeyType EllipticCurveHsm = new KeyType("EC-HSM");
-        public static readonly KeyType Octet = new KeyType("Octet");
+        public static bool operator ==(KeyType first, KeyType second)
+        {
+            return StringComparer.OrdinalIgnoreCase.Equals(first.StringValue, second.StringValue);
+        }
+
+        public static bool operator !=(KeyType first, KeyType second)
+        {
+            return !StringComparer.OrdinalIgnoreCase.Equals(first.StringValue, second.StringValue);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is KeyType objAsKeyType &&
+                StringComparer.OrdinalIgnoreCase.Equals(StringValue, objAsKeyType.StringValue);
+        }
+
+        public override int GetHashCode()
+        {
+            return StringValue.GetHashCode();
+        }
     }
 }
