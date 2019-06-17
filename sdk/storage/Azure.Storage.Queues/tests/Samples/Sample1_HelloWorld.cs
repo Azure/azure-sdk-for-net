@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Azure.Storage.Samples
             QueueServiceClient queueServiceClient = new QueueServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new QueueClient
-            QueueClient queueClient = queueServiceClient.GetQueueClient("myqueue");
+            QueueClient queueClient = queueServiceClient.GetQueueClient($"myqueue-{Guid.NewGuid()}");
             try
             {
                 // Create your new Queue in the service
@@ -51,7 +52,7 @@ namespace Azure.Storage.Samples
             QueueServiceClient queueServiceClient = new QueueServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new QueueClient
-            QueueClient queueClient = queueServiceClient.GetQueueClient("myqueue2");
+            QueueClient queueClient = queueServiceClient.GetQueueClient($"myqueue2-{Guid.NewGuid()}");
             try
             {
                 // Create your new Queue in the service

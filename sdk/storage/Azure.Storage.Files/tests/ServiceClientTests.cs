@@ -6,16 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
     [TestFixture]
-    public class ServiceClientTests
+    public class ServiceClientTests : FileTestBase
     {
+        public ServiceClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
         [Test]
         public void Ctor_ConnectionString()
         {
@@ -28,7 +35,7 @@ namespace Azure.Storage.Files.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
-            var service = new FileServiceClient(connectionString.ToString(true), TestHelper.GetOptions<FileConnectionOptions>());
+            var service = this.InstrumentClient(new FileServiceClient(connectionString.ToString(true), this.GetOptions()));
 
             var builder = new FileUriBuilder(service.Uri);
 
@@ -38,11 +45,10 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Act
             var properties = await service.GetPropertiesAsync();
@@ -52,16 +58,16 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var service = new FileServiceClient(
-                TestHelper.InvalidUri,
-                TestHelper.GetOptions<FileConnectionOptions>(
-                    new SharedKeyCredentials(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey)));
+            var service = this.InstrumentClient(
+                new FileServiceClient(
+                    InvalidUri,
+                    this.GetOptions(
+                        new SharedKeyCredentials(
+                            TestConfigurations.DefaultTargetTenant.AccountName,
+                            TestConfigurations.DefaultTargetTenant.AccountKey))));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -71,11 +77,10 @@ namespace Azure.Storage.Files.Test
 
         [Test]
         [NonParallelizable]
-        [Category("Live")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             var properties = await service.GetPropertiesAsync();
             _ = properties.Value.Cors.ToArray();
             properties.Value.Cors.Clear();
@@ -99,18 +104,18 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             var properties = await service.GetPropertiesAsync();
-            var fakeService = new FileServiceClient(
-                new Uri("https://error.file.core.windows.net"),
-                    TestHelper.GetOptions<FileConnectionOptions>(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey)));
+            var fakeService = this.InstrumentClient(
+                new FileServiceClient(
+                    new Uri("https://error.file.core.windows.net"),
+                        this.GetOptions(
+                            new SharedKeyCredentials(
+                                TestConfigurations.DefaultTargetTenant.AccountName,
+                                TestConfigurations.DefaultTargetTenant.AccountKey))));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -119,14 +124,13 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task ListSharesSegmentAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Ensure at least one share
-            using (TestHelper.GetNewShare(out var share, service: service)) 
+            using (this.GetNewShare(out var share, service: service)) 
             {
                 var marker = default(string);
                 SharesSegment sharesSegment;
@@ -150,16 +154,16 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange
-            var service = new FileServiceClient(
-                new Uri("https://error.file.core.windows.net"),
-                TestHelper.GetOptions<FileConnectionOptions>(
-                    new SharedKeyCredentials(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey)));
+            var service = this.InstrumentClient(
+                new FileServiceClient(
+                    new Uri("https://error.file.core.windows.net"),
+                    this.GetOptions(
+                        new SharedKeyCredentials(
+                            TestConfigurations.DefaultTargetTenant.AccountName,
+                            TestConfigurations.DefaultTargetTenant.AccountKey))));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(

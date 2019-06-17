@@ -31,7 +31,7 @@ namespace Azure.Core.Testing
             Mode = mode;
         }
 
-        private static RecordedTestMode GetModeFromEnvironment()
+        internal static RecordedTestMode GetModeFromEnvironment()
         {
             string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 

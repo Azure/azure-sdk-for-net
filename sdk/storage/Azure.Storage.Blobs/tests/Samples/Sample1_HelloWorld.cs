@@ -30,7 +30,7 @@ namespace Azure.Storage.Samples
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
@@ -54,7 +54,7 @@ namespace Azure.Storage.Samples
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer2");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer2-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
@@ -94,7 +94,7 @@ namespace Azure.Storage.Samples
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer3");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer3-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
@@ -139,7 +139,7 @@ namespace Azure.Storage.Samples
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer4");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer4-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service

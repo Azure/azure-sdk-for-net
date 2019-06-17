@@ -5,16 +5,23 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
     [TestFixture]
-    public class ShareClientTests
+    public class ShareClientTests : FileTestBase
     {
+        public ShareClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
         [Test]
         public void Ctor_ConnectionString()
         {
@@ -27,9 +34,9 @@ namespace Azure.Storage.Files.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
-            var shareName = TestHelper.GetNewShareName();
+            var shareName = this.GetNewShareName();
 
-            var share = new ShareClient(connectionString.ToString(true), shareName, TestHelper.GetOptions<FileConnectionOptions>());
+            var share = this.InstrumentClient(new ShareClient(connectionString.ToString(true), shareName, this.GetOptions()));
 
             var builder = new FileUriBuilder(share.Uri);
 
@@ -41,33 +48,31 @@ namespace Azure.Storage.Files.Test
         [Test]
         public void WithSnapshot()
         {
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
             var builder = new FileUriBuilder(share.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
 
-            share = share.WithSnapshot("foo");
+            share = this.InstrumentClient(share.WithSnapshot("foo"));
             builder = new FileUriBuilder(share.Uri);
 
             Assert.AreEqual("foo", builder.Snapshot);
 
-            share = share.WithSnapshot(null);
+            share = this.InstrumentClient(share.WithSnapshot(null));
             builder = new FileUriBuilder(share.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
         }
 
-
         [Test]
-        [Category("Live")]
         public async Task CreateAsync()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             try
             {
@@ -84,34 +89,33 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateAsync_Metadata()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
-            var metadata = TestHelper.BuildMetadata();
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            var metadata = this.BuildMetadata();
 
             // Act
             await share.CreateAsync(metadata: metadata);
 
             // Assert
             var response = await share.GetPropertiesAsync();
-            TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+            this.AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await share.DeleteAsync();
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+
             // Share is intentionally created twice
             await share.CreateAsync();
 
@@ -125,12 +129,11 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateAsync_WithAccountSas()
         {
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_AccountSas();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_AccountSas();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             try
             {
@@ -145,12 +148,11 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateAsync_WithFileServiceSas()
         {
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_FileServiceSasShare(shareName);
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_FileServiceSasShare(shareName);
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             var pass = false;
 
@@ -175,10 +177,9 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Act
                 var reponse = await share.GetPropertiesAsync();
@@ -189,13 +190,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -204,32 +204,30 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetMetadataAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var metadata = TestHelper.BuildMetadata();
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await share.SetMetadataAsync(metadata);
 
                 // Assert
                 var response = await share.GetPropertiesAsync();
-                TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+                this.AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
-            var metadata = TestHelper.BuildMetadata();
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            var metadata = this.BuildMetadata();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -238,13 +236,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetAccessPolicyAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var signedIdentifiers = TestHelper.BuildSignedIdentifiers();
+                var signedIdentifiers = this.BuildSignedIdentifiers();
                 await share.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Act
@@ -262,13 +259,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -277,13 +273,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetAccessPolicyAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var signedIdentifiers = TestHelper.BuildSignedIdentifiers();
+                var signedIdentifiers = this.BuildSignedIdentifiers();
 
                 // Act
                 var response = await share.SetAccessPolicyAsync(signedIdentifiers);
@@ -294,14 +289,13 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
-            var signedIdentifiers = TestHelper.BuildSignedIdentifiers();
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            var signedIdentifiers = this.BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -310,10 +304,9 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetStatisticsAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Act
                 var response = await share.GetStatisticsAsync();
@@ -324,14 +317,13 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetStatisticsAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
-            var signedIdentifiers = TestHelper.BuildSignedIdentifiers();
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            var signedIdentifiers = this.BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -340,10 +332,9 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateSnapshotAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Act
                 var response = await share.CreateSnapshotAsync();
@@ -354,13 +345,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateSnapshotAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -369,10 +359,9 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetQuotaAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Act
                 await share.SetQuotaAsync(Constants.KB);
@@ -384,13 +373,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetQuotaAsync_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -399,13 +387,12 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
             await share.CreateAsync(quotaInBytes: 1);
 
             // Act
@@ -416,14 +403,13 @@ namespace Azure.Storage.Files.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task Delete_Error()
         {
             // Arrange
-            var shareName = TestHelper.GetNewShareName();
-            var service = TestHelper.GetServiceClient_SharedKey();
-            var share = service.GetShareClient(shareName);
-            var signedIdentifiers = TestHelper.BuildSignedIdentifiers();
+            var shareName = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = this.InstrumentClient(service.GetShareClient(shareName));
+            var signedIdentifiers = this.BuildSignedIdentifiers();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(

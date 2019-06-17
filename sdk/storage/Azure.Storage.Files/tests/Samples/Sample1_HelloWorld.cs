@@ -28,7 +28,7 @@ namespace Azure.Storage.Samples
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service
@@ -52,7 +52,7 @@ namespace Azure.Storage.Samples
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare2");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare2-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service
@@ -94,7 +94,7 @@ namespace Azure.Storage.Samples
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare3");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare3-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service

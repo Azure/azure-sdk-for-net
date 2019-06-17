@@ -4,20 +4,27 @@
 
 using System;
 using System.Net;
+using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     [TestFixture]
-    public class BlobUriBuilderTests
+    public class BlobUriBuilderTests : BlobTestBase
     {
+        public BlobUriBuilderTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
         //TODO address the flakiness of this test.
         [Test]
         public void BlobUriBuilder_RoundTrip()
         {
-            var service = TestHelper.GetServiceClient_AccountSas();
+            var service = this.GetServiceClient_AccountSas();
             var blobUriBuilder = new BlobUriBuilder(service.Uri);
 
             var blobUri = blobUriBuilder.ToUri();

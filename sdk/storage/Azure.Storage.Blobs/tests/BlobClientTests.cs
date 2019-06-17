@@ -8,18 +8,25 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
     [TestFixture]
-    public class BlobClientTests
+    public class BlobClientTests : BlobTestBase
     {
+        public BlobClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
         [Test]
         public void Ctor_ConnectionString()
         {
@@ -32,10 +39,10 @@ namespace Azure.Storage.Blobs.Test
 
             var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
 
-            var blob = new BlobClient(connectionString.ToString(true), containerName, blobName, TestHelper.GetOptions<BlobConnectionOptions>());
+            var blob = this.InstrumentClient(new BlobClient(connectionString.ToString(true), containerName, blobName, this.GetOptions()));
 
             var builder = new BlobUriBuilder(blob.Uri);
 
@@ -45,14 +52,13 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DownloadAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var data = this.GetRandomBuffer(Constants.KB);
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
@@ -72,22 +78,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DownloadAsync_WithUnreliableConnection()
         {
             // Arrange
-            var service = new BlobServiceClient(
+            var service = this.InstrumentClient(
+                new BlobServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint),
-                    TestHelper.GetFaultyBlobConnectionOptions(
+                    this.GetFaultyBlobConnectionOptions(
                         new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
                         raiseAt: 256 * Constants.KB,
-                        raise: new Exception("Unexpected")));
+                        raise: new Exception("Unexpected"))));
 
-            using (TestHelper.GetNewContainer(out var container, service: service))
+            using (this.GetNewContainer(out var container, service: service))
             {
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
+                var data = this.GetRandomBuffer(Constants.KB);
 
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
@@ -107,14 +113,13 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DownloadAsync_Range()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var data = TestHelper.GetRandomBuffer(10 * Constants.KB);
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var data = this.GetRandomBuffer(10 * Constants.KB);
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 var offset = Constants.KB;
                 var count = 2 * Constants.KB;
                 using (var stream = new MemoryStream(data))
@@ -136,71 +141,74 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task DownloadAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task DownloadAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                using (var stream = new MemoryStream(data))
+                using (this.GetNewContainer(out var container))
                 {
-                    await blob.UploadAsync(stream);
+                    // Arrange
+                    var data = this.GetRandomBuffer(Constants.KB);
+                    var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(parameters);
+
+                    // Act
+                    var response = await blob.DownloadAsync(accessConditions: accessConditions);
+
+                    // Assert
+                    Assert.AreEqual(data.Length, response.Value.ContentLength);
+                    var actual = new MemoryStream();
+                    await response.Value.Content.CopyToAsync(actual);
+                    Assert.AreEqual(data.Length, actual.Length);
+                    var actualData = actual.GetBuffer();
+                    Assert.IsTrue(data.SequenceEqual(actualData));
                 }
-
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(parameters);
-
-                // Act
-                var response = await blob.DownloadAsync(accessConditions: accessConditions);
-
-                // Assert
-                Assert.AreEqual(data.Length, response.Value.ContentLength);
-                var actual = new MemoryStream();
-                await response.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                var actualData = actual.GetBuffer();
-                Assert.IsTrue(data.SequenceEqual(actualData));
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task DownloadAsync_AccessConditionsFail(AccessConditionParameters parameters)
+        public async Task DownloadAsync_AccessConditionsFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
             {
-                // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                using (var stream = new MemoryStream(data))
+                using (this.GetNewContainer(out var container))
                 {
-                    await blob.UploadAsync(stream);
+                    // Arrange
+                    var data = this.GetRandomBuffer(Constants.KB);
+                    var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await blob.UploadAsync(stream);
+                    }
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.DownloadAsync(accessConditions: accessConditions),
+                        e => { });
                 }
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.DownloadAsync(accessConditions: accessConditions),
-                    e => { });
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task DownloadAsync_MD5()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var data = TestHelper.GetRandomBuffer(10 * Constants.KB);
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var data = this.GetRandomBuffer(10 * Constants.KB);
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 var offset = Constants.KB;
                 var count = 2 * Constants.KB;
                 using (var stream = new MemoryStream(data))
@@ -220,13 +228,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DownloadAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -236,14 +243,13 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task StartCopyFromUriAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var srcBlob = await this.GetNewBlobClient(container);
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 var response = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
@@ -255,16 +261,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task StartCopyFromUriAsync_Metadata()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var srcBlob = await this.GetNewBlobClient(container);
-                var metadata = TestHelper.BuildMetadata();
+                var metadata = this.BuildMetadata();
 
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await destBlob.StartCopyFromUriAsync(
@@ -273,144 +278,150 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 var response = await destBlob.GetPropertiesAsync();
-                TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+                this.AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task StartCopyFromUriAsync_Source_AccessConditions(AccessConditionParameters parameters)
+        public async Task StartCopyFromUriAsync_Source_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var srcBlob = await this.GetNewBlobClient(container);
-
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(srcBlob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(srcBlob, parameters.LeaseId);
-                var sourceAccessConditions = this.BuildAccessConditions(
-                    parameters: parameters);
-
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-
-                // Act
-                var response = await destBlob.StartCopyFromUriAsync(
-                    source: srcBlob.Uri,
-                    sourceAccessConditions: sourceAccessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task StartCopyFromUriAsync_Source_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var srcBlob = await this.GetNewBlobClient(container);
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(srcBlob, parameters.NoneMatch);
-
-                var sourceAccessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: false);
-
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    destBlob.StartCopyFromUriAsync(
-                        source: srcBlob.Uri, 
-                        sourceAccessConditions: sourceAccessConditions),
-                    e => { });
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task StartCopyFromUriAsync_Destination_AccessConditions(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                using (var stream = new MemoryStream(data))
+                using (this.GetNewContainer(out var container))
                 {
-                    await srcBlob.UploadAsync(stream);
-                }
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                    // Arrange
+                    var srcBlob = await this.GetNewBlobClient(container);
 
-                // destBlob needs to exist so we can get its lease and etag
-                using (var stream = new MemoryStream(data))
-                {
-                    await destBlob.UploadAsync(stream);
-                }
+                    parameters.Match = await this.SetupBlobMatchCondition(srcBlob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(srcBlob, parameters.LeaseId, garbageLeaseId);
+                    var sourceAccessConditions = this.BuildAccessConditions(
+                        parameters: parameters);
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(destBlob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(destBlob, parameters.LeaseId);
+                    var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
-                var accessConditions = this.BuildAccessConditions(parameters: parameters);
-
-                // Act
-                var response = await destBlob.StartCopyFromUriAsync(
-                    source: srcBlob.Uri,
-                    destinationAccessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task StartCopyFromUriAsync_Destination_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                using (var stream = new MemoryStream(data))
-                {
-                    await srcBlob.UploadAsync(stream);
-                }
-
-                // destBlob needs to exist so we can get its etag
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                using (var stream = new MemoryStream(data))
-                {
-                    await destBlob.UploadAsync(stream);
-                }
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters: parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    destBlob.StartCopyFromUriAsync(
+                    // Act
+                    var response = await destBlob.StartCopyFromUriAsync(
                         source: srcBlob.Uri,
-                        destinationAccessConditions: accessConditions),
-                    e => { });
+                        sourceAccessConditions: sourceAccessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task StartCopyFromUriAsync_Source_AccessConditionsFail()
+        {
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var srcBlob = await this.GetNewBlobClient(container);
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(srcBlob, parameters.NoneMatch);
+
+                    var sourceAccessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: false);
+
+                    var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        destBlob.StartCopyFromUriAsync(
+                            source: srcBlob.Uri,
+                            sourceAccessConditions: sourceAccessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_Destination_AccessConditions()
+        {
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var data = this.GetRandomBuffer(Constants.KB);
+                    var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await srcBlob.UploadAsync(stream);
+                    }
+                    var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+
+                    // destBlob needs to exist so we can get its lease and etag
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await destBlob.UploadAsync(stream);
+                    }
+
+                    parameters.Match = await this.SetupBlobMatchCondition(destBlob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(destBlob, parameters.LeaseId, garbageLeaseId);
+
+                    var accessConditions = this.BuildAccessConditions(parameters: parameters);
+
+                    // Act
+                    var response = await destBlob.StartCopyFromUriAsync(
+                        source: srcBlob.Uri,
+                        destinationAccessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
+            }
+        }
+
+        [Test]
+        public async Task StartCopyFromUriAsync_Destination_AccessConditionsFail()
+        {
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var data = this.GetRandomBuffer(Constants.KB);
+                    var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await srcBlob.UploadAsync(stream);
+                    }
+
+                    // destBlob needs to exist so we can get its etag
+                    var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await destBlob.UploadAsync(stream);
+                    }
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(destBlob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters: parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        destBlob.StartCopyFromUriAsync(
+                            source: srcBlob.Uri,
+                            destinationAccessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var destBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -420,25 +431,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task AbortCopyFromUriAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 await container.SetAccessPolicyAsync(PublicAccessType.Blob);
-                var data = TestHelper.GetRandomBuffer(8 * Constants.MB);
+                var data = this.GetRandomBuffer(8 * Constants.MB);
 
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await srcBlob.UploadAsync(stream);
                 }
 
-                var secondaryService = TestHelper.GetServiceClient_SecondaryAccount_SharedKey();
-                using (TestHelper.GetNewContainer(out var destContainer, service: secondaryService))
+                var secondaryService = this.GetServiceClient_SecondaryAccount_SharedKey();
+                using (this.GetNewContainer(out var destContainer, service: secondaryService))
                 {
-                    var destBlob = destContainer.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                    var destBlob = this.InstrumentClient(destContainer.GetBlockBlobClient(this.GetNewBlobName()));
 
                     var copyResponse = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
@@ -452,31 +462,30 @@ namespace Azure.Storage.Blobs.Test
                     }
                     catch (StorageRequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
                     {
-                        Assert.Inconclusive("Copy may have completed too quickly to abort.");
+                        this.WarnCopyCompletedTooQuickly();
                     }
                 }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task AbortCopyFromUriAsync_Lease()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 await container.SetAccessPolicyAsync(PublicAccessType.Blob);
-                var data = TestHelper.GetRandomBuffer(8 * Constants.MB);
+                var data = this.GetRandomBuffer(8 * Constants.MB);
 
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await srcBlob.UploadAsync(stream);
                 }
-                var secondaryService = TestHelper.GetServiceClient_SecondaryAccount_SharedKey();
-                using (TestHelper.GetNewContainer(out var destContainer, service: secondaryService))
+                var secondaryService = this.GetServiceClient_SecondaryAccount_SharedKey();
+                using (this.GetNewContainer(out var destContainer, service: secondaryService))
                 {
-                    var destBlob = destContainer.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                    var destBlob = this.InstrumentClient(destContainer.GetBlockBlobClient(this.GetNewBlobName()));
                     using (var stream = new MemoryStream(data))
                     {
                         await destBlob.UploadAsync(stream);
@@ -511,31 +520,30 @@ namespace Azure.Storage.Blobs.Test
                     }
                     catch (StorageRequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
                     {
-                        Assert.Inconclusive("Copy may have completed too quickly to abort.");
+                        this.WarnCopyCompletedTooQuickly();
                     }
                 }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task AbortCopyFromUriAsync_LeaseFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 await container.SetAccessPolicyAsync(PublicAccessType.Blob);
-                var data = TestHelper.GetRandomBuffer(8 * Constants.MB);
+                var data = this.GetRandomBuffer(8 * Constants.MB);
 
-                var srcBlob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var srcBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await srcBlob.UploadAsync(stream);
                 }
-                var secondaryService = TestHelper.GetServiceClient_SecondaryAccount_SharedKey();
-                using (TestHelper.GetNewContainer(out var destContainer, service: secondaryService))
+                var secondaryService = this.GetServiceClient_SecondaryAccount_SharedKey();
+                using (this.GetNewContainer(out var destContainer, service: secondaryService))
                 {
-                    var destBlob = destContainer.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                    var destBlob = this.InstrumentClient(destContainer.GetBlockBlobClient(this.GetNewBlobName()));
                     using (var stream = new MemoryStream(data))
                     {
                         await destBlob.UploadAsync(stream);
@@ -544,7 +552,7 @@ namespace Azure.Storage.Blobs.Test
                     var copyResponse = await destBlob.StartCopyFromUriAsync(
                         source: srcBlob.Uri);
 
-                    var leaseId = Guid.NewGuid().ToString();
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
 
                     // Act
                     try
@@ -561,7 +569,7 @@ namespace Azure.Storage.Blobs.Test
                                 switch (e.ErrorCode)
                                 {
                                     case "NoPendingCopyOperation":
-                                        Assert.Inconclusive("Copy may have completed too quickly to abort.");
+                                        this.WarnCopyCompletedTooQuickly();
                                         break;
                                     default:
                                         Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode);
@@ -572,21 +580,20 @@ namespace Azure.Storage.Blobs.Test
                     }
                     catch (StorageRequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
                     {
-                        Assert.Inconclusive("Copy may have completed too quickly to abort.");
+                        this.WarnCopyCompletedTooQuickly();
                     }
                 }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task AbortCopyFromUriAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var copyId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var copyId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -596,10 +603,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DeleteAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -613,10 +619,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task DeleteAsync_Options()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -632,83 +637,85 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task DeleteAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task DeleteAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                var response = await blob.DeleteAsync(accessConditions: accessConditions);
+                    // Act
+                    var response = await blob.DeleteAsync(accessConditions: accessConditions);
 
-                // Assert
-                Assert.IsNotNull(response.Headers.RequestId);
+                    // Assert
+                    Assert.IsNotNull(response.Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task DeleteAsync_AccessConditionsFail(AccessConditionParameters parameters)
+        public async Task DeleteAsync_AccessConditionsFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
-                    blob.DeleteAsync(accessConditions: accessConditions),
-                    e => { });
+                    // Act
+                    await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                        blob.DeleteAsync(accessConditions: accessConditions),
+                        e => { });
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task DeleteAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
                     blob.DeleteAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
 
         //[Test]
-        //[Category("Live")]
         //public async Task DeleteAsync_Batch()
         //{
-        //    using (TestHelper.GetNewContainer(out var container, serviceUri: TestHelper.GetServiceUri_PreviewAccount_SharedKey()))
+        //    using (this.GetNewContainer(out var container, serviceUri: this.GetServiceUri_PreviewAccount_SharedKey()))
         //    {
         //        const int blobSize = Constants.KB;
-        //        var data = TestHelper.GetRandomBuffer(blobSize);
+        //        var data = this.GetRandomBuffer(blobSize);
 
-        //        var blob1 = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+        //        var blob1 = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
         //        using (var stream = new MemoryStream(data))
         //        {
         //            await blob1.UploadAsync(stream);
         //        }
 
-        //        var blob2 = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+        //        var blob2 = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
         //        using (var stream = new MemoryStream(data))
         //        {
         //            await blob2.UploadAsync(stream);
@@ -729,21 +736,19 @@ namespace Azure.Storage.Blobs.Test
         //}
 
         [Test]
-        [Category("Live")]
         [NonParallelizable]
         public async Task UndeleteAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                await TestHelper.EnableSoftDelete();
-                var blob = await this.GetNewBlobClient(container);
-
-                await blob.DeleteAsync();
-
-                // Act
+                await this.EnableSoftDelete();
                 try
                 {
+                    var blob = await this.GetNewBlobClient(container);
+                    await blob.DeleteAsync();
+
+                    // Act
                     var response = await blob.UndeleteAsync();
 
                     // Assert
@@ -757,19 +762,18 @@ namespace Azure.Storage.Blobs.Test
                 finally
                 {
                     // Cleanup
-                    await TestHelper.DisableSoftDelete();
+                    await this.DisableSoftDelete();
                 }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task UndeleteAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -779,13 +783,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetAccountInfoAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 var response = await blob.GetAccountInfoAsync();
@@ -796,15 +799,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
-            var service = new BlobServiceClient(
-                TestHelper.GetServiceClient_SharedKey().Uri,
-                TestHelper.GetOptions<BlobConnectionOptions>());
-            var container = service.GetBlobContainerClient(TestHelper.GetNewContainerName());
-            var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+            var service = this.InstrumentClient(
+                new BlobServiceClient(
+                    this.GetServiceClient_SharedKey().Uri,
+                    this.GetOptions()));
+            var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
+            var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -813,10 +816,9 @@ namespace Azure.Storage.Blobs.Test
     }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -830,20 +832,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_ContainerSAS()
         {
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName))
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
 
-                var sasBlob = TestHelper.GetServiceClient_BlobServiceSas_Container(
-                    containerName: containerName)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName);
+                var sasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceSas_Container(
+                        containerName: containerName)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName));
 
                 // Act
                 var response = await sasBlob.GetPropertiesAsync();
@@ -854,26 +856,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_ContainerIdentitySAS()
         {
-            var oauthService = await TestHelper.GetServiceClient_OauthAccount();
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName, service: oauthService))
+            var oauthService = await this.GetServiceClient_OauthAccount();
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName, service: oauthService))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
 
                 var userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
-                    expiry: DateTimeOffset.UtcNow.AddHours(1));
+                    expiry: this.Recording.UtcNow.AddHours(1));
 
-                var identitySasBlob = TestHelper.GetServiceClient_BlobServiceIdentitySas_Container(
-                    containerName: containerName,
-                    userDelegationKey: userDelegationKey)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName);
+                var identitySasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceIdentitySas_Container(
+                        containerName: containerName,
+                        userDelegationKey: userDelegationKey)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName));
 
                 // Act
                 var response = await identitySasBlob.GetPropertiesAsync();
@@ -884,21 +886,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_BlobSAS()
         {
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName))
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
 
-                var sasBlob = TestHelper.GetServiceClient_BlobServiceSas_Blob(
-                    containerName: containerName,
-                    blobName: blobName)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName);
+                var sasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceSas_Blob(
+                        containerName: containerName,
+                        blobName: blobName)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName));
 
                 // Act
                 var response = await sasBlob.GetPropertiesAsync();
@@ -909,27 +911,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_BlobIdentitySAS()
         {
-            var oauthService = await TestHelper.GetServiceClient_OauthAccount();
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName, service: oauthService))
+            var oauthService = await this.GetServiceClient_OauthAccount();
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName, service: oauthService))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
 
                 var userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
-                    expiry: DateTimeOffset.UtcNow.AddHours(1));
+                    expiry: this.Recording.UtcNow.AddHours(1));
 
-                var identitySasBlob = TestHelper.GetServiceClient_BlobServiceIdentitySas_Blob(
-                    containerName: containerName,
-                    blobName: blobName,
-                    userDelegationKey: userDelegationKey)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName);
+                var identitySasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceIdentitySas_Blob(
+                        containerName: containerName,
+                        blobName: blobName,
+                        userDelegationKey: userDelegationKey)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName));
 
                 // Act
                 var response = await identitySasBlob.GetPropertiesAsync();
@@ -940,24 +942,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_SnapshotSAS()
         {
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName))
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
                 var snapshotResponse = await blob.CreateSnapshotAsync();
 
-                var sasBlob = TestHelper.GetServiceClient_BlobServiceSas_Snapshot(
-                    containerName: containerName,
-                    blobName: blobName,
-                    snapshot: snapshotResponse.Value.Snapshot)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName)
-                        .WithSnapshot(snapshotResponse.Value.Snapshot);
+                var sasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceSas_Snapshot(
+                        containerName: containerName,
+                        blobName: blobName,
+                        snapshot: snapshotResponse.Value.Snapshot)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName)
+                    .WithSnapshot(snapshotResponse.Value.Snapshot));
 
                 // Act
                 var response = await sasBlob.GetPropertiesAsync();
@@ -968,13 +970,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_SnapshotIdentitySAS()
         {
-            var oauthService = await TestHelper.GetServiceClient_OauthAccount();
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
-            using (TestHelper.GetNewContainer(out var container, containerName: containerName, service: oauthService))
+            var oauthService = await this.GetServiceClient_OauthAccount();
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
+            using (this.GetNewContainer(out var container, containerName: containerName, service: oauthService))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container, blobName);
@@ -982,14 +983,15 @@ namespace Azure.Storage.Blobs.Test
 
                 var userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                     start: null,
-                    expiry: DateTimeOffset.UtcNow.AddHours(1));
+                    expiry: this.Recording.UtcNow.AddHours(1));
 
-                var identitySasBlob = TestHelper.GetServiceClient_BlobServiceIdentitySas_Container(
-                    containerName: containerName,
-                    userDelegationKey: userDelegationKey)
-                        .GetBlobContainerClient(containerName)
-                        .GetBlockBlobClient(blobName)
-                        .WithSnapshot(snapshotResponse.Value.Snapshot);
+                var identitySasBlob = this.InstrumentClient(
+                    this.GetServiceClient_BlobServiceIdentitySas_Container(
+                        containerName: containerName,
+                        userDelegationKey: userDelegationKey)
+                    .GetBlobContainerClient(containerName)
+                    .GetBlockBlobClient(blobName)
+                    .WithSnapshot(snapshotResponse.Value.Snapshot));
 
                 // Act
                 var response = await identitySasBlob.GetPropertiesAsync();
@@ -1000,57 +1002,60 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task GetPropertiesAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task GetPropertiesAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                var response = await blob.GetPropertiesAsync(accessConditions: accessConditions);
+                    // Act
+                    var response = await blob.GetPropertiesAsync(accessConditions: accessConditions);
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task GetPropertiesAsync_AccessConditionsFail(AccessConditionParameters parameters)
+        public async Task GetPropertiesAsync_AccessConditionsFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters);
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters);
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.GetPropertiesAsync(accessConditions: accessConditions),
-                    e => { });
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.GetPropertiesAsync(accessConditions: accessConditions),
+                        e => { });
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task GetPropertiesAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1060,10 +1065,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetHttpHeadersAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var constants = new TestConstants(this);
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -1071,83 +1076,86 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await blob.SetHttpHeadersAsync(new BlobHttpHeaders
                 {
-                    CacheControl = TestConstants.CacheControl,
-                    ContentDisposition = TestConstants.ContentDisposition,
-                    ContentEncoding = new string[] { TestConstants.ContentEncoding },
-                    ContentLanguage = new string[] { TestConstants.ContentLanguage },
-                    ContentHash = TestConstants.ContentMD5,
-                    ContentType = TestConstants.ContentType
+                    CacheControl = constants.CacheControl,
+                    ContentDisposition = constants.ContentDisposition,
+                    ContentEncoding = new string[] { constants.ContentEncoding },
+                    ContentLanguage = new string[] { constants.ContentLanguage },
+                    ContentHash = constants.ContentMD5,
+                    ContentType = constants.ContentType
                 });
 
                 // Assert
                 var response = await blob.GetPropertiesAsync();
-                Assert.AreEqual(TestConstants.ContentType, response.Value.ContentType);
-                Assert.IsTrue(TestConstants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+                Assert.IsTrue(constants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
-                Assert.AreEqual(TestConstants.ContentEncoding, response.Value.ContentEncoding.First());
+                Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(1, response.Value.ContentLanguage.Count());
-                Assert.AreEqual(TestConstants.ContentLanguage, response.Value.ContentLanguage.First());
-                Assert.AreEqual(TestConstants.ContentDisposition, response.Value.ContentDisposition);
-                Assert.AreEqual(TestConstants.CacheControl, response.Value.CacheControl);
+                Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
+                Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
+                Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task SetHttpHeadersAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task SetHttpHeadersAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                var response = await blob.SetHttpHeadersAsync(
-                    httpHeaders: new BlobHttpHeaders(),
-                    accessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task SetHttpHeadersAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetHttpHeadersAsync(
+                    // Act
+                    var response = await blob.SetHttpHeadersAsync(
                         httpHeaders: new BlobHttpHeaders(),
-                        accessConditions: accessConditions),
-                    e => { });
+                        accessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task SetHttpHeadersAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.SetHttpHeadersAsync(
+                            httpHeaders: new BlobHttpHeaders(),
+                            accessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task SetHttpHeadersAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1157,83 +1165,85 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetMetadataAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
-                var metadata = TestHelper.BuildMetadata();
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await blob.SetMetadataAsync(metadata);
 
                 // Assert
                 var response = await blob.GetPropertiesAsync();
-                TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+                this.AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task SetMetadataAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task SetMetadataAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-                var metadata = TestHelper.BuildMetadata();
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+                    var metadata = this.BuildMetadata();
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                var response = await blob.SetMetadataAsync(
-                    metadata: metadata,
-                    accessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task SetMetadataAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-                var metadata = TestHelper.BuildMetadata();
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.SetMetadataAsync(
+                    // Act
+                    var response = await blob.SetMetadataAsync(
                         metadata: metadata,
-                        accessConditions: accessConditions),
-                    e => { });
+                        accessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task SetMetadataAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+                    var metadata = this.BuildMetadata();
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.SetMetadataAsync(
+                            metadata: metadata,
+                            accessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task SetMetadataAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var metadata = TestHelper.BuildMetadata();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1243,10 +1253,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateSnapshotAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -1260,57 +1269,60 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditions_Data))]
-        [Category("Live")]
-        public async Task CreateSnapshotAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task CreateSnapshotAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                parameters.LeaseId = await TestHelper.SetupBlobLeaseCondition(blob, parameters.LeaseId);
-                var accessConditions = this.BuildAccessConditions(
-                    parameters: parameters,
-                    lease: true);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    parameters.LeaseId = await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                    var accessConditions = this.BuildAccessConditions(
+                        parameters: parameters,
+                        lease: true);
 
-                // Act
-                var response = await blob.CreateSnapshotAsync(accessConditions: accessConditions);
+                    // Act
+                    var response = await blob.CreateSnapshotAsync(accessConditions: accessConditions);
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task CreateSnapshotAsync_AccessConditionsFail(AccessConditionParameters parameters)
+        public async Task CreateSnapshotAsync_AccessConditionsFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            var garbageLeaseId = this.GetGarbageLeaseId();
+            foreach (var parameters in this.GetAccessConditionsFail_Data(garbageLeaseId))
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildAccessConditions(parameters);
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildAccessConditions(parameters);
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.CreateSnapshotAsync(accessConditions: accessConditions),
-                    e => { });
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.CreateSnapshotAsync(accessConditions: accessConditions),
+                        e => { });
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task CreateSnapshotAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1320,15 +1332,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task AcquireLeaseAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 // Act
@@ -1340,68 +1351,69 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task AcquireLeaseAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task AcquireLeaseAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                var accessConditions = this.BuildHttpAccessConditions(
-                    parameters: parameters);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    var accessConditions = this.BuildHttpAccessConditions(
+                        parameters: parameters);
 
-                // Act
-                var response = await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId,
-                    httpAccessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task AcquireLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildHttpAccessConditions(parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.AcquireLeaseAsync(
+                    // Act
+                    var response = await blob.AcquireLeaseAsync(
                         duration: duration,
                         proposedID: leaseId,
-                        httpAccessConditions: accessConditions),
-                    e => { });
+                        httpAccessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task AcquireLeaseAsync_AccessConditionsFail()
+        {
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildHttpAccessConditions(parameters);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.AcquireLeaseAsync(
+                            duration: duration,
+                            proposedID: leaseId,
+                            httpAccessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task AcquireLeaseAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var leaseId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 // Act
@@ -1412,15 +1424,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task RenewLeaseAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 await blob.AcquireLeaseAsync(duration, leaseId);
@@ -1434,74 +1445,75 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task RenewLeaseAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task RenewLeaseAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                var accessConditions = this.BuildHttpAccessConditions(
-                    parameters: parameters);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    var accessConditions = this.BuildHttpAccessConditions(
+                        parameters: parameters);
 
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
 
-                // Act
-                var response = await blob.RenewLeaseAsync(
-                    leaseID: leaseId,
-                    httpAccessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task RenewLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildHttpAccessConditions(parameters);
-
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.RenewLeaseAsync(
+                    // Act
+                    var response = await blob.RenewLeaseAsync(
                         leaseID: leaseId,
-                        httpAccessConditions: accessConditions),
-                    e => { });
+                        httpAccessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task RenewLeaseAsync_AccessConditionsFail()
+        {
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildHttpAccessConditions(parameters);
+
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.RenewLeaseAsync(
+                            leaseID: leaseId,
+                            httpAccessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task RenewLeaseAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var leaseId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var leaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1511,15 +1523,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task ReleaseLeaseAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                var blob = await this.InstrumentClient(this.GetNewBlobClient(container));
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 await blob.AcquireLeaseAsync(duration, leaseId);
@@ -1533,74 +1544,75 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task ReleaseLeaseAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task ReleaseLeaseAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                var accessConditions = this.BuildHttpAccessConditions(
-                    parameters: parameters);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    var accessConditions = this.BuildHttpAccessConditions(
+                        parameters: parameters);
 
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
 
-                // Act
-                var response = await blob.ReleaseLeaseAsync(
-                    leaseID: leaseId,
-                    httpAccessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task ReleaseLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildHttpAccessConditions(parameters);
-
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.ReleaseLeaseAsync(
+                    // Act
+                    var response = await blob.ReleaseLeaseAsync(
                         leaseID: leaseId,
-                        httpAccessConditions: accessConditions),
-                    e => { });
+                        httpAccessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task ReleaseLeaseAsync_AccessConditionsFail()
+        {
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildHttpAccessConditions(parameters);
+
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.ReleaseLeaseAsync(
+                            leaseID: leaseId,
+                            httpAccessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task ReleaseLeaseAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var leaseId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var leaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1610,15 +1622,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task BreakLeaseAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 await blob.AcquireLeaseAsync(duration, leaseId);
@@ -1632,15 +1643,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task BreakLeaseAsync_BreakPeriod()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
                 var breakPeriod = 5;
 
@@ -1655,71 +1665,72 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task BreakLeaseAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task BreakLeaseAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                var accessConditions = this.BuildHttpAccessConditions(
-                    parameters: parameters);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    var accessConditions = this.BuildHttpAccessConditions(
+                        parameters: parameters);
 
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
 
-                // Act
-                var response = await blob.BreakLeaseAsync(
-                    httpAccessConditions: accessConditions);
+                    // Act
+                    var response = await blob.BreakLeaseAsync(
+                        httpAccessConditions: accessConditions);
 
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task BreakLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
+        public async Task BreakLeaseAsync_AccessConditionsFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildHttpAccessConditions(parameters);
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildHttpAccessConditions(parameters);
 
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
 
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.BreakLeaseAsync(
-                        httpAccessConditions: accessConditions),
-                    e => { });
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.BreakLeaseAsync(
+                            httpAccessConditions: accessConditions),
+                        e => { });
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
         public async Task BreakLeaseAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1729,16 +1740,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task ChangeLeaseAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var newLeaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
+                var newLeaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 await blob.AcquireLeaseAsync(duration, leaseId);
@@ -1752,79 +1762,80 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditions_Data))]
-        [Category("Live")]
-        public async Task ChangeLeaseAsync_AccessConditions(AccessConditionParameters parameters)
+        public async Task ChangeLeaseAsync_AccessConditions()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            foreach (var parameters in this.NoLease_AccessConditions_Data)
             {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
-                var newLeaseId = Guid.NewGuid().ToString();
-                var duration = 15;
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var newLeaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
 
-                parameters.Match = await TestHelper.SetupBlobMatchCondition(blob, parameters.Match);
-                var accessConditions = this.BuildHttpAccessConditions(
-                    parameters: parameters);
+                    parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
+                    var accessConditions = this.BuildHttpAccessConditions(
+                        parameters: parameters);
 
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
 
-                // Act
-                var response = await blob.ChangeLeaseAsync(
-                    leaseID: leaseId,
-                    proposedID: newLeaseId,
-                    httpAccessConditions: accessConditions);
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        [TestCaseSource(nameof(NoLease_AccessConditionsFail_Data))]
-        [Category("Live")]
-        public async Task ChangeLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
-        {
-            using (TestHelper.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = await this.GetNewBlobClient(container);
-
-                var leaseId = Guid.NewGuid().ToString();
-                var newLeaseId = Guid.NewGuid().ToString();
-                var duration = 15;
-
-                parameters.NoneMatch = await TestHelper.SetupBlobMatchCondition(blob, parameters.NoneMatch);
-                var accessConditions = this.BuildHttpAccessConditions(parameters);
-
-                await blob.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedID: leaseId);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    blob.ChangeLeaseAsync(
+                    // Act
+                    var response = await blob.ChangeLeaseAsync(
                         leaseID: leaseId,
                         proposedID: newLeaseId,
-                        httpAccessConditions: accessConditions),
-                    e => { });
+                        httpAccessConditions: accessConditions);
+
+                    // Assert
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                }
             }
         }
 
         [Test]
-        [Category("Live")]
+        public async Task ChangeLeaseAsync_AccessConditionsFail()
+        {
+            foreach (var parameters in this.NoLease_AccessConditionsFail_Data)
+            {
+                using (this.GetNewContainer(out var container))
+                {
+                    // Arrange
+                    var blob = await this.GetNewBlobClient(container);
+
+                    var leaseId = this.Recording.Random.NewGuid().ToString();
+                    var newLeaseId = this.Recording.Random.NewGuid().ToString();
+                    var duration = 15;
+
+                    parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                    var accessConditions = this.BuildHttpAccessConditions(parameters);
+
+                    await blob.AcquireLeaseAsync(
+                        duration: duration,
+                        proposedID: leaseId);
+
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                        blob.ChangeLeaseAsync(
+                            leaseID: leaseId,
+                            proposedID: newLeaseId,
+                            httpAccessConditions: accessConditions),
+                        e => { });
+                }
+            }
+        }
+
+        [Test]
         public async Task ChangeLeaseAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var leaseId = Guid.NewGuid().ToString();
-                var newLeaseId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var leaseId = this.Recording.Random.NewGuid().ToString();
+                var newLeaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -1836,10 +1847,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetTierAsync()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
@@ -1853,15 +1863,14 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetTierAsync_Lease()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
                 var blob = await this.GetNewBlobClient(container);
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
                 await blob.AcquireLeaseAsync(duration, leaseId);
@@ -1880,24 +1889,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetTierAsync_LeaseFail()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var data = TestHelper.GetRandomBuffer(Constants.KB);
+                var data = this.GetRandomBuffer(Constants.KB);
 
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.UploadAsync(stream);
                 }
 
-                var leaseId = Guid.NewGuid().ToString();
+                var leaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
                     blob.SetTierAsync(
                         accessTier: AccessTier.Cool,
                         leaseAccessConditions: new LeaseAccessConditions
@@ -1909,39 +1917,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Category("Live")]
         public async Task SetTierAsync_Error()
         {
-            using (TestHelper.GetNewContainer(out var container))
+            using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var blob = container.GetBlockBlobClient(TestHelper.GetNewBlobName());
-                var leaseId = Guid.NewGuid().ToString();
-                var newLeaseId = Guid.NewGuid().ToString();
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var leaseId = this.Recording.Random.NewGuid().ToString();
+                var newLeaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
                     blob.SetTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
 
         //[Test]
-        //[Category("Live")]
         //public async Task SetTierAsync_Batch()
         //{
-        //    using (TestHelper.GetNewContainer(out var container, service: TestHelper.GetServiceClient_PreviewAccount_SharedKey()))
+        //    using (this.GetNewContainer(out var container, service: this.GetServiceClient_PreviewAccount_SharedKey()))
         //    {
         //        const int blobSize = Constants.KB;
-        //        var data = TestHelper.GetRandomBuffer(blobSize);
+        //        var data = this.GetRandomBuffer(blobSize);
 
-        //        var blob1 = containerUri.CreateBlockBlobUri(TestHelper.GetNewBlobName());
+        //        var blob1 = this.InstrumentClient(container.CreateBlockBlobClient(this.GetNewBlobName()));
         //        using (var stream = new MemoryStream(data))
         //        {
         //            await blob1.UploadAsync(stream);
         //        }
 
-        //        var blob2 = containerUri.CreateBlockBlobUri(TestHelper.GetNewBlobName());
+        //        var blob2 = this.InstrumentClient(container.CreateBlockBlobClient(this.GetNewBlobName()));
         //        using (var stream = new MemoryStream(data))
         //        {
         //            await blob2.UploadAsync(stream);
@@ -1964,26 +1970,26 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public void WithSnapshot()
         {
-            var containerName = TestHelper.GetNewContainerName();
-            var blobName = TestHelper.GetNewBlobName();
+            var containerName = this.GetNewContainerName();
+            var blobName = this.GetNewBlobName();
 
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
-            var container = service.GetBlobContainerClient(containerName);
+            var container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
 
-            var blob = container.GetBlockBlobClient(blobName);
+            var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
 
             var builder = new BlobUriBuilder(blob.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
 
-            blob = blob.WithSnapshot("foo");
+            blob = this.InstrumentClient(blob.WithSnapshot("foo"));
 
             builder = new BlobUriBuilder(blob.Uri);
 
             Assert.AreEqual("foo", builder.Snapshot);
 
-            blob = blob.WithSnapshot(null);
+            blob = this.InstrumentClient(blob.WithSnapshot(null));
 
             builder = new BlobUriBuilder(blob.Uri);
 
@@ -1992,9 +1998,9 @@ namespace Azure.Storage.Blobs.Test
 
         private async Task<BlobClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
         {
-            blobName = blobName ?? TestHelper.GetNewBlobName();
-            var blob = container.GetBlockBlobClient(blobName);
-            var data = TestHelper.GetRandomBuffer(Constants.KB);
+            blobName = blobName ?? this.GetNewBlobName();
+            var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
+            var data = this.GetRandomBuffer(Constants.KB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -2003,99 +2009,45 @@ namespace Azure.Storage.Blobs.Test
             return blob;
         }
 
-        public static IEnumerable<object[]> AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> AccessConditions_Data
             => new[]
             {
                 new AccessConditionParameters(),
-                new AccessConditionParameters
-                {
-                    IfModifiedSince = TestHelper.OldDate
-                },
-                new AccessConditionParameters
-                {
-                    IfUnmodifiedSince = TestHelper.NewDate
-                },
-                new AccessConditionParameters
-                {
-                    Match = TestHelper.ReceivedETag
-                },
-                new AccessConditionParameters
-                {
-                    NoneMatch = TestHelper.GarbageETag
-                },
-                new AccessConditionParameters
-                {
-                    LeaseId = TestHelper.ReceivedLeaseId
-                }
-            }.Select(x => new object[] { x });
+                new AccessConditionParameters { IfModifiedSince = this.OldDate },
+                new AccessConditionParameters { IfUnmodifiedSince = this.NewDate },
+                new AccessConditionParameters { Match = this.ReceivedETag },
+                new AccessConditionParameters { NoneMatch = this.GarbageETag },
+                new AccessConditionParameters { LeaseId = this.ReceivedLeaseId }
+            };
 
-        public static IEnumerable<object[]> AccessConditionsFail_Data
+        public IEnumerable<AccessConditionParameters> GetAccessConditionsFail_Data(string garbageLeaseId)
             => new[]
             {
-                new AccessConditionParameters
-                {
-                    IfModifiedSince = TestHelper.NewDate
-                },
-                new AccessConditionParameters
-                {
-                    IfUnmodifiedSince = TestHelper.OldDate
-                },
-                new AccessConditionParameters
-                {
-                    Match = TestHelper.GarbageETag
-                },
-                new AccessConditionParameters
-                {
-                    NoneMatch = TestHelper.ReceivedETag
-                },
-                new AccessConditionParameters
-                {
-                    LeaseId = TestHelper.GarbageLeaseId
-                },
-             }.Select(x => new object[] { x });
+                new AccessConditionParameters { IfModifiedSince = this.NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = this.OldDate },
+                new AccessConditionParameters { Match = this.GarbageETag },
+                new AccessConditionParameters { NoneMatch = this.ReceivedETag },
+                new AccessConditionParameters { LeaseId = garbageLeaseId },
+             };
 
-        public static IEnumerable<object[]> NoLease_AccessConditions_Data
+        public IEnumerable<AccessConditionParameters> NoLease_AccessConditions_Data
             => new[]
             {
                 new AccessConditionParameters(),
-                new AccessConditionParameters
-                {
-                    IfModifiedSince = TestHelper.OldDate
-                },
-                new AccessConditionParameters
-                {
-                    IfUnmodifiedSince = TestHelper.NewDate
-                },
-                new AccessConditionParameters
-                {
-                    Match = TestHelper.ReceivedETag
-                },
-                new AccessConditionParameters
-                {
-                    NoneMatch = TestHelper.GarbageETag
-                },
-            }.Select(x => new object[] { x });
+                new AccessConditionParameters { IfModifiedSince = this.OldDate },
+                new AccessConditionParameters { IfUnmodifiedSince = this.NewDate },
+                new AccessConditionParameters { Match = this.ReceivedETag },
+                new AccessConditionParameters { NoneMatch = this.GarbageETag },
+            };
 
-        public static IEnumerable<object[]> NoLease_AccessConditionsFail_Data
+        public IEnumerable<AccessConditionParameters> NoLease_AccessConditionsFail_Data
             => new[]
             {
-                new AccessConditionParameters
-                {
-                    IfModifiedSince = TestHelper.NewDate
-                },
-                new AccessConditionParameters
-                {
-                    IfUnmodifiedSince = TestHelper.OldDate
-                },
-                new AccessConditionParameters
-                {
-                    Match = TestHelper.GarbageETag
-                },
-                new AccessConditionParameters
-                {
-                    NoneMatch = TestHelper.ReceivedETag
-                },
-            }.Select(x => new object[] { x });
+                new AccessConditionParameters { IfModifiedSince = this.NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = this.OldDate },
+                new AccessConditionParameters { Match = this.GarbageETag },
+                new AccessConditionParameters { NoneMatch = this.ReceivedETag },
+            };
 
         private HttpAccessConditions BuildHttpAccessConditions(
             AccessConditionParameters parameters)
@@ -2125,7 +2077,7 @@ namespace Azure.Storage.Blobs.Test
             return accessConditions;
         }
 
-        public struct AccessConditionParameters
+        public class AccessConditionParameters
         {
             public DateTimeOffset? IfModifiedSince { get; set; }
             public DateTimeOffset? IfUnmodifiedSince { get; set; }
