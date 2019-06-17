@@ -11,26 +11,26 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Compatibility
 {
     /// <summary>
-    ///   A transport client abstraction responsible for wrapping the track one event sender as a transport receiver for an
-    ///   AMQP-based connections.  It is intended that the public <see cref="EventReceiver" /> make use of an instance
+    ///   A transport client abstraction responsible for wrapping the track one producer as a transport consumer for an
+    ///   AMQP-based connections.  It is intended that the public <see cref="EventHubConsumer" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Messaging.EventHubs.Core.TransportEventReceiver" />
+    /// <seealso cref="Azure.Messaging.EventHubs.Core.TransportEventHubConsumer" />
     ///
-    internal sealed class TrackOneEventReceiver : TransportEventReceiver
+    internal sealed class TrackOneEventHubConsumer : TransportEventHubConsumer
     {
-        /// <summary>A lazy instantiation of the sender instance to delegate operation to.</summary>
+        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
         private Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
 
         /// <summary>
-        ///   The track one <see cref="TrackOne.PartitionReceiver" /> for use with this transport sender.
+        ///   The track one <see cref="TrackOne.PartitionReceiver" /> for use with this transport producer.
         /// </summary>
         ///
         private TrackOne.PartitionReceiver TrackOneReceiver => _trackOneReceiver.Value;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackOneEventReceiver"/> class.
+        ///     Initializes a new instance of the <see cref="TrackOneEventHubConsumer"/> class.
         /// </summary>
         ///
         /// <param name="trackOneReceiverFactory">A delegate that can be used for creation of the <see cref="TrackOne.PartitionReceiver" /> to which operations are delegated to.</param>
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   caller.
         /// </remarks>
         ///
-        public TrackOneEventReceiver(Func<TrackOne.PartitionReceiver> trackOneReceiverFactory)
+        public TrackOneEventHubConsumer(Func<TrackOne.PartitionReceiver> trackOneReceiverFactory)
         {
             Guard.ArgumentNotNull(nameof(trackOneReceiverFactory), trackOneReceiverFactory);
             _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(trackOneReceiverFactory, LazyThreadSafetyMode.PublicationOnly);
@@ -55,10 +55,10 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the receiver was created will be used.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this receiver is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
                                                                         TimeSpan? maximumWaitTime,

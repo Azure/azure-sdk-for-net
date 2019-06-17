@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of live tests for the <see cref="EventReceiver" />
+    ///   The suite of live tests for the <see cref="EventHubConsumer" />
     ///   class.
     /// </summary>
     ///
@@ -22,18 +22,17 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </remarks>
     ///
     [TestFixture]
-    [NonParallelizable]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public class EventReceiverLiveTests
+    public class EventHubConsumerLiveTests
     {
         /// <summary>
-        ///   Verifies that the <see cref="EventReceiver" /> is able to
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task ReceiverWithNoOptionsCanReceive()
+        public async Task ConsumerWithNoOptionsCanReceive()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -43,46 +42,42 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var receiver = client.CreateReceiver(partition))
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
                     {
-                        Assert.That(async () => await receiver.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     }
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventReceiver" /> is able to
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task ReceiverWithOptionsCanReceive()
+        public async Task ConsumerWithOptionsCanReceive()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                var options = new EventReceiverOptions
-                {
-                    ConsumerGroup = "$Default",
-                    BeginReceivingAt = EventPosition.NewEventsOnly
-                };
+                var options = new EventHubConsumerOptions { ConsumerGroup = "$Default" };
 
                 await using (var client = new EventHubClient(connectionString))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var receiver = client.CreateReceiver(partition, options))
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest, options))
                     {
-                        Assert.That(async () => await receiver.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     }
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventReceiver" /> is able to
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -100,26 +95,21 @@ namespace Azure.Messaging.EventHubs.Tests
                     new EventData(Encoding.UTF8.GetBytes("Three"))
                 };
 
-                var receiverOptions = new EventReceiverOptions
-                {
-                    BeginReceivingAt = EventPosition.NewEventsOnly
-                };
-
                 await using (var client = new EventHubClient(connectionString))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var sender = client.CreateSender(new EventSenderOptions { PartitionId = partition }))
-                    await using (var receiver = client.CreateReceiver(partition, receiverOptions))
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
                     {
-                        // Initiate an operation to force the receiver to connect and set its position at the
+                        // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
 
-                        Assert.That(async () => await receiver.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
                         // Send the batch of events.
 
-                        await sender.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch);
 
                         // Recieve and validate the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -128,9 +118,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var index = 0;
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
+                        while ((receivedEvents.Count < eventBatch.Length) && (++index < 5))
                         {
-                            receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
                         index = 0;
@@ -150,7 +140,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventReceiver" /> is able to
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
@@ -180,26 +170,21 @@ namespace Azure.Messaging.EventHubs.Tests
                     new EventData(Encoding.UTF8.GetBytes("Fifteen"))
                 };
 
-                var receiverOptions = new EventReceiverOptions
-                {
-                    BeginReceivingAt = EventPosition.NewEventsOnly
-                };
-
                 await using (var client = new EventHubClient(connectionString))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var sender = client.CreateSender(new EventSenderOptions { PartitionId = partition }))
-                    await using (var receiver = client.CreateReceiver(partition, receiverOptions))
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
                     {
-                        // Initiate an operation to force the receiver to connect and set its position at the
+                        // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
 
-                        Assert.That(async () => await receiver.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
                         // Send the batch of events, receive and validate them.
 
-                        await sender.SendAsync(eventBatch);
+                        await producer.SendAsync(eventBatch);
 
                         // Recieve and validate the events; because there is some non-determinism in the messaging flow, the
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -210,9 +195,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         var batchNumber = 1;
                         var batchSize = (eventBatch.Length / 3);
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < eventBatch.Length + 3))
+                        while ((receivedEvents.Count < eventBatch.Length) && (++index < eventBatch.Length + 5))
                         {
-                            var currentReceiveBatch = await receiver.ReceiveAsync(batchSize, TimeSpan.FromMilliseconds(25));
+                            var currentReceiveBatch = await consumer.ReceiveAsync(batchSize, TimeSpan.FromMilliseconds(25));
                             receivedEvents.AddRange(currentReceiveBatch);
 
                             Assert.That(currentReceiveBatch, Is.Not.Empty, $"There should have been a set of events received for batch number: { batchNumber }.");

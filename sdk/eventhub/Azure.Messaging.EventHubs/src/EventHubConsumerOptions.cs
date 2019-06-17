@@ -9,33 +9,33 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="EventReceiver" />
+    ///   The baseline set of options that can be specified when creating a <see cref="EventHubConsumer" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class EventReceiverOptions
+    public class EventHubConsumerOptions
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
         public const string DefaultConsumerGroup = "$Default";
 
-        /// <summary>The minimum value allowed for the prefetch count of the receiver.</summary>
+        /// <summary>The minimum value allowed for the prefetch count of the consumer.</summary>
         internal const int MinimumPrefetchCount = 10;
 
-        /// <summary>The maximum length, in characters, for the identifier assigned to a receiver.</summary>
+        /// <summary>The maximum length, in characters, for the identifier assigned to a consumer.</summary>
         internal const int MaximumIdentifierLength = 64;
 
         /// <summary>The amount of time to wait for messages when receiving.</summary>
         private TimeSpan? _maximumReceiveWaitTime = TimeSpan.FromMinutes(1);
 
-        /// <summary>The prefetch count to use for the receiver.</summary>
+        /// <summary>The prefetch count to use for the consumer.</summary>
         private int _prefetchCount = 300;
 
-        /// <summary>The identifier to use for the receiver.</summary>
+        /// <summary>The identifier to use for the consumer.</summary>
         private string _identifier = null;
 
         /// <summary>
-        ///   The name of the consumer group that an event receiver should be associated with.  Events read
-        ///   by the receiver will be performed in the context of this group.
+        ///   The name of the consumer group that an Event Hub consumer should be associated with.  Events read
+        ///   by the consumer will be performed in the context of this group.
         /// </summary>
         ///
         /// <value>If not specified, the default consumer group will be assumed.</value>
@@ -43,30 +43,18 @@ namespace Azure.Messaging.EventHubs
         public string ConsumerGroup { get; set; } = DefaultConsumerGroup;
 
         /// <summary>
-        ///   The position within the partition where the receiver should begin reading events.
-        /// </summary>
+        ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
+        ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
+        ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
+        ///   partition/consumer group pair, the one having a larger <see cref="ExclusiveConsumerPriority"/> value will "win."
         ///
-        /// <value>
-        ///   If not specified, the receiver will begin receiving all events that are
-        ///   contained in the partition, starting with the first event that was enqueued and
-        ///   will continue receiving until there are no more events observed.
-        /// </value>
-        ///
-        public EventPosition BeginReceivingAt { get; set; } = EventPosition.FirstAvailableEvent;
-
-        /// <summary>
-        ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
-        ///   requested partition and an associated consumer group.  To do so, this receiver will attempt to assert ownership
-        ///   over the partition; in the case where more than one exclusive receiver attempts to assert ownership for the same
-        ///   partition/consumer group pair, the one having a larger <see cref="ExclusiveReceiverPriority"/> value will "win."
-        ///
-        ///   When an exclusive receiver is used, those receivers which are not exclusive or which have a lower priority will either
+        ///   When an exclusive consumer is used, those consumers which are not exclusive or which have a lower priority will either
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value should be <c>null</c>.</value>
+        /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
         ///
-        public long? ExclusiveReceiverPriority { get; set; }
+        public long? ExclusiveConsumerPriority { get; set; }
 
         /// <summary>
         ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
@@ -104,7 +92,7 @@ namespace Azure.Messaging.EventHubs
         internal TimeSpan? MaximumReceiveWaitTimeOrDefault => (_maximumReceiveWaitTime == TimeSpan.Zero) ? null : _maximumReceiveWaitTime;
 
         /// <summary>
-        ///     An optional text-based identifier label to assign to an event receiver.
+        ///     An optional text-based identifier label to assign to a consumer.
         /// </summary>
         ///
         /// <value>The identifier is used for informational purposes only.  If not specified, the reaciever will have no assigned identifier label.</value>
@@ -121,7 +109,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The prefetch count used by the receiver to control the number of events this receiver will actively receive
+        ///   The prefetch count used by the consumer to control the number of events this consumer will actively receive
         ///   and queue locally without regard to whether a receive operation is currently active.
         /// </summary>
         ///
@@ -166,17 +154,16 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="EventReceiverOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="EventHubConsumerOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="EventReceiverOptions" />.</returns>
+        /// <returns>A new copy of <see cref="EventHubConsumerOptions" />.</returns>
         ///
-        internal EventReceiverOptions Clone() =>
-            new EventReceiverOptions
+        internal EventHubConsumerOptions Clone() =>
+            new EventHubConsumerOptions
             {
                 ConsumerGroup = this.ConsumerGroup,
-                BeginReceivingAt = this.BeginReceivingAt,
-                ExclusiveReceiverPriority = this.ExclusiveReceiverPriority,
+                ExclusiveConsumerPriority = this.ExclusiveConsumerPriority,
                 Retry = this.Retry?.Clone(),
 
                 _identifier = this._identifier,
@@ -185,7 +172,7 @@ namespace Azure.Messaging.EventHubs
             };
 
         /// <summary>
-        ///   Validates that the identifier requested for the receiver can be used, throwing an <see cref="ArgumentException" /> if
+        ///   Validates that the identifier requested for the consumer can be used, throwing an <see cref="ArgumentException" /> if
         ///   it is not valid.
         /// </summary>
         ///
@@ -195,7 +182,7 @@ namespace Azure.Messaging.EventHubs
         {
             if ((!String.IsNullOrEmpty(identifier)) && (identifier.Length > MaximumIdentifierLength))
             {
-                throw new ArgumentException(nameof(identifier), String.Format(CultureInfo.CurrentCulture, Resources.ReceiverIdentifierOverMaxValue, MaximumIdentifierLength));
+                throw new ArgumentException(nameof(identifier), String.Format(CultureInfo.CurrentCulture, Resources.ConsumerIdentifierOverMaxValue, MaximumIdentifierLength));
             }
         }
 

@@ -11,26 +11,26 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Compatibility
 {
     /// <summary>
-    ///   A transport client abstraction responsible for wrapping the track one event sender as a transport sender for
-    ///   AMQP-based connections.  It is intended that the public <see cref="EventSender" /> make use of an instance
+    ///   A transport client abstraction responsible for wrapping the track one producer as a transport producer for
+    ///   AMQP-based connections.  It is intended that the public <see cref="EventHubProducer" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Messaging.EventHubs.Core.TransportEventSender" />
+    /// <seealso cref="Azure.Messaging.EventHubs.Core.TransportEventHubProducer" />
     ///
-    internal sealed class TrackOneEventSender : TransportEventSender
+    internal sealed class TrackOneEventHubProducer : TransportEventHubProducer
     {
-        /// <summary>A lazy instantiation of the sender instance to delegate operation to.</summary>
+        /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
         private Lazy<TrackOne.EventDataSender> _trackOneSender;
 
         /// <summary>
-        ///   The track one <see cref="TrackOne.EventDataSender" /> for use with this transport sender.
+        ///   The track one <see cref="TrackOne.EventDataSender" /> for use with this transport producer.
         /// </summary>
         ///
         private TrackOne.EventDataSender TrackOneSender => _trackOneSender.Value;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TrackOneEventSender"/> class.
+        ///     Initializes a new instance of the <see cref="TrackOneEventHubProducer"/> class.
         /// </summary>
         ///
         /// <param name="trackOneSenderFactory">A delegate that can be used for creation of the <see cref="TrackOne.EventDataSender" /> to which operations are delegated to.</param>
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   caller.
         /// </remarks>
         ///
-        public TrackOneEventSender(Func<TrackOne.EventDataSender> trackOneSenderFactory)
+        public TrackOneEventHubProducer(Func<TrackOne.EventDataSender> trackOneSenderFactory)
         {
             Guard.ArgumentNotNull(nameof(trackOneSenderFactory), trackOneSenderFactory);
             _trackOneSender = new Lazy<TrackOne.EventDataSender>(trackOneSenderFactory, LazyThreadSafetyMode.PublicationOnly);
@@ -56,11 +56,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="events">The set of event data to send.</param>
-        /// <param name="batchOptions">The set of options to consider when sending this batch.</param>
+        /// <param name="sendOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public override Task SendAsync(IEnumerable<EventData> events,
-                                       EventBatchingOptions batchOptions,
+                                       SendOptions sendOptions,
                                        CancellationToken cancellationToken)
         {
             static TrackOne.EventData TransformEvent(EventData eventData) =>
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     Properties = eventData.Properties
                 };
 
-            return TrackOneSender.SendAsync(events.Select(TransformEvent), batchOptions?.PartitionKey);
+            return TrackOneSender.SendAsync(events.Select(TransformEvent), sendOptions?.PartitionKey);
         }
 
         /// <summary>

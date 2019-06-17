@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="TrackOneEventSender" />
+    ///   The suite of tests for the <see cref="TrackOneEventHubProducer" />
     ///   class.
     /// </summary>
     ///
@@ -225,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEventPositionEquivalentRecognizesSameBeginning()
         {
             var trackOnePosition = TrackOne.EventPosition.FromStart();
-            var trackTwoPosition = EventPosition.FirstAvailableEvent;
+            var trackTwoPosition = EventPosition.Earliest;
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);
         }
@@ -239,7 +239,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEventPositionEquivalentRecognizesSameEnding()
         {
             var trackOnePosition = TrackOne.EventPosition.FromEnd();
-            var trackTwoPosition = EventPosition.NewEventsOnly;
+            var trackTwoPosition = EventPosition.Latest;
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);
         }

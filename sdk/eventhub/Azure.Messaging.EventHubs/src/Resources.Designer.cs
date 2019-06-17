@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A sender created for a specific partition cannot send events using a partition key.  This sender is associated with partition &apos;{0}&apos;..
+        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition &apos;{0}&apos;..
         /// </summary>
         internal static string CannotSendWithPartitionIdAndPartitionKey
         {
@@ -212,11 +212,11 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
-        internal static string ReceiverIdentifierOverMaxValue
+        internal static string ConsumerIdentifierOverMaxValue
         {
             get
             {
-                return ResourceManager.GetString("ReceiverIdentifierOverMaxValue", resourceCulture);
+                return ResourceManager.GetString("ConsumerIdentifierOverMaxValue", resourceCulture);
             }
         }
 

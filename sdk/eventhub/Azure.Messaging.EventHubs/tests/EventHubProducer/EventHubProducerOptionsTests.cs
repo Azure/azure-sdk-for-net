@@ -4,22 +4,23 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventSenderOptions" />
+    ///   The suite of tests for the <see cref="EventHubProducerOptions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class SenderOptionsTests
+    [Parallelizable(ParallelScope.Children)]
+    public class EventHubProducerOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventSenderOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new EventSenderOptions
+            var options = new EventHubProducerOptions
             {
                 PartitionId = "some_partition_id_123",
                 Retry = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(5), 6),
@@ -37,18 +38,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
         [Test]
         public void DefaultTimeoutIsValidated()
         {
-            Assert.That(() => new EventSenderOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
+            Assert.That(() => new EventHubProducerOptions { Timeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
@@ -57,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0)]
         public void DefaultTimeoutUsesDefaultValueIfNormalizesValueINotSpecified(int? noTimeoutValue)
         {
-            var options = new EventSenderOptions();
+            var options = new EventHubProducerOptions();
             var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
 
             options.Timeout = timeoutValue;
