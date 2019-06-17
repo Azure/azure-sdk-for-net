@@ -1,10 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net452;netcoreapp2.0;netcoreapp1.1</TargetFrameworks>     
+        <TargetFrameworks>net452;netcoreapp2.0;netcoreapp1.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />
     </ItemGroup>
+    <PropertyGroup>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
+      <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
         <PackageReference Include="xUnit" Version="2.3.1" />
