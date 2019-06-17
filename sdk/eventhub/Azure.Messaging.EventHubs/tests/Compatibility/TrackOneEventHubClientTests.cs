@@ -22,6 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class TrackOneEventHubClientTests
     {
         /// <summary>
@@ -420,12 +421,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateSender" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateProducer" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task CreateSenderDelegatesToTheClient()
+        public async Task CreateProducerDelegatesToTheClient()
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
@@ -438,13 +439,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                var senderOptions = new EventSenderOptions { PartitionId = "45345" };
+                var producerOptions = new EventHubProducerOptions { PartitionId = "45345" };
 
-                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
-                // receiver from within the mock client, that operation will fail with a null reference exception.
+                // Because the producer is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // producer from within the mock client, that operation will fail with a null reference exception.
 
-                Assert.That(async () => await client.CreateSender(senderOptions)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
-                Assert.That(mock.CreateSenderInvokedWith, Is.EqualTo(senderOptions.PartitionId));
+                Assert.That(async () => await client.CreateProducer(producerOptions)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
+                Assert.That(mock.CreateProducerInvokedWith, Is.EqualTo(producerOptions.PartitionId));
             }
             finally
             {
@@ -453,12 +454,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateReceiver" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateConsumer" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task CreateReceiverDelegatesToTheClient()
+        public async Task CreateConsumerDelegatesToTheClient()
         {
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
@@ -472,19 +473,20 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var partitionId = "32234";
-                var receiverOptions = new EventReceiverOptions { ConsumerGroup = "Test", BeginReceivingAt = EventPosition.FromOffset(34) };
+                var eventPosition = EventPosition.FromOffset(34);
+                var consumerOptions = new EventHubConsumerOptions { ConsumerGroup = "Test" };
 
-                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
-                // receiver from within the mock client, that operation will fail with a null reference exception.
+                // Because the consumer is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // consumer from within the mock client, that operation will fail with a null reference exception.
 
-                Assert.That(async () => await client.CreateReceiver(partitionId, receiverOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
+                Assert.That(async () => await client.CreateConsumer(partitionId, eventPosition, consumerOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
 
                 (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReiverInvokedWith;
 
-                Assert.That(calledConsumerGroup, Is.EqualTo(receiverOptions.ConsumerGroup), "The consumer group should match.");
+                Assert.That(calledConsumerGroup, Is.EqualTo(consumerOptions.ConsumerGroup), "The consumer group should match.");
                 Assert.That(calledPartition, Is.EqualTo(partitionId), "The partition should match.");
-                Assert.That(calledPosition.Offset, Is.EqualTo(receiverOptions.BeginReceivingAt.Offset), "The event position offset should match.");
-                Assert.That(calledOptions.Identifier, Is.EqualTo(receiverOptions.Identifier), "The options should match.");
+                Assert.That(calledPosition.Offset, Is.EqualTo(eventPosition.Offset), "The event position offset should match.");
+                Assert.That(calledOptions.Identifier, Is.EqualTo(consumerOptions.Identifier), "The options should match.");
             }
             finally
             {
@@ -501,7 +503,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasCloseAsyncInvoked;
             public bool WasGetRuntimeInvoked;
             public string GetPartitionRuntimePartitionInvokedWith;
-            public string CreateSenderInvokedWith;
+            public string CreateProducerInvokedWith;
             public (string ConsumerGroup, string Partition, TrackOne.EventPosition startingPosition, long? priority, TrackOne.ReceiverOptions Options) CreateReiverInvokedWith;
 
 
@@ -518,7 +520,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.CompletedTask;
             }
 
-            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, TrackOne.ReceiverOptions receiverOptions)
+            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, TrackOne.ReceiverOptions consumerOptions)
             {
                 CreateReiverInvokedWith =
                 (
@@ -526,7 +528,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    partitionId,
                    eventPosition,
                    epoch,
-                   receiverOptions
+                   consumerOptions
                 );
 
                 return default(PartitionReceiver);
@@ -546,7 +548,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             internal override EventDataSender OnCreateEventSender(string partitionId)
             {
-                CreateSenderInvokedWith = partitionId;
+                CreateProducerInvokedWith = partitionId;
                 return default(EventDataSender);
             }
         }

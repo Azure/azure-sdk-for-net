@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of live tests for the <see cref="EventSender" />
+    ///   The suite of live tests for the <see cref="EventHubProducer" />
     ///   class.
     /// </summary>
     ///
@@ -23,58 +23,58 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public class EventSenderLiveTests
+    public class EventHubProducerLiveTests
     {
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderWithNoOptionsCanSend()
+        public async Task ProducerWithNoOptionsCanSend()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var sender = client.CreateSender())
+                await using (var producer = client.CreateProducer())
                 {
                     var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
-                    Assert.That(async () => await sender.SendAsync(events), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderWithOptionsCanSend()
+        public async Task ProducerWithOptionsCanSend()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var senderOptions = new EventSenderOptions { Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(45), 5) };
+                var producerOptions = new EventHubProducerOptions { Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(45), 5) };
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var sender = client.CreateSender(senderOptions))
+                await using (var producer = client.CreateProducer(producerOptions))
                 {
                     var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
-                    Assert.That(async () => await sender.SendAsync(events), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderCanSendToASpecificPartition()
+        public async Task ProducerCanSendToASpecificPartition()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -83,24 +83,24 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
-                    var senderOptions = new EventSenderOptions { PartitionId = partition };
+                    var producerOptions = new EventHubProducerOptions { PartitionId = partition };
 
-                    await using (var sender = client.CreateSender(senderOptions))
+                    await using (var producer = client.CreateProducer(producerOptions))
                     {
                         var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
-                        Assert.That(async () => await sender.SendAsync(events), Throws.Nothing);
+                        Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                     }
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderCanSendEventsWithCustomProperties()
+        public async Task ProducerCanSendEventsWithCustomProperties()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -121,20 +121,20 @@ namespace Azure.Messaging.EventHubs.Tests
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var sender = client.CreateSender())
+                await using (var producer = client.CreateProducer())
                 {
-                    Assert.That(async () => await sender.SendAsync(events), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderCanSendEventsUsingAPartitionHashHey()
+        public async Task ProducerCanSendEventsUsingAPartitionHashHey()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -145,25 +145,25 @@ namespace Azure.Messaging.EventHubs.Tests
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var sender = client.CreateSender())
+                await using (var producer = client.CreateProducer())
                 {
-                    var batchOptions = new EventBatchingOptions { PartitionKey = "some123key-!d" };
-                    Assert.That(async () => await sender.SendAsync(events, batchOptions), Throws.Nothing);
+                    var batchOptions = new SendOptions { PartitionKey = "some123key-!d" };
+                    Assert.That(async () => await producer.SendAsync(events, batchOptions), Throws.Nothing);
                 }
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
-        public async Task SenderCanSendMultipleBatchesOfEventsUsingAPartitionHashHey()
+        public async Task ProducerCanSendMultipleBatchesOfEventsUsingAPartitionHashHey()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
-                var batchOptions = new EventBatchingOptions { PartitionKey = "some123key-!d" };
+                var batchOptions = new SendOptions { PartitionKey = "some123key-!d" };
 
                 for (var index = 0; index < 5; ++index)
                 {
@@ -174,9 +174,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                     await using (var client = new EventHubClient(connectionString))
-                    await using (var sender = client.CreateSender())
+                    await using (var producer = client.CreateProducer())
                     {
-                        Assert.That(async () => await sender.SendAsync(events, batchOptions), Throws.Nothing, $"Batch { index } should not have thrown an exception.");
+                        Assert.That(async () => await producer.SendAsync(events, batchOptions), Throws.Nothing, $"Batch { index } should not have thrown an exception.");
                     }
                 }
             }

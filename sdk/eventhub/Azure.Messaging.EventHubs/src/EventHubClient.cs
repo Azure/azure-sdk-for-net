@@ -66,24 +66,6 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub path.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the path to the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="eventHubPath" />.  The path to the Event Hub should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        public EventHubClient(string connectionString,
-                              string eventHubPath) : this(connectionString, eventHubPath, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
-        /// </summary>
-        ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub path and SAS token are contained in this connection string.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
@@ -98,6 +80,24 @@ namespace Azure.Messaging.EventHubs
         ///
         public EventHubClient(string connectionString,
                               EventHubClientOptions clientOptions) : this(connectionString, null, clientOptions)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub path.</param>
+        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Event Hub itself, it will contain the path to the desired Event Hub,
+        ///   and can be used directly without passing the <paramref name="eventHubPath" />.  The path to the Event Hub should be
+        ///   passed only once, either as part of the connection string or separately.
+        /// </remarks>
+        ///
+        public EventHubClient(string connectionString,
+                              string eventHubPath) : this(connectionString, eventHubPath, null)
         {
         }
 
@@ -254,15 +254,15 @@ namespace Azure.Messaging.EventHubs
                                                                              CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, cancellationToken);
 
         /// <summary>
-        ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
-        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
-        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   Creates an Event Hub producer responsible for transmitting <see cref="EventData" /> to the
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="producerOptions"/>
+        ///   specified, the producer may be created to allow event data to be automatically routed to an available
         ///   partition or specific to a partition.
         /// </summary>
         ///
-        /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
+        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
         ///
-        /// <returns>An event sender configured in the requested manner.</returns>
+        /// <returns>An Event Hub producer configured in the requested manner.</returns>
         ///
         /// <remarks>
         ///   Allowing automatic routing of partitions is recommended when:
@@ -274,54 +274,51 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        public virtual EventSender CreateSender(EventSenderOptions senderOptions = default)
+        public virtual EventHubProducer CreateProducer(EventHubProducerOptions producerOptions = default)
         {
-            var options = senderOptions?.Clone() ?? new EventSenderOptions { Retry = null, Timeout = null };
+            var options = producerOptions?.Clone() ?? new EventHubProducerOptions { Retry = null, Timeout = null };
 
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.Timeout = options.TimeoutOrDefault ?? ClientOptions.DefaultTimeout;
 
-            return InnerClient.CreateSender(options);
+            return InnerClient.CreateProducer(options);
         }
 
         /// <summary>
-        ///   Creates an event receiver responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
+        ///   Creates an Event Hub consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
         ///   and as a member of a specific consumer group.
         ///
-        ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
-        ///   group to ensure that only one receiver from that group is reading the from the partition.
-        ///   These exclusive receivers are sometimes referred to as "Epoch Receivers."
+        ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
+        ///   group to ensure that only one consumer from that group is reading the from the partition.
+        ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
         ///
-        ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
-        ///   group to be actively reading events from the partition.  These non-exclusive receivers are
-        ///   sometimes referred to as "Non-epoch Receivers."
+        ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
+        ///   group to be actively reading events from the partition.  These non-exclusive consumers are
+        ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a receiver as exclusive may be specified in the <paramref name="receiverOptions" />.
-        ///   By default, receivers are created as non-exclusive.
+        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
+        ///   By default, consumers are created as non-exclusive.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="receiverOptions">The set of options to apply when creating the receiver.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
         ///
-        /// <returns>An event receiver configured in the requested manner.</returns>
+        /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
-        /// <remarks>
-        ///   If the starting event position is not specified in the <paramref name="receiverOptions"/>, the receiver will
-        ///   default to ignoring events in the partition that were queued prior to the receiver being created and read only
-        ///   events which appear after that point.
-        /// </remarks>
-        ///
-        public virtual EventReceiver CreateReceiver(string partitionId,
-                                                    EventReceiverOptions receiverOptions = default)
+        public virtual EventHubConsumer CreateConsumer(string partitionId,
+                                                       EventPosition eventPosition,
+                                                       EventHubConsumerOptions consumerOptions = default)
         {
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
+            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
 
-            var options = receiverOptions?.Clone() ?? new EventReceiverOptions { Retry = null, DefaultMaximumReceiveWaitTime = null };
+            var options = consumerOptions?.Clone() ?? new EventHubConsumerOptions { Retry = null, DefaultMaximumReceiveWaitTime = null };
 
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.DefaultMaximumReceiveWaitTime = options.MaximumReceiveWaitTimeOrDefault ?? ClientOptions.DefaultTimeout;
 
-            return InnerClient.CreateReceiver(partitionId, options);
+            return InnerClient.CreateConsumer(partitionId, eventPosition, options);
         }
 
         /// <summary>

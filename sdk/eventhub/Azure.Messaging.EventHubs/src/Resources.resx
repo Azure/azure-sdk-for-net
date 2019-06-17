@@ -135,7 +135,7 @@
   <data name="MissingSystemProperty" xml:space="preserve">
     <value>System property '{0}' is missing in the event.</value>
   </data>
-  <data name="ReceiverIdentifierOverMaxValue" xml:space="preserve">
+  <data name="ConsumerIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
   <data name="TimeoutMustBePositive" xml:space="preserve">
@@ -178,7 +178,7 @@
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
   <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
-    <value>A sender created for a specific partition cannot send events using a partition key.  This sender is associated with partition '{0}'.</value>
+    <value>A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition '{0}'.</value>
   </data>
   <data name="UnsupportedCredential" xml:space="preserve">
     <value>The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential.</value>

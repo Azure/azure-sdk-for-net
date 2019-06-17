@@ -14,21 +14,22 @@ using TrackOne;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="TrackOneEventSender" />
+    ///   The suite of tests for the <see cref="TrackOneEventHubProducer" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class TrackOneEventSenderTests
+    [Parallelizable(ParallelScope.Children)]
+    public class TrackOneEventHubProducerTests
     {
         /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesTheSenderFactory()
+        public void ConstructorValidatesTheProducerFactory()
         {
-            Assert.That(() => new TrackOneEventSender(null), Throws.ArgumentNullException);
+            Assert.That(() => new TrackOneEventHubProducer(null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -36,21 +37,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SenderIsConstructedCorrectly()
+        public async Task ProducerIsConstructedCorrectly()
         {
             var partition = "123";
             var mock = new ObservableSenderMock(new ClientMock(), partition);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            // Invoke an operation to force the sender to be lazily instantiated.  Otherwise,
+            // Invoke an operation to force the producer to be lazily instantiated.  Otherwise,
             // construction does not happen.
 
-            await sender.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new EventBatchingOptions(), default);
+            await producer.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new SendOptions(), default);
             Assert.That(mock.ConstructedWithPartition, Is.EqualTo(partition));
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventSender.SendAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -61,11 +62,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(" ")]
         public async Task SendAsyncForwardsThePartitionHashKey(string expectedHashKey)
         {
-            var options = new EventBatchingOptions { PartitionKey = expectedHashKey };
+            var options = new SendOptions { PartitionKey = expectedHashKey };
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            await sender.SendAsync(new[] { new EventData(new byte[] { 0x43 }) }, options, CancellationToken.None);
+            await producer.SendAsync(new[] { new EventData(new byte[] { 0x43 }) }, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
 
             (_, var actualHashKey) = mock.SendCalledWithParameters;
@@ -73,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventSender.SendAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -87,11 +88,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 new EventData(new byte[] { 0x11, 0x22, 0x33 })
             };
 
-            var options = new EventBatchingOptions();
+            var options = new SendOptions();
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            await sender.SendAsync(sourceEvents, options, CancellationToken.None);
+            await producer.SendAsync(sourceEvents, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
 
             var sentEvents = mock.SendCalledWithParameters.Events.ToArray();
@@ -107,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventSender.SendAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -123,15 +124,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < sourceEvents.Length; ++index)
             {
-                sourceEvents[index].Properties["type"] = typeof(TrackOneEventSender).Name;
+                sourceEvents[index].Properties["type"] = typeof(TrackOneEventHubProducer).Name;
                 sourceEvents[index].Properties["arbitrary"] = index;
             }
 
-            var options = new EventBatchingOptions();
+            var options = new SendOptions();
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            await sender.SendAsync(sourceEvents, options, CancellationToken.None);
+            await producer.SendAsync(sourceEvents, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
 
             var sentEvents = mock.SendCalledWithParameters.Events.ToArray();
@@ -147,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventSender.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CloseAsync" />
         ///   method.
         /// </summary>
         ///
@@ -155,14 +156,14 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDoesNotDelegateIfTheSenderWasNotCreated()
         {
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            await sender.CloseAsync(default);
+            await producer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventSender.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CloseAsync" />
         ///   method.
         /// </summary>
         ///
@@ -170,18 +171,18 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDelegatesToTheSender()
         {
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var sender = new TrackOneEventSender(() => mock);
+            var producer = new TrackOneEventHubProducer(() => mock);
 
-            // Invoke an operation to force the sender to be lazily instantiated.  Otherwise,
+            // Invoke an operation to force the producer to be lazily instantiated.  Otherwise,
             // Close does not delegate the call.
 
-            await sender.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new EventBatchingOptions(), default);
-            await sender.CloseAsync(default);
+            await producer.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new SendOptions(), default);
+            await producer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.True);
         }
 
         /// <summary>
-        ///   Allows for observation of operations performed by the sender for testing purposes.
+        ///   Allows for observation of operations performed by the producer for testing purposes.
         /// </summary>
         ///
         private class ObservableSenderMock : TrackOne.EventDataSender
@@ -219,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             protected override Task OnCloseAsync() => Task.CompletedTask;
-            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, ReceiverOptions receiverOptions) => default;
+            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, ReceiverOptions consumerOptions) => default;
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId) => Task.FromResult(default(EventHubPartitionRuntimeInformation));
             protected override Task<EventHubRuntimeInformation> OnGetRuntimeInformationAsync() => Task.FromResult(default(EventHubRuntimeInformation));
             internal override EventDataSender OnCreateEventSender(string partitionId) => default;
