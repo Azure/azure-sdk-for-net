@@ -166,9 +166,9 @@ namespace Azure.Security.KeyVault.Keys
                         KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
                         break;
                     case KeyOpsPropertyName:
-                        foreach (var element in prop.Value.EnumerateObject())
+                        foreach (var element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.Value.ToString()));
+                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.ToString()));
                         }
                         break;
                     case CurveNamePropertyName:

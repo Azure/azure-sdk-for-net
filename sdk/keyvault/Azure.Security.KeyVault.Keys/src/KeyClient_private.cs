@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Keys
 
         private async Task<Response> SendRequestAsync(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, path))
+            using (Request request = CreateRequest(method, path))
             {
                 return await SendRequestAsync(request, cancellationToken);
             }
@@ -53,6 +53,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 case 200:
                 case 201:
+                case 204:
                     return response;
                 default:
                     throw await response.CreateRequestFailedExceptionAsync();
@@ -100,6 +101,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 case 200:
                 case 201:
+                case 204:
                     return response;
                 default:
                     throw response.CreateRequestFailedException();
@@ -108,8 +110,6 @@ namespace Azure.Security.KeyVault.Keys
 
         private Request CreateRequest(HttpPipelineMethod method, params string[] path)
         {
-            // duplicating the code from the overload which takes a URI here because there is currently a bug in 
-            // request.UriBuilder when you call AppendQuery before AppendPath
             Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -121,9 +121,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 if (!string.IsNullOrEmpty(p))
                 {
-                    var pp = !p.StartsWith("/") ? "/" + p : p;
-
-                    request.UriBuilder.AppendPath(pp);
+                    request.UriBuilder.AppendPath(p);
                 }
             }
 

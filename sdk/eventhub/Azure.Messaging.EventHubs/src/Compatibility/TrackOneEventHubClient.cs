@@ -135,9 +135,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     tokenProvider = new TrackOneSharedAccessTokenProvider(sasCredential.SharedAccessSignature);
                     break;
 
+                case EventHubTokenCredential eventHubCredential:
+                    tokenProvider = new TrackOneGenericTokenProvider(eventHubCredential);
+                    break;
+
                 default:
-                    throw new NotImplementedException("Only shared key credentials are currently supported.");
-                    //TODO: Revisit this once Azure.Identity is ready for managed identities.
+                    throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential));
             }
 
             // Create the endpoint for the client.

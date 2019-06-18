@@ -11,12 +11,12 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class UserTests : GraphTestBase
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
+        [Fact]
         public void CreateDeleteUserTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-               //Test
+                //Test
                 User user = CreateUser(context);
                 DeleteUser(context, user.UserPrincipalName);
                 //verify the user has been deleted.
