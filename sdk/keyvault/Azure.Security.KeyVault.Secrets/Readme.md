@@ -1,7 +1,7 @@
 # Azure Key Vault Secret client library for .NET
 Azure Key Vault is a cloud service that provides a secure storage of secrets, such as passwords and database connection strings. 
 
-Secret client library allows you to securely store and tightly control the access to tokens, passwords, API keys, and other secrets. This library offers operations to create, retrieve, update, delete, purge, backup, restore and list the secrets and its versions.
+Secret client library allows you to securely store and control the access to tokens, passwords, API keys, and other secrets. This library offers operations to create, retrieve, update, delete, purge, backup, restore and list the secrets and its versions.
 
 [Source code][secrets_client_src] | Package (NuGet) (coming soon) | [API reference documentation] (coming soon) | [Product documentation][keyvault_docs] | [Samples] (coming soon)
 
@@ -72,21 +72,18 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
-# Create a new secret client using the default credential from Azure.Identity
+// Create a new secret client using the default credential from Azure.Identity
 var client = new SecretClient(vaultUri: <your-vault-url>, credential: new SystemCredential())
 ```
+> SystemCredential():
+> Uses the environment variables previosly set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`)
 
 ## Key concepts
 ### Secret
-A secret is the fundamental resource within Azure KeyVault. From a developer's perspective, Key Vault APIs accept and return secret values as strings. In addition to the secret data, the following attributes may be specified:
-* Expires: Identifies the expiration time on or after which the secret data should not be retrieved.
-* NotBefore: Identifies the time after which the secret will be active.
-* Enabled: Specifies whether the secret data can be retrieved.
-* Created: Indicates when this version of the secret was created.
-* Updated: Indicates when this version of the secret was updated.
+A secret is the fundamental resource within Azure KeyVault. From a developer's perspective, Key Vault APIs accept and return secret values as strings.
 
 ### Secret Client:
-The Secret client performs the interactions with the Azure Key Vault service for getting, setting, updating, deleting, and listing secrets and its versions. An asynchronous and synchronous SecretClient client exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a SecretClient, you can interact with the primary resource types in Key Vault.
+An asynchronous and synchronous SecretClient client exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a SecretClient, you can interact with the primary resource types in Key Vault.
 
 ## Examples
 The following section provides several code snippets using the above created `client`, covering some of the most common Azure Key Vault Secret service related tasks, including:
@@ -104,10 +101,10 @@ The following section provides several code snippets using the above created `cl
 ```c#
 Secret secret = client.Set("secret-name", "secret-value");
 
-Console.WriteLine(secret.Name)
-Console.WriteLine(secret.Value)
-Console.WriteLine(secret.Version)
-Console.WriteLine(secret.Enabled)
+Console.WriteLine(secret.Name);
+Console.WriteLine(secret.Value);
+Console.WriteLine(secret.Version);
+Console.WriteLine(secret.Enabled);
 ```
 
 ### Retrieve a Secret
@@ -116,26 +113,28 @@ Console.WriteLine(secret.Enabled)
 ```c#
 Secret secret = client.Get("secret-name");
 
-Console.WriteLine(secret.Name)
-Console.WriteLine(secret.Value)
+Console.WriteLine(secret.Name);
+Console.WriteLine(secret.Value);
 ```
 
 ### Update an existing Secret
 `Update` updates a secret previously stored in the Key Vault.
 
 ```c#
-# Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
-secret.ContentType = "text/plain"
+Secret secret = new Secret("secret-name");
 
-# You can specify additional application-specific metadata in the form of tags.
-secret.Tags = {"foo": "updated tag"}
+// Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved
+secret.ContentType = "text/plain";
 
-SecretBase secretUpdated = client.Update(secret);
+// You can specify additional application-specific metadata in the form of tags.
+secret.Tags["foo"] = "updated tag";
 
-Console.WriteLine(secretUpdated.Name)
-Console.WriteLine(secretUpdated.Value)
-Console.WriteLine(secretUpdated.Version)
-Console.WriteLine(secretUpdated.ContentType)
+SecretBase updatedSecret = client.Update(secret);
+
+Console.WriteLine(updatedSecret.Name);
+Console.WriteLine(updatedSecret.Value);
+Console.WriteLine(updatedSecret.Version);
+Console.WriteLine(updatedSecret.ContentType);
 ```
 
 ### Delete a Secret
@@ -144,19 +143,19 @@ Console.WriteLine(secretUpdated.ContentType)
 ```c#
 DeletedSecret secret = client.Delete("secret-name");
 
-Console.WriteLine(secret.Name)
-Console.WriteLine(secret.Value)
+Console.WriteLine(secret.Name);
+Console.WriteLine(secret.Value);
 ```
 
 ### List secrets
 This example lists all the secrets in the specified Key Vault.
 
 ```c#
-List<Response<SecretBase>> allSecrets = Client.GetSecrets().ToList();
+List<Response<SecretBase>> allSecrets = Client.GetSecrets();
 
   foreach (Secret secret in allSecrets)
   {
-    Console.WriteLine(secret.Name)
+    Console.WriteLine(secret.Name);
   }
 ```
 
@@ -169,10 +168,10 @@ The following examples provide code snippets for performing async operations in 
 This example creates a secret in the Key Vault with the specified optional arguments.
 
 ```c#
-Secret secret = client.SetAsync("secret-name", "secret-value");
+Secret secret = await client.SetAsync("secret-name", "secret-value");
 
-Console.WriteLine(secret.Name)
-Console.WriteLine(secret.Value)
+Console.WriteLine(secret.Name);
+Console.WriteLine(secret.Value);
 ```
 
 ## Troubleshooting
