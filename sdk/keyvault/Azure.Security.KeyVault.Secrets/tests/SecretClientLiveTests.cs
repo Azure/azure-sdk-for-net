@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Core.Testing;
+using System.Text;
 
 namespace Azure.Security.KeyVault.Test
 {
@@ -113,8 +114,80 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
+        public async Task UpdateSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            Secret secret = await Client.SetAsync(secretName, "CrudBasicValue1");
+
+            RegisterForCleanup(secret);
+
+            secret.Expires = secret.Created;
+
+            SecretBase updateResult = await Client.UpdateAsync(secret);
+
+            AssertSecretsEqual(secret, updateResult);
+        }
+
+        [Test]
+        public async Task GetSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            SecretBase setSecret = await Client.SetAsync(secretName, "value");
+            RegisterForCleanup(setSecret);
+            
+            Secret secret = await Client.GetAsync(secretName);
+
+            AssertSecretsEqual(setSecret, secret);
+        }
+
+        [Test]
+        public async Task GetSecretWithVersion()
+        {
+            string secretName = Recording.GenerateId();
+
+            SecretBase version1 = await Client.SetAsync(secretName, "value1");
+            RegisterForCleanup(version1);
+            SecretBase version2 = await Client.SetAsync(secretName, "value2");
+            await Client.SetAsync(secretName, "value3");
+
+            Secret secret = await Client.GetAsync(secretName, version2.Version);
+
+            Assert.AreEqual("value2", secret.Value);
+        }
+
+        [Test]
+        public async Task GetSecretVersionsNonExisting()
+        {
+            List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            
+            Assert.AreEqual(0, allSecrets.Count);
+        }
+
+        [Test]
+        public async Task BackupSecret()
+        {
+            string secretName = Recording.GenerateId();
+
+            Secret secret = await Client.SetAsync(secretName, "BackupRestore");
+
+            RegisterForCleanup(secret);
+
+            byte[] backup = await Client.BackupAsync(secretName);
+
+            Assert.NotNull(backup);
+        }
+
+        [Test]
+        public void BackupSecretNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.BackupAsync(Recording.GenerateId()));
+        }
+
+        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/6514")]
-        public async Task BackupRestore()
+        public async Task RestoreSecret()
         {
             string secretName = Recording.GenerateId();
 
@@ -139,6 +212,13 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
+        public void RestoreMalformedBackup()
+        {
+            byte[] backupMalformed = Encoding.ASCII.GetBytes("non-existing");
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.RestoreAsync(backupMalformed));
+        }
+
+        [Test]
         public async Task DeleteSecret()
         {
             string secretName = Recording.GenerateId();
@@ -152,6 +232,12 @@ namespace Azure.Security.KeyVault.Test
             AssertSecretsEqual(secret, deletedSecret);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
+        }
+
+        [Test]
+        public void DeleteSecretNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.DeleteAsync(Recording.GenerateId()));
         }
 
         [Test]
@@ -178,6 +264,12 @@ namespace Azure.Security.KeyVault.Test
         }
 
         [Test]
+        public void GetDeletedSecretNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetDeletedAsync(Recording.GenerateId()));
+        }
+
+        [Test]
         public async Task RecoverSecret()
         {
             string secretName = Recording.GenerateId();
@@ -199,6 +291,12 @@ namespace Azure.Security.KeyVault.Test
             AssertSecretsEqual(secret, deletedSecret);
             AssertSecretsEqual(secret, recoverSecretResult);
             AssertSecretsEqual(secret, recoveredSecret);
+        }
+
+        [Test]
+        public void RecoverSecretNonExisting()
+        {
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.RecoverDeletedAsync(Recording.GenerateId()));
         }
 
         [Test]
