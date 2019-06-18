@@ -90,6 +90,42 @@ namespace AlertsManagement.Tests.ScenarioTests
             }
         }
 
+        [Fact]
+        [Trait("Category", "Scenario")]
+        public void AlertsSummaryTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var alertsManagementClient = GetAlertsManagementClient(context, handler);
+
+                // Get alerts summary grouped by severity and state
+                string groupBy = "severity,alertState";
+                var summary = alertsManagementClient.Alerts.GetSummary(groupby: groupBy);
+
+                if (!this.IsRecording)
+                {
+                    Assert.NotNull(summary.Properties.Total);
+                    Assert.Equal("severity", summary.Properties.Groupedby);
+
+                    IEnumerator<AlertsSummaryGroupItem> enumerator = summary.Properties.Values.GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        AlertsSummaryGroupItem current = enumerator.Current;
+                        IsValidSeverity(current.Name);
+                        Assert.NotNull(current.Count);
+                        Assert.Equal("alertState", current.Groupedby);
+                        IEnumerator<AlertsSummaryGroupItem> stateEnumerator = current.Values.GetEnumerator();
+                        while (stateEnumerator.MoveNext())
+                        {
+                            AlertsSummaryGroupItem currentstate = stateEnumerator.Current;
+                            IsValidAlertState(currentstate.Name);
+                            Assert.NotNull(currentstate.Count);
+                        }
+                    }
+                }
+            }
+        }
+
         private void CheckAllAlertsContainsUpdatedAlertObject(IPage<Alert> allAlerts, Alert alertPostStateChange)
         {
             bool alertFound = false;
@@ -132,6 +168,32 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 throw new Exception("Test Failed : State update event not found in alert history.");
             }
+        }
+
+        private void IsValidAlertState(string name)
+        {
+            List<string> validStates = new List<string>
+            {
+                AlertState.New,
+                AlertState.Acknowledged,
+                AlertState.Closed
+            };
+
+            Assert.Contains(name, validStates);
+        }
+
+        private void IsValidSeverity(string name)
+        {
+            List<string> validSeverity = new List<string>
+            {
+                Severity.Sev0,
+                Severity.Sev1,
+                Severity.Sev2,
+                Severity.Sev3,
+                Severity.Sev4
+            };
+
+            Assert.Contains(name, validSeverity);
         }
     }
 }
