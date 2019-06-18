@@ -109,15 +109,15 @@ namespace Azure.Storage.Samples
                 // Instantiate new FileClient
                 FileClient fileClient = directoryClient.GetFileClient("myfile");
 
-                // Create File in the Service
-                await fileClient.CreateAsync(maxSize: 1024);
-
                 // Upload data to File
                 using (FileStream fileStream = File.OpenRead("Samples/SampleSource.txt"))
                 {
+                    // Create File in the Service
+                    await fileClient.CreateAsync(maxSize: fileStream.Length);
+
                     await fileClient.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
-                        range: new HttpRange(0, 1024),
+                        range: new HttpRange(0, fileStream.Length),
                         content: fileStream);
                 }
 

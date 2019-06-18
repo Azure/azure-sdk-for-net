@@ -103,12 +103,12 @@ namespace Azure.Storage.Samples
                 // Instantiate a new PageBlobClient
                 PageBlobClient pageBlobClient = blobContainerClient.GetPageBlobClient("pageblob");
 
-                // Create PageBlob in the Service
-                await pageBlobClient.CreateAsync(size: 1024);
-
                 // Upload content to PageBlob
                 using (FileStream fileStream = File.OpenRead("Samples/SampleSource.txt"))
                 {
+                    // Create PageBlob in the Service
+                    await pageBlobClient.CreateAsync(size: fileStream.Length);
+
                     await pageBlobClient.UploadPagesAsync(
                         content: fileStream,
                         offset: 0);
