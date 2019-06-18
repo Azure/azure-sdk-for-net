@@ -6,6 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Content-Length": "12",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-keyvault-secret/1.0.0.0",
@@ -22,7 +23,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "371",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 Jun 2019 07:07:48 GMT",
+        "Date": "Tue, 18 Jun 2019 20:32:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -32,25 +33,25 @@
         "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "074723ef-9da4-425c-9daf-094d45cd41cc",
+        "x-ms-request-id": "8062960a-6403-450c-ac6c-122421afa996",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "key": {
-          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/d31ae415f9bd429698afa7995865c888",
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/719cb702f78c4f7c95654a1e16209f69",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "hZTeeHCALBwWxUHt9O6AzZbSrKdlIejCPu4mQP-ckIU",
-          "y": "y2U-Ngoa5Bp-1zFom295l6td0uUDwuQx0QwpUULZkk8"
+          "x": "zq_amHb8q7FKSi1P61UrLmfjjEbxLJoC8AX06xnBPdw",
+          "y": "K2b8Qyx464RvZdHhQ4ioSx5FeQ9vFmzwJx0cRk6eyfs"
         },
         "attributes": {
           "enabled": true,
-          "created": 1560496068,
-          "updated": 1560496068,
+          "created": 1560889938,
+          "updated": 1560889938,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }
@@ -75,7 +76,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "371",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 Jun 2019 07:07:48 GMT",
+        "Date": "Tue, 18 Jun 2019 20:32:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -85,25 +86,25 @@
         "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "f03e7886-a957-4b19-8abc-191b8a571312",
+        "x-ms-request-id": "fe8b0e96-ca30-43aa-b122-953c210dbef5",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "key": {
-          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/d31ae415f9bd429698afa7995865c888",
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/719cb702f78c4f7c95654a1e16209f69",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "hZTeeHCALBwWxUHt9O6AzZbSrKdlIejCPu4mQP-ckIU",
-          "y": "y2U-Ngoa5Bp-1zFom295l6td0uUDwuQx0QwpUULZkk8"
+          "x": "zq_amHb8q7FKSi1P61UrLmfjjEbxLJoC8AX06xnBPdw",
+          "y": "K2b8Qyx464RvZdHhQ4ioSx5FeQ9vFmzwJx0cRk6eyfs"
         },
         "attributes": {
           "enabled": true,
-          "created": 1560496068,
-          "updated": 1560496068,
+          "created": 1560889938,
+          "updated": 1560889938,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }
@@ -128,7 +129,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "506",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 14 Jun 2019 07:07:49 GMT",
+        "Date": "Tue, 18 Jun 2019 20:32:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -138,28 +139,28 @@
         "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "b1c46db5-ccb4-4029-9b70-8aa0f17e5823",
+        "x-ms-request-id": "e23817bc-1b2f-4a73-bad3-0b7e66dc8e8d",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "recoveryId": "https://pakrym-keyvault.vault.azure.net/deletedkeys/2126831586",
-        "deletedDate": 1560496069,
-        "scheduledPurgeDate": 1568272069,
+        "deletedDate": 1560889938,
+        "scheduledPurgeDate": 1568665938,
         "key": {
-          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/d31ae415f9bd429698afa7995865c888",
+          "kid": "https://pakrym-keyvault.vault.azure.net/keys/2126831586/719cb702f78c4f7c95654a1e16209f69",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "hZTeeHCALBwWxUHt9O6AzZbSrKdlIejCPu4mQP-ckIU",
-          "y": "y2U-Ngoa5Bp-1zFom295l6td0uUDwuQx0QwpUULZkk8"
+          "x": "zq_amHb8q7FKSi1P61UrLmfjjEbxLJoC8AX06xnBPdw",
+          "y": "K2b8Qyx464RvZdHhQ4ioSx5FeQ9vFmzwJx0cRk6eyfs"
         },
         "attributes": {
           "enabled": true,
-          "created": 1560496068,
-          "updated": 1560496068,
+          "created": 1560889938,
+          "updated": 1560889938,
           "recoveryLevel": "Recoverable\u002bPurgeable"
         }
       }
@@ -182,7 +183,7 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Date": "Fri, 14 Jun 2019 07:07:58 GMT",
+        "Date": "Tue, 18 Jun 2019 20:32:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
@@ -192,7 +193,7 @@
         "x-ms-keyvault-network-info": "addr=131.107.174.199;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
         "x-ms-keyvault-service-version": "1.1.0.866",
-        "x-ms-request-id": "d391509c-826a-481f-a29a-2acd66ec8764",
+        "x-ms-request-id": "a0773335-c913-4bfc-8944-42dbd0325b94",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": null
