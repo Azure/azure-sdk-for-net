@@ -160,7 +160,7 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public async Task GetSecretVersionsNonExisting()
         {
-            List<Response<SecretBase>> allSecrets = await Client.GetAllVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
+            List<Response<SecretBase>> allSecrets = await Client.GetSecretVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
             
             Assert.AreEqual(0, allSecrets.Count);
         }
