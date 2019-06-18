@@ -1,11 +1,10 @@
 trigger: none
 
-variables:
-  ProjectFile: sdk/eventhub/Microsoft.Azure.EventHubs.sln
-
 jobs:
-- template: ../../eng/pipelines/templates/jobs/tests.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    envvars:
+    MaxParallel: 1
+    ServiceDirectory: eventhub
+    EnvVars:
       EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
       EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
