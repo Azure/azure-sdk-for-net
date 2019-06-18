@@ -104,14 +104,24 @@ namespace Azure.Storage.Samples
                 PageBlobClient pageBlobClient = blobContainerClient.GetPageBlobClient("pageblob");
 
                 // Create PageBlob in the Service
-                await pageBlobClient.CreateAsync(size: 2048);
+                const int blobSize = 1024;
+                await pageBlobClient.CreateAsync(size: blobSize);
 
                 // Upload content to PageBlob
                 using (FileStream fileStream = File.OpenRead("Samples/SampleSource.txt"))
                 {
-                    await pageBlobClient.UploadPagesAsync(
-                        content: fileStream,
-                        offset: 0);
+                    // Because the file size varies slightly across platforms
+                    // and PageBlob pages need to be multiples of 512, we'll
+                    // pad the file to our blobSize
+                    using (MemoryStream pageStream = new MemoryStream(new byte[blobSize]))
+                    {
+                        await fileStream.CopyToAsync(pageStream);
+                        pageStream.Seek(0, SeekOrigin.Begin);
+
+                        await pageBlobClient.UploadPagesAsync(
+                            content: pageStream,
+                            offset: 0);
+                    }
                 }
 
                 // Download PageBlob
@@ -145,10 +155,10 @@ namespace Azure.Storage.Samples
                 // Create new Container in the Service
                 await blobContainerClient.CreateAsync();
 
-                // Instantiate a new PageBlobClient
+                // Instantiate a new AppendBlobClient
                 AppendBlobClient appendBlobClient = blobContainerClient.GetAppendBlobClient("appendblob");
 
-                // Create PageBlob in the Service
+                // Create AppendBlob in the Service
                 await appendBlobClient.CreateAsync();
 
                 // Append content to AppendBlob
@@ -157,14 +167,14 @@ namespace Azure.Storage.Samples
                     await appendBlobClient.AppendBlockAsync(fileStream);
                 }
 
-                // Download PageBlob
+                // Download AppendBlob
                 using (FileStream fileStream = File.Create("AppendDestination.txt"))
                 {
                     Response<BlobDownloadInfo> downloadResponse = await appendBlobClient.DownloadAsync();
                     await downloadResponse.Value.Content.CopyToAsync(fileStream);
                 }
 
-                // Delete PageBlob in the Service
+                // Delete AppendBlob in the Service
                 await appendBlobClient.DeleteAsync();
             }
             finally
