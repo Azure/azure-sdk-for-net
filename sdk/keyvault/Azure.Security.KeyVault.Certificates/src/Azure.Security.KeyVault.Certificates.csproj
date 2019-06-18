@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
@@ -19,8 +19,8 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.2" />
-    <PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19259.10" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
+    <PackageReference Include="System.Memory"/>
+    <PackageReference Include="System.Text.Json"/>
+    <PackageReference Include="System.Threading.Tasks.Extensions"/>
   </ItemGroup>
 </Project>

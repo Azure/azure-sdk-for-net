@@ -33,13 +33,9 @@ namespace Azure.Security.KeyVault.Certificates
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new CertificateClientOptions();
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
-                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net//.Default"),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+            _pipeline = HttpPipelineBuilder.Build(options,
+                    bufferResponse: true,
+                    new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default"));
         }
 
         // Certificates API
