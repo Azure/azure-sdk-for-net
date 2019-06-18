@@ -181,5 +181,302 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendSingleZeroLengthEvent()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    var events = new[] { new EventData(new byte[0]) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendSingleLargeEvent()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    // Actual limit is 1046520 for a single event
+                    var events = new[] { new EventData(new byte[1000000]) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendSingleEventLargerThanMaximumSize()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    // Actual limit is 1046520 for a single event
+                    var events = new[] { new EventData(new byte[1100000]) };
+                    Assert.ThrowsAsync<TrackOne.MessageSizeExceededException>(async () => await producer.SendAsync(events));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    var events = new[]
+                    {
+                        new EventData(Encoding.UTF8.GetBytes("This is a message")),
+                        new EventData(Encoding.UTF8.GetBytes("This is another message")),
+                        new EventData(Encoding.UTF8.GetBytes("So many messages"))
+                    };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendZeroLengthBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    var events = new[]
+                    {
+                        new EventData(new byte[0]),
+                        new EventData(new byte[0]),
+                        new EventData(new byte[0])
+                    };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendLargeBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    // Actual limit is 1046520 for a single event
+                    var events = new[]
+                    {
+                        new EventData(new byte[1000000 / 3]),
+                        new EventData(new byte[1000000 / 3]),
+                        new EventData(new byte[1000000 / 3])
+                    };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendBatchLargerThanMaximumSize()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    // Actual limit is 1046520 for a single event
+                    var events = new[]
+                    {
+                        new EventData(new byte[1100000 / 3]),
+                        new EventData(new byte[1100000 / 3]),
+                        new EventData(new byte[1100000 / 3])
+                    };
+                    Assert.ThrowsAsync<TrackOne.MessageSizeExceededException>(async () => await producer.SendAsync(events));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendBatchToASpecificPartition()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+                    var producerOptions = new EventHubProducerOptions { PartitionId = partition };
+
+                    await using (var producer = client.CreateProducer(producerOptions))
+                    {
+                        var events = new[]
+                        {
+                            new EventData(Encoding.UTF8.GetBytes("This is a message")),
+                            new EventData(Encoding.UTF8.GetBytes("This is another message")),
+                            new EventData(Encoding.UTF8.GetBytes("Do we need more messages"))
+                        };
+                        Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendWhenPartitionIsNull()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var producerOptions = new EventHubProducerOptions { PartitionId = null };
+
+                    await using (var producer = client.CreateProducer(producerOptions))
+                    {
+                        var events = new[] { new EventData(Encoding.UTF8.GetBytes("Will it work")) };
+                        Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProducerCannotSendWhenClosed(bool sync)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    var events = new[] { new EventData(Encoding.UTF8.GetBytes("Dummy event")) };
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+
+                    if (sync)
+                    {
+                        producer.Close();
+                    }
+                    else
+                    {
+                        await producer.CloseAsync();
+                    }
+
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await producer.SendAsync(events));
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendToInvalidPartition()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var events = new[] { new EventData(Encoding.UTF8.GetBytes("Lorem Ipsum")) };
+
+                    // Some invalid partition values. These will fail on the service side.
+                    var invalidPartitions = new[]
+                    {
+                        "XYZ",
+                        "-1",
+                        "1000",
+                        "-"
+                    };
+
+                    foreach (var invalidPartition in invalidPartitions)
+                    {
+                        await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = invalidPartition }))
+                        {
+                            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await producer.SendAsync(events));
+                        }
+                    }
+                }
+            }
+        }
     }
 }
