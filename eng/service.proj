@@ -2,12 +2,18 @@
   <PropertyGroup>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
+    <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
+    <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj" />
-    <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(ExcludeMgmtLib)"/>
+  <ItemGroup Condition="'$(PackageDirectory)' == ''">
+    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
+    <TestProjects Include="..\sdk\$(ServiceDirectory)\*\tests\**\*.csproj" />
+    <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects)" />
+    <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
+
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
   <Target Name="CheckProjects" AfterTargets="Build">
