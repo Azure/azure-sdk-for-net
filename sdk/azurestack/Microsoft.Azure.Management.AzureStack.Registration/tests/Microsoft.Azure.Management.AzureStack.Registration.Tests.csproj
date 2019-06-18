@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.AzureStack.Tests</PackageId>
-    <Description>Azure Microsoft.AzureStack Tests Class Library</Description>
-    <AssemblyName>Microsoft.Azure.Management.AzureStack.Tests</AssemblyName>
+    <PackageId>Microsoft.Azure.Management.AzureStack.Registration.Tests</PackageId>
+    <Description>Microsoft AzureStack Registration Tests Class Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.AzureStack.Registration.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
   <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>-->
   <ItemGroup>
-    <ProjectReference Include="..\src\Microsoft.Azure.Management.AzureStack.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.AzureStack.Registration.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

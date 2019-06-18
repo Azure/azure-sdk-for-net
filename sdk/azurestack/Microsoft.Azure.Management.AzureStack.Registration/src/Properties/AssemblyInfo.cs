@@ -4,11 +4,11 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft AzureStack Management Library in Azure")]
+[assembly: AssemblyTitle("Microsoft AzureStack Registration Library in Azure")]
 [assembly: AssemblyDescription("Provides Microsoft AzureStack registration operations in Azure")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
