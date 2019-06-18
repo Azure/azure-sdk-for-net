@@ -243,7 +243,7 @@ namespace Microsoft.Azure.ServiceBus
         public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
 
         /// <summary>
-        /// Enables Azure Active Directory Managed Identity authentication when set to AuthenticationType.ManagedIdentity
+        /// Enables Azure Active Directory Managed Identity authentication when set to ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity
         /// </summary>
         public string Authentication
         {
@@ -252,12 +252,14 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (!string.IsNullOrWhiteSpace(this.SasKeyName))
                 {
-                    throw Fx.Exception.Argument("Authentication, SharedAccessKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessKeyName"));
+                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
+                        Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
 
                 if (!string.IsNullOrWhiteSpace(this.SasToken))
                 {
-                    throw Fx.Exception.Argument("Authentication, SharedAccessSignature", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessSignature"));
+                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
+                        Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
                 this.authType = value;
             }

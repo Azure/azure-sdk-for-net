@@ -135,9 +135,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     tokenProvider = new TrackOneSharedAccessTokenProvider(sasCredential.SharedAccessSignature);
                     break;
 
+                case EventHubTokenCredential eventHubCredential:
+                    tokenProvider = new TrackOneGenericTokenProvider(eventHubCredential);
+                    break;
+
                 default:
-                    throw new NotImplementedException("Only shared key credentials are currently supported.");
-                    //TODO: Revisit this once Azure.Identity is ready for managed identities.
+                    throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential));
             }
 
             // Create the endpoint for the client.
@@ -163,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   and their identifiers.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
@@ -186,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
@@ -221,11 +224,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public override EventSender CreateSender(EventSenderOptions senderOptions)
         {
-            (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)senderOptions.Retry).GetProperties();
-
             TrackOne.EventDataSender CreateSenderFactory()
             {
                 var sender = TrackOneClient.CreateEventSender(senderOptions.PartitionId);
+
+                (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)senderOptions.Retry).GetProperties();
                 sender.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
 
                 return sender;
@@ -240,10 +243,72 @@ namespace Azure.Messaging.EventHubs.Compatibility
         }
 
         /// <summary>
+        ///   Creates an event receiver responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
+        ///   and as a member of a specific consumer group.
+        ///
+        ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
+        ///   group to ensure that only one receiver from that group is reading the from the partition.
+        ///   These exclusive receivers are sometimes referred to as "Epoch Receivers."
+        ///
+        ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
+        ///   group to be actively reading events from the partition.  These non-exclusive receivers are
+        ///   sometimes referred to as "Non-epoch Receivers."
+        ///
+        ///   Designating a receiver as exclusive may be specified in the <paramref name="receiverOptions" />.
+        ///   By default, receivers are created as non-exclusive.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="receiverOptions">The set of options to apply when creating the receiver.</param>
+        ///
+        /// <returns>An event receiver configured in the requested manner.</returns>
+        ///
+        public override EventReceiver CreateReceiver(string partitionId,
+                                                     EventReceiverOptions receiverOptions)
+        {
+            TrackOne.PartitionReceiver CreateReceiverFactory()
+            {
+                var position = new TrackOne.EventPosition
+                {
+                    IsInclusive = receiverOptions.BeginReceivingAt.IsInclusive,
+                    Offset = receiverOptions.BeginReceivingAt.Offset,
+                    SequenceNumber = receiverOptions.BeginReceivingAt.SequenceNumber,
+                    EnqueuedTimeUtc = receiverOptions.BeginReceivingAt.EnqueuedTimeUtc
+                };
+
+                var trackOneOptions = new TrackOne.ReceiverOptions { Identifier = receiverOptions.Identifier };
+
+                PartitionReceiver receiver;
+
+                if (receiverOptions.ExclusiveReceiverPriority.HasValue)
+                {
+                    receiver = TrackOneClient.CreateEpochReceiver(receiverOptions.ConsumerGroup, partitionId, position, receiverOptions.ExclusiveReceiverPriority.Value, trackOneOptions);
+                }
+                else
+                {
+                    receiver = TrackOneClient.CreateReceiver(receiverOptions.ConsumerGroup, partitionId, position, trackOneOptions);
+                }
+
+                (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)receiverOptions.Retry).GetProperties();
+                receiver.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
+
+                return receiver;
+            }
+
+            return new EventReceiver
+            (
+                new TrackOneEventReceiver(CreateReceiverFactory),
+                TrackOneClient.EventHubName,
+                partitionId,
+                receiverOptions
+            );
+        }
+
+        /// <summary>
         ///   Closes the connection to the transport client instance.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///

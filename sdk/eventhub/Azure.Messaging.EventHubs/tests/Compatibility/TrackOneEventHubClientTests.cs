@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConstructorRequiresThOption()
+        public void ConstructorRequiresTheOption()
         {
             Assert.That(() => new TrackOneEventHubClient("my.eventhub.com", "somePath", Mock.Of<TokenCredential>(), null), Throws.InstanceOf<ArgumentException>());
         }
@@ -83,7 +83,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(TransportType.AmqpTcp, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
 
             Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options), Throws.InstanceOf<ArgumentException>());
@@ -102,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubPath = "some-path";
             var credential = Mock.Of<TokenCredential>();
 
-            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options), Throws.InstanceOf<NotImplementedException>());
+            Assert.That(() => TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -111,12 +112,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CreateClienCreatesTheProperClientType()
+        public async Task CreateClientCreatesTheProperClientType()
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -148,7 +150,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -176,12 +179,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CreateClientTranslatesTheCredential()
+        public async Task CreateClientTranslatesTheSharedKeyCredential()
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -203,12 +207,41 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task CreateClientTranslatesTheEventHubCredential()
+        {
+            var options = new EventHubClientOptions();
+            var host = "my.eventhub.com";
+            var eventHubPath = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new EventHubTokenCredential(Mock.Of<TokenCredential>(), resource);
+            var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
+
+            try
+            {
+                Assert.That(client.InternalTokenProvider, Is.InstanceOf<TrackOneGenericTokenProvider>(), "The token provider should be the track one generic adapter.");
+                Assert.That(((TrackOneGenericTokenProvider)client.InternalTokenProvider).Credential, Is.EqualTo(credential), "The source credential should match.");
+
+            }
+            finally
+            {
+                await client?.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateClient" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreateClientFormsTheCorrectEndpoint()
         {
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -236,7 +269,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions();
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -266,7 +300,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var host = "my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var client = (AmqpEventHubClient)TrackOneEventHubClient.CreateClient(host, eventHubPath, credential, options);
 
@@ -291,7 +326,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var mock = new ObservableClientMock(host, eventHubPath, credential, options);
             var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
@@ -311,7 +347,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var mock = new ObservableClientMock(host, eventHubPath, credential, options);
             var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
@@ -325,7 +362,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.GetPropertiesAsync" />
         ///   method.
         /// </summary>
         ///
@@ -335,7 +372,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var mock = new ObservableClientMock(host, eventHubPath, credential, options);
             var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
@@ -362,7 +400,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubClientOptions();
             var host = "http://my.eventhub.com";
             var eventHubPath = "some-path";
-            var signature = new SharedAccessSignature(options.TransportType, host, eventHubPath, "keyName", "KEY", TimeSpan.FromHours(1));
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
             var credential = new SharedAccessSignatureCredential(signature);
             var mock = new ObservableClientMock(host, eventHubPath, credential, options);
             var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
@@ -373,6 +412,79 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await client.GetPartitionPropertiesAsync(partitionId, CancellationToken.None);
                 Assert.That(mock.GetPartitionRuntimePartitionInvokedWith, Is.EqualTo(partitionId));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateSender" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateSenderDelegatesToTheClient()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubPath = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+
+            try
+            {
+                var senderOptions = new EventSenderOptions { PartitionId = "45345" };
+
+                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // receiver from within the mock client, that operation will fail with a null reference exception.
+
+                Assert.That(async () => await client.CreateSender(senderOptions)?.SendAsync(new[] { new EventData(new byte[] { 0x12 }) }), Throws.InstanceOf<NullReferenceException>(), "because the EventDataSender was not populated.");
+                Assert.That(mock.CreateSenderInvokedWith, Is.EqualTo(senderOptions.PartitionId));
+            }
+            finally
+            {
+                await client?.CloseAsync(default);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubClient.CreateReceiver" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateReceiverDelegatesToTheClient()
+        {
+            var options = new EventHubClientOptions();
+            var host = "http://my.eventhub.com";
+            var eventHubPath = "some-path";
+            var resource = $"amqps://{ host }/{ eventHubPath }";
+            var signature = new SharedAccessSignature(resource, "keyName", "KEY", TimeSpan.FromHours(1));
+            var credential = new SharedAccessSignatureCredential(signature);
+            var mock = new ObservableClientMock(host, eventHubPath, credential, options);
+            var client = new TrackOneEventHubClient(host, eventHubPath, credential, options, (host, path, credential, options) => mock);
+
+            try
+            {
+                var partitionId = "32234";
+                var receiverOptions = new EventReceiverOptions { ConsumerGroup = "Test", BeginReceivingAt = EventPosition.FromOffset(34) };
+
+                // Because the receiver is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
+                // receiver from within the mock client, that operation will fail with a null reference exception.
+
+                Assert.That(async () => await client.CreateReceiver(partitionId, receiverOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
+
+                (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReiverInvokedWith;
+
+                Assert.That(calledConsumerGroup, Is.EqualTo(receiverOptions.ConsumerGroup), "The consumer group should match.");
+                Assert.That(calledPartition, Is.EqualTo(partitionId), "The partition should match.");
+                Assert.That(calledPosition.Offset, Is.EqualTo(receiverOptions.BeginReceivingAt.Offset), "The event position offset should match.");
+                Assert.That(calledOptions.Identifier, Is.EqualTo(receiverOptions.Identifier), "The options should match.");
             }
             finally
             {
@@ -417,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    receiverOptions
                 );
 
-                return Mock.Of<PartitionReceiver>();
+                return default(PartitionReceiver);
             }
 
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId)
@@ -435,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override EventDataSender OnCreateEventSender(string partitionId)
             {
                 CreateSenderInvokedWith = partitionId;
-                return Mock.Of<EventDataSender>();
+                return default(EventDataSender);
             }
         }
     }

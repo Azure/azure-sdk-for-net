@@ -65,13 +65,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
-        /// <param name="enableAzureFilesAadIntegration">Enables Azure Files
-        /// AAD Integration for SMB if sets to true.</param>
+        /// <param name="azureFilesIdentityBasedAuthentication">Provides the
+        /// identity based authentication settings for Azure Files.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
-        /// storage service if sets to true.</param>
+        /// storage service if sets to true. The default value is true since
+        /// API version 2019-04-01.</param>
         /// <param name="isHnsEnabled">Account HierarchicalNamespace enabled if
         /// sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             Encryption = encryption;
             NetworkRuleSet = networkRuleSet;
             AccessTier = accessTier;
-            EnableAzureFilesAadIntegration = enableAzureFilesAadIntegration;
+            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             IsHnsEnabled = isHnsEnabled;
             CustomInit();
@@ -166,15 +167,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         public AccessTier? AccessTier { get; set; }
 
         /// <summary>
-        /// Gets or sets enables Azure Files AAD Integration for SMB if sets to
-        /// true.
+        /// Gets or sets provides the identity based authentication settings
+        /// for Azure Files.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.azureFilesAadIntegration")]
-        public bool? EnableAzureFilesAadIntegration { get; set; }
+        [JsonProperty(PropertyName = "properties.azureFilesIdentityBasedAuthentication")]
+        public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
         /// <summary>
         /// Gets or sets allows https traffic only to storage service if sets
-        /// to true.
+        /// to true. The default value is true since API version 2019-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly { get; set; }
@@ -220,6 +221,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (NetworkRuleSet != null)
             {
                 NetworkRuleSet.Validate();
+            }
+            if (AzureFilesIdentityBasedAuthentication != null)
+            {
+                AzureFilesIdentityBasedAuthentication.Validate();
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition FirstAvailableEvent => FromOffset(StartOfStreamOffset, true);
+        public static EventPosition FirstAvailableEvent => FromOffset(StartOfStreamOffset, false);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this

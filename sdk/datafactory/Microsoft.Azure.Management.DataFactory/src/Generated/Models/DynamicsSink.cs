@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         static DynamicsSink()
         {
-            WriteBehavior = "Upsert";
+            WriteBehavior = Upsert;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// The write behavior for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
-        public static string WriteBehavior { get; private set; }
+        public static object WriteBehavior { get; private set; }
 
     }
 }

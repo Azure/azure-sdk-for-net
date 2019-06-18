@@ -26,8 +26,8 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventSenderLiveTests
     {
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
@@ -47,8 +47,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
@@ -69,8 +69,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
@@ -95,8 +95,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
@@ -129,8 +129,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]
@@ -154,8 +154,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
+        ///   Verifies that the <see cref="EventSender" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
         [Test]

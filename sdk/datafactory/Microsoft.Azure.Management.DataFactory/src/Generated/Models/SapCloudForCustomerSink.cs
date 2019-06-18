@@ -47,9 +47,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="writeBehavior">The write behavior for the operation.
-        /// Default is 'Insert'. Possible values include: 'Insert',
-        /// 'Update'</param>
-        public SapCloudForCustomerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), string writeBehavior = default(string))
+        /// Default is 'Insert'.</param>
+        public SapCloudForCustomerSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object writeBehavior = default(object))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             WriteBehavior = writeBehavior;
@@ -63,10 +62,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the write behavior for the operation. Default is
-        /// 'Insert'. Possible values include: 'Insert', 'Update'
+        /// 'Insert'.
         /// </summary>
         [JsonProperty(PropertyName = "writeBehavior")]
-        public string WriteBehavior { get; set; }
+        public object WriteBehavior { get; set; }
 
     }
 }

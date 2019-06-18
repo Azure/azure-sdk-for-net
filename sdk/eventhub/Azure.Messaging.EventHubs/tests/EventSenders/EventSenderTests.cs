@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchingOptions = new EventBatchingOptions { PartitionKey = "testKey" };
             var events = new[] { new EventData(new byte[] { 0x44, 0x66, 0x88 }) };
             var transportSender = new ObservableTransportSenderMock();
-            var sender = new EventSender(transportSender, "dummy", new EventSenderOptions{ PartitionId = "1" });
+            var sender = new EventSender(transportSender, "dummy", new EventSenderOptions { PartitionId = "1" });
 
             Assert.That(async () => await sender.SendAsync(events, batchingOptions), Throws.InvalidOperationException);
         }
