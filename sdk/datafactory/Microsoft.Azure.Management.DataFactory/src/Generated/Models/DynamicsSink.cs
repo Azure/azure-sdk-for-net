@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         static DynamicsSink()
         {
-            WriteBehavior = Upsert;
+            WriteBehavior = DynamicsSinkWriteBehavior.Upsert;
         }
 
         /// <summary>
