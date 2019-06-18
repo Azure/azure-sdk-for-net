@@ -71,9 +71,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
                 await response.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                var actualData = actual.GetBuffer();
-                Assert.IsTrue(data.SequenceEqual(actualData));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -106,9 +104,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
                 await response.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                var actualData = actual.GetBuffer();
-                Assert.IsTrue(data.SequenceEqual(actualData));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -135,8 +131,7 @@ namespace Azure.Storage.Blobs.Test
                 var actual = new MemoryStream();
                 await response.Value.Content.CopyToAsync(actual);
                 Assert.AreEqual(count, actual.Length);
-                var actualData = actual.GetBuffer();
-                Assert.IsTrue(data.Skip(offset).Take(count).SequenceEqual(actualData));
+                TestHelper.AssertSequenceEqual(data.Skip(offset).Take(count), actual.ToArray());
             }
         }
 
@@ -167,9 +162,7 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual(data.Length, response.Value.ContentLength);
                     var actual = new MemoryStream();
                     await response.Value.Content.CopyToAsync(actual);
-                    Assert.AreEqual(data.Length, actual.Length);
-                    var actualData = actual.GetBuffer();
-                    Assert.IsTrue(data.SequenceEqual(actualData));
+                    TestHelper.AssertSequenceEqual(data, actual.ToArray());
                 }
             }
         }
@@ -223,7 +216,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 var expectedMD5 = MD5.Create().ComputeHash(data.Skip(offset).Take(count).ToArray());
-                Assert.IsTrue(expectedMD5.SequenceEqual(response.Value.ContentHash));
+                TestHelper.AssertSequenceEqual(expectedMD5, response.Value.ContentHash);
             }
         }
 
@@ -1087,7 +1080,7 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 var response = await blob.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
-                Assert.IsTrue(constants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
                 Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(1, response.Value.ContentLanguage.Count());

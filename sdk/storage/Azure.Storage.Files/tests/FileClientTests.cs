@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 var response = await file.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
-                Assert.IsTrue(constants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
                 Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(1, response.Value.ContentLanguage.Count());
@@ -274,7 +274,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 var response = await file.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
-                Assert.IsTrue(constants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                TestHelper.AssertSequenceEqual(constants.ContentMD5.ToList(), response.Value.ContentHash.ToList());
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
                 Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(1, response.Value.ContentLanguage.Count());
@@ -513,9 +513,7 @@ namespace Azure.Storage.Files.Test
                 Assert.AreEqual(data.Length, response.Value.ContentLength);
                 var actual = new MemoryStream();
                 await response.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                var actualData = actual.GetBuffer();
-                Assert.IsTrue(data.SequenceEqual(actualData));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -559,8 +557,7 @@ namespace Azure.Storage.Files.Test
                 var downloadResponse = await fileFaulty.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                Assert.IsTrue(data.SequenceEqual(actual.GetBuffer()));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -687,8 +684,7 @@ namespace Azure.Storage.Files.Test
                 var downloadResponse = await file.DownloadAsync(range: new HttpRange(offset, data.LongLength));
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                Assert.IsTrue(data.SequenceEqual(actual.GetBuffer()));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 

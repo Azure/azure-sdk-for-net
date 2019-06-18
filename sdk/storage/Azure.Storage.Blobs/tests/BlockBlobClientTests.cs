@@ -561,7 +561,7 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 var response = await blob.GetPropertiesAsync();
                 Assert.AreEqual(constants.ContentType, response.Value.ContentType);
-                Assert.IsTrue(constants.ContentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
                 Assert.AreEqual(1, response.Value.ContentEncoding.Count());
                 Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(1, response.Value.ContentLanguage.Count());
@@ -968,8 +968,7 @@ namespace Azure.Storage.Blobs.Test
                 var downloadResponse = await blob.DownloadAsync();
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                Assert.IsTrue(data.SequenceEqual(actual.ToArray()));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -1029,7 +1028,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
                 Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding.First());
                 Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage.First());
-                Assert.IsTrue(contentMD5.ToList().SequenceEqual(response.Value.ContentHash.ToList()));
+                TestHelper.AssertSequenceEqual(contentMD5, response.Value.ContentHash);
             }
         }
 
@@ -1183,8 +1182,7 @@ namespace Azure.Storage.Blobs.Test
                 var downloadResponse = await blob.DownloadAsync();
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
-                Assert.AreEqual(data.Length, actual.Length);
-                Assert.IsTrue(data.SequenceEqual(actual.ToArray()));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 

@@ -53,10 +53,6 @@ namespace Azure.Storage.Queues.Models
         /// A <see cref="StorageRequestFailedException"/>.
         /// </returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message)
-            {
-                ErrorCode = this.Code,
-                AdditionalInformation = this.AdditionalInformation
-            };
+            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
     }
 }

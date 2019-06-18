@@ -716,7 +716,7 @@ namespace Azure.Storage.Common.Test
             var keyBytes = accountAndKey.AccountKeyValue;
             var expectedKeyBytes = Convert.FromBase64String(accountKeyString);
 
-            Assert.IsTrue(keyBytes.SequenceEqual(expectedKeyBytes));
+            TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);
         }
     }
 

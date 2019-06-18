@@ -239,7 +239,7 @@ namespace Azure.Storage.Blobs.Test
                 var dataResult = new MemoryStream();
                 await result.Value.Content.CopyToAsync(dataResult);
                 Assert.AreEqual(data.Length, dataResult.Length);
-                Assert.IsTrue(data.SequenceEqual(dataResult.GetBuffer()));
+                TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
             }
         }
 
@@ -438,7 +438,7 @@ namespace Azure.Storage.Blobs.Test
                 var actual = new MemoryStream();
                 await downloadResponse.Value.Content.CopyToAsync(actual);
                 Assert.AreEqual(data.Length, actual.Length);
-                Assert.IsTrue(data.SequenceEqual(actual.ToArray()));
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
 
@@ -494,7 +494,7 @@ namespace Azure.Storage.Blobs.Test
                     var dataResult = new MemoryStream();
                     await result.Value.Content.CopyToAsync(dataResult);
                     Assert.AreEqual(2 * Constants.KB, dataResult.Length);
-                    Assert.IsTrue(data.Skip(2 * Constants.KB).Take(2 * Constants.KB).SequenceEqual(dataResult.GetBuffer()));
+                    TestHelper.AssertSequenceEqual(data.Skip(2 * Constants.KB).Take(2 * Constants.KB), dataResult.ToArray());
                 }
             }
         }
