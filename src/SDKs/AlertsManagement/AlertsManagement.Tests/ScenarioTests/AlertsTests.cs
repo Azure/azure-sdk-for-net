@@ -31,7 +31,7 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                string alertId = "f928fcb7-edbd-42e9-a87e-1b2851affcff";
+                string alertId = "63d67c2c-7a2e-4da1-bb90-da475144ac62";
 
                 // Get alert by ID
                 Alert actualAlert = alertsManagementClient.Alerts.GetById(alertId);

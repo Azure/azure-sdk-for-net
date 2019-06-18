@@ -31,7 +31,7 @@ namespace AlertsManagement.Tests.ScenarioTests
             {
                 var alertsManagementClient = GetAlertsManagementClient(context, handler);
 
-                string smartGroupId = "04219a26-3c24-4bbc-88a8-41bfb608ba10";
+                string smartGroupId = "b15afb0c-4f70-477b-872a-f383b4065d40";
 
                 // Get smart group by ID
                 SmartGroup actualSmartGroup = alertsManagementClient.SmartGroups.GetById(smartGroupId);

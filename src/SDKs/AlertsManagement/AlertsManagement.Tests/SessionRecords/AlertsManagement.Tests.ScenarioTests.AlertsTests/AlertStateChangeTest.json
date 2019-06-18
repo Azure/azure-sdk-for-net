@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff?api-version=2018-05-05",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvZjkyOGZjYjctZWRiZC00MmU5LWE4N2UtMWIyODUxYWZmY2ZmP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDU=",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62?api-version=2019-05-05-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvNjNkNjdjMmMtN2EyZS00ZGExLWJiOTAtZGE0NzUxNDRhYzYyP2FwaS12ZXJzaW9uPTIwMTktMDUtMDUtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4e971c7e-55c4-4026-b759-5edb8a7e94a2"
+          "fe71cf6b-e32d-4130-869b-3db82db69d0c"
         ],
         "accept-language": [
           "en-US"
@@ -24,13 +24,13 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Thu, 06 Jun 2019 07:16:08 GMT"
+          "Tue, 18 Jun 2019 11:46:23 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d534baac-86d6-4c73-9446-b4979e662f7b"
+          "8d834d69-a6cb-4cdb-a017-4a6a757b69b2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -42,13 +42,13 @@
           "999"
         ],
         "x-ms-correlation-request-id": [
-          "0375733d-3cdb-4f15-a423-4183920bb787"
+          "7a59794b-5a42-4afe-a65b-49c729d7367c"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190606T071608Z:0375733d-3cdb-4f15-a423-4183920bb787"
+          "SOUTHINDIA:20190618T114623Z:7a59794b-5a42-4afe-a65b-49c729d7367c"
         ],
         "Content-Length": [
-          "4690"
+          "3455"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,17 +57,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"essentials\": {\r\n      \"alertRule\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/abc/providers/microsoft.insights/activityLogAlerts/SubWithoutAG\",\r\n      \"alertState\": \"New\",\r\n      \"severity\": \"Sev4\",\r\n      \"signalType\": \"Log\",\r\n      \"monitorCondition\": \"Fired\",\r\n      \"monitorService\": \"ActivityLog Administrative\",\r\n      \"targetResource\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/microsoft.alertsmanagement/alerts/edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n      \"targetResourceName\": \"edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n      \"targetResourceGroup\": \"\",\r\n      \"targetResourceType\": \"alerts\",\r\n      \"sourceCreatedId\": \"53efdf3d-36b4-441d-9857-972d14a63a32\",\r\n      \"smartGroupId\": \"959b88a8-50e9-40d1-93d6-7131731f8d28\",\r\n      \"startDateTime\": \"2019-06-06T07:15:14.1432801Z\",\r\n      \"lastModifiedDateTime\": \"2019-06-06T07:15:14.1432801Z\",\r\n      \"lastModifiedUserName\": \"System\",\r\n      \"actionStatus\": {\r\n        \"isSuppressed\": false\r\n      },\r\n      \"description\": \"\"\r\n    },\r\n    \"context\": {\r\n      \"context\": {\r\n        \"activityLog\": {\r\n          \"authorization\": {\r\n            \"action\": \"Microsoft.AlertsManagement/alerts/changestate/action\",\r\n            \"scope\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72\"\r\n          },\r\n          \"channels\": \"Operation\",\r\n          \"claims\": \"{\\\"aud\\\":\\\"https://management.core.windows.net/\\\",\\\"iss\\\":\\\"https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/\\\",\\\"iat\\\":\\\"1559804891\\\",\\\"nbf\\\":\\\"1559804891\\\",\\\"exp\\\":\\\"1559808791\\\",\\\"aio\\\":\\\"42ZgYDgT90DEhXdnass3PeeKpTsZAQ==\\\",\\\"appid\\\":\\\"2d7b7f2e-f82e-479b-9c29-8ed7cc5cbdda\\\",\\\"appidacr\\\":\\\"1\\\",\\\"http://schemas.microsoft.com/identity/claims/identityprovider\\\":\\\"https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/\\\",\\\"http://schemas.microsoft.com/identity/claims/objectidentifier\\\":\\\"e8957b41-5c38-4292-8b7e-cc962bba2d0a\\\",\\\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\\\":\\\"e8957b41-5c38-4292-8b7e-cc962bba2d0a\\\",\\\"http://schemas.microsoft.com/identity/claims/tenantid\\\":\\\"72f988bf-86f1-41af-91ab-2d7cd011db47\\\",\\\"uti\\\":\\\"3ibFGVQqtECS6IapS6EOAA\\\",\\\"ver\\\":\\\"1.0\\\"}\",\r\n          \"caller\": \"e8957b41-5c38-4292-8b7e-cc962bba2d0a\",\r\n          \"correlationId\": \"fb5acf0c-0144-4275-ac9d-628ee1296b6c\",\r\n          \"description\": \"\",\r\n          \"eventSource\": \"Administrative\",\r\n          \"eventTimestamp\": \"2019-06-06T07:13:15.5252592Z\",\r\n          \"httpRequest\": \"{\\\"clientRequestId\\\":\\\"45db527e-b046-44fe-b803-dd50a690d187\\\",\\\"clientIpAddress\\\":\\\"167.220.238.79\\\",\\\"method\\\":\\\"POST\\\"}\",\r\n          \"eventDataId\": \"53efdf3d-36b4-441d-9857-972d14a63a32\",\r\n          \"level\": \"Informational\",\r\n          \"operationName\": \"Microsoft.AlertsManagement/alerts/changestate/action\",\r\n          \"operationId\": \"fb5acf0c-0144-4275-ac9d-628ee1296b6c\",\r\n          \"resourceId\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n          \"resourceProviderName\": \"Microsoft.AlertsManagement\",\r\n          \"status\": \"Started\",\r\n          \"subStatus\": \"\",\r\n          \"subscriptionId\": \"dd91de05-d791-4ceb-b6dc-988682dc7d72\",\r\n          \"submissionTimestamp\": \"2019-06-06T07:14:46.1679871Z\",\r\n          \"resourceType\": \"Microsoft.AlertsManagement/alerts\"\r\n        }\r\n      }\r\n    },\r\n    \"egressConfig\": {\r\n      \"partitionKey\": \"MonitorServiceConfigurationCollectionPartition\",\r\n      \"monitorService\": \"ActivityLog Administrative\",\r\n      \"monitorServiceOwnerEmailIds\": \"rkadr@microsoft.com\",\r\n      \"modifiedByApplicationId\": \"ccdfc67e-a7a1-4df5-91c7-7876da73b995\",\r\n      \"displayConfig\": [\r\n        {\r\n          \"rootJsonNode\": \"context.activityLog\",\r\n          \"sectionName\": \"\",\r\n          \"displayControls\": [\r\n            {\r\n              \"property\": \"eventSource\",\r\n              \"displayName\": \"Event source\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"channels\",\r\n              \"displayName\": \"Channels\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"level\",\r\n              \"displayName\": \"Level\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"caller\",\r\n              \"displayName\": \"Caller\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"eventDataId\",\r\n              \"displayName\": \"Event data id\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"rootJsonNode\": \"context.activityLog\",\r\n          \"sectionName\": \"\",\r\n          \"displayControls\": [\r\n            {\r\n              \"property\": \"status\",\r\n              \"displayName\": \"Status\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"operationId\",\r\n              \"displayName\": \"Operation id\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"operationName\",\r\n              \"displayName\": \"Operation name\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"submissionTimeStamp\",\r\n              \"displayName\": \"Submission time stamp\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"rootJsonNode\": \"context.activityLog\",\r\n          \"sectionName\": \"\",\r\n          \"displayControls\": [\r\n            {\r\n              \"property\": \"authorization.action\",\r\n              \"displayName\": \"Authorization - Action\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"authorization.scope\",\r\n              \"displayName\": \"Authorization - Scope\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"claims\",\r\n              \"displayName\": \"Claims\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"httpRequest\",\r\n              \"displayName\": \"HTTP request\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"essentials\": {\r\n      \"severity\": \"Sev3\",\r\n      \"signalType\": \"Log\",\r\n      \"alertState\": \"New\",\r\n      \"monitorCondition\": \"Fired\",\r\n      \"monitorService\": \"Application Insights\",\r\n      \"targetResource\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertscorrelationrg/providers/microsoft.insights/components/alertscorrelationworkerrole_int\",\r\n      \"targetResourceName\": \"alertscorrelationworkerrole_int\",\r\n      \"targetResourceGroup\": \"alertscorrelationrg\",\r\n      \"targetResourceType\": \"components\",\r\n      \"sourceCreatedId\": \"35fa80f9-176b-4a37-a471-3cf52cb67ff8\",\r\n      \"alertRule\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/AlertsCorrelationRG/providers/microsoft.insights/scheduledqueryrules/CPU Alert\",\r\n      \"startDateTime\": \"2019-06-18T11:36:00.2663861Z\",\r\n      \"lastModifiedDateTime\": \"2019-06-18T11:36:00.2663861Z\",\r\n      \"lastModifiedUserName\": \"System\",\r\n      \"actionStatus\": {\r\n        \"isSuppressed\": false\r\n      },\r\n      \"description\": \"NA\"\r\n    },\r\n    \"context\": {\r\n      \"AlertRuleName\": \"CPU Alert\",\r\n      \"SearchQuery\": \"pageViews\",\r\n      \"AlertThresholdOperator\": \"Less Than\",\r\n      \"AlertThresholdValue\": 444,\r\n      \"SearchIntervalStartTimeUtc\": \"6/18/2019 11:13:36 AM\",\r\n      \"SearchIntervalEndtimeUtc\": \"6/18/2019 11:18:36 AM\",\r\n      \"ResultCount\": 0,\r\n      \"SearchIntervalInSeconds\": 300,\r\n      \"LinkToSearchResults\": \"https://portal.azure.com#@72f988bf-86f1-41af-91ab-2d7cd011db47/blade/Microsoft_OperationsManagementSuite_Workspace/AnalyticsBlade/initiator/AnalyticsShareLinkToQuery/isQueryEditorVisible/true/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2Fdd91de05-d791-4ceb-b6dc-988682dc7d72%2FresourceGroups%2FAlertsCorrelationRG%2Fproviders%2Fmicrosoft.insights%2Fcomponents%2FAlertsCorrelationWorkerRole_INT%22%7D%5D%7D/query/pageViews/isQuerybase64Compressed/false/timespanInIsoFormat/2019-06-18T11%3a13%3a36.0000000Z%2f2019-06-18T11%3a18%3a36.0000000Z\",\r\n      \"Description\": \"NA\",\r\n      \"SeverityDescription\": \"Error\",\r\n      \"SubscriptionId\": \"dd91de05-d791-4ceb-b6dc-988682dc7d72\",\r\n      \"WorkspaceId\": \"0740c55f-dd5c-41c8-b80d-dd7a0d161389\",\r\n      \"SearchIntervalDurationMin\": \"5\",\r\n      \"AffectedConfigurationItems\": [],\r\n      \"AlertType\": \"Number of results\",\r\n      \"Frequency\": 5\r\n    },\r\n    \"egressConfig\": {\r\n      \"partitionKey\": \"MonitorServiceConfigurationCollectionPartition\",\r\n      \"monitorService\": \"Application Insights\",\r\n      \"monitorServiceOwnerEmailIds\": \"rkadr@microsoft.com\",\r\n      \"modifiedByApplicationId\": \"2a4f1e5b-62ba-4701-a6ff-9a9f79f63948\",\r\n      \"displayConfig\": [\r\n        {\r\n          \"rootJsonNode\": \"\",\r\n          \"sectionName\": \"\",\r\n          \"displayControls\": [\r\n            {\r\n              \"property\": \"SearchIntervalStartTimeUtc\",\r\n              \"displayName\": \"Search interval start time\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"SearchIntervalEndTimeUtc\",\r\n              \"displayName\": \"Search interval end time\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"SearchQuery\",\r\n              \"displayName\": \"Search query\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"LinkToSearchResults\",\r\n              \"displayName\": \"Search results\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"SearchIntervalDurationMin\",\r\n              \"displayName\": \"Period\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"AlertThresholdOperator\",\r\n              \"displayName\": \"Alert threshold operator\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"AlertThresholdValue\",\r\n              \"displayName\": \"Alert threshold value\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"ResultCount\",\r\n              \"displayName\": \"Result count\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            },\r\n            {\r\n              \"property\": \"SeverityDescription\",\r\n              \"displayName\": \"Severity description\",\r\n              \"type\": \"Text\",\r\n              \"isOptional\": false\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"CPU Alert\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff/changestate?api-version=2018-05-05&newState=Closed",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvZjkyOGZjYjctZWRiZC00MmU5LWE4N2UtMWIyODUxYWZmY2ZmL2NoYW5nZXN0YXRlP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDUmbmV3U3RhdGU9Q2xvc2Vk",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62/changestate?api-version=2019-05-05-preview&newState=Closed",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvNjNkNjdjMmMtN2EyZS00ZGExLWJiOTAtZGE0NzUxNDRhYzYyL2NoYW5nZXN0YXRlP2FwaS12ZXJzaW9uPTIwMTktMDUtMDUtcHJldmlldyZuZXdTdGF0ZT1DbG9zZWQ=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d53a4f02-3c17-492f-9831-afbca48d44d8"
+          "e2a8d30a-96c4-4db9-8e54-53f89d98525d"
         ],
         "accept-language": [
           "en-US"
@@ -84,13 +84,13 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Thu, 06 Jun 2019 07:16:10 GMT"
+          "Tue, 18 Jun 2019 11:46:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "8aded0a4-16d6-4048-bd45-fbe057245df7"
+          "ad224299-09b9-4dbd-9065-994d46c545a8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -102,13 +102,13 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "604da853-f035-4ffe-85d2-483cef329663"
+          "0cc56084-92eb-4c63-80c6-68c8dbda3fa3"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190606T071610Z:604da853-f035-4ffe-85d2-483cef329663"
+          "SOUTHINDIA:20190618T114625Z:0cc56084-92eb-4c63-80c6-68c8dbda3fa3"
         ],
         "Content-Length": [
-          "3039"
+          "2214"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -117,17 +117,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"essentials\": {\r\n      \"alertRule\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/abc/providers/microsoft.insights/activityLogAlerts/SubWithoutAG\",\r\n      \"alertState\": \"Closed\",\r\n      \"severity\": \"Sev4\",\r\n      \"signalType\": \"Log\",\r\n      \"monitorCondition\": \"Fired\",\r\n      \"monitorService\": \"ActivityLog Administrative\",\r\n      \"targetResource\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/microsoft.alertsmanagement/alerts/edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n      \"targetResourceName\": \"edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n      \"targetResourceGroup\": \"\",\r\n      \"targetResourceType\": \"alerts\",\r\n      \"sourceCreatedId\": \"53efdf3d-36b4-441d-9857-972d14a63a32\",\r\n      \"smartGroupId\": \"959b88a8-50e9-40d1-93d6-7131731f8d28\",\r\n      \"startDateTime\": \"2019-06-06T07:15:14.1432801Z\",\r\n      \"lastModifiedDateTime\": \"2019-06-06T07:16:09.2550832Z\",\r\n      \"lastModifiedUserName\": \"User\",\r\n      \"actionStatus\": {\r\n        \"isSuppressed\": false\r\n      },\r\n      \"description\": \"\"\r\n    },\r\n    \"context\": {\r\n      \"context\": {\r\n        \"activityLog\": {\r\n          \"authorization\": {\r\n            \"action\": \"Microsoft.AlertsManagement/alerts/changestate/action\",\r\n            \"scope\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72\"\r\n          },\r\n          \"channels\": \"Operation\",\r\n          \"claims\": \"{\\\"aud\\\":\\\"https://management.core.windows.net/\\\",\\\"iss\\\":\\\"https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/\\\",\\\"iat\\\":\\\"1559804891\\\",\\\"nbf\\\":\\\"1559804891\\\",\\\"exp\\\":\\\"1559808791\\\",\\\"aio\\\":\\\"42ZgYDgT90DEhXdnass3PeeKpTsZAQ==\\\",\\\"appid\\\":\\\"2d7b7f2e-f82e-479b-9c29-8ed7cc5cbdda\\\",\\\"appidacr\\\":\\\"1\\\",\\\"http://schemas.microsoft.com/identity/claims/identityprovider\\\":\\\"https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/\\\",\\\"http://schemas.microsoft.com/identity/claims/objectidentifier\\\":\\\"e8957b41-5c38-4292-8b7e-cc962bba2d0a\\\",\\\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\\\":\\\"e8957b41-5c38-4292-8b7e-cc962bba2d0a\\\",\\\"http://schemas.microsoft.com/identity/claims/tenantid\\\":\\\"72f988bf-86f1-41af-91ab-2d7cd011db47\\\",\\\"uti\\\":\\\"3ibFGVQqtECS6IapS6EOAA\\\",\\\"ver\\\":\\\"1.0\\\"}\",\r\n          \"caller\": \"e8957b41-5c38-4292-8b7e-cc962bba2d0a\",\r\n          \"correlationId\": \"fb5acf0c-0144-4275-ac9d-628ee1296b6c\",\r\n          \"description\": \"\",\r\n          \"eventSource\": \"Administrative\",\r\n          \"eventTimestamp\": \"2019-06-06T07:13:15.5252592Z\",\r\n          \"httpRequest\": \"{\\\"clientRequestId\\\":\\\"45db527e-b046-44fe-b803-dd50a690d187\\\",\\\"clientIpAddress\\\":\\\"167.220.238.79\\\",\\\"method\\\":\\\"POST\\\"}\",\r\n          \"eventDataId\": \"53efdf3d-36b4-441d-9857-972d14a63a32\",\r\n          \"level\": \"Informational\",\r\n          \"operationName\": \"Microsoft.AlertsManagement/alerts/changestate/action\",\r\n          \"operationId\": \"fb5acf0c-0144-4275-ac9d-628ee1296b6c\",\r\n          \"resourceId\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/edce88d9-d5c7-431f-89e3-88fa955448cd\",\r\n          \"resourceProviderName\": \"Microsoft.AlertsManagement\",\r\n          \"status\": \"Started\",\r\n          \"subStatus\": \"\",\r\n          \"subscriptionId\": \"dd91de05-d791-4ceb-b6dc-988682dc7d72\",\r\n          \"submissionTimestamp\": \"2019-06-06T07:14:46.1679871Z\",\r\n          \"resourceType\": \"Microsoft.AlertsManagement/alerts\"\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"essentials\": {\r\n      \"severity\": \"Sev3\",\r\n      \"signalType\": \"Log\",\r\n      \"alertState\": \"Closed\",\r\n      \"monitorCondition\": \"Fired\",\r\n      \"monitorService\": \"Application Insights\",\r\n      \"targetResource\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourcegroups/alertscorrelationrg/providers/microsoft.insights/components/alertscorrelationworkerrole_int\",\r\n      \"targetResourceName\": \"alertscorrelationworkerrole_int\",\r\n      \"targetResourceGroup\": \"alertscorrelationrg\",\r\n      \"targetResourceType\": \"components\",\r\n      \"sourceCreatedId\": \"35fa80f9-176b-4a37-a471-3cf52cb67ff8\",\r\n      \"alertRule\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/resourceGroups/AlertsCorrelationRG/providers/microsoft.insights/scheduledqueryrules/CPU Alert\",\r\n      \"startDateTime\": \"2019-06-18T11:36:00.2663861Z\",\r\n      \"lastModifiedDateTime\": \"2019-06-18T11:46:24.2940342Z\",\r\n      \"lastModifiedUserName\": \"User\",\r\n      \"actionStatus\": {\r\n        \"isSuppressed\": false\r\n      },\r\n      \"description\": \"NA\"\r\n    },\r\n    \"context\": {\r\n      \"AlertRuleName\": \"CPU Alert\",\r\n      \"SearchQuery\": \"pageViews\",\r\n      \"AlertThresholdOperator\": \"Less Than\",\r\n      \"AlertThresholdValue\": 444,\r\n      \"SearchIntervalStartTimeUtc\": \"6/18/2019 11:13:36 AM\",\r\n      \"SearchIntervalEndtimeUtc\": \"6/18/2019 11:18:36 AM\",\r\n      \"ResultCount\": 0,\r\n      \"SearchIntervalInSeconds\": 300,\r\n      \"LinkToSearchResults\": \"https://portal.azure.com#@72f988bf-86f1-41af-91ab-2d7cd011db47/blade/Microsoft_OperationsManagementSuite_Workspace/AnalyticsBlade/initiator/AnalyticsShareLinkToQuery/isQueryEditorVisible/true/scope/%7B%22resources%22%3A%5B%7B%22resourceId%22%3A%22%2Fsubscriptions%2Fdd91de05-d791-4ceb-b6dc-988682dc7d72%2FresourceGroups%2FAlertsCorrelationRG%2Fproviders%2Fmicrosoft.insights%2Fcomponents%2FAlertsCorrelationWorkerRole_INT%22%7D%5D%7D/query/pageViews/isQuerybase64Compressed/false/timespanInIsoFormat/2019-06-18T11%3a13%3a36.0000000Z%2f2019-06-18T11%3a18%3a36.0000000Z\",\r\n      \"Description\": \"NA\",\r\n      \"SeverityDescription\": \"Error\",\r\n      \"SubscriptionId\": \"dd91de05-d791-4ceb-b6dc-988682dc7d72\",\r\n      \"WorkspaceId\": \"0740c55f-dd5c-41c8-b80d-dd7a0d161389\",\r\n      \"SearchIntervalDurationMin\": \"5\",\r\n      \"AffectedConfigurationItems\": [],\r\n      \"AlertType\": \"Number of results\",\r\n      \"Frequency\": 5\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"CPU Alert\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff/history?api-version=2018-05-05",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvZjkyOGZjYjctZWRiZC00MmU5LWE4N2UtMWIyODUxYWZmY2ZmL2hpc3Rvcnk/YXBpLXZlcnNpb249MjAxOC0wNS0wNQ==",
+      "RequestUri": "/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62/history?api-version=2019-05-05-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGQ5MWRlMDUtZDc5MS00Y2ViLWI2ZGMtOTg4NjgyZGM3ZDcyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQWxlcnRzTWFuYWdlbWVudC9hbGVydHMvNjNkNjdjMmMtN2EyZS00ZGExLWJiOTAtZGE0NzUxNDRhYzYyL2hpc3Rvcnk/YXBpLXZlcnNpb249MjAxOS0wNS0wNS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f22003b0-aee0-4eed-b8ee-2fa3bdd7c529"
+          "ea44d334-2ea1-42ac-be28-619efa47f770"
         ],
         "accept-language": [
           "en-US"
@@ -144,13 +144,13 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Thu, 06 Jun 2019 07:16:11 GMT"
+          "Tue, 18 Jun 2019 11:46:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "fb3fd553-705a-44a3-9ac1-8eb2f551ad9a"
+          "b513e6b9-2477-45be-93f3-6283dba7aa3e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -159,16 +159,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "81367c17-cc0a-4d7d-9357-9d12cbe34b2c"
+          "1bbfc0e6-a286-447a-a71d-280aa05c9971"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190606T071611Z:81367c17-cc0a-4d7d-9357-9d12cbe34b2c"
+          "SOUTHINDIA:20190618T114626Z:1bbfc0e6-a286-447a-a71d-280aa05c9971"
         ],
         "Content-Length": [
-          "697"
+          "694"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -177,7 +177,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertId\": \"f928fcb7-edbd-42e9-a87e-1b2851affcff\",\r\n    \"modifications\": [\r\n      {\r\n        \"modificationEvent\": \"StateChange\",\r\n        \"oldValue\": \"New\",\r\n        \"newValue\": \"Closed\",\r\n        \"modifiedAt\": \"2019-06-06T07:16:09.8989855Z\",\r\n        \"modifiedBy\": \"User\",\r\n        \"comments\": \"\",\r\n        \"description\": \"State changed from 'New' to 'Closed'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"AlertCreated\",\r\n        \"oldValue\": \"\",\r\n        \"newValue\": \"\",\r\n        \"modifiedAt\": \"2019-06-06T07:15:14.1432801Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"comments\": \"\",\r\n        \"description\": \"New Alert Object is created\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/f928fcb7-edbd-42e9-a87e-1b2851affcff/history/default\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"SubWithoutAG\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"alertId\": \"63d67c2c-7a2e-4da1-bb90-da475144ac62\",\r\n    \"modifications\": [\r\n      {\r\n        \"modificationEvent\": \"StateChange\",\r\n        \"oldValue\": \"New\",\r\n        \"newValue\": \"Closed\",\r\n        \"modifiedAt\": \"2019-06-18T11:46:24.7003279Z\",\r\n        \"modifiedBy\": \"User\",\r\n        \"comments\": \"\",\r\n        \"description\": \"State changed from 'New' to 'Closed'\"\r\n      },\r\n      {\r\n        \"modificationEvent\": \"AlertCreated\",\r\n        \"oldValue\": \"\",\r\n        \"newValue\": \"\",\r\n        \"modifiedAt\": \"2019-06-18T11:36:00.2663861Z\",\r\n        \"modifiedBy\": \"System\",\r\n        \"comments\": \"\",\r\n        \"description\": \"New Alert Object is created\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/dd91de05-d791-4ceb-b6dc-988682dc7d72/providers/Microsoft.AlertsManagement/alerts/63d67c2c-7a2e-4da1-bb90-da475144ac62/history/default\",\r\n  \"type\": \"Microsoft.AlertsManagement/alerts\",\r\n  \"name\": \"CPU Alert\"\r\n}",
       "StatusCode": 200
     }
   ],
