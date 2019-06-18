@@ -11,10 +11,10 @@ namespace Azure.Security.KeyVault.Keys
     {
         public string Name { get; set; }
         public KeyType KeyType { get; private set; }
-        public KeyCurveName Curve { get; set; }
+        public KeyCurveName? Curve { get; set; }
         public bool Hsm { get; private set; }
 
-        public EcKeyCreateOptions(string name, bool hsm, KeyCurveName curveName = default)
+        public EcKeyCreateOptions(string name, bool hsm, KeyCurveName? curveName = null)
         {
             Name = name;
 
@@ -27,9 +27,9 @@ namespace Azure.Security.KeyVault.Keys
                 KeyType = KeyType.EllipticCurve;
             }
 
-            if (curveName != default)
+            if (curveName.HasValue)
             {
-                Curve = curveName;
+                Curve = curveName.Value;
             }
         }
     }

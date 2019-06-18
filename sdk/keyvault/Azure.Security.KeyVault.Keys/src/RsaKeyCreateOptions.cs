@@ -14,10 +14,10 @@ namespace Azure.Security.KeyVault.Keys
     {
         public string Name { get; set; }
         public KeyType KeyType { get; private set; }
-        public int KeySize { get; set; }
+        public int? KeySize { get; set; }
         public bool Hsm { get; private set; }
 
-        public RsaKeyCreateOptions(string name, bool hsm, int keySize = default) 
+        public RsaKeyCreateOptions(string name, bool hsm, int? keySize = null) 
         {
             Name = name;
             
@@ -30,9 +30,9 @@ namespace Azure.Security.KeyVault.Keys
                 KeyType = KeyType.Rsa;
             }
 
-            if(keySize != default)
+            if(keySize.HasValue)
             {
-                KeySize = keySize;
+                KeySize = keySize.Value;
             }
         }
     }

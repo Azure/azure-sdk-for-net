@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private readonly Queue<(KeyBase Key, bool Delete)> _keysToCleanup = new Queue<(KeyBase, bool)>();
 
-        protected KeysTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        protected KeysTestBase(bool isAsync) : base(isAsync)
         {
         }
 
