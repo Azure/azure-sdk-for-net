@@ -61,10 +61,12 @@ namespace Azure.Core.Pipeline
         {
             static readonly string s_applicationJson = "application/json";
             static readonly string s_applicationOctetStream = "application/octet-stream";
+            static readonly string s_applicationForm = "application/x-www-form-urlencoded";
 
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
             public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, s_applicationJson);
             public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
+            public static readonly HttpHeader FormUrlEncodedContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
         }
     }
 }
