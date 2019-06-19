@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-0e610d25-3f0d-4c16-c998-5ace63261428?restype=container\u0026comp=metadata",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-storage-blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "206a87222f421a6b3e634449e7ed564a",
+        "x-ms-date": "Mon, 17 Jun 2019 20:57:15 GMT",
+        "x-ms-meta-foo": "bar",
+        "x-ms-meta-meta": "data",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "225",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 17 Jun 2019 20:57:15 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "ContainerNotFound",
+        "x-ms-request-id": "a935894e-b01e-0079-794f-25b12a000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified container does not exist.\n",
+        "RequestId:a935894e-b01e-0079-794f-25b12a000000\n",
+        "Time:2019-06-17T20:57:15.4710590Z\u003c/Message\u003e\u003c/Error\u003e"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "585885479"
+  }
+}

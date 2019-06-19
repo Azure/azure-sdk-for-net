@@ -7,14 +7,14 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Common.Test
 {
-    [TestClass]
+    [TestFixture]
     public class StreamPartitionerTests
     {
-        [TestMethod]
+        [Test]
         public async Task ReadAsync()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
@@ -54,7 +54,7 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public async Task Read_WithReadOnlyMemory()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
@@ -96,8 +96,8 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task ReadAsync_1GB()
         {
             long memoryStart;
@@ -148,8 +148,8 @@ namespace Azure.Storage.Common.Test
             Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DEFAULT_BUFFER_SIZE); // TODO Assuming at most 8 buffers allocated
         }
 
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task ReadAsync_1GB_WithReadOnlyMemory()
         {
             long memoryStart;
