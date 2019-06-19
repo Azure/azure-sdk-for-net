@@ -4,9 +4,6 @@ pr:
     - master
     - search-preview
     - BuildToolsForSdk
-  paths:
-    exclude:
-    - sdk/
 
 variables:
   DotNetCoreVersion: '2.1.503'
@@ -33,7 +30,7 @@ jobs:
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs)
         displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -57,7 +54,7 @@ jobs:
           inputs:
             command: msbuild
             solution: build.proj
-            arguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+            arguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs)
           displayName: 'Ubuntu Build and Run tests'        
         - task: PublishTestResults@2
           condition: succeededOrFailed()
@@ -66,22 +63,3 @@ jobs:
             testRunTitle: 'Ubuntu Test Results'
             testResultsFormat: 'VSTest'
             mergeTestResults: true
-
-  # - job: Ubuntu_Build
-  #   pool:
-  #     vmImage: 'ubuntu-16.04'
-  
-  #   steps:
-  #       - task: DotNetCoreInstaller@0
-  #         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
-  #         inputs:
-  #           version: '$(DotNetCoreVersion)'
-  #       - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
-  #         displayName: 'Build and test on Non-windows machine'
-  #       - task: PublishTestResults@2
-  #         condition: succeededOrFailed()
-  #         inputs:
-  #           testResultsFiles: '**/*.trx'
-  #           testRunTitle: 'Ubuntu Test Results'
-  #           testResultsFormat: 'VSTest'
-  #           mergeTestResults: true
