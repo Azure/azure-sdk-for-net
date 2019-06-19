@@ -28,17 +28,18 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.LoggingPolicy = null;
 
             // specify custom retry policy options
-            options.RetryPolicy = new FixedRetryPolicy()
+            options.RetryPolicy = new RetryPolicy()
             {
+                Mode = RetryMode.Fixed,
                 MaxRetries = 10,
                 Delay = TimeSpan.FromSeconds(1)
             };
 
             // add a policy (custom behavior) that executes once per client call
-            options.PerCallPolicies.Add(new AddHeaderPolicy());
+            options.AddPolicy(HttpPipelinePosition.PerCall, new AddHeaderPolicy());
 
             // add a policy that executes once per retry
-            options.PerRetryPolicies.Add(new CustomLogPolicy());
+            options.AddPolicy(HttpPipelinePosition.PerRetry, new CustomLogPolicy());
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             // pass the policy options to the client

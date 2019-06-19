@@ -49,20 +49,6 @@ namespace Azure.ApplicationModel.Configuration
             if (label != null) Labels.Add(label);
         }
 
-        internal string BatchLink { get; set; }
-
-        internal SettingSelector CloneWithBatchLink(string batchLink)
-        {
-            return new SettingSelector()
-            {
-                Keys = new List<string>(Keys),
-                Labels = new List<string>(Labels),
-                Fields = Fields,
-                AsOf = AsOf,
-                BatchLink = batchLink
-            };
-        }
-
         public bool Equals(SettingSelector other)
         {
             if (other == null) return false;
@@ -70,7 +56,6 @@ namespace Azure.ApplicationModel.Configuration
             if (!Labels.SequenceEqual(other.Labels)) return false;
             if (!Fields.Equals(other.Fields)) return false;
             if (AsOf != other.AsOf) return false;
-            if (!string.Equals(BatchLink, other.BatchLink, StringComparison.Ordinal)) return false;
 
             return true;
         }
@@ -95,7 +80,6 @@ namespace Azure.ApplicationModel.Configuration
             hashCode.Add(Labels);
             hashCode.Add(AsOf);
             hashCode.Add(Fields);
-            hashCode.Add(BatchLink, StringComparer.Ordinal);
             return hashCode.ToHashCode();
         }
 

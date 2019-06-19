@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Test
             var response = await service.GetAccountInfoAsync();
 
             // Assert
-            Assert.IsNotNull(response.Raw.Headers.RequestId);
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [TestMethod]

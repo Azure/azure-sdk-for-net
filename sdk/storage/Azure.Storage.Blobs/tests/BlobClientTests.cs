@@ -300,7 +300,7 @@ namespace Azure.Storage.Blobs.Test
                     sourceAccessConditions: sourceAccessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -364,7 +364,7 @@ namespace Azure.Storage.Blobs.Test
                     destinationAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -627,7 +627,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 var response = await blob.GetPropertiesAsync();
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -791,7 +791,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.GetAccountInfoAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -825,7 +825,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -849,7 +849,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await sasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -879,7 +879,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await identitySasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -904,7 +904,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await sasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -935,7 +935,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await identitySasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -963,7 +963,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await sasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -995,7 +995,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await identitySasBlob.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1019,7 +1019,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.GetPropertiesAsync(accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1114,7 +1114,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1198,7 +1198,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.CreateSnapshotAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1279,7 +1279,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.CreateSnapshotAsync(accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1335,7 +1335,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.AcquireLeaseAsync(duration, leaseId);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1363,7 +1363,7 @@ namespace Azure.Storage.Blobs.Test
                     httpAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1429,7 +1429,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.RenewLeaseAsync(leaseId);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Blobs.Test
                     httpAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1528,7 +1528,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.ReleaseLeaseAsync(leaseId);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1559,7 +1559,7 @@ namespace Azure.Storage.Blobs.Test
                     httpAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1627,7 +1627,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.BreakLeaseAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1650,7 +1650,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.BreakLeaseAsync(breakPeriodInSeconds: breakPeriod);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1680,7 +1680,7 @@ namespace Azure.Storage.Blobs.Test
                     httpAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1747,7 +1747,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.ChangeLeaseAsync(leaseId, newLeaseId);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -1780,7 +1780,7 @@ namespace Azure.Storage.Blobs.Test
                     httpAccessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
