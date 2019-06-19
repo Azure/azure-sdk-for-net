@@ -60,7 +60,7 @@ $Env:AZURE_TENANT_ID="tenant-ID"
     > --secret-permissions:
     > Accepted values: backup, delete, get, list, purge, recover, restore, set
 
-* Use the above mentioned Key Vault name to retreive details of your Vault which also contains your Key Vault URL:
+* Use the above mentioned Key Vault name to retrieve details of your Vault which also contains your Key Vault URL:
     ```PowerShell
     az keyvault show --name <your-key-vault-name> 
     ```
@@ -73,10 +73,13 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 // Create a new secret client using the default credential from Azure.Identity
-var client = new SecretClient(vaultUri: <your-vault-url>, credential: new SystemCredential())
+var client = new SecretClient(vaultUri: <your-vault-url>, credential: new SystemCredential());
+
+// Create a new secret using the secret client
+Secret secret = client.Set("secret-name", "secret-value");
 ```
 > SystemCredential():
-> Uses the environment variables previosly set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`)
+> Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`)
 
 ## Key concepts
 ### Secret
@@ -86,14 +89,14 @@ A secret is the fundamental resource within Azure KeyVault. From a developer's p
 An asynchronous and synchronous SecretClient client exists in the SDK allowing for selection of a client based on an application's use case. Once you've initialized a SecretClient, you can interact with the primary resource types in Key Vault.
 
 ## Examples
-The following section provides several code snippets using the above created `client`, covering some of the most common Azure Key Vault Secret service related tasks, including:
+The following section provides several code snippets using the [above created](#create-secret-client) `client`, covering some of the most common Azure Key Vault Secret service related tasks, including:
 
 * [Create a Secret](#create-a-secret)
+* [Async create a Secret](#async-create-a-secret)
 * [Retrieve a Secret](#retrieve-a-secret)
 * [Update an existing Secret](#update-an-existing-secret)
 * [Delete a Secret](#delete-a-secret)
 * [List Secrets](#list-secrets)
-* [Async create a Secret](#async-create-a-secret)
 
 ### Create a Secret
 `Set` creates a Secret to be stored in the Azure Key Vault. If a secret with the same name already exists, then a new version of the secret is created.
@@ -159,7 +162,7 @@ List<Response<SecretBase>> allSecrets = Client.GetSecrets();
   }
 ```
 
-### Async operations
+## Async operations
 The Azure.Security.KeyVault.Secrets package supports async API that are identical to synchronous API. All methods end with `Async`. 
 
 The following examples provide code snippets for performing async operations in the Secret Client library:
