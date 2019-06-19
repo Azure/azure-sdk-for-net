@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class SystemCredential : AggregateCredential
+    public class DefaultAzureCredential : ChainedTokenCredential
     {
-        public SystemCredential()
+        public DefaultAzureCredential()
             :this(null)
         {
 
         }
 
-        public SystemCredential(IdentityClientOptions options)
+        public DefaultAzureCredential(IdentityClientOptions options)
             : base(new EnvironmentCredential(options), new ManagedIdentityCredential(options: options))
         {
 
