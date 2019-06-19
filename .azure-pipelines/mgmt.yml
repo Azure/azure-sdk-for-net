@@ -31,7 +31,7 @@ jobs:
     #   - task: MSBuild@1
     #     inputs:
     #       solution: build.proj
-    #       msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs)
+    #       msbuildArguments: /t:RunTests $(LoggingArgs)
     #     displayName: 'Build and Run tests'
     #   - task: PublishTestResults@2
     #     condition: succeededOrFailed()
