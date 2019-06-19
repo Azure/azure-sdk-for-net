@@ -18,6 +18,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
+    <None Update="Data\mockcert.pfx" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
