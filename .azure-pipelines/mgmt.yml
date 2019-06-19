@@ -50,9 +50,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
         inputs:
           version: '$(DotNetCoreVersion)'
-      
-      - task: DotNetCoreCLI@1        
-        displayName: 'Ubuntu Build and Run tests'
+          
       - script: dotnet msbuild build.proj /t:RunTests $(LoggingArgs)
         displayName: 'Ubuntu Build and Run tests'
       - task: PublishTestResults@2
