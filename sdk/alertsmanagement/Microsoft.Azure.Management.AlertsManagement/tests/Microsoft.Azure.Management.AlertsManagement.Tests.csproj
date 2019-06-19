@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>AlertsManagement.Tests</PackageId>
     <Description>AlertsManagement.Tests Class Library</Description>
@@ -9,7 +9,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <ProjectReference Include="..\Management.AlertsManagement\Microsoft.Azure.AlertsManagement.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.AlertsManagement.csproj" />
   </ItemGroup>
 
   <ItemGroup>
