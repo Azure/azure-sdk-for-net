@@ -6,7 +6,8 @@ pr:
     - BuildToolsForSdk
 
 variables:
-  DotNetCoreVersion: '2.1.503'
+  DotNetCoreVersion: '2.2.202'
+  #DotNetCoreVersion: '2.1.503'
 
 jobs:
   - job: Windows_Build
