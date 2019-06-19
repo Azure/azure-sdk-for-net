@@ -21,6 +21,7 @@
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageReference Update="Microsoft.Azure.Management.Batch" Version="4.2.0" />
     <PackageReference Update="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />
+    <PackageReference Update="Microsoft.Azure.Management.EventHub" Version="2.5.0" />
     <PackageReference Update="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
     <PackageReference Update="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
@@ -46,7 +47,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
+    <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.5.1]" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" />

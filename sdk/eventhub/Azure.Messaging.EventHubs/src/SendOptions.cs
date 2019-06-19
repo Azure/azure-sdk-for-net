@@ -7,27 +7,27 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The set of options that can be specified when sending a set of events to configure
-    ///   how the event data is packaged into batches.
+    ///   The set of options that can be specified to influence the way in which events
+    ///   are sent to the Event Hubs service.
     /// </summary>
     ///
-    public class EventBatchingOptions
+    public class SendOptions
     {
         /// <summary>The maximum size to allow for the batch, in bytes.</summary>
-        private int _maximumSizeInBytes = EventSender.MaximumBatchSizeLimit;
+        private int _maximumSizeInBytes = EventHubProducer.MaximumBatchSizeLimit;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of events, in bytes.  If this size is exceeded,
-        ///   an exception will be thrown and the send operation will fail.
+        ///   the set of events will be broken into multiple batches for sending.
         /// </summary>
         ///
-        private int MaximumSizeInBytes
+        private int MaximumBatchSizeInBytes
         {
             get => _maximumSizeInBytes;
 
             set
             {
-                Guard.ArgumentInRange(nameof(MaximumSizeInBytes), value, EventSender.MinimumBatchSizeLimit, EventSender.MaximumBatchSizeLimit);
+                Guard.ArgumentInRange(nameof(MaximumBatchSizeInBytes), value, EventHubProducer.MinimumBatchSizeLimit, EventHubProducer.MaximumBatchSizeLimit);
                 _maximumSizeInBytes = value;
             }
         }  //TODO: Expose this when splitting of batches is supported.
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs
         ///   specified directly when sending the batch.
         /// </summary>
         ///
-        /// <value>The partition hashing key to associate with the event batch.</value>
+        /// <value>The partition hashing key to associate with the event or batch of events.</value>
         ///
         public string PartitionKey { get; set; }
 

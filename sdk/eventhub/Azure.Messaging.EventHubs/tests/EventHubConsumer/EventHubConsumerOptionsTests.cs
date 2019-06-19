@@ -4,37 +4,36 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventReceiverOptions" />
+    ///   The suite of tests for the <see cref="EventHubConsumerOptions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class ReceiverOptionsTests
+    [Parallelizable(ParallelScope.Children)]
+    public class EventHubConsumerOptionsTests
     {
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventReceiverOptions.Clone" />
+        ///   Verifies functionality of the <see cref="EventHubConsumerOptions.Clone" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public void CloneProducesACopy()
         {
-            var options = new EventReceiverOptions
+            var options = new EventHubConsumerOptions
             {
                 ConsumerGroup = "custom$consumer",
-                BeginReceivingAt = EventPosition.FromOffset(65),
-                ExclusiveReceiverPriority = 99,
+                OwnerLevel = 99,
                 Retry = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(5), 6),
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
-                Identifier = "an_event_receiver"
+                Identifier = "an_event_consumer"
             };
 
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.ConsumerGroup, Is.EqualTo(options.ConsumerGroup), "The consumer group of the clone should match.");
-            Assert.That(clone.BeginReceivingAt, Is.EqualTo(options.BeginReceivingAt), "The position to begin reading events of the clone should match.");
-            Assert.That(clone.ExclusiveReceiverPriority, Is.EqualTo(options.ExclusiveReceiverPriority), "The exclusive priority of the clone should match.");
+            Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The ownerlevel of the clone should match.");
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The default maximum wait time of the clone should match.");
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
 
@@ -43,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="EventReceiverOptions.PrefetchCount" /> is
+        ///  Verifies that setting the <see cref="EventHubConsumerOptions.PrefetchCount" /> is
         ///  validated.
         /// </summary>
         ///
@@ -55,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///  Verifies that setting the <see cref="EventReceiverOptions.Identifier" /> is
+        ///  Verifies that setting the <see cref="EventHubConsumerOptions.Identifier" /> is
         ///  validated.
         /// </summary>
         ///
@@ -69,18 +68,18 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventReceiverOptions.DefaultMaximumReceiveWaitTime" />
+        ///   Verifies functionality of the <see cref="EventHubConsumerOptions.DefaultMaximumReceiveWaitTime" />
         ///   property.
         /// </summary>
         ///
         [Test]
         public void DefaultMaximumReceiveWaitTimeIsValidated()
         {
-            Assert.That(() => new EventReceiverOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
+            Assert.That(() => new EventHubConsumerOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventSenderOptions.Timeout" />
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.Timeout" />
         ///   property.
         /// </summary>
         ///
@@ -89,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0)]
         public void DefaultMaximumReceiveWaitTimeUsesNormalizesValueINotSpecified(int? noTimeoutValue)
         {
-            var options = new EventReceiverOptions();
+            var options = new EventHubConsumerOptions();
             var timeoutValue = (noTimeoutValue.HasValue) ? TimeSpan.Zero : (TimeSpan?)null;
 
             options.DefaultMaximumReceiveWaitTime = timeoutValue;
@@ -98,14 +97,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   A mock of the <see cref="EventReceiverOptions" /> to allow the protected validation
+        ///   A mock of the <see cref="EventHubConsumerOptions" /> to allow the protected validation
         ///   constants to be referenced.
         /// </summary>
         ///
-        private class MockOptions : EventReceiverOptions
+        private class MockOptions : EventHubConsumerOptions
         {
-            public int MinPrefixCount => EventReceiverOptions.MinimumPrefetchCount;
-            public int MaxIdentifierLength => EventReceiverOptions.MaximumIdentifierLength;
+            public int MinPrefixCount => EventHubConsumerOptions.MinimumPrefetchCount;
+            public int MaxIdentifierLength => EventHubConsumerOptions.MaximumIdentifierLength;
         }
     }
 }

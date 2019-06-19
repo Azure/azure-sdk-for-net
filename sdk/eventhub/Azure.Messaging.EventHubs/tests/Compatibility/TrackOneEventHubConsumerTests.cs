@@ -14,21 +14,21 @@ using TrackOne;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="TrackOneEventReceiver" />
+    ///   The suite of tests for the <see cref="TrackOneEventHubConsumer" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class TrackOneEventReceiverTests
+    public class TrackOneEventHubConsumerTests
     {
         /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesTheSenderFactory()
+        public void ConstructorValidatesTheReceiverFactory()
         {
-            Assert.That(() => new TrackOneEventReceiver(null), Throws.ArgumentNullException);
+            Assert.That(() => new TrackOneEventHubConsumer(null), Throws.ArgumentNullException);
         }
 
         /// <summary
@@ -42,20 +42,20 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = "123";
             var position = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-25T12:00:00Z"));
             var priority = 8765;
-            var identifier = "ThisIsAnAwesomeReceiver!";
+            var identifier = "ThisIsAnAwesomeConsumer!";
             var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTimeUtc.Value), priority, new ReceiverOptions { Identifier = identifier });
-            var receiver = new TrackOneEventReceiver(() => mock);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
 
-            // Invoke an operation to force the sender to be lazily instantiated.  Otherwise,
+            // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,
             // construction does not happen.
 
-            await receiver.ReceiveAsync(0, TimeSpan.Zero, default);
+            await consumer.ReceiveAsync(0, TimeSpan.Zero, default);
 
             Assert.That(mock.ConstructedWith.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should match.");
             Assert.That(mock.ConstructedWith.Partition, Is.EqualTo(partition), "The partition should match.");
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(mock.ConstructedWith.Position, position), Is.True, "The starting event position should match.");
-            Assert.That(mock.ConstructedWith.Priority, Is.EqualTo(priority), "The exclusive priority should match.");
-            Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The receiver identifier should match.");
+            Assert.That(mock.ConstructedWith.Priority, Is.EqualTo(priority), "The ownerlevel should match.");
+            Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The consumer identifier should match.");
         }
 
         /// <summary
@@ -68,9 +68,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var maximumEventCount = 666;
             var maximumWaitTime = TimeSpan.FromMilliseconds(17);
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var receiver = new TrackOneEventReceiver(() => mock);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
 
-            await receiver.ReceiveAsync(maximumEventCount, maximumWaitTime, CancellationToken.None);
+            await consumer.ReceiveAsync(maximumEventCount, maximumWaitTime, CancellationToken.None);
 
             Assert.That(mock.ReceiveInvokeWith.MaxCount, Is.EqualTo(maximumEventCount), "The maximum event count should match.");
             Assert.That(mock.ReceiveInvokeWith.WaitTime, Is.EqualTo(maximumWaitTime), "The maximum wait time should match.");
@@ -84,8 +84,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveAsyncSendsAnEmptyEnumerableWhenThereAreNoEvents()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var receiver = new TrackOneEventReceiver(() => mock);
-            var results = await receiver.ReceiveAsync(10, default, default);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
+            var results = await consumer.ReceiveAsync(10, default, default);
 
             Assert.That(results, Is.Not.Null, "There should have been an enumerable returned.");
             Assert.That(results.Any(), Is.False, "The result enumerable should have been empty.");
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReceiveAsyncTransformsResults()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var receiver = new TrackOneEventReceiver(() => mock);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
 
             mock.ReceiveResult = new List<TrackOne.EventData>
             {
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mock.ReceiveResult[1].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(6666, DateTime.Parse("1974-12-09T20:00:00Z"), "24", null);
             mock.ReceiveResult[1].Properties["test"] = "this is a test!";
 
-            var results = await receiver.ReceiveAsync(10, default, default);
+            var results = await consumer.ReceiveAsync(10, default, default);
             var index = 0;
 
             foreach (var result in results)
@@ -125,41 +125,41 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="TrackOneEventReceiver.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubConsumer.CloseAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task CloseAsyncDoesNotDelegateIfTheSenderWasNotCreated()
+        public async Task CloseAsyncDoesNotDelegateIfTheReceiverWasNotCreated()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var receiver = new TrackOneEventReceiver(() => mock);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
 
-            await receiver.CloseAsync(default);
+            await consumer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
         }
 
         /// <summary
-        ///   Verifies functionality of the <see cref="TrackOneEventReceiver.CloseAsync" />
+        ///   Verifies functionality of the <see cref="TrackOneEventHubConsumer.CloseAsync" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task CloseAsyncDelegatesToTheSender()
+        public async Task CloseAsyncDelegatesToTheReceiver()
         {
             var mock = new ObservableReceiverMock(new ClientMock(), "$Default", "0", TrackOne.EventPosition.FromEnd(), null, new ReceiverOptions());
-            var receiver = new TrackOneEventReceiver(() => mock);
+            var consumer = new TrackOneEventHubConsumer(() => mock);
 
-            // Invoke an operation to force the receiver to be lazily instantiated.  Otherwise,
+            // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,
             // Close does not delegate the call.
 
-            await receiver.ReceiveAsync(0, TimeSpan.Zero, default);
-            await receiver.CloseAsync(default);
+            await consumer.ReceiveAsync(0, TimeSpan.Zero, default);
+            await consumer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.True);
         }
 
         /// <summary>
-        ///   Allows for observation of operations performed by the receiver for testing purposes.
+        ///   Allows for observation of operations performed by the consumer for testing purposes.
         /// </summary>
         ///
         private class ObservableReceiverMock : TrackOne.PartitionReceiver
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             protected override Task OnCloseAsync() => Task.CompletedTask;
-            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, ReceiverOptions receiverOptions) => default;
+            protected override PartitionReceiver OnCreateReceiver(string consumerGroupName, string partitionId, TrackOne.EventPosition eventPosition, long? epoch, ReceiverOptions consumerOptions) => default;
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId) => Task.FromResult(default(EventHubPartitionRuntimeInformation));
             protected override Task<EventHubRuntimeInformation> OnGetRuntimeInformationAsync() => Task.FromResult(default(EventHubRuntimeInformation));
             internal override EventDataSender OnCreateEventSender(string partitionId) => default;

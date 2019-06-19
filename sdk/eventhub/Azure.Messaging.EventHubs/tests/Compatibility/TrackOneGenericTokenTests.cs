@@ -16,6 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class TrackOneGenericTokenTokenTests
     {
         /// <summary>

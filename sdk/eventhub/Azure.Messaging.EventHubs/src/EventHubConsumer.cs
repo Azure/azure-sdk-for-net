@@ -11,108 +11,111 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   A receiver responsible for reading <see cref="EventData" /> from a specific Event Hub
+    ///   A consumer responsible for reading <see cref="EventData" /> from a specific Event Hub
     ///   partition and as a member of a specific consumer group.
     ///
-    ///   A receiver may be exclusive, which asserts ownership over the partition for the consumer
-    ///   group to ensure that only one receiver from that group is reading the from the partition.
-    ///   These exclusive receivers are sometimes referred to as "Epoch Receivers."
+    ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
+    ///   group to ensure that only one consumer from that group is reading the from the partition.
+    ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
     ///
-    ///   A receiver may also be non-exclusive, allowing multiple receivers from the same consumer
-    ///   group to be actively reading events from the partition.  These non-exclusive receivers are
-    ///   sometimes referred to as "Non-Epoch Receivers."
+    ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
+    ///   group to be actively reading events from the partition.  These non-exclusive consumers are
+    ///   sometimes referred to as "Non-Epoch Consumers."
     /// </summary>
     ///
-    public class EventReceiver : IAsyncDisposable
+    public class EventHubConsumer : IAsyncDisposable
     {
         /// <summary>
-        ///   The identifier of the Event Hub partition that this receiver is associated with.  Events will be read
+        ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
         /// </summary>
         ///
         public string PartitionId { get; protected set; }
 
         /// <summary>
-        ///   The name of the consumer group that this receiver is associated with.  Events will be read
+        ///   The name of the consumer group that this consumer is associated with.  Events will be read
         ///   only in the context of this group.
         /// </summary>
         ///
         public string ConsumerGroup { get; protected set; }
 
         /// <summary>
-        ///   When populated, the priority indicates that a receiver is intended to be the only reader of events for the
-        ///   requested partition and an associated consumer group.  To do so, this receiver will attempt to assert ownership
-        ///   over the partition; in the case where more than one exclusive receiver attempts to assert ownership for the same
-        ///   partition/consumer group pair, the one having a larger priority value will "win."
+        ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
+        ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
+        ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
+        ///   partition/consumer group pair, the one having a larger onwership level value will "win."
         ///
-        ///   When an exclusive receiver is used, those receivers which are not exclusive or which have a lower priority will either
+        ///   When an exclusive consumer is used, those consumers which are not exclusive or which have a lower owner level will either
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value>The priority to associated with an exclusive receiver; for a non-exclusive receiver, this value will be <c>null</c>.</value>
+        /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value will be <c>null</c>.</value>
         ///
-        public long? ExclusiveReceiverPriority { get; protected set; }
+        public long? OwnerLevel { get; protected set; }
 
         /// <summary>
-        ///   The position of the event in the partition where the receiver should begin reading.
+        ///   The position of the event in the partition where the consumer should begin reading.
         /// </summary>
         ///
         public EventPosition StartingPosition { get; protected set; }
 
         /// <summary>
-        ///   The set of event receiver options used for creation of this receiver.
+        ///   The set of consumer options used for creation of this consumer.
         /// </summary>
         ///
-        private EventReceiverOptions Options { get; }
+        private EventHubConsumerOptions Options { get; }
 
         /// <summary>
-        ///   An abstracted Event Receiver specific to the active protocol and transport intended to perform delegated operations.
+        ///   An abstracted Event Hub consumer specific to the active protocol and transport intended to perform delegated operations.
         /// </summary>
         ///
-        private TransportEventReceiver InnerReceiver { get; }
+        private TransportEventHubConsumer InnerConsumer { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubConsumer"/> class.
         /// </summary>
         ///
-        /// <param name="transportReceiver">An abstracted Event Receiver specific to the active protocol and transport intended to perform delegated operations.</param>
+        /// <param name="transportConsumer">An abstracted Event Consumer specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="receiverOptions">The set of options to use for this receiver.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="consumerOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
-        ///   If the starting event position is not specified in the <paramref name="receiverOptions"/>, the receiver will
-        ///   default to ignoring events in the partition that were queued prior to the receiver being created and read only
+        ///   If the starting event position is not specified in the <paramref name="consumerOptions"/>, the consumer will
+        ///   default to ignoring events in the partition that were queued prior to the consumer being created and read only
         ///   events which appear after that point.
         ///
-        ///   Because this is a non-public constructor, it is assumed that the <paramref name="receiverOptions" /> passed are
+        ///   Because this is a non-public constructor, it is assumed that the <paramref name="consumerOptions" /> passed are
         ///   owned by this instance and are safe from changes made by consumers.  It is considered the responsibility of the
         ///   caller to ensure that any needed cloning of options is performed.
         /// </remarks>
         ///
-        internal EventReceiver(TransportEventReceiver transportReceiver,
+        internal EventHubConsumer(TransportEventHubConsumer transportConsumer,
                                string eventHubPath,
                                string partitionId,
-                               EventReceiverOptions receiverOptions)
+                               EventPosition eventPosition,
+                               EventHubConsumerOptions consumerOptions)
         {
-            Guard.ArgumentNotNull(nameof(transportReceiver), transportReceiver);
+            Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
-            Guard.ArgumentNotNull(nameof(receiverOptions), receiverOptions);
+            Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
+            Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
 
             PartitionId = partitionId;
-            StartingPosition = receiverOptions.BeginReceivingAt;
-            ExclusiveReceiverPriority = receiverOptions.ExclusiveReceiverPriority;
-            ConsumerGroup = receiverOptions.ConsumerGroup;
-            Options = receiverOptions;
-            InnerReceiver = transportReceiver;
+            StartingPosition = eventPosition;
+            OwnerLevel = consumerOptions.OwnerLevel;
+            ConsumerGroup = consumerOptions.ConsumerGroup;
+            Options = consumerOptions;
+            InnerConsumer = transportConsumer;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubConsumer"/> class.
         /// </summary>
         ///
-        protected EventReceiver()
+        protected EventHubConsumer()
         {
         }
 
@@ -121,10 +124,10 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the receiver was created will be used.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this receiver is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public virtual Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
                                                                  TimeSpan? maximumWaitTime = default,
@@ -135,21 +138,21 @@ namespace Azure.Messaging.EventHubs
             Guard.ArgumentInRange(nameof(maximumMessageCount), maximumMessageCount, 1, Int32.MaxValue);
             Guard.ArgumentNotNegative(nameof(maximumWaitTime), maximumWaitTime.Value);
 
-            return InnerReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
+            return InnerConsumer.ReceiveAsync(maximumMessageCount, maximumWaitTime.Value, cancellationToken);
         }
 
         /// <summary>
-        ///   Closes the receiver.
+        ///   Closes the consumer.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerReceiver.CloseAsync(cancellationToken);
+        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerConsumer.CloseAsync(cancellationToken);
 
         /// <summary>
-        ///   Closes the receiver.
+        ///   Closes the consumer.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
