@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v2.0/models/celebrities/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/satya.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "168"
+        ]
+      },
+      "ResponseHeaders": {
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Mon, 30 Jul 2018 21:58:51 GMT"
+        ],
+        "apim-request-id": [
+          "d7896618-6c8f-49f1-891f-6ece203fcf18"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"faceRectangle\": {\r\n          \"top\": 50,\r\n          \"left\": 211,\r\n          \"width\": 55,\r\n          \"height\": 55\r\n        },\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.99132126569747925\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"d7896618-6c8f-49f1-891f-6ece203fcf18\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.Test
                 var response = await share.CreateAsync(quotaInBytes: 1);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
             finally
             {
@@ -136,7 +136,7 @@ namespace Azure.Storage.Files.Test
             {
                 var result = await share.CreateAsync(quotaInBytes: 1);
 
-                Assert.AreNotEqual(default, result.Raw.Headers.RequestId, $"{nameof(result)} may not be populated");
+                Assert.AreNotEqual(default, result.GetRawResponse().Headers.RequestId, $"{nameof(result)} may not be populated");
             }
             finally
             {
@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.Test
                 var reponse = await share.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(reponse.Raw.Headers.RequestId);
+                Assert.IsNotNull(reponse.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Storage.Files.Test
                 var response = await share.SetAccessPolicyAsync(signedIdentifiers);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 

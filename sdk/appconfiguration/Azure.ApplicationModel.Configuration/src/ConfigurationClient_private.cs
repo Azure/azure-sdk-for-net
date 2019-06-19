@@ -118,7 +118,7 @@ namespace Azure.ApplicationModel.Configuration
             return resp;
         }
 
-        internal void BuildBatchQuery(HttpPipelineUriBuilder builder, SettingSelector selector)
+        internal void BuildBatchQuery(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
         {
             if (selector.Keys.Count > 0)
             {
@@ -162,42 +162,31 @@ namespace Azure.ApplicationModel.Configuration
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
-            if (!string.IsNullOrEmpty(selector.BatchLink))
+            if (!string.IsNullOrEmpty(pageLink))
             {
-                builder.AppendQuery("after", selector.BatchLink);
+                builder.AppendQuery("after", pageLink);
             }
         }
 
-        void BuildUriForGetBatch(HttpPipelineUriBuilder builder, SettingSelector selector)
+        void BuildUriForGetBatch(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(KvRoute);
-            BuildBatchQuery(builder, selector);
+            BuildBatchQuery(builder, selector, pageLink);
         }
 
-        void BuildUriForRevisions(HttpPipelineUriBuilder builder, SettingSelector selector)
+        void BuildUriForRevisions(HttpPipelineUriBuilder builder, SettingSelector selector, string pageLink)
         {
             builder.Uri = _baseUri;
             builder.AppendPath(RevisionsRoute);
-            BuildBatchQuery(builder, selector);
+            BuildBatchQuery(builder, selector, pageLink);
         }
 
         static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
         {
-            ReadOnlyMemory<byte> content = default;
-            int size = 256;
-            while (true)
-            {
-                byte[] buffer = new byte[size];
-                if (ConfigurationServiceSerializer.TrySerialize(setting, buffer, out int written))
-                {
-                    content = buffer.AsMemory(0, written);
-                    break;
-                }
-                size *= 2;
-            }
-
-            return content;
+            var writer = new ArrayBufferWriter<byte>();
+            ConfigurationServiceSerializer.Serialize(setting, writer);
+            return writer.WrittenMemory;
         }
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]

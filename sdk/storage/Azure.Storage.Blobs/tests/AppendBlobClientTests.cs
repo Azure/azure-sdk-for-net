@@ -88,7 +88,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
                 var listResponse = await container.ListBlobsFlatSegmentAsync();
                 Assert.AreEqual(1, listResponse.Value.BlobItems.Count());
@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.CreateAsync(accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.Raw.Headers.RequestId);
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.Storage.Blobs.Test
                         transactionalContentHash: MD5.Create().ComputeHash(data));
 
                     // Assert
-                    Assert.IsNotNull(response.Raw.Headers.RequestId);
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }
@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs.Test
                         accessConditions: accessConditions);
 
                     // Assert
-                    Assert.IsNotNull(response.Raw.Headers.RequestId);
+                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
                 }
             }
         }

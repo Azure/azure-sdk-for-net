@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -12,9 +16,9 @@ namespace Azure.Security.KeyVault.Secrets
 
         public string RecoveryId { get; private set; }
 
-        public DateTime? DeletedDate { get; private set; }
+        public DateTimeOffset? DeletedDate { get; private set; }
 
-        public DateTime? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
@@ -27,12 +31,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (DeletedDate.HasValue)
             {
-                json.WriteNumber("deletedDate", new DateTimeOffset(DeletedDate.Value).ToUnixTimeMilliseconds());
+                json.WriteNumber("deletedDate", DeletedDate.Value.ToUnixTimeMilliseconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber("scheduledPurgeDate", new DateTimeOffset(ScheduledPurgeDate.Value).ToUnixTimeMilliseconds());
+                json.WriteNumber("scheduledPurgeDate", ScheduledPurgeDate.Value.ToUnixTimeMilliseconds());
             }
         }
 
@@ -47,12 +51,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (json.TryGetProperty("deletedDate", out JsonElement deletedDate))
             {
-                DeletedDate = DateTimeOffset.FromUnixTimeMilliseconds(deletedDate.GetInt64()).UtcDateTime;
+                DeletedDate = DateTimeOffset.FromUnixTimeMilliseconds(deletedDate.GetInt64());
             }
 
             if (json.TryGetProperty("scheduledPurgeDate", out JsonElement scheduledPurgeDate))
             {
-                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(scheduledPurgeDate.GetInt64()).UtcDateTime;
+                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(scheduledPurgeDate.GetInt64());
             }
 
 

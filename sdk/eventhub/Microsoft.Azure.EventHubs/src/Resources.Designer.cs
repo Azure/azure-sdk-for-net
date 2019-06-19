@@ -12,7 +12,6 @@ namespace Microsoft.Azure.EventHubs {
     using System;
     using System.Reflection;
 
-
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -98,6 +97,15 @@ namespace Microsoft.Azure.EventHubs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request..
+        /// </summary>
+        internal static string AuthKeyShouldBeAlone {
+            get {
+                return ResourceManager.GetString("AuthKeyShouldBeAlone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sending empty {0} is not a valid operation..
         /// </summary>
         internal static string CannotSendAnEmptyEvent {
@@ -175,15 +183,6 @@ namespace Microsoft.Azure.EventHubs {
         internal static string ReceiverIdentifierOverMaxValue {
             get {
                 return ResourceManager.GetString("ReceiverIdentifierOverMaxValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} cannot be specified along with {1}. {0} alone should be sufficient to Authenticate the request..
-        /// </summary>
-        internal static string SasTokenShouldBeAlone {
-            get {
-                return ResourceManager.GetString("SasTokenShouldBeAlone", resourceCulture);
             }
         }
         

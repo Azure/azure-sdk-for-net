@@ -1,0 +1,71 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Thu, 14 Jun 2018 14:53:22 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14997",
+        "x-ms-request-id": "19efe790-074f-4241-ae94-0422935d0f46",
+        "x-ms-correlation-request-id": "19efe790-074f-4241-ae94-0422935d0f46"
+      },
+      "body": {
+        "name": "exampleIntegrationRuntime",
+        "properties": {
+          "state": "Online",
+          "type": "SelfHosted",
+          "typeProperties": {
+            "autoUpdate": "Off",
+            "taskQueueId": "1a6296ab-423c-4346-9bcc-85a78c2c0582",
+            "version": "3.8.6730.2",
+            "nodes": [
+              {
+                "nodeName": "Node_1",
+                "machineName": "YANZHANG-DT",
+                "hostServiceUri": "https://yanzhang-dt.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+                "status": "Online",
+                "capabilities": {
+                  "serviceBusConnected": "True",
+                  "httpsPortEnabled": "True",
+                  "credentialInSync": "True",
+                  "connectedToResourceManager": "True",
+                  "nodeEnabled": "True"
+                },
+                "versionStatus": "UpToDate",
+                "version": "3.8.6730.2",
+                "registerTime": "2018-06-14T14:51:44.9237069Z",
+                "lastConnectTime": "2018-06-14T14:52:59.8933313Z",
+                "lastStartTime": "2018-06-14T14:52:59.8933313Z",
+                "lastUpdateResult": "None",
+                "isActiveDispatcher": true,
+                "maxConcurrentJobs": 56
+              }
+            ],
+            "updateDelayOffset": "PT3H",
+            "localTimeZoneOffset": "PT8H",
+            "serviceUrls": [
+              "wu.frontend.int.clouddatahub-int.net",
+              "*.servicebus.windows.net"
+            ],
+            "versionStatus": "UpToDate",
+            "capabilities": {
+              "serviceBusConnected": "True",
+              "httpsPortEnabled": "True",
+              "credentialInSync": "True",
+              "connectedToResourceManager": "True",
+              "nodeEnabled": "True"
+            },
+            "latestVersion": "3.7.6711.1",
+            "createTime": "2018-06-14T09:17:45.1839685Z"
+          }
+        }
+      }
+    }
+  }
+}

@@ -13,13 +13,13 @@ namespace Azure.Core.Tests
 {
     public class ExponentialPolicyTest: RetryPolicyTestBase
     {
-        public ExponentialPolicyTest(bool isAsync) : base(isAsync) { }
+        public ExponentialPolicyTest(bool isAsync) : base(RetryMode.Exponential, isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
+            var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public async Task WaitsSameAmountEveryTime()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new ExponentialRetryPolicyMock(maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
+            var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
@@ -61,7 +61,7 @@ namespace Azure.Core.Tests
         public async Task RespectsMaxDelay()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new ExponentialRetryPolicyMock(maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
+            var policy = new RetryPolicyMock(RetryMode.Exponential, maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 5, 5, 5 };
@@ -87,7 +87,7 @@ namespace Azure.Core.Tests
         public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
+            var policy = new RetryPolicyMock(RetryMode.Exponential, delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -110,34 +110,6 @@ namespace Azure.Core.Tests
         {
             // Expect maximum 25% variance
             Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.25, "Expected {0} to be around {1}", actual, expected);
-        }
-
-        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
-        {
-            var policy = new ExponentialRetryPolicyMock(maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
-            return (policy, policy.DelayGate);
-        }
-
-        private class ExponentialRetryPolicyMock: ExponentialRetryPolicy
-        {
-            public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
-
-            public ExponentialRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
-            {
-                MaxRetries = maxRetries;
-                Delay = delay;
-                MaxDelay = maxDelay;
-            }
-
-            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
-            {
-                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
-            }
-
-            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-            {
-                return DelayGate.WaitForRelease(time);
-            }
         }
     }
 }

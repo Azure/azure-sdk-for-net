@@ -13,18 +13,18 @@ namespace Azure.Core.Pipeline.Policies
         {
         }
 
-        public static HttpPipelinePolicy Singleton { get; set; } = new BufferResponsePolicy();
+        public static HttpPipelinePolicy Shared { get; set; } = new BufferResponsePolicy();
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessNextAsync(pipeline, message);
+            await ProcessNextAsync(message, pipeline);
             await BufferResponse(message, true);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessNext(pipeline, message);
-            BufferResponse(message, false).GetAwaiter().GetResult();
+            ProcessNext(message, pipeline);
+            BufferResponse(message, false).EnsureCompleted();
         }
 
         private static async Task BufferResponse(HttpPipelineMessage message, bool async)
@@ -41,6 +41,7 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     responseContentStream.CopyTo(bufferedStream);
                 }
+                responseContentStream.Dispose();
                 bufferedStream.Position = 0;
                 message.Response.ContentStream = bufferedStream;
             }

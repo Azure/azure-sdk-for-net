@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Sql.Tests.EncryptionProtectorScenarioTests.TestUpdateEncryptionProtector" /><Add Test="Sql.Tests.ServerKeyScenarioTests.TestCreateUpdateDropServerKey" /></Playlist>

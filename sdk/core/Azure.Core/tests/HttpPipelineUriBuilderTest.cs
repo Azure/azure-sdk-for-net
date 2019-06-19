@@ -175,5 +175,18 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("http://localhost/a", uriBuilder.Uri.ToString());
         }
+
+        [Test]
+        public void AppendingPathAfterQueryAndSettingTheUriWorks()
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Uri = new Uri("http://localhost/");
+            uriBuilder.AppendQuery("query", "value");
+            uriBuilder.AppendPath("a");
+            uriBuilder.AppendPath("b");
+            uriBuilder.AppendQuery("c", "d");
+
+            Assert.AreEqual("http://localhost/ab?query=value&c=d", uriBuilder.Uri.ToString());
+        }
     }
 }

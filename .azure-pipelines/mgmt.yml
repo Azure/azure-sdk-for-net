@@ -6,32 +6,37 @@ pr:
     - BuildToolsForSdk
 
 variables:
-  DotNetCoreVersion: '2.1.503'
+  DotNetCoreVersion: '2.2.202'
+  #DotNetCoreVersion: '2.1.503'
 
 jobs:
   - job: Windows_Build
     pool:
       vmImage: 'VS2017-Win2016'
     variables:
-      IgnoreBuildTokens: 'Microsoft.Rest.ClientRuntime.Tracing.Tests Microsoft.Azure.Services.AppAuthentication.IntegrationTests KeyVault\dataPlane LocationBasedServices Az.Auth.Tests BotService.Tests Search Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests Batch\Support\FileConventions AzureBatchFileConventions.IntegrationTests Batch\DataPlane\Azure.Batch.Unit.Tests Batch\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests ContainerService\ContainerService.Tests Consumption\Consumption.Tests Billing\Billing.Tests ApplicationInsights\Management\ApplicationInsights.Tests Batch\Management\Management.Batch.Tests SecurityCenter\SecurityCenter.Tests AzureStack\Admin\FabricAdmin\Fabric.Admin.Tests IotHub\IotHub.Tests Monitor\Monitor.Tests Compute\Compute.Tests Reservations\Reservations.Tests NetApp\NetApp.Tests ContainerRegistry\ContainerRegistry.Tests OperationalInsights\Management\OperationalInsights.Test Subscription\Subscription.Tests'  
-      LoggingArgs: '/flp:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp1:warningsonly;logfile=msbuild.wrn /flp2:errorsonly;logfile=msbuild.err'
+      IgnoreBuildTokens: 'Microsoft.Rest.ClientRuntime.Tracing.Tests Microsoft.Azure.Services.AppAuthentication.IntegrationTests KeyVault\dataPlane LocationBasedServices Az.Auth.Tests Search Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests Batch\Support\FileConventions AzureBatchFileConventions.IntegrationTests Batch\DataPlane\Azure.Batch.Unit.Tests Batch\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests ContainerService\ContainerService.Tests Consumption\Consumption.Tests Billing\Billing.Tests ApplicationInsights\Management\ApplicationInsights.Tests Batch\Management\Management.Batch.Tests SecurityCenter\SecurityCenter.Tests AzureStack\Admin\FabricAdmin\Fabric.Admin.Tests IotHub\IotHub.Tests Monitor\Monitor.Tests Compute\Compute.Tests Reservations\Reservations.Tests NetApp\NetApp.Tests ContainerRegistry\ContainerRegistry.Tests OperationalInsights\Management\OperationalInsights.Test Subscription\Subscription.Tests WebSites\WebSites.Tests DataLake.Store EventGrid.Tests StorageSync.Tests ServiceFabric\ServiceFabric.Test AppAuthentication\Azure.Services.AppAuthentication.Unit.Tests Graph.RBAC\Graph.RBAC.Tests'
+      LoggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=msbuild.normal;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp2:warningsonly;logfile=msbuild.wrn /flp3:errorsonly;logfile=msbuild.err'
 
     steps:
-      - task: CmdLine@1
-        inputs:
-          filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
-          arguments: -Vr *,31bf3856ad364e35
+      # - task: CmdLine@1
+      #   inputs:
+      #     filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
+      #     arguments: -Vr *,31bf3856ad364e35
+      #   displayName: 'Disable strong name verification'
+
       - task: MSBuild@1
         inputs:
           solution: build.proj
+        displayName: 'Install build tools'
       - task: MSBuild@1
         inputs:
           solution: build.proj
-          msbuildArguments: /t:RunTests /clp:ShowTimestamp $(LoggingArgs) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+          msbuildArguments: /t:RunTests $(LoggingArgs)
+        displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
-          testResultsFiles: '**/*.trx'
+          testResultsFiles: 'TestResults/**/*.trx'
           testRunTitle: 'Windows Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
@@ -41,16 +46,17 @@ jobs:
       vmImage: 'ubuntu-16.04'
   
     steps:
-        - task: DotNetCoreInstaller@0
-          displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
-          inputs:
-            version: '$(DotNetCoreVersion)'
-        - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
-          displayName: 'Build and test on Non-windows machine'
-        - task: PublishTestResults@2
-          condition: succeededOrFailed()
-          inputs:
-            testResultsFiles: '**/*.trx'
-            testRunTitle: 'Ubuntu Test Results'
-            testResultsFormat: 'VSTest'
-            mergeTestResults: true
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+        inputs:
+          version: '$(DotNetCoreVersion)'
+          
+      - script: dotnet msbuild build.proj /t:RunTests $(LoggingArgs)
+        displayName: 'Ubuntu Build and Run tests'
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/*.trx'
+          testRunTitle: 'Ubuntu Test Results'
+          testResultsFormat: 'VSTest'
+          mergeTestResults: true

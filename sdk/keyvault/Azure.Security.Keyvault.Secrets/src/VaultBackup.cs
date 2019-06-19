@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -17,11 +21,6 @@ namespace Azure.Security.KeyVault.Secrets
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
             json.WriteString("value", Base64Url.Encode(Value));
-        }
-
-        protected override byte[] CreateSerializationBuffer()
-        {
-            return Value != null ? new byte[Value.Length * 2] : base.CreateSerializationBuffer();
         }
     }
 }
