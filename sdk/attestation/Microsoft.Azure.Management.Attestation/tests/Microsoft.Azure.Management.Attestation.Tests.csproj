@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Attestation.csproj" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.3-preview" /> 
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" /> 
   </ItemGroup>
 
 
@@ -22,5 +22,8 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\Attestation.Tests.ScenarioTests.AttestationOperationsTests\" />
   </ItemGroup>
 </Project>
