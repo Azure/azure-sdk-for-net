@@ -43,15 +43,15 @@ namespace Azure.Messaging.EventHubs
         ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
         ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
-        ///   partition/consumer group pair, the one having a larger priority value will "win."
+        ///   partition/consumer group pair, the one having a larger onwership level value will "win."
         ///
-        ///   When an exclusive consumer is used, those consumers which are not exclusive or which have a lower priority will either
+        ///   When an exclusive consumer is used, those consumers which are not exclusive or which have a lower owner level will either
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
         /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value will be <c>null</c>.</value>
         ///
-        public long? ExclusiveConsumerPriority { get; protected set; }
+        public long? OwnerLevel { get; protected set; }
 
         /// <summary>
         ///   The position of the event in the partition where the consumer should begin reading.
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs
 
             PartitionId = partitionId;
             StartingPosition = eventPosition;
-            ExclusiveConsumerPriority = consumerOptions.ExclusiveConsumerPriority;
+            OwnerLevel = consumerOptions.OwnerLevel;
             ConsumerGroup = consumerOptions.ConsumerGroup;
             Options = consumerOptions;
             InnerConsumer = transportConsumer;

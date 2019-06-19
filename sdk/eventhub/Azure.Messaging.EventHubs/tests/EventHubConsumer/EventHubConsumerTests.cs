@@ -99,13 +99,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConsumerOptions
             {
-                ExclusiveConsumerPriority = priority
+                OwnerLevel = priority
             };
 
             var transportConsumer = new ObservableTransportConsumerMock();
             var consumer = new EventHubConsumer(transportConsumer, "dummy", "0", EventPosition.FromOffset(65), options);
 
-            Assert.That(consumer.ExclusiveConsumerPriority, Is.EqualTo(priority));
+            Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
         }
 
         /// <summary>
