@@ -473,17 +473,18 @@ namespace Azure.Messaging.EventHubs.Tests
             try
             {
                 var partitionId = "32234";
+                var consumerGroup = "AGroup";
                 var eventPosition = EventPosition.FromOffset(34);
-                var consumerOptions = new EventHubConsumerOptions { ConsumerGroup = "Test" };
+                var consumerOptions = new EventHubConsumerOptions { Identifier = "Test" };
 
                 // Because the consumer is lazily instantiated, an operation needs to be requested to force creation.  Because we are returning a null
                 // consumer from within the mock client, that operation will fail with a null reference exception.
 
-                Assert.That(async () => await client.CreateConsumer(partitionId, eventPosition, consumerOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
+                Assert.That(async () => await client.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions).ReceiveAsync(10), Throws.InstanceOf<NullReferenceException>(), "because the PartitionReceiver was not populated.");
 
                 (var calledConsumerGroup, var calledPartition, var calledPosition, var calledPriority, var calledOptions) = mock.CreateReiverInvokedWith;
 
-                Assert.That(calledConsumerGroup, Is.EqualTo(consumerOptions.ConsumerGroup), "The consumer group should match.");
+                Assert.That(calledConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should match.");
                 Assert.That(calledPartition, Is.EqualTo(partitionId), "The partition should match.");
                 Assert.That(calledPosition.Offset, Is.EqualTo(eventPosition.Offset), "The event position offset should match.");
                 Assert.That(calledOptions.Identifier, Is.EqualTo(consumerOptions.Identifier), "The options should match.");

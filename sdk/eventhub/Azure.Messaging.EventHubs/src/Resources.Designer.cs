@@ -89,6 +89,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be empty or white space, though it may be null.
+        /// </summary>
+        internal static string ArgumentEmptyOrWhiteSpace
+        {
+            get
+            {
+                return ResourceManager.GetString("ArgumentEmptyOrWhiteSpace", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; cannot exceed {1} characters..
         /// </summary>
         internal static string ArgumentStringTooLong
