@@ -17,7 +17,7 @@ namespace Azure.Identity.Tests.Mock
         [Test]
         public void VerifyCtorErrorHandling()
         {
-            var clientCertificate = new X509Certificate2(@"./Data/mockcert.pfx");
+            var clientCertificate = new X509Certificate2(@"./Data/cert.pfx", "password");
 
             var tenantId = Guid.NewGuid().ToString();
 
@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests.Mock
 
             var expectedClientId = Guid.NewGuid().ToString();
 
-            var mockCert = new X509Certificate2("./Data/mockcert.pfx");
+            var mockCert = new X509Certificate2("./Data/cert.pfx", "password");
 
             var credential = new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options: options);
 
