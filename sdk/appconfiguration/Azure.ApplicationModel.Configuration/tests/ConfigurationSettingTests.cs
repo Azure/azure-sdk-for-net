@@ -36,7 +36,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.Uri.AbsoluteUri);
 
@@ -54,7 +54,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.Uri.AbsoluteUri);
         }
@@ -70,7 +70,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual("http://localhost/?key=*&label=%00", builder.Uri.AbsoluteUri);
         }
@@ -85,7 +85,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual($"http://localhost/?key={key}", builder.Uri.AbsoluteUri);
         }
@@ -100,7 +100,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.Uri.AbsoluteUri);
         }
@@ -117,7 +117,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.Uri.AbsoluteUri);
         }
@@ -134,7 +134,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var builder = new HttpPipelineUriBuilder();
             builder.Uri = new Uri("http://localhost/");
-            service.BuildBatchQuery(builder, selector, null);
+            service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual($"http://localhost/?key=key", builder.Uri.AbsoluteUri);
         }
@@ -163,6 +163,39 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
             Assert.AreNotEqual(s_testSetting, testSettingDiffTags);
+        }
+
+        private bool SettingSelectoComparissonr(SettingSelector actual, SettingSelector other)
+        {
+            if (actual != null && other == null) return false;
+            if (!actual.Keys.SequenceEqual(other.Keys)) return false;
+            if (!actual.Labels.SequenceEqual(other.Labels)) return false;
+            if (!actual.Fields.Equals(other.Fields)) return false;
+            if (actual.AsOf != other.AsOf) return false;
+
+            return true;
+        }
+
+        [Test]
+        public void SettingSelectorCloneWithBatchLink()
+        {
+            SettingSelector selector = new SettingSelector()
+            {
+                Keys = new List<string> { "key1", "key2", "key3" },
+                Labels = { "label1" },
+                Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value,
+                AsOf = DateTimeOffset.Now
+            };
+
+            var selectorWithLink = selector.CloneWithBatchLink("someLink");
+
+            Assert.IsTrue(SettingSelectoComparissonr(selector, selectorWithLink));
+
+            selector.Keys.Add("Key4");
+            selector.Labels.Add("Label2");
+            selector.Fields = SettingFields.All;
+
+            Assert.IsFalse(SettingSelectoComparissonr(selector, selectorWithLink));
         }
     }
 }

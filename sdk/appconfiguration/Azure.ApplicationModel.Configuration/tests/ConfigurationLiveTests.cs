@@ -12,25 +12,19 @@ using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-    public class ConfigurationLiveTests: RecordedTestBase
+    [Category("Live")]
+    public class ConfigurationLiveTests: ClientTestBase
     {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
-        }
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync) { }
 
         private string GenerateKeyId(string prefix = null)
         {
-            return prefix + Recording.GenerateId();
+            return prefix + Guid.NewGuid().ToString("N");
         }
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(
-                new ConfigurationClient(
-                    Recording.GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
-                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+            return InstrumentClient(TestEnvironment.GetClient());
         }
 
         private ConfigurationSetting CreateSetting()
@@ -262,7 +256,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(testSetting);
-                response.GetRawResponse().Headers.TryGetValue("x-ms-client-request-id", out string requestId);
+                response.Raw.Headers.TryGetValue("x-ms-client-request-id", out string requestId);
                 Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }
@@ -501,16 +495,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRevisions()
         {
-            // The service keeps revision history even after the key was removed
-            // Avoid reusing ids
-            Recording.DisableIdReuse();
-
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             //Prepare environment
             ConfigurationSetting setting = testSetting;
-
             setting.Key = GenerateKeyId("key-");
             var testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";
@@ -524,17 +513,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test
                 var selector = new SettingSelector(setting.Key);
                 selector.AsOf = DateTimeOffset.MaxValue;
+                SettingBatch batch = await service.GetRevisionsAsync(selector, CancellationToken.None);
 
                 int resultsReturned = 0;
-                await foreach (var value in service.GetRevisionsAsync(selector, CancellationToken.None))
+                for (int i = 0; i < batch.Count; i++)
                 {
-                    if (value.Value.Label.Contains("update"))
+                    var value = batch[i];
+                    if (value.Label.Contains("update"))
                     {
-                        Assert.AreEqual(value.Value, testSettingUpdate);
+                        Assert.AreEqual(value, testSettingUpdate);
                     }
                     else
                     {
-                        Assert.AreEqual(value.Value, setting);
+                        Assert.AreEqual(value, setting);
                     }
                     resultsReturned++;
                 }
@@ -641,13 +632,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             int resultsReturned = 0;
             SettingSelector selector = new SettingSelector(key);
-
-            await foreach (ConfigurationSetting item in service.GetSettingsAsync(selector, CancellationToken.None))
+            while (true)
             {
-                Assert.AreEqual("test_value", item.Value);
-                resultsReturned ++;
-            }
+                using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
+                {
+                    SettingBatch batch = response.Value;
+                    resultsReturned += batch.Count;
+                    var nextBatch = batch.NextBatch;
 
+                    if (nextBatch == null) break;
+
+                    selector = nextBatch;
+                }
+            }
             Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
@@ -666,8 +663,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.AreEqual("*", selector.Keys.First());
                 Assert.AreEqual("*", selector.Labels.First());
 
-                var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .Count();
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
+                int resultsReturned = batch.Count;
 
                 //At least there should be one key available
                 Assert.GreaterOrEqual(resultsReturned, 1);
@@ -689,12 +686,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key, testSetting.Label);
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
 
-                Assert.AreEqual(1, batch.Length);
-                Assert.AreEqual(testSetting.Key, batch[0].Value.Key);
-                Assert.AreEqual(testSetting.Label, batch[0].Value.Label);
+                Assert.AreEqual(1, batch.Count);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -713,11 +709,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key);
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
 
-                Assert.AreEqual(1, batch.Length);
-                Assert.AreEqual(testSetting.Key, batch[0].Value.Key);
+                Assert.AreEqual(1, batch.Count);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
             }
             finally
             {
@@ -739,12 +734,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 Assert.AreEqual("*", selector.Keys.First());
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
+                int resultsReturned = batch.Count;
 
                 //At least there should be one key available
-                Assert.GreaterOrEqual(batch.Length, 1);
-                Assert.AreEqual(testSetting.Label, batch[0].Value.Label);
+                Assert.GreaterOrEqual(resultsReturned, 1);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -767,18 +762,18 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
+                int resultsReturned = batch.Count;
 
-                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(1, resultsReturned);
 
-                Assert.IsNotNull(batch[0].Value.Key);
-                Assert.IsNotNull(batch[0].Value.Label);
-                Assert.IsNotNull(batch[0].Value.ETag);
-                Assert.IsNull(batch[0].Value.Value);
-                Assert.IsNull(batch[0].Value.ContentType);
-                Assert.IsNull(batch[0].Value.LastModified);
-                Assert.IsNull(batch[0].Value.Locked);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.IsNull(batch[0].Locked);
             }
             finally
             {
@@ -799,19 +794,17 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 {
                     Fields = SettingFields.All
                 };
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
 
-                Response<ConfigurationSetting>[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .ToArray();
+                Assert.AreEqual(1, batch.Count);
 
-                Assert.AreEqual(1, batch.Length);
-
-                Assert.IsNotNull(batch[0].Value.Key);
-                Assert.IsNotNull(batch[0].Value.Label);
-                Assert.IsNotNull(batch[0].Value.Value);
-                Assert.IsNotNull(batch[0].Value.ContentType);
-                Assert.IsNotNull(batch[0].Value.ETag);
-                Assert.IsNotNull(batch[0].Value.LastModified);
-                Assert.IsNotNull(batch[0].Value.Locked);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].Locked);
             }
             finally
             {

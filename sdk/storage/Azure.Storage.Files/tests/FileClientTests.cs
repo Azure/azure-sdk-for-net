@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.Test
                 var response = await file.CreateAsync(maxSize: Constants.MB);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Storage.Files.Test
                 var response = await file.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Test
                 var response = await sasFile.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.Test
                 var response = await sasFile.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -357,7 +357,7 @@ namespace Azure.Storage.Files.Test
                 var response = await dest.StartCopyAsync(source.Uri);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -609,7 +609,7 @@ namespace Azure.Storage.Files.Test
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -673,9 +673,9 @@ namespace Azure.Storage.Files.Test
                         progressHandler: progressHandler);
 
                     Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.GetRawResponse().Headers.Date);
-                    Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
-                    result.GetRawResponse().Headers.TryGetValue("x-ms-version", out var version);
+                    Assert.IsNotNull(result.Raw.Headers.Date);
+                    Assert.IsNotNull(result.Raw.Headers.RequestId);
+                    result.Raw.Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
 
                     await Task.Delay(1000); // wait 1s to allow lingering progress events to execute

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code above this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.Media</PackageId>
+        <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
+        <Version>2.0.2</Version>
+        <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
+        <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
+        <PackageReleaseNotes>
+            <![CDATA[
+        Updates to the V3 API include:
+        
+        * The StreamingLocator added a property named filters. This property property is a list of Account or Asset filter names to apply to the StreamingLocator. 
+        * The enums for FaceDectectorPreset and ContentAwareEncodingExperimental have been added to the encoding presets.
+            ]]>
+    </PackageReleaseNotes>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    </PropertyGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

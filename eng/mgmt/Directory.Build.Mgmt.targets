@@ -1,8 +1,0 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- <Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.targets" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.targets') "/>
-  <Import Project="$(LibraryToolsFolder)\bootstrapTools\bootstrap.targets" /> -->
-
-  <Target Name="initt">
-    <Message Text="Init target called" />
-  </Target>
-</Project>

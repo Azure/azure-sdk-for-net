@@ -40,7 +40,7 @@ namespace Azure.Storage
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             this.AddAuthorizationHeader(message);
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.Storage
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             this.AddAuthorizationHeader(message);
-            ProcessNext(message, pipeline);
+            ProcessNext(pipeline, message);
         }
 
         private void AddAuthorizationHeader(HttpPipelineMessage message, bool includeXmsDate = true)

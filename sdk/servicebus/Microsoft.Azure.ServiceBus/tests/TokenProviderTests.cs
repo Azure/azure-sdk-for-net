@@ -7,10 +7,43 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Primitives;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Xunit;
 
     public class TokenProviderTests : SenderReceiverClientTestBase
     {
+        #pragma warning disable xUnit1013
+        /// <remarks>
+        ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment
+        ///   the [Fact] attribute before running.
+        /// </remarks>
+        //[Fact]
+        [DisplayTestMethodName]
+        public async Task UseITokenProviderWithAad()
+        {
+            var tenantId = "";
+            var aadAppId = "";
+            var aadAppSecret = "";
+
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                TestUtility.Log($"Skipping test during scheduled runs.");
+                return;
+            }
+
+            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+            var cc = new ClientCredential(aadAppId, aadAppSecret);
+            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, cc);
+
+            // Create new client with updated connection string.
+            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+            var queueClient = new QueueClient(csb.Endpoint, csb.EntityPath, tokenProvider);
+
+            // Send and receive messages.
+            await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
+        }
+        #pragma warning restore xUnit1013
+
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
@@ -28,32 +61,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
                 }
                 finally
                 {
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync();
                 }
             });
-        }
-
-        [Fact]
-        public async Task AzureActiveDirectoryTokenProviderAuthCallbackTest()
-        {
-            string TestToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
-            string ServiceBusAudience = "https://servicebus.azure.net";
-
-            var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
-                (audience, authority, state) =>
-                {
-                    Assert.Equal(ServiceBusAudience, audience);
-                    return Task.FromResult(TestToken);
-                },
-                null);
-
-            var token = await aadTokenProvider.GetTokenAsync(ServiceBusAudience, TimeSpan.FromSeconds(60));
-            Assert.Equal(TestToken, token.TokenValue);
-            Assert.Equal(typeof(JsonSecurityToken), token.GetType());
         }
     }
 }

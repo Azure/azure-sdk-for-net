@@ -11,10 +11,29 @@ namespace Azure.Core.Testing
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
+    public class SyncAsyncPolicyTestBase
     {
-        public SyncAsyncPolicyTestBase(bool isAsync) : base(isAsync)
+        public bool IsAsync { get; }
+
+        public SyncAsyncPolicyTestBase(bool isAsync)
         {
+            IsAsync = isAsync;
+        }
+
+        protected MockTransport CreateMockTransport()
+        {
+            return new MockTransport()
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+        }
+
+        protected MockTransport CreateMockTransport(params MockResponse[] responses)
+        {
+            return new MockTransport(responses)
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
         }
 
         protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
@@ -26,7 +45,7 @@ namespace Azure.Core.Testing
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest())
+            using (Request request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");

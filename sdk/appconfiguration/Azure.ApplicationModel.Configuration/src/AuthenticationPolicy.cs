@@ -25,7 +25,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             await ProcessAsync(message, async: true);
 
-            await ProcessNextAsync(message, pipeline);
+            await ProcessNextAsync(pipeline, message);
         }
 
         private async Task ProcessAsync(HttpPipelineMessage message, bool async)
@@ -41,11 +41,11 @@ namespace Azure.ApplicationModel.Configuration
                     {
                         if (async)
                         {
-                            await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken);
+                            await message.Request.Content.WriteToAsync(contentHashStream, message.Cancellation);
                         }
                         else
                         {
-                            message.Request.Content.WriteTo(contentHashStream, message.CancellationToken);
+                            message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
                         }
                     }
                 }
@@ -77,7 +77,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             ProcessAsync(message, async: false).GetAwaiter().GetResult();
 
-            ProcessNext(message, pipeline);
+            ProcessNext(pipeline, message);
         }
     }
 }

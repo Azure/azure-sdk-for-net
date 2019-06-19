@@ -73,7 +73,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
 
             // Create new client with updated connection string.
-            var ehClient = EventHubClient.CreateWithTokenProvider(csb.Endpoint, csb.EntityPath, tokenProvider);
+            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, tokenProvider);
 
             // Send one event
             TestUtility.Log($"Sending one message.");
@@ -109,28 +109,28 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         /// <summary>
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
-        [Fact(Skip = "Manual run only")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task UseITokenProviderWithAad()
         {
+            var tenantId = "";
             var aadAppId = "";
             var aadAppSecret = "";
 
-            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback = 
-                async (audience, authority, state) =>
-                {
-                    var authContext = new AuthenticationContext(authority);
-                    var cc = new ClientCredential(aadAppId, aadAppSecret);
-                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
-                    return authResult.AccessToken;
-                };
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                TestUtility.Log($"Skipping test during scheduled runs.");
+                return;
+            }
 
-            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback);
+            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+            var cc = new ClientCredential(aadAppId, aadAppSecret);
+            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, cc);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.CreateWithTokenProvider(csb.Endpoint, csb.EntityPath, tokenProvider);
+            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, tokenProvider);
 
             // Send one event
             TestUtility.Log($"Sending one message.");
@@ -157,26 +157,27 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
         /// <returns></returns>
-        [Fact (Skip = "Manual run only")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task UseCreateApiWithAad()
         {
+            var tenantId = "";
             var aadAppId = "";
             var aadAppSecret = "";
 
-            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
-                async (audience, authority, state) =>
-                {
-                    var authContext = new AuthenticationContext(authority);
-                    var cc = new ClientCredential(aadAppId, aadAppSecret);
-                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
-                    return authResult.AccessToken;
-                };
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                TestUtility.Log($"Skipping test during scheduled runs.");
+                return;
+            }
+
+            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+            var cc = new ClientCredential(aadAppId, aadAppSecret);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.CreateWithAzureActiveDirectory(csb.Endpoint, csb.EntityPath, authCallback);
+            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, authContext, cc);
 
             // Send one event
             TestUtility.Log($"Sending one message.");

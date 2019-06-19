@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
+    <Version>1.0.0</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Training API;Custom Vision Training SDK;Vision;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+    <![CDATA[
+    This is a public release of the Cognitive Services Custom Vision Training SDK.
+
+    Changes in this release:
+    1) Added an advanced training option to set a budget to train longer for improved iteration performance.
+    2) Added additional export options targetting Vision AI Dev Kit and Docker ARM for Raspberry Pi.
+
+    ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <PackageProjectUrl>http://customvision.ai</PackageProjectUrl>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

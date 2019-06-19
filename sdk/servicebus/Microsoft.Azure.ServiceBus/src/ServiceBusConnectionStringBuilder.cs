@@ -21,7 +21,6 @@ namespace Microsoft.Azure.ServiceBus
         const string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
         const string SharedAccessKeyConfigName = "SharedAccessKey";
         const string SharedAccessSignatureConfigName = "SharedAccessSignature";
-        const string AuthenticationConfigName = "Authentication";
 
         const string EntityPathConfigName = "EntityPath";
         const string TransportTypeConfigName = "TransportType";
@@ -29,12 +28,6 @@ namespace Microsoft.Azure.ServiceBus
         const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-        string authType;
-
-        public static class AuthenticationType
-        {
-            public const string ManagedIdentity = "Managed Identity";
-        }
 
         /// <summary>
         /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>
@@ -194,14 +187,7 @@ namespace Microsoft.Azure.ServiceBus
         public string SasKeyName
         {
             get => this.sasKeyName;
-            set
-            {
-                if (this.Authentication != null)
-                {
-                    throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
-                }
-                this.sasKeyName = value.Trim();
-            }
+            set => this.sasKeyName = value.Trim();
         }
 
         /// <summary>
@@ -221,14 +207,7 @@ namespace Microsoft.Azure.ServiceBus
         public string SasToken
         {
             get => this.sasToken;
-            set
-            {
-                if (this.Authentication != null)
-                {
-                    throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
-                }
-                this.sasToken = value.Trim();
-            }
+            set => this.sasToken = value.Trim();
         }
 
         /// <summary>
@@ -242,29 +221,6 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>Defaults to 1 minute.</remarks>
         public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
 
-        /// <summary>
-        /// Enables Azure Active Directory Managed Identity authentication when set to ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity
-        /// </summary>
-        public string Authentication
-        {
-            get => this.authType;
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(this.SasKeyName))
-                {
-                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
-                        Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
-                }
-
-                if (!string.IsNullOrWhiteSpace(this.SasToken))
-                {
-                    throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
-                        Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
-                }
-                this.authType = value;
-            }
-        }
-
         internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
@@ -276,37 +232,32 @@ namespace Microsoft.Azure.ServiceBus
             var connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
-                connectionStringBuilder.Append(EndpointConfigName).Append(KeyValueSeparator).Append(this.Endpoint).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{EndpointConfigName}{KeyValueSeparator}{this.Endpoint}{KeyValuePairDelimiter}");
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasKeyName))
             {
-                connectionStringBuilder.Append(SharedAccessKeyNameConfigName).Append(KeyValueSeparator).Append(this.SasKeyName).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{SharedAccessKeyNameConfigName}{KeyValueSeparator}{this.SasKeyName}{KeyValuePairDelimiter}");
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasKey))
             {
-                connectionStringBuilder.Append(SharedAccessKeyConfigName).Append(KeyValueSeparator).Append(this.SasKey).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}{KeyValuePairDelimiter}");
             }
 
             if (!string.IsNullOrWhiteSpace(this.SasToken))
             {
-                connectionStringBuilder.Append(SharedAccessSignatureConfigName).Append(KeyValueSeparator).Append(this.SasToken).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{SharedAccessSignatureConfigName}{KeyValueSeparator}{this.SasToken}{KeyValuePairDelimiter}");
             }
 
             if (this.TransportType != TransportType.Amqp)
             {
-                connectionStringBuilder.Append(TransportTypeConfigName).Append(KeyValueSeparator).Append(this.TransportType).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
             }
 
             if (this.OperationTimeout != Constants.DefaultOperationTimeout)
             {
-                connectionStringBuilder.Append(OperationTimeoutConfigName).Append(KeyValueSeparator).Append(this.OperationTimeout).Append(KeyValuePairDelimiter);
-            }
-
-            if (this.Authentication != null)
-            {
-                connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append(this.Authentication).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -406,10 +357,6 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
-                }
-                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
-                {
-                    this.Authentication = value;
                 }
                 else
                 {

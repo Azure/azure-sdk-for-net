@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.CognitiveServices.Search.LocalSearch</PackageId>
+		<Description>Provides ability to search for businesses</Description>
+		<Version>0.9.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.CognitiveServices.BingLocalSearch</AssemblyName>    
+		<PackageTags>CognitiveServices;Bing;BingLocalSearch;LocalSearch;Local Search</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+
+		This version is based on the v1.0 Bing Local Search API specification.
+
+		Features:
+		1. Search for businesses by name ("mcdonald's") or by category ("restaurants")
+		2. Search for businesses near named geographic places ("restaurants in seattle")
+		3. Search near specific geographic coordinates using the localCircularView and/or localMapView parameters
+		4. Search by category id using the localCategories parameter.
+      ]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>

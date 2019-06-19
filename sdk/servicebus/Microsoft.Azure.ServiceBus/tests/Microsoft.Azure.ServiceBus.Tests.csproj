@@ -27,20 +27,20 @@
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Transactions" />
-    <PackageReference Include="WindowsAzure.ServiceBus" />
+    <PackageReference Include="WindowsAzure.ServiceBus" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Polly" />
-    <PackageReference Include="System.Net.WebSockets.Client" />
-    <PackageReference Include="System.ValueTuple" />
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="PublicApiGenerator" />
-    <PackageReference Include="ApprovalTests" NoWarn="NU1701" />
-    <PackageReference Include="ApprovalUtilities" NoWarn="NU1701" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="Polly" Version="7.1.0" />
+    <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="PublicApiGenerator" Version="8.1.0" />
+    <PackageReference Include="ApprovalTests" Version="3.0.21" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.0.21" NoWarn="NU1701" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

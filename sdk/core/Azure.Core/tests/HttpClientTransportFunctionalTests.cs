@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
                     Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
 
                     var transport = new HttpClientTransport();
-                    Request request = transport.CreateRequest();
+                    Request request = transport.CreateRequest(null);
                     request.UriBuilder.Uri = new Uri(url);
                     Response response = await ExecuteRequest(request, transport);
                     Assert.True(response.Headers.TryGetValue("Via", out var via));

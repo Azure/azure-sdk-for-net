@@ -17,25 +17,6 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public override HttpPipelineRequestContent Content
-        {
-            get { return base.Content; }
-            set
-            {
-                if (value != null && value.TryComputeLength(out long length))
-                {
-                    _headers["Content-Length"] = new List<string> { length.ToString() };
-
-                }
-                else
-                {
-                    _headers.Remove("Content-Length");
-                }
-                base.Content = value;
-            }
-        }
-
-
 #if HAS_INTERNALS_VISIBLE_CORE
 internal
 #endif

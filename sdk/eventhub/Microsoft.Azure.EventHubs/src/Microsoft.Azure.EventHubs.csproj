@@ -8,6 +8,22 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
+  <!--
+      The Identity Model client for Active Directory package does not support client certificate
+      assertions for their Xamarin.iOS10 and uap10.0 targets.  Builds for Xamarin.iOS10 targets will bind to the
+      netstandard 1.4 version of the Event Hubs SDK and the Xamarin.iOS10 version of the Identity Model package.
+
+      Because newer versions of UWP are compatible with netstandard 2.0 we need to ensure that we provide a uap10.0 asset
+      in the package that doesn't depend on client certificate support. In order to do that we will copy the netstandard1.4
+      asset into the uap10.0 target in the package to ensure it always gets chosen when running on uwp.
+
+      Because of the missing support in the Identity Model Client for Azure Active Directory, the client certificate-related constructs
+      in the Event Hubs client will be hidden during compilation for targets that Xamarin iOS and UWP will bind to.
+  -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard1.4'">
+    <DefineConstants>$(DefineConstants);ALLOW_CERTIFICATE_IDENTITY</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -24,13 +40,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Net.Http" />
-    <PackageReference Include="System.Reflection.TypeExtensions" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.3.7" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.5.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
@@ -40,6 +57,29 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
+
+  <Target Name="AddUAPPackageAsset" BeforeTargets="BuiltProjectOutputGroup">
+    <!--
+      For compat with the older package we are keeping a uap10.0 asset
+      in the package but it will just be a copy of the netstandard1.4 asset,
+      as the library doesn't use any UAP specific APIs and we don't want to
+      complicate our cross-platform engineering system to pull in uap tools.
+    -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
+      <BuiltProjectOutputGroupKeyOutput Include="@(IntermediateAssembly->'%(FullPath)')">
+        <IsKeyOutput>true</IsKeyOutput>
+        <FinalOutputPath>$(TargetPath)</FinalOutputPath>
+        <TargetPath>$(TargetFileName)</TargetPath>
+        <TargetFramework>uap10.0</TargetFramework>
+      </BuiltProjectOutputGroupKeyOutput>
+      <DocumentationProjectOutputGroupOutput Include="@(DocFileItem->'%(FullPath)')">
+        <FinalOutputPath>@(FinalDocFile->'%(FullPath)')</FinalOutputPath>
+        <IsKeyOutput>true</IsKeyOutput>
+        <TargetPath>@(DocFileItem->'%(Filename)%(Extension)')</TargetPath>
+        <TargetFramework>uap10.0</TargetFramework>
+      </DocumentationProjectOutputGroupOutput>
+    </ItemGroup>
+  </Target>
 </Project>

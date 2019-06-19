@@ -35,7 +35,7 @@ namespace Azure.Core.Testing
             _responseFactory = responseFactory;
         }
 
-        public override Request CreateRequest()
+        public override Request CreateRequest(IServiceProvider services)
             => new MockRequest();
 
         public override void Process(HttpPipelineMessage message)
@@ -75,11 +75,6 @@ namespace Azure.Core.Testing
             }
 
             message.Response.ClientRequestId = request.ClientRequestId;
-
-            if (message.Response.ContentStream != null && ExpectSyncPipeline != null)
-            {
-                message.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, message.Response.ContentStream);
-            }
         }
 
         public MockRequest SingleRequest => Requests.Single();

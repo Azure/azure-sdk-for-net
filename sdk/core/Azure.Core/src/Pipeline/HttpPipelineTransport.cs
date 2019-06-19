@@ -12,6 +12,6 @@ namespace Azure.Core.Pipeline
 
         public abstract Task ProcessAsync(HttpPipelineMessage message);
 
-        public abstract Request CreateRequest();
+        public abstract Request CreateRequest(IServiceProvider services);
     }
 }

@@ -11,14 +11,14 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             OnSendingRequest(message);
-            ProcessNext(message, pipeline);
+            ProcessNext(pipeline, message);
             OnReceivedResponse(message);
         }
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             OnSendingRequest(message);
-            await ProcessNextAsync(message, pipeline);
+            await ProcessNextAsync(pipeline, message);
             OnReceivedResponse(message);
         }
 

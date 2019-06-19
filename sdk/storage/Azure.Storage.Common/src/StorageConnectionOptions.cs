@@ -12,12 +12,22 @@ namespace Azure.Storage
     /// Provides the client configuration options for connecting to Azure
     /// Storage
     /// </summary>
-    public abstract class StorageConnectionOptions : ClientOptions
+    public abstract class StorageConnectionOptions : HttpClientOptions
     {
         /// <summary>
         /// Optional credentials for authenticating requests to the service
         /// </summary>
         public IStorageCredentials Credentials { get; set; }
+
+        /// <summary>
+        /// HttpPipelinePolicy for automatically retrying failed requests
+        /// </summary>
+        public RetryPolicy RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Logging 
+        /// </summary>
+        public HttpPipelinePolicy LoggingPolicy { get; set; }
 
         /// <summary>
         /// Construct the default options for making service requests that
@@ -34,9 +44,8 @@ namespace Azure.Storage
 
             // TODO: Decide if these are good default options for an Azure
             // Queue Storage retry policy
-            this.RetryPolicy = new RetryPolicy()
+            this.RetryPolicy = new FixedRetryPolicy()
             {
-                Mode = RetryMode.Fixed,
                 Delay = TimeSpan.Zero,
                 MaxRetries = Constants.MaxReliabilityRetries
             };
@@ -71,13 +80,17 @@ namespace Azure.Storage
         /// An HttpPipeline used to make requests to Azure Storage
         /// </returns>
         internal virtual HttpPipeline Build()
-            => HttpPipelineBuilder.Build(
+            => HttpPipeline.Build(
                 this,
+                this.ResponseClassifier,
+                ClientRequestIdPolicy.Singleton,
+                this.RetryPolicy,
+                this.GetAuthenticationPipelinePolicy(this.Credentials),
+                this.LoggingPolicy,
                 // TODO: PageBlob's UploadPagesAsync test currently fails
                 // without buffered responses, so I'm leaving this on for now.
                 // It'd be a great perf win to remove it soon.
-                bufferResponse: true,
-                this.GetAuthenticationPipelinePolicy(this.Credentials));
+                BufferResponsePolicy.Singleton);
 
         /// <summary>
         /// Create an authentication HttpPipelinePolicy to sign requests

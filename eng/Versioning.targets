@@ -29,9 +29,9 @@
       <_BuildNumberDD>$(_BuildNumber.Substring(6, 2))</_BuildNumberDD>
       <_BuildNumberR>$(_BuildNumber.Substring(9))</_BuildNumberR>
 
-      <_VersionPrefixMajor>$(Version.Split('.')[0])</_VersionPrefixMajor>
-      <_VersionPrefixMinor>$(Version.Split('.')[1])</_VersionPrefixMinor>
-      <_VersionPrefixPatch>$(Version.Split(".-")[2])</_VersionPrefixPatch>
+      <_VersionPrefixMajor>$(VersionPrefix.Split('.')[0])</_VersionPrefixMajor>
+      <_VersionPrefixMinor>$(VersionPrefix.Split('.')[1])</_VersionPrefixMinor>
+      <_VersionPrefixPatch>$(VersionPrefix.Split('.')[2])</_VersionPrefixPatch>
 
       <_FileMajor>$(_VersionPrefixMajor)</_FileMajor>
 

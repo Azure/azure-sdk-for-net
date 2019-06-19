@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
+    <Version>4.0.0</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support new OCR operations, `BatchReadFile` and `GetReadOperationResult`.
+    2. Change class name `RecognitionResult` to `TextRecognitionResult.`
+    ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

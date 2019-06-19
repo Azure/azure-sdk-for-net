@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\tools\generate.cmd operationalinsights/data-plane %*
+call %~dp0..\..\..\..\..\tools\generate.cmd operationalinsights/data-plane %*

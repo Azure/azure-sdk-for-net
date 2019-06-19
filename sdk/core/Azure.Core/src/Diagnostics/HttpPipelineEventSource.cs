@@ -108,7 +108,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void ResponseContent(Response response, CancellationToken cancellationToken)
+        public void ResponseContent(Response response)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {

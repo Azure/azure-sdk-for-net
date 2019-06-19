@@ -11,15 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
-    public class RetriableStreamTests: SyncAsyncTestBase
+    public class RetriableStreamTests
     {
-        private readonly byte[] _buffer = new byte[256];
-
-        public RetriableStreamTests(bool isAsync): base(isAsync)
-        {
-        }
+        private byte[] _buffer = new byte[256];
 
         [Test]
         public async Task MaintainsGlobalLengthAndPosition()
@@ -27,30 +21,27 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var stream2 = new MockReadStream(50, offset: 50, throwIOException: false);
 
-            var mockTransport = CreateMockTransport(
+            var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
-                offset => SendTestRequest(pipeline, offset),
-                offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(), maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(25, reliableStream.Position);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 25, 25));
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(50, reliableStream.Position);
 
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
+            Assert.AreEqual(50, await reliableStream.ReadAsync(_buffer, 50, 50));
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(100, reliableStream.Position);
 
-            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.AreEqual(0, await reliableStream.ReadAsync(_buffer, 0, 50));
             AssertReads(_buffer, 100);
         }
 
@@ -60,23 +51,19 @@ namespace Azure.Core.Tests
             var stream1 = new MockReadStream(100, throwAfter: 50);
             var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
 
-            var mockTransport = CreateMockTransport(
+            var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
-                offset => SendTestRequest(pipeline, offset),
-                offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
-                maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(25, reliableStream.Position);
 
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 25, 25));
             Assert.AreEqual(100, reliableStream.Length);
             Assert.AreEqual(50, reliableStream.Position);
 
@@ -91,23 +78,18 @@ namespace Azure.Core.Tests
             var stream1 = new NoLengthStream();
             var stream2 = new MockReadStream(50);
 
-            var mockTransport = CreateMockTransport(
+            var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
                 new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = RetriableStream.Create(
-                IsAsync ? await SendTestRequestAsync(pipeline, 0) : SendTestRequest(pipeline, 0),
-                offset => SendTestRequest(pipeline, offset),
-                offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
-                maxRetries: 5);
+            var reliableStream = RetriableStream.Create(await SendTestRequestAsync(pipeline, 0), offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.AreEqual(50, await reliableStream.ReadAsync(_buffer, 0, 50));
             Assert.AreEqual(50, reliableStream.Position);
 
-            Assert.AreEqual(0, await ReadAsync(reliableStream, _buffer, 0, 50));
+            Assert.AreEqual(0, await reliableStream.ReadAsync(_buffer, 0, 50));
 
             Assert.Throws<NotSupportedException>(() => _ = reliableStream.Length);
 
@@ -115,25 +97,20 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ThrowsIfInitialRequestThrow()
+        {
+            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), new ResponseClassifier(), 5));
+        }
+
+        [Test]
         public async Task ThrowsIfSendingRetryRequestThrows()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var mockTransport = CreateMockTransport(new MockResponse(200) { ContentStream = stream1 });
+            var mockTransport = new MockTransport(new MockResponse(200) { ContentStream = stream1 });
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(
-                offset =>
-                {
-                    if (offset == 0)
-                    {
-                        return SendTestRequest(pipeline, offset);
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException();
-                    }
-                },
+            var reliableStream = await RetriableStream.Create(
                 async offset =>
                 {
                     if (offset == 0)
@@ -146,17 +123,17 @@ namespace Azure.Core.Tests
                     }
                 }, new ResponseClassifier(), maxRetries: 5);
 
-            await ReadAsync(reliableStream, _buffer, 0, 25);
-            await ReadAsync(reliableStream, _buffer, 25, 25);
+            await reliableStream.ReadAsync(_buffer, 0, 25);
+            await reliableStream.ReadAsync(_buffer, 25, 25);
 
             AssertReads(_buffer, 50);
-            Assert.ThrowsAsync<InvalidOperationException>(() => ReadAsync(reliableStream, _buffer, 50, 50));
+            Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
         }
 
         [Test]
         public async Task RetriesMaxCountAndThrowsAggregateException()
         {
-            var mockTransport = CreateMockTransport(
+            var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 1) },
                 new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 2) },
@@ -165,15 +142,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await CreateAsync(offset =>
-                {
-                    if (offset == 0)
-                    {
-                        return SendTestRequest(pipeline, offset);
-                    }
-
-                    throw new InvalidOperationException();
-                },
+            var reliableStream = await RetriableStream.Create(
                 async offset =>
                 {
                     if (offset == 0)
@@ -184,7 +153,7 @@ namespace Azure.Core.Tests
                     throw new InvalidOperationException();
                 }, new ResponseClassifier(), maxRetries: 3);
 
-            var aggregateException = Assert.ThrowsAsync<AggregateException>(() => ReadAsync(reliableStream, _buffer, 0, 4));
+            var aggregateException = Assert.ThrowsAsync<AggregateException>(() => reliableStream.ReadAsync(_buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
             Assert.AreEqual(4, aggregateException.InnerExceptions.Count);
             Assert.AreEqual("Failed at 0", aggregateException.InnerExceptions[0].Message);
@@ -192,26 +161,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Failed at 2", aggregateException.InnerExceptions[2].Message);
             Assert.AreEqual("Failed at 3", aggregateException.InnerExceptions[3].Message);
             Assert.AreEqual(4, mockTransport.Requests.Count);
-        }
-
-        [Test]
-        public void ThrowsIfInitialRequestThrow()
-        {
-            Assert.Throws<InvalidOperationException>(() => RetriableStream.Create(
-                _ => throw new InvalidOperationException(),
-                _ => null,
-                new ResponseClassifier(),
-                5));
-        }
-
-        [Test]
-        public void ThrowsIfInitialRequestThrowAsync()
-        {
-            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.CreateAsync(
-                _ => null,
-                _ => throw new InvalidOperationException(),
-                new ResponseClassifier(),
-                5));
         }
 
         private void AssertReads(byte[] buffer, int length)
@@ -222,42 +171,15 @@ namespace Azure.Core.Tests
             }
         }
 
-        private Task<Stream> CreateAsync(
-            Func<long, Response> responseFactory,
-            Func<long, Task<Response>> asyncResponseFactory,
-            ResponseClassifier responseClassifier,
-            int maxRetries)
-        {
-            return IsAsync ?
-                RetriableStream.CreateAsync(responseFactory, asyncResponseFactory, responseClassifier, maxRetries) :
-                Task.FromResult(RetriableStream.Create(responseFactory, asyncResponseFactory, responseClassifier, maxRetries));
-        }
-
-        private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length)
-        {
-            return IsAsync ? stream.ReadAsync(buffer, offset, length) : Task.FromResult(stream.Read(buffer, offset, length));
-        }
-
-        private static Response SendTestRequest(HttpPipeline pipeline, long offset)
-        {
-            using Request request = CreateRequest(pipeline, offset);
-
-            return pipeline.SendRequest(request, CancellationToken.None);
-        }
-
         private static Task<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
-            using Request request = CreateRequest(pipeline, offset);
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
+                request.Headers.Add("Range", "bytes=" + offset);
 
-            return pipeline.SendRequestAsync(request, CancellationToken.None);
-        }
-
-        private static Request CreateRequest(HttpPipeline pipeline, long offset)
-        {
-            Request request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
-            request.Headers.Add("Range", "bytes=" + offset);
-            return request;
+                return pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
         }
 
         private class NoLengthStream : ReadOnlyStream

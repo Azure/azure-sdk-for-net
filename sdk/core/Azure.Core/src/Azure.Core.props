@@ -1,7 +1,4 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\Shared\</AzureCoreSharedSources>
-  </PropertyGroup>
 
   <!-- Project references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'=='true'">
@@ -10,6 +7,6 @@
 
   <!-- Package references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'!='true'">
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" Version="1.0.0-preview.5" />
   </ItemGroup>
 </Project>

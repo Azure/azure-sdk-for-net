@@ -26,8 +26,7 @@ namespace Azure.Storage.Test
 
             foreach (var kvp in expected)
             {
-                if (!actual.TryGetValue(kvp.Key, out var value) ||
-                    String.Compare(kvp.Value, value, StringComparison.OrdinalIgnoreCase) != 0)
+                if (!(actual.TryGetValue(kvp.Key, out var value) && kvp.Value == value))
                 {
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }

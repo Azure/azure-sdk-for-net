@@ -1,12 +1,12 @@
 using Azure.Data;
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Microsoft.Azure.Template.Tests
 {
     public class UnitTest1
     {
-        [Test]
+        [Fact]
         public void Test1()
         {
             var c = new Class1();

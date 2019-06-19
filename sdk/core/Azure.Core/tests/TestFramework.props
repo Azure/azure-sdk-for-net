@@ -1,6 +1,0 @@
-﻿<Project ToolsVersion="15.0">
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\*.cs" Link="TestFramework\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-</Project>

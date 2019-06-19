@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
@@ -55,7 +54,7 @@ namespace Azure.Storage.Test
         {
             raise = raise ?? new IOException("Simulated connection fault");
             var options = GetOptions<FileConnectionOptions>(credentials);
-            options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
+            options.PerCallPolicies.Add(new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
 
@@ -87,7 +86,7 @@ namespace Azure.Storage.Test
         {
             service = service ?? GetServiceClient_SharedKey();
 
-            var result = new DisposingShare(service.GetShareClient(shareName ?? GetNewShareName()), metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
+            var result = new DisposingShare(service.GetShareClient(shareName ?? GetNewShareName()), metadata ?? new Dictionary<string, string>());
 
             share = result.ShareClient;
 

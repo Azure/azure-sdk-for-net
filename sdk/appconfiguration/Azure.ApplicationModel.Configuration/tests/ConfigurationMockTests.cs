@@ -226,11 +226,25 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var query = new SettingSelector();
             int keyIndex = 0;
-
-            await foreach (var value in service.GetSettingsAsync(query, CancellationToken.None))
+            while (true)
             {
-                Assert.AreEqual("key" + keyIndex, value.Value.Key);
-                keyIndex++;
+                using (Response<SettingBatch> response = await service.GetBatchAsync(query, CancellationToken.None))
+                {
+                    SettingBatch batch = response.Value;
+                    for (int i = 0; i < batch.Count; i++)
+                    {
+                        ConfigurationSetting value = batch[i];
+                        Assert.AreEqual("key" + keyIndex, value.Key);
+                        keyIndex++;
+                    }
+
+                    var nextBatch = batch.NextBatch;
+
+                    if (nextBatch == null)
+                        break;
+
+                    query = nextBatch;
+                }
             }
 
             Assert.AreEqual(2, mockTransport.Requests.Count);

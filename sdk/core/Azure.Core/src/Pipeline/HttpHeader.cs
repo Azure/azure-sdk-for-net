@@ -63,7 +63,6 @@ namespace Azure.Core.Pipeline
             static readonly string s_applicationOctetStream = "application/octet-stream";
 
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
-            public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, s_applicationJson);
             public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
         }
     }

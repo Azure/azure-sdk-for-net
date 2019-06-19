@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.Test
                 var response = await directory.CreateAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Storage.Files.Test
                 var response = await directory.GetPropertiesAsync();
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 

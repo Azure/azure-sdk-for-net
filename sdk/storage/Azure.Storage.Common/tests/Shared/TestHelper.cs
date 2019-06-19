@@ -67,7 +67,7 @@ namespace Azure.Storage.Test
         }
 
         public static Metadata BuildMetadata() =>
-            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            new Dictionary<string, string>()
             {
                 { "foo", "bar" },
                 { "meta", "data" }
@@ -92,7 +92,7 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Create and configure connection option instances to use a test
         /// specific retry policy and response classifier.
-        ///
+        /// 
         /// We're willing to wait longer and make gratuitous retries than our
         /// default connection options for the sake of robust test execution.
         /// </summary>
@@ -107,9 +107,8 @@ namespace Azure.Storage.Test
                     ResponseClassifier = new TestResponseClassifier(),
                     LoggingPolicy = LoggingPolicy.Shared,
                     RetryPolicy =
-                        new RetryPolicy()
+                        new ExponentialRetryPolicy()
                         {
-                            Mode = RetryMode.Exponential,
                             MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
                             Delay = TimeSpan.FromSeconds(0.5),
                             MaxDelay = TimeSpan.FromSeconds(10)

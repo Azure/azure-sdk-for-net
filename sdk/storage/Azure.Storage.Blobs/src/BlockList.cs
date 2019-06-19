@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs
             blocks.ETag = response.Value.ETag;
             blocks.ContentType = response.Value.ContentType;
             blocks.BlobContentLength = response.Value.BlobContentLength;
-            return new Response<BlockList>(response.GetRawResponse(), blocks);
+            return new Response<BlockList>(response.Raw, blocks);
         }
     }
 }

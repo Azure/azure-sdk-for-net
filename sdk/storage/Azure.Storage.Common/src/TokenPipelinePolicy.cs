@@ -40,7 +40,7 @@ namespace Azure.Storage
             this.AddAuthorization(message);
 
             // Continue processing the request
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.Storage
             this.AddAuthorization(message);
 
             // Continue processing the request
-            ProcessNext(message, pipeline);
+            ProcessNext(pipeline, message);
         }
 
         /// <summary>

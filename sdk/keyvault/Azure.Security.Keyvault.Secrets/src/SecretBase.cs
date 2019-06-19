@@ -1,8 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -20,8 +16,6 @@ namespace Azure.Security.KeyVault.Secrets
 
         public SecretBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
-
             _identifier.Name = name;
         }
 
@@ -42,17 +36,17 @@ namespace Azure.Security.KeyVault.Secrets
 
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
-        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
+        public DateTime? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTime? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
 
-        public DateTimeOffset? Created => _attributes.Created;
+        public DateTime? Created => _attributes.Created;
 
-        public DateTimeOffset? Updated => _attributes.Updated;
+        public DateTime? Updated => _attributes.Updated;
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
+        public IDictionary<string, string> Tags { get; set; }
 
         internal override void ReadProperties(JsonElement json)
         {

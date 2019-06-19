@@ -1,7 +1,5 @@
-trigger: none
+variables:
+  ProjectFile: sdk/keyvault/Microsoft.Azure.KeyVault.sln
 
 jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
-  parameters:
-    MaxParallel: 1
-    ServiceDirectory: keyvault
+- template: ../../eng/pipelines/templates/jobs/tests.yml

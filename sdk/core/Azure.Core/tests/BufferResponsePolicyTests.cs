@@ -22,7 +22,7 @@ namespace Azure.Core.Tests
             mockResponse.ContentStream = readTrackingStream;
 
             var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
+            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
 
             Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
             var ms = (MemoryStream)response.ContentStream;
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
             };
 
             var mockTransport = CreateMockTransport(mockResponse);
-            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Shared));
+            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton));
         }
 
         [Test]
@@ -54,23 +54,8 @@ namespace Azure.Core.Tests
             MockResponse mockResponse = new MockResponse(200);
 
             var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
+            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
             Assert.Null(response.ContentStream);
-        }
-
-        [Test]
-        public async Task ClosesStreamAfterCopying()
-        {
-            ReadTrackingStream readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
-            MockResponse mockResponse = new MockResponse(200)
-            {
-                ContentStream = readTrackingStream
-            };
-
-            var mockTransport = CreateMockTransport(mockResponse);
-            await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
-
-            Assert.True(readTrackingStream.IsClosed);
         }
 
         private class ReadTrackingStream : Stream
@@ -134,14 +119,6 @@ namespace Azure.Core.Tests
             {
                 throw new System.NotImplementedException();
             }
-
-            public override void Close()
-            {
-                IsClosed = true;
-                base.Close();
-            }
-
-            public bool IsClosed { get; set; }
 
             public override bool CanRead { get; } = true;
             public override bool CanSeek { get; }

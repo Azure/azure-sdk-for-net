@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Test
                 var response = await blob.CreateAsync(Constants.KB);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -397,7 +397,7 @@ namespace Azure.Storage.Blobs.Test
                         accessConditions: accessConditions);
 
                     // Assert
-                    Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                    Assert.IsNotNull(response.Raw.Headers.RequestId);
                 }
             }
         }
@@ -592,7 +592,7 @@ namespace Azure.Storage.Blobs.Test
                     range: new HttpRange(0, Constants.KB),
                     accessConditions: accessConditions);
 
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -948,7 +948,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 
@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Blobs.Test
                     accessConditions: accessConditions);
 
                 // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                Assert.IsNotNull(response.Raw.Headers.RequestId);
             }
         }
 

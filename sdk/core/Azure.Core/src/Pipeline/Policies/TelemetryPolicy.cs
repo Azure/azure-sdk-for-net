@@ -9,17 +9,13 @@ namespace Azure.Core.Pipeline.Policies
 {
     public class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
-        private readonly string _componentName;
-
-        private readonly string _componentVersion;
+        private readonly Assembly _clientAssembly;
 
         private string _header;
 
         private string _applicationId;
 
         private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;
-
-        public static string DefaultApplicationId { get; set; }
 
         public string ApplicationId
         {
@@ -31,24 +27,32 @@ namespace Azure.Core.Pipeline.Policies
             }
         }
 
-        public TelemetryPolicy(string componentName, string componentVersion)
+        public TelemetryPolicy(Assembly clientAssembly)
         {
-            _componentName = componentName;
-            _componentVersion = componentVersion;
-            _applicationId = DefaultApplicationId;
+            _clientAssembly = clientAssembly;
             InitializeHeader();
         }
 
         private void InitializeHeader()
         {
+            var componentAttribute = _clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{_clientAssembly.FullName}'.");
+            }
+
+            var componentName = componentAttribute.ComponentName;
+            var componentVersion = _clientAssembly.GetName().Version.ToString();
+
             var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
             if (_applicationId != null)
             {
-                _header = $"{_applicationId} azsdk-net-{_componentName}/{_componentVersion} {platformInformation}";
+                _header = $"{_applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
             else
             {
-                _header = $"azsdk-net-{_componentName}/{_componentVersion} {platformInformation}";
+                _header = $"azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
         }
 

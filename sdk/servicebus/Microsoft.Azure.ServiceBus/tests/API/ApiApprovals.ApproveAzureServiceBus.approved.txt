@@ -92,7 +92,6 @@ namespace Microsoft.Azure.ServiceBus
         string ClientId { get; }
         bool IsClosedOrClosing { get; }
         System.TimeSpan OperationTimeout { get; set; }
-        bool OwnsConnection { get; }
         string Path { get; }
         System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         Microsoft.Azure.ServiceBus.ServiceBusConnection ServiceBusConnection { get; }
@@ -331,7 +330,6 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, Microsoft.Azure.ServiceBus.TransportType transportType) { }
-        public string Authentication { get; set; }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public System.TimeSpan OperationTimeout { get; set; }
@@ -342,10 +340,6 @@ namespace Microsoft.Azure.ServiceBus
         public string GetEntityConnectionString() { }
         public string GetNamespaceConnectionString() { }
         public override string ToString() { }
-        public class static AuthenticationType
-        {
-            public const string ManagedIdentity = "Managed Identity";
-        }
     }
     public class ServiceBusException : System.Exception
     {
@@ -864,11 +858,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
-        public const string CommonAuthority = "https://login.microsoftonline.com/common";
-        public AzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authenticationCallback, string authority, object state) { }
-        public event Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback AuthCallback;
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
-        public delegate System.Threading.Tasks.Task<string> AuthenticationCallback(string audience, string authority, object state);
     }
     public interface ITokenProvider
     {
@@ -878,9 +868,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         public JsonSecurityToken(string rawToken, string audience) { }
     }
-    public class ManagedIdentityTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
+    public class ManagedServiceIdentityTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
-        public ManagedIdentityTokenProvider() { }
+        public ManagedServiceIdentityTokenProvider() { }
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
     }
     public class SecurityToken
@@ -900,8 +890,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public abstract class TokenProvider : Microsoft.Azure.ServiceBus.Primitives.ITokenProvider
     {
         protected TokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority = "https://login.microsoftonline.com/common", object state = null) { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedIdentityTokenProvider() { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAadTokenProvider(Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext authContext, Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential clientCredential) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAadTokenProvider(Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext authContext, string clientId, System.Uri redirectUri, Microsoft.IdentityModel.Clients.ActiveDirectory.IPlatformParameters platformParameters, Microsoft.IdentityModel.Clients.ActiveDirectory.UserIdentifier userIdentifier = null) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAadTokenProvider(Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext authContext, Microsoft.IdentityModel.Clients.ActiveDirectory.ClientAssertionCertificate clientAssertionCertificate) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedServiceIdentityTokenProvider() { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, System.TimeSpan tokenTimeToLive) { }

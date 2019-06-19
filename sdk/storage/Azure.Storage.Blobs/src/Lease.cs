@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs
         /// <returns>The Lease response.</returns>
         internal static Response<Lease> ToLease(this Response<BrokenLease> response)
             => new Response<Lease>(
-                response.GetRawResponse(),
+                response.Raw,
                 new Lease
                 {
                     ETag = response.Value.ETag,

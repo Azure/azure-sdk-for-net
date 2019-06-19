@@ -1,4 +1,7 @@
 <Project DefaultTargets="Init" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
 	<Import Project="Directory.Build.props" />	
+	<Import Project="test.props" />
+	<Import Project="AzSdk.props" />
 	<Import Project="Directory.Build.targets" />
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_build.proj" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_build.proj') "/>
 </Project>

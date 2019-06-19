@@ -18,34 +18,22 @@ namespace Microsoft.Azure.EventGrid
             // in EventGridSubscriber.GetJsonSerializerWithPolymorphicSupport()
             // Example: jsonSerializer.Converters.Add(new PolymorphicDeserializeJsonConverter<JobOutput>("@odata.type"));
 
-            // AppConfiguration events
-            { EventTypes.AppConfigurationKeyValueDeletedEvent, typeof(AppConfigurationKeyValueDeletedEventData) },
-            { EventTypes.AppConfigurationKeyValueModifiedEvent, typeof(AppConfigurationKeyValueModifiedEventData) },
-
             // ContainerRegistry events
             { EventTypes.ContainerRegistryImagePushedEvent, typeof(ContainerRegistryImagePushedEventData) },
             { EventTypes.ContainerRegistryImageDeletedEvent, typeof(ContainerRegistryImageDeletedEventData) },
-            { EventTypes.ContainerRegistryChartDeletedEvent, typeof(ContainerRegistryChartDeletedEventData) },
-            { EventTypes.ContainerRegistryChartPushedEvent, typeof(ContainerRegistryChartPushedEventData) },
 
             // IoTHub Device events
             { EventTypes.IoTHubDeviceCreatedEvent, typeof(IotHubDeviceCreatedEventData) },
             { EventTypes.IoTHubDeviceDeletedEvent, typeof(IotHubDeviceDeletedEventData) },
             { EventTypes.IoTHubDeviceConnectedEvent, typeof(IotHubDeviceConnectedEventData) },
             { EventTypes.IoTHubDeviceDisconnectedEvent, typeof(IotHubDeviceDisconnectedEventData) },
-            { EventTypes.IotHubDeviceTelemetryEvent, typeof(IotHubDeviceTelemetryEventData) },
 
             // EventGrid events
             { EventTypes.EventGridSubscriptionValidationEvent, typeof(SubscriptionValidationEventData) },
             { EventTypes.EventGridSubscriptionDeletedEvent, typeof(SubscriptionDeletedEventData) },
 
-            // Event Hub events
+            // Event Hub Events
             { EventTypes.EventHubCaptureFileCreatedEvent, typeof(EventHubCaptureFileCreatedEventData) },
-
-            // Maps events
-            { EventTypes.MapsGeofenceEnteredEvent, typeof(MapsGeofenceEnteredEventData) },
-            { EventTypes.MapsGeofenceExitedEvent, typeof(MapsGeofenceExitedEventData) },
-            { EventTypes.MapsGeofenceResultEvent, typeof(MapsGeofenceResultEventData) },
 
             // Media Services events
             { EventTypes.MediaJobStateChangeEvent, typeof(MediaJobStateChangeEventData) },

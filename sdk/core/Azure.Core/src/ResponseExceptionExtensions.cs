@@ -10,7 +10,7 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
-    public static class ResponseExceptionExtensions
+    public static class ResponseExceptionExtensionsExtensions
     {
         private const string DefaultMessage = "Service request failed.";
 

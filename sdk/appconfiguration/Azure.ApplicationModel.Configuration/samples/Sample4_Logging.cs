@@ -27,7 +27,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             listener.EnableEvents(EventLevel.LogAlways);
 
             Response<ConfigurationSetting> setResponse = client.Set(new ConfigurationSetting("some_key", "some_value"));
-            if (setResponse.GetRawResponse().Status != 200)
+            if (setResponse.Raw.Status != 200)
             {
                 throw new Exception("could not set configuration setting");
             }

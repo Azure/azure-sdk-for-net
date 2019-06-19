@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
 
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override Request CreateRequest()
+        public sealed override Request CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
         public override void Process(HttpPipelineMessage message)
@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
                     .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
             }
-            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+            return pipelineRequest.BuildRequestMessage(message.Cancellation);
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
@@ -162,7 +162,15 @@ namespace Azure.Core.Pipeline
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
-            public override HttpPipelineRequestContent Content { get; set; }
+            public override HttpPipelineRequestContent Content
+            {
+                get => _requestContent?.PipelineContent;
+                set
+                {
+                    EnsureContentInitialized();
+                    _requestContent.PipelineContent = value;
+                }
+            }
 
             public override string ClientRequestId { get; set; }
 
@@ -199,49 +207,37 @@ namespace Azure.Core.Pipeline
                     // and so the retry logic fails.
                     currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
                     CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
+
                 }
                 else
                 {
                     currentRequest = _requestMessage;
+                    _wasSent = true;
                 }
 
                 currentRequest.RequestUri = UriBuilder.Uri;
 
-
-                if (Content != null)
+                if (_requestContent?.PipelineContent != null)
                 {
-                    PipelineContentAdapter currentContent;
-                    if (_wasSent)
+                    currentRequest.Content = new PipelineContentAdapter()
                     {
-                        currentContent = new PipelineContentAdapter();
-                        CopyHeaders(_requestContent.Headers, currentContent.Headers);
-                    }
-                    else
-                    {
-                        EnsureContentInitialized();
-                        currentContent = _requestContent;
-                    }
-
-                    currentContent.CancellationToken = cancellation;
-                    currentContent.PipelineContent = Content;
-                    currentRequest.Content = currentContent;
+                        CancellationToken = cancellation,
+                        PipelineContent = _requestContent.PipelineContent
+                    };
+                    CopyHeaders(_requestContent.Headers, currentRequest.Content.Headers);
                 }
-
-                _wasSent = true;
 
                 return currentRequest;
             }
 
             public override void Dispose()
             {
-                Content?.Dispose();
                 _requestMessage.Dispose();
             }
 
             public override string ToString() => _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
-
             public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
             {
                 switch (method)
@@ -289,6 +285,13 @@ namespace Azure.Core.Pipeline
                     Debug.Assert(PipelineContent != null);
 
                     return PipelineContent.TryComputeLength(out length);
+                }
+
+
+                protected override void Dispose(bool disposing)
+                {
+                    PipelineContent?.Dispose();
+                    base.Dispose(disposing);
                 }
             }
         }

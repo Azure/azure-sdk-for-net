@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
+
 namespace Azure.Core.Pipeline.Policies
 {
     public class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
@@ -12,7 +15,7 @@ namespace Azure.Core.Pipeline.Policies
         {
         }
 
-        public static ClientRequestIdPolicy Shared { get; } = new ClientRequestIdPolicy();
+        public static ClientRequestIdPolicy Singleton { get; } = new ClientRequestIdPolicy();
 
         public override void OnSendingRequest(HttpPipelineMessage message)
         {

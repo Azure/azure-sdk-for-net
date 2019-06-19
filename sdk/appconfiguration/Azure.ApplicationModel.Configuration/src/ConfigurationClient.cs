@@ -3,7 +3,6 @@
 // license information.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -51,9 +50,13 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = HttpPipelineBuilder.Build(options,
-                    bufferResponse: true,
-                    new AuthenticationPolicy(credential, secret));
+            _pipeline = HttpPipeline.Build(options,
+                    options.ResponseClassifier,
+                    options.RetryPolicy,
+                    ClientRequestIdPolicy.Singleton,
+                    new AuthenticationPolicy(credential, secret),
+                    options.LoggingPolicy,
+                    BufferResponsePolicy.Singleton);
         }
 
         /// <summary>
@@ -459,26 +462,6 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public virtual IAsyncEnumerable<Response<ConfigurationSetting>> GetSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetSettingsPageAsync(selector, nextLink, cancellationToken));
-        }
-
-        public virtual IEnumerable<Response<ConfigurationSetting>> GetSettings(SettingSelector selector, CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetSettingsPage(selector, nextLink, cancellationToken));
-        }
-
-        public virtual IAsyncEnumerable<Response<ConfigurationSetting>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetRevisionsPageAsync(selector, nextLink, cancellationToken));
-        }
-
-        public virtual IEnumerable<Response<ConfigurationSetting>> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
-        }
-
         private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime)
         {
             if (string.IsNullOrEmpty(key))
@@ -504,9 +487,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<PageResponse<ConfigurationSetting>> GetSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector, pageLink))
+            using (Request request = CreateBatchRequest(selector))
             {
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -514,12 +497,12 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken);
-                        return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
+                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
                     default:
                         throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
+
         }
 
         /// <summary>
@@ -527,9 +510,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private PageResponse<ConfigurationSetting> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        public virtual Response<SettingBatch> GetBatch(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector, pageLink))
+            using (Request request = CreateBatchRequest(selector))
             {
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -537,19 +520,18 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken);
-                        return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
+                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
                     default:
                         throw response.CreateRequestFailedException();
                 }
             }
         }
 
-        private Request CreateBatchRequest(SettingSelector selector, string pageLink)
+        private Request CreateBatchRequest(SettingSelector selector)
         {
             Request request = _pipeline.CreateRequest();
             request.Method = HttpPipelineMethod.Get;
-            BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
+            BuildUriForGetBatch(request.UriBuilder, selector);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -566,17 +548,18 @@ namespace Azure.ApplicationModel.Configuration
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<PageResponse<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
+            using (Request request = CreateGetRevisionsRequest(selector))
             {
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
                 switch (response.Status)
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken);
-                        return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
+                    {
+                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
+                    }
                     default:
                         throw await response.CreateRequestFailedExceptionAsync();
                 }
@@ -589,28 +572,29 @@ namespace Azure.ApplicationModel.Configuration
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private PageResponse<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        public virtual Response<SettingBatch> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
+            using (Request request = CreateGetRevisionsRequest(selector))
             {
                 Response response = _pipeline.SendRequest(request, cancellationToken);
                 switch (response.Status)
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken);
-                        return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
+                    {
+                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
+                    }
                     default:
                         throw response.CreateRequestFailedException();
                 }
             }
         }
 
-        private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
+        private Request CreateGetRevisionsRequest(SettingSelector selector)
         {
             var request = _pipeline.CreateRequest();
             request.Method = HttpPipelineMethod.Get;
-            BuildUriForRevisions(request.UriBuilder, selector, pageLink);
+            BuildUriForRevisions(request.UriBuilder, selector);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {

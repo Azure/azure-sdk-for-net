@@ -13,10 +13,10 @@ namespace Azure.Core.Pipeline.Policies
         private readonly TokenCredential _credential;
 
         private readonly string[] _scopes;
-        
-        private string _headerValue;
 
-        private DateTimeOffset _refreshOn;
+        private string _currentToken;
+
+        private string _headerValue;
 
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
         {
@@ -50,25 +50,26 @@ namespace Azure.Core.Pipeline.Policies
 
         public async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (DateTimeOffset.UtcNow >= _refreshOn)
-            {
-                AccessToken token = async ?
-                        await _credential.GetTokenAsync(_scopes, message.CancellationToken).ConfigureAwait(false) :
-                        _credential.GetToken(_scopes, message.CancellationToken);
+            string token = async ?
+                    await _credential.GetTokenAsync(_scopes, message.Cancellation).ConfigureAwait(false) :
+                    _credential.GetToken(_scopes, message.Cancellation);
 
-                _headerValue = "Bearer " + token.Token;
-                _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);
+            if (token != _currentToken)
+            {
+                // Avoid per request allocations
+                _currentToken = token;
+                _headerValue = "Bearer " + token;
             }
 
             message.Request.SetHeader(HttpHeader.Names.Authorization, _headerValue);
 
             if (async)
             {
-                await ProcessNextAsync(message, pipeline);
+                await ProcessNextAsync(pipeline, message);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                ProcessNext(pipeline, message);
             }
         }
     }

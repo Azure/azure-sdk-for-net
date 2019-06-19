@@ -16,9 +16,8 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             // specify retry policy options
             var options = new ConfigurationClientOptions();
-            options.RetryPolicy = new RetryPolicy()
+            options.RetryPolicy = new FixedRetryPolicy()
             {
-                Mode = RetryMode.Fixed,
                 MaxRetries = 10,
                 Delay = TimeSpan.FromSeconds(1)
             };

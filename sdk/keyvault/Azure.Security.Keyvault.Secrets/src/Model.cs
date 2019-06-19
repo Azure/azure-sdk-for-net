@@ -1,10 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
-
-using Azure.Core;
-using System;
+﻿using System;
+using System.Buffers;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
@@ -13,7 +10,7 @@ namespace Azure.Security.KeyVault.Secrets
     {
         internal void Deserialize(Stream content)
         {
-            using (JsonDocument json = JsonDocument.Parse(content))
+            using (JsonDocument json = JsonDocument.Parse(content, default))
             {
                 this.ReadProperties(json.RootElement);
             }
@@ -21,24 +18,55 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal ReadOnlyMemory<byte> Serialize()
         {
-            Utf8JsonWriter json;
-            var writer = new ArrayBufferWriter<byte>();
-            using (json = new Utf8JsonWriter(writer))
-            {
-                json.WriteStartObject();
+            byte[] buffer = CreateSerializationBuffer();
 
-                WriteProperties(ref json);
+            var writer = new FixedSizedBufferWriter(buffer);
 
-                json.WriteEndObject();
+            var json = new Utf8JsonWriter(writer);
 
-                json.Flush();
+            json.WriteStartObject();
 
-                return writer.WrittenMemory;
-            }
+            WriteProperties(ref json);
+
+            json.WriteEndObject();
+
+            return buffer.AsMemory(0, (int)json.BytesWritten);
         }
 
         internal abstract void WriteProperties(ref Utf8JsonWriter json);
 
         internal abstract void ReadProperties(JsonElement json);
+
+        protected virtual byte[] CreateSerializationBuffer()
+        {
+            return new byte[1024];
+        }
+
+        // TODO (pri 3): CoreFx will soon have a type like this. We should remove this one then.
+        internal class FixedSizedBufferWriter : IBufferWriter<byte>
+        {
+            private readonly byte[] _buffer;
+            private int _count;
+
+            public FixedSizedBufferWriter(byte[] buffer)
+            {
+                _buffer = buffer;
+            }
+
+            public Memory<byte> GetMemory(int minimumLength = 0) => _buffer.AsMemory(_count);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public Span<byte> GetSpan(int minimumLength = 0) => _buffer.AsSpan(_count);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Advance(int bytes)
+            {
+                _count += bytes;
+                if (_count > _buffer.Length)
+                {
+                    throw new InvalidOperationException("Cannot advance past the end of the buffer.");
+                }
+            }
+        }
     }
 }

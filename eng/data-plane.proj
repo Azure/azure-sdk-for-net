@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
-    <ExcludeDataPlaneProjects Include="$(RepoRoot)\sdk\*\**\Microsoft.Azure.*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
-    <ExcludeMgmtLib Include="$(RepoRoot)\sdk\*\Microsoft.Azure.Management.*\**\.*proj" />
-    <DataPlaneProjectReference Include="$(RepoRoot)\sdk\*\**\Microsoft.Azure.*.*proj" Exclude="@(ExcludeDataPlaneProjects);@(ExcludeMgmtLib)" />
+    <ExcludeDataPlaneProjects Include="$(RepoSrcPath)\*\data-plane\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
+    <ExcludeDataPlaneProjects Include="$(RepoRoot)\sdk\*\Microsoft.Azure.*\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
+    <DataPlaneProjectReference Include="$(RepoSrcPath)\*\data-plane\**\*.*proj" Exclude="@(ExcludeDataPlaneProjects)" />
+    <DataPlaneProjectReference Include="$(RepoRoot)\sdk\*\Microsoft.Azure.*\**\*.*proj" Exclude="@(ExcludeDataPlaneProjects)" />
 
     <!-- All client libraries start with Azure.* -->
     <ExcludeClientProjects Include="$(RepoRoot)\sdk\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />

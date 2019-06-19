@@ -8,10 +8,6 @@
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
-    <ExcludeFromTest>true</ExcludeFromTest>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFrameworks>net452</TargetFrameworks>
   </PropertyGroup>  
   <ItemGroup>

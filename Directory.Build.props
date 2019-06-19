@@ -2,40 +2,12 @@
   <PropertyGroup>
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
     <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
-    <RepoSrcPath>$(RepoRoot)src</RepoSrcPath>
-    <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
+    <RepoSrcPath>$(RepoRoot)src/SDKs</RepoSrcPath>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
   </PropertyGroup>
 
-  <!-- Setup default project properties -->
-  <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
-    <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
-  </PropertyGroup>
-
-  <!-- Setup common output paths -->
-  <PropertyGroup>
-    <ArtifactsDir Condition="'$(ArtifactsDir)' == ''">$(RepoRoot)artifacts\</ArtifactsDir>
-    <ArtifactsObjDir>$(ArtifactsDir)obj\</ArtifactsObjDir>
-    <ArtifactsBinDir>$(ArtifactsDir)bin\</ArtifactsBinDir>
-    <ArtifactsPackagesDir>$(ArtifactsDir)packages\$(Configuration)\</ArtifactsPackagesDir>
-
-    <OutDirName Condition="'$(OutDirName)' == ''">$(MSBuildProjectName)</OutDirName>
-
-    <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsBinDir)$(OutDirName)\'))</BaseOutputPath>
-    <OutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseOutputPath)$(Configuration)\</OutputPath>
-    <OutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseOutputPath)$(PlatformName)\$(Configuration)\</OutputPath>
-
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsObjDir)$(OutDirName)\'))</BaseIntermediateOutputPath>
-    <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
-    <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
-
-    <PackageOutputPath>$(ArtifactsPackagesDir)</PackageOutputPath>
-  </PropertyGroup>
-
-  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
+  <Import Project="$(RepoEngPath)\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />
   <Import Project="$(RepoEngPath)\Directory.Build.Data.props" Condition="'$(IsDataPlaneProject)' == 'true'" />
 </Project>

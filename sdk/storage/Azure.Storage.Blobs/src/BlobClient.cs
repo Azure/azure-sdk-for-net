@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Specialized
         public Uri Uri { get; }
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
         /// every request.
         /// </summary>
         protected HttpPipeline Pipeline { get; private set; }
@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        ///
+        /// 
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="containerName">
@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var conn = StorageConnectionString.Parse(connectionString);
 
-            var builder =
+            var builder = 
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
                     ContainerName = containerName,
@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
@@ -163,7 +163,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="DownloadAsync"/> operation downloads a blob from
         /// the service, including its metadata and properties.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob" />.
         /// </summary>
         /// <param name="range">
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public async Task<Response<BlobDownloadInfo>> DownloadAsync(
             HttpRange range = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobAccessConditions? accessConditions = default, 
             bool rangeGetContentHash = default,
             CancellationToken cancellation = default)
         {
@@ -218,16 +218,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     response.Value.Content = RetriableStream.Create(
-                        response.GetRawResponse(),
-                         startOffset =>
-                            (this.StartDownloadAsync(
-                                    range,
-                                    accessConditions,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    cancellation)
-                                .ConfigureAwait(false).GetAwaiter().GetResult())
-                            .GetRawResponse(),
+                        response.Raw,
                         async startOffset =>
                             (await this.StartDownloadAsync(
                                 range,
@@ -236,7 +227,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 startOffset,
                                 cancellation)
                                 .ConfigureAwait(false))
-                            .GetRawResponse(),
+                                .Raw,
                         // TODO: For now we're using the default ResponseClassifier
                         // on BlobConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -244,7 +235,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // Wrap the FlattenedDownloadProperties into a BlobDownloadOperation
                     // to make the Content easier to find
-                    return new Response<BlobDownloadInfo>(response.GetRawResponse(), new BlobDownloadInfo(response.Value));
+                    return new Response<BlobDownloadInfo>(response.Raw, new BlobDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -323,7 +314,7 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellation: cancellation)
                     .ConfigureAwait(false);
 
-            this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            this.Pipeline.LogTrace($"Response: {response.Raw.Status}, ContentLength: {response.Value.ContentLength}");
 
             return response;
         }
@@ -334,19 +325,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// the <see cref="BlobProperties.CopyStatus"/> returned from the
         /// <see cref="GetPropertiesAsync"/> to determine if the copy has
         /// completed.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
         /// </summary>
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
+        /// blob.  A source blob in the same storage account can be 
         /// authenticated via Shared Key.  However, if the source is a blob in
         /// another account, the source blob must either be public or must be
         /// authenticated via a shared access signature. If the source blob
         /// is public, no authentication is required to perform the copy
         /// operation.
-        ///
+        /// 
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
         /// source file must be authenticated using a shared access signature,
@@ -376,9 +367,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobCopyInfo>> StartCopyFromUriAsync(
-            Uri source,
-            Metadata metadata = default,
-            BlobAccessConditions? sourceAccessConditions = default,
+            Uri source, 
+            Metadata metadata = default, 
+            BlobAccessConditions? sourceAccessConditions = default, 
             BlobAccessConditions? destinationAccessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -404,7 +395,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifModifiedSince: destinationAccessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: destinationAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: destinationAccessConditions?.HttpAccessConditions?.IfMatch,
-                        ifNoneMatch: destinationAccessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        ifNoneMatch: destinationAccessConditions?.HttpAccessConditions?.IfNoneMatch,                    
                         leaseId: destinationAccessConditions?.LeaseAccessConditions?.LeaseId,
                         metadata: metadata,
                         cancellation: cancellation)
@@ -426,7 +417,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="AbortCopyFromUriAsync"/> operation aborts a pending
         /// <see cref="StartCopyFromUriAsync"/> operation, and leaves a this
         /// blob with zero length and full metadata.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/abort-copy-blob" />.
         /// </summary>
         /// <param name="copyId">
@@ -448,7 +439,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response> AbortCopyFromUriAsync(
-            string copyId,
+            string copyId, 
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -486,11 +477,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
         /// or snapshot for  deletion. The blob is later deleted during
         /// garbage collection.
-        ///
+        /// 
         /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
+        /// snapshots. You can delete both at the same time using 
         /// <see cref="DeleteSnapshotsOption.Include"/>.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
         /// <param name="deleteOptions">
@@ -559,7 +550,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="UndeleteAsync"/> operation restores the contents
         /// and metadata of a soft deleted blob and any associated soft
         /// deleted snapshots.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob" />.
         /// </summary>
         /// <param name="cancellation">
@@ -602,7 +593,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
         /// name and account kind for the account of the blob.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
         /// </summary>
         /// <param name="cancellation">
@@ -647,7 +638,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
         /// blob.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties" />.
         /// </summary>
         /// <param name="accessConditions">
@@ -705,7 +696,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
         /// properties on the blob.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
         /// </summary>
         /// <param name="httpHeaders">
@@ -760,7 +751,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellation: cancellation)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
-                        response.GetRawResponse(),
+                        response.Raw,
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
@@ -781,9 +772,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
+        /// The <see cref="SetMetadataAsync"/> operation sets user-defined 
         /// metadata for the specified blob as one or more name-value pairs.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-metadata" />.
         /// </summary>
         /// <param name="metadata">
@@ -806,7 +797,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobInfo>> SetMetadataAsync(
-            Metadata metadata,
+            Metadata metadata, 
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -832,7 +823,7 @@ namespace Azure.Storage.Blobs.Specialized
                             cancellation: cancellation)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
-                        response.GetRawResponse(),
+                        response.Raw,
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
@@ -854,7 +845,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
         /// read-only snapshot of a blob.
-        ///
+        /// 
         /// For more infomration, see <see href="https://docs.microsoft.com/rest/api/storageservices/snapshot-blob" />.
         /// </summary>
         /// <param name="metadata">
@@ -877,7 +868,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
-            Metadata metadata = default,
+            Metadata metadata = default, 
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -916,16 +907,16 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="AcquireLeaseAsync"/> operation acquires a lease on
-        /// the blob for write and delete operations.  The lease
+        /// the blob for write and delete operations.  The lease 
         /// <paramref name="duration"/> must be between 15 to 60 seconds, or
         /// infinite (-1).
-        ///
+        /// 
         /// If the blob does not have an active lease, the Blob service
         /// creates a lease on the blob and returns it.  If the blob has an
         /// active lease, you can only request a new lease using the active
         /// lease ID as <paramref name="proposedId"/>, but you can specify a
         /// new <paramref name="duration"/>.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-blob" />.
         /// </summary>
         /// <param name="duration">
@@ -954,7 +945,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> AcquireLeaseAsync(
+        public async Task<Response<Lease>> AcquireLeaseAsync( 
             int duration,
             string proposedID = default,
             HttpAccessConditions? httpAccessConditions = default,
@@ -997,13 +988,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="RenewLeaseAsync"/> operation renews the blob's
         /// previously-acquired lease.
-        ///
-        /// The lease can be renewed if the <paramref name="leaseId"/>
+        /// 
+        /// The lease can be renewed if the <paramref name="leaseId"/> 
         /// matches that associated with the blob.  Note that the lease may be
         /// renewed even if it has expired as long as the blob has not been
         /// modified or leased again since the expiration of that lease.  When
         /// you renew a lease, the lease duration clock resets.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-blob" />.
         /// </summary>
         /// <param name="leaseId">
@@ -1025,7 +1016,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<Lease>> RenewLeaseAsync(
-            string leaseID,
+            string leaseID, 
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -1063,14 +1054,14 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="ReleaseLeaseAsync"/> operation releases the
+        /// The <see cref="ReleaseLeaseAsync"/> operation releases the 
         /// blob's previously-acquired lease.
-        ///
+        /// 
         /// The lease may be released if the <paramref name="leaseId"/>
-        /// matches that associated with the blob.  Releasing the lease allows
+        /// matches that associated with the blob.  Releasing the lease allows 
         /// another client to immediately acquire the lease for the blob as
         /// soon as the release is complete.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-blob" />.
         /// </summary>
         /// <param name="leaseId">
@@ -1133,8 +1124,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="BreakLeaseAsync"/> operation breaks the blob's
         /// previously-acquired lease (if it exists).
-        ///
-        /// Once a lease is broken, it cannot be renewed.  Any authorized
+        /// 
+        /// Once a lease is broken, it cannot be renewed.  Any authorized 
         /// request can break the lease; the request is not required to
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="period"/> is allowed to elapse, during which
@@ -1142,10 +1133,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="ReleaseLeaseAsync"/> can be performed on the blob.
         /// When a lease is successfully broken, the response indicates the
         /// interval in seconds until a new lease can be acquired.
-        ///
+        /// 
         /// A lease that has been broken can also be released.  A client can
         /// immediately acquire a blob lease that has been released.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-blob" />.
         /// </summary>
         /// <param name="period">
@@ -1174,7 +1165,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<Lease>> BreakLeaseAsync(
-            int? breakPeriodInSeconds = default,
+            int? breakPeriodInSeconds = default, 
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -1213,11 +1204,11 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="ChangeLeaseAsync"/> operation changes the lease
+        /// The <see cref="ChangeLeaseAsync"/> operation changes the lease 
         /// of an active lease.  A change must include the current
         /// <paramref name="leaseId"/> and a new
         /// <paramref name="proposedId"/>.
-        ///
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-blob" />.
         /// </summary>
         /// <param name="leaseId">
@@ -1245,7 +1236,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public async Task<Response<Lease>> ChangeLeaseAsync(
             string leaseID,
-            string proposedID,
+            string proposedID, 
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellation = default)
         {
@@ -1289,13 +1280,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// The operation is allowed on a page blob in a premium storage
         /// account and on a block blob in a blob storage or general purpose
         /// v2 account.
-        ///
+        /// 
         /// A premium page blob's tier determines the allowed size, IOPS, and
         /// bandwidth of the blob.  A block blob's tier determines
         /// Hot/Cool/Archive storage type.  This operation does not update the
         /// blob's ETag.  For detailed information about block blob level
         /// tiering <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />
-        ///
+        /// 
         /// For more information about setting the tier, see
         /// <see href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers" />.
         /// </summary>
@@ -1409,7 +1400,7 @@ namespace Azure.Storage.Blobs.Models
         /// Properties returned when downloading a Blob
         /// </summary>
         public BlobDownloadProperties Properties { get; private set; }
-
+        
         /// <summary>
         /// Creates a new DownloadInfo backed by FlattenedDownloadProperties
         /// </summary>
@@ -1480,7 +1471,7 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for a page blob. This header is not returned for block blobs or append blobs
         /// </summary>
         public long BlobSequenceNumber => this._flattened.BlobSequenceNumber;
-
+        
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
