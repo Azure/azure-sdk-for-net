@@ -15,9 +15,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConsumerOptions
     {
-        /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
-        public const string DefaultConsumerGroup = "$Default";
-
         /// <summary>The minimum value allowed for the prefetch count of the consumer.</summary>
         internal const int MinimumPrefetchCount = 10;
 
@@ -32,15 +29,6 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>The identifier to use for the consumer.</summary>
         private string _identifier = null;
-
-        /// <summary>
-        ///   The name of the consumer group that an Event Hub consumer should be associated with.  Events read
-        ///   by the consumer will be performed in the context of this group.
-        /// </summary>
-        ///
-        /// <value>If not specified, the default consumer group will be assumed.</value>
-        ///
-        public string ConsumerGroup { get; set; } = DefaultConsumerGroup;
 
         /// <summary>
         ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
@@ -162,7 +150,6 @@ namespace Azure.Messaging.EventHubs
         internal EventHubConsumerOptions Clone() =>
             new EventHubConsumerOptions
             {
-                ConsumerGroup = this.ConsumerGroup,
                 OwnerLevel = this.OwnerLevel,
                 Retry = this.Retry?.Clone(),
 
