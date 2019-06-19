@@ -6,6 +6,10 @@
     <AssemblyName>DataFactory.Tests</AssemblyName>
     <Version>1.0.0</Version>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.DataFactory.csproj" />
   </ItemGroup>

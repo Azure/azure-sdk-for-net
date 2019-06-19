@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
-// TODO: Investigate parallel conflicts in the CI
-// [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
-
+// TODO: Look into writing a custom Parallelizable attribute that will run
+// sequentially for record/playback but let us run in parallel for live tests.
+// [assembly: Parallelizable(ParallelScope.Children)]

@@ -42,14 +42,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'LicenseIncluded'</param>
         /// <param name="customSetupScriptProperties">Custom setup script
         /// properties for a managed dedicated integration runtime.</param>
+        /// <param name="dataProxyProperties">Data proxy properties for a
+        /// managed dedicated integration runtime.</param>
         /// <param name="edition">The edition for the SSIS Integration Runtime.
         /// Possible values include: 'Standard', 'Enterprise'</param>
-        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), string edition = default(string))
+        public IntegrationRuntimeSsisProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeSsisCatalogInfo catalogInfo = default(IntegrationRuntimeSsisCatalogInfo), string licenseType = default(string), IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default(IntegrationRuntimeCustomSetupScriptProperties), IntegrationRuntimeDataProxyProperties dataProxyProperties = default(IntegrationRuntimeDataProxyProperties), string edition = default(string))
         {
             AdditionalProperties = additionalProperties;
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
             CustomSetupScriptProperties = customSetupScriptProperties;
+            DataProxyProperties = dataProxyProperties;
             Edition = edition;
             CustomInit();
         }
@@ -86,6 +89,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "customSetupScriptProperties")]
         public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets data proxy properties for a managed dedicated
+        /// integration runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataProxyProperties")]
+        public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the edition for the SSIS Integration Runtime. Possible

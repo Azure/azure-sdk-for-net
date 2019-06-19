@@ -135,9 +135,12 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     tokenProvider = new TrackOneSharedAccessTokenProvider(sasCredential.SharedAccessSignature);
                     break;
 
+                case EventHubTokenCredential eventHubCredential:
+                    tokenProvider = new TrackOneGenericTokenProvider(eventHubCredential);
+                    break;
+
                 default:
-                    throw new NotImplementedException("Only shared key credentials are currently supported.");
-                    //TODO: Revisit this once Azure.Identity is ready for managed identities.
+                    throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential));
             }
 
             // Create the endpoint for the client.
@@ -163,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   and their identifiers.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
@@ -175,8 +178,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             (
                 TrackOneClient.EventHubName,
                 runtimeInformation.CreatedAt,
-                runtimeInformation.PartitionIds,
-                DateTime.UtcNow
+                runtimeInformation.PartitionIds
             );
         }
 
@@ -186,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
@@ -203,39 +205,103 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 runtimeInformation.LastEnqueuedSequenceNumber,
                 runtimeInformation.LastEnqueuedOffset,
                 runtimeInformation.LastEnqueuedTimeUtc,
-                runtimeInformation.IsEmpty,
-                DateTime.UtcNow
+                runtimeInformation.IsEmpty
             );
         }
 
         /// <summary>
-        ///   Creates an event sender responsible for transmitting <see cref="EventData" /> to the
-        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="senderOptions"/>
-        ///   specified, the sender may be created to allow event data to be automatically routed to an available
+        ///   Creates an Event Hub producer responsible for transmitting <see cref="EventData" /> to the
+        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="producerOptions"/>
+        ///   specified, the producer may be created to allow event data to be automatically routed to an available
         ///   partition or specific to a partition.
         /// </summary>
         ///
-        /// <param name="senderOptions">The set of options to apply when creating the sender.</param>
+        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
         ///
-        /// <returns>An event sender configured in the requested manner.</returns>
+        /// <returns>An Event Hub producer configured in the requested manner.</returns>
         ///
-        public override EventSender CreateSender(EventSenderOptions senderOptions)
+        public override EventHubProducer CreateProducer(EventHubProducerOptions producerOptions)
         {
-            (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)senderOptions.Retry).GetProperties();
-
             TrackOne.EventDataSender CreateSenderFactory()
             {
-                var sender = TrackOneClient.CreateEventSender(senderOptions.PartitionId);
-                sender.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
+                var producer = TrackOneClient.CreateEventSender(producerOptions.PartitionId);
 
-                return sender;
+                (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)producerOptions.Retry).GetProperties();
+                producer.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
+
+                return producer;
             }
 
-            return new EventSender
+            return new EventHubProducer
             (
-                new TrackOneEventSender(CreateSenderFactory),
+                new TrackOneEventHubProducer(CreateSenderFactory),
                 TrackOneClient.EventHubName,
-                senderOptions
+                producerOptions
+            );
+        }
+
+        /// <summary>
+        ///   Creates a consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
+        ///   and as a member of a specific consumer group.
+        ///
+        ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
+        ///   group to ensure that only one consumer from that group is reading the from the partition.
+        ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
+        ///
+        ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
+        ///   group to be actively reading events from the partition.  These non-exclusive consumers are
+        ///   sometimes referred to as "Non-epoch Consumers."
+        ///
+        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
+        ///   By default, consumers are created as non-exclusive.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        ///
+        /// <returns>An Event Hub consumer configured in the requested manner.</returns>
+        ///
+        public override EventHubConsumer CreateConsumer(string partitionId,
+                                                        EventPosition eventPosition,
+                                                        EventHubConsumerOptions consumerOptions)
+        {
+            TrackOne.PartitionReceiver CreateReceiverFactory()
+            {
+                var position = new TrackOne.EventPosition
+                {
+                    IsInclusive = eventPosition.IsInclusive,
+                    Offset = eventPosition.Offset,
+                    SequenceNumber = eventPosition.SequenceNumber,
+                    EnqueuedTimeUtc = eventPosition.EnqueuedTimeUtc
+                };
+
+                var trackOneOptions = new TrackOne.ReceiverOptions { Identifier = consumerOptions.Identifier };
+
+                PartitionReceiver consumer;
+
+                if (consumerOptions.OwnerLevel.HasValue)
+                {
+                    consumer = TrackOneClient.CreateEpochReceiver(consumerOptions.ConsumerGroup, partitionId, position, consumerOptions.OwnerLevel.Value, trackOneOptions);
+                }
+                else
+                {
+                    consumer = TrackOneClient.CreateReceiver(consumerOptions.ConsumerGroup, partitionId, position, trackOneOptions);
+                }
+
+                (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)consumerOptions.Retry).GetProperties();
+                consumer.RetryPolicy = new RetryExponential(minBackoff, maxBackoff, maxRetries);
+
+                return consumer;
+            }
+
+            return new EventHubConsumer
+            (
+                new TrackOneEventHubConsumer(CreateReceiverFactory),
+                TrackOneClient.EventHubName,
+                partitionId,
+                eventPosition,
+                consumerOptions
             );
         }
 
@@ -243,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   Closes the connection to the transport client instance.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request for cancelling the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///

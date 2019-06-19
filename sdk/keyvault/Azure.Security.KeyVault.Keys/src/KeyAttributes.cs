@@ -62,16 +62,16 @@ namespace Azure.Security.KeyVault.Keys
                         Enabled = prop.Value.GetBoolean();
                         break;
                     case NotBeforePropertyName:
-                        NotBefore = DateTimeOffset.Parse(prop.Value.GetString());
+                        NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.Parse(prop.Value.GetString());
+                        Expires = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.Parse(prop.Value.GetString());
+                        Created = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.Parse(prop.Value.GetString());
+                        Updated = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
                         break;
                     case RecoveryLevelPropertyName:
                         RecoveryLevel = prop.Value.GetString();

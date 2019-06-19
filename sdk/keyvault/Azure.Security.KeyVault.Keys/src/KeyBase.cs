@@ -14,6 +14,7 @@ namespace Azure.Security.KeyVault.Keys
         internal KeyBase() { }
         public KeyBase(string name)
         {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
             Name = name;
         }
 
@@ -43,7 +44,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
 
-        private void ParseId(string id)
+        protected void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute); ;
 

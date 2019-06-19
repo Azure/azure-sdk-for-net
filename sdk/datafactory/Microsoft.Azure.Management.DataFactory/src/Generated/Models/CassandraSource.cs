@@ -49,10 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// returning data to the client application. Cassandra checks the
         /// specified number of Cassandra servers for data to satisfy the read
         /// request. Must be one of cassandraSourceReadConsistencyLevels. The
-        /// default value is 'ONE'. It is case-insensitive. Possible values
-        /// include: 'ALL', 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE',
-        /// 'TWO', 'THREE', 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'</param>
-        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), string consistencyLevel = default(string))
+        /// default value is 'ONE'. It is case-insensitive.</param>
+        public CassandraSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object consistencyLevel = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
@@ -79,12 +77,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// client application. Cassandra checks the specified number of
         /// Cassandra servers for data to satisfy the read request. Must be one
         /// of cassandraSourceReadConsistencyLevels. The default value is
-        /// 'ONE'. It is case-insensitive. Possible values include: 'ALL',
-        /// 'EACH_QUORUM', 'QUORUM', 'LOCAL_QUORUM', 'ONE', 'TWO', 'THREE',
-        /// 'LOCAL_ONE', 'SERIAL', 'LOCAL_SERIAL'
+        /// 'ONE'. It is case-insensitive.
         /// </summary>
         [JsonProperty(PropertyName = "consistencyLevel")]
-        public string ConsistencyLevel { get; set; }
+        public object ConsistencyLevel { get; set; }
 
     }
 }

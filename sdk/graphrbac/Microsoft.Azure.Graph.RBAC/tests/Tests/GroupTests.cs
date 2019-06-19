@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 {
     public class GroupTests : GraphTestBase
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
+        [Fact]
         public void CreateDeleteGroupTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6557")]
+        [Fact]
         public void AddRemoveMemberTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

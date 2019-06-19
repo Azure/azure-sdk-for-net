@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
-        /// <param name="enableAzureFilesAadIntegration">Enables Azure Files
-        /// AAD Integration for SMB if sets to true.</param>
+        /// <param name="azureFilesIdentityBasedAuthentication">Provides the
+        /// identity based authentication settings for Azure Files.</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
         /// <param name="networkRuleSet">Network rule set</param>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="geoReplicationStats">Geo Replication Stats</param>
         /// <param name="failoverInProgress">If the failover is in progress,
         /// the value will be true, otherwise, it will be null.</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?))
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             SecondaryEndpoints = secondaryEndpoints;
             Encryption = encryption;
             AccessTier = accessTier;
-            EnableAzureFilesAadIntegration = enableAzureFilesAadIntegration;
+            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             NetworkRuleSet = networkRuleSet;
             IsHnsEnabled = isHnsEnabled;
@@ -242,11 +242,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         public AccessTier? AccessTier { get; private set; }
 
         /// <summary>
-        /// Gets or sets enables Azure Files AAD Integration for SMB if sets to
-        /// true.
+        /// Gets or sets provides the identity based authentication settings
+        /// for Azure Files.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.azureFilesAadIntegration")]
-        public bool? EnableAzureFilesAadIntegration { get; set; }
+        [JsonProperty(PropertyName = "properties.azureFilesIdentityBasedAuthentication")]
+        public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
         /// <summary>
         /// Gets or sets allows https traffic only to storage service if sets
@@ -300,6 +300,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (AzureFilesIdentityBasedAuthentication != null)
+            {
+                AzureFilesIdentityBasedAuthentication.Validate();
             }
             if (NetworkRuleSet != null)
             {

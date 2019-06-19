@@ -154,6 +154,8 @@ known_presence_issues:
   - ['sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
   
+  - ['sdk/search','#5499']
+  - ['sdk/search/Microsoft.Azure.Management.Search','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']

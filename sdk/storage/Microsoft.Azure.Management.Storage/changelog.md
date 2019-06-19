@@ -1,10 +1,20 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 12.0.0
+
+- Support Create or Update Storage Account with AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions as 'AADDS' or 'None'.
+
+**Breaking changes**
+
+- Remove StorageAccount property: EnableAzureFilesAadIntegration.
+- BlobContainers.List() return value type change from ListContainerItems to IPage<ListContainerItem>.
+
 ### Changes in 11.0.0
 
 - Upgrade to rest api version 2019-04-01
 - Support Revoke UserDelegationKeys on a specified Storage account
 - Support Enable/Disable Automatic Snapshot Policy on Blob Service Properties of a specified Storage account 
+- Support Create or Update Storage Account with Sku Standard_GZRS and Standard_RAGZRS
 
 **Breaking changes**
 

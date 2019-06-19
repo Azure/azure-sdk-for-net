@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventSender" />.
+    ///   an <see cref="EventHubProducer" />.
     /// </summary>
     ///
     public sealed class EventPosition
@@ -26,15 +26,15 @@ namespace Azure.Messaging.EventHubs
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition FirstAvailableEvent => FromOffset(StartOfStreamOffset, true);
+        public static EventPosition Earliest => FromOffset(StartOfStreamOffset, false);
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventReceiver"/>
+        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventHubConsumer"/>
         ///   is created with this position.
         /// </summary>
         ///
-        public static EventPosition NewEventsOnly => FromOffset(EndOfStreamOffset, false);
+        public static EventPosition Latest => FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
         ///   The offset of the eventidentified by this position.

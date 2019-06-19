@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A sender created for a specific partition cannot send events using a partition key.  This sender is associated with partition &apos;{0}&apos;..
+        ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition &apos;{0}&apos;..
         /// </summary>
         internal static string CannotSendWithPartitionIdAndPartitionKey
         {
@@ -166,13 +166,24 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, the path to an Event Hub, and a Shared Access Signature (both the name and value) to be valid..
+        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid.  The path to an Event Hub must be included in the connection string or specified separately..
         /// </summary>
-        internal static string MalformedEventHubClientConnectionString
+        internal static string MissingConnectionInformation
         {
             get
             {
-                return ResourceManager.GetString("MalformedEventHubClientConnectionString", resourceCulture);
+                return ResourceManager.GetString("MissingConnectionInformation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.
+        /// </summary>
+        internal static string OnlyOneEventHubNameMayBeSpecified
+        {
+            get
+            {
+                return ResourceManager.GetString("OnlyOneEventHubNameMayBeSpecified", resourceCulture);
             }
         }
 
@@ -201,11 +212,11 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
-        internal static string ReceiverIdentifierOverMaxValue
+        internal static string ConsumerIdentifierOverMaxValue
         {
             get
             {
-                return ResourceManager.GetString("ReceiverIdentifierOverMaxValue", resourceCulture);
+                return ResourceManager.GetString("ConsumerIdentifierOverMaxValue", resourceCulture);
             }
         }
 
@@ -283,6 +294,28 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("ValueOutOfRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential..
+        /// </summary>
+        internal static string UnsupportedCredential
+        {
+            get
+            {
+                return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to >A shared key credential is unable to generate a token directly.  Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens..
+        /// </summary>
+        internal static string SharedKeyCredentialCannotGenerateTokens
+        {
+            get
+            {
+                return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
             }
         }
     }

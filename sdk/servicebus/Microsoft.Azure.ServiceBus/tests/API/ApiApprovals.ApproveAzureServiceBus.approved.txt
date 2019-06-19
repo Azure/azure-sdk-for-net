@@ -900,7 +900,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public abstract class TokenProvider : Microsoft.Azure.ServiceBus.Primitives.ITokenProvider
     {
         protected TokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAadTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority = "https://login.microsoftonline.com/common", object state = null) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority = "https://login.microsoftonline.com/common", object state = null) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedIdentityTokenProvider() { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }

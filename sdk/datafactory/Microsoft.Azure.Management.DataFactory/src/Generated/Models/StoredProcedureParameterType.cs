@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     {
         public const string String = "String";
         public const string Int = "Int";
+        public const string Int64 = "Int64";
         public const string Decimal = "Decimal";
         public const string Guid = "Guid";
         public const string Boolean = "Boolean";
