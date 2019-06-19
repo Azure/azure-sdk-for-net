@@ -3,8 +3,9 @@
   "meta": {
     "autorest_options": {
       "csharp": "",
+      "reflect-api-versions": "",
       "license-header": "MICROSOFT_MIT_NO_VERSION",
-      "sdkrel:csharp-sdks-folder": "./src/SDKs",
+      "sdkrel:csharp-sdks-folder": "./sdk",
       "use": "@microsoft.azure/autorest.csharp"
     },
     "advanced_options": {

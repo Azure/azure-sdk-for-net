@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Azure.Core.Tests
                         credential => credential.GetTokenAsync(
                             It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
-                    .ReturnsAsync("token");
+                    .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
             else
             {
@@ -34,7 +35,7 @@ namespace Azure.Core.Tests
                         credential => credential.GetToken(
                             It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
                             It.IsAny<CancellationToken>()))
-                    .Returns("token");
+                    .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }
 
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
@@ -48,7 +49,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RequestsTokenEveryRequest()
         {
-            string currentToken = null;
+            AccessToken currentToken = new AccessToken(null, default);
             var credentialsMock = new Mock<TokenCredential>();
 
             if (IsAsync)
@@ -71,10 +72,10 @@ namespace Azure.Core.Tests
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
-            currentToken = "token1";
+            currentToken = new AccessToken("token1", DateTimeOffset.UtcNow);
             await SendGetRequest(transport, policy);
 
-            currentToken = "token2";
+            currentToken = new AccessToken("token2", DateTimeOffset.UtcNow);
             await SendGetRequest(transport, policy);
 
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
@@ -94,7 +95,7 @@ namespace Azure.Core.Tests
                         credential => credential.GetTokenAsync(
                             It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
-                    .ReturnsAsync("token");
+                    .ReturnsAsync(new AccessToken("token", DateTimeOffset.MaxValue));
             }
             else
             {
@@ -102,7 +103,7 @@ namespace Azure.Core.Tests
                         credential => credential.GetToken(
                             It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
                             It.IsAny<CancellationToken>()))
-                    .Returns("token");
+                    .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }
 
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, "scope");

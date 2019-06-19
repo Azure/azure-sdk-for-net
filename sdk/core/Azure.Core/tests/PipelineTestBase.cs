@@ -11,14 +11,9 @@ namespace Azure.Core.Tests
     {
         protected static async Task<Response> ExecuteRequest(Request request, HttpClientTransport transport)
         {
-            using (var message = new HttpPipelineMessage(CancellationToken.None)
-            {
-                Request = request
-            })
-            {
-                await transport.ProcessAsync(message);
-                return message.Response;
-            }
+            var message = new HttpPipelineMessage(CancellationToken.None) { Request = request };
+            await transport.ProcessAsync(message);
+            return message.Response;
         }
     }
 }

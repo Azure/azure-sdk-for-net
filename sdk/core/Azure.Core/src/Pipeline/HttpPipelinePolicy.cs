@@ -26,18 +26,13 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpPipelineMessage"/> next policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
         /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static async Task ProcessNextAsync(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpPipelineMessage message)
+        protected static Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (pipeline.IsEmpty) throw new InvalidOperationException("last policy in the pipeline must be a transport");
-            var next = pipeline.Span[0];
-            await next.ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
+            return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void ProcessNext(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpPipelineMessage message)
+        protected static void ProcessNext(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (pipeline.IsEmpty) throw new InvalidOperationException("last policy in the pipeline must be a transport");
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
     }

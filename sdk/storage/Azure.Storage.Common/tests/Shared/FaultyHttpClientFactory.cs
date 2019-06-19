@@ -25,7 +25,7 @@ namespace Azure.Storage.Test.Shared
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
 
             // Copy to a MemoryStream first because RetriableStreamImpl
             // doesn't support Position
@@ -43,7 +43,7 @@ namespace Azure.Storage.Test.Shared
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessNext(pipeline, message);
+            ProcessNext(message, pipeline);
 
             // Copy to a MemoryStream first because RetriableStreamImpl
             // doesn't support Position
@@ -59,7 +59,7 @@ namespace Azure.Storage.Test.Shared
                 this._exceptionToRaise);
         }
     }
-    
+
     /*
     sealed class FaultyUploadHttpClientFactory : IPipelinePolicyFactory
     {
@@ -67,7 +67,7 @@ namespace Azure.Storage.Test.Shared
 
         static readonly int retriesBeforeSuccess = 3;
         static int currentCount = 0;
-        
+
         readonly Exception exceptionToRaise;
 
         public FaultyUploadHttpClientFactory(Exception exceptionToRaise) => this.exceptionToRaise = exceptionToRaise;
@@ -116,7 +116,7 @@ namespace Azure.Storage.Test.Shared
 
             this.faultyStream = faultyStream;
         }
-    
+
         protected override Task<Stream> CreateContentReadStreamAsync() => Task.FromResult(this.faultyStream);
 
         protected override Task SerializeToStreamAsync(Stream stream, TransportContext context) => this.faultyStream.CopyToAsync(stream);
