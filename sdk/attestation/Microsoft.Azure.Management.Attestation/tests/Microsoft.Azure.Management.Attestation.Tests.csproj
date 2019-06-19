@@ -4,7 +4,7 @@
     <PackageId>Attestation.Tests</PackageId>
     <Version>1.0.0</Version>
     <Description>Attestation.Tests Class library</Description>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>Attestatio.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
