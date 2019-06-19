@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.ConstructedWith.ConsumerGroup, Is.EqualTo(consumerGroup), "The consumer group should match.");
             Assert.That(mock.ConstructedWith.Partition, Is.EqualTo(partition), "The partition should match.");
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(mock.ConstructedWith.Position, position), Is.True, "The starting event position should match.");
-            Assert.That(mock.ConstructedWith.Priority, Is.EqualTo(priority), "The exclusive priority should match.");
+            Assert.That(mock.ConstructedWith.Priority, Is.EqualTo(priority), "The ownerlevel should match.");
             Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The consumer identifier should match.");
         }
 

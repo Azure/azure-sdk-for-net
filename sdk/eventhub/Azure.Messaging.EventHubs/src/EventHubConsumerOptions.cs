@@ -46,15 +46,15 @@ namespace Azure.Messaging.EventHubs
         ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
         ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
-        ///   partition/consumer group pair, the one having a larger <see cref="ExclusiveConsumerPriority"/> value will "win."
+        ///   partition/consumer group pair, the one having a larger <see cref="OwnerLevel"/> value will "win."
         ///
-        ///   When an exclusive consumer is used, those consumers which are not exclusive or which have a lower priority will either
+        ///   When an exclusive consumer is used, other consumers which are non-exclusive or which have a lower owner level will either
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
         /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
         ///
-        public long? ExclusiveConsumerPriority { get; set; }
+        public long? OwnerLevel { get; set; }
 
         /// <summary>
         ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue
@@ -163,7 +163,7 @@ namespace Azure.Messaging.EventHubs
             new EventHubConsumerOptions
             {
                 ConsumerGroup = this.ConsumerGroup,
-                ExclusiveConsumerPriority = this.ExclusiveConsumerPriority,
+                OwnerLevel = this.OwnerLevel,
                 Retry = this.Retry?.Clone(),
 
                 _identifier = this._identifier,

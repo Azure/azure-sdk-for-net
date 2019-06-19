@@ -280,9 +280,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
                 PartitionReceiver consumer;
 
-                if (consumerOptions.ExclusiveConsumerPriority.HasValue)
+                if (consumerOptions.OwnerLevel.HasValue)
                 {
-                    consumer = TrackOneClient.CreateEpochReceiver(consumerOptions.ConsumerGroup, partitionId, position, consumerOptions.ExclusiveConsumerPriority.Value, trackOneOptions);
+                    consumer = TrackOneClient.CreateEpochReceiver(consumerOptions.ConsumerGroup, partitionId, position, consumerOptions.OwnerLevel.Value, trackOneOptions);
                 }
                 else
                 {

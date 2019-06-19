@@ -502,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
-            Assert.That(actualOptions.ExclusiveConsumerPriority, Is.EqualTo(expectedOptions.ExclusiveConsumerPriority), "The exclusive priorities should match.");
+            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
@@ -526,7 +526,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubConsumerOptions
             {
                 ConsumerGroup = "SomeGroup",
-                ExclusiveConsumerPriority = 251,
+                OwnerLevel = 251,
                 Identifier = "Bob",
                 PrefetchCount = 600,
                 Retry = clientOptions.Retry,
@@ -545,7 +545,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
             Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
-            Assert.That(actualOptions.ExclusiveConsumerPriority, Is.EqualTo(expectedOptions.ExclusiveConsumerPriority), "The exclusive priorities should match.");
+            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
@@ -712,7 +712,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
             Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
-            Assert.That(actualOptions.ExclusiveConsumerPriority, Is.EqualTo(expectedOptions.ExclusiveConsumerPriority), "The exclusive priorities should match.");
+            Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
             Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)actualOptions.Retry, (ExponentialRetry)expectedOptions.Retry), "The retries should match.");
