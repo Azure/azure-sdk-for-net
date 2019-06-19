@@ -20,7 +20,6 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        //TODO address the flakiness of this test.
         [Test]
         public void BlobUriBuilder_RoundTrip()
         {
@@ -32,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
             var expectedUri = WebUtility.UrlDecode(service.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
 
-            Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
+            Assert.AreEqual(expectedUri, actualUri);
         }
 
         [Test]
