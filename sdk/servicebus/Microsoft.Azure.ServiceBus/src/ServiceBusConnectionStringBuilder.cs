@@ -29,11 +29,12 @@ namespace Microsoft.Azure.ServiceBus
         const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-        string authType;
+        AuthenticationType authType = AuthenticationType.None;
 
-        public static class AuthenticationType
+        public enum AuthenticationType
         {
-            public const string ManagedIdentity = "Managed Identity";
+            None,
+            ManagedIdentity
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Microsoft.Azure.ServiceBus
             get => this.sasKeyName;
             set
             {
-                if (this.Authentication != null)
+                if (this.Authentication != AuthenticationType.None)
                 {
                     throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
                 }
@@ -223,7 +224,7 @@ namespace Microsoft.Azure.ServiceBus
             get => this.sasToken;
             set
             {
-                if (this.Authentication != null)
+                if (this.Authentication != AuthenticationType.None)
                 {
                     throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
                 }
@@ -245,7 +246,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Enables Azure Active Directory Managed Identity authentication when set to ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity
         /// </summary>
-        public string Authentication
+        public AuthenticationType Authentication
         {
             get => this.authType;
             set
@@ -304,9 +305,9 @@ namespace Microsoft.Azure.ServiceBus
                 connectionStringBuilder.Append(OperationTimeoutConfigName).Append(KeyValueSeparator).Append(this.OperationTimeout).Append(KeyValuePairDelimiter);
             }
 
-            if (this.Authentication != null)
+            if (this.Authentication == AuthenticationType.ManagedIdentity)
             {
-                connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append(this.Authentication).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append("Managed Identity").Append(KeyValuePairDelimiter);
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -409,7 +410,11 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Authentication = value;
+                    value = value.Replace(" ", string.Empty);
+                    if (!Enum.TryParse(value, true, out this.authType))
+                    {
+                        this.authType = AuthenticationType.None;
+                    }
                 }
                 else
                 {
