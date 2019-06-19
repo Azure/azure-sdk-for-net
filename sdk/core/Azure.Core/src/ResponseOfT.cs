@@ -8,13 +8,15 @@ namespace Azure
 {
     public readonly struct Response<T> : IDisposable
     {
+        private readonly Response _rawResponse;
+
         public Response(Response response, T parsed)
         {
-            Raw = response;
+            _rawResponse = response;
             Value = parsed;
         }
 
-        public Response Raw { get; }
+        public Response GetRawResponse() => _rawResponse;
 
         public T Value { get; }
 
@@ -22,7 +24,7 @@ namespace Azure
 
         public void Dispose()
         {
-            Raw.Dispose();
+            GetRawResponse().Dispose();
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

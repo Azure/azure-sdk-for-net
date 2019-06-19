@@ -10,8 +10,10 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    public class RetryPolicy : HttpPipelinePolicy
     {
+        private readonly Random _random = new ThreadSafeRandom();
+
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
@@ -19,8 +21,22 @@ namespace Azure.Core.Pipeline.Policies
         /// <summary>
         /// Gets or sets the maximum number of retry attempts before giving up.
         /// </summary>
-        public int MaxRetries { get; set; } = 10;
+        public int MaxRetries { get; set; } = 3;
 
+        /// <summary>
+        /// Gets or sets the timespan used as delay between the retries or as a base for exponential backoff.
+        /// </summary>
+        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(0.8);
+
+        /// <summary>
+        /// Gets or sets maximum timespan to pause between requests.
+        /// </summary>
+        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
+
+        /// <summary>
+        /// Gets os sets retry mode
+        /// </summary>
+        public RetryMode Mode { get; set; } = RetryMode.Fixed;
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -44,11 +60,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                     }
                     else
                     {
-                        ProcessNext(pipeline, message);
+                        ProcessNext(message, pipeline);
                     }
                 }
                 catch (Exception ex)
@@ -106,11 +122,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await WaitAsync(delay, message.Cancellation);
+                        await WaitAsync(delay, message.CancellationToken);
                     }
                     else
                     {
-                        Wait(delay, message.Cancellation);
+                        Wait(delay, message.CancellationToken);
                     }
                 }
 
@@ -154,8 +170,38 @@ namespace Azure.Core.Pipeline.Policies
             return TimeSpan.Zero;
         }
 
-        protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+        private void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        {
+            delay = TimeSpan.Zero;
 
-        protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
+            switch (Mode)
+            {
+                case RetryMode.Fixed:
+                    delay = Delay;
+                    break;
+                case RetryMode.Exponential:
+                    delay = CalculateExponentialDelay(attempted);
+                    break;
+            }
+
+            TimeSpan serverDelay = GetServerDelay(message);
+            if (serverDelay > delay)
+            {
+                delay = serverDelay;
+            }
+        }
+
+        private void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+        {
+            delay = CalculateExponentialDelay(attempted);
+        }
+
+        private TimeSpan CalculateExponentialDelay(int attempted)
+        {
+            return TimeSpan.FromMilliseconds(
+                Math.Min(
+                    (1 << (attempted - 1)) * _random.Next((int)(Delay.TotalMilliseconds * 0.8), (int)(Delay.TotalMilliseconds * 1.2)),
+                    MaxDelay.TotalMilliseconds));
+        }
     }
 }

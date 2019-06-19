@@ -428,7 +428,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             }
             else
             {
-                return EventHubClient.Create(
+                return EventHubClient.CreateWithTokenProvider(
                     this.EndpointAddress,
                     this.EventHubPath,
                     this.tokenProvider,

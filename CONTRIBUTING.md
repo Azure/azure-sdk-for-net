@@ -10,61 +10,62 @@
 
 ### To build:
 =======
-#### If you have recently cloned the repo or did a pull from upstream or did git clean -xdf you need to the following before you do anything else in order to build your projects
-
- 1. Open **elevated** VS 2017 command prompt
- 2. Navigate to repository root directory
- 3. Skip verification for the following dlls
-    - Sn -Vr tools\bootstrapTools\taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll
-    - Sn -Vr tools\SdkBuildTools\tasks\net46\Microsoft.Azure.Sdk.Build.Tasks.dll
- 4. Execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
- 5. Follow below steps to start building your repo/project
 
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
- 1. Open any solution, eg "SDKs\Compute\Compute.sln"
+ 1. Open any solution, eg "Compute\Microsoft.Azure.Management.Compute.sln"
  2. Build solution from VS
  
 #### Full Build from command line
 
- 1. Open VS 2017 command prompt
+ 1. Open VS 2017 developer command prompt
  2. Navigate to repository root directory
  3. Invoke **msbuild** build.proj /t:Build
  will Build
- ##### *Build* without any scope will build all SDK's and create nuget packages.
+ ##### *Build* without any scope will build all management SDK's.
+
+#### Build single SDK
+`msbuild build.proj /t:CreateNugetPackage /p:scope=Compute`
+
+### To run tests:
+Using Visual Studio:
+  - Build project in VS
+  - "Test Explorer" window will get populated with tests. Right click on a test that you wish to Run/Debug.
+
+Using the command line:
+msbuild .\build.proj /t:Runtests /p:Scope=Compute
+in the above example RunTests will build and run tests for Compute only
+or you can use command line CLI
+dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
 
 #### Create single nuget package
 In order to build one package and run it's test
-`msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
-Nuget package will be created in root directory under \binaries\packages
- 
-### To run the tests:
-Using Visual Studio:
-  - Build.
-  - "Test Explorer" window will get populated with tests. Select test and Run/Debug.
+`msbuild build.proj /t:CreateNugetPackage /p:scope=Compute`
+Nuget package will be created in root directory under \artifacts\packages\Debug (default configuration is Debug)
 
-Using the command line:
-msbuild .\build.proj /t:"Runtests" /p:Scope=SDKs\Compute
-in the above example RunTests will build and run tests for Compute only
-or
-dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
+### Non-Windows command line build
+Now you can use the same command on non-windows as above
+for e.g. on Ubuntu you can do something like below:
+`dotnet msbuild build.proj /t:Build /p:scope=Compute`
+`dotnet msbuild build.proj /t:RunTests /p:scope=Compute`
+`dotnet msbuild build.proj /t:CreateNugetPackage /p:scope=Compute`
 
-  - Refer to the "To build" section to get the command window set up.
-  - Invoke "RunTests" target from "Build.proj". RunTests will build and run tests 
-        *msbuild build.proj /t:RunTests /p:scope=SDKs\Compute*
+### Update build tools
+Build tools are now downloaded as part of a nuget package under root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools
+If for any reason there is an update to the build tools, you will then need to first delete directory root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools and reexecute your build command. This will simply get the latest version of build tools.
+
 
 ## To on-board new libraries
 
 ### Project Structure
 
-In "SDKs\< Service Name >", you will find projects for services that have already been implemented
+In "sdk\< Service Name >", you will find projects for services that have already been implemented
 
-  - Each SDK project needs to target .NET 4.5.2 and .NET Standard 1.4
-	  - Test project needs to target NetCoreApp 1.1
+  - The easiest way is to model your test/sdk project using existing test/sdk project
+    - Make a copy of existing csproj and change the meta data relevant to your SDK
+    - This ensures the SDK that will be generated will be consistent (including consistent target frameworks)
   - Each service contains a project for their generated/customized code
     - The folder 'Generated' contains the generated code
-    - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
-    - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
-  - Services also contain a project for their tests
+    - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or 
 
 ### Standard Process
 
@@ -78,24 +79,18 @@ In "SDKs\< Service Name >", you will find projects for services that have alread
  6. **MANDATORY**: Add or update tests for the newly generated code.
  7. Once added to the Azure SDK for .NET, build your local package using command
  e.g.
- `msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
- 8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **psSdkJson6** branch, change the package version in the .csproj file, as well as in the AssemblyInfo.cs file.
- 9.  A Pull request of your Azure SDK for .NET changes against **psSdkJson6** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
- 11. Both the pull requests will be reviewed and merged by the Azure SDK team
+ `msbuild build.proj /t:CreateNugetPackage /p:scope=Compute`
+ 8.  A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+ 9. Both the pull requests will be reviewed and merged by the Azure SDK team
 
 ### New Resource Provider
 1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
 2. Follow the standard process described above.
 3. Directory names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
 4. Create a new directory (name of your service e.g. Compute, Storage etc)
-5. If you have a data plane as well as management plane follow the following directory structure.
- - `SDKs\<RPName>\management\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
- - `SDKs\<RPName\management\<RPName>.Tests\Management.<RPName>.Tests.csproj`
- - `SDKs\<RPName>\dataplane\Microsoft.Azure.<RPName>\Microsoft.Azure.<RPName>.csproj`
- - `SDKs\<RPName\dataplane\Microsoft.Azure.<RPName>.Tests\Microsoft.Azure.<RPName>.Tests.csproj`
-6. If you only have management plane SDK then have the following directory structure
- - `SDKs\<RPName>\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
- - `SDKs\<RPName\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+6. For e.g. for management plane SDKs the following directory structure
+ - `<RPName>\<packageName>\src\Microsoft.Azure.Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `<RPName>\<packageName>\tests\Microsoft.Azure.Management.<RPName>.Tests.csproj`
 7. Copy .csproj from any other .csproj and update the following information in the new .csproj
  - PackageId
  - Description

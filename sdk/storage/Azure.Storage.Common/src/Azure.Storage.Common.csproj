@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
+    <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
+    <Description>
+      This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/changelog.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/BreakingChanges.txt
+      Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
+      Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
+    </Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--
+    .shproj Shared Code Projects aren't supported outside of VS/Windows, so
+    we're hacking around that by manually sharing a couple folders of code.
+
+    The Common project is the most sensible place for shared code to live.
+    Unfortunately that shared code isn't used by the common project (and
+    will actually break if you include it) so we're explicitly excluding it
+    here.
+    -->
+    <Compile Remove="Shared\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+</Project>

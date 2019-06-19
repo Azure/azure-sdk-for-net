@@ -22,6 +22,7 @@ tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
 src/NuGet.Config
 tools/7-zip/
+#tools/LocalNugetFeed/Microsoft.Internal.NetSdkBuild.Mgmt.Tools.*.nupkg
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
@@ -114,7 +115,9 @@ tools/*.dll
 
 # Sensitive files
 *.keys
+!Azure.Security.KeyVault.Keys
 *.pfx
+sdk/storage/Azure.Storage.Common/tests/Shared/TestConfigurations.xml
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -143,3 +146,7 @@ build.out
 csx/
 *.GhostDoc.xml
 pingme.txt
+
+# TS/Node files
+dist/
+node_modules/
