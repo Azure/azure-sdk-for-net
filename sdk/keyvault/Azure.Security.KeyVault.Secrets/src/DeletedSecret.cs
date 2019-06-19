@@ -7,6 +7,10 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
 {
+    /// <summary>
+    /// DeletedSecret is the resource consisting of name, recovery id, deleted date, scheduled purge date and its attributes 
+    /// inherited from <see cref="SecretBase"/>.
+    /// </summary>
     public class DeletedSecret : SecretBase
     {
         internal DeletedSecret()
@@ -14,10 +18,19 @@ namespace Azure.Security.KeyVault.Secrets
 
         }
 
+        /// <summary>
+        /// The identifier of the deleted secret object. This is used to recover the secret.
+        /// </summary>
         public string RecoveryId { get; private set; }
 
+        /// <summary>
+        /// Time when the secret was deleted, in UTC.
+        /// </summary>
         public DateTimeOffset? DeletedDate { get; private set; }
 
+        /// <summary>
+        /// Time when the secret was deleted, in UTC.
+        /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
@@ -58,8 +71,6 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(scheduledPurgeDate.GetInt64());
             }
-
-
         }
     }
 }

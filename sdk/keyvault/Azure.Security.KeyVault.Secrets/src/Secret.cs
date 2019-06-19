@@ -7,12 +7,20 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
 {
+    /// <summary>
+    /// Secret is the resource consisting of name, value and its attributes inherited from <see cref="SecretBase"/>.
+    /// </summary>
     public class Secret : SecretBase
     {
         internal Secret()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Secret class.
+        /// </summary>
+        /// <param name="name">The name of the secret.</param>
+        /// <param name="value">The value of the secret.</param>
         public Secret(string name, string value)
             : base(name)
         {
@@ -21,6 +29,9 @@ namespace Azure.Security.KeyVault.Secrets
             Value = value;
         }
 
+        /// <summary>
+        /// The value of the secret.
+        /// </summary>
         public string Value { get; private set; }
 
         internal override void ReadProperties(JsonElement json)
@@ -43,5 +54,4 @@ namespace Azure.Security.KeyVault.Secrets
             base.WriteProperties(ref json);
         }
     }
-
 }
