@@ -75,9 +75,11 @@ namespace Azure
         /// </remarks>
         public virtual async ValueTask<Response<T>> WaitCompletionAsync(CancellationToken cancellationToken = default)
         {
-            while (true) {
+            while (true)
+            {
                 await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (HasCompleted) {
+                if (HasCompleted)
+                {
                     return new Response<T>(_response, Value);
                 }
                 await Task.Delay(PollingInterval, cancellationToken).ConfigureAwait(false);
