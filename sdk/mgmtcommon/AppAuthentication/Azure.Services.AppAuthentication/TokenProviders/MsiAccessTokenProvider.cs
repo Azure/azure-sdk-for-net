@@ -3,7 +3,6 @@
 
 using System;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -74,7 +73,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             // request to IMDS timed out (internal cancellation token cancelled), neither Azure VM IMDS nor App Services MSI are available
                             if (internalTokenSource.Token.IsCancellationRequested)
                             {
-                                throw new HttpRequestException();
+                                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
                             }
 
                             throw;
@@ -109,7 +109,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     return request;
                 };
 
-                HttpResponseMessage response = await httpClient.SendAsyncWithRetry(getRequestMessage, cancellationToken).ConfigureAwait(false);
+                HttpResponseMessage response;
+                try
+                {
+                    response = await httpClient.SendAsyncWithRetry(getRequestMessage, cancellationToken).ConfigureAwait(false);
+                }
+                catch (HttpRequestException)
+                {
+                    throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
+                        $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.RetryFailure} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                }
 
                 // If the response is successful, it should have JSON response with an access_token field
                 if (response.IsSuccessStatusCode)
@@ -139,15 +148,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                throw new Exception($"MSI ResponseCode: {response.StatusCode}, Response: {exceptionText}");
-            }
-            catch (HttpRequestException)
-            {
-                throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.RetryFailure} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                throw new Exception($"{AzureServiceTokenProviderException.RetryFailure} MSI ResponseCode: {response.StatusCode}, Response: {exceptionText}");
             }
             catch (Exception exp)
             {
+                if (exp is AzureServiceTokenProviderException) throw;
+
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
                     $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.GenericErrorMessage} {exp.Message}");
             }

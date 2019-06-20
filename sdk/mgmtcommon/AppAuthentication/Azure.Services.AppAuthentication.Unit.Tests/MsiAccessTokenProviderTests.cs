@@ -222,30 +222,50 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
-            DateTime start = DateTime.Now;
             var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
-            TimeSpan duration = DateTime.Now - start;
 
             Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
+            Assert.DoesNotContain(AzureServiceTokenProviderException.RetryFailure, exception.Message);
         }
 
         [Theory]
         [InlineData(MockMsi.MsiTestType.MsiUnresponsive)]
         [InlineData(MockMsi.MsiTestType.MsiThrottled)]
         [InlineData(MockMsi.MsiTestType.MsiTransientServerError)]
-        private async Task TransientErrorTest(MockMsi.MsiTestType testType)
+        private async Task TransientErrorRetryTest(MockMsi.MsiTestType testType)
         {
+            // To simplify tests, mock as MSI App Services to skip Azure VM IDMS probe request by 
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+
             MockMsi mockMsi = new MockMsi(testType);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
             MsiRetryHelper.WaitBeforeRetry = false;
 
-            // Get token.
+            // Get token, requests will fail several times before success
             var authResult = await msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
-            // Check if the principalused and type are as expected. 
             Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, expiresOn: authResult.ExpiresOn);
+
+            // Request for token again, subsequent requests will all fail
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
+
+            Assert.Contains(AzureServiceTokenProviderException.RetryFailure, exception.Message);
+
+            if (testType == MockMsi.MsiTestType.MsiUnresponsive)
+            {
+                Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
+            }
+            else
+            {
+                Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.Message);
+                Assert.Contains(testType.ToString(), exception.Message);
+            }
+
         }
     }
-
 }
