@@ -66,7 +66,7 @@ namespace Azure
         public TimeSpan PollingInterval { get; set; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Reriodically calls the server till the LRO completes.
+        /// Periodically calls the server till the LRO completes.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>

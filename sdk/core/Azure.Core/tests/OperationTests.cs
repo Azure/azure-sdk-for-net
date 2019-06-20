@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,28 +36,6 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(testResult, operation.Value);
             Assert.AreEqual(testResponse, operation.GetRawResponse());
-        }
-
-        [Test]
-        public void Cancellation()
-        {
-            var cancel = new CancellationTokenSource();
-            cancel.CancelAfter(100);
-
-            int updateCalled = 0;
-
-            var operation = new TestOperation<int>(TimeSpan.FromMilliseconds(1000), 100, null);
-            operation.PollingInterval = TimeSpan.FromMilliseconds(10);
-            operation.UpdateCalled = () => { updateCalled++; };
-
-            Assert.That(async () =>
-            {
-                _ = await operation.WaitCompletionAsync(cancel.Token);
-            }, Throws.InstanceOf<OperationCanceledException>());
-
-            Assert.IsTrue(cancel.IsCancellationRequested);
-            Assert.Greater(updateCalled, 0);
-            Assert.IsFalse(operation.HasValue);
         }
 
         [Test]
@@ -108,6 +84,40 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(testResult, operation.Value);
             Assert.AreEqual(testResponse, operation.GetRawResponse());
+        }
+
+        [Test]
+        public void Cancellation()
+        {
+            var cancel = new CancellationTokenSource();
+            cancel.CancelAfter(100);
+
+            int updateCalled = 0;
+
+            var operation = new TestOperation<int>(TimeSpan.FromMilliseconds(1000), 100, null);
+            operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+            operation.UpdateCalled = () => { updateCalled++; };
+
+            Assert.That(async () =>
+            {
+                _ = await operation.WaitCompletionAsync(cancel.Token);
+            }, Throws.InstanceOf<OperationCanceledException>());
+
+            Assert.IsTrue(cancel.IsCancellationRequested);
+            Assert.Greater(updateCalled, 0);
+            Assert.IsFalse(operation.HasValue);
+        }
+
+        [Test]
+        public void NotCompleted()
+        {
+            var operation = new TestOperation<int>(TimeSpan.FromMilliseconds(1000), 100, null);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                _ = operation.Value;
+            });
         }
     }
 }
