@@ -73,7 +73,6 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         private EventHubScope(string eventHubHame,
                               IReadOnlyList<string> consumerGroups)
         {
-            //TODO: Constructor needs to take the state needed to tear down the Event Hub.
             EventHubName = eventHubHame;
             ConsumerGroups = consumerGroups;
         }
