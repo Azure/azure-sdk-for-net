@@ -31,13 +31,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerWithNoOptionsCanSend()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ProducerWithNoOptionsCanSend(TransportType transportType)
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 await using (var producer = client.CreateProducer())
                 {
                     var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
@@ -52,14 +54,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerWithOptionsCanSend()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ProducerWithOptionsCanSend(TransportType transportType)
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var producerOptions = new EventHubProducerOptions { Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(45), 5) };
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 await using (var producer = client.CreateProducer(producerOptions))
                 {
                     var events = new[] { new EventData(Encoding.UTF8.GetBytes("AWord")) };
