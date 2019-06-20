@@ -197,8 +197,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 await using (var producer = client.CreateProducer())
                 {
-                    var events = new[] { new EventData(new byte[0]) };
-                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                    var singleEvent = new EventData(new byte[0]);
+                    var eventBatch = new[] { new EventData(new byte[0]) };
+
+                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.Nothing);
                 }
             }
         }
@@ -219,8 +222,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event
-                    var events = new[] { new EventData(new byte[1000000]) };
-                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                    var singleEvent = new EventData(new byte[1000000]);
+                    var eventBatch = new[] { new EventData(new byte[1000000]) };
+
+                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.Nothing);
                 }
             }
         }
@@ -241,8 +247,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event
-                    var events = new[] { new EventData(new byte[1100000]) };
-                    Assert.ThrowsAsync<TrackOne.MessageSizeExceededException>(async () => await producer.SendAsync(events));
+                    var singleEvent = new EventData(new byte[1500000]);
+                    var eventBatch = new[] { new EventData(new byte[1500000]) };
+
+                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
                 }
             }
         }
@@ -268,6 +277,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         new EventData(Encoding.UTF8.GetBytes("This is another message")),
                         new EventData(Encoding.UTF8.GetBytes("So many messages"))
                     };
+
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
@@ -294,6 +304,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         new EventData(new byte[0]),
                         new EventData(new byte[0])
                     };
+
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
@@ -321,6 +332,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         new EventData(new byte[1000000 / 3]),
                         new EventData(new byte[1000000 / 3])
                     };
+
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                 }
             }
@@ -344,11 +356,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Actual limit is 1046520 for a single event
                     var events = new[]
                     {
-                        new EventData(new byte[1100000 / 3]),
-                        new EventData(new byte[1100000 / 3]),
-                        new EventData(new byte[1100000 / 3])
+                        new EventData(new byte[1500000 / 3]),
+                        new EventData(new byte[1500000 / 3]),
+                        new EventData(new byte[1500000 / 3])
                     };
-                    Assert.ThrowsAsync<TrackOne.MessageSizeExceededException>(async () => await producer.SendAsync(events));
+
+                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
                 }
             }
         }
@@ -378,6 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             new EventData(Encoding.UTF8.GetBytes("This is another message")),
                             new EventData(Encoding.UTF8.GetBytes("Do we need more messages"))
                         };
+
                         Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
                     }
                 }
@@ -438,7 +452,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.CloseAsync();
                     }
 
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await producer.SendAsync(events));
+                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<ObjectDisposedException>());
                 }
             }
         }
@@ -449,7 +463,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCannotSendToInvalidPartition()
+        [TestCase("XYZ")]
+        [TestCase("-1")]
+        [TestCase("1000")]
+        [TestCase("-")]
+        public async Task ProducerCannotSendToInvalidPartition(string invalidPartition)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -459,21 +477,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var events = new[] { new EventData(Encoding.UTF8.GetBytes("Lorem Ipsum")) };
 
-                    // Some invalid partition values. These will fail on the service side.
-                    var invalidPartitions = new[]
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = invalidPartition }))
                     {
-                        "XYZ",
-                        "-1",
-                        "1000",
-                        "-"
-                    };
-
-                    foreach (var invalidPartition in invalidPartitions)
-                    {
-                        await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = invalidPartition }))
-                        {
-                            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await producer.SendAsync(events));
-                        }
+                        Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<ArgumentOutOfRangeException>());
                     }
                 }
             }
