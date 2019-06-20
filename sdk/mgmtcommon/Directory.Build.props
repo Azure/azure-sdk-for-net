@@ -3,5 +3,8 @@
     <IsMgmtProject Condition="'$(IsMgmtProject)' == ''">true</IsMgmtProject>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == ''">false</IsDataPlaneProject>
   </PropertyGroup>
+  <PropertyGroup>
+    <SkipBaselineTargetFxMatching>true</SkipBaselineTargetFxMatching>
+  </PropertyGroup>
   <Import Project="..\Directory.Build.props" />
 </Project>

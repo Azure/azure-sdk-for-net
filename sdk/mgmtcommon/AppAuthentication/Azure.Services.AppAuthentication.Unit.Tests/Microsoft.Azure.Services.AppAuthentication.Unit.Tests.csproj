@@ -7,6 +7,10 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Azure.Services.AppAuthentication.TestCommon\Microsoft.Azure.Services.AppAuthentication.TestCommon.csproj" />
         <ProjectReference Include="..\Azure.Services.AppAuthentication\Microsoft.Azure.Services.AppAuthentication.csproj" />

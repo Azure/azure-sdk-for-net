@@ -8,4 +8,7 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
 	</ItemGroup>
+  <ItemGroup> 
+     <Compile Include="$(RepoEngPath)\mgmt\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" /> 
+  </ItemGroup>
 </Project>
