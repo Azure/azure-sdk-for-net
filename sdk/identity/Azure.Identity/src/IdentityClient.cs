@@ -8,6 +8,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -171,7 +172,7 @@ namespace Azure.Identity
 
             request.Method = HttpPipelineMethod.Post;
 
-            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
+            request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
             request.UriBuilder.Uri = _options.AuthorityHost;
 
@@ -194,7 +195,7 @@ namespace Azure.Identity
 
             request.Method = HttpPipelineMethod.Post;
 
-            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
+            request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
             request.UriBuilder.Uri = _options.AuthorityHost;
 
