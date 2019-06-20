@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <PropertyGroup>
+    <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
   </PropertyGroup>
 

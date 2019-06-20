@@ -9,4 +9,7 @@
     <Error Condition="!Exists('$(ScopePath)')" Text="Scope [$(Scope)] does not exists please specify a path relative to the sdk root directory (i.e. compute, keyvault, etc)" />
     <Error Condition="'$(Scope)' == '' and '$(ForPublishing)' == 'true'" Text="Scope cannot be empty you are intending to automatically publish the build output. Please set a Scope and retry." />
   </Target>
+  
+  <Target Name="Pack" DependsOnTargets="CreateNugetPackage" />
+  <Target Name="VSTest" DependsOnTargets="RunTests" />
 </Project>
