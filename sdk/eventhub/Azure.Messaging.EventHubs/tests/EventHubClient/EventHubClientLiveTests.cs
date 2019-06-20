@@ -126,7 +126,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanRetrieveProperties()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ClientCanRetrieveProperties(TransportType transportType)
         {
             var partitionCount = 4;
 
@@ -134,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
 
-                await using (var client = new EventHubClient(connectionString, scope.EventHubName))
+                await using (var client = new EventHubClient(connectionString, scope.EventHubName, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var properties = await client.GetPropertiesAsync();
 
@@ -152,7 +154,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanRetrievePartitionProperties()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ClientCanRetrievePartitionProperties(TransportType transportType)
         {
             var partitionCount = 4;
 
@@ -173,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     )
                 );
 
-                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubPath, credential))
+                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubPath, credential, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                     var properties = await client.GetPropertiesAsync();
@@ -223,121 +227,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanRetrievePropertiesWithAmqpWebSocketsConnection()
-        {
-            var partitionCount = 4;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitionCount))
-            {
-                var connectionString = TestEnvironment.EventHubsConnectionString;
-
-                await using (var client = new EventHubClient(connectionString, scope.EventHubName, new EventHubClientOptions { TransportType = TransportType.AmqpWebSockets }))
-                {
-                    var properties = await client.GetPropertiesAsync();
-
-                    Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
-                    Assert.That(properties.Path, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
-                    Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedAtUtc, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(5)), "The Event Hub should have been created just about now.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ClientCanRetrievePartitionPropertiesWithAmqpWebSocketsConnection()
-        {
-            var partitionCount = 4;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitionCount))
-            {
-                var clientOptions = new EventHubClientOptions { TransportType = TransportType.AmqpWebSockets };
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var connectionProperties = ConnectionStringParser.Parse(connectionString);
-
-                var credential = new SharedAccessSignatureCredential
-                (
-                    new SharedAccessSignature
-                    (
-                        $"{ clientOptions.TransportType.GetUriScheme() }://{ connectionProperties.Endpoint.Host }/{ connectionProperties.EventHubPath }".ToLowerInvariant(),
-                        connectionProperties.SharedAccessKeyName,
-                        connectionProperties.SharedAccessKey,
-                        TimeSpan.FromHours(4)
-                    )
-                );
-
-                await using (var client = new EventHubClient(connectionProperties.Endpoint.Host, connectionProperties.EventHubPath, credential, clientOptions))
-                {
-                    var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                    var properties = await client.GetPropertiesAsync();
-                    var partition = properties.PartitionIds.First();
-                    var partitionProperties = await client.GetPartitionPropertiesAsync(partition, cancellation.Token);
-
-                    Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
-                    Assert.That(partitionProperties.Id, Is.EqualTo(partition), "The partition identifier should match.");
-                    Assert.That(partitionProperties.EventHubPath, Is.EqualTo(connectionProperties.EventHubPath).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
-                    Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequance number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.Null.Or.Empty, "The last offset should have been populated.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ClientCanSendWithAmqpWebSocketsConnection()
-        {
-            await using (var scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = TransportType.AmqpWebSockets }))
-                await using (var producer = client.CreateProducer())
-                {
-                    var events = new[] { new EventData(Encoding.UTF8.GetBytes("Awesome content")) };
-                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ClientCanReceiveWithAmqpWebSocketsConnection()
-        {
-            await using (var scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = TransportType.AmqpWebSockets }))
-                {
-                    var partition = (await client.GetPartitionIdsAsync()).First();
-
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
-                    {
-                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task ClientCannotRetrieveMetadataWhenClosed(bool sync)
@@ -362,9 +251,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         await client.CloseAsync();
                     }
 
-                    Assert.ThrowsAsync<OperationCanceledException>(async () => await client.GetPartitionIdsAsync());
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetPropertiesAsync());
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetPartitionPropertiesAsync(partition));
+                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<OperationCanceledException>());
+                    Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<ObjectDisposedException>());
+                    Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<ObjectDisposedException>());
                 }
             }
         }
@@ -375,7 +264,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ClientCannotRetrievePartitionPropertiesWhenPartitionIdIsInvalid()
+        [TestCase("XYZ")]
+        [TestCase("-1")]
+        [TestCase("1000")]
+        [TestCase("-")]
+        public async Task ClientCannotRetrievePartitionPropertiesWhenPartitionIdIsInvalid(string invalidPartition)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -383,19 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    // Some invalid partition values. These will fail on the service side.
-                    var invalidPartitions = new[]
-                    {
-                        "XYZ",
-                        "-1",
-                        "1000",
-                        "-"
-                    };
-
-                    foreach (var invalidPartition in invalidPartitions)
-                    {
-                        Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await client.GetPartitionPropertiesAsync(invalidPartition));
-                    }
+                    Assert.That(async () => await client.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
                 }
             }
         }
