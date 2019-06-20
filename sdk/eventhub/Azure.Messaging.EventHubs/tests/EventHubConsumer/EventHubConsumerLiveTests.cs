@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await consumer.CloseAsync();
                         }
 
-                        Assert.ThrowsAsync<ObjectDisposedException>(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero));
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ObjectDisposedException>());
                     }
                 }
             }
@@ -513,7 +513,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCannotReceiveFromInvalidPartition()
+        [TestCase("XYZ")]
+        [TestCase("-1")]
+        [TestCase("1000")]
+        [TestCase("-")]
+        public async Task ConsumerCannotReceiveFromInvalidPartition(string invalidPartition)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -521,21 +525,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    // Some invalid partition values. These will fail on the service side.
-                    var invalidPartitions = new[]
+                    await using (var consumer = client.CreateConsumer(invalidPartition, EventPosition.Latest))
                     {
-                        "XYZ",
-                        "-1",
-                        "1000",
-                        "-"
-                    };
-
-                    foreach (var invalidPartition in invalidPartitions)
-                    {
-                        await using (var consumer = client.CreateConsumer(invalidPartition, EventPosition.Latest))
-                        {
-                            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero));
-                        }
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
                     }
                 }
             }
@@ -613,7 +605,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "nonExistentConsumerGroup" }))
                     {
-                        Assert.ThrowsAsync<TrackOne.MessagingEntityNotFoundException>(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero));
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
                     }
                 }
             }
@@ -982,6 +974,27 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                     Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
                     Assert.That(async () => await invalidGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                }
+            }
+        }
+
+        [Test]
+        public async Task ConsumerCanReceiveWhenClientIsClosed()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    {
+                        client.Close();
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    }
                 }
             }
         }
