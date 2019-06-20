@@ -18,16 +18,6 @@ jobs:
       LoggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=msbuild.normal;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp2:warningsonly;logfile=msbuild.wrn /flp3:errorsonly;logfile=msbuild.err'
 
     steps:
-      # - task: CmdLine@1
-      #   inputs:
-      #     filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
-      #     arguments: -Vr *,31bf3856ad364e35
-      #   displayName: 'Disable strong name verification'
-
-      - task: MSBuild@1
-        inputs:
-          solution: build.proj
-        displayName: 'Install build tools'
       - task: MSBuild@1
         inputs:
           solution: build.proj
@@ -44,13 +34,13 @@ jobs:
   - job: Ubuntu_Build
     pool:
       vmImage: 'ubuntu-16.04'
-  
+
     steps:
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
         inputs:
           version: '$(DotNetCoreVersion)'
-          
+
       - script: dotnet msbuild build.proj /t:RunTests $(LoggingArgs)
         displayName: 'Ubuntu Build and Run tests'
       - task: PublishTestResults@2
@@ -60,3 +50,4 @@ jobs:
           testRunTitle: 'Ubuntu Test Results'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
+

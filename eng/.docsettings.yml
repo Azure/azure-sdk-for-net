@@ -153,9 +153,12 @@ known_presence_issues:
   - ['sdk/mixedreality/Microsoft.Azure.Management.MixedReality','#5499']
   - ['sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
-  
   - ['sdk/search','#5499']
   - ['sdk/search/Microsoft.Azure.Management.Search','#5499']
+  - ['sdk/mgmtcommon', '#5499']
+  - ['sdk\mgmtcommon\TestFramework', '#5499']
+  - ['sdk\mgmtcommon\Auth\Az.Auth\Az.Auth.Tests\Az.Auth.Net452.Test', '#5499']
+  - ['sdk\mgmtcommon\Test\ClientRuntime.E2E.Tests', '#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
@@ -176,7 +179,10 @@ known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.FilesConventions/README.md','#5499']
   - ['sdk/datamigration/Microsoft.Azure.Management.DataMigration/src/README.md','#5499']
   - ['sdk/postgresql/Microsoft.Azure.Management.PostgreSQL/src/README.md','#5499']
-  
+  - ['sdk\mgmtcommon\AppAuthentication\README.md', '#5499']
+  - ['sdk\mgmtcommon\ClientRuntime.Etw\README.md', '#5499']
+  - ['sdk\mgmtcommon\ClientRuntime.Log4Net\README.md', '#5499']
+
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

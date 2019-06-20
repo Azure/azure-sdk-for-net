@@ -49,6 +49,31 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.PartitionId" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("    ")]
+        [TestCase(" ")]
+        [TestCase("")]
+        public void PartitionIdIsValidated(string partition)
+        {
+            Assert.That(() => new EventHubProducerOptions { PartitionId = partition }, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerOptions.PartitionId" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PartitionIdAllowsNull()
+        {
+            Assert.That(() => new EventHubProducerOptions { PartitionId = null }, Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubProducerOptions.Timeout" />
         ///   property.
         /// </summary>

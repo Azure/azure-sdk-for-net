@@ -5,24 +5,31 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
+using Azure.Storage.Queues.Tests;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestClass]
-    public class MessageIdClientTests
+    [TestFixture]
+    public class MessageIdClientTests : QueueTestBase
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        public MessageIdClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
-                var enqueuedMessages = await queue.GetMessagesClient().EnqueueAsync(String.Empty);
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var enqueuedMessages = await messages.EnqueueAsync(String.Empty);
                 var enqueuedMessage = enqueuedMessages.Value.First();
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(enqueuedMessage.MessageId);
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
                 var result = await messageId.DeleteAsync(enqueuedMessage.PopReceipt);
@@ -32,55 +39,55 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task DeleteAsync_Error()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(TestHelper.GetNewMessageId());
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(this.GetNewMessageId()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    messageId.DeleteAsync(TestHelper.GetNewString()),
+                    messageId.DeleteAsync(this.GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task DeleteAsync_DeletePeek()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
-                var enqueuedMessages = await queue.GetMessagesClient().EnqueueAsync(String.Empty);
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var enqueuedMessages = await messages.EnqueueAsync(String.Empty);
                 var enqueuedMessage = enqueuedMessages.Value.First();
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(enqueuedMessage.MessageId);
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
                 var result = await messageId.DeleteAsync(enqueuedMessage.PopReceipt);
 
                 // Assert
-                await queue.GetMessagesClient().PeekAsync();
+                await messages.PeekAsync();
                 Assert.IsNotNull(result.Headers.RequestId);
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task UpdateAsync_Update()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessages = await queue.GetMessagesClient().EnqueueAsync(message0);
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var enqueuedMessages = await messages.EnqueueAsync(message0);
                 var enqueuedMessage = enqueuedMessages.Value.First();
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(enqueuedMessage.MessageId);
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
                 var result = await messageId.UpdateAsync(message1, enqueuedMessage.PopReceipt, new TimeSpan(100));
@@ -90,19 +97,19 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task UpdateAsync_Min()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessages = await queue.GetMessagesClient().EnqueueAsync(message0);
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var enqueuedMessages = await messages.EnqueueAsync(message0);
                 var enqueuedMessage = enqueuedMessages.Value.First();
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(enqueuedMessage.MessageId);
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
                 var result = await messageId.UpdateAsync(message1, enqueuedMessage.PopReceipt);
@@ -112,25 +119,25 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task UpdateAsync_UpdatePeek()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
                 var message0 = "foo";
                 var message1 = "bar";
 
-                var enqueuedMessages = await queue.GetMessagesClient().EnqueueAsync(message0);
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var enqueuedMessages = await messages.EnqueueAsync(message0);
                 var enqueuedMessage = enqueuedMessages.Value.First();
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(enqueuedMessage.MessageId);
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
                 await messageId.UpdateAsync(message1, enqueuedMessage.PopReceipt);
 
                 // Assert
-                var peekedMessages = await queue.GetMessagesClient().PeekAsync(1);
+                var peekedMessages = await messages.PeekAsync(1);
                 var peekedMessage = peekedMessages.Value.First();
 
                 Assert.AreEqual(1, peekedMessages.Value.Count());
@@ -138,18 +145,18 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task UpdateAsync_Error()
         {
             // Arrange
-            using (TestHelper.GetNewQueue(out var queue))
+            using (this.GetNewQueue(out var queue))
             {
-                var messageId = queue.GetMessagesClient().GetMessageIdClient(TestHelper.GetNewMessageId());
+                var messages = this.InstrumentClient(queue.GetMessagesClient());
+                var messageId = this.InstrumentClient(messages.GetMessageIdClient(this.GetNewMessageId()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    messageId.UpdateAsync(String.Empty, TestHelper.GetNewString()),
+                    messageId.UpdateAsync(String.Empty, this.GetNewString()),
                     actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
 
             }
