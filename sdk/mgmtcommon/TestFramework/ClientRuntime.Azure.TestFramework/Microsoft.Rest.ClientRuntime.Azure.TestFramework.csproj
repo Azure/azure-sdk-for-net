@@ -23,7 +23,10 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
-  </ItemGroup> 
+  </ItemGroup>
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
+  </ItemGroup>
   <!--
   <ItemGroup Condition=" '$(ProjectRefApplicable)' == 'true' ">
     <ProjectReference Include="..\..\Auth\Az.Auth\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" Condition=" '$(ProjectRefApplicable)' == 'true' "/>

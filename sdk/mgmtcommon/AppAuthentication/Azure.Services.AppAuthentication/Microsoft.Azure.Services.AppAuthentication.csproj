@@ -5,7 +5,7 @@
         <Version>1.2.0-preview3</Version>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
         <PackageTags>Azure Authentication AppAuthentication</PackageTags>
-	<PackageReleaseNotes>
+	    <PackageReleaseNotes>
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
@@ -17,7 +17,7 @@
 			Adding quote escaping for connection string parameter values
 			Other minor fixes and test updates
 		]]>
-	</PackageReleaseNotes>
+	    </PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
         <Content Include="build\*.targets" PackagePath="build\" />
@@ -28,6 +28,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.4" />
+       	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
