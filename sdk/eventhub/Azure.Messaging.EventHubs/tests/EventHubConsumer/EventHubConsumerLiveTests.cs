@@ -540,5 +540,450 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(6)]
+        [TestCase(10)]
+        [TestCase(20)]
+        [TestCase(50)]
+        public async Task ConsumerCannotReceiveMoreThanMaximumMessageCountMessages(int maximumMessageCount)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventBatch = Enumerable
+                    .Range(0, 20 * maximumMessageCount)
+                    .Select(index => new EventData(new byte[10]));
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    {
+                        // Initiate an operation to force the receiver to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batch of events.
+
+                        await producer.SendAsync(eventBatch);
+
+                        // Receive and validate the events.
+
+                        var index = 0;
+
+                        while (index < eventBatch.Count())
+                        {
+                            var receivedEvents = await consumer.ReceiveAsync(maximumMessageCount, TimeSpan.FromSeconds(10));
+                            index += receivedEvents.Count();
+
+                            Assert.That(receivedEvents.Count(), Is.LessThanOrEqualTo(maximumMessageCount));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerCannotReceiveFromNonExistentConsumerGroup()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "nonExistentConsumerGroup" }))
+                    {
+                        Assert.ThrowsAsync<TrackOne.MessagingEntityNotFoundException>(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task NoOwnerLevelConsumerCannotStartReceiving()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LowerOwnerLevelConsumerCannotStartReceiving()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LowerOrNoOwnerLevelConsumerCanStartReceivingFromOtherPartitions()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(3))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partitionIds = await client.GetPartitionIdsAsync();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    var lowerExclusiveConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[2], EventPosition.Latest);
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task LowerOrNoOwnerLevelConsumerCanStartReceivingFromOtherConsumerGroups()
+        {
+            var consumerGroups = new[]
+            {
+                "notdefault",
+                "notdefault2"
+            };
+
+            await using (var scope = await EventHubScope.CreateAsync(1, consumerGroups))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[0], OwnerLevel = 20 });
+
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[1], OwnerLevel = 10 });
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnerConsumerClosesNoOwnerLevelConsumer()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+
+                    await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+                    await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnerConsumerClosesLowerOwnerLevelConsumer()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+
+                    await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnerConsumerDoesNotCloseLowerOrNoOwnerLevelConsumersFromOtherPartitions()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(3))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partitionIds = await client.GetPartitionIdsAsync();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[2], EventPosition.Latest);
+
+                    await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+                    await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OwnerConsumerDoesNotCloseLowerOrNoOwnerLevelConsumersFromOtherConsumerGroups()
+        {
+            var consumerGroups = new[]
+            {
+                "notdefault",
+                "notdefault2"
+            };
+
+            await using (var scope = await EventHubScope.CreateAsync(1, consumerGroups))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[0], OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[1], OwnerLevel = 10 });
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+
+                    await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FailingToCreateOwnerConsumerDoesNotCompromiseReceiveBehavior()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(2, "anotherConsumerGroup"))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partitionIds = await client.GetPartitionIdsAsync();
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest);
+                    var exclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    // Failing at consumer creation should not compromise future ReceiveAsync calls.
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+
+                    // It should be possible to create new valid consumers.
+
+                    var newExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var anotherPartitionConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest);
+                    var anotherConsumerGroupConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "anotherConsumerGroup" });
+
+                    Assert.That(async () => await newExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    Assert.That(async () => await anotherPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    Assert.That(async () => await anotherConsumerGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                    // Proper exceptions should be thrown as well.
+
+                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
+                    var invalidConsumerGroupConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                    Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
+                    Assert.That(async () => await invalidConsumerGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FailingToCreateInvalidPartitionConsumerDoesNotCompromiseReceiveBehavior()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
+
+                    // Failing at consumer creation should not compromise future ReceiveAsync calls.
+
+                    Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+                    // It should be possible to create new valid consumers.
+
+                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    Assert.That(async () => await exclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                    // Proper exceptions should be thrown as well.
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var invalidConsumerGroupConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                    Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
+                    Assert.That(async () => await invalidConsumerGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FailingToCreateInvalidConsumerGroupConsumerDoesNotCompromiseReceiveBehavior()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var invalidGroupConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+
+                    // Failing at consumer creation should not compromise future ReceiveAsync calls.
+
+                    Assert.That(async () => await invalidGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+
+                    // It should be possible to create new valid consumers.
+
+                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+
+                    Assert.That(async () => await exclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                    // Proper exceptions should be thrown as well.
+
+                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
+
+                    Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
+                    Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
+                    Assert.That(async () => await invalidGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                }
+            }
+        }
     }
 }
