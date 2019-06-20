@@ -263,10 +263,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.ProcessNotFound);
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
-            // Mock MSI is being asked to act like MSI was able to get token. 
+            // Mock MSI is being asked to act like MSI was NOT able to get token. 
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesFailure);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+        
+            // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
+
+            // use test hook to expedite test
+            MsiRetryHelper.WaitBeforeRetry = false;
 
             // AzureServiceTokenProvider is being asked to use two providers, and and both should fail to get token.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -278,8 +285,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Mock process manager will fail, and so hit count will be 1. 
             Assert.Equal(1, mockProcessManager.HitCount);
 
-            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
-            Assert.Equal(1, mockMsi.HitCount);
+            // AzureCliAccessTokenProvider will fail, and so MSI handler will be hit next. MSI retry count is 5 so hit count is 5 here.
+            Assert.Equal(5, mockMsi.HitCount);
+
+            // Clean up environment variables
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv,null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
     }
 }

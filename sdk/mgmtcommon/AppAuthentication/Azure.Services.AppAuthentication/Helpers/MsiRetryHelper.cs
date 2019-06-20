@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 try
                 {
-                    response = await httpClient.SendAsync(getRequest(), cancellationToken);
+                    response = await httpClient.SendAsync(getRequest(), cancellationToken).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode || !response.IsRetryableStatusCode() || attempts == MaxRetries)
                     {
