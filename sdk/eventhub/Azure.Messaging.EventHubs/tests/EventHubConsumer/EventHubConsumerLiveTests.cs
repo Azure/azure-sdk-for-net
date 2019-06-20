@@ -32,13 +32,15 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerWithNoOptionsCanReceive()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ConsumerWithNoOptionsCanReceive(TransportType transportType)
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
@@ -56,7 +58,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerWithOptionsCanReceive()
+        [TestCase(TransportType.AmqpTcp)]
+        [TestCase(TransportType.AmqpWebSockets)]
+        public async Task ConsumerWithOptionsCanReceive(TransportType transportType)
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -64,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var options = new EventHubConsumerOptions { ConsumerGroup = "$Default" };
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
