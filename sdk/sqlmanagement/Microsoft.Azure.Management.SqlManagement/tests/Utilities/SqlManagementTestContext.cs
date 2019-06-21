@@ -5,7 +5,9 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Sql.Tests.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -21,6 +23,16 @@ namespace Sql.Tests
             [CallerMemberName]
             string testName="error_determining_test_name")
         {
+            var providersToIgnore = new Dictionary<string, string>
+            {
+                {"Microsoft.Sql", null}
+            };
+
+            var userAgentsToIgnore = new Dictionary<string, string>
+            {
+            };
+
+            HttpMockServer.Matcher = new PermissiveRecordMatcherWithApiExclusion(true, providersToIgnore, userAgentsToIgnore);
             _mockContext = MockContext.Start(suiteObject.GetType().FullName, testName);
         }
 
