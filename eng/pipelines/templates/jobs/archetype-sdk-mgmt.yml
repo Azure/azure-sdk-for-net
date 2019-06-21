@@ -27,7 +27,7 @@ jobs:
           echo "Tagging build with $releaseTag"
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: 'Tagging the build'
-
+        condition: ne(variables['System.TeamProject'], 'public')
   - job: Test
     variables:
       DotNetCoreSDKVersion: '2.2.202'
@@ -48,7 +48,6 @@ jobs:
       vmImage: "$(OSVmImage)"
     steps:
       - task: DotNetCoreInstaller@0
-
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
           version: '$(DotNetCoreSDKVersion)'

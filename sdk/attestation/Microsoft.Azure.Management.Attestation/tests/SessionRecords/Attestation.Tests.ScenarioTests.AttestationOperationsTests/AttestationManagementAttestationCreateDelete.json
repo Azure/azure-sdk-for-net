@@ -1,0 +1,337 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/providers/Microsoft.Attestation?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXR0ZXN0YXRpb24/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d26f24f0-f013-4937-af7d-e4e8bd677a3f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "3c55042b-fa0c-4baf-9746-1422af3b362e"
+        ],
+        "x-ms-correlation-request-id": [
+          "3c55042b-fa0c-4baf-9746-1422af3b362e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190618T175955Z:3c55042b-fa0c-4baf-9746-1422af3b362e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 18 Jun 2019 17:59:55 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "505"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/providers/Microsoft.Attestation\",\r\n  \"namespace\": \"Microsoft.Attestation\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"c61423b7-1d1f-430d-b444-0eee53298103\",\r\n      \"roleDefinitionId\": \"7299b0b1-11da-4858-8943-7db197005959\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"attestationProviders\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-09-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-09-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourcegroups/testattestationrg643?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlZ3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnNjQzP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "83c116b8-dc4c-4263-9910-e5f32855dbf4"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "104cd35e-f753-489c-addb-ae1c1600ce3f"
+        ],
+        "x-ms-correlation-request-id": [
+          "104cd35e-f753-489c-addb-ae1c1600ce3f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190618T175957Z:104cd35e-f753-489c-addb-ae1c1600ce3f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 18 Jun 2019 17:59:56 GMT"
+        ],
+        "Content-Length": [
+          "193"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg643\",\r\n  \"name\": \"testattestationrg643\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg643/providers/Microsoft.Attestation/attestationProviders/testattestation403?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnNjQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXR0ZXN0YXRpb24vYXR0ZXN0YXRpb25Qcm92aWRlcnMvdGVzdGF0dGVzdGF0aW9uNDAzP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5af86c21-558d-4e04-81b2-dc404ef48bac"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "fabric:/AttestationService/Tenant/testattestation403"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "35aa3d8f-426c-49b0-8af2-f96aeb472e1f"
+        ],
+        "x-ms-correlation-request-id": [
+          "35aa3d8f-426c-49b0-8af2-f96aeb472e1f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190618T180000Z:35aa3d8f-426c-49b0-8af2-f96aeb472e1f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 18 Jun 2019 17:59:59 GMT"
+        ],
+        "Content-Length": [
+          "343"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg643/providers/Microsoft.Attestation/attestationProviders/testattestation403\",\r\n  \"name\": \"testattestation403\",\r\n  \"type\": \"Microsoft.Attestation/attestationProviders\",\r\n  \"properties\": {\r\n    \"status\": \"NotReady\",\r\n    \"attestUri\": \"https://testattestation403.us.attest.azure.net\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg643/providers/Microsoft.Attestation/attestationProviders/testattestation403?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnNjQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXR0ZXN0YXRpb24vYXR0ZXN0YXRpb25Qcm92aWRlcnMvdGVzdGF0dGVzdGF0aW9uNDAzP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "35fb9a98-1d8e-4f61-bab4-572e0ee0f02b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "1ca4cb63-52e6-43a4-958a-7fb96eb9ebf2"
+        ],
+        "x-ms-correlation-request-id": [
+          "1ca4cb63-52e6-43a4-958a-7fb96eb9ebf2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190618T180000Z:1ca4cb63-52e6-43a4-958a-7fb96eb9ebf2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 18 Jun 2019 17:59:59 GMT"
+        ],
+        "Content-Length": [
+          "82"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"NotReady\",\r\n  \"attestUri\": \"https://testattestation403.us.attest.azure.net\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/testattestationrg643/providers/Microsoft.Attestation/attestationProviders/testattestation403?api-version=2018-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcyNGM1NDMtNTNjZS00NGE2LWI2MzMtZTExZWYyNzgzOWI3L3Jlc291cmNlR3JvdXBzL3Rlc3RhdHRlc3RhdGlvbnJnNjQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXR0ZXN0YXRpb24vYXR0ZXN0YXRpb25Qcm92aWRlcnMvdGVzdGF0dGVzdGF0aW9uNDAzP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64e587d8-4fd9-450f-ac82-6c8b144b9a1c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27617.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Attestation.AttestationManagementClient/0.9.5.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "388b9036-2c2d-44d8-930f-a55c1b7a133f"
+        ],
+        "x-ms-correlation-request-id": [
+          "388b9036-2c2d-44d8-930f-a55c1b7a133f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190618T180000Z:388b9036-2c2d-44d8-930f-a55c1b7a133f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 18 Jun 2019 17:59:59 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    }
+  ],
+  "Names": {
+    "Initialize": [
+      "testattestationrg643",
+      "testattestation403",
+      "attestationpolicynametest6591"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "a724c543-53ce-44a6-b633-e11ef27839b7",
+    "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubId": "a724c543-53ce-44a6-b633-e11ef27839b7"
+  }
+}

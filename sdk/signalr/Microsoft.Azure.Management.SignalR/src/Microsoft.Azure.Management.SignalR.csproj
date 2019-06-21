@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.SignalR</PackageId>
 		<Description>Provides management capabilities for Azure SignalR.</Description>
-		<Version>0.11.0-preview</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.SignalR</AssemblyName>
 		<PackageTags>Microsoft Azure SignalR;SignalR;</PackageTags>
 		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
