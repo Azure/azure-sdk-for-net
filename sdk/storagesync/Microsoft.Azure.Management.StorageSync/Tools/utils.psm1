@@ -321,7 +321,8 @@ function Record-UnitTests
 
     Trace-Start
     Trace-Argument -Name Mode -Value $Mode
-    $solutionPath = Join-Path $scriptDirectory "..\StorageSync.sln"
+    $solutionPath = Join-Path $scriptDirectory "..\Microsoft.Azure.Management.StorageSync.sln"
+    Trace-AssertCondition (Test-Path $solutionPath) "Cannot access path: $solutionPath"
 
     $authString = Get-TestAuthenticationString -Mode $Mode -TestMode Record
     [environment]::SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", $authString) | Out-Null
@@ -340,7 +341,8 @@ function Replay-UnitTests
 
     Trace-Start
     Trace-Argument -Name Mode -Value $Mode
-    $solutionPath = Join-Path $scriptDirectory "..\StorageSync.sln"
+    $solutionPath = Join-Path $scriptDirectory "..\Microsoft.Azure.Management.StorageSync.sln"
+    Trace-AssertCondition (Test-Path $solutionPath) "Cannot access path: $solutionPath"
 
     $authString = Get-TestAuthenticationString -Mode $Mode -TestMode Playback
     [environment]::SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", $authString) | Out-Null
