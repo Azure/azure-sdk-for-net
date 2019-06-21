@@ -19,12 +19,15 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("FormRecognizerClient", "AnalyzeWithCustomModel", "v1.0-preview"),
-                new Tuple<string, string, string>("FormRecognizerClient", "DeleteCustomModel", "v1.0-preview"),
-                new Tuple<string, string, string>("FormRecognizerClient", "GetCustomModel", "v1.0-preview"),
-                new Tuple<string, string, string>("FormRecognizerClient", "GetCustomModels", "v1.0-preview"),
-                new Tuple<string, string, string>("FormRecognizerClient", "GetExtractedKeys", "v1.0-preview"),
-                new Tuple<string, string, string>("FormRecognizerClient", "TrainCustomModel", "v1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "AnalyzeWithCustomModel", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "BatchReadReceipt", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "BatchReadReceiptInStream", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "DeleteCustomModel", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "GetCustomModel", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "GetCustomModels", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "GetExtractedKeys", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "GetReadReceiptResult", "1.0-preview"),
+                new Tuple<string, string, string>("FormRecognizerClient", "TrainCustomModel", "1.0-preview"),
               }.AsEnumerable();
           }
       }

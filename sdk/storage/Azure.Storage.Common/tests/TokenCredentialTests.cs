@@ -4,15 +4,15 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Common.Test
 {
-    [TestClass]
+    [TestFixture]
     public class TokenCredentialTests
     {
 
-        [TestMethod]
+        [Test]
         [Description("Basic instantiation and disposal.")]
         public void TokenDispose()
         {
@@ -20,7 +20,7 @@ namespace Azure.Storage.Common.Test
             token.Dispose();
         }
 
-        [TestMethod]
+        [Test]
         [Description("Basic timer triggering test.")]
         public void TimerShouldTriggerPeriodically()
         {
@@ -50,7 +50,7 @@ namespace Azure.Storage.Common.Test
         //   Assert.AreEqual failed.Expected:<000>. Actual:<0000>.
         // Stack Trace:
         //   at Azure.Storage.Common.Test.TokenCredentialTests.UpdaterShouldRunOneAtATime() in TokenCredentialTests.cs:line 80
-        [TestMethod]
+        [Test]
         [Ignore("#6292")]
         [Description("Make sure the token updater only gets triggered after the previous update finishes.")]
         public void UpdaterShouldRunOneAtATime()
@@ -87,7 +87,7 @@ namespace Azure.Storage.Common.Test
             Assert.AreEqual("000", tokenCredential.Token);
         }
 
-        [TestMethod]
+        [Test]
         [Description("Test the situation where the periodic token updater throws an exception.")]
         public async Task ErrorThrownWhenTimerIsTriggered()
         {

@@ -17,7 +17,11 @@ namespace Azure
             _response = response;
         }
 
-        public DateTimeOffset? Date => TryGetValue(HttpHeader.Names.Date, out var value) ? (DateTimeOffset?)DateTimeOffset.Parse(value) : null;
+        public DateTimeOffset? Date =>
+            TryGetValue(HttpHeader.Names.Date, out var value) ||
+            TryGetValue(HttpHeader.Names.XMsDate, out value) ?
+                (DateTimeOffset?)DateTimeOffset.Parse(value) :
+                null;
 
         public string ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
 

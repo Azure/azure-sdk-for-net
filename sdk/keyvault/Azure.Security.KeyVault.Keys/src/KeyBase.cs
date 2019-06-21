@@ -5,11 +5,19 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    public class KeyBase
+    public class KeyBase : Model
     {
+        internal KeyBase() { }
+        public KeyBase(string name)
+        {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Name = name;
+        }
+
         private KeyAttributes _attributes;
         
         public string Name { get; private set; }
@@ -31,12 +39,12 @@ namespace Azure.Security.KeyVault.Keys
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public KeyBase(string name)
-        {
-            Name = name;
-        }
+        private const string KeyIdPropertyName = "kid";
+        private const string ManagedPropertyName = "managed";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
 
-        private void ParseId(string id)
+        protected void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute); ;
 
@@ -50,6 +58,34 @@ namespace Azure.Security.KeyVault.Keys
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
+        }
+
+        internal override void WriteProperties(Utf8JsonWriter json) { }
+        
+        internal override void ReadProperties(JsonElement json)
+        {
+            foreach(JsonProperty prop in json.EnumerateObject())
+            {
+                switch (prop.Name)
+                {
+                    case KeyIdPropertyName:
+                        ParseId(prop.Value.GetString());
+                        break;
+                    case ManagedPropertyName:
+                        Managed = prop.Value.GetBoolean();
+                        break;
+                    case AttributesPropertyName:
+                        _attributes.ReadProperties(prop.Value);
+                        break;
+                    case TagsPropertyName:
+                        Tags = new Dictionary<string, string>();
+                        foreach (var tagProp in prop.Value.EnumerateObject())
+                        {
+                            Tags[tagProp.Name] = tagProp.Value.GetString();
+                        }
+                        break;
+                }
+            }
         }
     }
 }

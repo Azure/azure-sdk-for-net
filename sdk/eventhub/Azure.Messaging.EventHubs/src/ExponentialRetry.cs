@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs
     ///
     /// <seealso cref="Retry" />
     ///
-    public sealed class ExponentialRetry : Retry, IEquatable<ExponentialRetry>
+    public sealed class ExponentialRetry : Retry
     {
         /// <summary>The minimum time period permissible for backing off between retries.</summary>
         private readonly TimeSpan _minimumBackoff;
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public ExponentialRetry(TimeSpan minimumBackoff,
                                 TimeSpan maximumBackoff,
-                                int      maximumRetryCount)
+                                int maximumRetryCount)
         {
             Guard.ArgumentNotNegative(nameof(minimumBackoff), minimumBackoff);
             Guard.ArgumentNotNegative(nameof(maximumBackoff), maximumBackoff);
@@ -50,55 +50,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the two <see cref="ExponentialRetry" /> instances are equal.
-        /// </summary>
-        ///
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        ///
-        /// <returns><c>true</c> if the specified instances are equal; otherwise, <c>false</c>.</returns>
-        ///
-        public static bool operator ==(ExponentialRetry left,
-                                       ExponentialRetry right) => left?.Equals(right) ?? ReferenceEquals(left, right);
-
-        /// <summary>
-        ///   Determines whether the two <see cref="ExponentialRetry" /> instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        ///
-        /// <returns><c>true</c> if the specified instances are not equal; otherwise, <c>false</c>.</returns>
-        ///
-        public static bool operator !=(ExponentialRetry left,
-                                       ExponentialRetry right) => !(left == right);
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="ExponentialRetry" />, is equal to this instance.
-        /// </summary>
-        ///
-        /// <param name="other">The <see cref="ExponentialRetry" /> to compare with this instance.</param>
-        ///
-        /// <returns><c>true</c> if the specified <see cref="ExponentialRetry" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(ExponentialRetry other)
-        {
-            if (ReferenceEquals(other, this))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            return (other._minimumBackoff == _minimumBackoff)
-                && (other._maximumBackoff == _maximumBackoff)
-                && (other._maximumRetryCount == _maximumRetryCount);
-        }
-
-        /// <summary>
         ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
         /// </summary>
         ///
@@ -107,8 +58,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            ((obj is ExponentialRetry other) && (Equals(other)));
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -117,19 +67,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
-        {
-            int hash = 17;
-
-            unchecked
-            {
-                hash = (hash * 23) + _minimumBackoff.GetHashCode();
-                hash = (hash * 23) + _maximumBackoff.GetHashCode();
-                hash = (hash * 23) + _maximumRetryCount.GetHashCode();
-
-                return hash;
-            }
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -150,6 +88,46 @@ namespace Azure.Messaging.EventHubs
             new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>
+        ///   Allows internal access to the retry properties for compatibility shims.
+        /// </summary>
+        ///
+        /// <returns>The set of properties for the retry policy.</returns>
+        ///
+        /// <remarks>
+        ///   This method is intended to allow for compatibility shims to create the equivilent retry
+        ///   policy within the track one code;  it will be removed after the first preview and should
+        ///   not be depended upon outside of that context.
+        /// </remarks>
+        ///
+        internal (TimeSpan minimumBackOff, TimeSpan maximumBackoff, int maximumRetryCount) GetProperties() => (_minimumBackoff, _maximumBackoff, _maximumRetryCount); //TODO: Remove after preview
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="ExponentialRetry" />, is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="ExponentialRetry" /> to consider.</param>
+        /// <param name="second">The second <see cref="ExponentialRetry" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="ExponentialRetry" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        internal static bool HaveSameConfiguration(ExponentialRetry first, ExponentialRetry second)
+        {
+            if (ReferenceEquals(first, second))
+            {
+                return true;
+            }
+
+            if ((first == null) || (second == null))
+            {
+                return false;
+            }
+
+            return (first._minimumBackoff == second._minimumBackoff)
+                && (first._maximumBackoff == second._maximumBackoff)
+                && (first._maximumRetryCount == second._maximumRetryCount);
+        }
+
+        /// <summary>
         ///   Allows a concrete retry policy implementation to offer a base retry interval to be used in
         ///   the calculations performed by <see cref="Retry.GetNextRetryInterval" />.
         /// </summary>
@@ -167,9 +145,9 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         protected override TimeSpan? CalculateNextRetryInterval(Exception lastException,
-                                                                TimeSpan  remainingTime,
-                                                                int       baseWaitSeconds,
-                                                                int       retryCount)
+                                                                TimeSpan remainingTime,
+                                                                int baseWaitSeconds,
+                                                                int retryCount)
         {
             if ((!IsRetriableException(lastException)) || (retryCount >= _maximumRetryCount))
             {
@@ -197,7 +175,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private double ComputeRetryFactor(TimeSpan minimumBackoff,
                                           TimeSpan maximumBackoff,
-                                          int      maximumRetryCount)
+                                          int maximumRetryCount)
         {
             double deltaBackoff = maximumBackoff.Subtract(minimumBackoff).TotalSeconds;
 

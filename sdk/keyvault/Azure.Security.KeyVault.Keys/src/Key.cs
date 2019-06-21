@@ -2,11 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -14,12 +10,22 @@ namespace Azure.Security.KeyVault.Keys
     {
         public JsonWebKey KeyMaterial { get; set; }
 
+        internal Key() { }
+
         public Key(string name) : base(name) { }
-        
-        public Key(string name, string keyId, string keyType, IList<string> keyOperations)
-            :base(name)
+
+        internal override void ReadProperties(JsonElement json)
         {
-            KeyMaterial = new JsonWebKey(keyId, keyType, keyOperations);
+            KeyMaterial = null;
+
+            if (json.TryGetProperty("key", out JsonElement key))
+            {
+                KeyMaterial = new JsonWebKey();
+                KeyMaterial.ReadProperties(key);
+                ParseId(KeyMaterial.KeyId);
+            }
+
+            base.ReadProperties(json);
         }
     }
 }

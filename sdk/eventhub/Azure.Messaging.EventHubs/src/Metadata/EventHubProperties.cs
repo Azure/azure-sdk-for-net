@@ -31,30 +31,20 @@ namespace Azure.Messaging.EventHubs.Metadata
         public string[] PartitionIds { get; }
 
         /// <summary>
-        ///   The date and time, in UTC, that the information was retrieved from the
-        ///   Event Hub.
-        /// </summary>
-        ///
-        public DateTime PropertyRetrievalTimeUtc { get; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="path">The path of the Event Hub.</param>
         /// <param name="createdUtc">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
-        /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
-        internal EventHubProperties(string    path,
-                                    DateTime  createdUtc,
-                                    string[]  partitionIds,
-                                    DateTime? retrievalTimeUtc = null)
+        internal EventHubProperties(string path,
+                                    DateTime createdUtc,
+                                    string[] partitionIds)
         {
             Path = path;
             CreatedAtUtc = createdUtc;
             PartitionIds = partitionIds;
-            PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
         }
     }
 }

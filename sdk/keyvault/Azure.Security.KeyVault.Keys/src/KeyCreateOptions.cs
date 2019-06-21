@@ -10,9 +10,9 @@ namespace Azure.Security.KeyVault.Keys
     public class KeyCreateOptions
     {
         public IList<KeyOperations> KeyOperations { get; set; }
-        public bool Hsm { get; set; }
         public DateTimeOffset? NotBefore { get; set; }
         public DateTimeOffset? Expires { get; set; }
-        public IDictionary<string, string> Tags { get; set; }
+        public bool? Enabled { get; set; }
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string> ();
     }
 }

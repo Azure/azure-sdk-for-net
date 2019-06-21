@@ -1,10 +1,10 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!--
     We're currently on 1.0.0-preview.X and we'll share this version number
     across all Storage projects until the need to version independently arises.
@@ -34,22 +34,29 @@
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
-
+  <Import Condition="'$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
-  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
+  <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
-
   <!-- Add references for TEST projects -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
+    <None Include="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+
+
+  <!-- Pull in Azure.Core helpers for TEST projects -->
+  <Import Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

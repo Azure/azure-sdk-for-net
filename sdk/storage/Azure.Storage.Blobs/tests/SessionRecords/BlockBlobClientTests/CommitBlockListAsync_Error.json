@@ -1,0 +1,106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6d03c232-d33a-a1a9-7eb8-4da3c573468b?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-storage-blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "b8f4d89c9985d8a4b90a594a90b24162",
+        "x-ms-date": "Mon, 17 Jun 2019 20:56:32 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 17 Jun 2019 20:56:31 GMT",
+        "ETag": "\u00220x8D6F366473AA2CF\u0022",
+        "Last-Modified": "Mon, 17 Jun 2019 20:56:32 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6ac813d2-201e-007b-164f-250f92000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6d03c232-d33a-a1a9-7eb8-4da3c573468b/test-blob-ec4fd827-d0d2-5321-189c-ccb7972238db?comp=blocklist",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "120",
+        "Content-Type": "application/xml",
+        "User-Agent": [
+          "azsdk-net-storage-blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "a35dd5304ab4902f646d4c6b20afd410",
+        "x-ms-date": "Mon, 17 Jun 2019 20:56:32 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": [
+        "\u003cBlockList\u003e\r\n",
+        "  \u003cUncommitted\u003edGVzdC1ibG9jay00NmZkZjM5ZS1hZTQxLTAzMzUtMDMxZi1mOTI2ZTk1MmUxNzk=\u003c/Uncommitted\u003e\r\n",
+        "\u003c/BlockList\u003e"
+      ],
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "221",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 17 Jun 2019 20:56:31 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "InvalidBlockList",
+        "x-ms-request-id": "6ac813da-201e-007b-1d4f-250f92000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidBlockList\u003c/Code\u003e\u003cMessage\u003eThe specified block list is invalid.\n",
+        "RequestId:6ac813da-201e-007b-1d4f-250f92000000\n",
+        "Time:2019-06-17T20:56:32.6932910Z\u003c/Message\u003e\u003c/Error\u003e"
+      ]
+    },
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6d03c232-d33a-a1a9-7eb8-4da3c573468b?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-storage-blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "659d44c03c2ac740010692458792111d",
+        "x-ms-date": "Mon, 17 Jun 2019 20:56:32 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 17 Jun 2019 20:56:31 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6ac813e0-201e-007b-234f-250f92000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "280391110"
+  }
+}

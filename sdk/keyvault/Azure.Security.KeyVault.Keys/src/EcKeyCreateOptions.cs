@@ -9,22 +9,28 @@ namespace Azure.Security.KeyVault.Keys
 {
     public class EcKeyCreateOptions : KeyCreateOptions
     {
-        public KeyCurveName Curve { get; set; }
-        public KeyType KeyType { get; set; }
+        public string Name { get; set; }
+        public KeyType KeyType { get; private set; }
+        public KeyCurveName? Curve { get; set; }
+        public bool Hsm { get; private set; }
 
-        public EcKeyCreateOptions()
+        public EcKeyCreateOptions(string name, bool hsm, KeyCurveName? curveName = null)
         {
-            KeyType = KeyType.EllipticCurve;
-        }
+            Name = name;
 
-        public EcKeyCreateOptions(KeyCurveName curve, List<KeyOperations> keyOps, DateTimeOffset? notBefore, DateTimeOffset? expires, Dictionary<string, string> tags)
-        {
-            Curve = curve;
-            KeyOperations = keyOps;
-            KeyType = KeyType.EllipticCurve;
-            NotBefore = notBefore;
-            Expires = expires;
-            Tags = new Dictionary<string, string>(tags);
+            if(hsm)
+            {
+                KeyType = KeyType.EllipticCurveHsm;
+            }
+            else
+            {
+                KeyType = KeyType.EllipticCurve;
+            }
+
+            if (curveName.HasValue)
+            {
+                Curve = curveName.Value;
+            }
         }
     }
 }

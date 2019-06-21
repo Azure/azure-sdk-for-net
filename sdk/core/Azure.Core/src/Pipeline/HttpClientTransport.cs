@@ -162,15 +162,7 @@ namespace Azure.Core.Pipeline
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
-            public override HttpPipelineRequestContent Content
-            {
-                get => _requestContent?.PipelineContent;
-                set
-                {
-                    EnsureContentInitialized();
-                    _requestContent.PipelineContent = value;
-                }
-            }
+            public override HttpPipelineRequestContent Content { get; set; }
 
             public override string ClientRequestId { get; set; }
 
@@ -207,37 +199,49 @@ namespace Azure.Core.Pipeline
                     // and so the retry logic fails.
                     currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
                     CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
-
                 }
                 else
                 {
                     currentRequest = _requestMessage;
-                    _wasSent = true;
                 }
 
                 currentRequest.RequestUri = UriBuilder.Uri;
 
-                if (_requestContent?.PipelineContent != null)
+
+                if (Content != null)
                 {
-                    currentRequest.Content = new PipelineContentAdapter()
+                    PipelineContentAdapter currentContent;
+                    if (_wasSent)
                     {
-                        CancellationToken = cancellation,
-                        PipelineContent = _requestContent.PipelineContent
-                    };
-                    CopyHeaders(_requestContent.Headers, currentRequest.Content.Headers);
+                        currentContent = new PipelineContentAdapter();
+                        CopyHeaders(_requestContent.Headers, currentContent.Headers);
+                    }
+                    else
+                    {
+                        EnsureContentInitialized();
+                        currentContent = _requestContent;
+                    }
+
+                    currentContent.CancellationToken = cancellation;
+                    currentContent.PipelineContent = Content;
+                    currentRequest.Content = currentContent;
                 }
+
+                _wasSent = true;
 
                 return currentRequest;
             }
 
             public override void Dispose()
             {
+                Content?.Dispose();
                 _requestMessage.Dispose();
             }
 
             public override string ToString() => _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
+
             public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
             {
                 switch (method)
@@ -285,13 +289,6 @@ namespace Azure.Core.Pipeline
                     Debug.Assert(PipelineContent != null);
 
                     return PipelineContent.TryComputeLength(out length);
-                }
-
-
-                protected override void Dispose(bool disposing)
-                {
-                    PipelineContent?.Dispose();
-                    base.Dispose(disposing);
                 }
             }
         }

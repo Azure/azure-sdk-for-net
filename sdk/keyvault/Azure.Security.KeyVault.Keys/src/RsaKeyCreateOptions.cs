@@ -12,22 +12,28 @@ namespace Azure.Security.KeyVault.Keys
 {
     public class RsaKeyCreateOptions : KeyCreateOptions
     {
-        public int KeySize { get; set; }
-        public KeyType KeyType { get; set; }
+        public string Name { get; set; }
+        public KeyType KeyType { get; private set; }
+        public int? KeySize { get; set; }
+        public bool Hsm { get; private set; }
 
-        public RsaKeyCreateOptions() 
+        public RsaKeyCreateOptions(string name, bool hsm, int? keySize = null) 
         {
-            KeyType = KeyType.Rsa;
-        }
+            Name = name;
+            
+            if(hsm)
+            {
+                KeyType = KeyType.RsaHsm;
+            }
+            else
+            {
+                KeyType = KeyType.Rsa;
+            }
 
-        public RsaKeyCreateOptions(int size, List<KeyOperations> keyOps, DateTimeOffset? notBefore, DateTimeOffset? expires, Dictionary<string, string> tags)
-        {
-            KeySize = size;
-            KeyOperations = keyOps;
-            KeyType = KeyType.Rsa;
-            NotBefore = notBefore;
-            Expires = expires;
-            Tags = new Dictionary<string, string>(tags);
+            if(keySize.HasValue)
+            {
+                KeySize = keySize.Value;
+            }
         }
     }
 }
