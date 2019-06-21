@@ -644,7 +644,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 var receivedEvents = new List<EventData>();
                                 var index = 0;
 
-                                while (++index < 5)
+                                while (++index < 10)
                                 {
                                     receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                                 }
@@ -720,7 +720,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while (++index < 5)
+                            while (++index < 10)
                             {
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count() + 10, TimeSpan.FromMilliseconds(25)));
                             }
@@ -800,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while (++index < 5)
+                            while (++index < 10)
                             {
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                             }
