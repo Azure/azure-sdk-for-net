@@ -192,14 +192,20 @@ function Setup-Environment
 function Setup-Secrets
 {
     param (
-        [Parameter(Mandatory = $True, Position = 0)]
+        [Parameter(Mandatory = $True)]
         $SecretForInt,
 
-        [Parameter(Mandatory = $True, Position = 1)]
+        [Parameter(Mandatory = $True)]
         $SecretForDev,
 
-        [Parameter(Mandatory = $True, Position = 2)]
-        $SecretForProd
+        [Parameter(Mandatory = $True)]
+        $SecretForProd,
+
+        [Parameter(Mandatory = $True)]
+        $UserLoginForProd,
+
+        [Parameter(Mandatory = $True)]
+        $UserPasswordForProd
     )
 
     Trace-Start
@@ -228,11 +234,45 @@ function Setup-Secrets
         }
     }
 
+    Trace-AssertCondition ($null -ne $UserLoginForProd) "User login is not provided"
+    Trace-AssertCondition ($null -ne $UserPasswordForProd) "User password is not provided"
+
     Set-KeyVaultTestSecret -Name "SdkTestIntAuthenticationString" -Value $SecretForInt
     Set-KeyVaultTestSecret -Name "SdkTestDevAuthenticationString" -Value $SecretForDev
     Set-KeyVaultTestSecret -Name "SdkTestProdAuthenticationString" -Value $SecretForProd
-    
+
+    Set-KeyVaultTestSecret -Name "SdkTestProdUserLoginString" -Value $UserLoginForProd
+    Set-KeyVaultTestSecret -Name "SdkTestProdUserPasswordString" -Value $UserPasswordForProd
+
     Trace-Exit | Out-Null
+}
+
+function Get-TestUserCredential
+{
+    param(
+        [Parameter(Mandatory = $True)]
+        [ValidateSet('Int','Dev','Prod')]
+        $Mode)
+
+    Trace-Start
+
+    Trace-Argument -Name Mode -Value $Mode
+
+    $cred = $null
+
+    switch ($Mode)
+    {
+        "Prod" 
+        {
+            $username = Get-KeyVaultTestSecret -Name "SdkTestProdUserLoginString"
+            $passwordSecureString = Get-KeyVaultTestSecret -Name "SdkTestProdUserPasswordString" | ConvertTo-SecureString -asPlainText -Force            
+            $cred = New-Object System.Management.Automation.PSCredential($username, $passwordSecureString)
+            break
+        }
+        default { throw "Unsupported mode: $Mode"}
+    }    
+    Trace-Exit | Out-Null
+    return $cred
 }
 
 function Get-TestAuthenticationString
@@ -316,3 +356,4 @@ Export-ModuleMember -Function *-StorageSyncSDK
 Export-ModuleMember -Function *-UnitTests
 Export-ModuleMember -Function *-Secrets
 Export-ModuleMember -Function Get-TestAuthenticationString
+Export-ModuleMember -Function Get-TestUserCredential
