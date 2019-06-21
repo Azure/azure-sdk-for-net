@@ -833,5 +833,29 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [Ignore("Expected behavior currently under discussion")]
+        public async Task ProducerCanSendWhenClientIsClosed()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    client.Close();
+
+                    var events = new EventData(Encoding.UTF8.GetBytes("Do not delete me!"));
+                    Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
+                }
+            }
+        }
     }
 }
