@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Compatibility;
@@ -15,6 +16,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class TrackOneSharedAccessSignatureTokenProviderTests
     {
         /// <summary>
@@ -91,13 +93,36 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void GetTokenAsyncValidatesTheResource()
+        [TestCase("amqps://my.eventhubs.com")]
+        [TestCase("amqps://my.eventhubs.com/otherHub")]
+        [TestCase("amqps://other.eventhubs.com/someHub")]
+        [TestCase("https://my.eventhubs.com/someHub")]
+        public void GetTokenAsyncDisallowsInvalideResources(string invalidResource)
         {
-            var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
-            var wrongResource = signature.Resource + "DOES_NOT-MATCH";
+            var resource = WebUtility.UrlEncode("amqps://my.eventhubs.com/someHub");
+            var signature = new SharedAccessSignature($"SharedAccessSignature sr={ resource }&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
             var provider = new TrackOneSharedAccessTokenProvider(signature);
 
-            Assert.That(async () => await provider.GetTokenAsync(wrongResource, TimeSpan.FromHours(4)), Throws.InstanceOf<ArgumentException>());
+            Assert.That(async () => await provider.GetTokenAsync(invalidResource, TimeSpan.FromHours(4)), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneSharedAccessTokenProvider.GetTokenAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("amqps://my.eventhubs.com/someHub")]
+        [TestCase("amqps://my.eventhubs.com/someHub/partition")]
+        [TestCase("amqps://my.eventhubs.com/someHub/partition/0")]
+        [TestCase("amqps://my.eventhubs.com/someHub/management")]
+        public void GetTokenAsyncAllowsValidResources(string validResource)
+        {
+            var resource = WebUtility.UrlEncode("amqps://my.eventhubs.com/someHub");
+            var signature = new SharedAccessSignature($"SharedAccessSignature sr={ resource }&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey", "ABC123");
+            var provider = new TrackOneSharedAccessTokenProvider(signature);
+
+            Assert.That(async () => await provider.GetTokenAsync(validResource, TimeSpan.FromHours(4)), Throws.Nothing);
         }
 
         /// <summary>

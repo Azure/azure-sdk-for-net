@@ -6,17 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
+using Azure.Storage.Files.Tests;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestClass]
-    public class DirectoryClientTests
+    [TestFixture]
+    public class DirectoryClientTests : FileTestBase
     {
-        [TestMethod]
+        public DirectoryClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -28,10 +35,10 @@ namespace Azure.Storage.Files.Test
 
             var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
-            var shareName = TestHelper.GetNewShareName();
-            var directoryPath = TestHelper.GetNewDirectoryName();
+            var shareName = this.GetNewShareName();
+            var directoryPath = this.GetNewDirectoryName();
 
-            var directory = new DirectoryClient(connectionString.ToString(true), shareName, directoryPath, TestHelper.GetOptions<FileConnectionOptions>());
+            var directory = this.InstrumentClient(new DirectoryClient(connectionString.ToString(true), shareName, directoryPath, this.GetOptions()));
 
             var builder = new FileUriBuilder(directory.Uri);
 
@@ -40,14 +47,13 @@ namespace Azure.Storage.Files.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task CreateAsync()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 var response = await directory.CreateAsync();
@@ -57,14 +63,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task CreateAsync_Error()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
                 // Directory is intentionally created twice
                 await directory.CreateAsync();
 
@@ -75,30 +80,28 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task CreateAsync_Metadata()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
-                var metadata = TestHelper.BuildMetadata();
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await directory.CreateAsync(metadata: metadata);
 
                 // Assert
                 var response = await directory.GetPropertiesAsync();
-                TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+                this.AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task DeleteAsync()
         {
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.DeleteAsync();
@@ -108,14 +111,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task DeleteAsync_Error()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -124,11 +126,10 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetPropertiesAsync()
         {
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.GetPropertiesAsync();
@@ -138,14 +139,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetPropertiesAsync_Error()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -154,33 +154,31 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task SetMetadataAsync()
         {
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Arrange
-                var metadata = TestHelper.BuildMetadata();
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await directory.SetMetadataAsync(metadata);
 
                 // Assert
                 var response = await directory.GetPropertiesAsync();
-                TestHelper.AssertMetadataEquality(metadata, response.Value.Metadata);
+                this.AssertMetadataEquality(metadata, response.Value.Metadata);
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task SetMetadataAsync_Error()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
-                var metadata = TestHelper.BuildMetadata();
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
+                var metadata = this.BuildMetadata();
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -189,32 +187,31 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListFilesAndDirectoriesSegmentAsync()
         {
             // Arrange
             var numFiles = 10;
-            var fileNames = Enumerable.Range(0, numFiles).Select(_ => TestHelper.GetNewFileName()).ToArray();
+            var fileNames = Enumerable.Range(0, numFiles).Select(_ => this.GetNewFileName()).ToArray();
 
             var numDirectories = 5;
-            var directoryNames = Enumerable.Range(0, numDirectories).Select(_ => TestHelper.GetNewFileName()).ToArray();
+            var directoryNames = Enumerable.Range(0, numDirectories).Select(_ => this.GetNewFileName()).ToArray();
 
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
                 await directory.CreateAsync();
 
                 foreach (var fileName in fileNames)
                 {
-                    var file = directory.GetFileClient(fileName);
+                    var file = this.InstrumentClient(directory.GetFileClient(fileName));
 
                     await file.CreateAsync(maxSize: Constants.MB);
                 }
 
                 foreach (var subDirName in directoryNames)
                 {
-                    var subDir = directory.GetDirectoryClient(subDirName);
+                    var subDir = this.InstrumentClient(directory.GetDirectoryClient(subDirName));
 
                     await subDir.CreateAsync();
                 }
@@ -245,14 +242,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListFilesAndDirectoriesSegmentAsync_Error()
         {
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
                 // Arrange
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -261,12 +257,11 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListHandles()
         {
             // Arrange
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.ListHandlesAsync(
@@ -279,12 +274,11 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListHandles_Min()
         {
             // Arrange
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.ListHandlesAsync();
@@ -295,14 +289,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListHandles_Error()
         {
             // Arrange
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -312,12 +305,11 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.ForceCloseHandlesAsync();
@@ -328,12 +320,11 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ForceCloseHandles_Recursive()
         {
             // Arrange
-            using (TestHelper.GetNewDirectory(out var directory))
+            using (this.GetNewDirectory(out var directory))
             {
                 // Act
                 var response = await directory.ForceCloseHandlesAsync(recursive: true);
@@ -344,14 +335,13 @@ namespace Azure.Storage.Files.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ForceCloseHandles_Error()
         {
             // Arrange
-            using (TestHelper.GetNewShare(out var share))
+            using (this.GetNewShare(out var share))
             {
-                var directory = share.GetDirectoryClient(TestHelper.GetNewDirectoryName());
+                var directory = this.InstrumentClient(share.GetDirectoryClient(this.GetNewDirectoryName()));
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(

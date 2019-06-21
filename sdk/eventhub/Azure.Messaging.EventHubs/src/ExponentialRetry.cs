@@ -88,6 +88,20 @@ namespace Azure.Messaging.EventHubs
             new ExponentialRetry(_minimumBackoff, _maximumBackoff, _maximumRetryCount);
 
         /// <summary>
+        ///   Allows internal access to the retry properties for compatibility shims.
+        /// </summary>
+        ///
+        /// <returns>The set of properties for the retry policy.</returns>
+        ///
+        /// <remarks>
+        ///   This method is intended to allow for compatibility shims to create the equivilent retry
+        ///   policy within the track one code;  it will be removed after the first preview and should
+        ///   not be depended upon outside of that context.
+        /// </remarks>
+        ///
+        internal (TimeSpan minimumBackOff, TimeSpan maximumBackoff, int maximumRetryCount) GetProperties() => (_minimumBackoff, _maximumBackoff, _maximumRetryCount); //TODO: Remove after preview
+
+        /// <summary>
         ///   Determines whether the specified <see cref="ExponentialRetry" />, is equal to this instance.
         /// </summary>
         ///

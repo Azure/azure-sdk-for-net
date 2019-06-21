@@ -24,13 +24,13 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   <ItemGroup>
     <!-- This is needed for discovering tests in test explorer -->
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
+    <PackageReference Include="System.Runtime.InteropServices" />	
   </ItemGroup>
 
   <PropertyGroup>

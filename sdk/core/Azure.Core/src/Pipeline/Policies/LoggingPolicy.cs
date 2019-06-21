@@ -253,6 +253,18 @@ namespace Azure.Core.Pipeline.Policies
                 get => _originalStream.Position;
                 set => _originalStream.Position = value;
             }
+
+            public override void Close()
+            {
+                _originalStream.Close();
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+
+                _originalStream.Dispose();
+            }
         }
     }
 }

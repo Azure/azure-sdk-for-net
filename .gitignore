@@ -22,6 +22,7 @@ tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
 src/NuGet.Config
 tools/7-zip/
+#tools/LocalNugetFeed/Microsoft.Internal.NetSdkBuild.Mgmt.Tools.*.nupkg
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*

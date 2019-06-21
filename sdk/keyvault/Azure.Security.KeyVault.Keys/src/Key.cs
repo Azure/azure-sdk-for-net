@@ -22,8 +22,9 @@ namespace Azure.Security.KeyVault.Keys
             {
                 KeyMaterial = new JsonWebKey();
                 KeyMaterial.ReadProperties(key);
+                ParseId(KeyMaterial.KeyId);
             }
-            
+
             base.ReadProperties(json);
         }
     }

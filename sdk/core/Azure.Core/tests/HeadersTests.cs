@@ -40,6 +40,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void DateReturnsXMsDateHeaderValue()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("x-ms-date", "Sun, 29 Sep 2013 01:02:03 GMT"));
+
+            Assert.AreEqual(new DateTimeOffset(2013, 9, 29, 1, 2, 3, TimeSpan.Zero), mockResponse.Headers.Date);
+        }
+
+        [Test]
+        public void DateReturnsDateHeaderValueFirst()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("x-ms-date", "Sun, 29 Sep 2013 01:02:03 GMT"));
+            mockResponse.AddHeader(new HttpHeader("Date", "Sun, 29 Sep 2013 09:02:03 GMT"));
+
+            Assert.AreEqual(new DateTimeOffset(2013, 9, 29, 9, 2, 3, TimeSpan.Zero), mockResponse.Headers.Date);
+        }
+
+
+        [Test]
         public void DateReturnsNullForNoHeader()
         {
             var mockResponse = new MockResponse(200);

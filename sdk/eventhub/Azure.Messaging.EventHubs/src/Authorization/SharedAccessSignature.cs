@@ -19,103 +19,103 @@ namespace Azure.Messaging.EventHubs.Authorization
     internal class SharedAccessSignature
     {
         /// <summary>The maximum allowed length of the SAS key name.</summary>
-        protected const int MaximumKeyNameLength = 256;
+        private const int MaximumKeyNameLength = 256;
 
-        /// <summary>The maximum allowed lenght of the SAS key.</summary>
-        protected const int MaximumKeyLength = 256;
+        /// <summary>The maximum allowed length of the SAS key.</summary>
+        private const int MaximumKeyLength = 256;
 
         /// <summary>The token that represents the type of authentication used.</summary>
-        protected const string AuthenticationTypeToken = "SharedAccessSignature";
+        private const string AuthenticationTypeToken = "SharedAccessSignature";
 
         /// <summary>The token that identifies the signed component of the shared access signature.</summary>
-        protected const string SignedResourceToken = "sr";
+        private const string SignedResourceToken = "sr";
 
-        /// <summary>The token that identifies that signature component of the shared access signature.</summary>
-        protected const string SignatureToken = "sig";
+        /// <summary>The token that identifies the signature component of the shared access signature.</summary>
+        private const string SignatureToken = "sig";
 
-        /// <summary>The token that identifies that signed SAS key component of the shared access signature.</summary>
-        protected const string SignedKeyNameToken = "skn";
+        /// <summary>The token that identifies the signed SAS key component of the shared access signature.</summary>
+        private const string SignedKeyNameToken = "skn";
 
-        /// <summary>The token that identifies that signed expiration time of the shared access signature.</summary>
-        protected const string SignedExpiryToken = "se";
+        /// <summary>The token that identifies the signed expiration time of the shared access signature.</summary>
+        private const string SignedExpiryToken = "se";
 
         /// <summary>The token that fully identifies the signed resource within the signature.</summary>
-        protected const string SignedResourceFullIdentifierToken = AuthenticationTypeToken + " " + SignedResourceToken;
+        private const string SignedResourceFullIdentifierToken = AuthenticationTypeToken + " " + SignedResourceToken;
 
         /// <summary>The character used to separate a token and its value in the connection string.</summary>
-        protected const char TokenValueSeparator = '=';
+        private const char TokenValueSeparator = '=';
 
         /// <summary>The character used to mark the beginning of a new token/value pair in the signature.</summary>
-        protected const char TokenValuePairDelimiter = '&';
+        private const char TokenValuePairDelimiter = '&';
+
+        /// <summary>The default length of time to consider a signature valid, if not otherwise specified.</summary>
+        private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Represents the Unix epoch time value, January 1, 1970 12:00:00, UTC.</summary>
-        protected static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         ///   The name of the shared access key, either for the Event Hubs namespace
         ///   or the Event Hub.
         /// </summary>
         ///
-        public string SharedAccessKeyName { get; protected set; }
+        public string SharedAccessKeyName { get; private set; }
 
         /// <summary>
         ///   The value of the shared access key, either for the Event Hubs namespace
         ///   or the Event Hub.
         /// </summary>
         ///
-        public string SharedAccessKey { get; protected set; }
+        public string SharedAccessKey { get; private set; }
 
         /// <summary>
         ///   The date and time that the shared access signature expires, in UTC.
         /// </summary>
         ///
-        public DateTime ExpirationUtc { get; protected set; }
+        public DateTime ExpirationUtc { get; private set; }
 
         /// <summary>
         ///   The resource to which the shared access signature is intended to serve as
         ///   authorization.
         /// </summary>
         ///
-        public string Resource { get; protected set; }
+        public string Resource { get; private set; }
 
         /// <summary>
         ///   The shared access signature to be used for authorization, either for the Event Hubs namespace
         ///   or the Event Hub.
         /// </summary>
         ///
-        public string Value { get; protected set; }
+        public string Value { get; private set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
         /// </summary>
         ///
-        /// <param name="connectionType">The type of connection that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
-        /// <param name="signatureValidityDuration">The duration that the signature should be considered valid.</param>
+        /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
-        public SharedAccessSignature(ConnectionType connectionType,
-                                     string host,
-                                     string eventHubPath,
+        public SharedAccessSignature(string eventHubResource,
                                      string sharedAccessKeyName,
                                      string sharedAccessKey,
-                                     TimeSpan signatureValidityDuration)
+                                     TimeSpan? signatureValidityDuration = default)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(host), host);
-            Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            signatureValidityDuration = signatureValidityDuration ?? DefaultSignatureValidityDuration;
+
+            Guard.ArgumentNotNullOrEmpty(nameof(eventHubResource), eventHubResource);
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKeyName), sharedAccessKeyName);
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessKey), sharedAccessKey);
 
             Guard.ArgumentNotTooLong(nameof(sharedAccessKeyName), sharedAccessKeyName, MaximumKeyNameLength);
             Guard.ArgumentNotTooLong(nameof(sharedAccessKey), sharedAccessKey, MaximumKeyLength);
-            Guard.ArgumentNotNegative(nameof(signatureValidityDuration), signatureValidityDuration);
+            Guard.ArgumentNotNegative(nameof(signatureValidityDuration), signatureValidityDuration.Value);
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
-            ExpirationUtc = DateTime.UtcNow.Add(signatureValidityDuration);
-            Resource = BuildAudience(connectionType, host, eventHubPath);
+            ExpirationUtc = DateTime.UtcNow.Add(signatureValidityDuration.Value);
+            Resource = eventHubResource;
             Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, ExpirationUtc);
         }
 
@@ -149,17 +149,31 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
+        ///   nitializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
+        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
+        /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
+        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
+        /// <param name="value">The shared access signature to be used for authorization.</param>
+        /// <param name="expirationUtc">The date and time that the shared access signature expires, in UTC.</param>
+        ///
         /// <remarks>
-        ///   This constructor is primarily intended for testing scenarios, where the default behavior
-        ///   for constructing or parsing a signature is intended to be bypassed.  In other cases, it is
-        ///   recommended to override the <see cref="BuildSignature"/> or <see cref="ParseSignature"/> methods directly.
+        ///     This constructor is intended to support cloning of the signature and internal testing,
+        ///     allowing for direct setting of the property values without validation or adjustment.
         /// </remarks>
         ///
-        protected SharedAccessSignature()
+        internal SharedAccessSignature(string eventHubResource,
+                                       string sharedAccessKeyName,
+                                       string sharedAccessKey,
+                                       string value,
+                                       DateTime expirationUtc)
         {
+            Resource = eventHubResource;
+            SharedAccessKeyName = sharedAccessKeyName;
+            SharedAccessKey = sharedAccessKey;
+            Value = value;
+            ExpirationUtc = expirationUtc;
         }
 
         /// <summary>
@@ -220,46 +234,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>A new copy of <see cref="SharedAccessSignature" />.</returns>
         ///
         internal SharedAccessSignature Clone() =>
-            new SharedAccessSignature()
-            {
-                Resource = this.Resource,
-                SharedAccessKeyName = this.SharedAccessKeyName,
-                SharedAccessKey = this.SharedAccessKey,
-                ExpirationUtc = this.ExpirationUtc,
-                Value = this.Value
-            };
-
-        /// <summary>
-        ///   Builds the shared accesss signature value, which can be used as a token for
-        ///   access to the Event Hubs service.
-        /// </summary>
-        ///
-        /// <param name="audience">The audience scope to which this signature applies.</param>
-        /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
-        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
-        /// <param name="expirationUtc">The date/time, in UTC, that the signature expires.</param>
-        ///
-        /// <returns>The value of the shared access signature.</returns>
-        ///
-        protected string BuildSignature(string audience,
-                                        string sharedAccessKeyName,
-                                        string sharedAccessKey,
-                                        DateTime expirationUtc)
-        {
-            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey)))
-            {
-                var encodedAudience = WebUtility.UrlEncode(audience);
-                var expiration = Convert.ToString(ConvertToUnixTime(expirationUtc), CultureInfo.InvariantCulture);
-                var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes($"{ encodedAudience }\n{ expiration }")));
-
-                return String.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
-                    AuthenticationTypeToken,
-                    SignedResourceToken, encodedAudience,
-                    SignatureToken, WebUtility.UrlEncode(signature),
-                    SignedExpiryToken, WebUtility.UrlEncode(expiration),
-                    SignedKeyNameToken, WebUtility.UrlEncode(sharedAccessKeyName));
-            }
-        }
+            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, ExpirationUtc);
 
         /// <summary>
         ///   Parses a shared access signature into its component parts.
@@ -269,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The set of composite properties parsed from the signature.</returns>
         ///
-        protected (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
+        private static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
         {
             int tokenPositionModifier = (sharedAccessSignature[0] == TokenValuePairDelimiter) ? 0 : 1;
             int lastPosition = 0;
@@ -376,37 +351,36 @@ namespace Azure.Messaging.EventHubs.Authorization
             return parsedValues;
         }
 
-
         /// <summary>
-        ///   Builds the audience for use in the signature.
+        ///   Builds the shared accesss signature value, which can be used as a token for
+        ///   access to the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="connectionType">The type of connection that will be used for communicating with the Event Hubs service.</param>
-        /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubPath">The path of the specific Event Hub to connect the client to.</param>
+        /// <param name="audience">The audience scope to which this signature applies.</param>
+        /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
+        /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
+        /// <param name="expirationUtc">The date/time, in UTC, that the signature expires.</param>
         ///
-        /// <returns>The value to use as the audience of the signature.</returns>
+        /// <returns>The value of the shared access signature.</returns>
         ///
-        private string BuildAudience(ConnectionType connectionType,
-                                     string host,
-                                     string eventHubPath)
+        private static string BuildSignature(string audience,
+                                             string sharedAccessKeyName,
+                                             string sharedAccessKey,
+                                             DateTime expirationUtc)
         {
-            var builder = new UriBuilder(host)
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey)))
             {
-                Scheme = connectionType.GetUriScheme(),
-                Path = eventHubPath,
-                Port = -1,
-                Fragment = String.Empty,
-                Password = String.Empty,
-                UserName = String.Empty,
-            };
+                var encodedAudience = WebUtility.UrlEncode(audience);
+                var expiration = Convert.ToString(ConvertToUnixTime(expirationUtc), CultureInfo.InvariantCulture);
+                var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes($"{ encodedAudience }\n{ expiration }")));
 
-            if (!builder.Path.EndsWith("/"))
-            {
-                builder.Path += "/";
+                return String.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
+                    AuthenticationTypeToken,
+                    SignedResourceToken, encodedAudience,
+                    SignatureToken, WebUtility.UrlEncode(signature),
+                    SignedExpiryToken, WebUtility.UrlEncode(expiration),
+                    SignedKeyNameToken, WebUtility.UrlEncode(sharedAccessKeyName));
             }
-
-            return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
 
         /// <summary>
@@ -418,7 +392,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The date/time, in UTC, which corresponds to the specified timestamp.</returns>
         ///
-        private DateTime ConvertFromUnixTime(long unixTime) =>
+        private static DateTime ConvertFromUnixTime(long unixTime) =>
             Epoch.AddSeconds(unixTime);
 
         /// <summary>
@@ -429,7 +403,9 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The Unix-style timestamp which corresponds to the specified date/time.</returns>
         ///
-        private long ConvertToUnixTime(DateTime dateTime) =>
+        private static long ConvertToUnixTime(DateTime dateTime) =>
             Convert.ToInt64((dateTime.ToUniversalTime() - Epoch).TotalSeconds);
+
+
     }
 }

@@ -1,49 +1,29 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Core.Testing;
+using Azure.Core;
 
 namespace Azure.Identity.Tests.Mock
 {
     public class MockManagedIdentityCredentialTests
     {
         [Test]
-        public async Task TokenCacheRefresh()
-        {
-            // ensure expired tokens are refreshed
-            var expired = new ManagedIdentityCredential() { Client = MockIdentityClient.ExpiredTokenClient };
-
-            HashSet<string> tokens = new HashSet<string>();
-
-            for (int i = 0; i < 100; i++)
-            {
-                Assert.IsTrue(tokens.Add(await expired.GetTokenAsync(MockScopes.Default)), "token failed to refresh");
-            }
-
-            // ensure non expired tokens are not refeshed
-            var live = new ManagedIdentityCredential() { Client = MockIdentityClient.LiveTokenClient };
-
-            tokens.Clear();
-
-            tokens.Add(await live.GetTokenAsync(MockScopes.Default));
-
-            for (int i = 0; i < 100; i++)
-            {
-                Assert.IsFalse(tokens.Add(await live.GetTokenAsync(MockScopes.Default)));
-            }
-        }
-
-        [Test]
         public async Task CancellationTokenHonoredAsync()
         {
-            var credential = new ManagedIdentityCredential() { Client = new MockIdentityClient() };
+            var credential = new ManagedIdentityCredential();
+
+            credential._client(new MockIdentityClient());
 
             var cancellation = new CancellationTokenSource();
 
-            ValueTask<string> getTokenComplete = credential.GetTokenAsync(MockScopes.Default, cancellation.Token);
+            Task<AccessToken> getTokenComplete = credential.GetTokenAsync(MockScopes.Default, cancellation.Token);
 
             cancellation.Cancel();
 
@@ -55,11 +35,13 @@ namespace Azure.Identity.Tests.Mock
         [Test]
         public async Task ScopesHonoredAsync()
         {
-            var credential = new ManagedIdentityCredential() { Client = new MockIdentityClient() };
+            var credential = new ManagedIdentityCredential();
 
-            string defaultScopeToken = await credential.GetTokenAsync(MockScopes.Default);
+            credential._client(new MockIdentityClient());
 
-            Assert.IsTrue(new MockToken(defaultScopeToken).HasField("scopes", MockScopes.Default.ToString()));
+            AccessToken defaultScopeToken = await credential.GetTokenAsync(MockScopes.Default);
+
+            Assert.IsTrue(new MockToken(defaultScopeToken.Token).HasField("scopes", MockScopes.Default.ToString()));
         }
 
         [Test]
@@ -77,9 +59,9 @@ namespace Azure.Identity.Tests.Mock
 
             var credential = new ManagedIdentityCredential(options: options);
 
-            string actualToken = await credential.GetTokenAsync(MockScopes.Default);
+            AccessToken actualToken = await credential.GetTokenAsync(MockScopes.Default);
 
-            Assert.AreEqual(expectedToken, actualToken);
+            Assert.AreEqual(expectedToken, actualToken.Token);
 
             MockRequest request = mockTransport.SingleRequest;
 

@@ -4,8 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
@@ -17,14 +21,24 @@ namespace Azure.Storage
 #pragma warning restore CA1032 // Implement standard exception constructors
     {
         /// <summary>
+        /// Name of the x-ms-error-code header.
+        /// </summary>
+        private const string ErrorCodeHeaderName = "x-ms-error-code";
+
+        /// <summary>
+        /// Name of the x-ms-request-id header.
+        /// </summary>
+        private const string RequestIdHeaderName = "x-ms-request-id";
+
+        /// <summary>
         /// Well known error codes for common failure conditions
         /// </summary>
-        public string ErrorCode { get; set; }
+        public string ErrorCode { get; private set; }
 
         /// <summary>
         /// Additional information helpful in debugging errors.
         /// </summary>
-        public IDictionary<string, string> AdditionalInformation { get; internal set; } = new Dictionary<string, string>();
+        public IDictionary<string, string> AdditionalInformation { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Gets the x-ms-request-id header that uniquely identifies the
@@ -38,7 +52,7 @@ namespace Azure.Storage
         /// <param name="response">Response of the failed request.</param>
         /// <param name="message">Summary of the failure.</param>
         public StorageRequestFailedException(Response response, string message = null)
-            : this(response, message, null)
+            : this(response, message ?? response?.ReasonPhrase, null)
         {
         }
 
@@ -49,8 +63,9 @@ namespace Azure.Storage
         /// <param name="message">Summary of the failure.</param>
         /// <param name="innerException">Inner exception.</param>
         public StorageRequestFailedException(Response response, string message, Exception innerException)
-            : base(response.Status, CreateMessage(response, message), innerException)
-            => this.RequestId = GetRequestId(response);
+            : this(response, message ?? response?.ReasonPhrase, innerException, null)
+        {
+        }
 
         /// <summary>
         /// Create a new StorageRequestFailedException.
@@ -58,41 +73,97 @@ namespace Azure.Storage
         /// <param name="response">Response of the failed request.</param>
         /// <param name="message">Summary of the failure.</param>
         /// <param name="innerException">Inner exception.</param>
-        private StorageRequestFailedException(int status, string message, string requestId)
-            : base(status, message)
-            => this.RequestId = requestId;
-
-        /// <summary>
-        /// Create a new StorageRequestFailedException.
-        /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <param name="message">Summary of the failure.</param>
-        /// <returns>A new StorageRequestFailedException.</returns>
-        public static async Task<StorageRequestFailedException> CreateAsync(Response response, string message)
+        /// <param name="errorCode">Optional error code of the failure.</param>
+        /// <param name="additionalInfo">Optional additional info about the failure.</param>
+        internal StorageRequestFailedException(
+            Response response,
+            string message,
+            Exception innerException,
+            string errorCode,
+            IDictionary<string, string> additionalInfo = null)
+            : base(
+                  response?.Status ?? throw new ArgumentNullException(nameof(response)),
+                  CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
+                  innerException)
         {
-            message = await ResponseExceptionExtensionsExtensions.CreateRequestFailedMessageAsync(message, response, true).ConfigureAwait(false);
-            return new StorageRequestFailedException(response.Status, message, GetRequestId(response));
+            // Get the error code, if it wasn't provided
+            if (String.IsNullOrEmpty(errorCode))
+            {
+                response.Headers.TryGetValue(ErrorCodeHeaderName, out errorCode);
+            }
+            this.ErrorCode = errorCode;
+
+            if (additionalInfo != null)
+            {
+                this.AdditionalInformation = additionalInfo;
+            }
+
+            // Include the RequestId
+            this.RequestId = response.Headers.TryGetValue(RequestIdHeaderName, out var value) ? value : null;
         }
 
         /// <summary>
-        /// Builds a request failure message, synchronously.
+        /// Create the exception's Message.
         /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <param name="message">Summary of the failure.</param>
-        /// <returns>The request failure message.</returns>
-        private static string CreateMessage(Response response, string message)
-            => ResponseExceptionExtensionsExtensions.CreateRequestFailedMessageAsync(message, response, false).GetAwaiter().GetResult();
+        /// <param name="message">The default message.</param>
+        /// <param name="response">The error response.</param>
+        /// <param name="errorCode">An optional error code.</param>
+        /// <param name="additionalInfo">Optional additional information.</param>
+        /// <returns>The exception's Message.</returns>
+        private static string CreateMessage(
+            Response response,
+            string message,
+            string errorCode,
+            IDictionary<string, string> additionalInfo)
+        {
+            // Start with the message, status, and reason
+            var messageBuilder = new StringBuilder()
+                .AppendLine(message)
+                .Append("Status: ")
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture))
+                .Append(" (")
+                .Append(response.ReasonPhrase)
+                .AppendLine(")");
 
-        /// <summary>
-        /// Gets the x-ms-request-id header that uniquely identifies the
-        /// request that was made and can be used for troubleshooting.
-        /// </summary>
-        /// <param name="response">Response of the failed request.</param>
-        /// <returns>
-        /// The x-ms-request-id header that uniquely identifies the request
-        /// that was made and can be used for troubleshooting.
-        /// </returns>
-        private static string GetRequestId(Response response)
-            => response.Headers.TryGetValue("x-ms-request-id", out var value) ? value : null;
+            // Make the Storage ErrorCode especially prominent
+            if (!String.IsNullOrEmpty(errorCode) ||
+                response.Headers.TryGetValue(ErrorCodeHeaderName, out errorCode))
+            {
+                messageBuilder
+                    .AppendLine()
+                    .Append("ErrorCode: ")
+                    .AppendLine(errorCode);
+            }
+
+            // A Storage error's Content is (currently) always the ErrorCode and
+            // AdditionalInfo, so we skip the specific Content section
+            if (additionalInfo != null && additionalInfo.Count > 0)
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Additional Information:");
+                foreach (var info in additionalInfo)
+                {
+                    messageBuilder
+                        .Append(info.Key)
+                        .Append(": ")
+                        .AppendLine(info.Value);
+                }
+            }
+
+            // Include the response headers
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
+            foreach (var responseHeader in response.Headers)
+            {
+                messageBuilder
+                    .Append(responseHeader.Name)
+                    .Append(": ")
+                    .AppendLine(responseHeader.Value);
+            }
+
+            return messageBuilder.ToString();
+        }
     }
 }

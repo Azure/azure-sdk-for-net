@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags "--tag=package-resources-2019-05" -SdkGenerationDirectory "$PSScriptRoot\Generated"

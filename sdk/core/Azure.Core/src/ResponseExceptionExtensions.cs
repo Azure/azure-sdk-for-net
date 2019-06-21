@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
-    public static class ResponseExceptionExtensionsExtensions
+    public static class ResponseExceptionExtensions
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -45,7 +46,7 @@ namespace Azure.Core
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)
                 .Append("Status: ")
-                .Append(response.Status.ToString())
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture))
                 .Append(" (")
                 .Append(response.ReasonPhrase)
                 .AppendLine(")");
@@ -59,7 +60,7 @@ namespace Azure.Core
 
                 using (var streamReader = new StreamReader(response.ContentStream, encoding))
                 {
-                    string content = async ? await streamReader.ReadToEndAsync() : streamReader.ReadToEnd();
+                    string content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
 
                     messageBuilder.AppendLine(content);
                 }
