@@ -65,6 +65,29 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is a string comprised of only whitespace, though
+        ///   <c>null</c> is considered a valid value.  An <see cref="ArgumentException" /> is thrown
+        ///   if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        ///
+        public static void ArgumentNotEmptyOrWhitespace(string argumentName,
+                                                       string argumentValue)
+        {
+            if (argumentValue == null)
+            {
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(argumentValue))
+            {
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentEmptyOrWhiteSpace, argumentName), argumentName);
+            }
+        }
+
+        /// <summary>
         ///   Ensures that a string argument's length is below a maximum allowed threshold,
         ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>

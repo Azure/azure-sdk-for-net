@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 await job.OutputStorage(StorageAccount).SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"));
 
                 var blobs = job.OutputStorage(StorageAccount).ListOutputs(JobOutputKind.JobOutput).ToList();
-                Assert.NotEqual(0, blobs.Count);
+                Assert.NotEmpty(blobs);
                 Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
             }
         }
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 var jobOutputStorageFromAccount = job.OutputStorage(StorageAccount);
 
                 var blobs = jobOutputStorageFromAccount.ListOutputs(JobOutputKind.JobPreview).ToList();
-                Assert.NotEqual(0, blobs.Count);
+                Assert.NotEmpty(blobs);
                 Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobPreview/SavedViaSas.txt"));
             }
         }

@@ -20,6 +20,8 @@ namespace Azure.Security.KeyVault.Secrets
 
         public SecretBase(string name)
         {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+
             _identifier.Name = name;
         }
 
@@ -50,7 +52,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         public string RecoveryLevel => _attributes.RecoveryLevel;
 
-        public IDictionary<string, string> Tags { get; set; }
+        public IDictionary<string, string> Tags { get; private set; } = new Dictionary<string, string>();
 
         internal override void ReadProperties(JsonElement json)
         {

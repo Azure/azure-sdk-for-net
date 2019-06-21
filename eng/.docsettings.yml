@@ -4,6 +4,8 @@ omitted_paths:
   - tools/*
   - src/*
   - Documentation/*
+  - sdk/*mgmt*/*
+  - sdk/*/*.Management.*/*
 language: net
 root_check_enabled: True
 required_readme_sections:
@@ -48,6 +50,9 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Search.BingLocalSearch','#5499']
   - ['sdk/cognitiveservices/Search.BingCustomImageSearch','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
+  - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
+  - ['sdk/search','#5499']
+
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
@@ -65,7 +70,7 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.FilesConventions/README.md','#5499']
-  
+
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

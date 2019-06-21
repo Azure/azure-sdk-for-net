@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             await jobOutputStorage.SaveAsyncImpl(JobOutputKind.JobOutput, FileBase, "TestText1.txt");
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
-            Assert.NotEqual(0, blobs.Count);
+            Assert.NotEmpty(blobs);
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/TestText1.txt"));
         }
 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"));
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
-            Assert.NotEqual(0, blobs.Count);
+            Assert.NotEmpty(blobs);
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
         }
 
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"), "RenamedTestText1.txt");
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
-            Assert.NotEqual(0, blobs.Count);
+            Assert.NotEmpty(blobs);
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/RenamedTestText1.txt"));
         }
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             await jobOutputStorage.SaveAsyncImpl(JobOutputKind.JobOutput, FileBase, "File\\Under\\TestText2.txt");
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
-            Assert.NotEqual(0, blobs.Count);
+            Assert.NotEmpty(blobs);
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/Under/TestText2.txt"));
         }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"), "File/In/The/Depths/TestText3.txt");
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
-            Assert.NotEqual(0, blobs.Count);
+            Assert.NotEmpty(blobs);
             Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/In/The/Depths/TestText3.txt"));
         }
 

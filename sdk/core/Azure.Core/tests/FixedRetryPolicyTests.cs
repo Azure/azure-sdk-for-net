@@ -13,13 +13,13 @@ namespace Azure.Core.Tests
 {
     public class FixedRetryPolicyTests: RetryPolicyTestBase
     {
-        public FixedRetryPolicyTests(bool isAsync) : base(isAsync) { }
+        public FixedRetryPolicyTests(bool isAsync) : base(RetryMode.Fixed, isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3));
+            var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(3));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
         public async Task WaitsSameAmountEveryTime()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3), maxRetries: 3);
+            var policy = new RetryPolicyMock(RetryMode.Fixed,delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -62,7 +62,7 @@ namespace Azure.Core.Tests
         public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(delay));
+            var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(delay));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -79,33 +79,6 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(TimeSpan.FromSeconds(expected), retryDelay);
             Assert.AreEqual(501, response.Status);
-        }
-
-        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
-        {
-            var policy = new FixedRetryPolicyMock(maxRetries, TimeSpan.FromSeconds(3));
-            return (policy, policy.DelayGate);
-        }
-
-        private class FixedRetryPolicyMock: FixedRetryPolicy
-        {
-            public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
-
-            public FixedRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default)
-            {
-                Delay = delay;
-                MaxRetries = maxRetries;
-            }
-
-            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
-            {
-                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
-            }
-
-            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-            {
-                return DelayGate.WaitForRelease(time);
-            }
         }
     }
 }
