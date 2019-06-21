@@ -8,19 +8,20 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
+    /// A JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data
+    /// structure that represents a cryptographic key.
+    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
     /// </summary>
     public class JsonWebKey : Model
     {
         /// <summary>
-        /// Key Identifier
+        /// The identifier of the key.
         /// </summary>
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Supported JsonWebKey key types (kty) for Elliptic
-        /// Curve, RSA, HSM, Octet, usually RSA. Possible values include:
-        /// 'EC', 'RSA', 'RSA-HSM', 'oct'
+        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
+        /// For valid values, see <see cref="KeyType"/>.
         /// </summary>
         public KeyType KeyType { get; set; }
 

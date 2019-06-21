@@ -5,17 +5,18 @@
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represent the key specific attributes needed in order to create a RSA key.
+    /// Represents the attributes to assign to an RSA key at creation.
     /// </summary>
     public class RsaKeyCreateOptions : KeyCreateOptions
     {
         /// <summary>
-        /// Name of the key.
+        /// The name of the key to create.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The type of key to create.
+        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
+        /// Possible values 'RSA', 'RSA-HSM.'
         /// </summary>
         public KeyType KeyType { get; private set; }
 
@@ -24,9 +25,11 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public int? KeySize { get; set; }
 
-        /// <summary>
-        /// Whether it is a hardware key (HSM) or software key.
+        /// <summary> 
+        /// Determines whether or not a hardware key (HSM) is used for creation.
         /// </summary>
+        ///
+        /// <value><c>true</c> to use a hardware key; <c>false</c> to use a software key</value>
         public bool Hsm { get; private set; }
 
 
@@ -39,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys
         public RsaKeyCreateOptions(string name, bool hsm, int? keySize = null) 
         {
             Name = name;
-            
+            Hsm = hsm;
             if(hsm)
             {
                 KeyType = KeyType.RsaHsm;

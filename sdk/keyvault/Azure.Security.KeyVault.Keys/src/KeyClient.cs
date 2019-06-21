@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
-        /// <param name="keyType">The type of key to create.</param>
+        /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
         /// <param name="keyOptions">Specific attributes with information about the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<Key> CreateKey(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
         /// <param name="name">The name of the key.</param>
-        /// <param name="keyType">The type of key to create.</param>
+        /// <param name="keyType">The type of key to create. See <see cref="KeyType"/> for valid values.</param>
         /// <param name="keyOptions">Specific attributes with information about the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<Key>> CreateKeyAsync(string name, KeyType keyType, KeyCreateOptions keyOptions = default, CancellationToken cancellationToken = default)
@@ -102,13 +102,13 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates and stores a new EC key in Key Vault.
+        /// Creates and stores a new Elliptic Curve key in Key Vault.
         /// </summary>
         /// <remarks>
         /// If the named key already exists, Azure Key Vault creates a new
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
-        /// <param name="ecKey">The key options object containing information about the EC key being created.</param>
+        /// <param name="ecKey">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<Key> CreateEcKey(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {
@@ -120,13 +120,13 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Creates and stores a new EC key in Key Vault.
+        /// Creates and stores a new Elliptic Curve key in Key Vault.
         /// </summary>
         /// <remarks>
         /// If the named key already exists, Azure Key Vault creates a new
         /// version of the key. It requires the keys/create permission.
         /// </remarks>
-        /// <param name="ecKey">The key options object containing information about the EC key being created.</param>
+        /// <param name="ecKey">The key options object containing information about the Elliptic Curve key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<Key>> CreateEcKeyAsync(EcKeyCreateOptions ecKey, CancellationToken cancellationToken = default)
         {

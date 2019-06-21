@@ -70,17 +70,17 @@ namespace Azure.Security.KeyVault.Secrets
         public string KeyId { get; private set; }
 
         /// <summary>
-        /// Determines whether the object is enabled.
+        /// Specifies whether the secret is enabled and useable.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Not before date in UTC.
+        /// Identifies the time (in UTC) before which the secret data should not be retrieved.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the secret data should not be retrieved.
         /// </summary>
         public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
 
