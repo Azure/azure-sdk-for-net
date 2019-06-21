@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class AggregateCredential : TokenCredential
+    public class ChainedTokenCredential : TokenCredential
     {
         private TokenCredential[] _sources;
 
-        public AggregateCredential(params TokenCredential[] sources)
+        public ChainedTokenCredential(params TokenCredential[] sources)
         {
             if (sources == null) throw new ArgumentNullException(nameof(sources));
 
