@@ -408,7 +408,7 @@ namespace Microsoft.Azure.ServiceBus
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
                 }
-                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase) && !int.TryParse(value, out _))
                 {
                     value = value.Replace(" ", string.Empty);
                     if (!Enum.TryParse(value, true, out this.authType))

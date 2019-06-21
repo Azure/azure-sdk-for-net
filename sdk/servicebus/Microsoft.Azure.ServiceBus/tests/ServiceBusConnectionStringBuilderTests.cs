@@ -213,5 +213,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new ManagementClient(builder); // Will throw without a valid TokenProvider
             Assert.Equal(typeof(ManagedIdentityTokenProvider), connection.TokenProvider.GetType());
         }
+
+        [Theory]
+        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=")]
+        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=1")]
+        [InlineData("Endpoint=sb://test.servicebus.windows.net/;Authentication=InvalidValue")]
+        public void ConnectionStringWithInvalidAuthenticationTest(string connectionString)
+        {
+            var builder = new ServiceBusConnectionStringBuilder(connectionString);
+            var connection = new ServiceBusConnection(builder);
+            Assert.Throws<ArgumentException>(() => new ManagementClient(builder));
+            Assert.Null(connection.TokenProvider);
+        }
     }
 }

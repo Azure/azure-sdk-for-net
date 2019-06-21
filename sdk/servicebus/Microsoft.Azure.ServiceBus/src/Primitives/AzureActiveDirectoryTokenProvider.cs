@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
             this.AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
-            this.authority = authority;
+            this.authority = authority ?? throw Fx.Exception.ArgumentNull(nameof(authority));
             this.authCallbackState = state;
         }
 
