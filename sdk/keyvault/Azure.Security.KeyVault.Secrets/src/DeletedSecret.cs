@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Secrets
         public DateTimeOffset? DeletedDate { get; private set; }
 
         /// <summary>
-        /// Time when the secret was deleted, in UTC.
+        /// Time when the secret is scheduled to be purged, in UTC
         /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 

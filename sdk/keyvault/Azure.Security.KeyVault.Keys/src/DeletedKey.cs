@@ -7,16 +7,30 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// DeletedKey is the resource consisting of name, recovery id, deleted date, scheduled purge date and its attributes 
+    /// inherited from <see cref="Key"/>.
+    /// </summary>
     public class DeletedKey : Key
     {
+        /// <summary>
+        /// The identifier of the deleted key object. This is used to recover the key.
+        /// </summary>
         public string RecoveryId { get; private set; }
 
+        /// <summary>
+        /// Time when the key was deleted, in UTC.
+        /// </summary>
         public DateTimeOffset? DeletedDate { get; private set; }
 
+        /// <summary>
+        /// Time when the key is scheduled to be purged, in UTC
+        /// </summary>
         public DateTimeOffset? ScheduledPurgeDate { get; private set; }
 
-        public DeletedKey() { }
-        public DeletedKey(string name) : base(name) { }
+        internal DeletedKey() { }
+
+        internal DeletedKey(string name) : base(name) { }
 
         public DeletedKey (string name, string recoveryId, DateTimeOffset? deletedDate, DateTimeOffset? scheduledPurge)
             : base(name)

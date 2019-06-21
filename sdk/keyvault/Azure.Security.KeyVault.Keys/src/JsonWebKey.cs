@@ -2,16 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
+    /// </summary>
     public class JsonWebKey : Model
     {
         /// <summary>
@@ -20,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets supported JsonWebKey key types (kty) for Elliptic
+        /// Supported JsonWebKey key types (kty) for Elliptic
         /// Curve, RSA, HSM, Octet, usually RSA. Possible values include:
         /// 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </summary>
@@ -31,6 +29,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public IList<KeyOperations> KeyOps { get; set; }
 
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/>
+        /// </summary>
         public JsonWebKey()
         {
             KeyOps = new List<KeyOperations>();
