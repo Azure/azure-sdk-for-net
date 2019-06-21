@@ -95,7 +95,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual Response<Key> UpdateKey(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key?.Version)) throw new ArgumentException($"{nameof(key.Version)} can't be empty or null");
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (key.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");
+            if (keyOperations == null) throw new ArgumentNullException(nameof(keyOperations));
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
@@ -104,7 +106,9 @@ namespace Azure.Security.KeyVault.Keys
 
         public virtual async Task<Response<Key>> UpdateKeyAsync(KeyBase key, IEnumerable<KeyOperations> keyOperations, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key?.Version)) throw new ArgumentException($"{nameof(key.Version)} can't be empty or null");
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (key.Version == null) throw new ArgumentNullException($"{nameof(key)}.{nameof(key.Version)}");
+            if (keyOperations == null) throw new ArgumentNullException(nameof(keyOperations));
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
