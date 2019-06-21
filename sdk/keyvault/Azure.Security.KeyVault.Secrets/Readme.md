@@ -73,12 +73,12 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 // Create a new secret client using the default credential from Azure.Identity
-var client = new SecretClient(vaultUri: <your-vault-url>, credential: new SystemCredential());
+var client = new SecretClient(vaultUri: <your-vault-url>, credential: new DefaultAzureCredential());
 
 // Create a new secret using the secret client
 Secret secret = client.Set("secret-name", "secret-value");
 ```
-> SystemCredential():
+> DefaultAzureCredential():
 > Uses the environment variables previously set (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, and `AZURE_TENANT_ID`)
 
 ## Key concepts
