@@ -244,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -303,7 +303,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -364,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -491,7 +491,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
@@ -528,7 +528,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var client = new EventHubClient(connectionString))
                 {
-                    await using (var consumer = client.CreateConsumer(invalidPartition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", invalidPartition, EventPosition.Latest))
                     {
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
                     }
@@ -563,7 +563,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the receiver to connect and set its position at the
                         // end of the event stream.
@@ -606,7 +606,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "nonExistentConsumerGroup" }))
+                    await using (var consumer = client.CreateConsumer("nonExistentConsumerGroup", partition, EventPosition.Latest))
                     {
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
                     }
@@ -630,11 +630,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var exclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                 }
@@ -657,11 +657,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var higherExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
-                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var lowerExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
 
                     Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                 }
@@ -684,15 +684,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partitionIds = await client.GetPartitionIdsAsync();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var higherExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
-                    var lowerExclusiveConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var lowerExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
 
                     Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[2], EventPosition.Latest);
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[2], EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                 }
@@ -721,15 +721,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[0], OwnerLevel = 20 });
+                    var higherExclusiveConsumer = client.CreateConsumer(consumerGroups[0], partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
-                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[1], OwnerLevel = 10 });
+                    var lowerExclusiveConsumer = client.CreateConsumer(consumerGroups[1], partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
 
                     Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                 }
@@ -752,8 +752,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var exclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
 
                     await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
                     await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
@@ -779,8 +779,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
-                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var higherExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
 
                     await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
@@ -806,9 +806,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partitionIds = await client.GetPartitionIdsAsync();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
-                    var lowerExclusiveConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
-                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[2], EventPosition.Latest);
+                    var higherExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[1], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[2], EventPosition.Latest);
 
                     await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
                     await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
@@ -842,9 +842,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var higherExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[0], OwnerLevel = 20 });
-                    var lowerExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = consumerGroups[1], OwnerLevel = 10 });
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
+                    var higherExclusiveConsumer = client.CreateConsumer(consumerGroups[0], partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var lowerExclusiveConsumer = client.CreateConsumer(consumerGroups[1], partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
 
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
@@ -870,8 +870,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partitionIds = await client.GetPartitionIdsAsync();
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest);
-                    var exclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[0], EventPosition.Latest);
+                    var exclusiveConsumer = client.CreateConsumer("$Default", partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
@@ -881,9 +881,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // It should be possible to create new valid consumers.
 
-                    var newExclusiveConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
-                    var anotherPartitionConsumer = client.CreateConsumer(partitionIds[1], EventPosition.Latest);
-                    var anotherConsumerGroupConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "anotherConsumerGroup" });
+                    var newExclusiveConsumer = client.CreateConsumer("$Default", partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 10 });
+                    var anotherPartitionConsumer = client.CreateConsumer("$Default", partitionIds[1], EventPosition.Latest);
+                    var anotherConsumerGroupConsumer = client.CreateConsumer("anotherConsumerGroup", partitionIds[0], EventPosition.Latest);
 
                     Assert.That(async () => await newExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     Assert.That(async () => await anotherPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
@@ -891,8 +891,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Proper exceptions should be thrown as well.
 
-                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
-                    var invalidConsumerGroupConsumer = client.CreateConsumer(partitionIds[0], EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+                    var invalidPartitionConsumer = client.CreateConsumer("$Default", "XYZ", EventPosition.Latest);
+                    var invalidConsumerGroupConsumer = client.CreateConsumer("imNotAConsumerGroup", partitionIds[0], EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                     Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
@@ -917,7 +917,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
+                    var invalidPartitionConsumer = client.CreateConsumer("$Default", "XYZ", EventPosition.Latest);
 
                     // Failing at consumer creation should not compromise future ReceiveAsync calls.
 
@@ -925,14 +925,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // It should be possible to create new valid consumers.
 
-                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var exclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     Assert.That(async () => await exclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
                     // Proper exceptions should be thrown as well.
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
-                    var invalidConsumerGroupConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
+                    var invalidConsumerGroupConsumer = client.CreateConsumer("imNotAConsumerGroup", partition, EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                     Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
@@ -957,26 +957,26 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    var invalidGroupConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { ConsumerGroup = "imNotAConsumerGroup" });
+                    var invalidConsumerGroupConsumer = client.CreateConsumer("imNotAConsumerGroup", partition, EventPosition.Latest);
 
                     // Failing at consumer creation should not compromise future ReceiveAsync calls.
 
-                    Assert.That(async () => await invalidGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                    Assert.That(async () => await invalidConsumerGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
 
                     // It should be possible to create new valid consumers.
 
-                    var exclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
+                    var exclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest, new EventHubConsumerOptions { OwnerLevel = 20 });
 
                     Assert.That(async () => await exclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
 
                     // Proper exceptions should be thrown as well.
 
-                    var nonExclusiveConsumer = client.CreateConsumer(partition, EventPosition.Latest);
-                    var invalidPartitionConsumer = client.CreateConsumer("XYZ", EventPosition.Latest);
+                    var nonExclusiveConsumer = client.CreateConsumer("$Default", partition, EventPosition.Latest);
+                    var invalidPartitionConsumer = client.CreateConsumer("$Default", "XYZ", EventPosition.Latest);
 
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                     Assert.That(async () => await invalidPartitionConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
-                    Assert.That(async () => await invalidGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
+                    Assert.That(async () => await invalidConsumerGroupConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.MessagingEntityNotFoundException>());
                 }
             }
         }
@@ -992,7 +992,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
                         client.Close();
 
