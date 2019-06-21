@@ -23,10 +23,10 @@ namespace SmokeTest
              * The credentials are stored in environment variables.
              */
 
-            var tenantid = Environment.GetEnvironmentVariable("KeyVault_TenantID");
-            var clientid = Environment.GetEnvironmentVariable("KeyVault_ClientID");
-            var clientsecret = Environment.GetEnvironmentVariable("KeyVault_ClientSecret");
-            var KeyVaultUri = Environment.GetEnvironmentVariable("KeyVaultUri");
+            var tenantid = Environment.GetEnvironmentVariable("DIR_TENANT_ID");
+            var clientid = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
+            var clientsecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+            var KeyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
             
             var client = new SecretClient(new Uri(KeyVaultUri), new ClientSecretCredential(tenantid, clientid, clientsecret));
 

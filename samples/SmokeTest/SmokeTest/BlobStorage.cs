@@ -14,7 +14,7 @@ namespace SmokeTest
          * The container name for this sample is 'mycontainer', and the Blob name 'SmokeTestBlob'
          */
 
-        private static BlobServiceClient service = new BlobServiceClient(Environment.GetEnvironmentVariable("Blob_ConnectionString"));
+        private static BlobServiceClient service = new BlobServiceClient(Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING"));
         private static BlockBlobClient blob = service.GetBlobContainerClient("mycontainer").GetBlockBlobClient("SmokeTestBlob");
 
         public static async Task performFunctionalities()

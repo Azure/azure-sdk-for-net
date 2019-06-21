@@ -26,7 +26,7 @@ namespace SmokeTest
             /* Create EventHub client.
              * THe connection string is retreived from a Envirnment variable
              */
-            var client = new EventHubClient(Environment.GetEnvironmentVariable("EventHubs_ConnectionString"));
+            var client = new EventHubClient(Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"));
 
             Console.Write("Creating the Sender and Receivers... ");
             var response = await CreateSenderAndReceiver(client);
