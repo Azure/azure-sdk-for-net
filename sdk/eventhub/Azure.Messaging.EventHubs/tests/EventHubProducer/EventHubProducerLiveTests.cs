@@ -26,6 +26,9 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventHubProducerLiveTests
     {
+        /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
+        private const int ReceiveRetryLimit = 10;
+
         /// <summary>
         ///   Verifies that the <see cref="EventHubProducer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -620,7 +623,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             for (var index = 0; index < partitions; index++)
                             {
-                                consumers.Add(client.CreateConsumer("$Default", partitionIds[index], EventPosition.Latest));
+                                consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
 
                                 // Initiate an operation to force the consumer to connect and set its position at the
                                 // end of the event stream.
@@ -644,7 +647,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 var receivedEvents = new List<EventData>();
                                 var index = 0;
 
-                                while (++index < 10)
+                                while (++index < ReceiveRetryLimit)
                                 {
                                     receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                                 }
@@ -699,7 +702,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(client.CreateConsumer("$Default", partitionIds[index], EventPosition.Latest));
+                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.
@@ -720,7 +723,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while (++index < 10)
+                            while (++index < ReceiveRetryLimit)
                             {
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count() + 10, TimeSpan.FromMilliseconds(25)));
                             }
@@ -774,7 +777,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(client.CreateConsumer("$Default", partitionIds[index], EventPosition.Latest));
+                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.
@@ -800,7 +803,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while (++index < 10)
+                            while (++index < ReceiveRetryLimit)
                             {
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                             }
