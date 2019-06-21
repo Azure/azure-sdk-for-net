@@ -1001,7 +1001,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 return new ManagedIdentityTokenProvider();
             }
 
-            throw new Exception("Could not create token provider. Either ITokenProvider has to be passed into constructor or connection string should contain SAS token OR SAS key name and SAS key OR Authentication = Managed Identity.");
+            throw new ArgumentException("Could not create token provider. Either ITokenProvider has to be passed into constructor or connection string should contain SAS token OR SAS key name and SAS key OR Authentication = Managed Identity.");
         }
 
         private Task<string> GetToken(Uri requestUri)
