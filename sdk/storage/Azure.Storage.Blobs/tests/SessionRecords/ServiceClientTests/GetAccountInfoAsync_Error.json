@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/?restype=account\u0026comp=properties",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "User-Agent": [
+          "azsdk-net-storage-blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "25f96bd1f25829dce7b834a0a7fb2daf",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "223",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 17 Jun 2019 20:58:30 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "ResourceNotFound",
+        "x-ms-request-id": "510ec2b9-101e-002d-2c4f-25fe7d000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eResourceNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified resource does not exist.\n",
+        "RequestId:510ec2b9-101e-002d-2c4f-25fe7d000000\n",
+        "Time:2019-06-17T20:58:30.4133018Z\u003c/Message\u003e\u003c/Error\u003e"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1354989510"
+  }
+}

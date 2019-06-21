@@ -256,13 +256,15 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   By default, consumers are created as non-exclusive.
         /// </summary>
         ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
         ///
         /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
-        public override EventHubConsumer CreateConsumer(string partitionId,
+        public override EventHubConsumer CreateConsumer(string consumerGroup,
+                                                        string partitionId,
                                                         EventPosition eventPosition,
                                                         EventHubConsumerOptions consumerOptions)
         {
@@ -282,11 +284,11 @@ namespace Azure.Messaging.EventHubs.Compatibility
 
                 if (consumerOptions.OwnerLevel.HasValue)
                 {
-                    consumer = TrackOneClient.CreateEpochReceiver(consumerOptions.ConsumerGroup, partitionId, position, consumerOptions.OwnerLevel.Value, trackOneOptions);
+                    consumer = TrackOneClient.CreateEpochReceiver(consumerGroup, partitionId, position, consumerOptions.OwnerLevel.Value, trackOneOptions);
                 }
                 else
                 {
-                    consumer = TrackOneClient.CreateReceiver(consumerOptions.ConsumerGroup, partitionId, position, trackOneOptions);
+                    consumer = TrackOneClient.CreateReceiver(consumerGroup, partitionId, position, trackOneOptions);
                 }
 
                 (TimeSpan minBackoff, TimeSpan maxBackoff, int maxRetries) = ((ExponentialRetry)consumerOptions.Retry).GetProperties();
@@ -300,6 +302,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 new TrackOneEventHubConsumer(CreateReceiverFactory),
                 TrackOneClient.EventHubName,
                 partitionId,
+                consumerGroup,
                 eventPosition,
                 consumerOptions
             );

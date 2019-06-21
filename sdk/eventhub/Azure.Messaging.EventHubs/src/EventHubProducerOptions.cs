@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -16,11 +17,14 @@ namespace Azure.Messaging.EventHubs
         /// <summary>The timeout that will be used by default for sending events.</summary>
         private TimeSpan? _timeout = TimeSpan.FromMinutes(1);
 
+        /// <summary>The identifier of the partition that the producer will be bound to.</summary>
+        private string _partitionId = null;
+
         /// <summary>
         ///   The identifier of the Event Hub partition that the <see cref="EventHubProducer" /> will be bound to,
         ///   limiting it to sending events to only that partition.
         ///
-        ///   If the identifier is not spedified, the Event Hubs service will be responsible for routing events that
+        ///   If the identifier is not specified, the Event Hubs service will be responsible for routing events that
         ///   are sent to an available partition.
         /// </summary>
         ///
@@ -36,7 +40,15 @@ namespace Azure.Messaging.EventHubs
         ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
-        public string PartitionId { get; set; }
+        public string PartitionId
+        {
+            get => _partitionId;
+            set
+            {
+                Guard.ArgumentNotEmptyOrWhitespace(nameof(PartitionId), value);
+                _partitionId = value;
+            }
+        }
 
         /// <summary>
         ///   The <see cref="EventHubs.Retry" /> used to govern retry attempts when an issue is
@@ -49,7 +61,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The default timeout to apply when sending events.  If the timeout is reached, before the Event Hub
-        ///   acknowledges receipt of the event data being sent, the attempt will be conisdered failed and considered
+        ///   acknowledges receipt of the event data being sent, the attempt will be classified as failed and considered
         ///   to be retried.
         /// </summary>
         ///
@@ -111,7 +123,7 @@ namespace Azure.Messaging.EventHubs
         internal EventHubProducerOptions Clone() =>
             new EventHubProducerOptions
             {
-                PartitionId = this.PartitionId,
+                _partitionId = this.PartitionId,
                 Retry = this.Retry?.Clone(),
                 Timeout = this.Timeout
             };

@@ -6,17 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestClass]
-    public class ServiceClientTests
+    [TestFixture]
+    public class ServiceClientTests : BlobTestBase
     {
-        [TestMethod]
+        public ServiceClientTests()
+            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        {
+        }
+
+        [Test]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -28,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
 
             var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
 
-            var service = new BlobServiceClient(connectionString.ToString(true), TestHelper.GetOptions<BlobConnectionOptions>());
+            var service = new BlobServiceClient(connectionString.ToString(true));
 
             var builder = new BlobUriBuilder(service.Uri);
 
@@ -37,14 +44,13 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (TestHelper.GetNewContainer(out _, service: service))
+            using (this.GetNewContainer(out _, service: service))
             {
                 // Act
                 var response = await service.ListContainersSegmentAsync();
@@ -54,13 +60,12 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync_Marker()
         {
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (TestHelper.GetNewContainer(out var container, service: service))
+            using (this.GetNewContainer(out var container, service: service))
             {
                 var marker = default(string);
                 ContainersSegment containersSegment;
@@ -79,18 +84,17 @@ namespace Azure.Storage.Blobs.Test
 
                 Assert.AreNotEqual(0, containers.Count);
                 Assert.AreEqual(containers.Count, containers.Select(c => c.Name).Distinct().Count());
-                Assert.IsTrue(containers.Any(c => container.Uri == service.GetBlobContainerClient(c.Name).Uri));
+                Assert.IsTrue(containers.Any(c => container.Uri == this.InstrumentClient(service.GetBlobContainerClient(c.Name)).Uri));
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (TestHelper.GetNewContainer(out _, service: service))
-            using (TestHelper.GetNewContainer(out var container, service: service))
+            using (this.GetNewContainer(out _, service: service))
+            using (this.GetNewContainer(out var container, service: service))
             {
                 // Act
                 var response = await service.ListContainersSegmentAsync(options: new ContainersSegmentOptions
@@ -103,15 +107,14 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync_Prefix()
         {
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             var prefix = "aaa";
-            var containerName = prefix + TestHelper.GetNewContainerName();
+            var containerName = prefix + this.GetNewContainerName();
             // Ensure at least one container
-            using (TestHelper.GetNewContainer(out var container, service: service, containerName: containerName))
+            using (this.GetNewContainer(out var container, service: service, containerName: containerName))
             {
                 // Act
                 var response = await service.ListContainersSegmentAsync(options: new ContainersSegmentOptions
@@ -126,16 +129,15 @@ namespace Azure.Storage.Blobs.Test
             }
         }
         
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync_Metadata()
         {
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (TestHelper.GetNewContainer(out var container, service: service))
+            using (this.GetNewContainer(out var container, service: service))
             {
                 // Arrange
-                var metadata = TestHelper.BuildMetadata();
+                var metadata = this.BuildMetadata();
                 await container.SetMetadataAsync(metadata);
 
                 // Act
@@ -149,12 +151,11 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -162,12 +163,11 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetAccountInfoAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Act
             var response = await service.GetAccountInfoAsync();
@@ -176,14 +176,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
-            var service = new BlobServiceClient(
-                TestHelper.GetServiceClient_SharedKey().Uri,
-                TestHelper.GetOptions<BlobConnectionOptions>());
+            var service = this.InstrumentClient(
+                new BlobServiceClient(
+                    this.GetServiceClient_SharedKey().Uri,
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -191,12 +191,11 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Act
             var response = await service.GetPropertiesAsync();
@@ -205,14 +204,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(String.IsNullOrWhiteSpace(response.Value.DefaultServiceVersion));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var service = new BlobServiceClient(
-                TestHelper.GetServiceClient_SharedKey().Uri,
-                TestHelper.GetOptions<BlobConnectionOptions>());
+            var service = this.InstrumentClient(
+                new BlobServiceClient(
+                    this.GetServiceClient_SharedKey().Uri,
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -220,13 +219,12 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [TestMethod]
-        [DoNotParallelize]
-        [TestCategory("Live")]
+        [Test]
+        [NonParallelizable]
         public async Task SetPropertiesAsync()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             var properties = (await service.GetPropertiesAsync()).Value;
             var originalCors = properties.Cors.ToArray();
             properties.Cors =
@@ -257,16 +255,16 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
             var properties = (await service.GetPropertiesAsync()).Value;
-            var invalidService = new BlobServiceClient(
-                TestHelper.GetServiceClient_SharedKey().Uri,
-                TestHelper.GetOptions<BlobConnectionOptions>());
+            var invalidService = this.InstrumentClient(
+                new BlobServiceClient(
+                    this.GetServiceClient_SharedKey().Uri,
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -275,15 +273,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetStatisticsAsync()
         {
             // Arrange
             // "-secondary" is required by the server
-            var service = new BlobServiceClient(
-                new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
-                TestHelper.GetOptions<BlobConnectionOptions>(TestHelper.GetNewSharedKeyCredentials()));
+            var service = this.InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
+                    this.GetOptions(this.GetNewSharedKeyCredentials())));
 
             // Act
             var response = await service.GetStatisticsAsync();
@@ -292,43 +290,40 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            var service = await TestHelper.GetServiceClient_OauthAccount();
+            var service = await this.GetServiceClient_OauthAccount();
 
             // Act
-            var response = await service.GetUserDelegationKeyAsync(start: null, expiry: DateTimeOffset.UtcNow.AddHours(1));
+            var response = await service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1));
 
             // Assert
             Assert.IsNotNull(response.Value);
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
-            var service = TestHelper.GetServiceClient_SharedKey();
+            var service = this.GetServiceClient_SharedKey();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: DateTimeOffset.UtcNow.AddHours(1)),
+                service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1)),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            var service = await TestHelper.GetServiceClient_OauthAccount();
+            var service = await this.GetServiceClient_OauthAccount();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: DateTimeOffset.Now.AddHours(1)),
+                service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.Now.AddHours(1)),
                 e => Assert.AreEqual("expiry must be UTC", e.Message));
         }
     }

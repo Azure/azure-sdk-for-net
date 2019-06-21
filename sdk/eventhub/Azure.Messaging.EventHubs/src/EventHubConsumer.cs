@@ -25,6 +25,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventHubConsumer : IAsyncDisposable
     {
+        /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
+        public const string DefaultConsumerGroup = "$Default";
+
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
@@ -78,6 +81,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="transportConsumer">An abstracted Event Consumer specific to the active protocol and transport intended to perform delegated operations.</param>
         /// <param name="eventHubPath">The path of the Event Hub from which events will be received.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to use for this consumer.</param>
         ///
@@ -92,13 +96,15 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventHubConsumer(TransportEventHubConsumer transportConsumer,
-                               string eventHubPath,
-                               string partitionId,
-                               EventPosition eventPosition,
-                               EventHubConsumerOptions consumerOptions)
+                                   string eventHubPath,
+                                   string consumerGroup,
+                                   string partitionId,
+                                   EventPosition eventPosition,
+                                   EventHubConsumerOptions consumerOptions)
         {
             Guard.ArgumentNotNull(nameof(transportConsumer), transportConsumer);
             Guard.ArgumentNotNullOrEmpty(nameof(eventHubPath), eventHubPath);
+            Guard.ArgumentNotNullOrEmpty(nameof(consumerGroup), consumerGroup);
             Guard.ArgumentNotNullOrEmpty(nameof(partitionId), partitionId);
             Guard.ArgumentNotNull(nameof(eventPosition), eventPosition);
             Guard.ArgumentNotNull(nameof(consumerOptions), consumerOptions);
@@ -106,7 +112,7 @@ namespace Azure.Messaging.EventHubs
             PartitionId = partitionId;
             StartingPosition = eventPosition;
             OwnerLevel = consumerOptions.OwnerLevel;
-            ConsumerGroup = consumerOptions.ConsumerGroup;
+            ConsumerGroup = consumerGroup;
             Options = consumerOptions;
             InnerConsumer = transportConsumer;
         }

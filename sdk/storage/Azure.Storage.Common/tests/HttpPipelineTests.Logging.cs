@@ -7,8 +7,8 @@ namespace Azure.Storage.Common.Test
     partial class HttpPipelineTests
     {
         /*
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task Logging_Shared_Key_Redact()
         {
             var sourceSwitch = new SourceSwitch("sourceSwitch") { Level = SourceLevels.All };
@@ -34,8 +34,8 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task Logging_SAS_Redact()
         {
             var sourceSwitch = new SourceSwitch("sourceSwitch") { Level = SourceLevels.All };
@@ -65,9 +65,9 @@ namespace Azure.Storage.Common.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         [Ignore("Needs permissions")]
-        [DoNotParallelize]
+        [NonParallelizable]
         public async Task Logging_EventLog()
         {
             var serviceCollection = 
@@ -82,8 +82,8 @@ namespace Azure.Storage.Common.Test
             await Logging_TestImpl(serviceCollection);
         }
 
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task Logging_ConsoleLog()
         {
             using (var textWriter = new StringWriter())
@@ -104,8 +104,8 @@ namespace Azure.Storage.Common.Test
         }
 
         
-        [TestMethod]
-        [DoNotParallelize]
+        [Test]
+        [NonParallelizable]
         public async Task Logging_TraceLog()
         {
             var sourceSwitch = new SourceSwitch("sourceSwitch") { Level = SourceLevels.All };

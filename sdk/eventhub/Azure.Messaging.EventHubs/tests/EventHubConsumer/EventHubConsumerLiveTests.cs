@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest))
                     {
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     }
@@ -65,14 +65,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                var options = new EventHubConsumerOptions { ConsumerGroup = "$Default" };
+                var options = new EventHubConsumerOptions { Identifier = "FakeIdentifier" };
 
                 await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { TransportType = transportType }))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest, options))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest, options))
                     {
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
                     }
@@ -104,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -179,7 +178,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    await using (var consumer = client.CreateConsumer(partition, EventPosition.Latest))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest))
                     {
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
