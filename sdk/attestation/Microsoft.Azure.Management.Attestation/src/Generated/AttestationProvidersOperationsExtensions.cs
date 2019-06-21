@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// Name of the resource group to which the resource belongs.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance
             /// </param>
             public static AttestationProvider Get(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// Name of the resource group to which the resource belongs.
             /// </param>
             /// <param name='providerName'>
-            /// Name of the attestation service
+            /// Name of the attestation service instance
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
