@@ -565,7 +565,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
                     await using (var consumer = client.CreateConsumer("$Default", partition, EventPosition.Latest))
                     {
-                        // Initiate an operation to force the receiver to connect and set its position at the
+                        // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
 
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
@@ -1008,6 +1008,129 @@ namespace Azure.Messaging.EventHubs.Tests
                         client.Close();
 
                         Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerCannotReceiveEventsSentToAnotherPartition()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventBatch = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partitionIds = await client.GetPartitionIdsAsync();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionIds[0] }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[1], EventPosition.Latest))
+                    {
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batches of events.
+
+                        var batches = 3;
+
+                        for (var batchesCount = 0; batchesCount < batches; batchesCount++)
+                        {
+                            await producer.SendAsync(eventBatch);
+                        }
+
+                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while (++index < 10)
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(batches * eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents, Is.Empty, "There should not have been a set of events received.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumersInDifferentConsumerGroupsShouldAllReceiveEvents()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1, new[] { "anotherConsumerGroup" }))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var eventBatch = new[]
+                {
+                    new EventData(Encoding.UTF8.GetBytes("One")),
+                    new EventData(Encoding.UTF8.GetBytes("Two")),
+                    new EventData(Encoding.UTF8.GetBytes("Three"))
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest))
+                    await using (var anotherConsumer = client.CreateConsumer("anotherConsumerGroup", partition, EventPosition.Latest))
+                    {
+                        // Initiate an operation to force the consumers to connect and set their positions at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+                        Assert.That(async () => await anotherConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send the batch of events.
+
+                        await producer.SendAsync(eventBatch);
+
+                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < eventBatch.Length) && (++index < 10))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count(), Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { consumer.ConsumerGroup } did not match the batch size.");
+
+                        receivedEvents.Clear();
+                        index = 0;
+
+                        while ((receivedEvents.Count < eventBatch.Length) && (++index < 10))
+                        {
+                            receivedEvents.AddRange(await anotherConsumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count(), Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { anotherConsumer.ConsumerGroup } did not match the batch size.");
                     }
                 }
             }
