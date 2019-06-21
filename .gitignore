@@ -150,4 +150,3 @@ pingme.txt
 # TS/Node files
 dist/
 node_modules/
-samples/SmokeTest/SmokeTest/Properties/launchSettings.json
