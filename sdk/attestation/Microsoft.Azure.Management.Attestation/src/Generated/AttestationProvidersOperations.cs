@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Name of the resource group to which the resource belongs.
         /// </param>
         /// <param name='providerName'>
-        /// Name of the attestation service
+        /// Name of the attestation service instance
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -111,14 +111,10 @@ namespace Microsoft.Azure.Management.Attestation
             }
             if (providerName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(providerName, "^[a-zA-Z0-9-]{3,24}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(providerName, "^[a-z0-9]{3,24}$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "providerName", "^[a-zA-Z0-9-]{3,24}$");
+                    throw new ValidationException(ValidationRules.Pattern, "providerName", "^[a-z0-9]{3,24}$");
                 }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -331,10 +327,6 @@ namespace Microsoft.Azure.Management.Attestation
                 {
                     throw new ValidationException(ValidationRules.Pattern, "providerName", "^[a-zA-Z0-9-]{3,24}$");
                 }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -567,10 +559,6 @@ namespace Microsoft.Azure.Management.Attestation
                     throw new ValidationException(ValidationRules.Pattern, "providerName", "^[a-zA-Z0-9-]{3,24}$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -722,10 +710,6 @@ namespace Microsoft.Azure.Management.Attestation
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<AttestationProvider>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -916,10 +900,6 @@ namespace Microsoft.Azure.Management.Attestation
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+[^\\.]$");
                 }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
