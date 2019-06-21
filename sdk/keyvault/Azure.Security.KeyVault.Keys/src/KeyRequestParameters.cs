@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         private KeyAttributes _attributes;
 
-        public KeyType KeyType { get; set; }
+        public KeyType? KeyType { get; set; }
         public int? KeySize { get; set; }
         public KeyAttributes Attributes { get; set; }
         public IList<KeyOperations> KeyOperations { get; set; }
@@ -107,9 +107,9 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if(!string.IsNullOrEmpty(KeyType.StringValue))
+            if(KeyType == null)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyType.StringValue);
+                json.WriteString(KeyTypePropertyNameBytes, KeyType.Value.ToString());
             }
             if(KeySize.HasValue)
             {

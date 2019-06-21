@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys
         /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
         /// For valid values, see <see cref="KeyType"/>.
         /// </summary>
-        public KeyType KeyType { get; set; }
+        public KeyType? KeyType { get; set; }
 
         /// <summary>
         /// Supported Key Operations
@@ -218,9 +218,9 @@ namespace Azure.Security.KeyVault.Keys
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
-            if (!string.IsNullOrEmpty(KeyType.StringValue))
+            if (KeyType != null)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyType.StringValue);
+                json.WriteString(KeyTypePropertyNameBytes, KeyType.Value.ToString());
             }
             if (KeyOps != null)
             {
