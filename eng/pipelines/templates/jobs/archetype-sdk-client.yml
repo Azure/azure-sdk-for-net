@@ -9,8 +9,15 @@ jobs:
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
-        displayName: "Build and Package"
+      - script: "dotnet build eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
+        displayName: "Build"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - script: |
+          dotnet pack eng/service.proj --no-build -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }} /p:VersionSuffix=run.$(Build.BuildID)"
+        displayName: "Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
