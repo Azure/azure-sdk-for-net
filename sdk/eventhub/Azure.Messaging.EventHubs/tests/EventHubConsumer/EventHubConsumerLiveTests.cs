@@ -1138,5 +1138,106 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(20)]
+        [TestCase(40)]
+        [TestCase(60)]
+        public async Task ReceiveStopsWhenMaximumWaitTimeIsReached(int maximumWaitTimeInSecs)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest))
+                    {
+                        // Initiate an operation to force the consumers to connect and set their positions at the
+                        // end of the event stream.
+
+                        await consumer.ReceiveAsync(1, TimeSpan.Zero);
+
+                        // The consumer will wait until maximum wait time is reached because there are no messages to receive.
+
+                        var startTime = DateTime.UtcNow;
+
+                        await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(maximumWaitTimeInSecs));
+
+                        var elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
+
+                        Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
+                        Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(20)]
+        [TestCase(40)]
+        [TestCase(60)]
+        public async Task ReceiveStopsWhenDefaultMaximumWaitTimeIsReachedIfMaximumWaitTimeIsNotProvided(int defaultMaximumWaitTimeInSecs)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+                    var consumerOptions = new EventHubConsumerOptions
+                    {
+                        DefaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(defaultMaximumWaitTimeInSecs)
+                    };
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Latest, consumerOptions))
+                    {
+                        var maximumWaitTimeInSecs = 10;
+
+                        // Initiate an operation to force the consumers to connect and set their positions at the
+                        // end of the event stream.
+
+                        await consumer.ReceiveAsync(1, TimeSpan.Zero);
+
+                        // The consumer will wait until default maximum wait time is reached because there are no messages to receive.
+
+                        var startTime = DateTime.UtcNow;
+
+                        await consumer.ReceiveAsync(1);
+
+                        var elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
+
+                        Assert.That(elapsedTime, Is.GreaterThan(defaultMaximumWaitTimeInSecs - 0.1));
+                        Assert.That(elapsedTime, Is.LessThan(defaultMaximumWaitTimeInSecs + 5));
+
+                        // The consumer will wait until maximum wait time is reached because there are no messages to receive.
+
+                        startTime = DateTime.UtcNow;
+
+                        await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(maximumWaitTimeInSecs));
+
+                        elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
+
+                        Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
+                        Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));
+                    }
+                }
+            }
+        }
     }
 }
