@@ -13,7 +13,7 @@ using Azure.Core.Pipeline.Policies;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// The SecretClient provides synchronous methods to manage <see cref="Secret"/> in the Azure Key Vault. The client
+    /// The SecretClient provides synchronous and asynchronous methods to manage <see cref="Secret"/> in the Azure Key Vault. The client
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing <see cref="Secret"/>.
     /// The client also supports listing <see cref="DeletedSecret"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Get a specified secret from a given key vault.
         /// </summary>
         /// <remarks>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault.
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
         /// This operation requires the secrets/get permission.
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// Get a specified secret from a given key vault.
         /// </summary>
         /// <remarks>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault.
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
         /// This operation requires the secrets/get permission.
         /// </remarks>
         /// <param name="name">The name of the secret.</param>
