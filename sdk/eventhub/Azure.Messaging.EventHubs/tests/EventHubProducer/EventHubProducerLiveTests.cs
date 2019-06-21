@@ -652,7 +652,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                     receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                                 }
 
-                                if (receivedEvents.Count() > 0)
+                                if (receivedEvents.Count > 0)
                                 {
                                     partitionsCount++;
                                 }
@@ -660,10 +660,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                         finally
                         {
-                            foreach (var consumer in consumers)
-                            {
-                                consumer.Close();
-                            }
+                            await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
                         }
 
                         Assert.That(partitionsCount, Is.GreaterThan(1));
@@ -691,7 +688,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var eventBatch = Enumerable
                         .Range(0, 30)
-                        .Select(index => new EventData(Encoding.UTF8.GetBytes("I'm getting used to this amount of messages")));
+                        .Select(index => new EventData(Encoding.UTF8.GetBytes("I'm getting used to this amount of messages")))
+                        .ToList();
 
                     var partitionIds = await client.GetPartitionIdsAsync();
                     var partitionsCount = 0;
@@ -725,13 +723,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             while (++index < ReceiveRetryLimit)
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count() + 10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Count + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
-                            if (receivedEvents.Count() > 0)
+                            if (receivedEvents.Count > 0)
                             {
                                 partitionsCount++;
-                                receivedEventsCount += receivedEvents.Count();
+                                receivedEventsCount += receivedEvents.Count;
                             }
                         }
                     }
@@ -744,7 +742,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
 
                     Assert.That(partitionsCount, Is.EqualTo(1));
-                    Assert.That(receivedEventsCount, Is.EqualTo(eventBatch.Count()));
+                    Assert.That(receivedEventsCount, Is.EqualTo(eventBatch.Count));
                 }
             }
         }
@@ -808,10 +806,10 @@ namespace Azure.Messaging.EventHubs.Tests
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(batches + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
-                            if (receivedEvents.Count() > 0)
+                            if (receivedEvents.Count > 0)
                             {
                                 partitionsCount++;
-                                receivedEventsCount += receivedEvents.Count();
+                                receivedEventsCount += receivedEvents.Count;
 
                                 foreach (var receivedEvent in receivedEvents)
                                 {
