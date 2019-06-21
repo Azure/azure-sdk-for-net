@@ -201,7 +201,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         var batchNumber = 1;
                         var batchSize = (eventBatch.Length / 3);
 
-                        while ((receivedEvents.Count < eventBatch.Length) && (++index < eventBatch.Length + 10))
+                        while ((receivedEvents.Count < eventBatch.Length) && (++index < eventBatch.Length + ReceiveRetryLimit))
                         {
                             var currentReceiveBatch = await consumer.ReceiveAsync(batchSize, TimeSpan.FromMilliseconds(25));
                             receivedEvents.AddRange(currentReceiveBatch);
@@ -559,7 +559,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var eventBatch = Enumerable
                     .Range(0, 20 * maximumMessageCount)
-                    .Select(index => new EventData(new byte[10]));
+                    .Select(index => new EventData(new byte[10]))
+                    .ToList();
 
                 await using (var client = new EventHubClient(connectionString))
                 {
@@ -581,12 +582,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         var index = 0;
 
-                        while (index < eventBatch.Count())
+                        while (index < eventBatch.Count)
                         {
-                            var receivedEvents = await consumer.ReceiveAsync(maximumMessageCount, TimeSpan.FromSeconds(10));
-                            index += receivedEvents.Count();
+                            var receivedEvents = (await consumer.ReceiveAsync(maximumMessageCount, TimeSpan.FromSeconds(10))).ToList();
+                            index += receivedEvents.Count;
 
-                            Assert.That(receivedEvents.Count(), Is.LessThanOrEqualTo(maximumMessageCount));
+                            Assert.That(receivedEvents.Count, Is.LessThanOrEqualTo(maximumMessageCount));
                         }
                     }
                 }
@@ -1123,7 +1124,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             receivedEvents.AddRange(await consumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
-                        Assert.That(receivedEvents.Count(), Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { consumer.ConsumerGroup } did not match the batch size.");
+                        Assert.That(receivedEvents.Count, Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { consumer.ConsumerGroup } did not match the batch size.");
 
                         receivedEvents.Clear();
                         index = 0;
@@ -1133,7 +1134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             receivedEvents.AddRange(await anotherConsumer.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
-                        Assert.That(receivedEvents.Count(), Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { anotherConsumer.ConsumerGroup } did not match the batch size.");
+                        Assert.That(receivedEvents.Count, Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { anotherConsumer.ConsumerGroup } did not match the batch size.");
                     }
                 }
             }
