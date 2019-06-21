@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Attestation
         /// Name of the resource group to which the resource belongs.
         /// </param>
         /// <param name='providerName'>
-        /// Name of the attestation service
+        /// Name of the attestation service instance
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
