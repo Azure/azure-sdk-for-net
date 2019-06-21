@@ -90,14 +90,16 @@ namespace Azure.Security.KeyVault.Secrets
 
         public virtual async Task<Response<SecretBase>> UpdateAsync(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
+            if (secret == null) throw new ArgumentNullException(nameof(secret));
+            if (secret.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
             return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
         }
 
         public virtual Response<SecretBase> Update(SecretBase secret, CancellationToken cancellationToken = default)
         {
-            if (secret?.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
+            if (secret == null) throw new ArgumentNullException(nameof(secret));
+            if (secret.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
             return SendRequest(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
         }
