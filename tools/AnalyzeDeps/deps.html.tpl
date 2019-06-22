@@ -70,6 +70,13 @@ $(
       td.version {
           width: 75px;
       }
+      code {
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+        background-color: rgba(27,31,35,.05);
+        border-radius: 3px;
+        font-size: 85%;
+        padding: .2em .4em;
+      }
       .tooltip {
           position: relative;
           display: inline-block;
@@ -155,18 +162,18 @@ $(
           }
         )
         $(
-          if ($Frozen) {
-            "$($Frozen.Count) dependency $(Pluralize $Frozen.Count 'version was' 'versions were') discovered in the <a href=""#lockfile"">lockfile</a>.<br/>"
+          if ($Locked) {
+            "$($Locked.Count) dependency $(Pluralize $Locked.Count 'version was' 'versions were') discovered in the <a href=""#lockfile"">lockfile</a>.<br/>"
             if ($Overrides) {
               "<strong>$($Overrides.Count) dependency version $(Pluralize $Overrides.Count 'override is' 'overrides are') present, causing package depenceny versions to differ from the version in the lockfile.</strong><br/>"
             } else {
               "All declared dependency versions were match those specified in the lockfile.<br/>"
             }
           } else {
-            "<strong>No lockfile was provided for this report, declared dependency versions were not able to be validated.</strong><br/>"
+            "<strong>No lockfile was provided for this report, or the lockfile was empty. Declared dependency versions were not able to be validated.</strong><br/>"
           }
         )
-        <br/>This report scanned $($Packages.Count) <a href="#packages">$(Pluralize $Packages.Count 'package' 'packages')</a>.
+        <br/>This report scanned $($Pkgs.Count) <a href="#packages">$(Pluralize $Pkgs.Count 'package' 'packages')</a>.
       </p>
       <a name="dependencies"/>
       $(
@@ -196,6 +203,64 @@ $(
         }
       )
       <br/><br/><hr/><br/><br/>
+      <a name="lockfile"/>
+      <table class="condensed">
+        <thead>
+          <tr><th colspan="3"><strong>Dependencies Centralized in Lockfile</strong></th></tr>
+          $(if ($Locked) { "<tr><th>Dependency</th><th>Centralized Version</th><th>Dependency State</th></tr>" })
+        </thead>
+        <tbody>
+        $(
+          foreach ($LockedDep in ($Locked.Keys | sort)) {
+            "<tr><td><a href=""#dep_$LockedDep"">$LockedDep</a></td><td>"
+            foreach ($LockedVer in ($Locked[$LockedDep].Keys | sort)) {
+              foreach ($Condition in ($Locked[$LockedDep][$LockedVer] | sort)) {
+                "$LockedVer"
+                if ($Condition) {
+                  "if <code>$Condition</code><br/>"
+                }
+              }
+            }
+            "</td><td>"
+            if (-not $Deps.ContainsKey($LockedDep)) {
+              "⚠️ No packages reference this dependency"
+            } elseif ($MismatchedVersions.ContainsKey($LockedDep)) {
+              "❌ One or more packages reference a different version of this dependency"
+            } else {
+              "✅ All packages validated against this dependency and version"
+            }
+            "</td>"
+          }
+        )
+        $(if (-Not $Locked) { "<tr><td colspan=""2"">No lockfile was provided for this report, or the lockfile was empty. Declared dependency versions were not able to be validated.</td></tr>" })
+        </tbody>
+      </table>
+      $(
+        if ($Locked -and $Unlocked) {
+          "<br/>"
+          $header_written = $false
+          foreach ($UnlockedDep in ($Unlocked | sort)) {
+            "<table class=""condensed""><thead>"
+            if (-not $header_written) {
+              "<tr><th colspan=""2"" class=""inconsistent""><strong>Dependencies Missing from Lockfile</strong></th></tr>"
+              $header_written = $true
+            }
+            "<tr><th colspan=""2"" class=""inconsistent""><strong>Missing Dependency:</strong> <a href=""#dep_$UnlockedDep"">$UnlockedDep</a></th></tr></thead><tbody>"
+            foreach ($TargetFramework in ($Deps[$UnlockedDep].Keys | sort)) {
+              "<tr><td colspan=""2""><strong>Target Framework: $TargetFramework</strong></td></tr>"
+              foreach ($Version in ($Deps[$UnlockedDep][$TargetFramework].Keys | sort)) {
+                "<tr><td class=""version"">$Version</td><td>"
+                foreach ($PkgName in ($Deps[$UnlockedDep][$TargetFramework][$Version] | sort)) {
+                  "$PkgName<br/>"
+                }
+                "</td></tr>"
+              }
+            }
+            "</tbody></table>"
+          }
+        }
+      )
+      <br/><br/><hr/><br/><br/>
       <a name="packages"/>
       <table class="condensed">
         <thead>
@@ -204,8 +269,8 @@ $(
         </thead>
         <tbody>
         $(
-          foreach ($PkgName in ($Packages.Keys | sort)) {
-            "<tr><td>$PkgName</td><td>$($Packages[$PkgName][0])</td><td>$($Packages[$PkgName][1])</td></tr>"
+          foreach ($PkgName in ($Pkgs.Keys | sort)) {
+            "<tr><td>$PkgName</td><td>$($Pkgs[$PkgName][0])</td><td>$($Pkgs[$PkgName][1])</td></tr>"
           }
         )
         </tbody>
