@@ -19,7 +19,7 @@ namespace ManagedServices.Tests.Helpers
         public static string registratonDefinitionId = "0cb6fbd6-90df-4923-9d92-c266f6c27bba",
                 registrationAssignmentId = "46c2a6a8-3dda-49ae-bc99-ecc5d28dd98a",
                 subscriptionId = "45062c92-741a-4e9b-acc4-f0afbfce9c7a",
-                apiVersion = "2018-06-01-preview",
+                apiVersion = "2019-06-01",
                 scope = string.Format("subscriptions/{0}", subscriptionId),
                 planName = "planName",
                 publisher = "publisher",

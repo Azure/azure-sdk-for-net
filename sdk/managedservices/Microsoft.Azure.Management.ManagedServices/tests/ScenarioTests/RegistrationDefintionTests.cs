@@ -52,7 +52,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     Assert.Single(registrationDefinitionsResponse);
 
                     //4. Delete Registration Defintion
-                    registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
+                    testFixture.ManagedServicesClient.RegistrationDefinitions
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
                         registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
