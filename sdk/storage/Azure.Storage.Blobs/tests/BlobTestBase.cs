@@ -185,7 +185,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
         public SasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, SharedKeyCredentials sharedKeyCredentials = default)
@@ -196,7 +196,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
         public SasQueryParameters GetNewBlobServiceIdentitySasCredentialsContainer(string containerName, UserDelegationKey userDelegationKey, string accountName)
@@ -207,7 +207,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new ContainerSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true, List = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
         public SasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, SharedKeyCredentials sharedKeyCredentials = default)
@@ -219,7 +219,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
         public SasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)
@@ -231,7 +231,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new BlobSasPermissions { Read = true, Add = true, Create = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
         public SasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, SharedKeyCredentials sharedKeyCredentials = default)
@@ -244,7 +244,7 @@ namespace Azure.Storage.Test.Shared
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new SnapshotSasPermissions { Read = true, Write = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)

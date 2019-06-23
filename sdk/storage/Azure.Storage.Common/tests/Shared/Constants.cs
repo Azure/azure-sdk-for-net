@@ -82,7 +82,7 @@ namespace Azure.Storage.Test
                 KeyStart = test.GetUtcNow().AddHours(-1),
                 KeyExpiry = test.GetUtcNow().AddHours(+1)
             };
-            this.Sas.IPRange = new IPRange { Start = this.Sas.StartAddress, End = this.Sas.EndAddress };
+            this.Sas.IPRange = new IPRange(this.Sas.StartAddress, this.Sas.EndAddress);
             this.Sas.SharedKeyCredential = new SharedKeyCredentials(this.Sas.Account, this.Sas.AccountKey);
         }
     }

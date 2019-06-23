@@ -3,69 +3,122 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using System.Net;
 
 namespace Azure.Storage.Common
 {
     /// <summary>
-    /// Represents a SAS IP range's start IP and (optionally) end IP.
+    /// Represents a range of allowed IP addresses for constructing a Shared
+    /// Access Signature.
     /// </summary>
-    public struct IPRange : IEquatable<IPRange>
+    public readonly struct IPRange : IEquatable<IPRange>
     {
         /// <summary>
-        /// Not specified if equal to IPAddress.None
+        /// Gets the start of the IP range.  Not specified if equal to null or
+        /// <see cref="IPAddress.None"/>.
         /// </summary>
-        public IPAddress Start { get; set; }
+        public IPAddress Start { get; }
 
         /// <summary>
-        /// Not specified if equal to IPAddress.None
+        /// Gets the optional end of the IP range.  Not specified if equal to
+        /// null or <see cref="IPAddress.None"/>.
         /// </summary>
-        public IPAddress End { get; set; }
+        public IPAddress End { get; }
 
         /// <summary>
-        /// String returns a string representation of an IPRange.
+        /// Creates a new <see cref="IPRange"/>.
         /// </summary>
-        /// <returns></returns>
-        public override string ToString()
+        /// <param name="start">
+        /// The range's start <see cref="IPAddress"/>.
+        /// </param>
+        /// <param name="end">
+        /// The range's optional end <see cref="IPAddress"/>.
+        /// </param>
+        public IPRange(IPAddress start, IPAddress end = null)
         {
-            var start = this.Start ?? IPAddress.None;
-            var end = this.End ?? IPAddress.None;
-
-            return
-                start == IPAddress.None
-                ? String.Empty
-                : end == IPAddress.None
-                ? start.ToString()
-                : start.ToString() + "-" + end.ToString();
+            this.Start = start ?? IPAddress.None;
+            this.End = end ?? IPAddress.None;
         }
+
+        /// <summary>
+        /// Check if an <see cref="IPAddress"/> was not provided.
+        /// </summary>
+        /// <param name="address">The address to check.</param>
+        /// <returns>True if it's empty, false otherwise.</returns>
+        private static bool IsEmpty(IPAddress address) =>
+            address == null || address == IPAddress.None;
+
+        /// <summary>
+        /// Creates a string representation of an <see cref="IPRange"/>.
+        /// </summary>
+        /// <returns>
+        /// A string representation of an <see cref="IPRange"/>.
+        /// </returns>
+        public override string ToString() =>
+            IsEmpty(this.Start) ? String.Empty :
+            IsEmpty(this.End) ? this.Start.ToString() :
+            this.Start.ToString() + "-" + this.End.ToString();
+
+        /// <summary>
+        /// Parse an IP range string into a new <see cref="IPRange"/>.
+        /// </summary>
+        /// <param name="s">IP range string to parse.</param>
+        /// <returns>The parsed <see cref="IPRange"/>.</returns>
         public static IPRange Parse(string s)
         {
             var dashIndex = s.IndexOf('-');
-            return dashIndex == -1
-                ? new IPRange { Start = IPAddress.Parse(s) }
-                : new IPRange
-                {
-                    Start = IPAddress.Parse(s.Substring(0, dashIndex)) ?? IPAddress.None,
-                    End = IPAddress.Parse(s.Substring(dashIndex + 1)) ?? IPAddress.None
-                };
+            return dashIndex == -1 ?
+                new IPRange(IPAddress.Parse(s)) :
+                new IPRange(
+                    IPAddress.Parse(s.Substring(0, dashIndex)),
+                    IPAddress.Parse(s.Substring(dashIndex + 1)));
         }
 
-        public override bool Equals(object obj)
-            => obj is IPRange other
-            && this.Equals(other)
-            ;
+        /// <summary>
+        /// Check if two <see cref="IPRange"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) =>
+            obj is IPRange other && this.Equals(other);
 
-        public override int GetHashCode()
-            => this.Start.GetHashCode() ^ this.End.GetHashCode();
+        /// <summary>
+        /// Get a hash code for the <see cref="IPRange"/>.
+        /// </summary>
+        /// <returns>Hash code for the <see cref="IPRange"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() =>
+            (this.Start?.GetHashCode() ?? 0) ^ (this.End?.GetHashCode() ?? 0);
 
-        public static bool operator ==(IPRange left, IPRange right) => left.Equals(right);
+        /// <summary>
+        /// Check if two <see cref="IPRange"/> instances are equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public static bool operator ==(IPRange left, IPRange right) =>
+            left.Equals(right);
 
-        public static bool operator !=(IPRange left, IPRange right) => !(left == right);
+        /// <summary>
+        /// Check if two <see cref="IPRange"/> instances are not equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're not equal, false otherwise.</returns>
+        public static bool operator !=(IPRange left, IPRange right) =>
+            !(left == right);
 
-        public bool Equals(IPRange other)
-            => ((this.Start == null && other.Start == null)
-                || this.Start.Equals(other.Start))
-            && ((this.End == null && other.End == null)
-                || this.End.Equals(other.End));
+        /// <summary>
+        /// Check if two <see cref="IPRange"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(IPRange other) =>
+            ((IsEmpty(this.Start) && IsEmpty(other.Start)) ||
+             (this.Start != null && this.Start.Equals(other.Start))) &&
+            ((IsEmpty(this.End) && IsEmpty(other.End)) ||
+             (this.End != null && this.End.Equals(other.End)));
     }
 }
