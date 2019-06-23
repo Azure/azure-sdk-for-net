@@ -232,7 +232,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
 
                     return await BlobRestClient.Container.DeleteAsync(
@@ -420,7 +420,10 @@ namespace Azure.Storage.Blobs
                         accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfUnmodifiedIfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(
+                            nameof(HttpAccessConditions.IfUnmodifiedSince),
+                            nameof(HttpAccessConditions.IfMatch),
+                            nameof(HttpAccessConditions.IfNoneMatch));
                     }
 
                     return await BlobRestClient.Container.SetMetadataAsync(
@@ -557,7 +560,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
 
                     return await BlobRestClient.Container.SetAccessPolicyAsync(
@@ -643,7 +646,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
                     return await BlobRestClient.Container.AcquireLeaseAsync(
                         this._pipeline,
@@ -715,7 +718,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
                     return await BlobRestClient.Container.RenewLeaseAsync(
                         this._pipeline,
@@ -786,7 +789,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
                     return await BlobRestClient.Container.ReleaseLeaseAsync(
                         this._pipeline,
@@ -870,7 +873,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
                     return (await BlobRestClient.Container.BreakLeaseAsync(
                         this._pipeline,
@@ -945,7 +948,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.IfMatchIfNoneMatchMustBeDefault();
+                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
                     return await BlobRestClient.Container.ChangeLeaseAsync(
                         this._pipeline,

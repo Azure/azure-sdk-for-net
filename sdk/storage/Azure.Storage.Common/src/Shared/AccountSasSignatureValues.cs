@@ -4,6 +4,7 @@
 
 using System;
 using System.Text;
+using Azure.Storage;
 using Azure.Storage.Common;
 
 #if BlobSDK
