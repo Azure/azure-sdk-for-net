@@ -26,7 +26,7 @@ namespace Azure.Storage.Common
         /// Generate a forward-only sequence of substreams based on bufferSize.
         /// </summary>
         /// <returns>StreamPartition</returns>
-        public async Task<StreamPartition> ReadAsync(int size = Constants.DEFAULT_BUFFER_SIZE, CancellationToken ct = default)
+        public async Task<StreamPartition> ReadAsync(int size = Constants.DefaultBufferSize, CancellationToken ct = default)
         {
             // TODO these operations should be simplified with Memory- and Span-accepting APIs in future NET Standard
             var buffer = this.memoryPool.Rent(size);

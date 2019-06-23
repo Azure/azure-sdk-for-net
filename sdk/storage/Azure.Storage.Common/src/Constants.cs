@@ -16,26 +16,10 @@ namespace Azure.Storage
 
         public const int MaxReliabilityRetries = 5;
 
-        public const int DEFAULT_BUFFER_SIZE = 4 * Constants.MB;
-        public const int DEFAULT_MAX_TOTAL_BUFFER_ALLOWED = 100 * Constants.MB;
-
-        static int seed = Environment.TickCount;
-
-        static readonly ThreadLocal<Random> random =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
-
-        public static Random Random => random.Value;
+        public const int DefaultBufferSize = 4 * Constants.MB;
+        public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
 
         public const string CloseAllHandles = "*";
-
-        public const string TargetStorageVersion = "2018-03-28";
-        public const string ClientRequestIdHeader = "x-ms-client-request-id";
-        public const string SnapshotParameter = "snapshot";
-        public const string HttpsScheme = "https";
-
-        public const string Redacted = "REDACTED";
-        public const string Authorization = "Authorization";
-        public const string CopySource = "x-ms-copy-source";
 
         public const string ISO8601Format = "yyyy-MM-ddTHH:mm:ssZ";
 

@@ -35,6 +35,6 @@
     Compile in ArrayBufferWriter which is needed for our recorded tests
     (and shared via InternalsVisibleTo with the other libraries)
     -->
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

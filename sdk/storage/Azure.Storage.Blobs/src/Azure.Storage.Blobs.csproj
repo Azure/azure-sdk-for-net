@@ -19,7 +19,7 @@
     </Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Shared\**\*.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Shared\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
 </Project>
