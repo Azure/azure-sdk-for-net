@@ -1980,7 +1980,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// A Message object which can be stored in a Queue
     /// </summary>
-    public partial class QueueMessage
+    internal partial class QueueMessage
     {
         /// <summary>
         /// The content of the message
@@ -2700,165 +2700,165 @@ namespace Azure.Storage.Queues.Models
 }
 #endregion class QueuesSegment
 
-#region enum strings StorageErrorCode
+#region enum strings QueueErrorCode
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct StorageErrorCode : System.IEquatable<StorageErrorCode>
+    public partial struct QueueErrorCode : System.IEquatable<QueueErrorCode>
     {
         #pragma warning disable CA2211 // Non-constant fields should not be visible
-        public static Azure.Storage.Queues.Models.StorageErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated = @"AccountBeingCreated";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled = @"AccountIsDisabled";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed = @"AuthenticationFailed";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure = @"AuthorizationFailure";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet = @"ConditionNotMet";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError = @"InternalError";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput = @"InvalidInput";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 = @"InvalidMd5";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata = @"InvalidMetadata";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange = @"InvalidRange";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName = @"InvalidResourceName";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri = @"InvalidUri";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch = @"Md5Mismatch";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge = @"MetadataTooLarge";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut = @"OperationTimedOut";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput = @"OutOfRangeInput";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound = @"ResourceNotFound";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy = @"ServerBusy";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader = @"UnsupportedHeader";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode InvalidMarker = @"InvalidMarker";
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker = @"InvalidMarker";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MessageNotFound = @"MessageNotFound";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound = @"MessageNotFound";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode MessageTooLarge = @"MessageTooLarge";
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge = @"MessageTooLarge";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode PopReceiptMismatch = @"PopReceiptMismatch";
+        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch = @"PopReceiptMismatch";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode QueueAlreadyExists = @"QueueAlreadyExists";
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists = @"QueueAlreadyExists";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode QueueBeingDeleted = @"QueueBeingDeleted";
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted = @"QueueBeingDeleted";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode QueueDisabled = @"QueueDisabled";
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled = @"QueueDisabled";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode QueueNotEmpty = @"QueueNotEmpty";
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty = @"QueueNotEmpty";
 
-        public static Azure.Storage.Queues.Models.StorageErrorCode QueueNotFound = @"QueueNotFound";
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound = @"QueueNotFound";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         private readonly string _value;
-        private StorageErrorCode(string value) { this._value = value; }
-        public bool Equals(Azure.Storage.Queues.Models.StorageErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.StorageErrorCode other && this.Equals(other);
+        private QueueErrorCode(string value) { this._value = value; }
+        public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.QueueErrorCode other && this.Equals(other);
         public override int GetHashCode() => this._value.GetHashCode();
         public override string ToString() => this._value;
         #pragma warning disable CA2225 // Operator overloads have named alternates
-        public static implicit operator StorageErrorCode(string value) => new Azure.Storage.Queues.Models.StorageErrorCode(value);
+        public static implicit operator QueueErrorCode(string value) => new Azure.Storage.Queues.Models.QueueErrorCode(value);
         #pragma warning restore CA2225 // Operator overloads have named alternates
-        public static implicit operator string(Azure.Storage.Queues.Models.StorageErrorCode o) => o._value;
-        public static bool operator ==(Azure.Storage.Queues.Models.StorageErrorCode a, Azure.Storage.Queues.Models.StorageErrorCode b) => a.Equals(b);
-        public static bool operator !=(Azure.Storage.Queues.Models.StorageErrorCode a, Azure.Storage.Queues.Models.StorageErrorCode b) => !a.Equals(b);
+        public static implicit operator string(Azure.Storage.Queues.Models.QueueErrorCode o) => o._value;
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueErrorCode a, Azure.Storage.Queues.Models.QueueErrorCode b) => !a.Equals(b);
     }
 }
-#endregion enum strings StorageErrorCode
+#endregion enum strings QueueErrorCode
 
-#region enum strings GeoReplicationStatusType
+#region enum strings GeoReplicationStatus
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// The status of the secondary location
     /// </summary>
-    public partial struct GeoReplicationStatusType : System.IEquatable<GeoReplicationStatusType>
+    public partial struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
     {
         #pragma warning disable CA2211 // Non-constant fields should not be visible
-        public static Azure.Storage.Queues.Models.GeoReplicationStatusType Live = @"live";
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Live = @"live";
 
-        public static Azure.Storage.Queues.Models.GeoReplicationStatusType Bootstrap = @"bootstrap";
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap = @"bootstrap";
 
-        public static Azure.Storage.Queues.Models.GeoReplicationStatusType Unavailable = @"unavailable";
+        public static Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = @"unavailable";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         private readonly string _value;
-        private GeoReplicationStatusType(string value) { this._value = value; }
-        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatusType other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.GeoReplicationStatusType other && this.Equals(other);
+        private GeoReplicationStatus(string value) { this._value = value; }
+        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public override bool Equals(object o) => o is Azure.Storage.Queues.Models.GeoReplicationStatus other && this.Equals(other);
         public override int GetHashCode() => this._value.GetHashCode();
         public override string ToString() => this._value;
         #pragma warning disable CA2225 // Operator overloads have named alternates
-        public static implicit operator GeoReplicationStatusType(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatusType(value);
+        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
         #pragma warning restore CA2225 // Operator overloads have named alternates
-        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatusType o) => o._value;
-        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatusType a, Azure.Storage.Queues.Models.GeoReplicationStatusType b) => a.Equals(b);
-        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatusType a, Azure.Storage.Queues.Models.GeoReplicationStatusType b) => !a.Equals(b);
+        public static implicit operator string(Azure.Storage.Queues.Models.GeoReplicationStatus o) => o._value;
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => a.Equals(b);
+        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus a, Azure.Storage.Queues.Models.GeoReplicationStatus b) => !a.Equals(b);
     }
 }
-#endregion enum strings GeoReplicationStatusType
+#endregion enum strings GeoReplicationStatus
 
 #region class GeoReplication
 namespace Azure.Storage.Queues.Models
@@ -2871,7 +2871,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The status of the secondary location
         /// </summary>
-        public Azure.Storage.Queues.Models.GeoReplicationStatusType Status { get; internal set; }
+        public Azure.Storage.Queues.Models.GeoReplicationStatus Status { get; internal set; }
 
         /// <summary>
         /// A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads.

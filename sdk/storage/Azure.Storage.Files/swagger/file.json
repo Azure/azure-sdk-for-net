@@ -2566,7 +2566,7 @@
         "ContainerQuotaDowngradeNotAllowed"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "FileErrorCode",
         "modelAsString": true
       }
     },

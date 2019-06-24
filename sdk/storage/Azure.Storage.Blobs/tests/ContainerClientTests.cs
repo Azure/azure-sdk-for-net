@@ -274,35 +274,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task GetAccountInfoAsync()
-        {
-            using (this.GetNewContainer(out var container))
-            {
-                // Act
-                var response = await container.GetAccountInfoAsync();
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        public async Task GetAccountInfoAsync_Error()
-        {
-            // Arrange
-            var service = this.InstrumentClient(
-                new BlobServiceClient(
-                    this.GetServiceClient_SharedKey().Uri,
-                    this.GetOptions()));
-            var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.GetAccountInfoAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
-        }
-
-        [Test]
         public async Task GetPropertiesAsync()
         {
             using (this.GetNewContainer(out var container, publicAccessType: PublicAccessType.Container))

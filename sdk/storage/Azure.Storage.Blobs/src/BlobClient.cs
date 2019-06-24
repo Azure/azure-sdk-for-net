@@ -683,49 +683,6 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
-        /// name and account kind for the account of the blob.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Task{Response{AccountInfo}}"/> describing the account.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if a
-        /// failure occurs.
-        /// </remarks>
-        public async Task<Response<AccountInfo>> GetAccountInfoAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
-            {
-                this.Pipeline.LogMethodEnter(nameof(BlobClient), message: $"{nameof(this.Uri)}: {this.Uri}");
-                try
-                {
-                    return await BlobRestClient.Blob.GetAccountInfoAsync(
-                        this.Pipeline,
-                        this.Uri,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    this.Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    this.Pipeline.LogMethodExit(nameof(BlobClient));
-                }
-            }
-        }
-
-        /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the

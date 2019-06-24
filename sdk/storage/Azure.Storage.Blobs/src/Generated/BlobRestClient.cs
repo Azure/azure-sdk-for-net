@@ -2446,105 +2446,6 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Container.ListBlobsHierarchySegmentAsync
-
-            #region Container.GetAccountInfoAsync
-            /// <summary>
-            /// Returns the sku name and account kind
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
-                    pipeline,
-                    resourceUri))
-                {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetAccountInfoAsync_CreateResponse(_response);
-                }
-            }
-
-            /// <summary>
-            /// Create the Container.GetAccountInfoAsync request.
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <returns>The Container.GetAccountInfoAsync Request.</returns>
-            internal static Azure.Request GetAccountInfoAsync_CreateRequest(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-
-                // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
-
-                // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "account");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-
-                return _request;
-            }
-
-            /// <summary>
-            /// Create the Container.GetAccountInfoAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 200:
-                    {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
-                        {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
-                        {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
-                        }
-
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
-
-                        return _result;
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion Container.GetAccountInfoAsync
         }
         #endregion Container operations
 
@@ -5371,105 +5272,6 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Blob.SetTierAsync
-
-            #region Blob.GetAccountInfoAsync
-            /// <summary>
-            /// Returns the sku name and account kind 
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
-                    pipeline,
-                    resourceUri))
-                {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetAccountInfoAsync_CreateResponse(_response);
-                }
-            }
-
-            /// <summary>
-            /// Create the Blob.GetAccountInfoAsync request.
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <returns>The Blob.GetAccountInfoAsync Request.</returns>
-            internal static Azure.Request GetAccountInfoAsync_CreateRequest(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-
-                // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
-
-                // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "account");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-
-                return _request;
-            }
-
-            /// <summary>
-            /// Create the Blob.GetAccountInfoAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 200:
-                    {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
-                        {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
-                        {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
-                        }
-
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
-
-                        return _result;
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion Blob.GetAccountInfoAsync
         }
         #endregion Blob operations
 
@@ -9081,7 +8883,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Key information
     /// </summary>
-    public partial class KeyInfo
+    internal partial class KeyInfo
     {
         /// <summary>
         /// The date-time the key is active in ISO 8601 UTC time
@@ -11152,7 +10954,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlockLookupList
     /// </summary>
-    public partial class BlockLookupList
+    internal partial class BlockLookupList
     {
         /// <summary>
         /// Committed
@@ -11496,241 +11298,241 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class ContainersSegment
 
-#region enum strings StorageErrorCode
+#region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct StorageErrorCode : System.IEquatable<StorageErrorCode>
+    public partial struct BlobErrorCode : System.IEquatable<BlobErrorCode>
     {
         #pragma warning disable CA2211 // Non-constant fields should not be visible
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated = @"AccountBeingCreated";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled = @"AccountIsDisabled";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed = @"AuthenticationFailed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure = @"AuthorizationFailure";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet = @"ConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InternalError = @"InternalError";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput = @"InvalidInput";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 = @"InvalidMd5";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata = @"InvalidMetadata";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange = @"InvalidRange";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName = @"InvalidResourceName";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri = @"InvalidUri";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch = @"Md5Mismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge = @"MetadataTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut = @"OperationTimedOut";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput = @"OutOfRangeInput";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound = @"ResourceNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy = @"ServerBusy";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader = @"UnsupportedHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AppendPositionConditionNotMet = @"AppendPositionConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet = @"AppendPositionConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobAlreadyExists = @"BlobAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists = @"BlobAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobNotFound = @"BlobNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound = @"BlobNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobOverwritten = @"BlobOverwritten";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten = @"BlobOverwritten";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobTierInadequateForContentLength = @"BlobTierInadequateForContentLength";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength = @"BlobTierInadequateForContentLength";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlockCountExceedsLimit = @"BlockCountExceedsLimit";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit = @"BlockCountExceedsLimit";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlockListTooLong = @"BlockListTooLong";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong = @"BlockListTooLong";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CannotChangeToLowerTier = @"CannotChangeToLowerTier";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier = @"CannotChangeToLowerTier";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CannotVerifyCopySource = @"CannotVerifyCopySource";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource = @"CannotVerifyCopySource";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerAlreadyExists = @"ContainerAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists = @"ContainerAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerBeingDeleted = @"ContainerBeingDeleted";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted = @"ContainerBeingDeleted";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerDisabled = @"ContainerDisabled";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled = @"ContainerDisabled";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerNotFound = @"ContainerNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound = @"ContainerNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContentLengthLargerThanTierLimit = @"ContentLengthLargerThanTierLimit";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit = @"ContentLengthLargerThanTierLimit";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CopyAcrossAccountsNotSupported = @"CopyAcrossAccountsNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported = @"CopyAcrossAccountsNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CopyIdMismatch = @"CopyIdMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch = @"CopyIdMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode FeatureVersionMismatch = @"FeatureVersionMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch = @"FeatureVersionMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopyBlobMismatch = @"IncrementalCopyBlobMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch = @"IncrementalCopyBlobMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed = @"IncrementalCopyOfEralierVersionSnapshotNotAllowed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed = @"IncrementalCopyOfEralierVersionSnapshotNotAllowed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopySourceMustBeSnapshot = @"IncrementalCopySourceMustBeSnapshot";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot = @"IncrementalCopySourceMustBeSnapshot";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InfiniteLeaseDurationRequired = @"InfiniteLeaseDurationRequired";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired = @"InfiniteLeaseDurationRequired";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobOrBlock = @"InvalidBlobOrBlock";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock = @"InvalidBlobOrBlock";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobTier = @"InvalidBlobTier";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier = @"InvalidBlobTier";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobType = @"InvalidBlobType";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType = @"InvalidBlobType";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlockId = @"InvalidBlockId";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId = @"InvalidBlockId";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlockList = @"InvalidBlockList";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList = @"InvalidBlockList";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidOperation = @"InvalidOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation = @"InvalidOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidPageRange = @"InvalidPageRange";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange = @"InvalidPageRange";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidSourceBlobType = @"InvalidSourceBlobType";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType = @"InvalidSourceBlobType";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidSourceBlobUrl = @"InvalidSourceBlobUrl";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl = @"InvalidSourceBlobUrl";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidVersionForPageBlobOperation = @"InvalidVersionForPageBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation = @"InvalidVersionForPageBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseAlreadyPresent = @"LeaseAlreadyPresent";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent = @"LeaseAlreadyPresent";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseAlreadyBroken = @"LeaseAlreadyBroken";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken = @"LeaseAlreadyBroken";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithBlobOperation = @"LeaseIdMismatchWithBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation = @"LeaseIdMismatchWithBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithContainerOperation = @"LeaseIdMismatchWithContainerOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation = @"LeaseIdMismatchWithContainerOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithLeaseOperation = @"LeaseIdMismatchWithLeaseOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation = @"LeaseIdMismatchWithLeaseOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMissing = @"LeaseIdMissing";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing = @"LeaseIdMissing";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBreakingAndCannotBeAcquired = @"LeaseIsBreakingAndCannotBeAcquired";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired = @"LeaseIsBreakingAndCannotBeAcquired";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBreakingAndCannotBeChanged = @"LeaseIsBreakingAndCannotBeChanged";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged = @"LeaseIsBreakingAndCannotBeChanged";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBrokenAndCannotBeRenewed = @"LeaseIsBrokenAndCannotBeRenewed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed = @"LeaseIsBrokenAndCannotBeRenewed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseLost = @"LeaseLost";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost = @"LeaseLost";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithBlobOperation = @"LeaseNotPresentWithBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation = @"LeaseNotPresentWithBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithContainerOperation = @"LeaseNotPresentWithContainerOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation = @"LeaseNotPresentWithContainerOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithLeaseOperation = @"LeaseNotPresentWithLeaseOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation = @"LeaseNotPresentWithLeaseOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MaxBlobSizeConditionNotMet = @"MaxBlobSizeConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet = @"MaxBlobSizeConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode NoPendingCopyOperation = @"NoPendingCopyOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation = @"NoPendingCopyOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OperationNotAllowedOnIncrementalCopyBlob = @"OperationNotAllowedOnIncrementalCopyBlob";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob = @"OperationNotAllowedOnIncrementalCopyBlob";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PendingCopyOperation = @"PendingCopyOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation = @"PendingCopyOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotCannotBeNewer = @"PreviousSnapshotCannotBeNewer";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer = @"PreviousSnapshotCannotBeNewer";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotNotFound = @"PreviousSnapshotNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound = @"PreviousSnapshotNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotOperationNotSupported = @"PreviousSnapshotOperationNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported = @"PreviousSnapshotOperationNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SequenceNumberConditionNotMet = @"SequenceNumberConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet = @"SequenceNumberConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SequenceNumberIncrementTooLarge = @"SequenceNumberIncrementTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge = @"SequenceNumberIncrementTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnapshotCountExceeded = @"SnapshotCountExceeded";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded = @"SnapshotCountExceeded";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnaphotOperationRateExceeded = @"SnaphotOperationRateExceeded";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded = @"SnaphotOperationRateExceeded";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnapshotsPresent = @"SnapshotsPresent";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent = @"SnapshotsPresent";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SourceConditionNotMet = @"SourceConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet = @"SourceConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SystemInUse = @"SystemInUse";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse = @"SystemInUse";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode TargetConditionNotMet = @"TargetConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet = @"TargetConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnauthorizedBlobOverwrite = @"UnauthorizedBlobOverwrite";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite = @"UnauthorizedBlobOverwrite";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobBeingRehydrated = @"BlobBeingRehydrated";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated = @"BlobBeingRehydrated";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobArchived = @"BlobArchived";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived = @"BlobArchived";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobNotArchived = @"BlobNotArchived";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived = @"BlobNotArchived";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         private readonly string _value;
-        private StorageErrorCode(string value) { this._value = value; }
-        public bool Equals(Azure.Storage.Blobs.Models.StorageErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.StorageErrorCode other && this.Equals(other);
+        private BlobErrorCode(string value) { this._value = value; }
+        public bool Equals(Azure.Storage.Blobs.Models.BlobErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.BlobErrorCode other && this.Equals(other);
         public override int GetHashCode() => this._value.GetHashCode();
         public override string ToString() => this._value;
         #pragma warning disable CA2225 // Operator overloads have named alternates
-        public static implicit operator StorageErrorCode(string value) => new Azure.Storage.Blobs.Models.StorageErrorCode(value);
+        public static implicit operator BlobErrorCode(string value) => new Azure.Storage.Blobs.Models.BlobErrorCode(value);
         #pragma warning restore CA2225 // Operator overloads have named alternates
-        public static implicit operator string(Azure.Storage.Blobs.Models.StorageErrorCode o) => o._value;
-        public static bool operator ==(Azure.Storage.Blobs.Models.StorageErrorCode a, Azure.Storage.Blobs.Models.StorageErrorCode b) => a.Equals(b);
-        public static bool operator !=(Azure.Storage.Blobs.Models.StorageErrorCode a, Azure.Storage.Blobs.Models.StorageErrorCode b) => !a.Equals(b);
+        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode o) => o._value;
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => !a.Equals(b);
     }
 }
-#endregion enum strings StorageErrorCode
+#endregion enum strings BlobErrorCode
 
 #region enum GeoReplicationStatus
 namespace Azure.Storage.Blobs.Models

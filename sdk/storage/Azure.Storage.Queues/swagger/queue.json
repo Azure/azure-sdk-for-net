@@ -1177,7 +1177,7 @@
         "QueueNotFound"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "QueueErrorCode",
         "modelAsString": true
       }
     },
@@ -1197,7 +1197,7 @@
             "unavailable"
           ],
           "x-ms-enum": {
-            "name": "GeoReplicationStatusType",
+            "name": "GeoReplicationStatus",
             "modelAsString": true
           }
         },
@@ -1305,6 +1305,7 @@
     "QueueMessage": {
       "description": "A Message object which can be stored in a Queue",
       "type": "object",
+      "x-ms-public":  false,
       "xml": { "name": "QueueMessage" },
       "required": [
         "MessageText"

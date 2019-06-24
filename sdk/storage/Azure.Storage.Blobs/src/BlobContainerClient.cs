@@ -318,49 +318,6 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
-        /// name and account kind for the account of the container.
-        /// 
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Task{Response{AccountInfo}}"/> describing the account.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if a
-        /// failure occurs.
-        /// </remarks>
-        public async Task<Response<AccountInfo>> GetAccountInfoAsync(
-            CancellationToken cancellationToken = default)
-        {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
-            {
-                this._pipeline.LogMethodEnter(nameof(BlobContainerClient), message: $"{nameof(this.Uri)}: {this.Uri}");
-                try
-                {
-                    return await BlobRestClient.Container.GetAccountInfoAsync(
-                        this._pipeline,
-                        this.Uri,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    this._pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    this._pipeline.LogMethodExit(nameof(BlobContainerClient));
-                }
-            }
-        }
-
-        /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// container. The data returned does not include the container's 

@@ -4605,151 +4605,151 @@ namespace Azure.Storage.Files.Models
 }
 #endregion class FileServiceProperties
 
-#region enum strings StorageErrorCode
+#region enum strings FileErrorCode
 namespace Azure.Storage.Files.Models
 {
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct StorageErrorCode : System.IEquatable<StorageErrorCode>
+    public partial struct FileErrorCode : System.IEquatable<FileErrorCode>
     {
         #pragma warning disable CA2211 // Non-constant fields should not be visible
-        public static Azure.Storage.Files.Models.StorageErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountBeingCreated = @"AccountBeingCreated";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode AccountIsDisabled = @"AccountIsDisabled";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthenticationFailed = @"AuthenticationFailed";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Files.Models.FileErrorCode AuthorizationFailure = @"AuthorizationFailure";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Files.Models.FileErrorCode ConditionNotMet = @"ConditionNotMet";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Files.Models.FileErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Files.Models.FileErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Files.Models.FileErrorCode InternalError = @"InternalError";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidInput = @"InvalidInput";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMd5 = @"InvalidMd5";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidMetadata = @"InvalidMetadata";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidRange = @"InvalidRange";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidResourceName = @"InvalidResourceName";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidUri = @"InvalidUri";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode Md5Mismatch = @"Md5Mismatch";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode MetadataTooLarge = @"MetadataTooLarge";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Files.Models.FileErrorCode OperationTimedOut = @"OperationTimedOut";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeInput = @"OutOfRangeInput";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Files.Models.FileErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Files.Models.FileErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ResourceNotFound = @"ResourceNotFound";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Files.Models.FileErrorCode ServerBusy = @"ServerBusy";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHeader = @"UnsupportedHeader";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Files.Models.FileErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode CannotDeleteFileOrDirectory = @"CannotDeleteFileOrDirectory";
+        public static Azure.Storage.Files.Models.FileErrorCode CannotDeleteFileOrDirectory = @"CannotDeleteFileOrDirectory";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ClientCacheFlushDelay = @"ClientCacheFlushDelay";
+        public static Azure.Storage.Files.Models.FileErrorCode ClientCacheFlushDelay = @"ClientCacheFlushDelay";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode DeletePending = @"DeletePending";
+        public static Azure.Storage.Files.Models.FileErrorCode DeletePending = @"DeletePending";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode DirectoryNotEmpty = @"DirectoryNotEmpty";
+        public static Azure.Storage.Files.Models.FileErrorCode DirectoryNotEmpty = @"DirectoryNotEmpty";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode FileLockConflict = @"FileLockConflict";
+        public static Azure.Storage.Files.Models.FileErrorCode FileLockConflict = @"FileLockConflict";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode InvalidFileOrDirectoryPathName = @"InvalidFileOrDirectoryPathName";
+        public static Azure.Storage.Files.Models.FileErrorCode InvalidFileOrDirectoryPathName = @"InvalidFileOrDirectoryPathName";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ParentNotFound = @"ParentNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ParentNotFound = @"ParentNotFound";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ReadOnlyAttribute = @"ReadOnlyAttribute";
+        public static Azure.Storage.Files.Models.FileErrorCode ReadOnlyAttribute = @"ReadOnlyAttribute";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareAlreadyExists = @"ShareAlreadyExists";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareAlreadyExists = @"ShareAlreadyExists";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareBeingDeleted = @"ShareBeingDeleted";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareBeingDeleted = @"ShareBeingDeleted";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareDisabled = @"ShareDisabled";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareDisabled = @"ShareDisabled";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareNotFound = @"ShareNotFound";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareNotFound = @"ShareNotFound";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode SharingViolation = @"SharingViolation";
+        public static Azure.Storage.Files.Models.FileErrorCode SharingViolation = @"SharingViolation";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareSnapshotInProgress = @"ShareSnapshotInProgress";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotInProgress = @"ShareSnapshotInProgress";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareSnapshotCountExceeded = @"ShareSnapshotCountExceeded";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotCountExceeded = @"ShareSnapshotCountExceeded";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareSnapshotOperationNotSupported = @"ShareSnapshotOperationNotSupported";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareSnapshotOperationNotSupported = @"ShareSnapshotOperationNotSupported";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ShareHasSnapshots = @"ShareHasSnapshots";
+        public static Azure.Storage.Files.Models.FileErrorCode ShareHasSnapshots = @"ShareHasSnapshots";
 
-        public static Azure.Storage.Files.Models.StorageErrorCode ContainerQuotaDowngradeNotAllowed = @"ContainerQuotaDowngradeNotAllowed";
+        public static Azure.Storage.Files.Models.FileErrorCode ContainerQuotaDowngradeNotAllowed = @"ContainerQuotaDowngradeNotAllowed";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         private readonly string _value;
-        private StorageErrorCode(string value) { this._value = value; }
-        public bool Equals(Azure.Storage.Files.Models.StorageErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-        public override bool Equals(object o) => o is Azure.Storage.Files.Models.StorageErrorCode other && this.Equals(other);
+        private FileErrorCode(string value) { this._value = value; }
+        public bool Equals(Azure.Storage.Files.Models.FileErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public override bool Equals(object o) => o is Azure.Storage.Files.Models.FileErrorCode other && this.Equals(other);
         public override int GetHashCode() => this._value.GetHashCode();
         public override string ToString() => this._value;
         #pragma warning disable CA2225 // Operator overloads have named alternates
-        public static implicit operator StorageErrorCode(string value) => new Azure.Storage.Files.Models.StorageErrorCode(value);
+        public static implicit operator FileErrorCode(string value) => new Azure.Storage.Files.Models.FileErrorCode(value);
         #pragma warning restore CA2225 // Operator overloads have named alternates
-        public static implicit operator string(Azure.Storage.Files.Models.StorageErrorCode o) => o._value;
-        public static bool operator ==(Azure.Storage.Files.Models.StorageErrorCode a, Azure.Storage.Files.Models.StorageErrorCode b) => a.Equals(b);
-        public static bool operator !=(Azure.Storage.Files.Models.StorageErrorCode a, Azure.Storage.Files.Models.StorageErrorCode b) => !a.Equals(b);
+        public static implicit operator string(Azure.Storage.Files.Models.FileErrorCode o) => o._value;
+        public static bool operator ==(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => a.Equals(b);
+        public static bool operator !=(Azure.Storage.Files.Models.FileErrorCode a, Azure.Storage.Files.Models.FileErrorCode b) => !a.Equals(b);
     }
 }
-#endregion enum strings StorageErrorCode
+#endregion enum strings FileErrorCode
 
 #region class DirectoryItem
 namespace Azure.Storage.Files.Models

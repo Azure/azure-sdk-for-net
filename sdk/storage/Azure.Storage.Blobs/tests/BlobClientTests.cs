@@ -748,7 +748,7 @@ namespace Azure.Storage.Blobs.Test
                     response.Headers.TryGetValue("x-ms-version", out var version);
                     Assert.IsNotNull(version);
                 }
-                catch (StorageRequestFailedException ex) when (ex.ErrorCode == StorageErrorCode.BlobNotFound)
+                catch (StorageRequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
@@ -774,39 +774,6 @@ namespace Azure.Storage.Blobs.Test
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
-
-        [Test]
-        public async Task GetAccountInfoAsync()
-        {
-            using (this.GetNewContainer(out var container))
-            {
-                // Arrange
-                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
-
-                // Act
-                var response = await blob.GetAccountInfoAsync();
-
-                // Assert
-                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-            }
-        }
-
-        [Test]
-        public async Task GetAccountInfoAsync_Error()
-        {
-            // Arrange
-            var service = this.InstrumentClient(
-                new BlobServiceClient(
-                    this.GetServiceClient_SharedKey().Uri,
-                    this.GetOptions()));
-            var container = this.InstrumentClient(service.GetBlobContainerClient(this.GetNewContainerName()));
-            var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                blob.GetAccountInfoAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
-    }
 
         [Test]
         public async Task GetPropertiesAsync()

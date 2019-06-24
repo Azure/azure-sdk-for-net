@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Test
                     share.CreateAsync(quotaInBytes: 1),
                     e =>
                     {
-                        Assert.AreEqual(StorageErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
+                        Assert.AreEqual(FileErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
                         pass = true;
                     }
                     );
