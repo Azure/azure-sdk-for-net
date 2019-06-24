@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.0.0-dev.20190614.1" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="4.0.0-dev.20190614.1" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="1.0.0-dev.20190614.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="1.0.0-dev.20190614.1" />
+    <PackageReference Include="Azure.Identity" Version="1.0.0-dev.20190621.1" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="4.0.0-dev.20190618.1" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="1.0.0-dev.20190621.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="1.0.0-dev.20190621.1" />
   </ItemGroup>
 
   <ItemGroup>

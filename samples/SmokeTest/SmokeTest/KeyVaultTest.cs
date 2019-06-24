@@ -7,7 +7,18 @@ namespace SmokeTest
 {
     class KeyVaultTest
     {
-        public static async Task performFunctionalities()
+        private string secretName;
+        private string secretValue;
+        private SecretClient client;
+
+        public KeyVaultTest(string secretName, string secretValue, string tenantid, string clientid, string clientsecret, string KeyVaultUri)
+        {
+            this.secretName = secretName;
+            this.secretValue = secretValue;
+            this.client = new SecretClient(new Uri(KeyVaultUri), new ClientSecretCredential(tenantid, clientid, clientsecret));
+        }
+
+        public async Task<bool> PerformFunctionalities()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("KEY VAULT");
@@ -17,55 +28,114 @@ namespace SmokeTest
             Console.WriteLine("2.- Get that Secret");
             Console.WriteLine("3.- Delete that Secret (Clean up)");
             Console.WriteLine("");
-
-            /*
-             * Create the KeyVault Client.
-             * The credentials are stored in environment variables.
-             */
-
-            var tenantid = Environment.GetEnvironmentVariable("DIR_TENANT_ID");
-            var clientid = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
-            var clientsecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-            var KeyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
-            
-            var client = new SecretClient(new Uri(KeyVaultUri), new ClientSecretCredential(tenantid, clientid, clientsecret));
-
-            const string SecretName = "SmokeTestSecret";
+             
+            var testPassed = true;
 
             //Create a new Secret
             Console.Write("Set a secret... ");
-            Console.Write(await SetNewSecret(SecretName, client) + '\n');
+            var result1 = await SetNewSecret();
+            if (result1 != null)
+            {
+                //If this test failes, the other ones are going to fail too.
+                Console.Error.Write("FAILED.\n");
+                Console.Error.WriteLine(result1);
+                Console.Error.WriteLine("Cannot get a secret and delete it.");
+                
+                return false;
+            }
+            else
+            {
+                Console.Error.Write("Secret created succesfully.\n");
+            }
 
             //Retrieve the Secret previously created
             Console.Write("Get that secret... ");
-            Console.Write(await GetSecret(SecretName, client) + '\n');
+            var result2 = await GetSecret();
+            if (result2 != null)
+            {
+                Console.Error.Write("FAILED.\n");
+                Console.Error.WriteLine(result2);
 
-            //Clean up the resource (Delte the secret that was created)
+                testPassed = false;
+            }
+            else
+            {
+                Console.WriteLine("Secret succesfully retreived.");
+            }
+
+            //Clean up the resource (Delete the secret that was created)
             Console.Write("Cleaning up the resource... ");
-            Console.Write(await CleanUp(SecretName, client) + '\n');
+            var result3 = await CleanUp();
+            if (result3 != null)
+            {
+                Console.Error.Write("FAILED.\n");
+                Console.Error.WriteLine(result3);
+
+                testPassed = false;
+            }
+            else
+            {
+                Console.WriteLine("done.");
+            }
+
+            return testPassed;
         }
 
-        private static async Task<string> SetNewSecret(string secretName, SecretClient client)
+        private async Task<Exception> SetNewSecret()
         {
-            var newSecret = new Secret(secretName, "Secret Succesfully created");
+            try
+            {
+                var newSecret = new Secret(secretName, secretValue);
+                var result = await client.SetAsync(newSecret);
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+            
+            return null;
 
-            var result = await client.SetAsync(newSecret);
-        
-            return result.Value.Value;
+            //return result.Value.Value;
+
         }
 
-        private static async Task<string> GetSecret(string secretName, SecretClient client)
+        private async Task<Exception> GetSecret()
         {
-            var secret = await client.GetAsync(secretName);
+            Azure.Response<Secret> secret;
 
-            return secret.Value.Value == "Secret Succesfully created"?  "Secret succesfully retreived" : "Secret retreived, but not the one previously created: " + secret.Value.Value;
-      
+            try
+            {
+                secret = await client.GetAsync(secretName);                
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+
+            //Verify that the secret received is the one that was sent previously
+            if (secret.Value.Value == secretValue)
+            {
+                return null;
+            }
+            else
+            {
+                return new Exception(String.Format("Secret retreived, but not the one previously created: '" + secret.Value.Value));
+            }
+
         }
 
-        private static async Task<string> CleanUp(string secretName, SecretClient client)
+        private async Task<Exception> CleanUp()
         {
-            await client.DeleteAsync(secretName);
-            return "done";
+            try
+            {
+                await client.DeleteAsync(secretName);
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+           
+            return null;
         }
 
     }

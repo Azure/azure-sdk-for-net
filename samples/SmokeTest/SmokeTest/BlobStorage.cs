@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
+
+
     class BlobStorage
     {
-        /*Create the Blob client with the connection string.
-         * The connection string is retreived from an envirmonet variable.
-         * The container name for this sample is 'mycontainer', and the Blob name 'SmokeTestBlob'
-         */
+        
+        private BlobServiceClient service;
+        private BlockBlobClient blob;
 
-        private static BlobServiceClient service = new BlobServiceClient(Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING"));
-        private static BlockBlobClient blob = service.GetBlobContainerClient("mycontainer").GetBlockBlobClient("SmokeTestBlob");
+        public BlobStorage(string connectionString,string containerName, string blobName)
+        {
+            this.service = new BlobServiceClient(connectionString);
+            this.blob = service.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
+        }
 
-        public static async Task performFunctionalities()
+        public async Task<bool> PerformFunctionalities()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("STORAGE");
@@ -28,28 +32,67 @@ namespace SmokeTest
 
             //Upload a new Blob (txt file in /BlobFiles folder)
             Console.Write("Uploading blob... ");
-            Console.Write(await UploadBlob() + '\n');
+            var result1 = await UploadBlob();
+            if(result1 != null)
+            {
+                //If this test failed, then the othe one is going to fail too.
+                Console.Error.Write("FAILED.\n");
+                Console.Error.WriteLine(result1);
+                Console.Error.WriteLine("Cannot delete the Blob.");
+                return false;
+
+            }
+            else
+            {
+                Console.Write("Blob uploaded successfully\n");
+            }
 
             //Delete the Blob that was created
             Console.Write("Deleting blob... ");
-            Console.Write(await DeleteBlob() + '\n');
+            var result2 = await DeleteBlob();
+            if (result2 != null)
+            {
+                Console.Error.Write("FAILED.\n");
+                Console.Error.WriteLine(result2);
+                return false;
+            }
+            else
+            {
+                Console.Write("Blob deleted successfully\n");
+            }
+
+            return true;
         }
 
-        private static async Task<string> UploadBlob()
+        private async Task<Exception> UploadBlob()
         {
             const string path = "./Resources/BlobTestSource.txt";
 
             using (FileStream data = File.OpenRead(path))
             {
-                await blob.UploadAsync(data);
+                try
+                {
+                    await blob.UploadAsync(data);
+                }
+                catch (Exception ex)
+                {
+                    return ex;
+                }
             }
-            return "Blob created successfully";
+            return null;
         }
 
-        private static async Task<string> DeleteBlob()
+        private async Task<Exception> DeleteBlob()
         {
-            await blob.DeleteAsync();
-            return "Blob deleted successfully";
+            try
+            {
+                await blob.DeleteAsync();
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
+            return null;
         }
 
     }
