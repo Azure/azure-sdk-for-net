@@ -9,13 +9,13 @@ namespace SmokeTest
 {
 
 
-    class BlobStorage
+    class BlobStorageTest
     {
         
         private BlobServiceClient service;
         private BlockBlobClient blob;
 
-        public BlobStorage(string connectionString,string containerName, string blobName)
+        public BlobStorageTest(string connectionString,string containerName, string blobName)
         {
             this.service = new BlobServiceClient(connectionString);
             this.blob = service.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);

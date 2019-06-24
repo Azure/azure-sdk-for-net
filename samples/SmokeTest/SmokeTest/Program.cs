@@ -15,10 +15,10 @@ namespace SmokeTest
             var keyVault = new KeyVaultTest("SmokeTestSecret", "smokeTestValue", Environment.GetEnvironmentVariable("DIR_TENANT_ID"), Environment.GetEnvironmentVariable("APP_CLIENT_ID"), Environment.GetEnvironmentVariable("CLIENT_SECRET"), Environment.GetEnvironmentVariable("KEY_VAULT_URI"));
             var kvResult = await keyVault.PerformFunctionalities();
 
-            var blobStorage = new BlobStorage(Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING"), "mycontainer", "netSmokeTestBlob");
+            var blobStorage = new BlobStorageTest(Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING"), "mycontainer", "netSmokeTestBlob");
             var bsResult = await blobStorage.PerformFunctionalities();
 
-            var eventHubs = new EventHubs(Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"));
+            var eventHubs = new EventHubsTest(Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING"));
             var ehResult = await eventHubs.PerformFunctionalities();
 
             if (!kvResult || !bsResult || !ehResult)

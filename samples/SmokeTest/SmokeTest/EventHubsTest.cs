@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    class EventHubs
+    class EventHubsTest
     {
         private EventHubClient client;
         private EventSender sender;
         private EventReceiver receiver;
 
-        public EventHubs(string connectionString)
+        public EventHubsTest(string connectionString)
         {
             this.client = new EventHubClient(connectionString);
         }
