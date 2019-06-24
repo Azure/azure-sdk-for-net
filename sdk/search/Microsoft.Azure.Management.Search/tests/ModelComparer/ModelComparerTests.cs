@@ -2,17 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Search.Tests.Utilities;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.Azure.Search.Common;
-    using Models;
-    using Utilities;
-    using Xunit;
-
     public sealed class ModelComparerTests
     {
         private enum Direction
@@ -27,10 +25,12 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(5, 5, new ModelComparer<int>());
             Assert.Equal(3.14, 3.14, new ModelComparer<double>());
             Assert.Equal('c', 'c', new ModelComparer<char>());
+            Assert.Equal(5, 5L, new ModelComparer<object>());
 
             Assert.NotEqual(5, 1, new ModelComparer<int>());
             Assert.NotEqual(3.14, -2.7, new ModelComparer<double>());
             Assert.NotEqual('c', 'z', new ModelComparer<char>());
+            Assert.NotEqual(3, 3.0, new ModelComparer<object>());
         }
 
         [Fact]
@@ -92,28 +92,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(maybePi, null, new ModelComparer<double?>());
             Assert.NotEqual(maybeTrue, null, new ModelComparer<bool?>());
 #pragma warning restore xUnit2000 // Literal or constant should be the first argument to Assert.NotEqual
-        }
-
-        [Fact]
-        public void NullEqualsDefault()
-        {
-            int? maybeZero = 0;
-            int? maybeFive = 5;
-            int? nullNumber = null;
-
-            bool? maybeFalse = false;
-            bool? maybeTrue = true;
-            bool? nullBool = null;
-
-            Assert.Equal(maybeZero, nullNumber, new ModelComparer<int?>());
-            Assert.Equal(nullNumber, maybeZero, new ModelComparer<int?>());
-            Assert.Equal(maybeFalse, nullBool, new ModelComparer<bool?>());
-            Assert.Equal(nullBool, maybeFalse, new ModelComparer<bool?>());
-
-            Assert.NotEqual(maybeFive, nullNumber, new ModelComparer<int?>());
-            Assert.NotEqual(nullNumber, maybeFive, new ModelComparer<int?>());
-            Assert.NotEqual(maybeTrue, nullBool, new ModelComparer<bool?>());
-            Assert.NotEqual(nullBool, maybeTrue, new ModelComparer<bool?>());
         }
 
         [Fact]
@@ -229,15 +207,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void ComparisonIgnoresETags()
-        {
-            var model = new Model() { Name = "Magical Trevor", Age = 11, ETag = "1" };
-            var sameModel = new Model(model) { ETag = "2" };
-
-            Assert.Equal(model, sameModel, new ModelComparer<Model>());
-        }
-
-        [Fact]
         public void ComparingMarkerClassesAlwaysReturnsTrue()
         {
             var marker = new Empty();
@@ -281,21 +250,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(l, b, comparer);
             Assert.Equal(l, s, comparer);
             Assert.Equal(l, i, comparer);
-        }
-
-        [Fact]
-        public void NullEqualsEmptyCollection()
-        {
-            IEnumerable<int> nullCollection = null;
-            var emptyArray = new int[0];
-            var emptyList = new List<int>();
-
-            var comparer = new ModelComparer<IEnumerable<int>>();
-
-            Assert.True(comparer.Equals(nullCollection, emptyArray));
-            Assert.True(comparer.Equals(emptyArray, nullCollection));
-            Assert.True(comparer.Equals(nullCollection, emptyList));
-            Assert.True(comparer.Equals(emptyList, nullCollection));
         }
 
         [Fact]
@@ -351,7 +305,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private class Empty { }
 
-        private class Model : IResourceWithETag
+        private class Model
         {
             public Model() { }
 
@@ -359,14 +313,11 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Name = other.Name;
                 Age = other.Age;
-                ETag = other.ETag;
             }
 
             public string Name { get; set; }
 
             public int Age { get; set; }
-
-            public string ETag { get; set; }
         }
 
         private struct FancyDirection : IEquatable<FancyDirection>
@@ -379,8 +330,7 @@ namespace Microsoft.Azure.Search.Tests
 
             private FancyDirection(string name)
             {
-                Throw.IfArgumentNull(name, nameof(name));
-                _value = name;
+                _value = name ?? throw new ArgumentNullException(nameof(name));
             }
 
             public static bool operator ==(FancyDirection lhs, FancyDirection rhs) => Equals(lhs, rhs);
@@ -399,7 +349,7 @@ namespace Microsoft.Azure.Search.Tests
         // Biased lists only care about the first element when it comes to equality comparison.
         private class BiasedList : IEnumerable<int>, IEquatable<BiasedList>
         {
-            private int[] _values;
+            private readonly int[] _values;
 
             public BiasedList(params int[] values)
             {
@@ -447,7 +397,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private sealed class Dog : Animal, IEquatable<Dog>
         {
-            private Random _random;
+            private readonly Random _random;
 
             public Dog(string name) : base(name)
             {

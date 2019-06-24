@@ -20,7 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Search.csproj" />
-    <ProjectReference Include="..\..\Microsoft.Azure.Search\src\Microsoft.Azure.Search.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

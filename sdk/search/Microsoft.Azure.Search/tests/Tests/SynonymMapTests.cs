@@ -305,7 +305,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertSynonymMapsEqual(SynonymMap expected, SynonymMap actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<SynonymMap>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<SynonymMap>());
         }
 
         private static SynonymMap CreateTestSynonymMap()

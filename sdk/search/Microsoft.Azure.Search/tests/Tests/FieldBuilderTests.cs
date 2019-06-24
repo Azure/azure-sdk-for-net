@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Search.Tests
                 serviceClient.Indexes.Create(actualIndex);
                 actualIndex = serviceClient.Indexes.Get(otherIndexName);
 
-                Assert.Equal(expectedIndex.Fields, actualIndex.Fields, new ModelComparer<IList<Field>>());
+                Assert.Equal(expectedIndex.Fields, actualIndex.Fields, new DataPlaneModelComparer<IList<Field>>());
             });
         }
 
