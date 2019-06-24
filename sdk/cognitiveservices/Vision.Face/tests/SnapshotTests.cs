@@ -17,9 +17,11 @@ namespace FaceSDK.Tests
         // of Cognitive Service Face. We can leave it as `Guid.Empty` in the `playback` test mode.
         private static readonly List<Guid> ApplyScope = new List<Guid> { Guid.Empty };
 
+        private static readonly string detectionModel = DetectionModel.Detection01;
+
         private static readonly string recognitionModel = RecognitionModel.Recognition02;
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceSnapshotTestFaceList()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -35,7 +37,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.FaceList.AddFaceFromStreamAsync(sourceFaceListId, stream).Result;
+                    var persistedFace = client.FaceList.AddFaceFromStreamAsync(sourceFaceListId, stream, detectionModel: detectionModel).Result;
                     Assert.NotNull(persistedFace);
                 }
 
@@ -74,7 +76,7 @@ namespace FaceSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceSnapshotTestLargeFaceList()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -90,7 +92,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.LargeFaceList.AddFaceFromStreamAsync(sourceLargeFacelistId, stream).Result;
+                    var persistedFace = client.LargeFaceList.AddFaceFromStreamAsync(sourceLargeFacelistId, stream, detectionModel: detectionModel).Result;
                     Assert.NotNull(persistedFace);
                 }
 
@@ -135,7 +137,7 @@ namespace FaceSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceSnapshotTestLargePersonGroup()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -157,7 +159,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.LargePersonGroupPerson.AddFaceFromStreamAsync(sourceLargePersonGroupId, largePersonGroupPersonId, stream).Result;
+                    var persistedFace = client.LargePersonGroupPerson.AddFaceFromStreamAsync(sourceLargePersonGroupId, largePersonGroupPersonId, stream, detectionModel: detectionModel).Result;
                     Assert.NotNull(persistedFace);
                     largePersonGroupPersonFaceId = persistedFace.PersistedFaceId;
                 }
@@ -205,7 +207,7 @@ namespace FaceSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6216")]
+        [Fact]
         public void FaceSnapshotTestPersonGroup()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -227,7 +229,7 @@ namespace FaceSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
-                    var persistedFace = client.PersonGroupPerson.AddFaceFromStreamAsync(sourcePersonGroupId, personGroupPersonId, stream).Result;
+                    var persistedFace = client.PersonGroupPerson.AddFaceFromStreamAsync(sourcePersonGroupId, personGroupPersonId, stream, detectionModel: detectionModel).Result;
                     Assert.NotNull(persistedFace);
                     personGroupPersonFaceId = persistedFace.PersistedFaceId;
                 }
