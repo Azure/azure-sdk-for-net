@@ -24,4 +24,8 @@
       <HintPath>System</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationAssignmentTests\" />
+    <Folder Include="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationDefintionTests\" />
+  </ItemGroup>
 </Project>
