@@ -1,23 +1,33 @@
-# Overview 
+# Azure.Core shared library for .NET
 
-Azure.Core provides shared primitives, abstractions, and helpers for .NET Azure SDK service client libraries. 
-These shared APIs allow client libraries to expose common functionality in a consistent fashion, 
+Azure.Core provides shared primitives, abstractions, and helpers for modern .NET Azure SDK client libraries. 
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) 
+and can be easily identified by package and namespaces names starting with 'Azure', e.g. ```Azure.Storage.Blobs```. 
+A more complete list of client libraries using Azure.Core can be found [here](https://github.com/Azure/azure-sdk-for-net#core-services). 
+
+Azure.Core allows client libraries to expose common functionality in a consistent fashion, 
 so that once you learn how to use these APIs in one client library, you will know how to use them in other client libraries.
 
-The main shared concepts of Azure.Core (and so all Azure SDK libraries using Azure.Core) include:
+The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
 
-1. Unified APIs for configuring service clients, e.g. configuring retries, logging.
-2. Unified APIs for accessing HTTP responses.
-3. Unified APIs for consuming long running operations (LROs).
-4. Unified APIs for consuming asynchronous streams (```IAsyncEnumerable<T>```) by paging.
-5. Unified exception hierarchy for reporting errors from service requests.
-6. Abstractions for representing Azure SDK credentials.
+- Configuring service clients, e.g. configuring retries, logging.
+- Accessing HTTP response details.
+- Calling long running operations (LROs).
+- Paging and asynchronous streams (```IAsyncEnumerable<T>``) 
+- Exceptions for reporting errors from service requests in a consistent fashion.
+- Abstractions for representing Azure SDK credentials.
 
-The following sections will explain these shared concepts in more detail.
+Below, you will find sections explaining these shared concepts in more detail.
 
-# Usage Scenarios and Samples
+## Installing
+Typically, you will not need to install Azure.Core; 
+it will be installed for you when you install one of the client libraries using it. 
+In case you want to install it explicitly (to implement your own client library, for example), 
+you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
 
-## Configuring Service Clients Using ```ClientOptions```
+## Usage Scenarios and Samples
+
+### Configuring Service Clients Using ```ClientOptions```
 Azure SDK client libraries typically expose one or more _service client_ types that 
 are the main starting points for calling corresponding Azure services. 
 You can easily find these client types as their names end with the word _Client_. 
@@ -39,17 +49,20 @@ public void ConfigureServiceClient()
     // configure retries
     options.RetryPolicy.MaxRetries = 5; // default is 3
     options.RetryPolicy.Mode = RetryMode.Exponential; // default is fixed retry policy
-    options.RetryPolicy.Delay = TimeSpan.FromSeconds(1); // derfault is 0.8s
+    options.RetryPolicy.Delay = TimeSpan.FromSeconds(1); // default is 0.8s
 
     // finally create BlobContainerClient, but many Azure SDK clients will work similarly
     var client = new BlobContainerClient(connectionString, "container", options);
+
+    // if you don't specify the options, default options will be used, e.g.
+    var clientWithDefaultOptions = new BlobContainerClient(connectionString, "container");
 }
 ```
 
-## Accessing HTTP Response Details Using ```Response<T>```
+### Accessing HTTP Response Details Using ```Response<T>```
 _Service clients_ have methods that can be used to call Azure services. 
 We refer to these client methods _service methods_.
-_Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cases its non-generic sibling ```Response```).
+_Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cases its non-generic sibling, a raw ```Response```).
 This type provides access to both the deserialized result of the service call, 
 and to the details of the HTTP response returned from the server.
 
@@ -87,14 +100,14 @@ public async Task UsingResponseOfT()
 }
 ```
 
-## Consuming Service Methods Returning ```IAsyncEnumerable<T>```
+### Reporting Errors ```RequestFailedException```
 Coming soon ...
 
-## Consuming Long Running Operations Using ```OperationT<T>```
+### Consuming Service Methods Returning ```IAsyncEnumerable<T>```
+Coming soon ...
+
+### Consuming Long Running Operations Using ```OperationT<T>```
 Comming soon ...
 
-# Installing
-Typically, you will not need to install Azure.Core; 
-it will be installed for you when you install one of the client libraries using it. 
-In case you want to install it explicitly (to implement your own client library, for example), 
-you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
+### Mocking
+Comming soon ...
