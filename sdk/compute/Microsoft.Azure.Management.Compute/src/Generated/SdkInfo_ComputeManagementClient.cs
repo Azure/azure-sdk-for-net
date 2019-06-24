@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "AvailabilitySets", "2019-03-01"),
                 new Tuple<string, string, string>("Compute", "Disks", "2018-09-30"),
                 new Tuple<string, string, string>("Compute", "Galleries", "2019-03-01"),
+                new Tuple<string, string, string>("Compute", "GalleryApplicationVersions", "2019-03-01"),
+                new Tuple<string, string, string>("Compute", "GalleryApplications", "2019-03-01"),
                 new Tuple<string, string, string>("Compute", "GalleryImageVersions", "2019-03-01"),
                 new Tuple<string, string, string>("Compute", "GalleryImages", "2019-03-01"),
                 new Tuple<string, string, string>("Compute", "Images", "2019-03-01"),

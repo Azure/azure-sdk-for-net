@@ -177,6 +177,16 @@ namespace Microsoft.Azure.Management.Compute
         IGalleryImageVersionsOperations GalleryImageVersions { get; }
 
         /// <summary>
+        /// Gets the IGalleryApplicationsOperations.
+        /// </summary>
+        IGalleryApplicationsOperations GalleryApplications { get; }
+
+        /// <summary>
+        /// Gets the IGalleryApplicationVersionsOperations.
+        /// </summary>
+        IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; }
+
+        /// <summary>
         /// Gets the IContainerServicesOperations.
         /// </summary>
         IContainerServicesOperations ContainerServices { get; }

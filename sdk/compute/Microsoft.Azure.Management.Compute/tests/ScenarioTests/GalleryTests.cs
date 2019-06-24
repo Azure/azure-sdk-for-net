@@ -5,13 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Xunit;
 
 namespace Compute.Tests
@@ -21,6 +26,7 @@ namespace Compute.Tests
         protected const string ResourceGroupPrefix = "galleryPsTestRg";
         protected const string GalleryNamePrefix = "galleryPsTestGallery";
         protected const string GalleryImageNamePrefix = "galleryPsTestGalleryImage";
+        protected const string GalleryApplicationNamePrefix = "galleryPsTestGalleryApplication";
         private string galleryHomeLocation = "eastus2euap";
 
         [Fact]
@@ -216,6 +222,126 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void GalleryApplication_CRUD_Tests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string location = ComputeManagementTestUtilities.DefaultLocation;
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+
+                m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+                Trace.TraceInformation("Created the resource group: " + rgName);
+                string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                Gallery gallery = GetTestInputGallery();
+                gallery.Location = location;
+                m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, gallery);
+                Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName, rgName));
+
+                string galleryApplicationName = ComputeManagementTestUtilities.GenerateName(GalleryApplicationNamePrefix);
+                GalleryApplication inputGalleryApplication = GetTestInputGalleryApplication();
+                m_CrpClient.GalleryApplications.CreateOrUpdate(rgName, galleryName, galleryApplicationName, inputGalleryApplication);
+                Trace.TraceInformation(string.Format("Created the gallery application: {0} in gallery: {1}", galleryApplicationName,
+                    galleryName));
+
+                GalleryApplication galleryApplicationFromGet = m_CrpClient.GalleryApplications.Get(rgName, galleryName, galleryApplicationName);
+                Assert.NotNull(galleryApplicationFromGet);
+                ValidateGalleryApplication(inputGalleryApplication, galleryApplicationFromGet);
+
+                inputGalleryApplication.Description = "Updated description.";
+                m_CrpClient.GalleryApplications.CreateOrUpdate(rgName, galleryName, galleryApplicationName, inputGalleryApplication);
+                Trace.TraceInformation(string.Format("Updated the gallery application: {0} in gallery: {1}", galleryApplicationName,
+                    galleryName));
+                galleryApplicationFromGet = m_CrpClient.GalleryApplications.Get(rgName, galleryName, galleryApplicationName);
+                Assert.NotNull(galleryApplicationFromGet);
+                ValidateGalleryApplication(inputGalleryApplication, galleryApplicationFromGet);
+
+                m_CrpClient.GalleryApplications.Delete(rgName, galleryName, galleryApplicationName);
+
+                Trace.TraceInformation(string.Format("Deleted the gallery application: {0} in gallery: {1}", galleryApplicationName,
+                    galleryName));
+
+                m_CrpClient.Galleries.Delete(rgName, galleryName);
+            }
+        }
+
+        [Fact]
+        public void GalleryApplicationVersion_CRUD_Tests()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string location = ComputeManagementTestUtilities.DefaultLocation;
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+                string applicationName = ComputeManagementTestUtilities.GenerateName("psTestSourceApplication");
+
+                try
+                {
+                    string applicationMediaLink = CreateApplicationMediaLink(rgName, "test.txt");
+
+                    Assert.False(string.IsNullOrEmpty(applicationMediaLink));
+                    Trace.TraceInformation(string.Format("Created the source application media link: {0}", applicationMediaLink));
+
+                    string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                    Gallery gallery = GetTestInputGallery();
+                    gallery.Location = location;
+                    m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, gallery);
+                    Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName,
+                        rgName));
+                    string galleryApplicationName = ComputeManagementTestUtilities.GenerateName(GalleryApplicationNamePrefix);
+                    GalleryApplication inputGalleryApplication = GetTestInputGalleryApplication();
+                    m_CrpClient.GalleryApplications.CreateOrUpdate(rgName, galleryName, galleryApplicationName, inputGalleryApplication);
+                    Trace.TraceInformation(string.Format("Created the gallery application: {0} in gallery: {1}", galleryApplicationName,
+                        galleryName));
+
+                    string galleryApplicationVersionName = "1.0.0";
+                    GalleryApplicationVersion inputApplicationVersion = GetTestInputGalleryApplicationVersion(applicationMediaLink);
+                    m_CrpClient.GalleryApplicationVersions.CreateOrUpdate(rgName, galleryName, galleryApplicationName,
+                        galleryApplicationVersionName, inputApplicationVersion);
+                    Trace.TraceInformation(string.Format("Created the gallery application version: {0} in gallery application: {1}",
+                        galleryApplicationVersionName, galleryApplicationName));
+
+                    GalleryApplicationVersion applicationVersionFromGet = m_CrpClient.GalleryApplicationVersions.Get(rgName,
+                        galleryName, galleryApplicationName, galleryApplicationVersionName);
+                    Assert.NotNull(applicationVersionFromGet);
+                    ValidateGalleryApplicationVersion(inputApplicationVersion, applicationVersionFromGet);
+                    applicationVersionFromGet = m_CrpClient.GalleryApplicationVersions.Get(rgName, galleryName, galleryApplicationName,
+                        galleryApplicationVersionName, ReplicationStatusTypes.ReplicationStatus);
+                    Assert.Equal(StorageAccountType.StandardLRS, applicationVersionFromGet.PublishingProfile.StorageAccountType);
+                    Assert.Equal(StorageAccountType.StandardLRS,
+                        applicationVersionFromGet.PublishingProfile.TargetRegions.First().StorageAccountType);
+                    Assert.NotNull(applicationVersionFromGet.ReplicationStatus);
+                    Assert.NotNull(applicationVersionFromGet.ReplicationStatus.Summary);
+
+                    inputApplicationVersion.PublishingProfile.EndOfLifeDate = DateTime.Now.AddDays(100).Date;
+                    m_CrpClient.GalleryApplicationVersions.CreateOrUpdate(rgName, galleryName, galleryApplicationName,
+                        galleryApplicationVersionName, inputApplicationVersion);
+                    Trace.TraceInformation(string.Format("Updated the gallery application version: {0} in gallery application: {1}",
+                        galleryApplicationVersionName, galleryApplicationName));
+                    applicationVersionFromGet = m_CrpClient.GalleryApplicationVersions.Get(rgName, galleryName,
+                        galleryApplicationName, galleryApplicationVersionName);
+                    Assert.NotNull(applicationVersionFromGet);
+                    ValidateGalleryApplicationVersion(inputApplicationVersion, applicationVersionFromGet);
+
+                    m_CrpClient.GalleryApplicationVersions.Delete(rgName, galleryName, galleryApplicationName, galleryApplicationVersionName);
+                    Trace.TraceInformation(string.Format("Deleted the gallery application version: {0} in gallery application: {1}",
+                        galleryApplicationVersionName, galleryApplicationName));
+
+                    m_CrpClient.GalleryApplications.Delete(rgName, galleryName, galleryApplicationName);
+                    Trace.TraceInformation("Deleted the gallery application.");
+                    m_CrpClient.Galleries.Delete(rgName, galleryName);
+                    Trace.TraceInformation("Deleted the gallery.");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                }
+            }
+        }
+
         private void ValidateGallery(Gallery galleryIn, Gallery galleryOut)
         {
             Assert.False(string.IsNullOrEmpty(galleryOut.ProvisioningState));
@@ -360,6 +486,116 @@ namespace Compute.Tests
             Image getImage = m_CrpClient.Images.Get(rgName, imageName);
             sourceImageId = getImage.Id;
             return createdVM;
+        }
+
+        private string CreateApplicationMediaLink(string rgName, string fileName)
+        {
+            string storageAccountName = ComputeManagementTestUtilities.GenerateName("saforgallery");
+            string asName = ComputeManagementTestUtilities.GenerateName("asforgallery");
+            StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName); // resource group is also created in this method.
+            string applicationMediaLink = @"https://saforgallery1969.blob.core.windows.net/sascontainer/test.txt\";
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var accountKeyResult = m_SrpClient.StorageAccounts.ListKeysWithHttpMessagesAsync(rgName, storageAccountName).Result;
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials(storageAccountName, accountKeyResult.Body.Key1), useHttps: true);
+
+                var blobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobContainer container = blobClient.GetContainerReference("sascontainer");
+                bool created = container.CreateIfNotExistsAsync().Result;
+
+                CloudPageBlob pageBlob = container.GetPageBlobReference(fileName);
+                byte[] blobContent = Encoding.UTF8.GetBytes("Application Package Test");
+                byte[] bytes = new byte[512]; // Page blob must be multiple of 512
+                System.Buffer.BlockCopy(blobContent, 0, bytes, 0, blobContent.Length);
+                pageBlob.UploadFromByteArrayAsync(bytes, 0, bytes.Length).RunSynchronously();
+
+                SharedAccessBlobPolicy sasConstraints = new SharedAccessBlobPolicy();
+                sasConstraints.SharedAccessStartTime = DateTime.UtcNow.AddDays(-1);
+                sasConstraints.SharedAccessExpiryTime = DateTime.UtcNow.AddDays(2);
+                sasConstraints.Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write;
+
+                //Generate the shared access signature on the blob, setting the constraints directly on the signature.
+                string sasContainerToken = pageBlob.GetSharedAccessSignature(sasConstraints);
+
+                //Return the URI string for the container, including the SAS token.
+                applicationMediaLink = pageBlob.Uri + sasContainerToken;
+            }
+            return applicationMediaLink;
+        }
+
+        private GalleryApplication GetTestInputGalleryApplication()
+        {
+            return new GalleryApplication
+            {
+                Eula = "This is the gallery application EULA.",
+                Location = ComputeManagementTestUtilities.DefaultLocation,
+                SupportedOSType = OperatingSystemTypes.Windows,
+                PrivacyStatementUri = "www.privacystatement.com",
+                ReleaseNoteUri = "www.releasenote.com",
+                Description = "This is the gallery application description.",
+            };
+        }
+
+        private GalleryApplicationVersion GetTestInputGalleryApplicationVersion(string applicationMediaLink)
+        {
+            return new GalleryApplicationVersion
+            {
+                Location = ComputeManagementTestUtilities.DefaultLocation,
+                PublishingProfile = new GalleryApplicationVersionPublishingProfile
+                {
+                    Source = new UserArtifactSource
+                    {
+                        FileName = "test.zip",
+                        MediaLink = applicationMediaLink
+                    },
+                    ReplicaCount = 1,
+                    StorageAccountType = StorageAccountType.StandardLRS,
+                    TargetRegions = new List<TargetRegion> {
+                        new TargetRegion { Name = ComputeManagementTestUtilities.DefaultLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                    },
+                    EndOfLifeDate = DateTime.Today.AddDays(10).Date
+                }
+            };
+        }
+
+        private void ValidateGalleryApplication(GalleryApplication applicationIn, GalleryApplication applicationOut)
+        {
+            if (applicationIn.Tags != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in applicationIn.Tags)
+                {
+                    Assert.Equal(kvp.Value, applicationOut.Tags[kvp.Key]);
+                }
+            }
+            Assert.Equal(applicationIn.Eula, applicationOut.Eula);
+            Assert.Equal(applicationIn.PrivacyStatementUri, applicationOut.PrivacyStatementUri);
+            Assert.Equal(applicationIn.ReleaseNoteUri, applicationOut.ReleaseNoteUri);
+            Assert.Equal(applicationIn.Location.ToLower(), applicationOut.Location.ToLower());
+            Assert.Equal(applicationIn.SupportedOSType, applicationOut.SupportedOSType);
+            if (!string.IsNullOrEmpty(applicationIn.Description))
+            {
+                Assert.Equal(applicationIn.Description, applicationOut.Description);
+            }
+        }
+
+        private void ValidateGalleryApplicationVersion(GalleryApplicationVersion applicationVersionIn, GalleryApplicationVersion applicationVersionOut)
+        {
+            Assert.False(string.IsNullOrEmpty(applicationVersionOut.ProvisioningState));
+
+            if (applicationVersionIn.Tags != null)
+            {
+                foreach (KeyValuePair<string, string> kvp in applicationVersionIn.Tags)
+                {
+                    Assert.Equal(kvp.Value, applicationVersionOut.Tags[kvp.Key]);
+                }
+            }
+
+            Assert.Equal(applicationVersionIn.Location.ToLower(), applicationVersionOut.Location.ToLower());
+            Assert.False(string.IsNullOrEmpty(applicationVersionOut.PublishingProfile.Source.MediaLink),
+                "applicationVersionOut.PublishingProfile.Source.MediaLink is null or empty.");
+            Assert.NotNull(applicationVersionOut.PublishingProfile.EndOfLifeDate);
+            Assert.NotNull(applicationVersionOut.PublishingProfile.PublishedDate);
+            Assert.NotNull(applicationVersionOut.Id);
         }
     }
 }

@@ -19,20 +19,20 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// The publishing profile of a gallery Image Version.
     /// </summary>
-    public partial class GalleryImageVersionPublishingProfile : GalleryArtifactPublishingProfileBase
+    public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// GalleryImageVersionPublishingProfile class.
+        /// GalleryApplicationVersionPublishingProfile class.
         /// </summary>
-        public GalleryImageVersionPublishingProfile()
+        public GalleryApplicationVersionPublishingProfile()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// GalleryImageVersionPublishingProfile class.
+        /// GalleryApplicationVersionPublishingProfile class.
         /// </summary>
         /// <param name="targetRegions">The target regions where the Image
         /// Version is going to be replicated to. This property is
@@ -52,10 +52,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageAccountType">Specifies the storage account type
         /// to be used to store the image. This property is not updatable.
         /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
-        public GalleryImageVersionPublishingProfile(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
+        /// <param name="contentType">Optional. May be used to help process
+        /// this file. The type of file contained in the source, e.g. zip,
+        /// json, etc.</param>
+        /// <param name="enableHealthCheck">Optional. Whether or not this
+        /// application reports health.</param>
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string contentType = default(string), bool? enableHealthCheck = default(bool?))
             : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType)
         {
             Source = source;
+            ContentType = contentType;
+            EnableHealthCheck = enableHealthCheck;
             CustomInit();
         }
 
@@ -67,7 +74,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "source")]
-        public GalleryArtifactSource Source { get; set; }
+        public UserArtifactSource Source { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. May be used to help process this file. The
+        /// type of file contained in the source, e.g. zip, json, etc.
+        /// </summary>
+        [JsonProperty(PropertyName = "contentType")]
+        public string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. Whether or not this application reports
+        /// health.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableHealthCheck")]
+        public bool? EnableHealthCheck { get; set; }
 
         /// <summary>
         /// Validate the object.
