@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.Management.HealthcareApis.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -80,5 +81,22 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         [JsonProperty(PropertyName = "allowCredentials")]
         public bool? AllowCredentials { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MaxAge > 99999)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxAge", 99999);
+            }
+            if (MaxAge < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxAge", 0);
+            }
+        }
     }
 }

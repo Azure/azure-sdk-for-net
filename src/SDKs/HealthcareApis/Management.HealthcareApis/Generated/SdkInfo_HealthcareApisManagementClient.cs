@@ -25,16 +25,5 @@ namespace Microsoft.Azure.Management.HealthcareApis
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4283";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd C:/dev/yazanmsft/azure-rest-api-specs/specification/healthcareapis/resource-manager/readme.md --csharp --version=2.0.4283 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.HealthcareApis --csharp.output-folder=C:/dev/yazanmsft/azure-sdk-for-net/src/SDKs/HealthcareApis/Management.HealthcareApis/Generated";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "a2e744bb0f7a32513b14ce9fa776e6cd9f906fc7";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

@@ -78,6 +78,10 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// </return>
         public async Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string locationName, string operationResultId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (locationName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
@@ -101,7 +105,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/locations/{locationName}/operationresults/{operationResultId}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
             _url = _url.Replace("{operationResultId}", System.Uri.EscapeDataString(operationResultId));
             List<string> _queryParameters = new List<string>();

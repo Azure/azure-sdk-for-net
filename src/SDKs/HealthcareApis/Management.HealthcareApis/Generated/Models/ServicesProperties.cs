@@ -112,6 +112,14 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
                     }
                 }
             }
+            if (CosmosDbConfiguration != null)
+            {
+                CosmosDbConfiguration.Validate();
+            }
+            if (CorsConfiguration != null)
+            {
+                CorsConfiguration.Validate();
+            }
         }
     }
 }
