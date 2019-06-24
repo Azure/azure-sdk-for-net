@@ -12,6 +12,8 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files\src\Azure.Storage.Files.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Common.csproj" />
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
+    <ProjectReference Include="..\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
   <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
   <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
