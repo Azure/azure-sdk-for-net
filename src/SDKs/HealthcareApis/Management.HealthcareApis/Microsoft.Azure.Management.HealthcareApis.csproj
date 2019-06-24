@@ -21,13 +21,5 @@
 	
   <!-- Please do not move/edit code below this line -->	
   <Import Condition="Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />	
-  <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
   <!-- Please do not move/edit code above this line -->
 </Project>
