@@ -146,18 +146,37 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond those discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the following set of samples is available:
+Beyond the scenarios discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the following set of samples is available:
 
-- Hello world
-- Create and Event Hub client with custom options
-- Inspect Event Hub and partition properties
-- Publish events to a specific Event Hub partition
-- Publish events with custom metadata
-- Consume events with as the owner of a partition/consumer group
-- Save the last read event and resume from that point
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample1_HelloWorld.cs)  
+  An introduction to Event Hubs, illustrating how to connect and query the service.
+
+- [Create an Event Hub client with custom options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample2_ClientWithCustomOptions.cs)  
+  An introduction to Event Hubs, exploring additional options for creating an Event Hub client.
+  
+- [Publish an event to an Event Hub](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample3_PublishAnEvent3.cs)  
+  An introduction to publishing events, using a simple Event Hub producer.
+  
+- [Publish events using a partition key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample4_PublishEventsWithPartitionKey.cs)  
+  An introduction to publishing events, using a partition key to group them together.
+  
+- [Publish events to a specific Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample5_PublishEventsToSpecificPartitions.cs)  
+  An introduction to publishing events, using an Event Hub producer that is associated with a specific partition.
+  
+- [Publish events with custom metadata](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample6_PublishEventsWithCustomMetadata.cs)  
+  An example of publishing events, extending the event data with custom metadata.
+  
+- [Consume events from an Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample7_ConsumeEvents.cs)  
+  An introduction to consuming events, using a simple Event Hub consumer.
+  
+- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample8_ConsumeEventsByBatch)  
+  An example of consuming events, using a batch approach to control throughput.
+  
+- [Consume events from a known position in the Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample9_ConsumeEventsFromAKnownPosition)  
+  An example of consuming events, starting at a well-known position in the Event Hub partition.
 
 ## Contributing  
 
-Please refer to our [contributing guide](https://raw.githubusercontent.com/jsquire/azure-sdk-for-net/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+Please refer to our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2FFREADME.png)
