@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.Storage.Files
+namespace Azure.Storage.Files.Models
 {
     // TODO can we make the info link not blob-centric?
 

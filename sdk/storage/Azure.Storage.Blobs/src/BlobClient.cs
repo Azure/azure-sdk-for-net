@@ -270,7 +270,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
         /// is thrown.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
             bool rangeGetContentHash = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -299,7 +299,7 @@ namespace Azure.Storage.Blobs.Specialized
                         range,
                         accessConditions,
                         rangeGetContentHash,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     // Wrap the response Content in a RetriableStream so we
@@ -313,7 +313,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     accessConditions,
                                     rangeGetContentHash,
                                     startOffset,
-                                    cancellation)
+                                    cancellationToken)
                                 .ConfigureAwait(false).GetAwaiter().GetResult())
                             .GetRawResponse(),
                         async startOffset =>
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 accessConditions,
                                 rangeGetContentHash,
                                 startOffset,
-                                cancellation)
+                                cancellationToken)
                                 .ConfigureAwait(false))
                             .GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
@@ -369,7 +369,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? accessConditions = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
@@ -401,14 +401,14 @@ namespace Azure.Storage.Blobs.Specialized
                 await BlobRestClient.Blob.DownloadAsync(
                     this.Pipeline,
                     this.Uri,
-                    range: pageRange.ToRange(),
+                    range: pageRange.ToString(),
                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                     ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                    cancellation: cancellation)
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
@@ -451,7 +451,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -468,7 +468,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -495,7 +495,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: destinationAccessConditions?.HttpAccessConditions?.IfNoneMatch,
                         leaseId: destinationAccessConditions?.LeaseAccessConditions?.LeaseId,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -524,7 +524,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on aborting the copy operation.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -538,7 +538,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response> AbortCopyFromUriAsync(
             string copyId,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -555,7 +555,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Uri,
                         copyId: copyId,
                         leaseId: leaseAccessConditions?.LeaseId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// deleting this blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -602,7 +602,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response> DeleteAsync(
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -623,7 +623,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -645,7 +645,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/undelete-blob" />.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -657,7 +657,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response> UndeleteAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -667,7 +667,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return await BlobRestClient.Blob.UndeleteAsync(
                         this.Pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -688,7 +688,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -700,7 +700,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// failure occurs.
         /// </remarks>
         public async Task<Response<AccountInfo>> GetAccountInfoAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -710,7 +710,7 @@ namespace Azure.Storage.Blobs.Specialized
                     return await BlobRestClient.Blob.GetAccountInfoAsync(
                         this.Pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -737,7 +737,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on getting the blob's properties.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -751,7 +751,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public async Task<Response<BlobProperties>> GetPropertiesAsync(
             BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -770,7 +770,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -798,7 +798,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's HTTP headers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -813,7 +813,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<BlobInfo>> SetHttpHeadersAsync(
             BlobHttpHeaders? httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -840,7 +840,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                            cancellation: cancellation)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
                         response.GetRawResponse(),
@@ -876,7 +876,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting the blob's metadata.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -891,7 +891,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<BlobInfo>> SetMetadataAsync(
             Metadata metadata,
             BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -912,7 +912,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                             ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                             ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                            cancellation: cancellation)
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return new Response<BlobInfo>(
                         response.GetRawResponse(),
@@ -947,7 +947,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// setting creating this snapshot.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -962,7 +962,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -982,7 +982,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1039,9 +1039,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public async Task<Response<Lease>> AcquireLeaseAsync(
             int duration,
-            string proposedID = default,
+            string proposedId = default,
             HttpAccessConditions? httpAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1049,7 +1049,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(proposedID)}: {proposedID}\n" +
+                    $"{nameof(proposedId)}: {proposedId}\n" +
                     $"{nameof(duration)}: {duration}");
                 try
                 {
@@ -1057,12 +1057,12 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         duration: duration,
-                        proposedLeaseId: proposedID,
+                        proposedLeaseId: proposedId,
                         ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: httpAccessConditions?.IfMatch,
                         ifNoneMatch: httpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1108,9 +1108,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<Lease>> RenewLeaseAsync(
-            string leaseID,
+            string leaseId,
             HttpAccessConditions? httpAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1118,19 +1118,19 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(leaseID)}: {leaseID}\n" +
+                    $"{nameof(leaseId)}: {leaseId}\n" +
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.RenewLeaseAsync(
                         this.Pipeline,
                         this.Uri,
-                        leaseId: leaseID,
+                        leaseId: leaseId,
                         ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: httpAccessConditions?.IfMatch,
                         ifNoneMatch: httpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1163,7 +1163,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="ContainerAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1176,9 +1176,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobInfo>> ReleaseLeaseAsync(
-            string leaseID,
+            string leaseId,
             HttpAccessConditions? httpAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1186,19 +1186,19 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(leaseID)}: {leaseID}\n" +
+                    $"{nameof(leaseId)}: {leaseId}\n" +
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.ReleaseLeaseAsync(
                         this.Pipeline,
                         this.Uri,
-                        leaseId: leaseID,
+                        leaseId: leaseId,
                         ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: httpAccessConditions?.IfMatch,
                         ifNoneMatch: httpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1245,7 +1245,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1259,7 +1259,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<Lease>> BreakLeaseAsync(
             int? breakPeriodInSeconds = default,
             HttpAccessConditions? httpAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1279,7 +1279,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: httpAccessConditions?.IfMatch,
                         ifNoneMatch: httpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToLease();
                 }
@@ -1315,7 +1315,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="HttpAccessConditions"/> to add conditions on
         /// changing a lease.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1327,10 +1327,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<Lease>> ChangeLeaseAsync(
-            string leaseID,
-            string proposedID,
+            string leaseId,
+            string proposedId,
             HttpAccessConditions? httpAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1338,21 +1338,21 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(leaseID)}: {leaseID}\n" +
-                    $"{nameof(proposedID)}: {proposedID}\n" +
+                    $"{nameof(leaseId)}: {leaseId}\n" +
+                    $"{nameof(proposedId)}: {proposedId}\n" +
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
                     return await BlobRestClient.Blob.ChangeLeaseAsync(
                         this.Pipeline,
                         this.Uri,
-                        leaseId: leaseID,
-                        proposedLeaseId: proposedID,
+                        leaseId: leaseId,
+                        proposedLeaseId: proposedId,
                         ifModifiedSince: httpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: httpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: httpAccessConditions?.IfMatch,
                         ifNoneMatch: httpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1389,7 +1389,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="LeaseAccessConditions"/> to add conditions on
         /// setting the access tier.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1403,7 +1403,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response> SetTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {
@@ -1420,7 +1420,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Uri,
                         tier: accessTier,
                         leaseId: leaseAccessConditions?.LeaseId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

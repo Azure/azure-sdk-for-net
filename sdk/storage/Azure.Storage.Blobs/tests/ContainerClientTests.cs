@@ -1312,7 +1312,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.StageBlockAsync(
-                        base64BlockID: blockId,
+                        base64BlockId: blockId,
                         content: stream);
                 }
 
@@ -1560,7 +1560,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream(data))
                 {
                     await blob.StageBlockAsync(
-                        base64BlockID: blockId,
+                        base64BlockId: blockId,
                         content: stream);
                 }
 

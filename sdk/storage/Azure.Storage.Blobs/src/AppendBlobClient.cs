@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the creation of this new append blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -234,7 +234,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default, 
             Metadata metadata = default, 
             AppendBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -262,7 +262,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -306,7 +306,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -323,7 +323,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default, 
             AppendBlobAccessConditions? accessConditions = default, 
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -357,7 +357,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,                                    
-                                    cancellation: cancellation)
+                                    cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             },
                         cleanup: () => { })
@@ -415,7 +415,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -433,7 +433,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -449,7 +449,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         sourceUri: sourceUri,
-                        sourceRange: sourceRange.ToRange(),
+                        sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
@@ -463,7 +463,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfUnmodifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

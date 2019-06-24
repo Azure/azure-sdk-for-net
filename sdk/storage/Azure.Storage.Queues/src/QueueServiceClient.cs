@@ -194,7 +194,7 @@ namespace Azure.Storage.Queues
         /// <param name="marker">
         /// Marker from the previous request.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -207,7 +207,7 @@ namespace Azure.Storage.Queues
         public async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
             QueuesSegmentOptions? options = default,
             string marker = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
@@ -226,7 +226,7 @@ namespace Azure.Storage.Queues
                         prefix: options?.Prefix,
                         maxresults: options?.MaxResults,
                         include: options?.Detail.AsIncludeType(),
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -245,14 +245,14 @@ namespace Azure.Storage.Queues
         /// Gets the properties of the queue service.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
         /// <see cref="Task{Response{QueueServiceProperties}}"/>
         /// </returns>
         public async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
@@ -264,7 +264,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Service.GetPropertiesAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -286,7 +286,7 @@ namespace Azure.Storage.Queues
         /// <param name="properties">
         /// <see cref="QueueServiceProperties"/>
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -294,7 +294,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
@@ -309,7 +309,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         properties: properties,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -330,14 +330,14 @@ namespace Azure.Storage.Queues
         /// geo-redundant replication is enabled for the storage account.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-stats"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
         /// <see cref="Task{Response{QueueServiceStatistics}}"/>
         /// </returns>
         public async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
             {
@@ -349,7 +349,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Service.GetStatisticsAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -364,7 +364,10 @@ namespace Azure.Storage.Queues
             }
         }
     }
+}
 
+namespace Azure.Storage.Queues.Models
+{
     /// <summary>
     /// QueuesSegmentOptions defines options available when calling ListQueues.
     /// </summary>

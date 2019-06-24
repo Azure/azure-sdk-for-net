@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues.Test
             {
                 var messages = this.InstrumentClient(queue.GetMessagesClient());
                 var enqueuedMessages = await messages.EnqueueAsync(String.Empty);
-                var enqueuedMessage = enqueuedMessages.Value.First();
+                var enqueuedMessage = enqueuedMessages.Value;
                 var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
@@ -63,7 +63,7 @@ namespace Azure.Storage.Queues.Test
             {
                 var messages = this.InstrumentClient(queue.GetMessagesClient());
                 var enqueuedMessages = await messages.EnqueueAsync(String.Empty);
-                var enqueuedMessage = enqueuedMessages.Value.First();
+                var enqueuedMessage = enqueuedMessages.Value;
                 var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
@@ -86,7 +86,7 @@ namespace Azure.Storage.Queues.Test
 
                 var messages = this.InstrumentClient(queue.GetMessagesClient());
                 var enqueuedMessages = await messages.EnqueueAsync(message0);
-                var enqueuedMessage = enqueuedMessages.Value.First();
+                var enqueuedMessage = enqueuedMessages.Value;
                 var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
@@ -108,7 +108,7 @@ namespace Azure.Storage.Queues.Test
 
                 var messages = this.InstrumentClient(queue.GetMessagesClient());
                 var enqueuedMessages = await messages.EnqueueAsync(message0);
-                var enqueuedMessage = enqueuedMessages.Value.First();
+                var enqueuedMessage = enqueuedMessages.Value;
                 var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act
@@ -130,7 +130,7 @@ namespace Azure.Storage.Queues.Test
 
                 var messages = this.InstrumentClient(queue.GetMessagesClient());
                 var enqueuedMessages = await messages.EnqueueAsync(message0);
-                var enqueuedMessage = enqueuedMessages.Value.First();
+                var enqueuedMessage = enqueuedMessages.Value;
                 var messageId = this.InstrumentClient(messages.GetMessageIdClient(enqueuedMessage.MessageId));
 
                 // Act

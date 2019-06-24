@@ -120,7 +120,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
-    const cancellationName = "cancellation";
+    const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
     const headerName = "_header";

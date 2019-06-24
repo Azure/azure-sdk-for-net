@@ -208,7 +208,7 @@ namespace Azure.Storage.Files
         /// <param name="quotaInBytes">
         /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -223,7 +223,7 @@ namespace Azure.Storage.Files
         public async Task<Response<ShareInfo>> CreateAsync(
             Metadata metadata = default, 
             int? quotaInBytes = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -239,7 +239,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         quota: quotaInBytes,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -262,7 +262,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this share.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -276,7 +276,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -289,7 +289,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. Specifies the share snapshot to delete.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -328,7 +328,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response> DeleteAsync(
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -343,7 +343,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. Specifies the share snapshot to query for properties.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -382,7 +382,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<ShareProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -418,7 +418,7 @@ namespace Azure.Storage.Files
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-properties"/>.
         /// </summary>
         /// <param name="quotaInBytes">Optional. The maximum size of the share. If unspecified, use the service's default value.</param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -432,7 +432,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<ShareInfo>> SetQuotaAsync(
             int quotaInBytes = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         quota: quotaInBytes,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -471,7 +471,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Custom metadata to set for this share.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -485,7 +485,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<ShareInfo>> SetMetadataAsync(
             Metadata metadata,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -498,7 +498,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -520,7 +520,7 @@ namespace Azure.Storage.Files
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/get-share-acl"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -533,7 +533,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -545,7 +545,7 @@ namespace Azure.Storage.Files
                     return await FileRestClient.Share.GetAccessPolicyAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -571,7 +571,7 @@ namespace Azure.Storage.Files
         /// Stored access policies that you can use to provide fine grained
         /// control over share permissions.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -585,7 +585,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<ShareInfo>> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -598,7 +598,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         permissions: permissions,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -618,7 +618,7 @@ namespace Azure.Storage.Files
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/get-share-stats"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -631,7 +631,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<ShareStatistics>> GetStatisticsAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -643,7 +643,7 @@ namespace Azure.Storage.Files
                     return await FileRestClient.Share.GetStatisticsAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

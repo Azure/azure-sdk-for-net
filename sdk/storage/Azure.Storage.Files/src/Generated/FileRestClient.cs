@@ -25,14 +25,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="properties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Files.Models.FileServiceProperties properties,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -40,8 +40,8 @@ namespace Azure.Storage.Files
                     properties,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -125,21 +125,21 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage service properties.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of shares.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.SharesSegment>> ListSharesSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files
                 int? maxresults = default,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ListSharesIncludeType> include = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListSharesSegmentAsync_CreateRequest(
                     pipeline,
@@ -245,8 +245,8 @@ namespace Azure.Storage.Files
                     include,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListSharesSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -348,7 +348,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -356,7 +356,7 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quota = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -365,8 +365,8 @@ namespace Azure.Storage.Files
                     metadata,
                     quota))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -468,14 +468,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -483,8 +483,8 @@ namespace Azure.Storage.Files
                     sharesnapshot,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -591,7 +591,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="deleteSnapshots">Specifies the option include to delete the base share and all of its snapshots.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -599,7 +599,7 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 Azure.Storage.Files.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
@@ -608,8 +608,8 @@ namespace Azure.Storage.Files
                     timeout,
                     deleteSnapshots))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -686,14 +686,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateSnapshotAsync_CreateRequest(
                     pipeline,
@@ -701,8 +701,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateSnapshotAsync_CreateResponse(_response);
                 }
             }
@@ -806,14 +806,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 int? quota = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetQuotaAsync_CreateRequest(
                     pipeline,
@@ -821,8 +821,8 @@ namespace Azure.Storage.Files
                     timeout,
                     quota))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetQuotaAsync_CreateResponse(_response);
                 }
             }
@@ -917,14 +917,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -932,8 +932,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -1032,21 +1032,21 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A collection of signed identifiers.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccessPolicyAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1132,14 +1132,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="permissions">The ACL for the share.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier> permissions = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetAccessPolicyAsync_CreateRequest(
                     pipeline,
@@ -1147,8 +1147,8 @@ namespace Azure.Storage.Files
                     permissions,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1255,21 +1255,21 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Stats for the share.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetStatisticsAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetStatisticsAsync_CreateResponse(_response);
                 }
             }
@@ -1359,14 +1359,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -1374,8 +1374,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -1474,14 +1474,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -1489,8 +1489,8 @@ namespace Azure.Storage.Files
                     sharesnapshot,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -1595,21 +1595,21 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -1680,14 +1680,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -1695,8 +1695,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -1799,7 +1799,7 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of directories and files.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1809,7 +1809,7 @@ namespace Azure.Storage.Files
                 string marker = default,
                 int? maxresults = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListFilesAndDirectoriesSegmentAsync_CreateRequest(
                     pipeline,
@@ -1820,8 +1820,8 @@ namespace Azure.Storage.Files
                     maxresults,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -1918,7 +1918,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1928,7 +1928,7 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string sharesnapshot = default,
                 bool? recursive = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListHandlesAsync_CreateRequest(
                     pipeline,
@@ -1939,8 +1939,8 @@ namespace Azure.Storage.Files
                     sharesnapshot,
                     recursive))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListHandlesAsync_CreateResponse(_response);
                 }
             }
@@ -2040,7 +2040,7 @@ namespace Azure.Storage.Files
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2050,7 +2050,7 @@ namespace Azure.Storage.Files
                 string marker = default,
                 string sharesnapshot = default,
                 bool? recursive = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ForceCloseHandlesAsync_CreateRequest(
                     pipeline,
@@ -2061,8 +2061,8 @@ namespace Azure.Storage.Files
                     sharesnapshot,
                     recursive))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ForceCloseHandlesAsync_CreateResponse(_response);
                 }
             }
@@ -2188,7 +2188,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2202,7 +2202,7 @@ namespace Azure.Storage.Files
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -2217,8 +2217,8 @@ namespace Azure.Storage.Files
                     fileContentDisposition,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -2353,7 +2353,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Return file data only from the specified byte range.</param>
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2361,7 +2361,7 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string range = default,
                 bool? rangeGetContentHash = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DownloadAsync_CreateRequest(
                     pipeline,
@@ -2370,8 +2370,8 @@ namespace Azure.Storage.Files
                     range,
                     rangeGetContentHash))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DownloadAsync_CreateResponse(_response);
                 }
             }
@@ -2673,14 +2673,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string sharesnapshot = default,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -2688,8 +2688,8 @@ namespace Azure.Storage.Files
                     sharesnapshot,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -2855,21 +2855,21 @@ namespace Azure.Storage.Files
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -2945,7 +2945,7 @@ namespace Azure.Storage.Files
             /// <param name="fileCacheControl">Sets the file's cache control. The File service stores this value but does not use or modify it.</param>
             /// <param name="fileContentHash">Sets the file's MD5 hash.</param>
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2958,7 +2958,7 @@ namespace Azure.Storage.Files
                 string fileCacheControl = default,
                 byte[] fileContentHash = default,
                 string fileContentDisposition = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -2972,8 +2972,8 @@ namespace Azure.Storage.Files
                     fileContentHash,
                     fileContentDisposition))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -3099,14 +3099,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -3114,8 +3114,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -3222,7 +3222,7 @@ namespace Azure.Storage.Files
             /// <param name="optionalbody">Initial data.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3233,7 +3233,7 @@ namespace Azure.Storage.Files
                 System.IO.Stream optionalbody = default,
                 int? timeout = default,
                 byte[] contentHash = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadRangeAsync_CreateRequest(
                     pipeline,
@@ -3245,8 +3245,8 @@ namespace Azure.Storage.Files
                     timeout,
                     contentHash))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadRangeAsync_CreateResponse(_response);
                 }
             }
@@ -3367,7 +3367,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3375,7 +3375,7 @@ namespace Azure.Storage.Files
                 string sharesnapshot = default,
                 int? timeout = default,
                 string range = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetRangeListAsync_CreateRequest(
                     pipeline,
@@ -3384,8 +3384,8 @@ namespace Azure.Storage.Files
                     timeout,
                     range))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetRangeListAsync_CreateResponse(_response);
                 }
             }
@@ -3493,7 +3493,7 @@ namespace Azure.Storage.Files
             /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3501,7 +3501,7 @@ namespace Azure.Storage.Files
                 System.Uri copySource,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StartCopyAsync_CreateRequest(
                     pipeline,
@@ -3510,8 +3510,8 @@ namespace Azure.Storage.Files
                     timeout,
                     metadata))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StartCopyAsync_CreateResponse(_response);
                 }
             }
@@ -3624,14 +3624,14 @@ namespace Azure.Storage.Files
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="copyId">The copy identifier provided in the x-ms-copy-id header of the original Copy File operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
                 int? timeout = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AbortCopyAsync_CreateRequest(
                     pipeline,
@@ -3639,8 +3639,8 @@ namespace Azure.Storage.Files
                     copyId,
                     timeout))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AbortCopyAsync_CreateResponse(_response);
                 }
             }
@@ -3721,7 +3721,7 @@ namespace Azure.Storage.Files
             /// <param name="maxresults">Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of handles.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>> ListHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3730,7 +3730,7 @@ namespace Azure.Storage.Files
                 int? maxresults = default,
                 int? timeout = default,
                 string sharesnapshot = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListHandlesAsync_CreateRequest(
                     pipeline,
@@ -3740,8 +3740,8 @@ namespace Azure.Storage.Files
                     timeout,
                     sharesnapshot))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListHandlesAsync_CreateResponse(_response);
                 }
             }
@@ -3833,7 +3833,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="marker">A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client.</param>
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3842,7 +3842,7 @@ namespace Azure.Storage.Files
                 int? timeout = default,
                 string marker = default,
                 string sharesnapshot = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ForceCloseHandlesAsync_CreateRequest(
                     pipeline,
@@ -3852,8 +3852,8 @@ namespace Azure.Storage.Files
                     marker,
                     sharesnapshot))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ForceCloseHandlesAsync_CreateResponse(_response);
                 }
             }

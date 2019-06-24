@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs
     /// <summary>
     /// BlobRestClient response extensions
     /// </summary>
-    public static partial class BlobExtensions
+    static partial class BlobExtensions
     {
         /// <summary>
         /// Convert the internal BrokenLease response into a Lease.  The

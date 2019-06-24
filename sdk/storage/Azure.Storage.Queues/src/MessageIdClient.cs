@@ -123,7 +123,7 @@ namespace Azure.Storage.Queues
         /// <param name="popReceipt">
         /// Required. A valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
@@ -131,7 +131,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response> DeleteAsync(
             string popReceipt,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessageIdClient)))
             {
@@ -146,7 +146,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         popReceipt: popReceipt,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -176,7 +176,7 @@ namespace Azure.Storage.Queues
         /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
         /// expiry time. A message can be updated until it has been deleted or has expired.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
@@ -186,7 +186,7 @@ namespace Azure.Storage.Queues
             string messageText,
             string popReceipt,
             TimeSpan visibilityTimeout = default, 
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessageIdClient)))
             {
@@ -204,7 +204,7 @@ namespace Azure.Storage.Queues
                         message: new QueueMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

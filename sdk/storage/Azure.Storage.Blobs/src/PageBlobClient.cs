@@ -251,7 +251,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the creation of this new page blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -269,7 +269,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobHttpHeaders? httpHeaders = default,
             Metadata metadata = default, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -300,7 +300,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -347,7 +347,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -365,7 +365,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] transactionalContentHash = default, 
             PageBlobAccessConditions? accessConditions = default, 
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -395,7 +395,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
                                     timeout: default,
-                                    range: range.ToRange(),
+                                    range: range.ToString(),
                                     leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                                     ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
                                     ifSequenceNumberLessThan: accessConditions?.IfSequenceNumberLessThan,
@@ -404,7 +404,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                                    cancellation: cancellation)
+                                    cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             },
                         cleanup: () => { })
@@ -441,7 +441,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on clearing pages from this page blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -456,7 +456,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<BlobContentInfo>> ClearPagesAsync(
             HttpRange range, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -471,7 +471,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         contentLength: default,
-                        range: range.ToRange(),
+                        range: range.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
                         ifSequenceNumberLessThan: accessConditions?.IfSequenceNumberLessThan,
@@ -480,7 +480,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -514,7 +514,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on getting page ranges for the this blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange? range = default, 
             string snapshot = default, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -546,13 +546,13 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         snapshot: snapshot,
-                        range: range?.ToRange(),
+                        range: range?.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on getting page ranges for the this blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -612,7 +612,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default, 
             string prevSnapshot = default, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -630,13 +630,13 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Uri,
                         snapshot: snapshot,
                         prevsnapshot: prevSnapshot,
-                        range: range?.ToRange(),
+                        range: range?.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -669,7 +669,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the resize of this page blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -684,7 +684,7 @@ namespace Azure.Storage.Blobs.Specialized
         public async Task<Response<BlobInfo>> ResizeAsync(
             long size, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -705,7 +705,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -751,7 +751,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add conditions
         /// on updating the sequence number of this page blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -767,7 +767,7 @@ namespace Azure.Storage.Blobs.Specialized
             SequenceNumberAction action,
             long? sequenceNumber = default, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -790,7 +790,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -833,7 +833,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobAccessConditions"/> to add
         /// conditions on the incremental copy into this page blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -894,7 +894,7 @@ namespace Azure.Storage.Blobs.Specialized
             Uri sourceUri, 
             string snapshot, 
             PageBlobAccessConditions? accessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -918,7 +918,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -977,7 +977,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="AppendBlobAccessConditions"/> to add
         /// conditions on the copying of data from this source blob.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -996,7 +996,7 @@ namespace Azure.Storage.Blobs.Specialized
             byte[] sourceContentHash = default,
             PageBlobAccessConditions? accessConditions = default,
             PageBlobAccessConditions? sourceAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -1011,11 +1011,11 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         sourceUri: sourceUri,
-                        sourceRange: sourceRange.ToRange(),
+                        sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
                         timeout: default,
-                        range: range.ToRange(),
+                        range: range.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifSequenceNumberLessThanOrEqualTo: accessConditions?.IfSequenceNumberLessThanOrEqual,
                         ifSequenceNumberLessThan: accessConditions?.IfSequenceNumberLessThan,
@@ -1028,7 +1028,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfUnmodifiedSince: sourceAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceAccessConditions?.HttpAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

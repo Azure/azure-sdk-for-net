@@ -62,16 +62,16 @@ namespace Azure.Storage.Samples
                 MessagesClient messagesClient = queueClient.GetMessagesClient();
 
                 // Enqueue a message to the queue
-                Response<IEnumerable<EnqueuedMessage>> enqueueResponse = await messagesClient.EnqueueAsync("my message");
+                Response<EnqueuedMessage> enqueueResponse = await messagesClient.EnqueueAsync("my message");
 
                 // Peek message
                 Response<IEnumerable<PeekedMessage>> peekResponse = await messagesClient.PeekAsync();
 
                 // Instantiate a new MessageIdClient
-                MessageIdClient messageIdClient = messagesClient.GetMessageIdClient(enqueueResponse.Value.First().MessageId);
+                MessageIdClient messageIdClient = messagesClient.GetMessageIdClient(enqueueResponse.Value.MessageId);
 
                 // Update message
-                await messageIdClient.UpdateAsync("new message", enqueueResponse.Value.First().PopReceipt);
+                await messageIdClient.UpdateAsync("new message", enqueueResponse.Value.PopReceipt);
 
                 // Dequeue message
                 Response<IEnumerable<DequeuedMessage>> dequeueResponse = await messagesClient.DequeueAsync();

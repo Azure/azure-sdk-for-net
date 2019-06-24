@@ -34,7 +34,7 @@ namespace Azure.Storage.Queues.Test
                     timeToLive: new TimeSpan(1, 0, 0));
 
                 // Assert
-                Assert.AreEqual(1, response.Value.Count());
+                Assert.NotNull(response.Value);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Storage.Queues.Test
                 var response = await messages.EnqueueAsync(String.Empty);
 
                 // Assert
-                Assert.AreEqual(1, response.Value.Count());
+                Assert.NotNull(response.Value);
             }
         }
 

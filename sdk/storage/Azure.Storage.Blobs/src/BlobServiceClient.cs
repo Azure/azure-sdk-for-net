@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs
         /// Specifies options for listing, filtering, and shaping the
         /// containers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs
         public async Task<Response<ContainersSegment>> ListContainersSegmentAsync(
             string marker = default,
             ContainersSegmentOptions? options = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs
                         prefix: options?.Prefix,
                         maxresults: options?.MaxResults,
                         include: options?.Details?.AsIncludeType(),
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -278,7 +278,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<AccountInfo>> GetAccountInfoAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs
                     return await BlobRestClient.Service.GetAccountInfoAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation)
+                        cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-properties" />.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -323,7 +323,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -333,7 +333,7 @@ namespace Azure.Storage.Blobs
                     return await BlobRestClient.Service.GetPropertiesAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-blob-service-properties"/>.
         /// </summary>
         /// <param name="properties">The blob service properties.</param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public async Task<Response> SetPropertiesAsync(
             BlobServiceProperties properties,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -388,7 +388,7 @@ namespace Azure.Storage.Blobs
                         this._pipeline,
                         this.Uri,
                         properties,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -412,7 +412,7 @@ namespace Azure.Storage.Blobs
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -425,7 +425,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -435,7 +435,7 @@ namespace Azure.Storage.Blobs
                     return await BlobRestClient.Service.GetStatisticsAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -463,7 +463,7 @@ namespace Azure.Storage.Blobs
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -478,7 +478,7 @@ namespace Azure.Storage.Blobs
         public async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? start,
             DateTimeOffset expiry,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
@@ -505,7 +505,7 @@ namespace Azure.Storage.Blobs
                         this._pipeline,
                         this.Uri,
                         keyInfo: keyInfo,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

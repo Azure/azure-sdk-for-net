@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations" />
 /// </summary>
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies standard HTTP access conditions.

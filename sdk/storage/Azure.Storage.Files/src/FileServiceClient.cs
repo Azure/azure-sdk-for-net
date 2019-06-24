@@ -190,7 +190,7 @@ namespace Azure.Storage.Files
         /// Specifies options for listing, filtering, and shaping the
         /// shares.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -203,9 +203,9 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<SharesSegment>> ListSharesSegmentAsync(
-            string marker = default, 
+            string marker = default,
             SharesSegmentOptions? options = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files
                         prefix: options?.Prefix,
                         maxresults: options?.MaxResults,
                         include: options?.Details?.ToArray(),
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -246,7 +246,7 @@ namespace Azure.Storage.Files
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-file-service-properties" />.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -259,7 +259,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<FileServiceProperties>> GetPropertiesAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
@@ -271,7 +271,7 @@ namespace Azure.Storage.Files
                     return await FileRestClient.Service.GetPropertiesAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -297,7 +297,7 @@ namespace Azure.Storage.Files
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-file-service-properties"/>.
         /// </summary>
         /// <param name="properties">The file service properties.</param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -310,7 +310,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response> SetPropertiesAsync(
             FileServiceProperties properties,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileServiceClient)))
             {
@@ -323,7 +323,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         properties: properties,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -338,7 +338,10 @@ namespace Azure.Storage.Files
             }
         }
     }
+}
 
+namespace Azure.Storage.Files.Models
+{
     /// <summary>
     /// Specifies options for listing shares with the 
     /// <see cref="FileServiceClient.ListSharesSegmentAsync"/> operation.

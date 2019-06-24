@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Act
                     var response = await blob.StageBlockAsync(
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         content: stream);
 
                     // Assert
@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Act
                     var response = await blob.StageBlockAsync(
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         content: stream,
                         leaseAccessConditions: new LeaseAccessConditions
                         {
@@ -167,7 +167,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.StageBlockAsync(
-                            base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                            base64BlockId: this.ToBase64(this.GetNewBlockName()),
                             content: stream,
                             leaseAccessConditions: new LeaseAccessConditions
                             {
@@ -316,7 +316,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
-                    base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                    base64BlockId: this.ToBase64(this.GetNewBlockName()),
                     sourceContentHash: MD5.Create().ComputeHash(data));
             }
         }
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
                     actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
                 );
@@ -377,7 +377,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
-                    base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                    base64BlockId: this.ToBase64(this.GetNewBlockName()),
                     leaseAccessConditions: leaseAccessConditions);
             }
         }
@@ -411,7 +411,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         leaseAccessConditions: leaseAccessConditions),
                     actualException => Assert.AreEqual("LeaseNotPresentWithBlobOperation", actualException.ErrorCode)
                 );
@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         sourceAccessConditions: sourceAccessConditions);
                 }
             }
@@ -475,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
-                            base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                            base64BlockId: this.ToBase64(this.GetNewBlockName()),
                             sourceAccessConditions: sourceAccessConditions),
                         e => { });
                 }
@@ -548,7 +548,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     blobHttpHeaders: new BlobHttpHeaders
                     {
                         CacheControl = constants.CacheControl,
@@ -590,7 +590,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     metadata: metadata);
 
                 // Assert
@@ -620,7 +620,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     blobAccessConditions: new BlobAccessConditions
                     {
                         LeaseAccessConditions = new LeaseAccessConditions
@@ -654,7 +654,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.CommitBlockListAsync(
-                        base64BlockIDs: new string[] { this.ToBase64(this.GetNewBlockName()) },
+                        base64BlockIds: new string[] { this.ToBase64(this.GetNewBlockName()) },
                         blobAccessConditions: new BlobAccessConditions
                         {
                             LeaseAccessConditions = new LeaseAccessConditions
@@ -699,7 +699,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     var response = await blob.CommitBlockListAsync(
-                        base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                        base64BlockIds: new string[] { this.ToBase64(blockName) },
                         blobAccessConditions: new BlobAccessConditions
                         {
                             HttpAccessConditions = accessConditions
@@ -747,7 +747,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.CommitBlockListAsync(
-                            base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                            base64BlockIds: new string[] { this.ToBase64(blockName) },
                             blobAccessConditions: new BlobAccessConditions
                             {
                                 HttpAccessConditions = accessConditions

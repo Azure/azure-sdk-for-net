@@ -219,7 +219,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -235,7 +235,7 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -284,7 +284,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
             Uri sourceUri,
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         copySource: sourceUri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -340,7 +340,7 @@ namespace Azure.Storage.Files
         /// <param name="copyId">
         /// String identifier for the copy operation.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -353,7 +353,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response> AbortCopyAsync(
             string copyId,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -368,7 +368,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         copyId: copyId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -400,7 +400,7 @@ namespace Azure.Storage.Files
         /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
         /// is thrown.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -416,7 +416,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -431,7 +431,7 @@ namespace Azure.Storage.Files
                     var response = await this.StartDownloadAsync(
                         range,
                         rangeGetContentHash,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     // Wrap the response Content in a RetriableStream so we
@@ -444,7 +444,7 @@ namespace Azure.Storage.Files
                                     range,
                                     rangeGetContentHash,
                                     startOffset,
-                                    cancellation)
+                                    cancellationToken)
                                 .ConfigureAwait(false).GetAwaiter().GetResult())
                             .GetRawResponse(),
                         async startOffset =>
@@ -452,7 +452,7 @@ namespace Azure.Storage.Files
                                     range,
                                     rangeGetContentHash,
                                     startOffset,
-                                    cancellation)
+                                    cancellationToken)
                                 .ConfigureAwait(false)).GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
@@ -495,7 +495,7 @@ namespace Azure.Storage.Files
         /// <param name="startOffset">
         /// Optional. Starting offset to request - in the event of a retry.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -508,7 +508,7 @@ namespace Azure.Storage.Files
         HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
@@ -520,9 +520,9 @@ namespace Azure.Storage.Files
                 await FileRestClient.File.DownloadAsync(
                     this._pipeline,
                     this.Uri,
-                    range: pageRange.ToRange(),
+                    range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    cancellation: cancellation)
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this._pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return response;
@@ -533,7 +533,7 @@ namespace Azure.Storage.Files
         ///
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -545,7 +545,7 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public async Task<Response> DeleteAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -557,7 +557,7 @@ namespace Azure.Storage.Files
                     return await FileRestClient.File.DeleteAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -583,7 +583,7 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. The snapshot identifier.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -597,7 +597,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<StorageFileProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -612,7 +612,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -642,7 +642,7 @@ namespace Azure.Storage.Files
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -657,7 +657,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -679,7 +679,7 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -703,7 +703,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Custom metadata to set for this file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -717,7 +717,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<StorageFileInfo>> SetMetadataAsync(
             Metadata metadata,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -730,7 +730,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                          metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -772,7 +772,7 @@ namespace Azure.Storage.Files
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -790,7 +790,7 @@ namespace Azure.Storage.Files
             Stream content,
             byte[] transactionalContentHash = null,
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
 
@@ -818,10 +818,10 @@ namespace Azure.Storage.Files
                                     this.Uri,
                                     optionalbody: content,
                                     contentLength: content.Length,
-                                    range: range.ToRange(),
+                                    range: range.ToString(),
                                     fileRangeWrite: writeType,
                                     contentHash: transactionalContentHash,
-                                    cancellation: cancellation)
+                                    cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             },
                         cleanup: () => { })
@@ -868,7 +868,7 @@ namespace Azure.Storage.Files
                                 pipeline: this.Pipeline,
                                 context: cancelContext,
                                 timeout: default,
-                                range: range.ToRange(),
+                                range: range.ToString(),
                                 fileRangeWrite: writeType,
                                 contentLength: default,
                                 contentMD5: contentHash,
@@ -914,7 +914,7 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. Specifies the share snapshot to query.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -929,7 +929,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -944,8 +944,8 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        range: range.ToRange(),
-                        cancellation: cancellation)
+                        range: range.ToString(),
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -979,7 +979,7 @@ namespace Azure.Storage.Files
         /// <param name="maxResults">
         /// Optional. Specifies the maximum number of handles to return.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -994,7 +994,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
             string marker = default,
             int? maxResults = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -1011,7 +1011,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         marker: marker,
                         maxresults: maxResults,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1051,7 +1051,7 @@ namespace Azure.Storage.Files
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the closure of the next segment of handles.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -1066,7 +1066,7 @@ namespace Azure.Storage.Files
         public async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         marker: marker,
                         handleId: handleId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

@@ -201,7 +201,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -215,7 +215,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<StorageDirectoryInfo>> CreateAsync(
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -248,7 +248,7 @@ namespace Azure.Storage.Files
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -259,7 +259,7 @@ namespace Azure.Storage.Files
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
         public async Task<Response> DeleteAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
@@ -271,7 +271,7 @@ namespace Azure.Storage.Files
                     return await FileRestClient.Directory.DeleteAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files
         /// from. For more information on working with share snapshots, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/snapshot-share"/>.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -313,7 +313,7 @@ namespace Azure.Storage.Files
         /// </remarks>       
         public async Task<Response<StorageDirectoryProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
@@ -328,7 +328,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -352,7 +352,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Custom metadata to set for this directory.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -365,7 +365,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<StorageDirectoryInfo>> SetMetadataAsync(
             Metadata metadata,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
@@ -378,7 +378,7 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -415,7 +415,7 @@ namespace Azure.Storage.Files
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the items.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -429,9 +429,9 @@ namespace Azure.Storage.Files
         /// </remarks>
         public async Task<Response<FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
             string marker = default,
-            string shareSnapshot = default, 
+            string shareSnapshot = default,
             FilesAndDirectoriesSegmentOptions? options = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
@@ -450,7 +450,7 @@ namespace Azure.Storage.Files
                         prefix: options?.Prefix,
                         maxresults: options?.MaxResults,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -485,7 +485,7 @@ namespace Azure.Storage.Files
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -501,8 +501,8 @@ namespace Azure.Storage.Files
             string marker = default,
             int? maxResults = default,
             bool? recursive = default,
-            CancellationToken cancellation = default)
-        {   
+            CancellationToken cancellationToken = default)
+        {
             // TODO Support share snapshot
 
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
@@ -522,7 +522,7 @@ namespace Azure.Storage.Files
                         marker: marker,
                         maxresults: maxResults,
                         recursive: recursive,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -566,7 +566,7 @@ namespace Azure.Storage.Files
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -582,7 +582,7 @@ namespace Azure.Storage.Files
             string handleId = Constants.CloseAllHandles,
             string marker = default,
             bool? recursive = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             // TODO Support share snapshot
 
@@ -603,7 +603,7 @@ namespace Azure.Storage.Files
                         marker: marker,
                         handleId: handleId,
                         recursive: recursive,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -618,7 +618,10 @@ namespace Azure.Storage.Files
             }
         }
     }
+}
 
+namespace Azure.Storage.Files.Models
+{
     /// <summary>
     /// Specifies options for listing files and directories with the 
     /// <see cref="DirectoryClient.ListFilesAndDirectoriesSegmentAsync"/>

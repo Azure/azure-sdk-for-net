@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -137,14 +138,14 @@ namespace Azure.Storage.Queues
         /// Clear deletes all messages from a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/clear-messages"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
         public async Task<Response> ClearAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessagesClient)))
             {
@@ -156,7 +157,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Messages.ClearAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -185,17 +186,17 @@ namespace Azure.Storage.Queues
         /// <param name="timeToLive">
         /// Optional. Specifies the time-to-live interval for the message
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{IEnumerable{EnqueuedMessage}}}"/>
+        /// <see cref="Task{Response{EnqueuedMessage}}"/>
         /// </returns>
-        public async Task<Response<IEnumerable<EnqueuedMessage>>> EnqueueAsync(
+        public async Task<Response<EnqueuedMessage>> EnqueueAsync(
             string messageText, 
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessagesClient)))
             {
@@ -207,14 +208,20 @@ namespace Azure.Storage.Queues
                     $"{nameof(timeToLive)}: {timeToLive}");
                 try
                 {
-                    return await QueueRestClient.Messages.EnqueueAsync(
-                        this._pipeline,
-                        this.Uri,
-                        message: new QueueMessage { MessageText = messageText },
-                        visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        messageTimeToLive: (int?)timeToLive?.TotalSeconds,
-                        cancellation: cancellation)
-                        .ConfigureAwait(false);
+                    // The service returns a sequence of messages, but the
+                    // sequence only ever has one value so we'll unwrap it
+                    var messages =
+                        await QueueRestClient.Messages.EnqueueAsync(
+                            this._pipeline,
+                            this.Uri,
+                            message: new QueueMessage { MessageText = messageText },
+                            visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                            messageTimeToLive: (int?)timeToLive?.TotalSeconds,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    return new Response<EnqueuedMessage>(
+                        messages.GetRawResponse(),
+                        messages.Value.FirstOrDefault());
                 }
                 catch (Exception ex)
                 {
@@ -239,7 +246,7 @@ namespace Azure.Storage.Queues
         /// <param name="visibilityTimeout">
         /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -248,7 +255,7 @@ namespace Azure.Storage.Queues
         public async Task<Response<IEnumerable<DequeuedMessage>>> DequeueAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessagesClient)))
             {
@@ -265,7 +272,7 @@ namespace Azure.Storage.Queues
                         this.Uri,
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -288,7 +295,7 @@ namespace Azure.Storage.Queues
         /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
         /// By default, a single message is peeked from the queue with this operation.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -296,7 +303,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response<IEnumerable<PeekedMessage>>> PeekAsync(
             int? maxMessages = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessagesClient)))
             {
@@ -311,7 +318,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         numberOfMessages: maxMessages,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

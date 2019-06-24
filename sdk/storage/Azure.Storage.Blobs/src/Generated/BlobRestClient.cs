@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobServiceProperties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -43,8 +43,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -132,14 +132,14 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -147,8 +147,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -233,14 +233,14 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetStatisticsAsync_CreateRequest(
                     pipeline,
@@ -248,8 +248,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetStatisticsAsync_CreateResponse(_response);
                 }
             }
@@ -338,7 +338,7 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify that the container's metadata be returned as part of the response body.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.ListContainersIncludeType? include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListContainersSegmentAsync_CreateRequest(
                     pipeline,
@@ -361,8 +361,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListContainersSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs
             /// <param name="keyInfo">Key information</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetUserDelegationKeyAsync_CreateRequest(
                     pipeline,
@@ -476,8 +476,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetUserDelegationKeyAsync_CreateResponse(_response);
                 }
             }
@@ -573,19 +573,19 @@ namespace Azure.Storage.Blobs
             /// Returns the sku name and account kind 
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
                     pipeline,
                     resourceUri))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccountInfoAsync_CreateResponse(_response);
                 }
             }
@@ -684,7 +684,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -693,7 +693,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -703,8 +703,8 @@ namespace Azure.Storage.Blobs
                     access,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -810,7 +810,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -818,7 +818,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -827,8 +827,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -972,7 +972,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -982,7 +982,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
@@ -993,8 +993,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -1080,7 +1080,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1090,7 +1090,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -1101,8 +1101,8 @@ namespace Azure.Storage.Blobs
                     ifModifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -1212,7 +1212,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1220,7 +1220,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccessPolicyAsync_CreateRequest(
                     pipeline,
@@ -1229,8 +1229,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1343,7 +1343,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetAccessPolicyAsync_CreateRequest(
                     pipeline,
@@ -1368,8 +1368,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1496,7 +1496,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1507,7 +1507,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
@@ -1519,8 +1519,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AcquireLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1635,7 +1635,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1645,7 +1645,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
@@ -1656,8 +1656,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ReleaseLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1769,7 +1769,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1779,7 +1779,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
@@ -1790,8 +1790,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return RenewLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1907,7 +1907,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1917,7 +1917,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
@@ -1928,8 +1928,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return BreakLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -2054,7 +2054,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2065,7 +2065,7 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
@@ -2077,8 +2077,8 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ChangeLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -2202,7 +2202,7 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2213,7 +2213,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListBlobsIncludeItem> include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListBlobsFlatSegmentAsync_CreateRequest(
                     pipeline,
@@ -2225,8 +2225,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListBlobsFlatSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -2328,7 +2328,7 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2340,7 +2340,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListBlobsIncludeItem> include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListBlobsHierarchySegmentAsync_CreateRequest(
                     pipeline,
@@ -2353,8 +2353,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListBlobsHierarchySegmentAsync_CreateResponse(_response);
                 }
             }
@@ -2452,19 +2452,19 @@ namespace Azure.Storage.Blobs
             /// Returns the sku name and account kind
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
                     pipeline,
                     resourceUri))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccountInfoAsync_CreateResponse(_response);
                 }
             }
@@ -2569,7 +2569,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2584,7 +2584,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DownloadAsync_CreateRequest(
                     pipeline,
@@ -2600,8 +2600,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DownloadAsync_CreateResponse(_response);
                 }
             }
@@ -2992,7 +2992,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3005,7 +3005,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -3019,8 +3019,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -3278,7 +3278,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3292,7 +3292,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
@@ -3307,8 +3307,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -3402,14 +3402,14 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> UndeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UndeleteAsync_CreateRequest(
                     pipeline,
@@ -3417,8 +3417,8 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UndeleteAsync_CreateResponse(_response);
                 }
             }
@@ -3503,7 +3503,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3521,7 +3521,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetHttpHeadersAsync_CreateRequest(
                     pipeline,
@@ -3540,8 +3540,8 @@ namespace Azure.Storage.Blobs
                     blobContentDisposition,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetHttpHeadersAsync_CreateResponse(_response);
                 }
             }
@@ -3700,7 +3700,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3713,7 +3713,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -3727,8 +3727,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -3867,7 +3867,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3880,7 +3880,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
@@ -3894,8 +3894,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AcquireLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4017,7 +4017,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4029,7 +4029,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
@@ -4042,8 +4042,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ReleaseLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4162,7 +4162,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4174,7 +4174,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
@@ -4187,8 +4187,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return RenewLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4312,7 +4312,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4325,7 +4325,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
@@ -4339,8 +4339,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ChangeLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4470,7 +4470,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4482,7 +4482,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
@@ -4495,8 +4495,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return BreakLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4628,7 +4628,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4641,7 +4641,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateSnapshotAsync_CreateRequest(
                     pipeline,
@@ -4655,8 +4655,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateSnapshotAsync_CreateResponse(_response);
                 }
             }
@@ -4788,7 +4788,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4806,7 +4806,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StartCopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -4825,8 +4825,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StartCopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -4980,7 +4980,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4998,7 +4998,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -5017,8 +5017,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -5164,7 +5164,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5173,7 +5173,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AbortCopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -5183,8 +5183,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AbortCopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -5271,7 +5271,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5280,7 +5280,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 string leaseId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetTierAsync_CreateRequest(
                     pipeline,
@@ -5290,8 +5290,8 @@ namespace Azure.Storage.Blobs
                     requestId,
                     leaseId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetTierAsync_CreateResponse(_response);
                 }
             }
@@ -5377,19 +5377,19 @@ namespace Azure.Storage.Blobs
             /// Returns the sku name and account kind 
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
                     pipeline,
                     resourceUri))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccountInfoAsync_CreateResponse(_response);
                 }
             }
@@ -5501,7 +5501,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5523,7 +5523,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -5546,8 +5546,8 @@ namespace Azure.Storage.Blobs
                     blobSequenceNumber,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -5721,7 +5721,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5740,7 +5740,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadPagesAsync_CreateRequest(
                     pipeline,
@@ -5760,8 +5760,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadPagesAsync_CreateResponse(_response);
                 }
             }
@@ -5916,7 +5916,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5933,7 +5933,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ClearPagesAsync_CreateRequest(
                     pipeline,
@@ -5951,8 +5951,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ClearPagesAsync_CreateResponse(_response);
                 }
             }
@@ -6102,7 +6102,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6126,7 +6126,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadPagesFromUriAsync_CreateRequest(
                     pipeline,
@@ -6151,8 +6151,8 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadPagesFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -6339,7 +6339,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6353,7 +6353,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPageRangesAsync_CreateRequest(
                     pipeline,
@@ -6368,8 +6368,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPageRangesAsync_CreateResponse(_response);
                 }
             }
@@ -6512,7 +6512,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6527,7 +6527,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPageRangesDiffAsync_CreateRequest(
                     pipeline,
@@ -6543,8 +6543,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPageRangesDiffAsync_CreateResponse(_response);
                 }
             }
@@ -6688,7 +6688,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6701,7 +6701,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ResizeAsync_CreateRequest(
                     pipeline,
@@ -6715,8 +6715,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ResizeAsync_CreateResponse(_response);
                 }
             }
@@ -6835,7 +6835,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6849,7 +6849,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UpdateSequenceNumberAsync_CreateRequest(
                     pipeline,
@@ -6864,8 +6864,8 @@ namespace Azure.Storage.Blobs
                     blobSequenceNumber,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UpdateSequenceNumberAsync_CreateResponse(_response);
                 }
             }
@@ -6985,7 +6985,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6997,7 +6997,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CopyIncrementalAsync_CreateRequest(
                     pipeline,
@@ -7010,8 +7010,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CopyIncrementalAsync_CreateResponse(_response);
                 }
             }
@@ -7153,7 +7153,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7173,7 +7173,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -7194,8 +7194,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -7361,7 +7361,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7378,7 +7378,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AppendBlockAsync_CreateRequest(
                     pipeline,
@@ -7396,8 +7396,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AppendBlockAsync_CreateResponse(_response);
                 }
             }
@@ -7558,7 +7558,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7580,7 +7580,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AppendBlockFromUriAsync_CreateRequest(
                     pipeline,
@@ -7603,8 +7603,8 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AppendBlockFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -7799,7 +7799,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7820,7 +7820,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadAsync_CreateRequest(
                     pipeline,
@@ -7842,8 +7842,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadAsync_CreateResponse(_response);
                 }
             }
@@ -8013,7 +8013,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8025,7 +8025,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StageBlockAsync_CreateRequest(
                     pipeline,
@@ -8038,8 +8038,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StageBlockAsync_CreateResponse(_response);
                 }
             }
@@ -8176,7 +8176,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8193,7 +8193,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StageBlockFromUriAsync_CreateRequest(
                     pipeline,
@@ -8211,8 +8211,8 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StageBlockFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -8378,7 +8378,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8398,7 +8398,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CommitBlockListAsync_CreateRequest(
                     pipeline,
@@ -8419,8 +8419,8 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CommitBlockListAsync_CreateResponse(_response);
                 }
             }
@@ -8588,7 +8588,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8598,7 +8598,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetBlockListAsync_CreateRequest(
                     pipeline,
@@ -8609,8 +8609,8 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetBlockListAsync_CreateResponse(_response);
                 }
             }

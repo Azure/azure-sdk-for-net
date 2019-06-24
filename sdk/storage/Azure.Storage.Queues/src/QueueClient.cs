@@ -221,7 +221,7 @@ namespace Azure.Storage.Queues
         /// <param name="metadata">
         /// Optional <see cref="Metadata"/>.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -229,7 +229,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response> CreateAsync(
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -242,7 +242,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -261,14 +261,14 @@ namespace Azure.Storage.Queues
         /// Deletes a queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
         public async Task<Response> DeleteAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -280,7 +280,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Queue.DeleteAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -300,14 +300,14 @@ namespace Azure.Storage.Queues
         /// Metadata is associated with the queue as name-values pairs.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-metadata"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
         /// <see cref="Task{Response{QueueProperties}}"/>
         /// </returns>
         public async Task<Response<QueueProperties>> GetPropertiesAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -319,7 +319,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Queue.GetPropertiesAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues
         /// <param name="metadata">
         /// <see cref="Metadata"/>
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -349,7 +349,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response> SetMetadataAsync(
             Metadata metadata,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -362,7 +362,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -382,14 +382,14 @@ namespace Azure.Storage.Queues
         /// Shared Access Signatures.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-acl"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{SignedIdentifier}}}"/>
         /// </returns>
         public async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -401,7 +401,7 @@ namespace Azure.Storage.Queues
                     return await QueueRestClient.Queue.GetAccessPolicyAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -423,7 +423,7 @@ namespace Azure.Storage.Queues
         /// <param name="permissions">
         /// IEnumerable of <see cref="SignedIdentifier"/>
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
@@ -431,7 +431,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public async Task<Response> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -444,7 +444,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this.Uri,
                         permissions: permissions,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

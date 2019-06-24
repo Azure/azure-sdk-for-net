@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -328,7 +328,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             content = content.WithNoDispose().WithProgress(progressHandler);
             var uploadAttempt = 0;
@@ -363,7 +363,7 @@ namespace Azure.Storage.Blobs
                                 ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                                 ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                                 ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                                cancellation: cancellation)
+                                cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         },
                         new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)))
@@ -427,12 +427,12 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobContentInfo>> StageBlockAsync(
-            string base64BlockID, 
+            string base64BlockId, 
             Stream content, 
             byte[] transactionalContentHash = default, 
             LeaseAccessConditions? leaseAccessConditions = default, 
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -440,7 +440,7 @@ namespace Azure.Storage.Blobs
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(base64BlockID)}: {base64BlockID}\n" +
+                    $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
                 {
@@ -457,12 +457,12 @@ namespace Azure.Storage.Blobs
                                 return await BlobRestClient.BlockBlob.StageBlockAsync(
                                     this.Pipeline,
                                     this.Uri,
-                                    blockId: base64BlockID,
+                                    blockId: base64BlockId,
                                     body: content,
                                     contentLength: content.Length,
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: leaseAccessConditions?.LeaseId,
-                                    cancellation: cancellation)
+                                    cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             },
                         cleanup: () => { })
@@ -526,7 +526,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on the staging of this block.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -540,12 +540,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public async Task<Response<BlobContentInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
-            string base64BlockID, 
+            string base64BlockId, 
             HttpRange sourceRange = default, 
             byte[] sourceContentHash = default,
             HttpAccessConditions? sourceAccessConditions = default,
             LeaseAccessConditions? leaseAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(base64BlockID)}: {base64BlockID}\n" +
+                    $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
                 try
@@ -562,16 +562,16 @@ namespace Azure.Storage.Blobs
                         this.Pipeline,
                         this.Uri,
                         contentLength: default,
-                        blockId: base64BlockID,
+                        blockId: base64BlockId,
                         sourceUri: sourceUri,
-                        sourceRange: sourceRange.ToRange(),
+                        sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         leaseId: leaseAccessConditions?.LeaseId,
                         sourceIfModifiedSince: sourceAccessConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceAccessConditions?.IfUnmodifiedSince,
                         sourceIfMatch: sourceAccessConditions?.IfMatch,
                         sourceIfNoneMatch: sourceAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -620,7 +620,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -633,11 +633,11 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public async Task<Response<BlobContentInfo>> CommitBlockListAsync(
-            IEnumerable<string> base64BlockIDs,
+            IEnumerable<string> base64BlockIds,
             BlobHttpHeaders? blobHttpHeaders = default, 
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -645,12 +645,12 @@ namespace Azure.Storage.Blobs
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(base64BlockIDs)}: {base64BlockIDs}\n" +
+                    $"{nameof(base64BlockIds)}: {base64BlockIds}\n" +
                     $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
                     $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
                 try
                 {
-                    var blocks = new BlockLookupList() { Uncommitted = base64BlockIDs.ToList() };
+                    var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
                         this.Pipeline,
                         this.Uri,
@@ -667,7 +667,7 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
                         ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -707,7 +707,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="LeaseAccessConditions"/> to add
         /// conditions on retrieving the block list.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs
             BlockListType? listType = default, 
             string snapshot = default, 
             LeaseAccessConditions? leaseAccessConditions = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -742,7 +742,7 @@ namespace Azure.Storage.Blobs
                         listType: listType ?? BlockListType.All,
                         snapshot: snapshot,
                         leaseId: leaseAccessConditions?.LeaseId,
-                        cancellation: cancellation)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToBlockList();
                 }
