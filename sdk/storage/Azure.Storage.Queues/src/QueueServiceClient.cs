@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
@@ -106,7 +107,7 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public QueueServiceClient(Uri serviceUri, SharedKeyCredentials credential, QueueClientOptions options = default)
+        public QueueServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(), options)
         {
         }
@@ -126,7 +127,7 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public QueueServiceClient(Uri serviceUri, TokenCredentials credential, QueueClientOptions options = default)
+        public QueueServiceClient(Uri serviceUri, TokenCredential credential, QueueClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(), options)
         {
         }

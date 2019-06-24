@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(Uri blobUri, SharedKeyCredentials credential, BlobClientOptions options = default)
+        public BlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(), options)
         {
         }
@@ -155,7 +155,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(Uri blobUri, TokenCredentials credential, BlobClientOptions options = default)
+        public BlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobUri, credential.AsPolicy(), options)
         {
         }

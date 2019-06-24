@@ -118,7 +118,7 @@ namespace Azure.Storage.Files
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(Uri shareUri, SharedKeyCredentials credential, FileClientOptions options = default)
+        public ShareClient(Uri shareUri, StorageSharedKeyCredential credential, FileClientOptions options = default)
             : this(shareUri, credential.AsPolicy(), options)
         {
         }

@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -68,22 +70,15 @@ namespace Azure.Storage.Test.Shared
             => this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    new SharedKeyCredentials(config.AccountName, config.AccountKey),
+                    new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     this.GetOptions()));
 
-        private async Task<BlobServiceClient> GetServiceClientFromOauthConfig(TenantConfiguration config)
-        {
-            var initalToken = await this.GenerateOAuthToken(
-                config.ActiveDirectoryAuthEndpoint,
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
-            return this.InstrumentClient(
+        private BlobServiceClient GetServiceClientFromOauthConfig(TenantConfiguration config) =>
+            this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    new TokenCredentials(initalToken),
+                    this.GetOAuthCredential(config),
                     this.GetOptions()));
-        }
 
         public BlobServiceClient GetServiceClient_SharedKey()
             => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetTenant);
@@ -94,11 +89,11 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_PreviewAccount_SharedKey()
             => this.GetServiceClientFromSharedKeyConfig(TestConfigurations.DefaultTargetPreviewBlobTenant);
 
-        public async Task<BlobServiceClient> GetServiceClient_OauthAccount()
-            => await this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
+        public BlobServiceClient GetServiceClient_OauthAccount() =>
+            this.GetServiceClientFromOauthConfig(TestConfigurations.DefaultTargetOAuthTenant);
 
         public BlobServiceClient GetServiceClient_AccountSas(
-            SharedKeyCredentials sharedKeyCredentials = default,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
@@ -107,7 +102,7 @@ namespace Azure.Storage.Test.Shared
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
             string containerName,
-            SharedKeyCredentials sharedKeyCredentials = default,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
@@ -126,7 +121,7 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_BlobServiceSas_Blob(
             string containerName,
             string blobName,
-            SharedKeyCredentials sharedKeyCredentials = default,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
@@ -147,7 +142,7 @@ namespace Azure.Storage.Test.Shared
             string containerName,
             string blobName,
             string snapshot,
-            SharedKeyCredentials sharedKeyCredentials = default,
+            StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new BlobServiceClient(
@@ -171,12 +166,12 @@ namespace Azure.Storage.Test.Shared
             return result;
         }
 
-        public SharedKeyCredentials GetNewSharedKeyCredentials()
-            => new SharedKeyCredentials(
+        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
                     TestConfigurations.DefaultTargetTenant.AccountName,
                     TestConfigurations.DefaultTargetTenant.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
@@ -188,7 +183,7 @@ namespace Azure.Storage.Test.Shared
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
-        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, SharedKeyCredentials sharedKeyCredentials = default)
+        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new BlobSasBuilder
             {
                 ContainerName = containerName,
@@ -210,7 +205,7 @@ namespace Azure.Storage.Test.Shared
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
-        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, SharedKeyCredentials sharedKeyCredentials = default)
+        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsBlob(string containerName, string blobName, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new BlobSasBuilder
             {
                 ContainerName = containerName,
@@ -234,7 +229,7 @@ namespace Azure.Storage.Test.Shared
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(userDelegationKey, accountName);
 
-        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, SharedKeyCredentials sharedKeyCredentials = default)
+        public BlobSasQueryParameters GetNewBlobServiceSasCredentialsSnapshot(string containerName, string blobName, string snapshot, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new BlobSasBuilder
             {
                 ContainerName = containerName,

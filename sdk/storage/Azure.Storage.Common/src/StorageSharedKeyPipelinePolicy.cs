@@ -7,57 +7,42 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage
+namespace Azure.Storage.Common
 {
-    // TODO: This has been translated from the policy inside SharedKeyCredentials
-    // and still has some dependencies to remove
-
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    public sealed class SharedKeyPipelinePolicy : HttpPipelinePolicy
+    public sealed class StorageSharedKeyPipelinePolicy : SynchronousHttpPipelinePolicy
     {
+        /// <summary>
+        /// Whether to always add the x-ms-date header.
+        /// </summary>
+        const bool IncludeXMsDate = true;
+
         /// <summary>
         /// Shared key credentials used to sign requests
         /// </summary>
-        private readonly SharedKeyCredentials _credentials;
+        private readonly StorageSharedKeyCredential _credentials;
 
         /// <summary>
         /// Create a new SharedKeyPipelinePolicy
         /// </summary>
         /// <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
-        public SharedKeyPipelinePolicy(SharedKeyCredentials credentials)
+        public StorageSharedKeyPipelinePolicy(StorageSharedKeyCredential credentials)
             => this._credentials = credentials;
 
         /// <summary>
         /// Sign the request using the shared key credentials.
         /// </summary>
         /// <param name="message">The message with the request to sign.</param>
-        /// <param name="pipeline">The next step in the pipeline.</param>
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
-            this.AddAuthorizationHeader(message);
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-        }
+            base.OnSendingRequest(message);
 
-        /// <summary>
-        /// Sign the request using the shared key credentials.
-        /// </summary>
-        /// <param name="message">The message with the request to sign.</param>
-        /// <param name="pipeline">The next step in the pipeline.</param>
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            this.AddAuthorizationHeader(message);
-            ProcessNext(message, pipeline);
-        }
-
-        private void AddAuthorizationHeader(HttpPipelineMessage message, bool includeXmsDate = true)
-        {
             // Add a x-ms-date header if it doesn't already exist
-            if (includeXmsDate && !message.Request.Headers.Contains("x-ms-date"))
+            if (IncludeXMsDate && !message.Request.Headers.Contains("x-ms-date"))
             {
                 var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
                 message.Request.Headers.Add("x-ms-date", date);

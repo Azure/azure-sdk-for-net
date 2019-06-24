@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -71,7 +71,7 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             var queueName = this.GetNewQueueName();
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
             var queue = this.InstrumentClient(service.GetQueueClient(queueName));
 
             try

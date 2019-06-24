@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
 
             // Act
             var response = await service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1));
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(

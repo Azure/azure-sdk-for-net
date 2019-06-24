@@ -3,8 +3,10 @@
 // license information.
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
+using Azure.Storage.Common;
 
 namespace Azure.Storage
 {
@@ -14,6 +16,11 @@ namespace Azure.Storage
     /// </summary>
     internal static class StorageClientOptions
     {
+        /// <summary>
+        /// The default scope used for token authentication with Storage.
+        /// </summary>
+        const string StorageScope = "https://storage.azure.net/.default";
+
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
         /// </summary>
@@ -35,8 +42,8 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="credentials">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this SharedKeyCredentials credential) =>
-            new SharedKeyPipelinePolicy(
+        public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
+            new StorageSharedKeyPipelinePolicy(
                 credential ?? throw new ArgumentNullException(nameof(credential)));
 
         /// <summary>
@@ -44,9 +51,10 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="credentials">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredentials credential) =>
-            new TokenPipelinePolicy(
-                credential ?? throw new ArgumentNullException(nameof(credential)));
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
+            new BearerTokenAuthenticationPolicy(
+                credential ?? throw new ArgumentNullException(nameof(credential)),
+                StorageScope);
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
@@ -61,9 +69,9 @@ namespace Azure.Storage
                 case SharedAccessSignatureCredentials _:
                 case null: // Anonymous authentication
                     return null;
-                case SharedKeyCredentials sharedKey:
+                case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
-                case TokenCredentials token:
+                case TokenCredential token:
                     return token.AsPolicy();
                 default:
                     throw new ArgumentException(

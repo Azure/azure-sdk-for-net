@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
@@ -63,7 +64,7 @@ namespace Azure.Storage.Queues
         /// <param name="options">
         /// Optional <see cref="QueueClientOptions"/>.
         /// </param>
-        public MessagesClient(Uri messagesUri, SharedKeyCredentials credential, QueueClientOptions options = default)
+        public MessagesClient(Uri messagesUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
             : this(messagesUri, credential.AsPolicy(), options)
         {
         }
@@ -80,7 +81,7 @@ namespace Azure.Storage.Queues
         /// <param name="options">
         /// Optional <see cref="QueueClientOptions"/>.
         /// </param>
-        public MessagesClient(Uri messagesUri, TokenCredentials credential, QueueClientOptions options = default)
+        public MessagesClient(Uri messagesUri, TokenCredential credential, QueueClientOptions options = default)
             : this(messagesUri, credential.AsPolicy(), options)
         {
         }

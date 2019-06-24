@@ -80,24 +80,24 @@ namespace Azure.Storage.Files.Tests
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.FileServiceEndpoint),
-                    new SharedKeyCredentials(
+                    new StorageSharedKeyCredential(
                         TestConfigurations.DefaultTargetTenant.AccountName,
                         TestConfigurations.DefaultTargetTenant.AccountKey),
                     this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_AccountSas(SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
@@ -113,12 +113,12 @@ namespace Azure.Storage.Files.Tests
             return result;
         }
 
-        public SharedKeyCredentials GetNewSharedKeyCredentials()
-            => new SharedKeyCredentials(
+        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
                 TestConfigurations.DefaultTargetTenant.AccountName,
                 TestConfigurations.DefaultTargetTenant.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
@@ -130,7 +130,7 @@ namespace Azure.Storage.Files.Tests
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new FileSasBuilder
             {
                 ShareName = shareName,
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.Tests
                 IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new FileSasBuilder
             {
                 ShareName = shareName,

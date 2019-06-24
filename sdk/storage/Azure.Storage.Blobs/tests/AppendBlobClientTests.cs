@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -403,7 +403,7 @@ namespace Azure.Storage.Blobs.Test
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        new SharedKeyCredentials(
+                        new StorageSharedKeyCredential(
                             TestConfigurations.DefaultTargetTenant.AccountName,
                             TestConfigurations.DefaultTargetTenant.AccountKey),
                         this.GetFaultyBlobConnectionOptions()));

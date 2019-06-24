@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             var containerName = this.GetNewContainerName();
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
             var container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
 
             try

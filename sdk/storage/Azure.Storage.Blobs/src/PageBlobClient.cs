@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
@@ -135,7 +136,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(Uri blobUri, SharedKeyCredentials credential, BlobClientOptions options = default)
+        public PageBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
         }
@@ -157,7 +158,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(Uri blobUri, TokenCredentials credential, BlobClientOptions options = default)
+        public PageBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
         }

@@ -77,18 +77,18 @@ namespace Azure.Storage.Sas
         public string QueueName { get; set; }
 
         /// <summary>
-        /// Use an account's <see cref="SharedKeyCredentials"/> to sign this 
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this 
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="sharedKeyCredential">
-        /// The storage account's <see cref="SharedKeyCredentials"/>.
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
         /// </param>
         /// <returns>
         /// The <see cref="SasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
-        public SasQueryParameters ToSasQueryParameters(SharedKeyCredentials sharedKeyCredential)
+        public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 

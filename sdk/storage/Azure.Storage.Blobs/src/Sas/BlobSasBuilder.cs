@@ -137,18 +137,18 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Use an account's <see cref="SharedKeyCredentials"/> to sign this 
+        /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this 
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="sharedKeyCredential">
-        /// The storage account's <see cref="SharedKeyCredentials"/>.
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
         /// </param>
         /// <returns>
         /// The <see cref="BlobSasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
-        public BlobSasQueryParameters ToSasQueryParameters(SharedKeyCredentials sharedKeyCredential)
+        public BlobSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw new ArgumentNullException(nameof(sharedKeyCredential));
 

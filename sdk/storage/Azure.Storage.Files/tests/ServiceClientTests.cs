@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Test
             var service = this.InstrumentClient(
                 new FileServiceClient(
                     InvalidUri,
-                    new SharedKeyCredentials(
+                    new StorageSharedKeyCredential(
                         TestConfigurations.DefaultTargetTenant.AccountName,
                         TestConfigurations.DefaultTargetTenant.AccountKey),
                     this.GetOptions()));
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.Test
             var fakeService = this.InstrumentClient(
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
-                    new SharedKeyCredentials(
+                    new StorageSharedKeyCredential(
                         TestConfigurations.DefaultTargetTenant.AccountName,
                         TestConfigurations.DefaultTargetTenant.AccountKey),
                     this.GetOptions()));
@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.Test
             var service = this.InstrumentClient(
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
-                    new SharedKeyCredentials(
+                    new StorageSharedKeyCredential(
                         TestConfigurations.DefaultTargetTenant.AccountName,
                         TestConfigurations.DefaultTargetTenant.AccountKey),
                     this.GetOptions()));

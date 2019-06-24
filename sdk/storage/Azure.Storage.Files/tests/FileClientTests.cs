@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -530,7 +530,7 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
+                        new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
                         this.GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
                 await directory.CreateAsync();
@@ -638,7 +638,7 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        new SharedKeyCredentials(
+                        new StorageSharedKeyCredential(
                             TestConfigurations.DefaultTargetTenant.AccountName,
                             TestConfigurations.DefaultTargetTenant.AccountKey),
                         this.GetFaultyFileConnectionOptions()));

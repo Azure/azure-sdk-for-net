@@ -5,7 +5,7 @@
 namespace Azure.Storage
 {
     // TODO: Consider making public if there's ever a reason for developers to use this type
-    internal sealed class SharedAccessSignatureCredentials : IStorageCredentials
+    internal sealed class SharedAccessSignatureCredentials
     {
         /// <summary>
         /// Gets the SAS token used to authenticate requests to the Storage

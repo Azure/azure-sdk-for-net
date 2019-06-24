@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -60,18 +61,20 @@ namespace Azure.Storage.Test.Shared
             return IPAddress.Parse(ipString);
         }
 
-        public async Task<string> GenerateOAuthToken(
-            string activeDirectoryAuthEndpoint,
-            string activeDirectoryTenantId,
-            string activeDirectoryApplicationId,
-            string activeDirectoryApplicationSecret)
-        {
-            var authority = String.Format(activeDirectoryAuthEndpoint + "/" + activeDirectoryTenantId);
-            var credential = new ClientCredential(activeDirectoryApplicationId, activeDirectoryApplicationSecret);
-            var context = new AuthenticationContext(authority);
-            var result = await context.AcquireTokenAsync("https://storage.azure.com", credential);
-            return result.AccessToken;
-        }
+        public TokenCredential GetOAuthCredential() =>
+            this.GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant);
+
+        public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
+            this.GetOAuthCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret);
+
+        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret) =>
+            new ClientSecretCredential(
+                tenantId,
+                appId,
+                secret);
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

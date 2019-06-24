@@ -135,7 +135,7 @@ namespace Azure.Storage.Files
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public FileClient(Uri fileUri, SharedKeyCredentials credential, FileClientOptions options = default)
+        public FileClient(Uri fileUri, StorageSharedKeyCredential credential, FileClientOptions options = default)
             : this(fileUri, credential.AsPolicy(), options)
         {
         }
