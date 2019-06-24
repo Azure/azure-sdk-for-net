@@ -1,0 +1,118 @@
+trigger:
+  - GenerateDocsForGitHub
+jobs:
+  - job: CreateDocs
+    pool:
+      vmImage: vs2017-win2016
+    steps:
+      # First set of steps download and install tools or create directories to be used in doc generation
+      - powershell: |
+          Invoke-WebRequest -Uri "https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip" `
+          -OutFile "mdoc.zip" | Wait-Process; Expand-Archive -Path "mdoc.zip" -DestinationPath "./mdoc/"
+        workingDirectory: $(Build.BinariesDirectory)
+        displayName: Download and Extract mdoc Zip
+      - task: NuGetToolInstaller@0
+        displayName: Install Nuget Client
+      - powershell: nuget install Microsoft.DocAsCode.ECMA2Yaml -ExcludeVersion
+        workingDirectory: $(Build.BinariesDirectory)
+        displayName: Install Microsoft.DocAsCode.ECMA2Yaml
+      - powershell: |
+          Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
+          -OutFile "docfx.zip" | Wait-Process; Expand-Archive -Path "docfx.zip" -DestinationPath "./docfx/"
+        workingDirectory: $(Build.BinariesDirectory)
+        displayName: Download and Extract DocFX
+      - powershell: |
+          New-Item -Type dir dll-docs/my-api
+          New-Item -Type dir dll-docs/dependencies/my-api
+          New-Item -Type dir dll-xml-output
+          New-Item -Type dir dll-xml-output-2
+          New-Item -Type dir dll-yaml-output
+          New-Item -Type dir docfx-output
+        displayName: Create Directories for Doc Generation
+        workingDirectory: $(Build.BinariesDirectory)
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)/dll-docs
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)/dll-docs/dependencies
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "3.0.100-preview5-011568"
+      # These steps create dlls from the source code in the repo and structure them for doc generation
+      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=$(ServiceDirectory) /p:PublicSign=false /p:OfficialBuildId=$(Build.BuildNumber) /p:PreRelaseVersionLabel=$(PreReleaseVersionLabel) /p:DotNetFinalVersionKind=$(DotNetFinalVersionKind)"
+        displayName: "Build Repo"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - powershell: ls
+        workingDirectory: $(Build.SourcesDirectory)/artifacts/bin
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)/dll-docs
+      - task: PythonScript@0
+        displayName: "Run Copydlls Script"
+        inputs:
+          scriptPath: "$(Build.SourcesDirectory)/Documentation/copydlls.py"
+          arguments: $(Build.SourcesDirectory) $(Build.BinariesDirectory)
+          failOnStderr: true
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)/dll-docs/my-api
+      # The last set of steps Generate the DocFx powered documentation website
+      - task: CmdLine@2
+        displayName: Initialize Frameworks File
+        inputs:
+          script: mdoc.exe fx-bootstrap ../dll-docs
+          workingDirectory: $(Build.BinariesDirectory)/mdoc
+          failOnStderr: true
+      - task: CmdLine@2
+        displayName: Produce ECMAXML
+        inputs:
+          script: |
+            mdoc.exe update -fx ../dll-docs -o ../dll-xml-output --debug -lang docid -lang vb.net -lang fsharp --delete
+          workingDirectory: $(Build.BinariesDirectory)/mdoc
+          failOnStderr: true
+      - task: PowerShell@2
+        displayName: Generate YAML Files
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\Documentation\ecmaxmltoyml.ps1
+          failOnStderr: true
+      - task: CmdLine@2
+        displayName: Provision DocFX Directory
+        inputs:
+          script: $(Build.BinariesDirectory)/docfx/docfx.exe init -q
+          workingDirectory: $(Build.BinariesDirectory)/docfx-output
+          failOnStderr: true
+      - powershell: ls
+        workingDirectory: $(Build.BinariesDirectory)/docfx-output/docfx_project/
+      - powershell: |
+          Copy-Item "$(Build.BinariesDirectory)/dll-yaml-output/*" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/api/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/Documentation/articles/*" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/articles/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/Documentation/index/*" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/Documentation/api/*" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/api/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/CONTRIBUTING.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/articles/"
+          Copy-Item "$(Build.SourcesDirectory)/packages.md" -Destination "$(Build.BinariesDirectory)/docfx-output/docfx_project/articles/"
+        displayName: Copy over Yaml and Md files
+      - task: CmdLine@2
+        displayName: Build Doc Content
+        inputs:
+          script: $(Build.BinariesDirectory)/docfx/docfx.exe
+          workingDirectory: $(Build.BinariesDirectory)/docfx-output/docfx_project/
+          failOnStderr: true
+      - task: CopyFiles@2
+        displayName: Copy HTML to Artificats Directory
+        inputs:
+          sourceFolder: $(Build.BinariesDirectory)/docfx-output/docfx_project/
+          content: '**\*'
+          targetFolder: $(Build.ArtifactStagingDirectory)/docfx_project
+          overWrite: true
+      - task: PublishPipelineArtifact@0
+        condition: succeeded()
+        inputs:
+          artifactName: docfx_project
+          targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site

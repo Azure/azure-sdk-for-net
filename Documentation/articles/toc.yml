@@ -1,0 +1,44 @@
+- name: Home
+  href: intro.md
+- name: General User Docs
+  items:
+    - name: Authentication Conflicts
+      href: AuthConflictsBetweenSDKs.md
+    - name: Breaking Changes
+      href: breaking-changes.md
+    - name: Code Generation
+      href: code-generation-instructions.md
+    - name: Existing Management Versioning
+      href: ExistingManagementSDKVersioning.md
+    - name: NetSDK Repo Task Module
+      href: NetSDK-Repo-Tasks-Module.md
+    - name: SDK for Net Packages
+      href: sdk-for-net-packages.md
+    - name: Azure Test Framework
+      href: Using-Azure-TestFramework.md
+    - name: Versioning
+      href: Versioning.md
+- name: ReadMes
+  items:
+    - name: -appconfiguration-Azure.ApplicationModel.Configuration-README
+      href: -appconfiguration-Azure.ApplicationModel.Configuration-README.md
+    - name: -appconfiguration-Azure.ApplicationModel.Configuration-tests-Readme
+      href: -appconfiguration-Azure.ApplicationModel.Configuration-tests-Readme.md
+    - name: -batch-Microsoft.Azure.Batch.FilesConventions-README
+      href: -batch-Microsoft.Azure.Batch.FilesConventions-README.md
+    - name: -batch-Microsoft.Azure.Batch-changelog
+      href: -batch-Microsoft.Azure.Batch-changelog.md
+    - name: -batch-Microsoft.Azure.Batch-README
+      href: -batch-Microsoft.Azure.Batch-README.md
+    - name: -batch-Microsoft.Azure.Batch-upcomingchanges
+      href: -batch-Microsoft.Azure.Batch-upcomingchanges.md
+    - name: -batch-Microsoft.Azure.Management.Batch-changelog
+      href: -batch-Microsoft.Azure.Management.Batch-changelog.md
+    - name: -cognitiveservices-Language.TextAnalytics-src-Readme
+      href: -cognitiveservices-Language.TextAnalytics-src-Readme.md
+    - name: -cognitiveservices-Personalizer-src-Feedback
+      href: -cognitiveservices-Personalizer-src-Feedback.md
+    - name: -cognitiveservices-Personalizer-src-Readme
+      href: -cognitiveservices-Personalizer-src-Readme.md
+  
+
