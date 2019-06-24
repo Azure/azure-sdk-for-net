@@ -1,10 +1,11 @@
+variables:
+  DotNetCoreSDKVersion: '2.2.202'
+  skipComponentGovernanceDetection: true
+  msBuildLogDir: msbuildlogs
+  loggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'
+
 jobs:
   - job: Build
-    variables:
-      DotNetCoreSDKVersion: '2.2.202'
-      skipComponentGovernanceDetection: true
-      MsBuildLogDir: msbuildlogs
-      LoggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=$(MsBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(MsBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(MsBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(MsBuildLogDir)/msbuild.err.log'
 
     pool:
       vmImage: windows-2019
@@ -13,7 +14,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
          version: '$(DotNetCoreSDKVersion)'
-      - script: dotnet msbuild eng/mgmt.proj /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(LoggingArgs)
+      - script: dotnet msbuild eng/mgmt.proj /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -22,7 +23,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
-            pathtoPublish: $(MsBuildLogDir)
+            pathtoPublish: $(msBuildLogDir)
             artifactName: MsBuildLogs
       - task: PublishPipelineArtifact@0
         condition: succeededOrFailed()
@@ -37,11 +38,6 @@ jobs:
         displayName: 'Tagging the build'
         condition: ne(variables['System.TeamProject'], 'public')
   - job: Test
-    variables:
-      DotNetCoreSDKVersion: '2.2.202'
-      skipComponentGovernanceDetection: true
-      MsBuildLogDir: msbuildlogs
-      LoggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=$(MsBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(MsBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(MsBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(MsBuildLogDir)/msbuild.err.log'
 
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
@@ -62,7 +58,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
           version: '$(DotNetCoreSDKVersion)'
-      - script: dotnet msbuild eng/mgmt.proj /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(LoggingArgs)
+      - script: dotnet msbuild eng/mgmt.proj /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -78,5 +74,5 @@ jobs:
       - task: PublishBuildArtifacts@1
         condition: succeededOrFailed()
         inputs:
-            pathtoPublish: $(MsBuildLogDir)
+            pathtoPublish: $(msBuildLogDir)
             artifactName: MsBuildLogs
