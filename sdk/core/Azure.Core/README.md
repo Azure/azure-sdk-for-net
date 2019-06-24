@@ -7,9 +7,9 @@ so that once you learn how to use these APIs in one client library, you will kno
 The main shared concepts of Azure.Core (and so all Azure SDK libraries using Azure.Core) include:
 
 1. Unified APIs for configuring service clients, e.g. configuring retries, logging.
-2. Unified APIs for accessig HTTP responses.
-3. Unified APis for consuming long running operations (LROs).
-4. Unified APIs for consuming asynchronous enumerables and paging.
+2. Unified APIs for accessing HTTP responses.
+3. Unified APIs for consuming long running operations (LROs).
+4. Unified APIs for consuming asynchronous streams (```IAsyncEnumerable<T>```) by paging.
 5. Unified exception hierarchy for reporting errors from service requests.
 6. Abstractions for representing Azure SDK credentials.
 
@@ -17,18 +17,18 @@ The following sections will explain these shared concepts in more detail.
 
 # Usage Scenarios and Samples
 
-## Configuring Service Clients
+## Configuring Service Clients Using ```ClientOptions```
 Azure SDK client libraries typically expose one or more _service client_ types that 
 are the main starting points for calling corresponding Azure services. 
 You can easily find these client types as their names end with the word _Client_. 
-For example, ```BlockBlobClient``` can be used to call storage blob services, 
-and ```KeyClient``` can be used to access KeyVault service cryptographis keys. 
+For example, ```BlockBlobClient``` can be used to call blob storage service, 
+and ```KeyClient``` can be used to access KeyVault service cryptographic keys. 
 
-These client types can be instantiated by calling a relativelly simple contructor, 
-or a constructor overload that takes various configuration options. 
+These client types can be instantiated by calling a simple constructor, 
+or its overload that takes various configuration options. 
 These options are passed as a parameter that extends ```ClientOptions``` class exposed by Azure.Core.
 Various service specific options are usually added to its subclasses, but a set of SDK-wide options are 
-avaliable directly on ```ClientOptions```.
+available directly on ```ClientOptions```.
 
 ```csharp
 public void ConfigureServiceClient()
@@ -46,44 +46,55 @@ public void ConfigureServiceClient()
 }
 ```
 
-## Accessing HTTP Response
-Comming soon ...
-
-## Consuming Long Running Operations
-Comming soon ...
-
-## HttpPipeline
+## Accessing HTTP Response Details Using ```Response<T>```
+_Service clients_ have methods that can be used to call Azure services. 
+We refer to these client methods _service methods_.
+_Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cases its non-generic sibling ```Response```).
+This type provides access to both the deserialized result of the service call, 
+and to the details of the HTTP response returned from the server.
 
 ```csharp
-public async Task HttpPipelineHelloWorld()
+public async Task UsingResponseOfT()
 {
-    // create http pipeline
-    var options = new HttpPipeline.Options();
-    HttpPipeline pipeline = HttpPipeline.Create(options, sdkName: "test", sdkVersion: "1.0");
+    // create a client
+    var client = new BlobContainerClient(connectionString, "container");
 
-    // create http message
-    using (HttpMessage message = pipeline.CreateMessage(options, cancellation: default)) {
+    // call a service method, which returns Response<T>
+    Response<ContainerItem> response = await client.GetPropertiesAsync();
 
-        // set message URI
-        var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
-        message.SetRequestLine(HttpVerb.Get, uri);
+    // Response<T> has two main accessors. 
+    // Value property for accessing the deserialized result of the call
+    ContainerItem container = response.Value;
 
-        // add headers
-        message.AddHeader("Host", uri.Host);
+    // .. and GetRawResponse method for accessing all the details of the HTTP response
+    Response http = response.GetRawResponse();
 
-        // send message
-        await pipeline.SendMessageAsync(message).ConfigureAwait(false);
+    // for example, you can access HTTP status
+    int status = http.Status;
 
-        // process response
-        Response response = message.Response;
-        if (response.Status == 200) {
-            var reader = new StreamReader(response.ContentStream);
-            string responseText = reader.ReadToEnd();
-        }
-        else throw new RequestFailedException(response);
-    }       
+    // or the headers
+    foreach(HttpHeader header = http.Headers) {
+        Console.WriteLine($"{header.Name} {header.Value}");
+    }
+
+    // or the stream of the response content
+    Stream content = http.ContentStream;
+
+    // but, if you are not interested in all HTTP details, 
+    // and just want the result of the service call,
+    // Response<T> provides a cast to get you directly to the result
+    ContainerItem result = await client.GetPropertiesAsync();
 }
 ```
 
+## Consuming Service Methods Returning ```IAsyncEnumerable<T>```
+Coming soon ...
+
+## Consuming Long Running Operations Using ```OperationT<T>```
+Comming soon ...
+
 # Installing
-Nuget package Azure.Core avaliable on https://www.nuget.org/packages/Azure.Core/
+Typically, you will not need to install Azure.Core; 
+it will be installed for you when you install one of the client libraries using it. 
+In case you want to install it explicitly (to implement your own client library, for example), 
+you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
