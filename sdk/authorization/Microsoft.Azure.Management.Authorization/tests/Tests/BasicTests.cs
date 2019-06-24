@@ -1213,6 +1213,18 @@ namespace Authorization.Tests
             }
         }
 
+        [Fact]
+        public void ElevateAccessTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+                client.GlobalAdministrator.ElevateAccess();
+            }
+        }
+
         #region deny assignments tests
 
         [Fact]
