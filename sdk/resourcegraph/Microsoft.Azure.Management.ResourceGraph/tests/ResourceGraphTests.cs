@@ -74,23 +74,25 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.NotNull(queryResponse.Facets);
                 Assert.Empty(queryResponse.Facets);
 
+                var table = (queryResponse.Data as JObject).ToObject<Table>();
+
                 // Data columns
-                Assert.NotNull(queryResponse.Data.Columns);
-                Assert.Equal(3, queryResponse.Data.Columns.Count);
-                Assert.NotNull(queryResponse.Data.Columns[0].Name);
-                Assert.NotNull(queryResponse.Data.Columns[1].Name);
-                Assert.NotNull(queryResponse.Data.Columns[2].Name);
-                Assert.Equal(ColumnDataType.String, queryResponse.Data.Columns[0].Type);
-                Assert.Equal(ColumnDataType.Object, queryResponse.Data.Columns[1].Type);
-                Assert.Equal(ColumnDataType.Object, queryResponse.Data.Columns[2].Type);
+                Assert.NotNull(table.Columns);
+                Assert.Equal(3, table.Columns.Count);
+                Assert.NotNull(table.Columns[0].Name);
+                Assert.NotNull(table.Columns[1].Name);
+                Assert.NotNull(table.Columns[2].Name);
+                Assert.Equal(ColumnDataType.String, table.Columns[0].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[1].Type);
+                Assert.Equal(ColumnDataType.Object, table.Columns[2].Type);
 
                 // Data rows
-                Assert.NotNull(queryResponse.Data.Rows);
-                Assert.Equal(2, queryResponse.Data.Rows.Count);
-                Assert.Equal(3, queryResponse.Data.Rows[0].Count);
-                Assert.IsType<string>(queryResponse.Data.Rows[0][0]);
-                Assert.IsType<JObject>(queryResponse.Data.Rows[0][1]);
-                Assert.IsType<JObject>(queryResponse.Data.Rows[0][2]);
+                Assert.NotNull(table.Rows);
+                Assert.Equal(2, table.Rows.Count);
+                Assert.Equal(3, table.Rows[0].Count);
+                Assert.IsType<string>(table.Rows[0][0]);
+                Assert.IsType<JObject>(table.Rows[0][1]);
+                Assert.IsType<JObject>(table.Rows[0][2]);
             }
         }
         
@@ -123,17 +125,19 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.NotNull(queryResponse.Facets);
                 Assert.Empty(queryResponse.Facets);
 
+                var table = (queryResponse.Data as JObject).ToObject<Table>();
+
                 // Data columns
-                Assert.NotNull(queryResponse.Data.Columns);
-                Assert.Single(queryResponse.Data.Columns);
-                Assert.NotNull(queryResponse.Data.Columns[0].Name);
-                Assert.Equal(ColumnDataType.String, queryResponse.Data.Columns[0].Type);
+                Assert.NotNull(table.Columns);
+                Assert.Single(table.Columns);
+                Assert.NotNull(table.Columns[0].Name);
+                Assert.Equal(ColumnDataType.String, table.Columns[0].Type);
 
                 // Data rows
-                Assert.NotNull(queryResponse.Data.Rows);
-                Assert.Equal(4, queryResponse.Data.Rows.Count);
-                Assert.Single(queryResponse.Data.Rows[0]);
-                Assert.IsType<string>(queryResponse.Data.Rows[0][0]);
+                Assert.NotNull(table.Rows);
+                Assert.Equal(4, table.Rows.Count);
+                Assert.Single(table.Rows[0]);
+                Assert.IsType<string>(table.Rows[0][0]);
             }
         }
         
@@ -190,21 +194,23 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.Equal(validExpression, validFacet.Expression);
                 Assert.Equal(4, validFacet.TotalRecords);
                 Assert.Equal(4, validFacet.Count);
-                
+
+                var facetData = (validFacet.Data as JObject).ToObject<Table>();
+
                 // Valid facet columns
-                Assert.NotNull(validFacet.Data.Columns);
-                Assert.Equal(2, validFacet.Data.Columns.Count);
-                Assert.NotNull(validFacet.Data.Columns[0].Name);
-                Assert.NotNull(validFacet.Data.Columns[1].Name);
-                Assert.Equal(ColumnDataType.String, validFacet.Data.Columns[0].Type);
-                Assert.Equal(ColumnDataType.Integer, validFacet.Data.Columns[1].Type);
+                Assert.NotNull(facetData.Columns);
+                Assert.Equal(2, facetData.Columns.Count);
+                Assert.NotNull(facetData.Columns[0].Name);
+                Assert.NotNull(facetData.Columns[1].Name);
+                Assert.Equal(ColumnDataType.String, facetData.Columns[0].Type);
+                Assert.Equal(ColumnDataType.Integer, facetData.Columns[1].Type);
 
                 // Valid facet rows
-                Assert.NotNull(validFacet.Data.Rows);
-                Assert.Equal(4, validFacet.Data.Rows.Count);
-                Assert.Equal(2, validFacet.Data.Rows[0].Count);
-                Assert.IsType<string>(validFacet.Data.Rows[0][0]);
-                Assert.IsType<long>(validFacet.Data.Rows[0][1]);
+                Assert.NotNull(facetData.Rows);
+                Assert.Equal(4, facetData.Rows.Count);
+                Assert.Equal(2, facetData.Rows[0].Count);
+                Assert.IsType<string>(facetData.Rows[0][0]);
+                Assert.IsType<long>(facetData.Rows[0][1]);
 
                 // Invalid facet
                 var invalidFacet = queryResponse.Facets[1] as FacetError;
@@ -242,6 +248,47 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
                 Assert.NotNull(error.Details[0].Message);
                 Assert.NotNull(error.Details[0].AdditionalProperties);
                 Assert.Equal(4, error.Details[0].AdditionalProperties.Count);
+            }
+        }
+
+        /// <summary>
+        /// Resources basic query test using ObjectArray response format.
+        /// </summary>
+        [Fact]
+        public void ResourcesBasicQueryObjectArrayFormatTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourceGraphClient = GetResourceGraphClient(context);
+                var query = new QueryRequest
+                {
+                    Subscriptions = new List<string> { "00000000-0000-0000-0000-000000000000" },
+                    Query = "project id, tags, properties | limit 2", 
+                    Options = new QueryRequestOptions
+                    {
+                        ResultFormat = ResultFormat.ObjectArray
+                    }
+                };
+
+                var queryResponse = resourceGraphClient.Resources(query);
+
+                // Top-level response fields
+                Assert.Equal(2, queryResponse.Count);
+                Assert.Equal(2, queryResponse.TotalRecords);
+                Assert.Null(queryResponse.SkipToken);
+                Assert.Equal(ResultTruncated.False, queryResponse.ResultTruncated);
+                Assert.NotNull(queryResponse.Data);
+                Assert.NotNull(queryResponse.Facets);
+                Assert.Empty(queryResponse.Facets);
+
+                // Data
+                var array = (queryResponse.Data as JArray).ToObject<IList<IDictionary<string, object>>>();
+                Assert.NotNull(array);
+                Assert.Equal(2, array.Count);
+                Assert.Equal(3, array[0].Count);
+                Assert.IsType<string>(array[0]["id"]);
+                Assert.IsType<JObject>(array[0]["tags"]);
+                Assert.IsType<JObject>(array[0]["properties"]);
             }
         }
     }
