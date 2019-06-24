@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.AlertsManagement.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// <summary>
     /// An azure managed resource object
     /// </summary>
-    public partial class ManagedResource : IResource
+    public partial class ManagedResource : Resource
     {
         /// <summary>
         /// Initializes a new instance of the ManagedResource class.
@@ -34,8 +33,12 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// Initializes a new instance of the ManagedResource class.
         /// </summary>
         /// <param name="location">Resource location</param>
+        /// <param name="id">Azure resource Id</param>
+        /// <param name="type">Azure resource type</param>
+        /// <param name="name">Azure resource name</param>
         /// <param name="tags">Resource tags</param>
-        public ManagedResource(string location, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedResource(string location, string id = default(string), string type = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, type, name)
         {
             Location = location;
             Tags = tags;

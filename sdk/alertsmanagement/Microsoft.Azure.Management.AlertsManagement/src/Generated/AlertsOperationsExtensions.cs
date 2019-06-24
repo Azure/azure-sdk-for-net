@@ -333,8 +333,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupby'>
-            /// This parameter allows the result set to be grouped by input fields. For
-            /// example, groupby=severity,alertstate. Possible values include: 'severity',
+            /// This parameter allows the result set to be grouped by input fields (Maximum
+            /// 2 comma separated fields supported). For example, groupby=severity or
+            /// groupby=severity,alertstate. Possible values include: 'severity',
             /// 'alertState', 'monitorCondition', 'monitorService', 'signalType',
             /// 'alertRule'
             /// </param>
@@ -398,8 +399,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupby'>
-            /// This parameter allows the result set to be grouped by input fields. For
-            /// example, groupby=severity,alertstate. Possible values include: 'severity',
+            /// This parameter allows the result set to be grouped by input fields (Maximum
+            /// 2 comma separated fields supported). For example, groupby=severity or
+            /// groupby=severity,alertstate. Possible values include: 'severity',
             /// 'alertState', 'monitorCondition', 'monitorService', 'signalType',
             /// 'alertRule'
             /// </param>
