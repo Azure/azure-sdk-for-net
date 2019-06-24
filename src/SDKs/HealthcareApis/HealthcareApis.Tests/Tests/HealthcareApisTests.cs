@@ -1,0 +1,244 @@
+﻿using HealthcareApis.Tests.Helpers;
+using Microsoft.Azure.Management.HealthcareApis;
+using Microsoft.Azure.Management.HealthcareApis.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Net;
+using Xunit;
+
+namespace HealthcareApis.Tests
+{
+    public class HealthcareApisTests
+    {
+
+        [Fact]
+        public void HealthcareApisCreateTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                //// Create healthcare apis account
+                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, true);
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisCreateWithParametersTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                //// Create cognitive services account
+                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, false);
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisCreateAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                // try to create account in non-existent RG
+                HealthcareApisManagementTestUtilities.ValidateExpectedException(() =>
+                     healthCareApisMgmtClient.Services.CreateOrUpdate("NotExistedRG", accountName, serviceDescription),
+                    HttpStatusCode.NotFound.ToString());
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisAccountUpdateWithCreateTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                //// Create cognitive services account
+                var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+
+                var servicePatchDescription = HealthcareApisManagementTestUtilities.GetServicePatchDescription();
+
+                // Update SKU 
+                var account = healthCareApisMgmtClient.Services.Update(rgname, accountName, servicePatchDescription);
+                Assert.True(account.Tags.Values.Contains("value3"));
+                Assert.True(account.Tags.Values.Contains("value4"));
+                Assert.False(account.Tags.Values.Contains("value1"));
+                Assert.False(account.Tags.Values.Contains("value2"));
+
+                // Validate
+                var fetchedAccount = healthCareApisMgmtClient.Services.Get(rgname, accountName);
+                Assert.Equal(servicePatchDescription.Tags.Count, fetchedAccount.Tags.Count);
+                Assert.Collection(fetchedAccount.Tags,
+                    (keyValue) => { Assert.Equal("key3", keyValue.Key); Assert.Equal("value3", keyValue.Value); },
+                    (keyValue) => { Assert.Equal("key4", keyValue.Key); Assert.Equal("value4", keyValue.Value); },
+                    (keyValue) => { Assert.Equal("key5", keyValue.Key); Assert.Equal("value5", keyValue.Value); }
+                );
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisListAccountsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var serviceAccountsLists = healthCareApisMgmtClient.Services.ListByResourceGroupWithHttpMessagesAsync(rgname);
+                Assert.NotNull(serviceAccountsLists);
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisGetAccountTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                // Create healthCareApisAccount
+                var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+
+                // Validate
+                var fetchedAccount = healthCareApisMgmtClient.Services.Get(rgname, accountName);
+                Assert.Equal(accountName, fetchedAccount.Name);
+                Assert.Equal("westus", fetchedAccount.Location);
+            }
+        }
+
+        [Fact]
+        public void HealthcareApisDeleteTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //generate account name
+                string accountName = TestUtilities.GenerateName("hca");
+
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+
+                //// Create healthcareApis services account
+                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+
+                // Delete an account
+                healthCareApisMgmtClient.Services.Delete(rgname, accountName);
+
+                // Delete an account which does not exist
+                healthCareApisMgmtClient.Services.Delete(rgname, "missingaccount");
+            }
+        }
+
+
+        [Fact]
+        public void HealthcareApisDeleteAccountErrorTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // try to delete non-existent account
+                HealthcareApisManagementTestUtilities.ValidateExpectedException(
+                    () => healthCareApisMgmtClient.Services.Delete("NotExistedRG", "nonExistedAccountName"),
+                     HttpStatusCode.NotFound.ToString());
+            }
+        }
+
+       
+
+        [Fact]
+        public void HealthcareApisCheckNameAvailabilityTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().Name))
+            {
+                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+                CheckNameAvailabilityParameters checkNameAvailabilityParameters = new CheckNameAvailabilityParameters
+                {
+                    Name = "hca1234",
+                    Type = "Microsoft.HealthcareApis/services"
+                };
+                var servicesNameAvailabilityInfo = healthCareApisMgmtClient.Services.CheckNameAvailability(checkNameAvailabilityParameters);
+                Assert.True(servicesNameAvailabilityInfo.NameAvailable);
+            }
+        }
+    }
+}

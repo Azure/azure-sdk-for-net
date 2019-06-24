@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// <summary>
         /// The subscription identifier.
         /// </summary>
-        System.Guid SubscriptionId { get; set; }
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The version of the API.
