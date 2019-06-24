@@ -82,8 +82,8 @@ namespace Azure.Storage.Blobs.Test
             var service = this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceEndpoint),
+                    new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
                     this.GetFaultyBlobConnectionOptions(
-                        new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
                         raiseAt: 256 * Constants.KB,
                         raise: new Exception("Unexpected"))));
 

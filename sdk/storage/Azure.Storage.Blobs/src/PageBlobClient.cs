@@ -46,6 +46,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class.
         /// </summary>
+        protected PageBlobClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
@@ -59,16 +67,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="blobName">
         /// The name of this page blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public PageBlobClient(string connectionString, string containerName, string blobName, BlobConnectionOptions connectionOptions = default)
-            : base(connectionString, containerName, blobName, connectionOptions)
+        public PageBlobClient(string connectionString, string containerName, string blobName)
+            : base(connectionString, containerName, blobName)
         {
         }
 
@@ -76,18 +76,45 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="containerName">
+        /// The name of the container containing this page blob.
+        /// </param>
+        /// <param name="blobName">
+        /// The name of this page blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public PageBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+            : base(connectionString, containerName, blobName, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public PageBlobClient(Uri primaryUri, BlobConnectionOptions connectionOptions = default)
-            : base(primaryUri, connectionOptions)
+        public PageBlobClient(Uri blobUri, BlobClientOptions options = default)
+            : base(blobUri, options)
         {
         }
 
@@ -95,7 +122,51 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the page blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public PageBlobClient(Uri blobUri, SharedKeyCredentials credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the page blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public PageBlobClient(Uri blobUri, TokenCredentials credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the page blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
@@ -103,8 +174,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal PageBlobClient(Uri primaryUri, HttpPipeline pipeline)
-            : base(primaryUri, pipeline)
+        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline)
+            : base(blobUri, pipeline)
         {
         }
         

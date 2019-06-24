@@ -34,6 +34,14 @@ namespace Azure.Storage.Files
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
         /// </summary>
+        protected ShareClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
@@ -44,47 +52,53 @@ namespace Azure.Storage.Files
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public ShareClient(string connectionString, string shareName, FileConnectionOptions connectionOptions = default)
+        public ShareClient(string connectionString, string shareName)
+            : this(connectionString, shareName, null)
         {
-            var conn = StorageConnectionString.Parse(connectionString);
-
-            var builder =
-                new FileUriBuilder(conn.FileEndpoint)
-                {
-                    ShareName = shareName
-                };
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new FileConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
-            this.Uri = builder.ToUri();
-            this._pipeline = connOptions.Build();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share in the storage account to reference.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public ShareClient(string connectionString, string shareName, FileClientOptions options)
+        {
+            var conn = StorageConnectionString.Parse(connectionString);
+            var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
+            this.Uri = builder.ToUri();
+            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the share.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(Uri primaryUri, FileConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new FileConnectionOptions()).Build())
+        public ShareClient(Uri shareUri, FileClientOptions options = default)
+            : this(shareUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -92,16 +106,59 @@ namespace Azure.Storage.Files
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="shareUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the share.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public ShareClient(Uri shareUri, SharedKeyCredentials credential, FileClientOptions options = default)
+            : this(shareUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="shareUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the share.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareClient(Uri shareUri, HttpPipelinePolicy authentication, FileClientOptions options)
+        {
+            this.Uri = shareUri;
+            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
         /// name of the account and the name of the share.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal ShareClient(Uri primaryUri, HttpPipeline pipeline)
+        internal ShareClient(Uri shareUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = shareUri;
             this._pipeline = pipeline;
         }
 

@@ -38,11 +38,10 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlobName() => $"test-blob-{this.Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{this.Recording.Random.NewGuid()}";
 
-        public BlobConnectionOptions GetOptions(IStorageCredentials credentials = null)
+        public BlobClientOptions GetOptions()
             => this.Recording.InstrumentClientOptions(
-                    new BlobConnectionOptions
+                    new BlobClientOptions
                     {
-                        Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
                         LoggingPolicy = LoggingPolicy.Shared,
                         RetryPolicy =
@@ -55,13 +54,12 @@ namespace Azure.Storage.Test.Shared
                             }
                     });
 
-        public BlobConnectionOptions GetFaultyBlobConnectionOptions(
-            SharedKeyCredentials credentials = null,
+        public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
             Exception raise = default)
         {
             raise = raise ?? new Exception("Simulated connection fault");
-            var options = this.GetOptions(credentials);
+            var options = this.GetOptions();
             options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
@@ -70,7 +68,8 @@ namespace Azure.Storage.Test.Shared
             => this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    this.GetOptions(new SharedKeyCredentials(config.AccountName, config.AccountKey))));
+                    new SharedKeyCredentials(config.AccountName, config.AccountKey),
+                    this.GetOptions()));
 
         private async Task<BlobServiceClient> GetServiceClientFromOauthConfig(TenantConfiguration config)
         {
@@ -79,11 +78,11 @@ namespace Azure.Storage.Test.Shared
                 config.ActiveDirectoryTenantId,
                 config.ActiveDirectoryApplicationId,
                 config.ActiveDirectoryApplicationSecret);
-
             return this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    this.GetOptions(new TokenCredentials(initalToken))));
+                    new TokenCredentials(initalToken),
+                    this.GetOptions()));
         }
 
         public BlobServiceClient GetServiceClient_SharedKey()

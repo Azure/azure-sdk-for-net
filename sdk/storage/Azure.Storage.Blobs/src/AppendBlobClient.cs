@@ -45,6 +45,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
         /// class.
+        /// </summary>
+        protected AppendBlobClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
+        /// class.
         /// </summary>       
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -59,16 +67,35 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="blobName">
         /// The name of this append blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        public AppendBlobClient(string connectionString, string containerName, string blobName)
+            : base(connectionString, containerName, blobName)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
+        /// class.
+        /// </summary>       
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="containerName">
+        /// The name of the container containing this append blob.
+        /// </param>
+        /// <param name="blobName">
+        /// The name of this append blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public AppendBlobClient(string connectionString, string containerName, string blobName, BlobConnectionOptions connectionOptions = default)
-            : base(connectionString, containerName, blobName, connectionOptions)
+        public AppendBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+            : base(connectionString, containerName, blobName, options)
         {
         }
 
@@ -76,18 +103,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the append blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public AppendBlobClient(Uri primaryUri, BlobConnectionOptions connectionOptions = default)
-            : base(primaryUri, connectionOptions)
+        public AppendBlobClient(Uri blobUri, BlobClientOptions options = default)
+            : base(blobUri, options)
         {
         }
 
@@ -95,7 +122,51 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the append blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public AppendBlobClient(Uri blobUri, SharedKeyCredentials credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the append blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public AppendBlobClient(Uri blobUri, TokenCredentials credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the append blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
@@ -103,8 +174,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal AppendBlobClient(Uri primaryUri, HttpPipeline pipeline)
-            : base(primaryUri, pipeline)
+        internal AppendBlobClient(Uri blobUri, HttpPipeline pipeline)
+            : base(blobUri, pipeline)
         {
         }
 

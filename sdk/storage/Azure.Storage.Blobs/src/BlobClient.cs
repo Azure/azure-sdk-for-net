@@ -36,6 +36,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class.
         /// </summary>
+        protected BlobClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class.
+        /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
@@ -49,49 +57,62 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        public BlobClient(string connectionString, string containerName, string blobName)
+            : this(connectionString, containerName, blobName, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="containerName">
+        /// The name of the container containing this blob.
+        /// </param>
+        /// <param name="blobName">
+        /// The name of this blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public BlobClient(string connectionString, string containerName, string blobName, BlobConnectionOptions connectionOptions = default)
+        public BlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-
             var builder =
                 new BlobUriBuilder(conn.BlobEndpoint)
                 {
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new BlobConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
             this.Uri = builder.ToUri();
-            this.Pipeline = connOptions.Build();
+            this.Pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(Uri primaryUri, BlobConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new BlobConnectionOptions()).Build())
+        public BlobClient(Uri blobUri, BlobClientOptions options = default)
+            : this(blobUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -99,7 +120,74 @@ namespace Azure.Storage.Blobs.Specialized
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobClient(Uri blobUri, SharedKeyCredentials credential, BlobClientOptions options = default)
+            : this(blobUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public BlobClient(Uri blobUri, TokenCredentials credential, BlobClientOptions options = default)
+            : this(blobUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+        {
+            this.Uri = blobUri;
+            this.Pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
@@ -107,9 +195,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobClient(Uri primaryUri, HttpPipeline pipeline)
+        internal BlobClient(Uri blobUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = blobUri;
             this.Pipeline = pipeline;
         }
 

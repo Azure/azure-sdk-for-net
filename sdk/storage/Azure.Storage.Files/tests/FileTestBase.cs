@@ -29,11 +29,10 @@ namespace Azure.Storage.Files.Tests
         public string GetNewDirectoryName() => $"test-directory-{this.Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{this.Recording.Random.NewGuid()}";
 
-        public FileConnectionOptions GetOptions(IStorageCredentials credentials = null)
+        public FileClientOptions GetOptions()
             => this.Recording.InstrumentClientOptions(
-                    new FileConnectionOptions
+                    new FileClientOptions
                     {
-                        Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
                         LoggingPolicy = LoggingPolicy.Shared,
                         RetryPolicy =
@@ -67,13 +66,12 @@ namespace Azure.Storage.Files.Tests
             return disposingShare;
         }
 
-        public FileConnectionOptions GetFaultyFileConnectionOptions(
-            SharedKeyCredentials credentials = null,
+        public FileClientOptions GetFaultyFileConnectionOptions(
             int raiseAt = default,
             Exception raise = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
-            var options = this.GetOptions(credentials);
+            var options = this.GetOptions();
             options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
@@ -82,10 +80,10 @@ namespace Azure.Storage.Files.Tests
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.FileServiceEndpoint),
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new SharedKeyCredentials(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
         public FileServiceClient GetServiceClient_AccountSas(SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(

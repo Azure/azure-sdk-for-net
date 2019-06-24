@@ -29,6 +29,32 @@ namespace Azure.Storage.Files
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class.
+        /// </summary>
+        protected DirectoryClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryClient"/> class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="shareName">
+        /// The name of the share in the storage account to reference.
+        /// </param>
+        public DirectoryClient(string connectionString, string shareName, string directoryPath)
+            : this(connectionString, shareName, directoryPath, null)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DirectoryClient"/> class.
         /// </summary>
         /// <param name="connectionString">
@@ -44,63 +70,103 @@ namespace Azure.Storage.Files
         /// <param name="directoryPath">
         /// The path of the directory in the storage account to reference.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="FileConnectionOptions"/> that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
+        /// <param name="options">
+        /// Optional <see cref="FileClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
         /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public DirectoryClient(string connectionString, string shareName, string directoryPath, FileConnectionOptions connectionOptions = default)
+        public DirectoryClient(string connectionString, string shareName, string directoryPath, FileClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-
             var builder =
                 new FileUriBuilder(conn.FileEndpoint)
                 {
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new FileConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
             this.Uri = builder.ToUri();
-            this._pipeline = connOptions.Build();
+            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/> class.
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the directory.
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="FileConnectionOptions"/> that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
+        /// <param name="options">
+        /// Optional <see cref="FileClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
         /// </param>
-        public DirectoryClient(Uri primaryUri, FileConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new FileConnectionOptions()).Build())
+        public DirectoryClient(Uri directoryUri, FileClientOptions options = default)
+            : this(directoryUri, (HttpPipelinePolicy)null, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DirectoryClient"/> class.
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the directory.
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public DirectoryClient(Uri directoryUri, SharedKeyCredentials credential, FileClientOptions options = default)
+            : this(directoryUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal DirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, FileClientOptions options)
+        {
+            this.Uri = directoryUri;
+            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DirectoryClient(Uri primaryUri, HttpPipeline pipeline)
+        internal DirectoryClient(Uri directoryUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = directoryUri;
             this._pipeline = pipeline;
         }
 

@@ -27,31 +27,91 @@ namespace Azure.Storage.Queues
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Creates a <see cref="MessageIdClient"/>.
+        /// Initializes a new instance of the <see cref="MessageIdClient"/>
+        /// class.
         /// </summary>
-        /// <param name="primaryUri">
-        /// The primary <see cref="Uri"/> endpoint for the service.
-        /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="QueueConnectionOptions"/>
-        /// </param>
-        public MessageIdClient(Uri primaryUri, QueueConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new QueueConnectionOptions()).Build())
+        protected MessageIdClient()
         {
         }
 
         /// <summary>
         /// Creates a <see cref="MessageIdClient"/>.
         /// </summary>
-        /// <param name="primaryUri">
-        /// The primary <see cref="Uri"/> endpoint for the service.
+        /// <param name="messageIdUri">
+        /// The message ID <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>
+        /// </param>
+        public MessageIdClient(Uri messageIdUri, QueueClientOptions options = default)
+            : this(messageIdUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessageIdClient"/>.
+        /// </summary>
+        /// <param name="messageIdUri">
+        /// The message ID <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>
+        /// </param>
+        public MessageIdClient(Uri messageIdUri, SharedKeyCredentials credential, QueueClientOptions options = default)
+            : this(messageIdUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessageIdClient"/>.
+        /// </summary>
+        /// <param name="messageIdUri">
+        /// The message ID <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>
+        /// </param>
+        public MessageIdClient(Uri messageIdUri, TokenCredentials credential, QueueClientOptions options = default)
+            : this(messageIdUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessageIdClient"/>.
+        /// </summary>
+        /// <param name="messageIdUri">
+        /// The message ID <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>
+        /// </param>
+        internal MessageIdClient(Uri messageIdUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        {
+            this.Uri = messageIdUri;
+            this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessageIdClient"/>.
+        /// </summary>
+        /// <param name="messageIdUri">
+        /// The message ID <see cref="Uri"/> endpoint for the service.
         /// </param>
         /// <param name="pipeline">
         /// The <see cref="HttpPipeline"/> used to execute operations.
         /// </param>
-        internal MessageIdClient(Uri primaryUri, HttpPipeline pipeline)
+        internal MessageIdClient(Uri messageIdUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = messageIdUri;
             this._pipeline = pipeline;
         }
 

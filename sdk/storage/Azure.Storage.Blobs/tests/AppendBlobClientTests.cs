@@ -403,10 +403,10 @@ namespace Azure.Storage.Blobs.Test
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(
-                            new SharedKeyCredentials(
-                                TestConfigurations.DefaultTargetTenant.AccountName,
-                                TestConfigurations.DefaultTargetTenant.AccountKey))));
+                        new SharedKeyCredentials(
+                            TestConfigurations.DefaultTargetTenant.AccountName,
+                            TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
                 var blobName = this.GetNewBlobName();

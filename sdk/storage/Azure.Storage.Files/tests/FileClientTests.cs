@@ -530,9 +530,8 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        this.GetFaultyFileConnectionOptions(
-                            new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
-                            raiseAt: 256 * Constants.KB)));
+                        new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
                 await directory.CreateAsync();
 
@@ -639,10 +638,10 @@ namespace Azure.Storage.Files.Test
                 var directoryFaulty = this.InstrumentClient(
                     new DirectoryClient(
                         directory.Uri,
-                        this.GetFaultyFileConnectionOptions(
-                            new SharedKeyCredentials(
-                                TestConfigurations.DefaultTargetTenant.AccountName,
-                                TestConfigurations.DefaultTargetTenant.AccountKey))));
+                        new SharedKeyCredentials(
+                            TestConfigurations.DefaultTargetTenant.AccountName,
+                            TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.GetFaultyFileConnectionOptions()));
 
                 await directory.CreateAsync();
 

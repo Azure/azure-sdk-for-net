@@ -281,7 +281,8 @@ namespace Azure.Storage.Blobs.Test
             var service = this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
-                    this.GetOptions(this.GetNewSharedKeyCredentials())));
+                    this.GetNewSharedKeyCredentials(),
+                    this.GetOptions()));
 
             // Act
             var response = await service.GetStatisticsAsync();

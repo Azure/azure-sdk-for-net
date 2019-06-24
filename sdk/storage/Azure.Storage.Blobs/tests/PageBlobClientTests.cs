@@ -412,7 +412,8 @@ namespace Azure.Storage.Blobs.Test
                 var containerClientFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
                 var pageBlobName = this.GetNewBlobName();

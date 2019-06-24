@@ -35,47 +35,7 @@ namespace Azure.Storage.Files
         /// Initializes a new instance of the <see cref="FileServiceClient"/>
         /// class.
         /// </summary>
-        /// <param name="connectionString">
-        /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
-        /// account at runtime.
-        /// 
-        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
-        /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public FileServiceClient(string connectionString, FileConnectionOptions connectionOptions = default)
-        {
-            var conn = StorageConnectionString.Parse(connectionString);
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new FileConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
-            this.Uri = conn.FileEndpoint;
-            this._pipeline = connOptions.Build();
-        }
-
-         /// <summary>
-        /// Initializes a new instance of the <see cref="FileServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="primaryUri">
-        /// A <see cref="Uri"/> referencing the file service.
-        /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        public FileServiceClient(Uri primaryUri, FileConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new FileConnectionOptions()).Build())
+        protected FileServiceClient()
         {
         }
 
@@ -83,15 +43,112 @@ namespace Azure.Storage.Files
         /// Initializes a new instance of the <see cref="FileServiceClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        public FileServiceClient(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public FileServiceClient(string connectionString, FileClientOptions options)
+        {
+            var conn = StorageConnectionString.Parse(connectionString);
+            this.Uri = conn.FileEndpoint;
+            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the file service.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public FileServiceClient(Uri serviceUri, FileClientOptions options = default)
+            : this(serviceUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the file service.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public FileServiceClient(Uri serviceUri, SharedKeyCredentials credential, FileClientOptions options = default)
+            : this(serviceUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the file service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal FileServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, FileClientOptions options)
+        {
+            this.Uri = serviceUri;
+            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the file service.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal FileServiceClient(Uri primaryUri, HttpPipeline pipeline)
+        internal FileServiceClient(Uri serviceUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = serviceUri;
             this._pipeline = pipeline;
         }
 

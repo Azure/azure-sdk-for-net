@@ -25,11 +25,10 @@ namespace Azure.Storage.Queues.Tests
         {
         }
 
-        public QueueConnectionOptions GetOptions(IStorageCredentials credentials = null)
+        public QueueClientOptions GetOptions()
             => this.Recording.InstrumentClientOptions(
-                    new QueueConnectionOptions
+                    new QueueClientOptions
                     {
-                        Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
                         LoggingPolicy = LoggingPolicy.Shared,
                         RetryPolicy =
@@ -46,10 +45,10 @@ namespace Azure.Storage.Queues.Tests
             => this.InstrumentClient(
                 new QueueServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.QueueServiceEndpoint),
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new SharedKeyCredentials(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
         public QueueServiceClient GetServiceClient_AccountSas(SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
@@ -77,7 +76,8 @@ namespace Azure.Storage.Queues.Tests
             return this.InstrumentClient(
                 new QueueServiceClient(
                     new Uri(config.QueueServiceEndpoint),
-                    this.GetOptions(new TokenCredentials(initalToken))));
+                    new TokenCredentials(initalToken),
+                    this.GetOptions()));
         }
 
         public IDisposable GetNewQueue(out QueueClient queue, QueueServiceClient service = default, IDictionary<string, string> metadata = default)

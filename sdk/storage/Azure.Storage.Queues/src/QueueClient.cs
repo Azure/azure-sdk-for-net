@@ -49,6 +49,14 @@ namespace Azure.Storage.Queues
         /// Initializes a new instance of the <see cref="QueueClient"/>
         /// class.
         /// </summary>
+        protected QueueClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
@@ -59,47 +67,57 @@ namespace Azure.Storage.Queues
         /// <param name="queueName">
         /// The name of the queue in the storage account to reference.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        public QueueClient(string connectionString, string queueName)
+            : this(connectionString, queueName, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// 
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of the queue in the storage account to reference.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public QueueClient(string connectionString, string queueName, QueueConnectionOptions connectionOptions = default)
+        public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-
             var builder =
                 new QueueUriBuilder(conn.QueueEndpoint)
                 {
                     QueueName = queueName
                 };
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new QueueConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
             this.Uri = builder.ToUri();
-            this._pipeline = connOptions.Build();
+            this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional connection options that define the transport pipeline
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public QueueClient(Uri primaryUri, QueueConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new QueueConnectionOptions()).Build())
+        public QueueClient(Uri queueUri, QueueClientOptions options = default)
+            : this(queueUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -107,16 +125,80 @@ namespace Azure.Storage.Queues
         /// Initializes a new instance of the <see cref="QueueClient"/>
         /// class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="queueUri">
+        /// A <see cref="Uri"/> referencing the queue that includes the
+        /// name of the account, and the name of the queue.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public QueueClient(Uri queueUri, SharedKeyCredentials credential, QueueClientOptions options = default)
+            : this(queueUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="queueUri">
+        /// A <see cref="Uri"/> referencing the queue that includes the
+        /// name of the account, and the name of the queue.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public QueueClient(Uri queueUri, TokenCredentials credential, QueueClientOptions options = default)
+            : this(queueUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="queueUri">
+        /// A <see cref="Uri"/> referencing the queue that includes the
+        /// name of the account, and the name of the queue.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        {
+            this.Uri = queueUri;
+            this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueueClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="queueUri">
         /// A <see cref="Uri"/> referencing the queue that includes the
         /// name of the account, and the name of the queue.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal QueueClient(Uri primaryUri, HttpPipeline pipeline)
+        internal QueueClient(Uri queueUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = queueUri;
             this._pipeline = pipeline;
         }
 

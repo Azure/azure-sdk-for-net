@@ -64,10 +64,10 @@ namespace Azure.Storage.Files.Test
             var service = this.InstrumentClient(
                 new FileServiceClient(
                     InvalidUri,
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new SharedKeyCredentials(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -112,10 +112,10 @@ namespace Azure.Storage.Files.Test
             var fakeService = this.InstrumentClient(
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
-                        this.GetOptions(
-                            new SharedKeyCredentials(
-                                TestConfigurations.DefaultTargetTenant.AccountName,
-                                TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new SharedKeyCredentials(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -160,10 +160,10 @@ namespace Azure.Storage.Files.Test
             var service = this.InstrumentClient(
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new SharedKeyCredentials(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(

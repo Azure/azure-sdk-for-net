@@ -189,7 +189,8 @@ namespace Azure.Storage.Blobs.Test
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
                 var blockBlobName = this.GetNewBlobName();
@@ -1145,7 +1146,8 @@ namespace Azure.Storage.Blobs.Test
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 var blockBlobName = this.GetNewBlobName();
                 var blobFaulty = this.InstrumentClient(containerFaulty.GetBlockBlobClient(blockBlobName));

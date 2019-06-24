@@ -30,31 +30,91 @@ namespace Azure.Storage.Queues
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Creates a <see cref="MessagesClient"/>.
+        /// Initializes a new instance of the <see cref="MessagesClient"/>
+        /// class.
         /// </summary>
-        /// <param name="primaryUri">
-        /// The primary <see cref="Uri"/> endpoint for the service.
-        /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="QueueConnectionOptions"/>.
-        /// </param>
-        public MessagesClient(Uri primaryUri, QueueConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new QueueConnectionOptions()).Build())
+        protected MessagesClient()
         {
         }
 
         /// <summary>
         /// Creates a <see cref="MessagesClient"/>.
         /// </summary>
-        /// <param name="primaryUri">
-        /// The primary <see cref="Uri"/> endpoint for the service.
+        /// <param name="messagesUri">
+        /// The messages <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>.
+        /// </param>
+        public MessagesClient(Uri messagesUri, QueueClientOptions options = default)
+            : this(messagesUri, (HttpPipelinePolicy)null, options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessagesClient"/>.
+        /// </summary>
+        /// <param name="messagesUri">
+        /// The messages <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>.
+        /// </param>
+        public MessagesClient(Uri messagesUri, SharedKeyCredentials credential, QueueClientOptions options = default)
+            : this(messagesUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessagesClient"/>.
+        /// </summary>
+        /// <param name="messagesUri">
+        /// The messages <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>.
+        /// </param>
+        public MessagesClient(Uri messagesUri, TokenCredentials credential, QueueClientOptions options = default)
+            : this(messagesUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessagesClient"/>.
+        /// </summary>
+        /// <param name="messagesUri">
+        /// The messages <see cref="Uri"/> endpoint for the service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="QueueClientOptions"/>.
+        /// </param>
+        internal MessagesClient(Uri messagesUri, HttpPipelinePolicy authentication, QueueClientOptions options)
+        {
+            this.Uri = messagesUri;
+            this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MessagesClient"/>.
+        /// </summary>
+        /// <param name="messagesUri">
+        /// The messages <see cref="Uri"/> endpoint for the service.
         /// </param>
         /// <param name="pipeline">
         /// The <see cref="HttpPipeline"/> used to execute operations.
         /// </param>
-        internal MessagesClient(Uri primaryUri, HttpPipeline pipeline)
+        internal MessagesClient(Uri messagesUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this.Uri = messagesUri;
             this._pipeline = pipeline;
         }
 
@@ -63,14 +123,14 @@ namespace Azure.Storage.Queues
         /// messageID to the end of MessagesClient's URL. The new MessageIdClient
         /// uses the same request policy pipeline as the MessagesURL.
         /// </summary>
-        /// <param name="messageID">
+        /// <param name="messageId">
         /// Message ID.
         /// </param>
         /// <returns>
         /// <see cref="MessageIdClient"/>
         /// </returns>
-        public MessageIdClient GetMessageIdClient(string messageID) =>
-            new MessageIdClient(this.Uri.AppendToPath(messageID.ToString(CultureInfo.InvariantCulture)), this._pipeline);
+        public MessageIdClient GetMessageIdClient(string messageId) =>
+            new MessageIdClient(this.Uri.AppendToPath(messageId.ToString(CultureInfo.InvariantCulture)), this._pipeline);
 
         /// <summary>
         /// Clear deletes all messages from a queue.
