@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public StorageTask<Response<BlobContentInfo>> UploadAsync(
+        public async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
@@ -332,55 +332,54 @@ namespace Azure.Storage.Blobs
         {
             content = content.WithNoDispose().WithProgress(progressHandler);
             var uploadAttempt = 0;
-            return StorageTask.Create(
-                pipeline: this.Pipeline,
-                cancellationToken: cancellation,
-                reliabilityConfiguration: new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)),
-                operation:
-                    async (p, ct) =>
-                    {
-                        using (p.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(BlockBlobClient),
+                    message:
+                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
+                    $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
+                try
+                {
+                    return await ReliableOperation.DoAsync(
+                        async () =>
                         {
-                            p.LogMethodEnter(
-                                nameof(BlockBlobClient),
-                                message:
-                                $"{nameof(this.Uri)}: {this.Uri}\n" +
-                                $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
-                                $"{nameof(blobAccessConditions)}: {blobAccessConditions}");
-                            try
-                            {
-                                p.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return await BlobRestClient.BlockBlob.UploadAsync(
-                                    p,
-                                    this.Uri,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    blobContentType: blobHttpHeaders?.ContentType,
-                                    blobContentEncoding: blobHttpHeaders?.ContentEncoding,
-                                    blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                                    blobContentHash: blobHttpHeaders?.ContentHash,
-                                    blobCacheControl: blobHttpHeaders?.CacheControl,
-                                    metadata: metadata,
-                                    leaseId: blobAccessConditions?.LeaseAccessConditions?.LeaseId,
-                                    blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                                    ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
-                                    ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                                    ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
-                                    ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
-                                    cancellation: ct)
-                                    .ConfigureAwait(false);
-                            }
-                            catch (Exception ex)
-                            {
-                                p.LogException(ex);
-                                throw;
-                            }
-                            finally
-                            {
-                                p.LogMethodExit(nameof(BlockBlobClient));
-                            }
-                        }
-                    });
+                            this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                            return await BlobRestClient.BlockBlob.UploadAsync(
+                                this.Pipeline,
+                                this.Uri,
+                                body: content,
+                                contentLength: content.Length,
+                                blobContentType: blobHttpHeaders?.ContentType,
+                                blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                                blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                                blobContentHash: blobHttpHeaders?.ContentHash,
+                                blobCacheControl: blobHttpHeaders?.CacheControl,
+                                metadata: metadata,
+                                leaseId: blobAccessConditions?.LeaseAccessConditions?.LeaseId,
+                                blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                                ifModifiedSince: blobAccessConditions?.HttpAccessConditions?.IfModifiedSince,
+                                ifUnmodifiedSince: blobAccessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
+                                ifMatch: blobAccessConditions?.HttpAccessConditions?.IfMatch,
+                                ifNoneMatch: blobAccessConditions?.HttpAccessConditions?.IfNoneMatch,
+                                cancellation: cancellation)
+                                .ConfigureAwait(false);
+                        },
+                        new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)))
+                        .ConfigureAwait(false); ;
+                    
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                }
+            }
         }
 
         /// <summary>

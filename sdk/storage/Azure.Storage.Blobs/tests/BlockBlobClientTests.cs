@@ -1093,7 +1093,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response<BlobContentInfo>>(
+                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             blob.UploadAsync(
                                 content: stream,
                                 blobAccessConditions: new BlobAccessConditions
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response<BlobContentInfo>>(
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.UploadAsync(
                             content: stream,
                             blobAccessConditions: new BlobAccessConditions
@@ -1162,7 +1162,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
 
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
 

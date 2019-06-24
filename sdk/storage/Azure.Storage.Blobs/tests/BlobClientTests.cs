@@ -672,7 +672,7 @@ namespace Azure.Storage.Blobs.Test
                         lease: true);
 
                     // Act
-                    await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.DeleteAsync(accessConditions: accessConditions),
                         e => { });
                 }
@@ -688,7 +688,7 @@ namespace Azure.Storage.Blobs.Test
                 var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
-                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.DeleteAsync(),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
@@ -1898,7 +1898,7 @@ namespace Azure.Storage.Blobs.Test
                 var leaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
-                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(
                         accessTier: AccessTier.Cool,
                         leaseAccessConditions: new LeaseAccessConditions
@@ -1920,7 +1920,7 @@ namespace Azure.Storage.Blobs.Test
                 var newLeaseId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
-                await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response>(
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.SetTierAsync(AccessTier.Cool),
                     e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }

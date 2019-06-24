@@ -599,49 +599,44 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public StorageTask<Response> DeleteAsync(
+        public async Task<Response> DeleteAsync(
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellation = default)
-        => StorageTask.Create(
-            pipeline: this.Pipeline,
-            cancellationToken: cancellation,
-            operation:
-                async (pipeline, cancel) =>
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(BlobClient),
+                    message:
+                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(deleteOptions)}: {deleteOptions}\n" +
+                    $"{nameof(accessConditions)}: {accessConditions}");
+                try
                 {
-                    using (pipeline.BeginLoggingScope(nameof(BlobClient)))
-                    {
-                        pipeline.LogMethodEnter(
-                            nameof(BlobClient),
-                            message:
-                            $"{nameof(this.Uri)}: {this.Uri}\n" +
-                            $"{nameof(deleteOptions)}: {deleteOptions}\n" +
-                            $"{nameof(accessConditions)}: {accessConditions}");
-                        try
-                        {
-                            return await BlobRestClient.Blob.DeleteAsync(
-                                pipeline,
-                                this.Uri,
-                                leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
-                                deleteSnapshots: deleteOptions,
-                                ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
-                                ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
-                                ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
-                                ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
-                                cancellation: cancel)
-                                .ConfigureAwait(false);
-                        }
-                        catch (Exception ex)
-                        {
-                            pipeline.LogException(ex);
-                            throw;
-                        }
-                        finally
-                        {
-                            pipeline.LogMethodExit(nameof(BlobClient));
-                        }
-                    }
-                });
+                    return await BlobRestClient.Blob.DeleteAsync(
+                        this.Pipeline,
+                        this.Uri,
+                        leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
+                        deleteSnapshots: deleteOptions,
+                        ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,
+                        ifUnmodifiedSince: accessConditions?.HttpAccessConditions?.IfUnmodifiedSince,
+                        ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
+                        ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
+                        cancellation: cancellation)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(BlobClient));
+                }
+            }
+        }
 
         /// <summary>
         /// The <see cref="UndeleteAsync"/> operation restores the contents
@@ -1405,45 +1400,40 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public StorageTask<Response> SetTierAsync(
+        public async Task<Response> SetTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellation = default)
-            => StorageTask.Create(
-                pipeline: this.Pipeline,
-                cancellationToken: cancellation,
-                operation:
-                    async (pipeline, cancel) =>
-                    {
-                        using (pipeline.BeginLoggingScope(nameof(BlobClient)))
-                        {
-                            pipeline.LogMethodEnter(
-                                nameof(BlobClient),
-                                message:
-                                $"{nameof(this.Uri)}: {this.Uri}\n" +
-                                $"{nameof(accessTier)}: {accessTier}\n" +
-                                $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
-                            try
-                            {
-                                return await BlobRestClient.Blob.SetTierAsync(
-                                    pipeline,
-                                    this.Uri,
-                                    tier: accessTier,
-                                    leaseId: leaseAccessConditions?.LeaseId,
-                                    cancellation: cancel)
-                                    .ConfigureAwait(false);
-                            }
-                            catch (Exception ex)
-                            {
-                                pipeline.LogException(ex);
-                                throw;
-                            }
-                            finally
-                            {
-                                pipeline.LogMethodExit(nameof(BlobClient));
-                            }
-                        }
-                    });
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(BlobClient),
+                    message:
+                    $"{nameof(this.Uri)}: {this.Uri}\n" +
+                    $"{nameof(accessTier)}: {accessTier}\n" +
+                    $"{nameof(leaseAccessConditions)}: {leaseAccessConditions}");
+                try
+                {
+                    return await BlobRestClient.Blob.SetTierAsync(
+                        this.Pipeline,
+                        this.Uri,
+                        tier: accessTier,
+                        leaseId: leaseAccessConditions?.LeaseId,
+                        cancellation: cancellation)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(BlobClient));
+                }
+            }
+        }
     }
 }
 

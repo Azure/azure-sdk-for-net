@@ -368,28 +368,5 @@ namespace Azure.Storage.Test.Shared
                 }
             }
         }
-
-        public Task AssertExpectedExceptionAsync<T, U>(StorageTask<U> task, T expectedException, Func<T, T, bool> predicate = null)
-            where T : Exception
-            => this.AssertExpectedExceptionAsync(task, expectedException, TestHelper.GetDefaultExceptionAssertion(predicate));
-
-        public Task AssertExpectedExceptionAsync<T, U>(StorageTask<U> task, Action<T> assertion)
-            where T : Exception
-            => this.AssertExpectedExceptionAsync<T, U>(task, default, (_, a) => assertion(a));
-
-        public async Task AssertExpectedExceptionAsync<T, U>(StorageTask<U> task, T expectedException, Action<T, T> assertion)
-            where T : Exception
-        {
-            Assert.IsNotNull(assertion);
-            try
-            {
-                await task;
-                Assert.Fail("Expected exception not found");
-            }
-            catch (T actualException)
-            {
-                assertion(expectedException, actualException);
-            }
-        }
     }
 }
