@@ -6,12 +6,21 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// The key import parameters.
+    /// </summary>
     public class KeyImportOptions : Key
     {
+        /// <summary>
+        /// Whether it is a hardware key (HSM) or software key.
+        /// </summary>
         public bool? Hsm { get; set; }
 
-        public KeyImportOptions(string name) : base(name) { }
-
+        /// <summary>
+        /// Initializes a new instance of the KeyImportOptions class.
+        /// </summary>
+        /// <param name="name">The name of the key.</param>
+        /// <param name="keyMaterial">The <see cref="JsonWebKey"/> properties of the key.</param>
         public KeyImportOptions(string name, JsonWebKey keyMaterial)
             : base(name)
         {

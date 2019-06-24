@@ -121,6 +121,32 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("         ")]
+        public void ArgumentNotEmptyOrWhitespaceEnforcesInvariants(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.ArgumentException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("1")]
+        [TestCase("This is a thing")]
+        public void ArgumentNotEmptyOrWhitespaceAllowsValidValues(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="Guard.ArgumentNotNegative" /> method.
         /// </summary>
         ///

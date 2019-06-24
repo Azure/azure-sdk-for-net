@@ -19,8 +19,8 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <ItemGroup>
-    <PackageReference Include="System.Memory"/>
-    <PackageReference Include="System.Text.Json"/>
-    <PackageReference Include="System.Threading.Tasks.Extensions"/>
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// Options that allow to configure the management of the request sent to Key Vault
+    /// </summary>
     public class KeyClientOptions : ClientOptions
     {
     }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the SignalRUsageName class.
         /// </summary>
-        /// <param name="value">The indentifier of the usage.</param>
+        /// <param name="value">The identifier of the usage.</param>
         /// <param name="localizedValue">Localized name of the usage.</param>
         public SignalRUsageName(string value = default(string), string localizedValue = default(string))
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the indentifier of the usage.
+        /// Gets or sets the identifier of the usage.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
