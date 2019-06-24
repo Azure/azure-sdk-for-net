@@ -3,9 +3,10 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using System.Text;
 
-namespace Azure.Storage.Files
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="FileSasPermissions"/> supports reading and writing
@@ -43,26 +44,10 @@ namespace Azure.Storage.Files
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (this.Read)
-            {
-                sb.Append(Constants.Sas.Permissions.Read);
-            }
-
-            if (this.Create)
-            {
-                sb.Append(Constants.Sas.Permissions.Create);
-            }
-
-            if (this.Write)
-            {
-                sb.Append(Constants.Sas.Permissions.Write);
-            }
-
-            if (this.Delete)
-            {
-                sb.Append(Constants.Sas.Permissions.Delete);
-            }
-
+            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (this.Create) { sb.Append(Constants.Sas.Permissions.Create); }
+            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
             return sb.ToString();
         }
 
@@ -73,7 +58,6 @@ namespace Azure.Storage.Files
         /// <returns>The parsed <see cref="FileSasPermissions"/>.</returns>
         public static FileSasPermissions Parse(string s)
         {
-            // Clear the flags
             var p = new FileSasPermissions(); 
             foreach (var c in s)
             {
@@ -94,19 +78,20 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is FileSasPermissions other && this.Equals(other);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) =>
+            obj is FileSasPermissions other && this.Equals(other);
 
         /// <summary>
         /// Get a hash code for the FileSasPermissions.
         /// </summary>
         /// <returns>Hash code for the FileSasPermissions.</returns>
-        public override int GetHashCode()
-            => (this.Read ? 0b0001 : 0)
-             + (this.Create ? 0b0010 : 0)
-             + (this.Write ? 0b0100 : 0)
-             + (this.Delete ? 0b1000 : 0)
-            ;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() =>
+            (this.Read   ? 0b0001 : 0) +
+            (this.Create ? 0b0010 : 0) +
+            (this.Write  ? 0b0100 : 0) +
+            (this.Delete ? 0b1000 : 0);
 
         /// <summary>
         /// Check if two FileSasPermissions instances are equal.
@@ -114,7 +99,8 @@ namespace Azure.Storage.Files
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FileSasPermissions left, FileSasPermissions right) => left.Equals(right);
+        public static bool operator ==(FileSasPermissions left, FileSasPermissions right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Check if two FileSasPermissions instances are not equal.
@@ -122,18 +108,18 @@ namespace Azure.Storage.Files
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FileSasPermissions left, FileSasPermissions right) => !(left == right);
+        public static bool operator !=(FileSasPermissions left, FileSasPermissions right) =>
+            !(left == right);
 
         /// <summary>
         /// Check if two FileSasPermissions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(FileSasPermissions other)
-            => this.Read == other.Read
-            && this.Create == other.Create
-            && this.Write == other.Write
-            && this.Delete == other.Delete
-            ;
+        public bool Equals(FileSasPermissions other) =>
+            this.Read == other.Read &&
+            this.Create == other.Create &&
+            this.Write == other.Write &&
+            this.Delete == other.Delete;
     }
 }

@@ -16,6 +16,12 @@ namespace Azure.Storage
 
         public const int MaxReliabilityRetries = 5;
 
+        /// <summary>
+        /// Gets the default service version to use when building shared access
+        /// signatures.
+        /// </summary>
+        public const string DefaultSasVersion = "2018-11-09";
+
         public const int DefaultBufferSize = 4 * Constants.MB;
         public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
 

@@ -3,22 +3,33 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using System.Text;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Sas
 {
     /// <summary>
-    /// <see cref="SnapshotSasPermissions"/> supports reading and writing
-    /// permissions string for a blob snapshot's access policy.  Use
-    /// <see cref="ToString"/> to generate a permissions string you can
-    /// provide to <see cref="BlobSasBuilder.Permissions"/>.
+    /// <see cref="BlobSasPermissions"/> supports reading and writing
+    /// permissions string for a blob's access policy.  Use <see cref="ToString"/>
+    /// to generate a permissions string you can provide to
+    /// <see cref="BlobSasBuilder.Permissions"/>.
     /// </summary>
-    public struct SnapshotSasPermissions : IEquatable<SnapshotSasPermissions>
+    public struct BlobSasPermissions : IEquatable<BlobSasPermissions>
     {
         /// <summary>
         /// Get or sets whether Read is permitted.
         /// </summary>
         public bool Read { get; set; }
+
+        /// <summary>
+        /// Get or sets whether Add is permitted.
+        /// </summary>
+        public bool Add { get; set; }
+
+        /// <summary>
+        /// Get or sets whether Create is permitted.
+        /// </summary>
+        public bool Create { get; set; }
 
         /// <summary>
         /// Get or sets whether Write is permitted.
@@ -38,39 +49,30 @@ namespace Azure.Storage.Blobs
         public override string ToString()
         {
             var sb = new StringBuilder();
-
-            if (this.Read)
-            {
-                sb.Append(Constants.Sas.Permissions.Read);
-            }
-
-            if (this.Write)
-            {
-                sb.Append(Constants.Sas.Permissions.Write);
-            }
-
-            if (this.Delete)
-            {
-                sb.Append(Constants.Sas.Permissions.Delete);
-            }
-
+            if (this.Read) { sb.Append(Constants.Sas.Permissions.Read); }
+            if (this.Add) { sb.Append(Constants.Sas.Permissions.Add); }
+            if (this.Create) { sb.Append(Constants.Sas.Permissions.Create); }
+            if (this.Write) { sb.Append(Constants.Sas.Permissions.Write); }
+            if (this.Delete) { sb.Append(Constants.Sas.Permissions.Delete); }
             return sb.ToString();
         }
 
         /// <summary>
-        /// Parse a permissions string into a new <see cref="SnapshotSasPermissions"/>.
+        /// Parse a permissions string into a new <see cref="BlobSasPermissions"/>.
         /// </summary>
         /// <param name="s">Permissions string to parse.</param>
-        /// <returns>The parsed <see cref="SnapshotSasPermissions"/>.</returns>
-        public static SnapshotSasPermissions Parse(string s)
+        /// <returns>The parsed <see cref="BlobSasPermissions"/>.</returns>
+        public static BlobSasPermissions Parse(string s)
         {
             // Clear the flags
-            var p = new SnapshotSasPermissions();
+            var p = new BlobSasPermissions();
             foreach (var c in s)
             {
                 switch (c)
                 {
                     case Constants.Sas.Permissions.Read: p.Read = true; break;
+                    case Constants.Sas.Permissions.Add: p.Add = true; break;
+                    case Constants.Sas.Permissions.Create: p.Create = true; break;
                     case Constants.Sas.Permissions.Write: p.Write = true; break;
                     case Constants.Sas.Permissions.Delete: p.Delete = true; break;
                     default: throw Errors.InvalidPermission(c);
@@ -80,46 +82,52 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Check if two SnapshotSasPermissions instances are equal.
+        /// Check if two BlobSasPermissions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => obj is SnapshotSasPermissions other && this.Equals(other);
+            => obj is BlobSasPermissions other && this.Equals(other);
 
         /// <summary>
-        /// Get a hash code for the SnapshotSasPermissions.
+        /// Get a hash code for the BlobSasPermissions.
         /// </summary>
-        /// <returns>Hash code for the SnapshotSasPermissions.</returns>
+        /// <returns>Hash code for the BlobSasPermissions.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => (this.Read ? 0b000001 : 0)
-             + (this.Write ? 0b000010 : 0)
-             + (this.Delete ? 0b000100 : 0)
+            => (this.Read   ? 0b00001 : 0)
+             + (this.Add    ? 0b00010 : 0)
+             + (this.Create ? 0b00100 : 0)
+             + (this.Write  ? 0b01000 : 0)
+             + (this.Delete ? 0b10000 : 0)
             ;
 
         /// <summary>
-        /// Check if two SnapshotSasPermissions instances are equal.
+        /// Check if two BlobSasPermissions instances are equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(SnapshotSasPermissions left, SnapshotSasPermissions right) => left.Equals(right);
+        public static bool operator ==(BlobSasPermissions left, BlobSasPermissions right) => left.Equals(right);
 
         /// <summary>
-        /// Check if two SnapshotSasPermissions instances are not equal.
+        /// Check if two BlobSasPermissions instances are not equal.
         /// </summary>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(SnapshotSasPermissions left, SnapshotSasPermissions right) => !(left == right);
+        public static bool operator !=(BlobSasPermissions left, BlobSasPermissions right) => !(left == right);
 
         /// <summary>
-        /// Check if two SnapshotSasPermissions instances are equal.
+        /// Check if two BlobSasPermissions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(SnapshotSasPermissions other)
+        public bool Equals(BlobSasPermissions other)
             => this.Read == other.Read
+            && this.Add == other.Add
+            && this.Create == other.Create
             && this.Write == other.Write
             && this.Delete == other.Delete
             ;

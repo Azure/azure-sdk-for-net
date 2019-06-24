@@ -3,9 +3,8 @@
 // license information.
 
 using System;
-using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Tests;
+using Azure.Storage.Sas;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test

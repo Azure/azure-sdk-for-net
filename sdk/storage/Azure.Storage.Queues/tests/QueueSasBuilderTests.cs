@@ -3,10 +3,8 @@
 // license information.
 
 using System;
-using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Tests;
-using Azure.Storage.Test;
+using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.Constants;
 
@@ -61,7 +59,7 @@ namespace Azure.Storage.Queues.Test
             var sasQueryParameters = queueSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
 
             // Assert
-            Assert.AreEqual(SasQueryParameters.SasVersion, sasQueryParameters.Version);
+            Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
             Assert.AreEqual(String.Empty, sasQueryParameters.Services);
             Assert.AreEqual(String.Empty, sasQueryParameters.ResourceTypes);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
@@ -118,7 +116,7 @@ namespace Azure.Storage.Queues.Test
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
                 SasProtocol.Https.ToString(),
-                includeVersion ? constants.Sas.Version:  SasQueryParameters.SasVersion);
+                includeVersion ? constants.Sas.Version:  SasQueryParameters.DefaultSasVersion);
 
             return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
         }

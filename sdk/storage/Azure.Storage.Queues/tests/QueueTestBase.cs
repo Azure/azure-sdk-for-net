@@ -8,8 +8,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
@@ -97,10 +97,10 @@ namespace Azure.Storage.Queues.Tests
                 TestConfigurations.DefaultTargetTenant.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(SharedKeyCredentials sharedKeyCredentials = default)
-            => new AccountSasSignatureValues
+            => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { Queue = true }.ToString(),
+                Services = new AccountSasServices { Queues = true }.ToString(),
                 ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),

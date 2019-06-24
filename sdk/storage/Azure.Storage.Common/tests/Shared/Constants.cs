@@ -6,8 +6,7 @@ using System;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
-using Azure.Storage.Common;
+using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Test

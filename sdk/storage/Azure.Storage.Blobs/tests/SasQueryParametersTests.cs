@@ -3,8 +3,7 @@
 // license information.
 
 using System;
-using Azure.Core.Testing;
-using Azure.Storage.Common;
+using Azure.Storage.Sas;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 

@@ -3,12 +3,12 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="BlobSasBuilder"/> is used to generate a Shared Access
@@ -27,8 +27,9 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The optional signed protocol field specifies the protocol
         /// permitted for a request made with the SAS.  Possible values are
-        /// <see cref="SasProtocol.HttpsAndHttp"/>, <see cref="SasProtocol.Https"/>,
-        /// and <see cref="SasProtocol.None"/>.
+        /// <see cref="SasProtocol.HttpsAndHttp"/>,
+        /// <see cref="SasProtocol.Https"/>, and
+        /// <see cref="SasProtocol.None"/>.
         /// </summary>
         public SasProtocol Protocol { get; set; }
 
@@ -52,8 +53,9 @@ namespace Azure.Storage.Blobs
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
         /// stored access policy.  The <see cref="BlobSasPermissions"/>, 
-        /// <see cref="ContainerSasPermissions"/>, and <see cref="SnapshotSasPermissions"/>
-        /// can be used to create the permissions string.
+        /// <see cref="ContainerSasPermissions"/>, and
+        /// <see cref="SnapshotSasPermissions"/> can be used to create the
+        /// permissions string.
         /// </summary>
         public string Permissions { get; set; }
 
@@ -79,14 +81,14 @@ namespace Azure.Storage.Blobs
         public string ContainerName { get; set; }
 
         /// <summary>
-        /// The name of the blob being made accessible, or <see cref="String.Empty"/>
-        /// for a container SAS.
+        /// The name of the blob being made accessible, or
+        /// <see cref="String.Empty"/> for a container SAS.
         /// </summary>
         public string BlobName { get; set; }
 
         /// <summary>
-        /// The name of the snapshot being made accessible, or <see cref="String.Empty"/>
-        /// for a blob SAS.
+        /// The name of the snapshot being made accessible, or
+        /// <see cref="String.Empty"/> for a blob SAS.
         /// </summary>
         public string Snapshot { get; set; }
 
@@ -143,9 +145,10 @@ namespace Azure.Storage.Blobs
         /// The storage account's <see cref="SharedKeyCredentials"/>.
         /// </param>
         /// <returns>
-        /// The <see cref="SasQueryParameters"/> used for authenticating requests.
+        /// The <see cref="BlobSasQueryParameters"/> used for authenticating
+        /// requests.
         /// </returns>
-        public SasQueryParameters ToSasQueryParameters(SharedKeyCredentials sharedKeyCredential)
+        public BlobSasQueryParameters ToSasQueryParameters(SharedKeyCredentials sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw new ArgumentNullException(nameof(sharedKeyCredential));
 
@@ -174,7 +177,7 @@ namespace Azure.Storage.Blobs
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
 
-            var p = new SasQueryParameters(
+            var p = new BlobSasQueryParameters(
                 version: this.Version, 
                 services: null, 
                 resourceTypes: null, 
@@ -200,9 +203,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
-        /// The <see cref="SasQueryParameters"/> used for authenticating requests.
+        /// The <see cref="BlobSasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        public SasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
+        public BlobSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
             userDelegationKey = userDelegationKey ?? throw new ArgumentNullException(nameof(userDelegationKey));
 
@@ -238,7 +241,7 @@ namespace Azure.Storage.Blobs
 
             var signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
-            var p = new SasQueryParameters(
+            var p = new BlobSasQueryParameters(
                 version: this.Version,
                 services: null,
                 resourceTypes: null,
@@ -324,15 +327,24 @@ namespace Azure.Storage.Blobs
             }
             if (String.IsNullOrEmpty(this.Version))
             {
-                this.Version = SasQueryParameters.SasVersion;
+                this.Version = SasQueryParameters.DefaultSasVersion;
             }
         }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() =>
+            base.ToString();
 
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is BlobSasBuilder other && this.Equals(other);
 
@@ -340,22 +352,22 @@ namespace Azure.Storage.Blobs
         /// Get a hash code for the BlobSasBuilder.
         /// </summary>
         /// <returns>Hash code for the BlobSasBuilder.</returns>
-        public override int GetHashCode()
-            => this.BlobName.GetHashCode()
-            ^ this.CacheControl.GetHashCode()
-            ^ this.ContainerName.GetHashCode()
-            ^ this.ContentDisposition.GetHashCode()
-            ^ this.ContentEncoding.GetHashCode()
-            ^ this.ContentLanguage.GetHashCode()
-            ^ this.ContentType.GetHashCode()
-            ^ this.ExpiryTime.GetHashCode()
-            ^ this.Identifier.GetHashCode()
-            ^ this.IPRange.GetHashCode()
-            ^ this.Permissions.GetHashCode()
-            ^ this.Protocol.GetHashCode()
-            ^ this.StartTime.GetHashCode()
-            ^ this.Version.GetHashCode()
-            ;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() =>
+            this.BlobName.GetHashCode() ^
+            this.CacheControl.GetHashCode() ^
+            this.ContainerName.GetHashCode() ^
+            this.ContentDisposition.GetHashCode() ^
+            this.ContentEncoding.GetHashCode() ^
+            this.ContentLanguage.GetHashCode() ^
+            this.ContentType.GetHashCode() ^
+            this.ExpiryTime.GetHashCode() ^
+            this.Identifier.GetHashCode() ^
+            this.IPRange.GetHashCode() ^
+            this.Permissions.GetHashCode() ^
+            this.Protocol.GetHashCode() ^
+            this.StartTime.GetHashCode() ^
+            this.Version.GetHashCode();
 
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
@@ -363,7 +375,8 @@ namespace Azure.Storage.Blobs
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobSasBuilder left, BlobSasBuilder right) => left.Equals(right);
+        public static bool operator ==(BlobSasBuilder left, BlobSasBuilder right) =>
+            left.Equals(right);
 
         /// <summary>
         /// Check if two BlobSasBuilder instances are not equal.
@@ -371,28 +384,28 @@ namespace Azure.Storage.Blobs
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobSasBuilder left, BlobSasBuilder right) => !(left == right);
+        public static bool operator !=(BlobSasBuilder left, BlobSasBuilder right) =>
+            !(left == right);
 
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobSasBuilder other)
-            => this.BlobName == other.BlobName
-            && this.CacheControl == other.CacheControl
-            && this.ContainerName == other.ContainerName
-            && this.ContentDisposition == other.ContentDisposition
-            && this.ContentEncoding == other.ContentEncoding
-            && this.ContentLanguage == other.ContentEncoding
-            && this.ContentType == other.ContentType
-            && this.ExpiryTime == other.ExpiryTime
-            && this.Identifier == other.Identifier
-            && this.IPRange == other.IPRange
-            && this.Permissions == other.Permissions
-            && this.Protocol == other.Protocol
-            && this.StartTime == other.StartTime
-            && this.Version == other.Version
-            ;
+        public bool Equals(BlobSasBuilder other) =>
+            this.BlobName == other.BlobName &&
+            this.CacheControl == other.CacheControl &&
+            this.ContainerName == other.ContainerName &&
+            this.ContentDisposition == other.ContentDisposition &&
+            this.ContentEncoding == other.ContentEncoding &&
+            this.ContentLanguage == other.ContentEncoding &&
+            this.ContentType == other.ContentType &&
+            this.ExpiryTime == other.ExpiryTime &&
+            this.Identifier == other.Identifier &&
+            this.IPRange == other.IPRange &&
+            this.Permissions == other.Permissions &&
+            this.Protocol == other.Protocol &&
+            this.StartTime == other.StartTime &&
+            this.Version == other.Version;
     }
 }

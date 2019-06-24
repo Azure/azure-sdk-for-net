@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Net;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// Represents a range of allowed IP addresses for constructing a Shared
@@ -113,7 +113,7 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Check if two <see cref="IPRange"/> instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(IPRange other) =>
             ((IsEmpty(this.Start) && IsEmpty(other.Start)) ||

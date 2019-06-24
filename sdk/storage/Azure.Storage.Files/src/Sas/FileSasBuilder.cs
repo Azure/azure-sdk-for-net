@@ -3,9 +3,10 @@
 // license information.
 
 using System;
+using System.ComponentModel;
 using Azure.Storage.Common;
 
-namespace Azure.Storage.Files
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="FileSasBuilder"/> is used to generate a Shared Access
@@ -139,7 +140,7 @@ namespace Azure.Storage.Files
 
             if (String.IsNullOrEmpty(this.Version))
             {
-                this.Version = SasQueryParameters.SasVersion;
+                this.Version = SasQueryParameters.DefaultSasVersion;
             }
 
             var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
@@ -194,10 +195,19 @@ namespace Azure.Storage.Files
                : $"/file/{account}/{shareName}";
 
         /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() =>
+            base.ToString();
+
+        /// <summary>
         /// Check if two FileSasBuilder instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is FileSasBuilder other && this.Equals(other);
 
@@ -205,6 +215,7 @@ namespace Azure.Storage.Files
         /// Get a hash code for the FileSasBuilder.
         /// </summary>
         /// <returns>Hash code for the FileSasBuilder.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
             => this.CacheControl.GetHashCode()
             ^ this.ContentDisposition.GetHashCode()
