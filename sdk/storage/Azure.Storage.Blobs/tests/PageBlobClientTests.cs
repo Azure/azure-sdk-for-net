@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
                 {
                     await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     var lastProgress = progressList.Last();
                     Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");

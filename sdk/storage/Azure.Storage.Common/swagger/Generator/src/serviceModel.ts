@@ -273,6 +273,9 @@ function createServiceInfo(project: IProject): IServiceInfo {
         extensionsName: <string>optional(
             () => project.swagger.info[`x-ms-code-generation-settings`][`client-extensions-name`],
             title + ' Extensions'),
+        modelFactoryName: <string>optional(
+            () => project.swagger.info[`x-ms-code-generation-settings`][`client-model-factory-name`],
+            title + ' ModelFactory'),
         versions: [ <string>required(() => project.swagger.info.version) ],
         public: isPublic,
         consumes: [`application/xml`],

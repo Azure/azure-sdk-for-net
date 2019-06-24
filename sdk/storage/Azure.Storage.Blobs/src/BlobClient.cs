@@ -214,7 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
         /// </remarks>
-        public BlobClient WithSnapshot(string snapshot) => this.WithSnapshotImpl(snapshot);
+        public virtual BlobClient WithSnapshot(string snapshot) => this.WithSnapshotImpl(snapshot);
 
         /// <summary>
         /// Creates a new instance of the <see cref="BlobClient"/> class
@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         /// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
         /// <returns>The new <see cref="BlobClient"/> instance referencing the verionId.</returns>
-        //public BlobClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
+        //public virtual BlobClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobClient WithVersionIdImpl(string versionId)
         //{
@@ -283,7 +283,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobDownloadInfo>> DownloadAsync(
+        public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             BlobAccessConditions? accessConditions = default,
             bool rangeGetContentHash = default,
@@ -463,7 +463,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobCopyInfo>> StartCopyFromUriAsync(
+        public virtual async Task<Response<BlobCopyInfo>> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
@@ -535,7 +535,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> AbortCopyFromUriAsync(
+        public virtual async Task<Response> AbortCopyFromUriAsync(
             string copyId,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -599,7 +599,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             DeleteSnapshotsOption? deleteOptions = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -656,7 +656,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> UndeleteAsync(
+        public virtual async Task<Response> UndeleteAsync(
             CancellationToken cancellationToken = default)
         {
             using (this.Pipeline.BeginLoggingScope(nameof(BlobClient)))
@@ -706,7 +706,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -767,7 +767,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobInfo>> SetHttpHeadersAsync(
+        public virtual async Task<Response<BlobInfo>> SetHttpHeadersAsync(
             BlobHttpHeaders? httpHeaders = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -845,7 +845,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobInfo>> SetMetadataAsync(
+        public virtual async Task<Response<BlobInfo>> SetMetadataAsync(
             Metadata metadata,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -916,7 +916,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
+        public virtual async Task<Response<BlobSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
             BlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -994,7 +994,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> AcquireLeaseAsync(
+        public virtual async Task<Response<Lease>> AcquireLeaseAsync(
             int duration,
             string proposedId = default,
             HttpAccessConditions? httpAccessConditions = default,
@@ -1064,7 +1064,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> RenewLeaseAsync(
+        public virtual async Task<Response<Lease>> RenewLeaseAsync(
             string leaseId,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -1132,7 +1132,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobInfo>> ReleaseLeaseAsync(
+        public virtual async Task<Response<BlobInfo>> ReleaseLeaseAsync(
             string leaseId,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -1213,7 +1213,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> BreakLeaseAsync(
+        public virtual async Task<Response<Lease>> BreakLeaseAsync(
             int? breakPeriodInSeconds = default,
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default)
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> ChangeLeaseAsync(
+        public virtual async Task<Response<Lease>> ChangeLeaseAsync(
             string leaseId,
             string proposedId,
             HttpAccessConditions? httpAccessConditions = default,
@@ -1357,7 +1357,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> SetTierAsync(
+        public virtual async Task<Response> SetTierAsync(
             AccessTier accessTier,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default)

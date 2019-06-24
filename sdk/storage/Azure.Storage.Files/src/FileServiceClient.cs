@@ -164,7 +164,7 @@ namespace Azure.Storage.Files
         /// <returns>
         /// A <see cref="ShareClient"/> for the desired share.
         /// </returns>
-        public ShareClient GetShareClient(string shareName) => new ShareClient(this.Uri.AppendToPath(shareName), this._pipeline);
+        public virtual ShareClient GetShareClient(string shareName) => new ShareClient(this.Uri.AppendToPath(shareName), this._pipeline);
 
         /// <summary>
         /// The <see cref="ListSharesSegmentAsync"/> operation returns a
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<SharesSegment>> ListSharesSegmentAsync(
+        public virtual async Task<Response<SharesSegment>> ListSharesSegmentAsync(
             string marker = default,
             SharesSegmentOptions? options = default,
             CancellationToken cancellationToken = default)
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<FileServiceProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<FileServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileServiceClient)))
@@ -308,7 +308,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> SetPropertiesAsync(
+        public virtual async Task<Response> SetPropertiesAsync(
             FileServiceProperties properties,
             CancellationToken cancellationToken = default)
         {

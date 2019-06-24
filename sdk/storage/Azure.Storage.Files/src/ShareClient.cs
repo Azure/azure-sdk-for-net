@@ -178,7 +178,7 @@ namespace Azure.Storage.Files
         /// <returns>
         /// A new <see cref="ShareClient"/> instance.
         /// </returns>
-        public ShareClient WithSnapshot(string snapshot)
+        public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(this.Uri) { Snapshot = snapshot };
             return new ShareClient(p.ToUri(), this._pipeline);
@@ -192,7 +192,7 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
-        public DirectoryClient GetDirectoryClient(string directoryName)
+        public virtual DirectoryClient GetDirectoryClient(string directoryName)
             => new DirectoryClient(this.Uri.AppendToPath(directoryName), this._pipeline);
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareInfo>> CreateAsync(
+        public virtual async Task<Response<ShareInfo>> CreateAsync(
             Metadata metadata = default, 
             int? quotaInBytes = default,
             CancellationToken cancellationToken = default)
@@ -274,7 +274,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
+        public virtual async Task<Response<ShareSnapshotInfo>> CreateSnapshotAsync(
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default)
         {
@@ -380,7 +380,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<ShareProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default)
         {
@@ -430,7 +430,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareInfo>> SetQuotaAsync(
+        public virtual async Task<Response<ShareInfo>> SetQuotaAsync(
             int quotaInBytes = default,
             CancellationToken cancellationToken = default)
         {
@@ -483,7 +483,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareInfo>> SetMetadataAsync(
+        public virtual async Task<Response<ShareInfo>> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default)
         {
@@ -532,7 +532,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
@@ -583,7 +583,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareInfo>> SetAccessPolicyAsync(
+        public virtual async Task<Response<ShareInfo>> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default)
         {
@@ -630,7 +630,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ShareStatistics>> GetStatisticsAsync(
+        public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))

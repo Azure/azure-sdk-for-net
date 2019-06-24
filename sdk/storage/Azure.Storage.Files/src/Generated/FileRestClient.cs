@@ -4780,6 +4780,23 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.DirectoryItem value);
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new DirectoryItem instance for mocking.
+        /// </summary>
+        public static DirectoryItem DirectoryItem(
+            string name)
+        {
+            var _model = new DirectoryItem();
+            _model.Name = name;
+            return _model;
+        }
+    }
 }
 #endregion class DirectoryItem
 
@@ -4811,6 +4828,23 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileProperty value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileProperty instance for mocking.
+        /// </summary>
+        public static FileProperty FileProperty(
+            long contentLength)
+        {
+            var _model = new FileProperty();
+            _model.ContentLength = contentLength;
+            return _model;
+        }
     }
 }
 #endregion class FileProperty
@@ -4869,6 +4903,25 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileItem value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileItem instance for mocking.
+        /// </summary>
+        public static FileItem FileItem(
+            string name,
+            Azure.Storage.Files.Models.FileProperty properties)
+        {
+            var _model = new FileItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            return _model;
+        }
     }
 }
 #endregion class FileItem
@@ -4952,6 +5005,37 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandle value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageHandle instance for mocking.
+        /// </summary>
+        public static StorageHandle StorageHandle(
+            string handleId,
+            string path,
+            string fileId,
+            string sessionId,
+            string clientIp,
+            System.DateTimeOffset openTime,
+            string parentId = default,
+            System.DateTimeOffset? lastReconnectTime = default)
+        {
+            var _model = new StorageHandle();
+            _model.HandleId = handleId;
+            _model.Path = path;
+            _model.FileId = fileId;
+            _model.SessionId = sessionId;
+            _model.ClientIp = clientIp;
+            _model.OpenTime = openTime;
+            _model.ParentId = parentId;
+            _model.LastReconnectTime = lastReconnectTime;
+            return _model;
+        }
     }
 }
 #endregion class StorageHandle
@@ -5100,6 +5184,41 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FilesAndDirectoriesSegment value);
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new FilesAndDirectoriesSegment instance for mocking.
+        /// </summary>
+        public static FilesAndDirectoriesSegment FilesAndDirectoriesSegment(
+            string serviceEndpoint,
+            string shareName,
+            string directoryPath,
+            string nextMarker,
+            string shareSnapshot = default,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.DirectoryItem> directoryItems = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileItem> fileItems = default)
+        {
+            var _model = new FilesAndDirectoriesSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ShareName = shareName;
+            _model.DirectoryPath = directoryPath;
+            _model.NextMarker = nextMarker;
+            _model.ShareSnapshot = shareSnapshot;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.DirectoryItems = directoryItems;
+            _model.FileItems = fileItems;
+            return _model;
+        }
+    }
 }
 #endregion class FilesAndDirectoriesSegment
 
@@ -5170,6 +5289,25 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandlesSegment value);
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageHandlesSegment instance for mocking.
+        /// </summary>
+        public static StorageHandlesSegment StorageHandlesSegment(
+            string nextMarker,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> handles = default)
+        {
+            var _model = new StorageHandlesSegment();
+            _model.NextMarker = nextMarker;
+            _model.Handles = handles;
+            return _model;
+        }
+    }
 }
 #endregion class StorageHandlesSegment
 
@@ -5226,6 +5364,27 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItemProperties value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareItemProperties instance for mocking.
+        /// </summary>
+        public static ShareItemProperties ShareItemProperties(
+            System.DateTimeOffset? lastModified = default,
+            Azure.ETag? etag = default,
+            int? quota = default)
+        {
+            var _model = new ShareItemProperties();
+            _model.LastModified = lastModified;
+            _model.Etag = etag;
+            _model.Quota = quota;
+            return _model;
+        }
     }
 }
 #endregion class ShareItemProperties
@@ -5310,6 +5469,29 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareItem value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareItem instance for mocking.
+        /// </summary>
+        public static ShareItem ShareItem(
+            string name,
+            Azure.Storage.Files.Models.ShareItemProperties properties,
+            string snapshot = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new ShareItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Snapshot = snapshot;
+            _model.Metadata = metadata;
+            return _model;
+        }
     }
 }
 #endregion class ShareItem
@@ -5417,6 +5599,33 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SharesSegment value);
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new SharesSegment instance for mocking.
+        /// </summary>
+        public static SharesSegment SharesSegment(
+            string serviceEndpoint,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ShareItem> shareItems = default)
+        {
+            var _model = new SharesSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.ShareItems = shareItems;
+            return _model;
+        }
+    }
 }
 #endregion class SharesSegment
 
@@ -5454,6 +5663,25 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.Range value);
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new Range instance for mocking.
+        /// </summary>
+        public static Range Range(
+            long start,
+            long end)
+        {
+            var _model = new Range();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
     }
 }
 #endregion class Range
@@ -5534,6 +5762,23 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.ShareStatistics value);
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareStatistics instance for mocking.
+        /// </summary>
+        public static ShareStatistics ShareStatistics(
+            int shareUsageBytes)
+        {
+            var _model = new ShareStatistics();
+            _model.ShareUsageBytes = shareUsageBytes;
+            return _model;
+        }
+    }
 }
 #endregion class ShareStatistics
 
@@ -5554,6 +5799,25 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. Any operation that modifies the share or its properties or metadata updates the last modified time. Operations on files do not affect the last modified time of the share.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareInfo instance for mocking.
+        /// </summary>
+        public static ShareInfo ShareInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ShareInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class ShareInfo
@@ -5594,6 +5858,29 @@ namespace Azure.Storage.Files.Models
             this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        public static ShareProperties ShareProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            int quota)
+        {
+            var _model = new ShareProperties();
+            _model.Metadata = metadata;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.Quota = quota;
+            return _model;
+        }
+    }
 }
 #endregion class ShareProperties
 
@@ -5620,6 +5907,27 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new ShareSnapshotInfo instance for mocking.
+        /// </summary>
+        public static ShareSnapshotInfo ShareSnapshotInfo(
+            string snapshot,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ShareSnapshotInfo();
+            _model.Snapshot = snapshot;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
 }
 #endregion class ShareSnapshotInfo
 
@@ -5640,6 +5948,25 @@ namespace Azure.Storage.Files.Models
         /// Returns the date and time the share was last modified. Any operation that modifies the directory or its properties updates the last modified time. Operations on files do not affect the last modified time of the directory.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageDirectoryInfo instance for mocking.
+        /// </summary>
+        public static StorageDirectoryInfo StorageDirectoryInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new StorageDirectoryInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class StorageDirectoryInfo
@@ -5680,6 +6007,29 @@ namespace Azure.Storage.Files.Models
             this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageDirectoryProperties instance for mocking.
+        /// </summary>
+        public static StorageDirectoryProperties StorageDirectoryProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            bool isServerEncrypted)
+        {
+            var _model = new StorageDirectoryProperties();
+            _model.Metadata = metadata;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
+    }
 }
 #endregion class StorageDirectoryProperties
 
@@ -5700,6 +6050,25 @@ namespace Azure.Storage.Files.Models
         /// Contains count of number of handles closed.
         /// </summary>
         public int NumberOfHandlesClosed { get; internal set; }
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageClosedHandlesSegment instance for mocking.
+        /// </summary>
+        public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
+            string marker,
+            int numberOfHandlesClosed)
+        {
+            var _model = new StorageClosedHandlesSegment();
+            _model.Marker = marker;
+            _model.NumberOfHandlesClosed = numberOfHandlesClosed;
+            return _model;
+        }
     }
 }
 #endregion class StorageClosedHandlesSegment
@@ -5726,6 +6095,27 @@ namespace Azure.Storage.Files.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileInfo instance for mocking.
+        /// </summary>
+        public static StorageFileInfo StorageFileInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            bool isServerEncrypted)
+        {
+            var _model = new StorageFileInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
     }
 }
 #endregion class StorageFileInfo
@@ -6073,6 +6463,57 @@ namespace Azure.Storage.Files.Models
             this.ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileProperties instance for mocking.
+        /// </summary>
+        public static StorageFileProperties StorageFileProperties(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            byte[] contentHash,
+            System.Collections.Generic.IEnumerable<string> contentEncoding,
+            string cacheControl,
+            string contentType,
+            System.Collections.Generic.IEnumerable<string> contentLanguage,
+            System.DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            long contentLength,
+            string copySource,
+            Azure.Storage.Files.Models.Header fileType,
+            Azure.Storage.Files.Models.CopyStatus copyStatus,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            bool isServerEncrypted,
+            string contentDisposition)
+        {
+            var _model = new StorageFileProperties();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.ContentHash = contentHash;
+            _model.ContentEncoding = contentEncoding;
+            _model.CacheControl = cacheControl;
+            _model.ContentType = contentType;
+            _model.ContentLanguage = contentLanguage;
+            _model.CopyCompletionTime = copyCompletionTime;
+            _model.CopyStatusDescription = copyStatusDescription;
+            _model.CopyId = copyId;
+            _model.CopyProgress = copyProgress;
+            _model.ContentLength = contentLength;
+            _model.CopySource = copySource;
+            _model.FileType = fileType;
+            _model.CopyStatus = copyStatus;
+            _model.Metadata = metadata;
+            _model.IsServerEncrypted = isServerEncrypted;
+            _model.ContentDisposition = contentDisposition;
+            return _model;
+        }
+    }
 }
 #endregion class StorageFileProperties
 
@@ -6155,6 +6596,29 @@ namespace Azure.Storage.Files.Models
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileUploadInfo instance for mocking.
+        /// </summary>
+        public static StorageFileUploadInfo StorageFileUploadInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            bool isServerEncrypted)
+        {
+            var _model = new StorageFileUploadInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
+    }
 }
 #endregion class StorageFileUploadInfo
 
@@ -6194,6 +6658,29 @@ namespace Azure.Storage.Files.Models
             this.Ranges = new System.Collections.Generic.List<Azure.Storage.Files.Models.Range>();
         }
     }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileRangeInfo instance for mocking.
+        /// </summary>
+        public static StorageFileRangeInfo StorageFileRangeInfo(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            long fileContentLength,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.Range> ranges)
+        {
+            var _model = new StorageFileRangeInfo();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.FileContentLength = fileContentLength;
+            _model.Ranges = ranges;
+            return _model;
+        }
+    }
 }
 #endregion class StorageFileRangeInfo
 
@@ -6224,6 +6711,29 @@ namespace Azure.Storage.Files.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Files.Models.CopyStatus CopyStatus { get; internal set; }
+    }
+
+    /// <summary>
+    /// FileModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FileModelFactory
+    {
+        /// <summary>
+        /// Creates a new StorageFileCopyInfo instance for mocking.
+        /// </summary>
+        public static StorageFileCopyInfo StorageFileCopyInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string copyId,
+            Azure.Storage.Files.Models.CopyStatus copyStatus)
+        {
+            var _model = new StorageFileCopyInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.CopyId = copyId;
+            _model.CopyStatus = copyStatus;
+            return _model;
+        }
     }
 }
 #endregion class StorageFileCopyInfo

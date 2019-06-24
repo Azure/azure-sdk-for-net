@@ -9,6 +9,7 @@
       "namespace": "Azure.Storage.Files",
       "client-name": "FileRestClient",
       "client-extensions-name": "FileExtensions",
+      "client-model-factory-name": "FileModelFactory",
       "x-ms-skip-path-components": true,
       "x-ms-public": false
     }

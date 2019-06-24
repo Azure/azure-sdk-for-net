@@ -780,6 +780,43 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 }
             }
         });
+
+        // If there are readonly properties, we'll create a model factory
+        const props = <IProperty[]>Object.values(type.properties);
+        if (type.public && props.some(p => p.readonly)) {
+            const factoryName = naming.type(model.info.modelFactoryName);
+            const typeName = naming.type(type.name);
+            const modelName = `_model`;
+            w.line();
+            w.line(`/// <summary>`);
+            w.line(`/// ${factoryName} provides utilities for mocking.`);
+            w.line(`/// </summary>`);
+            w.line(`public static partial class ${factoryName}`);
+            w.scope(`{`, `}`, () => {
+                w.line(`/// <summary>`);
+                w.line(`/// Creates a new ${typeName} instance for mocking.`);
+                w.line(`/// </summary>`);
+                w.write(`public static ${typeName} ${typeName}(`);
+                w.scope(() => {
+                    const separator = IndentWriter.createFenceposter();
+                    // Sort `= default` parameters last
+                    props.sort((a: IProperty, b: IProperty) => a.required ? -1 : b.required ? 1 : 0);
+                    for (const property of props) {
+                        if (separator()) { w.line(`,`); }
+                        w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
+                        if (!property.required) { w.write(` = default`); }
+                    }
+                    w.write(`)`);
+                });
+                w.scope('{', '}', () => {
+                    w.line(`var ${modelName} = new ${typeName}();`);
+                    for (const property of props) {
+                        w.line(`${modelName}.${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
+                    }
+                    w.line(`return ${modelName};`);
+                });
+            });
+        }
     });
     w.line(`#endregion ${regionName}`);
 }

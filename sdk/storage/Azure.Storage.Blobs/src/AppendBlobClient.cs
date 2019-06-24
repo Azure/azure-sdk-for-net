@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
             BlobHttpHeaders? httpHeaders = default, 
             Metadata metadata = default, 
             AppendBlobAccessConditions? accessConditions = default,
@@ -318,7 +318,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+        public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
             Stream content,
             byte[] transactionalContentHash = default, 
             AppendBlobAccessConditions? accessConditions = default, 
@@ -427,7 +427,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+        public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange = default,
             byte[] sourceContentHash = default,

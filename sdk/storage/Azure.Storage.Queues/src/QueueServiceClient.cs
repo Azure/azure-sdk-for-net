@@ -181,7 +181,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
-        public QueueClient GetQueueClient(string queueName)
+        public virtual QueueClient GetQueueClient(string queueName)
             => new QueueClient(this.Uri.AppendToPath(queueName), this._pipeline);
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
         /// </remarks>
-        public async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
+        public virtual async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
             QueuesSegmentOptions? options = default,
             string marker = default,
             CancellationToken cancellationToken = default)
@@ -251,7 +251,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response{QueueServiceProperties}}"/>
         /// </returns>
-        public async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))
@@ -292,7 +292,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> SetPropertiesAsync(
+        public virtual async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default)
         {
@@ -336,7 +336,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response{QueueServiceStatistics}}"/>
         /// </returns>
-        public async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
+        public virtual async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueServiceClient)))

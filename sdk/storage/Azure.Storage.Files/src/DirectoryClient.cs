@@ -178,7 +178,7 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="FileClient"/> instance.</returns>
-        public FileClient GetFileClient(string fileName)
+        public virtual FileClient GetFileClient(string fileName)
             => new FileClient(this.Uri.AppendToPath(fileName), this._pipeline);
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files
         /// </summary>
         /// <param name="directoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
-        public DirectoryClient GetDirectoryClient(string directoryName)
+        public virtual DirectoryClient GetDirectoryClient(string directoryName)
             => new DirectoryClient(this.Uri.AppendToPath(directoryName), this._pipeline);
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageDirectoryInfo>> CreateAsync(
+        public virtual async Task<Response<StorageDirectoryInfo>> CreateAsync(
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
@@ -311,7 +311,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>       
-        public async Task<Response<StorageDirectoryProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<StorageDirectoryProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default)
         {
@@ -363,7 +363,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageDirectoryInfo>> SetMetadataAsync(
+        public virtual async Task<Response<StorageDirectoryInfo>> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default)
         {
@@ -427,7 +427,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
+        public virtual async Task<Response<FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
             string marker = default,
             string shareSnapshot = default,
             FilesAndDirectoriesSegmentOptions? options = default,
@@ -497,7 +497,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+        public virtual async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
             string marker = default,
             int? maxResults = default,
             bool? recursive = default,
@@ -578,7 +578,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks> 
-        public async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
             bool? recursive = default,

@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> StageBlockAsync(
+        public virtual async Task<Response<BlobContentInfo>> StageBlockAsync(
             string base64BlockId, 
             Stream content, 
             byte[] transactionalContentHash = default, 
@@ -538,7 +538,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> StageBlockFromUriAsync(
+        public virtual async Task<Response<BlobContentInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId, 
             HttpRange sourceRange = default, 
@@ -632,7 +632,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+        public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders? blobHttpHeaders = default, 
             Metadata metadata = default,
@@ -719,7 +719,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlockList>> GetBlockListAsync(
+        public virtual async Task<Response<BlockList>> GetBlockListAsync(
             BlockListType? listType = default, 
             string snapshot = default, 
             LeaseAccessConditions? leaseAccessConditions = default,

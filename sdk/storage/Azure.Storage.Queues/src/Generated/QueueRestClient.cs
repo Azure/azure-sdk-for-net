@@ -2587,6 +2587,25 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueItem value);
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueItem instance for mocking.
+        /// </summary>
+        public static QueueItem QueueItem(
+            string name,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new QueueItem();
+            _model.Name = name;
+            _model.Metadata = metadata;
+            return _model;
+        }
+    }
 }
 #endregion class QueueItem
 
@@ -2696,6 +2715,33 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueuesSegment value);
+    }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueuesSegment instance for mocking.
+        /// </summary>
+        public static QueuesSegment QueuesSegment(
+            string serviceEndpoint,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueItem> queueItems = default,
+            string nextMarker = default)
+        {
+            var _model = new QueuesSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.QueueItems = queueItems;
+            _model.NextMarker = nextMarker;
+            return _model;
+        }
     }
 }
 #endregion class QueuesSegment
@@ -2895,6 +2941,25 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.GeoReplication value);
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new GeoReplication instance for mocking.
+        /// </summary>
+        public static GeoReplication GeoReplication(
+            Azure.Storage.Queues.Models.GeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            var _model = new GeoReplication();
+            _model.Status = status;
+            _model.LastSyncTime = lastSyncTime;
+            return _model;
+        }
+    }
 }
 #endregion class GeoReplication
 
@@ -3010,6 +3075,35 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.DequeuedMessage value);
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new DequeuedMessage instance for mocking.
+        /// </summary>
+        public static DequeuedMessage DequeuedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible,
+            long dequeueCount,
+            string messageText)
+        {
+            var _model = new DequeuedMessage();
+            _model.MessageId = messageId;
+            _model.InsertionTime = insertionTime;
+            _model.ExpirationTime = expirationTime;
+            _model.PopReceipt = popReceipt;
+            _model.TimeNextVisible = timeNextVisible;
+            _model.DequeueCount = dequeueCount;
+            _model.MessageText = messageText;
+            return _model;
+        }
+    }
 }
 #endregion class DequeuedMessage
 
@@ -3066,6 +3160,31 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessage value);
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new PeekedMessage instance for mocking.
+        /// </summary>
+        public static PeekedMessage PeekedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            long dequeueCount,
+            string messageText)
+        {
+            var _model = new PeekedMessage();
+            _model.MessageId = messageId;
+            _model.InsertionTime = insertionTime;
+            _model.ExpirationTime = expirationTime;
+            _model.DequeueCount = dequeueCount;
+            _model.MessageText = messageText;
+            return _model;
+        }
+    }
 }
 #endregion class PeekedMessage
 
@@ -3121,6 +3240,31 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.EnqueuedMessage value);
+    }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new EnqueuedMessage instance for mocking.
+        /// </summary>
+        public static EnqueuedMessage EnqueuedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible)
+        {
+            var _model = new EnqueuedMessage();
+            _model.MessageId = messageId;
+            _model.InsertionTime = insertionTime;
+            _model.ExpirationTime = expirationTime;
+            _model.PopReceipt = popReceipt;
+            _model.TimeNextVisible = timeNextVisible;
+            return _model;
+        }
     }
 }
 #endregion class EnqueuedMessage
@@ -3179,6 +3323,23 @@ namespace Azure.Storage.Queues.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueueServiceStatistics value);
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueServiceStatistics instance for mocking.
+        /// </summary>
+        public static QueueServiceStatistics QueueServiceStatistics(
+            Azure.Storage.Queues.Models.GeoReplication geoReplication = default)
+        {
+            var _model = new QueueServiceStatistics();
+            _model.GeoReplication = geoReplication;
+            return _model;
+        }
+    }
 }
 #endregion class QueueServiceStatistics
 
@@ -3208,6 +3369,25 @@ namespace Azure.Storage.Queues.Models
             this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new QueueProperties instance for mocking.
+        /// </summary>
+        public static QueueProperties QueueProperties(
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            int approximateMessagesCount)
+        {
+            var _model = new QueueProperties();
+            _model.Metadata = metadata;
+            _model.ApproximateMessagesCount = approximateMessagesCount;
+            return _model;
+        }
+    }
 }
 #endregion class QueueProperties
 
@@ -3228,6 +3408,25 @@ namespace Azure.Storage.Queues.Models
         /// A UTC date/time value that represents when the message will be visible on the queue.
         /// </summary>
         public System.DateTimeOffset TimeNextVisible { get; internal set; }
+    }
+
+    /// <summary>
+    /// QueueModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueueModelFactory
+    {
+        /// <summary>
+        /// Creates a new UpdatedMessage instance for mocking.
+        /// </summary>
+        public static UpdatedMessage UpdatedMessage(
+            string popReceipt,
+            System.DateTimeOffset timeNextVisible)
+        {
+            var _model = new UpdatedMessage();
+            _model.PopReceipt = popReceipt;
+            _model.TimeNextVisible = timeNextVisible;
+            return _model;
+        }
     }
 }
 #endregion class UpdatedMessage

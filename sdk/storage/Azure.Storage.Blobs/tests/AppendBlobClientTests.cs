@@ -424,7 +424,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
 
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
 

@@ -129,7 +129,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>.
         /// </returns>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             string popReceipt,
             CancellationToken cancellationToken = default)
         {
@@ -182,7 +182,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response{UpdatedMessage}}"/>.
         /// </returns>
-        public async Task<Response<UpdatedMessage>> UpdateAsync(
+        public virtual async Task<Response<UpdatedMessage>> UpdateAsync(
             string messageText,
             string popReceipt,
             TimeSpan visibilityTimeout = default, 

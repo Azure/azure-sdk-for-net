@@ -131,7 +131,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="MessageIdClient"/>
         /// </returns>
-        public MessageIdClient GetMessageIdClient(string messageId) =>
+        public virtual MessageIdClient GetMessageIdClient(string messageId) =>
             new MessageIdClient(this.Uri.AppendToPath(messageId.ToString(CultureInfo.InvariantCulture)), this._pipeline);
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> ClearAsync(
+        public virtual async Task<Response> ClearAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(MessagesClient)))
@@ -192,7 +192,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response{EnqueuedMessage}}"/>
         /// </returns>
-        public async Task<Response<EnqueuedMessage>> EnqueueAsync(
+        public virtual async Task<Response<EnqueuedMessage>> EnqueueAsync(
             string messageText, 
             TimeSpan? visibilityTimeout = default,
             TimeSpan? timeToLive = default,
@@ -252,7 +252,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{DequeuedMessage}}}"/>.
         /// </returns>
-        public async Task<Response<IEnumerable<DequeuedMessage>>> DequeueAsync(
+        public virtual async Task<Response<IEnumerable<DequeuedMessage>>> DequeueAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
             CancellationToken cancellationToken = default)
@@ -301,7 +301,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{PeekedMessage}}}"/>.
         /// </returns>
-        public async Task<Response<IEnumerable<PeekedMessage>>> PeekAsync(
+        public virtual async Task<Response<IEnumerable<PeekedMessage>>> PeekAsync(
             int? maxMessages = default,
             CancellationToken cancellationToken = default)
         {

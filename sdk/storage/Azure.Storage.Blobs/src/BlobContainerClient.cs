@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="blobName">The name of the block blob.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        public BlockBlobClient GetBlockBlobClient(string blobName) => new BlockBlobClient(this.Uri.AppendToPath(blobName), this._pipeline);
+        public virtual BlockBlobClient GetBlockBlobClient(string blobName) => new BlockBlobClient(this.Uri.AppendToPath(blobName), this._pipeline);
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new container
@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerInfo>> CreateAsync(
+        public virtual async Task<Response<ContainerInfo>> CreateAsync(
             PublicAccessType? publicAccessType = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -341,7 +341,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerItem>> GetPropertiesAsync(
+        public virtual async Task<Response<ContainerItem>> GetPropertiesAsync(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -420,7 +420,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerInfo>> SetMetadataAsync(
+        public virtual async Task<Response<ContainerInfo>> SetMetadataAsync(
             Metadata metadata,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -488,7 +488,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerAccessPolicy>> GetAccessPolicyAsync(
+        public virtual async Task<Response<ContainerAccessPolicy>> GetAccessPolicyAsync(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -560,7 +560,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerInfo>> SetAccessPolicyAsync(
+        public virtual async Task<Response<ContainerInfo>> SetAccessPolicyAsync(
             PublicAccessType? accessType = default,
             IEnumerable<SignedIdentifier> permissions = default,
             ContainerAccessConditions? accessConditions = default,
@@ -644,7 +644,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> AcquireLeaseAsync(
+        public virtual async Task<Response<Lease>> AcquireLeaseAsync(
             int duration,
             string proposedId = default,
             ContainerAccessConditions? accessConditions = default,
@@ -718,7 +718,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> RenewLeaseAsync(
+        public virtual async Task<Response<Lease>> RenewLeaseAsync(
             string leaseId,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainerInfo>> ReleaseLeaseAsync(
+        public virtual async Task<Response<ContainerInfo>> ReleaseLeaseAsync(
             string leaseId,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -873,7 +873,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> BreakLeaseAsync(
+        public virtual async Task<Response<Lease>> BreakLeaseAsync(
             int? period = default,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -946,7 +946,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<Lease>> ChangeLeaseAsync(
+        public virtual async Task<Response<Lease>> ChangeLeaseAsync(
             string leaseId,
             string proposedId,
             ContainerAccessConditions? accessConditions = default,
@@ -1027,7 +1027,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
+        public virtual async Task<Response<BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
             string marker = default,
             BlobsSegmentOptions? options = default,
             CancellationToken cancellationToken = default)
@@ -1119,7 +1119,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
+        public virtual async Task<Response<BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
             string marker = default,
             string delimiter = default,
             BlobsSegmentOptions? options = default,

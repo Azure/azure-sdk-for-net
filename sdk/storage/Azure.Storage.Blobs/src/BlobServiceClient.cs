@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
-        public BlobContainerClient GetBlobContainerClient(string containerName) => new BlobContainerClient(this.Uri.AppendToPath(containerName), this._pipeline);
+        public virtual BlobContainerClient GetBlobContainerClient(string containerName) => new BlobContainerClient(this.Uri.AppendToPath(containerName), this._pipeline);
 
         /// <summary>
         /// The <see cref="ListContainersSegmentAsync"/> operation returns a
@@ -223,7 +223,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<ContainersSegment>> ListContainersSegmentAsync(
+        public virtual async Task<Response<ContainersSegment>> ListContainersSegmentAsync(
             string marker = default,
             ContainersSegmentOptions? options = default,
             CancellationToken cancellationToken = default)
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<AccountInfo>> GetAccountInfoAsync(
+        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> SetPropertiesAsync(
+        public virtual async Task<Response> SetPropertiesAsync(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default)
         {
@@ -424,7 +424,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
+        public virtual async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
@@ -475,7 +475,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? start,
             DateTimeOffset expiry,
             CancellationToken cancellationToken = default)

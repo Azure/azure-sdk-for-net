@@ -263,7 +263,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
             long size, 
             long? sequenceNumber = default,
             BlobHttpHeaders? httpHeaders = default,
@@ -359,7 +359,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> UploadPagesAsync(
+        public virtual async Task<Response<BlobContentInfo>> UploadPagesAsync(
             Stream content,
             long offset,
             byte[] transactionalContentHash = default, 
@@ -453,7 +453,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> ClearPagesAsync(
+        public virtual async Task<Response<BlobContentInfo>> ClearPagesAsync(
             HttpRange range, 
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -526,7 +526,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<PageRangesInfo>> GetPageRangesAsync(
+        public virtual async Task<Response<PageRangesInfo>> GetPageRangesAsync(
             HttpRange? range = default, 
             string snapshot = default, 
             PageBlobAccessConditions? accessConditions = default,
@@ -607,7 +607,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
+        public virtual async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
             HttpRange? range = default, 
             string snapshot = default, 
             string prevSnapshot = default, 
@@ -681,7 +681,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobInfo>> ResizeAsync(
+        public virtual async Task<Response<BlobInfo>> ResizeAsync(
             long size, 
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default)
@@ -763,7 +763,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobInfo>> UpdateSequenceNumberAsync(
+        public virtual async Task<Response<BlobInfo>> UpdateSequenceNumberAsync(
             SequenceNumberAction action,
             long? sequenceNumber = default, 
             PageBlobAccessConditions? accessConditions = default,
@@ -890,7 +890,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// This can be determined by performing a <see cref="GetPageRangesDiffAsync"/>
         /// call on the snapshot to compare it to the previous snapshot.
         /// </remarks>
-        public async Task<Response<BlobCopyInfo>> StartCopyIncrementalAsync(
+        public virtual async Task<Response<BlobCopyInfo>> StartCopyIncrementalAsync(
             Uri sourceUri, 
             string snapshot, 
             PageBlobAccessConditions? accessConditions = default,
@@ -989,7 +989,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
+        public virtual async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,

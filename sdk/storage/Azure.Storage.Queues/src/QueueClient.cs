@@ -211,7 +211,7 @@ namespace Azure.Storage.Queues
         /// new <see cref="MessagesClient"/> uses the same request policy
         /// pipeline as the <see cref="QueueClient"/>.
         /// </summary>
-        public MessagesClient GetMessagesClient() => this.MessagesClientInstance.Value;
+        public virtual MessagesClient GetMessagesClient() => this.MessagesClientInstance.Value;
 
         /// <summary>
         /// Creates a queue.
@@ -227,7 +227,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> CreateAsync(
+        public virtual async Task<Response> CreateAsync(
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
@@ -267,7 +267,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -306,7 +306,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response{QueueProperties}}"/>
         /// </returns>
-        public async Task<Response<QueueProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<QueueProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -347,7 +347,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> SetMetadataAsync(
+        public virtual async Task<Response> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default)
         {
@@ -388,7 +388,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{SignedIdentifier}}}"/>
         /// </returns>
-        public async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
+        public virtual async Task<Response<IEnumerable<SignedIdentifier>>> GetAccessPolicyAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -429,7 +429,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Task{Response}"/>
         /// </returns>
-        public async Task<Response> SetAccessPolicyAsync(
+        public virtual async Task<Response> SetAccessPolicyAsync(
             IEnumerable<SignedIdentifier> permissions,
             CancellationToken cancellationToken = default)
         {

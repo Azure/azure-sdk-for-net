@@ -195,7 +195,7 @@ namespace Azure.Storage.Files
         /// <returns>
         /// A new <see cref="FileClient"/> instance.
         /// </returns>
-        public FileClient WithSnapshot(string shareSnapshot)
+        public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
             return new FileClient(builder.ToUri(), this._pipeline);
@@ -231,7 +231,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> CreateAsync(
+        public virtual async Task<Response<StorageFileInfo>> CreateAsync(
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
@@ -296,7 +296,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
+        public virtual async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
             Uri sourceUri,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
@@ -351,7 +351,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> AbortCopyAsync(
+        public virtual async Task<Response> AbortCopyAsync(
             string copyId,
             CancellationToken cancellationToken = default)
         {
@@ -413,7 +413,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
+        public virtual async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             CancellationToken cancellationToken = default)
@@ -544,7 +544,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
+        public virtual async Task<Response> DeleteAsync(
             CancellationToken cancellationToken = default)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
@@ -595,7 +595,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<StorageFileProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default)
         {
@@ -654,7 +654,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
+        public virtual async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
             CancellationToken cancellationToken = default)
@@ -715,7 +715,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> SetMetadataAsync(
+        public virtual async Task<Response<StorageFileInfo>> SetMetadataAsync(
             Metadata metadata,
             CancellationToken cancellationToken = default)
         {
@@ -784,7 +784,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
             FileRangeWriteType writeType,
             HttpRange range,
             Stream content,
@@ -926,7 +926,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
+        public virtual async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
             string shareSnapshot = default,
             CancellationToken cancellationToken = default)
@@ -991,7 +991,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+        public virtual async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
             string marker = default,
             int? maxResults = default,
             CancellationToken cancellationToken = default)
@@ -1063,7 +1063,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
             CancellationToken cancellationToken = default)

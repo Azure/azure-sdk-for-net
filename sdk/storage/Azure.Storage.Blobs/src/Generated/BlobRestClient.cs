@@ -9791,6 +9791,35 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.UserDelegationKey value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedOid,
+            string signedTid,
+            System.DateTimeOffset signedStart,
+            System.DateTimeOffset signedExpiry,
+            string signedService,
+            string signedVersion,
+            string value)
+        {
+            var _model = new UserDelegationKey();
+            _model.SignedOid = signedOid;
+            _model.SignedTid = signedTid;
+            _model.SignedStart = signedStart;
+            _model.SignedExpiry = signedExpiry;
+            _model.SignedService = signedService;
+            _model.SignedVersion = signedVersion;
+            _model.Value = value;
+            return _model;
+        }
+    }
 }
 #endregion class UserDelegationKey
 
@@ -10437,6 +10466,81 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemProperties value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        public static BlobItemProperties BlobItemProperties(
+            string copyId = default,
+            System.DateTimeOffset? creationTime = default,
+            Azure.ETag? eTag = default,
+            long? contentLength = default,
+            string contentType = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            byte[] contentHash = default,
+            string contentDisposition = default,
+            string cacheControl = default,
+            long? blobSequenceNumber = default,
+            Azure.Storage.Blobs.Models.BlobType? blobType = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            System.DateTimeOffset? lastModified = default,
+            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            System.Uri copySource = default,
+            string copyProgress = default,
+            System.DateTimeOffset? copyCompletionTime = default,
+            string copyStatusDescription = default,
+            bool? serverEncrypted = default,
+            bool? incrementalCopy = default,
+            string destinationSnapshot = default,
+            System.DateTimeOffset? deletedTime = default,
+            int? remainingRetentionDays = default,
+            Azure.Storage.Blobs.Models.AccessTier accessTier = default,
+            bool? accessTierInferred = default,
+            Azure.Storage.Blobs.Models.ArchiveStatus archiveStatus = default,
+            System.DateTimeOffset? accessTierChangeTime = default)
+        {
+            var _model = new BlobItemProperties();
+            _model.CopyId = copyId;
+            _model.CreationTime = creationTime;
+            _model.ETag = eTag;
+            _model.ContentLength = contentLength;
+            _model.ContentType = contentType;
+            _model.ContentEncoding = contentEncoding;
+            _model.ContentLanguage = contentLanguage;
+            _model.ContentHash = contentHash;
+            _model.ContentDisposition = contentDisposition;
+            _model.CacheControl = cacheControl;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            _model.BlobType = blobType;
+            _model.LeaseStatus = leaseStatus;
+            _model.LeaseState = leaseState;
+            _model.LeaseDuration = leaseDuration;
+            _model.LastModified = lastModified;
+            _model.CopyStatus = copyStatus;
+            _model.CopySource = copySource;
+            _model.CopyProgress = copyProgress;
+            _model.CopyCompletionTime = copyCompletionTime;
+            _model.CopyStatusDescription = copyStatusDescription;
+            _model.ServerEncrypted = serverEncrypted;
+            _model.IncrementalCopy = incrementalCopy;
+            _model.DestinationSnapshot = destinationSnapshot;
+            _model.DeletedTime = deletedTime;
+            _model.RemainingRetentionDays = remainingRetentionDays;
+            _model.AccessTier = accessTier;
+            _model.AccessTierInferred = accessTierInferred;
+            _model.ArchiveStatus = archiveStatus;
+            _model.AccessTierChangeTime = accessTierChangeTime;
+            return _model;
+        }
+    }
 }
 #endregion class BlobItemProperties
 
@@ -10530,6 +10634,31 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItem value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
+        public static BlobItem BlobItem(
+            string name,
+            Azure.Storage.Blobs.Models.BlobItemProperties properties,
+            bool? deleted = default,
+            string snapshot = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new BlobItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Deleted = deleted;
+            _model.Snapshot = snapshot;
+            _model.Metadata = metadata;
+            return _model;
+        }
     }
 }
 #endregion class BlobItem
@@ -10653,6 +10782,37 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobsFlatSegment value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobsFlatSegment instance for mocking.
+        /// </summary>
+        public static BlobsFlatSegment BlobsFlatSegment(
+            string serviceEndpoint,
+            string containerName,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            string delimiter = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> blobItems = default)
+        {
+            var _model = new BlobsFlatSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerName = containerName;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.Delimiter = delimiter;
+            _model.BlobItems = blobItems;
+            return _model;
+        }
+    }
 }
 #endregion class BlobsFlatSegment
 
@@ -10684,6 +10844,23 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobPrefix value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobPrefix instance for mocking.
+        /// </summary>
+        public static BlobPrefix BlobPrefix(
+            string name)
+        {
+            var _model = new BlobPrefix();
+            _model.Name = name;
+            return _model;
+        }
     }
 }
 #endregion class BlobPrefix
@@ -10825,6 +11002,39 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobsHierarchySegment value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobsHierarchySegment instance for mocking.
+        /// </summary>
+        public static BlobsHierarchySegment BlobsHierarchySegment(
+            string serviceEndpoint,
+            string containerName,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            string delimiter = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> blobItems = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobPrefix> blobPrefixes = default)
+        {
+            var _model = new BlobsHierarchySegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerName = containerName;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.Delimiter = delimiter;
+            _model.BlobItems = blobItems;
+            _model.BlobPrefixes = blobPrefixes;
+            return _model;
+        }
+    }
 }
 #endregion class BlobsHierarchySegment
 
@@ -10862,6 +11072,25 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Block value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new Block instance for mocking.
+        /// </summary>
+        public static Block Block(
+            string name,
+            int size)
+        {
+            var _model = new Block();
+            _model.Name = name;
+            _model.Size = size;
+            return _model;
+        }
     }
 }
 #endregion class Block
@@ -10944,6 +11173,25 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlockList value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlockList instance for mocking.
+        /// </summary>
+        public static BlockList BlockList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> committedBlocks = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> uncommittedBlocks = default)
+        {
+            var _model = new BlockList();
+            _model.CommittedBlocks = committedBlocks;
+            _model.UncommittedBlocks = uncommittedBlocks;
+            return _model;
+        }
     }
 }
 #endregion class BlockList
@@ -11115,6 +11363,37 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerProperties value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerProperties instance for mocking.
+        /// </summary>
+        public static ContainerProperties ContainerProperties(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            bool? hasLegalHold = default)
+        {
+            var _model = new ContainerProperties();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.LeaseStatus = leaseStatus;
+            _model.LeaseState = leaseState;
+            _model.LeaseDuration = leaseDuration;
+            _model.PublicAccess = publicAccess;
+            _model.HasImmutabilityPolicy = hasImmutabilityPolicy;
+            _model.HasLegalHold = hasLegalHold;
+            return _model;
+        }
+    }
 }
 #endregion class ContainerProperties
 
@@ -11188,6 +11467,27 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerItem value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerItem instance for mocking.
+        /// </summary>
+        public static ContainerItem ContainerItem(
+            string name,
+            Azure.Storage.Blobs.Models.ContainerProperties properties,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new ContainerItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Metadata = metadata;
+            return _model;
+        }
     }
 }
 #endregion class ContainerItem
@@ -11294,6 +11594,33 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainersSegment value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainersSegment instance for mocking.
+        /// </summary>
+        public static ContainersSegment ContainersSegment(
+            string serviceEndpoint,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ContainerItem> containerItems,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default)
+        {
+            var _model = new ContainersSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerItems = containerItems;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            return _model;
+        }
     }
 }
 #endregion class ContainersSegment
@@ -11625,6 +11952,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.GeoReplication value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new GeoReplication instance for mocking.
+        /// </summary>
+        public static GeoReplication GeoReplication(
+            Azure.Storage.Blobs.Models.GeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            var _model = new GeoReplication();
+            _model.Status = status;
+            _model.LastSyncTime = lastSyncTime;
+            return _model;
+        }
+    }
 }
 #endregion class GeoReplication
 
@@ -11663,6 +12009,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageRange value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageRange instance for mocking.
+        /// </summary>
+        public static PageRange PageRange(
+            long start,
+            long end)
+        {
+            var _model = new PageRange();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
+    }
 }
 #endregion class PageRange
 
@@ -11700,6 +12065,25 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ClearRange value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ClearRange instance for mocking.
+        /// </summary>
+        public static ClearRange ClearRange(
+            long start,
+            long end)
+        {
+            var _model = new ClearRange();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
     }
 }
 #endregion class ClearRange
@@ -11766,6 +12150,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageList value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageList instance for mocking.
+        /// </summary>
+        public static PageList PageList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.PageRange> pageRange = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ClearRange> clearRange = default)
+        {
+            var _model = new PageList();
+            _model.PageRange = pageRange;
+            _model.ClearRange = clearRange;
+            return _model;
+        }
+    }
 }
 #endregion class PageList
 
@@ -11822,6 +12225,23 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobServiceStatistics value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobServiceStatistics instance for mocking.
+        /// </summary>
+        public static BlobServiceStatistics BlobServiceStatistics(
+            Azure.Storage.Blobs.Models.GeoReplication geoReplication = default)
+        {
+            var _model = new BlobServiceStatistics();
+            _model.GeoReplication = geoReplication;
+            return _model;
+        }
     }
 }
 #endregion class BlobServiceStatistics
@@ -11923,6 +12343,25 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new AccountInfo instance for mocking.
+        /// </summary>
+        public static AccountInfo AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+        {
+            var _model = new AccountInfo();
+            _model.SkuName = skuName;
+            _model.AccountKind = accountKind;
+            return _model;
+        }
+    }
 }
 #endregion class AccountInfo
 
@@ -11943,6 +12382,25 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerInfo instance for mocking.
+        /// </summary>
+        public static ContainerInfo ContainerInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ContainerInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class ContainerInfo
@@ -12062,6 +12520,29 @@ namespace Azure.Storage.Blobs.Models
             this.SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.SignedIdentifier>();
         }
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerAccessPolicy instance for mocking.
+        /// </summary>
+        public static ContainerAccessPolicy ContainerAccessPolicy(
+            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
+        {
+            var _model = new ContainerAccessPolicy();
+            _model.BlobPublicAccess = blobPublicAccess;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.SignedIdentifiers = signedIdentifiers;
+            return _model;
+        }
+    }
 }
 #endregion class ContainerAccessPolicy
 
@@ -12087,6 +12568,27 @@ namespace Azure.Storage.Blobs.Models
         /// Uniquely identifies a container or blob's lease
         /// </summary>
         public string LeaseId { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new Lease instance for mocking.
+        /// </summary>
+        public static Lease Lease(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string leaseId)
+        {
+            var _model = new Lease();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.LeaseId = leaseId;
+            return _model;
+        }
     }
 }
 #endregion class Lease
@@ -12496,6 +12998,83 @@ namespace Azure.Storage.Blobs.Models
             this.ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        public static BlobProperties BlobProperties(
+            System.DateTimeOffset lastModified,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
+            string destinationSnapshot,
+            string contentType,
+            Azure.ETag eTag,
+            byte[] contentHash,
+            System.Collections.Generic.IEnumerable<string> contentEncoding,
+            string contentDisposition,
+            bool isIncrementalCopy,
+            System.Collections.Generic.IEnumerable<string> contentLanguage,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string cacheControl,
+            System.Uri copySource,
+            long blobSequenceNumber,
+            string copyProgress,
+            string acceptRanges,
+            string copyId,
+            int blobCommittedBlockCount,
+            string copyStatusDescription,
+            bool isServerEncrypted,
+            System.DateTimeOffset copyCompletionTime,
+            string accessTier,
+            Azure.Storage.Blobs.Models.BlobType blobType,
+            bool accessTierInferred,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            string archiveStatus,
+            System.DateTimeOffset creationTime,
+            System.DateTimeOffset accessTierChangeTime,
+            long contentLength)
+        {
+            var _model = new BlobProperties();
+            _model.LastModified = lastModified;
+            _model.LeaseDuration = leaseDuration;
+            _model.LeaseState = leaseState;
+            _model.LeaseStatus = leaseStatus;
+            _model.DestinationSnapshot = destinationSnapshot;
+            _model.ContentType = contentType;
+            _model.ETag = eTag;
+            _model.ContentHash = contentHash;
+            _model.ContentEncoding = contentEncoding;
+            _model.ContentDisposition = contentDisposition;
+            _model.IsIncrementalCopy = isIncrementalCopy;
+            _model.ContentLanguage = contentLanguage;
+            _model.CopyStatus = copyStatus;
+            _model.CacheControl = cacheControl;
+            _model.CopySource = copySource;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            _model.CopyProgress = copyProgress;
+            _model.AcceptRanges = acceptRanges;
+            _model.CopyId = copyId;
+            _model.BlobCommittedBlockCount = blobCommittedBlockCount;
+            _model.CopyStatusDescription = copyStatusDescription;
+            _model.IsServerEncrypted = isServerEncrypted;
+            _model.CopyCompletionTime = copyCompletionTime;
+            _model.AccessTier = accessTier;
+            _model.BlobType = blobType;
+            _model.AccessTierInferred = accessTierInferred;
+            _model.Metadata = metadata;
+            _model.ArchiveStatus = archiveStatus;
+            _model.CreationTime = creationTime;
+            _model.AccessTierChangeTime = accessTierChangeTime;
+            _model.ContentLength = contentLength;
+            return _model;
+        }
+    }
 }
 #endregion class BlobProperties
 
@@ -12528,6 +13107,29 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        public static BlobContentInfo BlobContentInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            long blobSequenceNumber)
+        {
+            var _model = new BlobContentInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
     }
 }
 #endregion class BlobContentInfo
@@ -12632,6 +13234,25 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        public static BlobInfo BlobInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new BlobInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
 }
 #endregion class BlobInfo
 
@@ -12657,6 +13278,27 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobSnapshotInfo instance for mocking.
+        /// </summary>
+        public static BlobSnapshotInfo BlobSnapshotInfo(
+            string snapshot,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new BlobSnapshotInfo();
+            _model.Snapshot = snapshot;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class BlobSnapshotInfo
@@ -12688,6 +13330,29 @@ namespace Azure.Storage.Blobs.Models
         /// State of the copy operation identified by x-ms-copy-id.
         /// </summary>
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobCopyInfo instance for mocking.
+        /// </summary>
+        public static BlobCopyInfo BlobCopyInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string copyId,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus)
+        {
+            var _model = new BlobCopyInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.CopyId = copyId;
+            _model.CopyStatus = copyStatus;
+            return _model;
+        }
     }
 }
 #endregion class BlobCopyInfo
@@ -12787,6 +13452,29 @@ namespace Azure.Storage.Blobs.Models
             this.Body = new Azure.Storage.Blobs.Models.PageList();
         }
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageRangesInfo instance for mocking.
+        /// </summary>
+        public static PageRangesInfo PageRangesInfo(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            long blobContentLength,
+            Azure.Storage.Blobs.Models.PageList body)
+        {
+            var _model = new PageRangesInfo();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.BlobContentLength = blobContentLength;
+            _model.Body = body;
+            return _model;
+        }
+    }
 }
 #endregion class PageRangesInfo
 
@@ -12829,6 +13517,33 @@ namespace Azure.Storage.Blobs.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobAppendInfo instance for mocking.
+        /// </summary>
+        public static BlobAppendInfo BlobAppendInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            string blobAppendOffset,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted)
+        {
+            var _model = new BlobAppendInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobAppendOffset = blobAppendOffset;
+            _model.BlobCommittedBlockCount = blobCommittedBlockCount;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
     }
 }
 #endregion class BlobAppendInfo
