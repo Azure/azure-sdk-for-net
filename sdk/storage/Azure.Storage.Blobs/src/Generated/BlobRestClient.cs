@@ -11149,6 +11149,37 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobsFlatSegment value);
     }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobsFlatSegment instance for mocking.
+        /// </summary>
+        public static BlobsFlatSegment BlobsFlatSegment(
+            string serviceEndpoint,
+            string containerName,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            string delimiter = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> blobItems = default)
+        {
+            var _model = new BlobsFlatSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerName = containerName;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.Delimiter = delimiter;
+            _model.BlobItems = blobItems;
+            return _model;
+        }
+    }
 }
 #endregion class BlobsFlatSegment
 
@@ -11180,6 +11211,23 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobPrefix value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobPrefix instance for mocking.
+        /// </summary>
+        public static BlobPrefix BlobPrefix(
+            string name)
+        {
+            var _model = new BlobPrefix();
+            _model.Name = name;
+            return _model;
+        }
     }
 }
 #endregion class BlobPrefix
@@ -11320,6 +11368,39 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobsHierarchySegment value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobsHierarchySegment instance for mocking.
+        /// </summary>
+        public static BlobsHierarchySegment BlobsHierarchySegment(
+            string serviceEndpoint,
+            string containerName,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default,
+            string delimiter = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> blobItems = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobPrefix> blobPrefixes = default)
+        {
+            var _model = new BlobsHierarchySegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerName = containerName;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            _model.Delimiter = delimiter;
+            _model.BlobItems = blobItems;
+            _model.BlobPrefixes = blobPrefixes;
+            return _model;
+        }
     }
 }
 #endregion class BlobsHierarchySegment
@@ -11880,6 +11961,33 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainersSegment value);
+    }
+
+    /// <summary>
+    /// BlobModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainersSegment instance for mocking.
+        /// </summary>
+        public static ContainersSegment ContainersSegment(
+            string serviceEndpoint,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ContainerItem> containerItems,
+            string nextMarker,
+            string prefix = default,
+            string marker = default,
+            int? maxResults = default)
+        {
+            var _model = new ContainersSegment();
+            _model.ServiceEndpoint = serviceEndpoint;
+            _model.ContainerItems = containerItems;
+            _model.NextMarker = nextMarker;
+            _model.Prefix = prefix;
+            _model.Marker = marker;
+            _model.MaxResults = maxResults;
+            return _model;
+        }
     }
 }
 #endregion class ContainersSegment
