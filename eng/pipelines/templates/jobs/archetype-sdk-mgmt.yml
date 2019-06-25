@@ -8,7 +8,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
          version: '$(DotNetCoreSDKVersion)'
-      - script: dotnet msbuild eng/mgmt.proj /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
+      - script: dotnet msbuild mgmt.proj /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -52,7 +52,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
           version: '$(DotNetCoreSDKVersion)'
-      - script: dotnet msbuild eng/mgmt.proj /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
+      - script: dotnet msbuild mgmt.proj /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
