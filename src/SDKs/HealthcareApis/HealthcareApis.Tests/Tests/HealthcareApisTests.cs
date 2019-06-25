@@ -23,12 +23,12 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //generate account name
+                // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                //// Create healthcare apis account
+                // Create healthcare apis account
                 var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
                 HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, true);
             }
@@ -47,12 +47,12 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //generate account name
+                // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                //// Create cognitive services account
+                // Create healthcareApis account
                 var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
                 HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, false);
             }
@@ -71,7 +71,7 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //generate account name
+                // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
@@ -96,12 +96,12 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //generate account name
+                // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                //// Create cognitive services account
+                //// Create healthcareApis account
                 var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
 
                 var servicePatchDescription = HealthcareApisManagementTestUtilities.GetServicePatchDescription();
@@ -160,7 +160,7 @@ namespace HealthcareApis.Tests
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                // Create healthCareApisAccount
+                // Create healthcareApis account
                 var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
 
                 // Validate
@@ -183,12 +183,12 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //generate account name
+                // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                //// Create healthcareApis services account
+                // Create healthcareApis account
                 var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
 
                 // Delete an account
@@ -219,8 +219,6 @@ namespace HealthcareApis.Tests
                      HttpStatusCode.NotFound.ToString());
             }
         }
-
-       
 
         [Fact]
         public void HealthcareApisCheckNameAvailabilityTest()
