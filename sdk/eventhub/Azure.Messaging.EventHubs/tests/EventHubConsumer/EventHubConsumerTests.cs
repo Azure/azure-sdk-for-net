@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheConsumer()
         {
-            Assert.That(() => new EventHubConsumer(null, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, new EventHubConsumerOptions()), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubConsumer(null, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHub(string eventHub)
         {
-            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), eventHub, EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Earliest, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), eventHub, EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Earliest, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesThePartition(string partition)
         {
-            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.Earliest, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Earliest, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheEventPosition()
         {
-            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroup, "1234", null, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroupName, "1234", null, new EventHubConsumerOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheOptions()
         {
-            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, null), Throws.ArgumentNullException);
+            Assert.That(() => new EventHubConsumer(new ObservableTransportConsumerMock(), "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partition = "aPartition";
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, partition, EventPosition.FromSequenceNumber(1), new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromSequenceNumber(1), new EventHubConsumerOptions());
 
             Assert.That(consumer.PartitionId, Is.EqualTo(partition));
         }
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.FromOffset(65), options);
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.FromOffset(65), options);
 
             Assert.That(consumer.OwnerLevel, Is.EqualTo(priority));
         }
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expectedPosition = EventPosition.FromSequenceNumber(5641);
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", expectedPosition, new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", expectedPosition, new EventHubConsumerOptions());
 
             Assert.That(consumer.StartingPosition, Is.EqualTo(expectedPosition));
         }
@@ -160,7 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveAsyncValidatesTheMaximumCount(int maximumMessageCount)
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions());
             var cancellation = new CancellationTokenSource();
             var expectedWaitTime = TimeSpan.FromDays(1);
 
@@ -180,7 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ReceiveAsyncValidatesTheMaximumWaitTime(int timeSpanDelta)
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions());
             var cancellation = new CancellationTokenSource();
             var expectedWaitTime = TimeSpan.FromMilliseconds(timeSpanDelta);
 
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConsumerOptions { DefaultMaximumReceiveWaitTime = TimeSpan.FromMilliseconds(8) };
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, options);
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, options);
             var cancellation = new CancellationTokenSource();
             var expectedMessageCount = 45;
 
@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportConsumer()
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions());
 
             await consumer.CloseAsync();
 
@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CloseClosesTheTransportConsumer()
         {
             var transportConsumer = new ObservableTransportConsumerMock();
-            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroup, "0", EventPosition.Latest, new EventHubConsumerOptions());
+            var consumer = new EventHubConsumer(transportConsumer, "dummy", EventHubConsumer.DefaultConsumerGroupName, "0", EventPosition.Latest, new EventHubConsumerOptions());
 
             consumer.Close();
 

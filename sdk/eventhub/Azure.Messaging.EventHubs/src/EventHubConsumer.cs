@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
     public class EventHubConsumer : IAsyncDisposable
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
-        public const string DefaultConsumerGroup = "$Default";
+        public const string DefaultConsumerGroupName = "$Default";
 
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
