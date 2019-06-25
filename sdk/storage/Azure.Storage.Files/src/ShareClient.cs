@@ -196,6 +196,15 @@ namespace Azure.Storage.Files
             => new DirectoryClient(this.Uri.AppendToPath(directoryName), this._pipeline);
 
         /// <summary>
+        /// Create a <see cref="DirectoryClient"/> object for the root of the
+        /// share.  The new <see cref="DirectoryClient"/> uses the same request
+        /// policy pipeline as the <see cref="ShareClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
+        public virtual DirectoryClient GetRootDirectoryClient()
+            => this.GetDirectoryClient("");
+
+        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
@@ -656,6 +665,67 @@ namespace Azure.Storage.Files
                     this._pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateDirectoryAsync"/> operation creates a new
+        /// directory in this share.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="directoryName">T
+        /// The name of the directory to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{DirectoryClient}}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
+           string directoryName,
+           IDictionary<string, string> metadata = default,
+           CancellationToken cancellationToken = default)
+        {
+            var directory = this.GetDirectoryClient(directoryName);
+            var response = await directory.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            return new Response<DirectoryClient>(response.GetRawResponse(), directory);
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteDirectoryAsync"/> operation removes the specified empty
+        /// directory.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="directoryName">T
+        /// The name of the directory to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual async Task<Response> DeleteDirectoryAsync(
+            string directoryName,
+            CancellationToken cancellationToken = default)
+        {
+            var directory = this.GetDirectoryClient(directoryName);
+            return await directory.DeleteAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

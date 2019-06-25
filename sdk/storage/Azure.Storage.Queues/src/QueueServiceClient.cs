@@ -363,6 +363,55 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+
+        /// <summary>
+        /// Creates a queue.
+        /// 
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// </summary>
+        /// <param name="queueName">
+        /// The name of the queue to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional <see cref="Metadata"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// A newly created <see cref="Response{QueueClient}"/>.
+        /// </returns>
+        public virtual async Task<Response<QueueClient>> CreateQueueAsync(
+            string queueName,
+            IDictionary<string, string> metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            var queue = this.GetQueueClient(queueName);
+            var response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            return new Response<QueueClient>(response, queue);
+        }
+
+        /// <summary>
+        /// Deletes a queue.
+        /// 
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3"/>.
+        /// </summary>
+        /// <param name="queueName">
+        /// The name of the queue to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Task{Response}"/>
+        /// </returns>
+        public virtual async Task<Response> DeleteQueueAsync(
+            string queueName,
+            CancellationToken cancellationToken = default)
+        {
+            var queue = this.GetQueueClient(queueName);
+            return await queue.DeleteAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }
 

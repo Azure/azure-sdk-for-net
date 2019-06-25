@@ -170,5 +170,34 @@ namespace Azure.Storage.Files.Test
                 service.ListSharesSegmentAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
         }
+
+        [Test]
+        public async Task CreateShareAsync()
+        {
+            var name = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var share = (await service.CreateShareAsync(name)).Value;
+                var properties = await share.GetPropertiesAsync();
+                Assert.AreNotEqual(0, properties.Value.Quota);
+            }
+            finally
+            {
+                await service.DeleteShareAsync(name);
+            }
+        }
+
+        [Test]
+        public async Task DeleteShareAsync()
+        {
+            var name = this.GetNewShareName();
+            var service = this.GetServiceClient_SharedKey();
+            var share = (await service.CreateShareAsync(name)).Value;
+
+            await service.DeleteShareAsync(name);
+            Assert.ThrowsAsync<StorageRequestFailedException>(
+                async () => await share.GetPropertiesAsync());
+        }
     }
 }

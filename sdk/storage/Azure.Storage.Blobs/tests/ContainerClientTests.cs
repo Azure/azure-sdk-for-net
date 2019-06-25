@@ -1583,6 +1583,24 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
+        [Test]
+        public async Task DeleteBlobAsync()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                var name = this.GetNewBlobName();
+                var blob = container.GetBlockBlobClient(name);
+                using (var stream = new MemoryStream(this.GetRandomBuffer(100)))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                await container.DeleteBlobAsync(name);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await blob.GetPropertiesAsync());
+            }
+        }
+
         private string[] BlobNames
             => new[]
             {

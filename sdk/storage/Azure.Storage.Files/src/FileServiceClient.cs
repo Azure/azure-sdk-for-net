@@ -337,6 +337,75 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="CreateShareAsync"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to create.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInBytes">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{ShareClient}}"/> referencing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareClient>> CreateShareAsync(
+            string shareName,
+            IDictionary<string, string> metadata = default,
+            int? quotaInBytes = default,
+            CancellationToken cancellationToken = default)
+        {
+            var share = this.GetShareClient(shareName);
+            var response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
+            return new Response<ShareClient>(response.GetRawResponse(), share);
+        }
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion.
+        /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// 
+        /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// </summary>
+        /// <param name="shareName">
+        /// The name of the share to delete.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteShareAsync(
+            string shareName,
+            CancellationToken cancellationToken = default)
+        {
+            var share = this.GetShareClient(shareName);
+            return await share.DeleteAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
     }
 }
 

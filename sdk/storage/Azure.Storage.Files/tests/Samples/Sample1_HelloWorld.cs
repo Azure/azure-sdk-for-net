@@ -65,7 +65,7 @@ namespace Azure.Storage.Samples
                 await directoryClient.CreateAsync();
 
                 // Instantiate new DirectoryClient
-                DirectoryClient subDirectoryClient = directoryClient.GetDirectoryClient("mysubdirectory");
+                DirectoryClient subDirectoryClient = directoryClient.GetSubdirectoryClient("mysubdirectory");
 
                 // Create sub directory
                 await subDirectoryClient.CreateAsync();

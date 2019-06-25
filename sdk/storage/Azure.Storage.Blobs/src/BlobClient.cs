@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1229,7 +1230,25 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
     }
 
-    // public partial interface IBlobDeleteAcceptedResponseHeaders : IBatchable { }
-
-    // public partial interface IBlobSetTierOKResponseHeaders : IBatchable { }
+    /// <summary>
+    /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
+    /// creating <see cref="BlobClient"/> instances.
+    /// </summary>
+    public static partial class SpecializedBlobExtensions
+    {
+        /// <summary>
+        /// Create a new <see cref="BlobClient"/> object by concatenating
+        /// <paramref name="blobName"/> to the end of the
+        /// <paramref name="client"/>'s <see cref="BlobContainerClient.Uri"/>.
+        /// The new <see cref="BlobClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        /// <param name="blobName">The name of the blob.</param>
+        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        public static BlobClient GetBlobClient(
+            this BlobContainerClient client,
+            string blobName)
+            => new BlobClient(client.Uri.AppendToPath(blobName), client._pipeline);
+    }
 }

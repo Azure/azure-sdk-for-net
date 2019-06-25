@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.Test
 
                 foreach (var subDirName in directoryNames)
                 {
-                    var subDir = this.InstrumentClient(directory.GetDirectoryClient(subDirName));
+                    var subDir = this.InstrumentClient(directory.GetSubdirectoryClient(subDirName));
 
                     await subDir.CreateAsync();
                 }
@@ -348,6 +348,58 @@ namespace Azure.Storage.Files.Test
                     directory.ForceCloseHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
+            }
+        }
+
+        [Test]
+        public async Task CreateSubdirectoryAsync()
+        {
+            using (this.GetNewDirectory(out var dir))
+            {
+                var subdir = (await dir.CreateSubdirectoryAsync(this.GetNewDirectoryName())).Value;
+
+                var properties = await subdir.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+        }
+
+        [Test]
+        public async Task DeleteSubdirectoryAsync()
+        {
+            using (this.GetNewDirectory(out var dir))
+            {
+                var name = this.GetNewDirectoryName();
+                var subdir = (await dir.CreateSubdirectoryAsync(name)).Value;
+
+                await dir.DeleteSubdirectoryAsync(name);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await subdir.GetPropertiesAsync());
+            }
+        }
+
+        [Test]
+        public async Task CreateFileAsync()
+        {
+            using (this.GetNewDirectory(out var dir))
+            {
+                var file = (await dir.CreateFileAsync(this.GetNewFileName(), 1024)).Value;
+
+                var properties = await file.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+        }
+
+        [Test]
+        public async Task DeleteFileAsync()
+        {
+            using (this.GetNewDirectory(out var dir))
+            {
+                var name = this.GetNewFileName();
+                var file = (await dir.CreateFileAsync(name, 1024)).Value;
+
+                await dir.DeleteFileAsync(name);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await file.GetPropertiesAsync());
             }
         }
     }

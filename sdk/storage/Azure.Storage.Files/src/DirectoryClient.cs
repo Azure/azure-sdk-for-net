@@ -183,14 +183,14 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Creates a new <see cref="DirectoryClient"/> object by appending
-        /// <paramref name="directoryName"/> to the end of <see cref="Uri"/>.  The
-        /// new <see cref="DirectoryClient"/> uses the same request policy
+        /// <paramref name="subdirectoryName"/> to the end of <see cref="Uri"/>.
+        /// The new <see cref="DirectoryClient"/> uses the same request policy
         /// pipeline as the <see cref="DirectoryClient"/>.
         /// </summary>
-        /// <param name="directoryName">The name of the subdirectory.</param>
+        /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
-        public virtual DirectoryClient GetDirectoryClient(string directoryName)
-            => new DirectoryClient(this.Uri.AppendToPath(directoryName), this._pipeline);
+        public virtual DirectoryClient GetSubdirectoryClient(string subdirectoryName)
+            => new DirectoryClient(this.Uri.AppendToPath(subdirectoryName), this._pipeline);
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new directory
@@ -616,6 +616,131 @@ namespace Azure.Storage.Files
                     this._pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateSubdirectoryAsync"/> operation creates a new
+        /// subdirectory under this directory.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="subdirectoryName">The name of the subdirectory.</param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{DirectoryClient}}"/> referencing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DirectoryClient>> CreateSubdirectoryAsync(
+            string subdirectoryName,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            var subdir = this.GetSubdirectoryClient(subdirectoryName);
+            var response = await subdir.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteSubdirectoryAsync"/> operation removes the
+        /// specified empty subdirectory.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="subdirectoryName">The name of the subdirectory.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual async Task<Response> DeleteSubdirectoryAsync(
+            string subdirectoryName,
+            CancellationToken cancellationToken = default)
+        {
+            var subdir = this.GetSubdirectoryClient(subdirectoryName);
+            return await subdir.DeleteAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="FileClient.UploadRangeAsync"/>.
+        /// </remarks>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{FileClient}}"/> referencing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileClient>> CreateFileAsync(
+            string fileName,
+            long maxSize,
+            FileHttpHeaders? httpHeaders = default,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            var file = this.GetFileClient(fileName);
+            var response = await file.CreateAsync(maxSize, httpHeaders, metadata, cancellationToken).ConfigureAwait(false);
+            return new Response<FileClient>(response.GetRawResponse(), file);
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteFileAsync"/> operation immediately removes
+        /// the file from the storage account.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteFileAsync(
+            string fileName,
+            CancellationToken cancellationToken = default)
+        {
+            var file = this.GetFileClient(fileName);
+            return await file.DeleteAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

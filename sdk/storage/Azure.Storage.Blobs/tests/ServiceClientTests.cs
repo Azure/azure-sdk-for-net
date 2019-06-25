@@ -327,5 +327,34 @@ namespace Azure.Storage.Blobs.Test
                 service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.Now.AddHours(1)),
                 e => Assert.AreEqual("expiry must be UTC", e.Message));
         }
+
+        [Test]
+        public async Task CreateBlobContainerAsync()
+        {
+            var name = this.GetNewContainerName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var container = (await service.CreateBlobContainerAsync(name)).Value;
+                var properties = await container.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+            finally
+            {
+                await service.DeleteBlobContainerAsync(name);
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobContainerAsync()
+        {
+            var name = this.GetNewContainerName();
+            var service = this.GetServiceClient_SharedKey();
+            var container = (await service.CreateBlobContainerAsync(name)).Value;
+
+            await service.DeleteBlobContainerAsync(name);
+            Assert.ThrowsAsync<StorageRequestFailedException>(
+                async () => await container.GetPropertiesAsync());
+        }
     }
 }

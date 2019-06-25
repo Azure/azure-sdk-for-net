@@ -416,5 +416,31 @@ namespace Azure.Storage.Files.Test
                 share.DeleteAsync(),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
         }
+
+        [Test]
+        public async Task CreateDirectoryAsync()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                var dir = (await share.CreateDirectoryAsync(this.GetNewDirectoryName())).Value;
+
+                var properties = await dir.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+        }
+
+        [Test]
+        public async Task DeleteDirectoryAsync()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewDirectoryName();
+                var dir = (await share.CreateDirectoryAsync(name)).Value;
+
+                await share.DeleteDirectoryAsync(name);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await dir.GetPropertiesAsync());
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -771,6 +772,47 @@ namespace Azure.Storage.Blobs
                     this._pipeline.LogMethodExit(nameof(BlobContainerClient));
                 }
             }
+        }
+
+        // TODO: Add UploadBlobAsync when we decide on the correct strategy
+
+        /// <summary>
+        /// The <see cref="DeleteBlobAsync"/> operation marks the specified
+        /// blob or snapshot for deletion. The blob is later deleted during
+        /// garbage collection.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.Include"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
+        /// </summary>
+        /// <param name="deleteOptions">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="accessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public async virtual Task<Response> DeleteBlobAsync(
+            string blobName,
+            DeleteSnapshotsOption? deleteOptions = default,
+            BlobAccessConditions? accessConditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            var blob = this.GetBlobClient(blobName);
+            return await blob.DeleteAsync(deleteOptions, accessConditions, cancellationToken).ConfigureAwait(false);
         }
     }
 }

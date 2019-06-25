@@ -67,6 +67,23 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task CreateAsync_FromService()
+        {
+            var name = this.GetNewQueueName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var result = await service.CreateQueueAsync(name);
+                var properties = await result.Value.GetPropertiesAsync();
+                Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+            }
+            finally
+            {
+                await service.DeleteQueueAsync(name);
+            }
+        }
+
+        [Test]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
@@ -311,6 +328,26 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
         }
+
+        [Test]
+        public async Task DeleteAsync_FromService()
+        {
+            var name = this.GetNewQueueName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var queue = (await service.CreateQueueAsync(name)).Value;
+                await service.DeleteQueueAsync(name);
+
+                // Ensure the queue no longer returns values
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await queue.GetPropertiesAsync());
+            }
+            finally
+            {
+            }
+        }
+
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [Test]
