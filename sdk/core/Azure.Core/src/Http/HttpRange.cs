@@ -30,8 +30,9 @@ namespace Azure.Core.Http
 
         // An httpRange which has a zero-value offset, and a count with value CountToEnd indicates the entire resource.
         // An httpRange which has a non zero-value offset but a count with value CountToEnd indicates from the offset to the resource's end.
-        internal readonly long Offset;
-        internal readonly long? Count;
+        public long Offset { get; }
+        public long? Count { get; }
+
         private const string Unit = "bytes";
         
         /// <summary>
