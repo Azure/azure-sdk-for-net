@@ -14,8 +14,16 @@ namespace Azure.Core.Http
     /// </summary>
     public readonly struct HttpRange : IEquatable<HttpRange>
     {
+        /// <summary>
+        /// Creates an instance of HttpRange
+        /// </summary>
+        /// <param name="offset">null means offset is 0</param>
+        /// <param name="count">null means to the end</param>
         public HttpRange(long? offset = default, long? count = default)
         {
+            if (offset.HasValue && offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+            if (count.HasValue && count <= 0) throw new ArgumentOutOfRangeException(nameof(offset));
+
             this.Offset = offset ?? 0;
             this.Count = count;
         }
@@ -45,15 +53,17 @@ namespace Azure.Core.Http
 
             return FormattableString.Invariant($"{Unit}={this.Offset}-{endRange}");
         }
+
+        /// <summary>
+        /// Returns Range headers for this range.
+        /// </summary>
+        /// <returns></returns>
         public HttpHeader ToRangeHeader() => new HttpHeader("Range", ToString());
 
         public static bool operator==(HttpRange left, HttpRange right) => left.Equals(right);
         public static bool operator!=(HttpRange left, HttpRange right) => !(left == right);
 
-        public bool Equals(HttpRange other)
-            => this.Offset == other.Offset
-            && this.Count == other.Count
-            ;
+        public bool Equals(HttpRange other) => this.Offset == other.Offset && this.Count == other.Count;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HttpRange other && this.Equals(other);

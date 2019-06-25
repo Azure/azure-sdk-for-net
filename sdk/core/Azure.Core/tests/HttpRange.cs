@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Reflection;
 using Azure.Core.Http;
-using NUnit;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -13,9 +11,9 @@ namespace Azure.Core.Tests
     {
         [Test, Sequential]
         public void ToString(
-            [Values(null, null, 50, 200)] long? offset,
-            [Values(null, 100, null, 100)] long? count,
-            [Values("0-", "0-99", "50-", "200-299")] string expected
+            [Values(null, null, 50, 200, 0)] long? offset,
+            [Values(null, 100, null, 100, 1)] long? count,
+            [Values("0-", "0-99", "50-", "200-299", "0-0")] string expected
         )
         {
             var range = new HttpRange(offset, count);
@@ -43,6 +41,18 @@ namespace Azure.Core.Tests
             Assert.IsTrue(r5_10 != nullRange);
             Assert.IsTrue(r5_10 != nullStart);
             Assert.IsTrue(r5_10 != nullEnd);
+        }
+
+        [Test, Sequential]
+        public void Errors(
+        [Values(0, 0, -1)] long? offset,
+        [Values(0, -1, 3)] long? count
+        )
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var range = new HttpRange(offset, count);
+            });
         }
     }
 }
