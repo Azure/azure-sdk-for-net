@@ -109,7 +109,7 @@ namespace HealthcareApis.Tests
 
                 var servicePatchDescription = HealthcareApisManagementTestUtilities.GetServicePatchDescription();
 
-                // Update SKU 
+                // Update Tags
                 var account = healthCareApisMgmtClient.Services.Update(rgname, accountName, servicePatchDescription);
                 Assert.True(account.Tags.Values.Contains("value3"));
                 Assert.True(account.Tags.Values.Contains("value4"));

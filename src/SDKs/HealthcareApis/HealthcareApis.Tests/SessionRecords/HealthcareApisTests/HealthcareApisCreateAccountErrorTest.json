@@ -68,7 +68,7 @@
       "RequestUri": "/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/NotExistedRG/providers/Microsoft.HealthcareApis/services/hca1234?api-version=2018-08-20-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2MxNDhiZjItNDJmYi00OTEzLWEzZmItMmYyODRhNjllYjg5L3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkhlYWx0aGNhcmVBcGlzL3NlcnZpY2VzL2hjYTEyMzQ/YXBpLXZlcnNpb249MjAxOC0wOC0yMC1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
+      "RequestBody": "{\r\n    \"name\": \"S1\"\r\n ,\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
