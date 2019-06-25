@@ -15,12 +15,7 @@ namespace Azure.Identity
     {
         private string _clientId;
         private ManagedIdentityClient _client;
-        private SemaphoreSlim _initLock = new SemaphoreSlim(1, 1);
-
-
-        private readonly Uri ImdsEndptoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
-        private const string ImdsApiVersion = "2018-02-01";
-
+        
         public ManagedIdentityCredential(string clientId = null, IdentityClientOptions options = null)
         {
             _clientId = clientId;
