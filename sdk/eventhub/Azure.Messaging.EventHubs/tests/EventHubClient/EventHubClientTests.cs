@@ -492,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             };
 
-            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroup;
+            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
             var expectedPartition = "56767";
             var expectedPosition = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-27T12:00:00Z"));
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
@@ -588,7 +588,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresEventPosition()
         {
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
-            Assert.That(() => client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, "123", null), Throws.ArgumentNullException);
+            Assert.That(() => client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, "123", null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubConsumerOptions { Retry = Retry.Default };
             var expectedPosition = EventPosition.FromOffset(65);
             var expectedPartition = "2123";
-            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroup;
+            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
 
             client.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
             (var actualConsumerGroup, var actualPartition, var actualPosition, var actualOptions) = transportClient.CreateConsumerCalledWith;

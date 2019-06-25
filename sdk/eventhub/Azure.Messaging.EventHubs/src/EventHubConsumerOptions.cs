@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs
         private string _identifier = null;
 
         /// <summary>
-        ///   When populated, the priority indicates that a consumer is intended to be the only reader of events for the
+        ///   When populated, the owner level indicates that a consumer is intended to be the only reader of events for the
         ///   requested partition and an associated consumer group.  To do so, this consumer will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive consumer attempts to assert ownership for the same
         ///   partition/consumer group pair, the one having a larger <see cref="OwnerLevel"/> value will "win."
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs
         ///   not be allowed to be created, if they already exist, will encounter an exception during the next attempted operation.
         /// </summary>
         ///
-        /// <value>The priority to associated with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
+        /// <value>The relative priority to associate with an exclusive consumer; for a non-exclusive consumer, this value should be <c>null</c>.</value>
         ///
         public long? OwnerLevel { get; set; }
 

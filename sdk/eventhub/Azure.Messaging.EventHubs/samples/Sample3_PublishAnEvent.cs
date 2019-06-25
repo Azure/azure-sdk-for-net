@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // assumptions about the data nor attempt to perform any operations on it; you are free to create the data
                 // in whatever form makes sense for your scenario.
                 //
-                // In our case, we will translate a simple sentance into bytes and send it to our Event Hub.
+                // In our case, we will translate a simple sentence into bytes and send it to our Event Hub.
 
                 var eventData = new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!"));
 

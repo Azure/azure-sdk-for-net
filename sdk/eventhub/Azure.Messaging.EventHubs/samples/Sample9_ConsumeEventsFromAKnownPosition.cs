@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                     EventData thirdEvent;
 
-                    await using (EventHubConsumer initialConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, firstPartition, EventPosition.Latest))
+                    await using (EventHubConsumer initialConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.Latest))
                     {
                         // The first receive that we ask of it will not see any events, but allows the consumer to start watching the partition.  Because
                         // the maximum wait time is specivied as zero, this call will return immediately and will not have consumed any events.
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // Create a new consumer beginning using the third event as the last sequence number processed; this new consumer will begin reading at the next available
                     // sequence number, allowing it to read the set of published events beginning with the fourth one.
 
-                    await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber)))
+                    await using (EventHubConsumer newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber)))
                     {
                         // We will consume the events in batches using the new consumer until all of the published events
                         // have been received.
