@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.SignalR.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,9 +37,21 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// service. Retained for future use.
         /// The hostname will be of format:
         /// &amp;lt;hostNamePrefix&amp;gt;.service.signalr.net.</param>
-        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string))
+        /// <param name="features">List of SignalR featureFlags. e.g.
+        /// ServiceMode.
+        ///
+        /// FeatureFlags that are not included in the parameters for the update
+        /// operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly
+        /// set.
+        /// When a featureFlag is not explicitly set, SignalR service will use
+        /// its globally default value.
+        /// But keep in mind, the default value doesn't mean "false". It varies
+        /// in terms of different FeatureFlags.</param>
+        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>))
         {
             HostNamePrefix = hostNamePrefix;
+            Features = features;
             CustomInit();
         }
 
@@ -54,6 +68,21 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "hostNamePrefix")]
         public string HostNamePrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of SignalR featureFlags. e.g. ServiceMode.
+        ///
+        /// FeatureFlags that are not included in the parameters for the update
+        /// operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly
+        /// set.
+        /// When a featureFlag is not explicitly set, SignalR service will use
+        /// its globally default value.
+        /// But keep in mind, the default value doesn't mean "false". It varies
+        /// in terms of different FeatureFlags.
+        /// </summary>
+        [JsonProperty(PropertyName = "features")]
+        public IList<SignalRFeature> Features { get; set; }
 
     }
 }

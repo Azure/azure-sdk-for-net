@@ -492,16 +492,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             };
 
+            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroup;
             var expectedPartition = "56767";
             var expectedPosition = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-27T12:00:00Z"));
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
-            mockClient.CreateConsumer(expectedPartition, expectedPosition);
+            mockClient.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition);
             var actualOptions = mockClient.ConsumerOptions;
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
-            Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
@@ -525,7 +525,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedOptions = new EventHubConsumerOptions
             {
-                ConsumerGroup = "SomeGroup",
                 OwnerLevel = 251,
                 Identifier = "Bob",
                 PrefetchCount = 600,
@@ -534,17 +533,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             };
 
+            var expectedConsumerGroup = "SomeGroup";
             var expectedPartition = "56767";
             var expectedPosition = EventPosition.FromSequenceNumber(123);
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
-            mockClient.CreateConsumer(expectedPartition, expectedPosition, expectedOptions);
+            mockClient.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
             var actualOptions = mockClient.ConsumerOptions;
 
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualOptions, Is.Not.SameAs(expectedOptions), "A clone of the options should have been made.");
-            Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
@@ -560,10 +559,24 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        public void CreateConsumerRequiresConsumerGroup(string consumerGroup)
+        {
+            var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
+            Assert.That(() => client.CreateConsumer(consumerGroup, "partition1", EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubClient.CreateConsumer" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
         public void CreateConsumerRequiresPartition(string partition)
         {
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
-            Assert.That(() => client.CreateConsumer(partition, EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateConsumer("someGroup", partition, EventPosition.Earliest), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -575,7 +588,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateConsumerRequiresEventPosition()
         {
             var client = new EventHubClient("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", "fake", new EventHubClientOptions());
-            Assert.That(() => client.CreateConsumer("123", null), Throws.ArgumentNullException);
+            Assert.That(() => client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, "123", null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -703,15 +716,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new EventHubConsumerOptions { Retry = Retry.Default };
             var expectedPosition = EventPosition.FromOffset(65);
             var expectedPartition = "2123";
+            var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroup;
 
-            client.CreateConsumer(expectedPartition, expectedPosition, expectedOptions);
-            (var actualPartition, var actualPosition, var actualOptions) = transportClient.CreateConsumerCalledWith;
+            client.CreateConsumer(expectedConsumerGroup, expectedPartition, expectedPosition, expectedOptions);
+            (var actualConsumerGroup, var actualPartition, var actualPosition, var actualOptions) = transportClient.CreateConsumerCalledWith;
 
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
+            Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer groups should match.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
             Assert.That(actualOptions, Is.Not.Null, "The consumer options should have been set.");
             Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
-            Assert.That(actualOptions.ConsumerGroup, Is.EqualTo(expectedOptions.ConsumerGroup), "The consumer groups should match.");
             Assert.That(actualOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The owner levels should match.");
             Assert.That(actualOptions.Identifier, Is.EqualTo(expectedOptions.Identifier), "The identifiers should match.");
             Assert.That(actualOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The prefetch counts should match.");
@@ -935,7 +949,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ObservableTransportClientMock : TransportEventHubClient
         {
-            public (string Partition, EventPosition position, EventHubConsumerOptions Options) CreateConsumerCalledWith;
+            public (string ConsumerGroup, string Partition, EventPosition position, EventHubConsumerOptions Options) CreateConsumerCalledWith;
             public EventHubProducerOptions CreateProducerCalledWithOptions;
             public string GetPartitionPropertiesCalledForId;
             public bool WasGetPropertiesCalled;
@@ -960,9 +974,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 return default(EventHubProducer);
             }
 
-            public override EventHubConsumer CreateConsumer(string partitionId, EventPosition eventPosition, EventHubConsumerOptions consumerOptions)
+            public override EventHubConsumer CreateConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubConsumerOptions consumerOptions)
             {
-                CreateConsumerCalledWith = (partitionId, eventPosition, consumerOptions);
+                CreateConsumerCalledWith = (consumerGroup, partitionId, eventPosition, consumerOptions);
                 return default(EventHubConsumer);
             }
 

@@ -22,7 +22,6 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConsumerOptions
             {
-                ConsumerGroup = "custom$consumer",
                 OwnerLevel = 99,
                 Retry = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(5), 6),
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
@@ -32,7 +31,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
-            Assert.That(clone.ConsumerGroup, Is.EqualTo(options.ConsumerGroup), "The consumer group of the clone should match.");
             Assert.That(clone.OwnerLevel, Is.EqualTo(options.OwnerLevel), "The ownerlevel of the clone should match.");
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The default maximum wait time of the clone should match.");
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");

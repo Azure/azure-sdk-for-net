@@ -1,0 +1,72 @@
+jobs:
+  - job: Build
+
+    pool:
+      vmImage: windows-2019
+    steps:
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        inputs:
+         version: '$(DotNetCoreSDKVersion)'
+      - script: dotnet msbuild eng/mgmt.proj /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
+        displayName: "Build & Package"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - task: PublishBuildArtifacts@1
+        condition: succeededOrFailed()
+        inputs:
+            pathtoPublish: $(msBuildLogDir)
+            artifactName: MsBuildLogs
+      - task: PublishPipelineArtifact@0
+        condition: succeededOrFailed()
+        inputs:
+          artifactName: packages
+          targetPath: $(Build.ArtifactStagingDirectory)
+      - powershell: |
+          $releaseTag = "FOR_SIGNING"
+          if ("$(ShouldPublish)" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
+          echo "Tagging build with $releaseTag"
+          echo "##vso[build.addbuildtag]$releaseTag"
+        displayName: 'Tagging the build'
+        condition: ne(variables['System.TeamProject'], 'public')
+  - job: Test
+
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+        Windows:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+        MacOs:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+    pool:
+      vmImage: "$(OSVmImage)"
+    steps:
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
+        inputs:
+          version: '$(DotNetCoreSDKVersion)'
+      - script: dotnet msbuild eng/mgmt.proj /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs)
+        displayName: "Build & Test"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: "**/*.trx"
+          testRunTitle: "$(OSName) Test Results"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true
+      - task: PublishBuildArtifacts@1
+        condition: succeededOrFailed()
+        inputs:
+            pathtoPublish: $(msBuildLogDir)
+            artifactName: MsBuildLogs

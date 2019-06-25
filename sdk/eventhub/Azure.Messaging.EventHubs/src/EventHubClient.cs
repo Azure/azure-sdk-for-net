@@ -255,9 +255,9 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Creates an Event Hub producer responsible for transmitting <see cref="EventData" /> to the
-        ///   Event Hub, grouped together in batches.  Depending on the <paramref name="producerOptions"/>
-        ///   specified, the producer may be created to allow event data to be automatically routed to an available
-        ///   partition or specific to a partition.
+        ///   Event Hub, either as a single item or grouped together in batches.  Depending on the
+        ///   <paramref name="producerOptions"/> specified, the producer may be created to allow event
+        ///   data to be automatically routed to an available partition or specific to a partition.
         /// </summary>
         ///
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
@@ -266,12 +266,12 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   Allowing automatic routing of partitions is recommended when:
-        ///   <para>- The sending of events needs to be highly available.</para>
+        ///   <para>- The publishing of events needs to be highly available.</para>
         ///   <para>- The event data should be evenly distributed among all available partitions.</para>
         ///
         ///   If no partition is specified, the following rules are used for automatically selecting one:
-        ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-        ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+        ///   <para>- Distribute the events equally amongst all available partitions using a round-robin approach.</para>
+        ///   <para>- If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
         /// </remarks>
         ///
         public virtual EventHubProducer CreateProducer(EventHubProducerOptions producerOptions = default)
@@ -300,13 +300,15 @@ namespace Azure.Messaging.EventHubs
         ///   By default, consumers are created as non-exclusive.
         /// </summary>
         ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
         ///
         /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
-        public virtual EventHubConsumer CreateConsumer(string partitionId,
+        public virtual EventHubConsumer CreateConsumer(string consumerGroup,
+                                                       string partitionId,
                                                        EventPosition eventPosition,
                                                        EventHubConsumerOptions consumerOptions = default)
         {
@@ -318,7 +320,7 @@ namespace Azure.Messaging.EventHubs
             options.Retry = options.Retry ?? ClientOptions.Retry.Clone();
             options.DefaultMaximumReceiveWaitTime = options.MaximumReceiveWaitTimeOrDefault ?? ClientOptions.DefaultTimeout;
 
-            return InnerClient.CreateConsumer(partitionId, eventPosition, options);
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, options);
         }
 
         /// <summary>

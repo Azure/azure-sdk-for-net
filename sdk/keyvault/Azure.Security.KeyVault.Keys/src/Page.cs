@@ -7,6 +7,10 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// Defines a page in Azure responses.
+    /// </summary>
+    /// <typeparam name="T">Type of the page content items</typeparam>
     public class Page<T> : Model
         where T : Model
     {
@@ -19,8 +23,14 @@ namespace Azure.Security.KeyVault.Keys
             _itemFactory = itemFactory;
         }
 
+        /// <summary>
+        /// Gets the content items.
+        /// </summary>
         public ReadOnlySpan<T> Items { get => _items.AsSpan(); }
 
+        /// <summary>
+        /// Gets the link to the next page.
+        /// </summary>
         public Uri NextLink { get => _nextLink; }
 
         internal override void ReadProperties(JsonElement json)

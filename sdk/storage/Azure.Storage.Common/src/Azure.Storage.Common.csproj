@@ -27,5 +27,11 @@
     <Compile Remove="Shared\**" />
     <EmbeddedResource Remove="Shared\**" />
     <None Remove="Shared\**" />
+
+    <!--
+    Compile in ArrayBufferWriter which is needed for our recorded tests
+    (and shared via InternalsVisibleTo with the other libraries)
+    -->
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
   </ItemGroup>
 </Project>

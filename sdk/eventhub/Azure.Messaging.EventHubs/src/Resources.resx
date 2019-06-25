@@ -123,6 +123,9 @@
   <data name="ArgumentNullOrWhiteSpace" xml:space="preserve">
     <value>The argument '{0}' may not be null or white space.</value>
   </data>
+  <data name="ArgumentEmptyOrWhiteSpace" xml:space="preserve">
+    <value>The argument '{0}' may not be empty or white space, though it may be null.</value>
+  </data>
   <data name="ArgumentStringTooLong" xml:space="preserve">
     <value>The argument '{0}' cannot exceed {1} characters.</value>
   </data>
