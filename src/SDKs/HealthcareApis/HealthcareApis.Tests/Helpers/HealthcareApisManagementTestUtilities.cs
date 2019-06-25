@@ -1,13 +1,16 @@
-﻿using Microsoft.Azure.Management.HealthcareApis;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.HealthcareApis;
 using Microsoft.Azure.Management.HealthcareApis.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Xunit;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace HealthcareApis.Tests.Helpers
 {
@@ -92,7 +95,7 @@ namespace HealthcareApis.Tests.Helpers
 
             ServiceCosmosDbConfigurationInfo cosmosDbConfigurationInfo = new ServiceCosmosDbConfigurationInfo(offerThroughput);
             ServiceAuthenticationConfigurationInfo authenticationConfigurationInfo = new ServiceAuthenticationConfigurationInfo(authority, audience, smartOnFhirEnabled);
-                
+
             var serviceProperties = new ServicesProperties(accessPolicies, provisioningState, cosmosDbConfigurationInfo, authenticationConfigurationInfo);
 
             return serviceProperties;
@@ -106,7 +109,7 @@ namespace HealthcareApis.Tests.Helpers
         public static void VerifyAccountProperties(ServicesDescription account, bool useDefaults, string location = "westus")
         {
             // verifies that the account is actually created
-            Assert.NotNull(account); 
+            Assert.NotNull(account);
             Assert.NotNull(account.Id);
             Assert.NotNull(account.Location);
             Assert.NotNull(account.Name);
