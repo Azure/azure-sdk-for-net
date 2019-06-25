@@ -13,7 +13,7 @@ namespace Azure.Identity
         private string _tenantId;
         private string _clientId;
         private string _clientSecret;
-        private IdentityClient _client;
+        private AadClient _client;
 
 
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret)
@@ -27,7 +27,7 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
 
-            _client = (options != null) ? new IdentityClient(options) : IdentityClient.SharedClient;
+            _client = (options != null) ? new AadClient(options) : AadClient.SharedClient;
         }
 
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)

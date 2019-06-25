@@ -19,7 +19,7 @@ namespace Azure.Identity.Tests.Mock
         {
             var credential = new ManagedIdentityCredential();
 
-            credential._client(new MockIdentityClient());
+            credential._client(new MockManagedIdentityClient());
 
             var cancellation = new CancellationTokenSource();
 
@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests.Mock
         {
             var credential = new ManagedIdentityCredential();
 
-            credential._client(new MockIdentityClient());
+            credential._client(new MockManagedIdentityClient());
 
             AccessToken defaultScopeToken = await credential.GetTokenAsync(MockScopes.Default);
 
@@ -47,13 +47,15 @@ namespace Azure.Identity.Tests.Mock
         [Test]
         public async Task VerifyMSIRequest()
         {
+            var pingResponse = new MockResponse(400);
+
             var response = new MockResponse(200);
 
             var expectedToken = "mock-msi-access-token";
 
             response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_in\": 3600 }}");
 
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(pingResponse, response);
 
             var options = new IdentityClientOptions() { Transport = mockTransport };
 
@@ -63,7 +65,7 @@ namespace Azure.Identity.Tests.Mock
 
             Assert.AreEqual(expectedToken, actualToken.Token);
 
-            MockRequest request = mockTransport.SingleRequest;
+            MockRequest request = mockTransport.Requests[1];
 
             string query = request.UriBuilder.Query;
 
