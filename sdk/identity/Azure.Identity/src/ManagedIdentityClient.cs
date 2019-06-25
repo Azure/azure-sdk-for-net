@@ -23,7 +23,6 @@ namespace Azure.Identity
         private static SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
         private static MsiType s_msiType;
         private static Uri s_endpoint;
-        private static string s_secret;
 
         private const string ImdsApiVersion = "2018-02-01";
         private const string AppServiceMsiApiVersion = "2017-09-01";
@@ -145,7 +144,7 @@ namespace Azure.Identity
                             // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
                             else
                             {
-                                s_msiType = MsiType.AppService;
+                                s_msiType = MsiType.CloudShell;
                             }
                         }
                         // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
@@ -196,13 +195,12 @@ namespace Azure.Identity
                             // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
                             if (!string.IsNullOrEmpty(secretEnvVar))
                             {
-                                s_secret = secretEnvVar;
                                 s_msiType = MsiType.AppService;
                             }
                             // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
                             else
                             {
-                                s_msiType = MsiType.AppService;
+                                s_msiType = MsiType.CloudShell;
                             }
                         }
                         // if MSI_ENDPOINT is NOT set AND the IMDS endpoint is available the MsiType is Imds
@@ -327,7 +325,7 @@ namespace Azure.Identity
 
             request.Method = HttpPipelineMethod.Get;
 
-            request.Headers.Add("secret", s_secret);
+            request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
             request.UriBuilder.Uri = s_endpoint;
 
