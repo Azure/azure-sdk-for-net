@@ -138,7 +138,6 @@ namespace Azure.Identity
                             // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
                             if (!string.IsNullOrEmpty(secretEnvVar))
                             {
-                                s_secret = secretEnvVar;
                                 s_msiType = MsiType.AppService;
                             }
                             // if ONLY the env var MSI_ENDPOINT is set the MsiType is CloudShell
