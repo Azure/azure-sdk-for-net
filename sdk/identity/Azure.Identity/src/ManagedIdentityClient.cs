@@ -4,9 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -16,17 +14,20 @@ namespace Azure.Identity
 {
     internal class ManagedIdentityClient
     {
+        private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient());
+        
+        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
+        private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private const string ImdsApiVersion = "2018-02-01";
+
+        // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string MsiEndpointEnvironemntVariable = "MSI_ENDPOINT";
         private const string MsiSecretEnvironemntVariable = "MSI_SECRET";
-        private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient());
-        private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private const string AppServiceMsiApiVersion = "2017-09-01";
+
         private static SemaphoreSlim s_initLock = new SemaphoreSlim(1, 1);
         private static MsiType s_msiType;
         private static Uri s_endpoint;
-
-        private const string ImdsApiVersion = "2018-02-01";
-        private const string AppServiceMsiApiVersion = "2017-09-01";
-
 
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
@@ -112,7 +113,6 @@ namespace Azure.Identity
                 default:
                     return default;
             }
-
         }
 
         private async ValueTask<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
@@ -250,7 +250,7 @@ namespace Azure.Identity
                 // this indicates that the request timed out and that imds is not available.  Otherwise the operation
                 // was user cancelled.  In this case we don't wan't to handle the exception so s_identityAvailable will
                 // remain unset, as we still haven't determined if the imds endpoint is available.
-                catch (OperationCanceledException ex) when (ex.CancellationToken == imdsTimeout)
+                catch (OperationCanceledException) when (imdsTimeout.IsCancellationRequested)
                 {
                     return false;
                 }
@@ -406,7 +406,7 @@ namespace Azure.Identity
                 // otherwise expires_on will be a unix timestamp seconds from epoch
                 else
                 {
-                    expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(expiresOnProp.GetInt64());
+                    expiresOn = DateTimeOffset.FromUnixTimeMilliseconds(expiresOnProp.GetInt64());
                 }
             }
 

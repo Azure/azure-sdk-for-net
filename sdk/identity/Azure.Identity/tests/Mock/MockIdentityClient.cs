@@ -15,7 +15,6 @@ namespace Azure.Identity.Tests.Mock
         public MockManagedIdentityClient()
             : this(LiveTokenFactory)
         {
-
         }
 
         public MockManagedIdentityClient(AccessToken token)
@@ -40,7 +39,6 @@ namespace Azure.Identity.Tests.Mock
 
         public async override Task<AccessToken> AuthenticateAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
         {
-
             return await CreateTokenAsync(scopes, clientId: clientId, cancellationToken: cancellationToken);
         }
 
@@ -48,7 +46,7 @@ namespace Azure.Identity.Tests.Mock
         {
             if (cancellationToken != default)
             {
-                await Task.Delay(1000, cancellationToken);
+                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
             }
 
             return _tokenFactory(scopes, tenantId, clientId, clientSecret, cancellationToken);
