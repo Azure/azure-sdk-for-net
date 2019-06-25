@@ -34,17 +34,17 @@ namespace Azure.Messaging.EventHubs.Tests
             typeof(Samples.Program)
               .Assembly
               .ExportedTypes
-              .Where(type => (type.IsClass && typeof(ISample).IsAssignableFrom(type)))
-              .Select(type => new object[] { (ISample)Activator.CreateInstance(type) });
+              .Where(type => (type.IsClass && typeof(IEventHubsSample).IsAssignableFrom(type)))
+              .Select(type => new object[] { (IEventHubsSample)Activator.CreateInstance(type) });
 
         /// <summary>
-        ///   Verifies that the specified <see cref="ISample" /> is able to
+        ///   Verifies that the specified <see cref="IEventHubsSample" /> is able to
         ///   be run without encountering an exception.
         /// </summary>
         ///
         [Test]
         [TestCaseSource(nameof(SampleTestCases))]
-        public async Task SmokeTestASample(ISample sample)
+        public async Task SmokeTestASample(IEventHubsSample sample)
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {

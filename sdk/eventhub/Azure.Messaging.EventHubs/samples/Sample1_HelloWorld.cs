@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to Event Hubs, illustrating how to connect and query the service.
     /// </summary>
     ///
-    public class Sample1_HelloWorld : ISample
+    public class Sample1_HelloWorld : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
+        ///   Receives a bach of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>

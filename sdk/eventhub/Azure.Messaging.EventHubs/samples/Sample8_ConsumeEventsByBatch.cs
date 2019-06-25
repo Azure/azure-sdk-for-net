@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, using a batch approach to control throughput.
     /// </summary>
     ///
-    public class Sample8_ConsumeEventsByBatch : ISample
+    public class Sample8_ConsumeEventsByBatch : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
