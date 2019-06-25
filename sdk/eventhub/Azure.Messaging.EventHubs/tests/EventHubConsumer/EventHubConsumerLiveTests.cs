@@ -746,7 +746,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task OwnerConsumerClosesNoOwnerLevelConsumer()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -763,6 +762,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
                     await exclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
 
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+
                     Assert.That(async () => await nonExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                 }
             }
@@ -774,7 +775,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test fails in Track One as well")]
         public async Task OwnerConsumerClosesLowerOwnerLevelConsumer()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -790,6 +790,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
                     await higherExclusiveConsumer.ReceiveAsync(1, TimeSpan.FromSeconds(2));
+
+                    await Task.Delay(TimeSpan.FromSeconds(5));
 
                     Assert.That(async () => await lowerExclusiveConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.InstanceOf<TrackOne.ReceiverDisconnectedException>());
                 }
