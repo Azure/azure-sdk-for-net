@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to consuming events, using a simple <see cref="EventHubConsumer" />.
     /// </summary>
     ///
-    public class Sample7_ConsumeEvents : ISample
+    public class Sample7_ConsumeEvents : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

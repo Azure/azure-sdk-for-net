@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using a simple <see cref="EventHubProducer" />.
     /// </summary>
     ///
-    public class Sample3_PublishAnEvent : ISample
+    public class Sample3_PublishAnEvent : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using an <see cref="EventHubProducer" /> that is associated with a specific partition.
     /// </summary>
     ///
-    public class Sample5_PublishEventsToSpecificPartitions : ISample
+    public class Sample5_PublishEventsToSpecificPartitions : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

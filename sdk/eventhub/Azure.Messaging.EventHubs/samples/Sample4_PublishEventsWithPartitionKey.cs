@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using a partition key to group them together.
     /// </summary>
     ///
-    public class Sample4_PublishEventsWithPartitionKey : ISample
+    public class Sample4_PublishEventsWithPartitionKey : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

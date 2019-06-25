@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to the Event Hubs client library.  As an open source effort, we're excited to welcome feedback and contributions from the community.  A great first step in sharing your thoughts and understanding where help is needed would be to take a look at the [open issues](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aopen+is%3Aissue+label%3AClient+label%3A%22Event+Hubs%22).
 
- Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use any contribution that you make. For details, visit https://cla.microsoft.com.
+Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use any contribution that you make. For details, visit https://cla.microsoft.com.
 
 ## Code of conduct
 
@@ -10,11 +10,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Getting started
 
-Before working on a contribution, it would be beneficial to familiarize yourself with the process and guidelines used for the Azure SDKs so that your submission is consistent with the project standards and is ready to be accepted with fewer changes requested.   In particular, it is recommended to review:
+Before working on a contribution, it would be beneficial to familiarize yourself with the process and guidelines used for the Azure SDKs so that your submission is consistent with the project standards and is ready to be accepted with fewer changes requested.  In particular, it is recommended to review:
 
   - [Azure SDK README](https://github.com/Azure/azure-sdk), to learn more about the overall project and processes used.
-  - [Azure SDK Design Guidelines](https://azuresdkspecs.z5.web.core.windows.net/DesignGuidelines.html#general-documentation), to understand the general guidelines for the SDKs across all languages and platforms
-  - [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html), to understand the guidelines specific to the Azure SDKs for .NET.
+  - [Azure SDK Design Guidelines](https://azuresdkspecs.z5.web.core.windows.net/DesignGuidelines.html#general-documentation), to understand the general guidelines for the Azure SDK across all languages and platforms.
+  - [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html), to understand the guidelines specific to the Azure SDK for .NET.
 
 ## Development environment setup
 
@@ -22,11 +22,13 @@ Before working on a contribution, it would be beneficial to familiarize yourself
 
 The Event Hubs client library tests may be executed using the `dotnet` CLI, or the test runner of your choice - such as Visual Studio or Visual Studio Code.  For those developers using Visual Studio, it is safe to use the Live Unit Testing feature, as any tests with external dependencies have been marked to be excluded.
 
-Tests in the Event Hubs client library are split into two categories - unit tests and integration tests.  For unit tests, there are no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.  
+Tests in the Event Hubs client library are split into two categories:
 
-Integration tests, have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  Specifically, an Azure resource group, Event Hubs namespace, and Azure Service Principal with "contributor" rights to the Event Hub namespace is required.   The Live tests read information from the following environment variables:
+- **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
 
- `EVENT_HUBS_CONNECTION_STRING`  
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  Specifically, an Azure resource group, Event Hubs namespace, and Azure Service Principal with "contributor" rights to the Event Hub namespace is required.  The Live tests read information from the following environment variables:
+
+`EVENT_HUBS_CONNECTION_STRING`  
   The full connection string to the Event Hubs namespace, using the default shared access policy.
     
 `EVENT_HUBS_NAMESPACE`  
@@ -47,7 +49,7 @@ Integration tests, have dependencies on live Azure resources and require setting
 `EVENT_HUBS_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
    
-To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.   You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
+To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
 
 The simplest way to get started is to execute the script with your subscription name and then follow the prompts:
 

@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
     /// </summary>
     ///
     ///
-    public interface ISample
+    public interface IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

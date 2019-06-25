@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events, starting at a well-known position in the Event Hub partition.
     /// </summary>
     ///
-    public class Sample9_ConsumeEventsFromAKnownPosition : ISample
+    public class Sample9_ConsumeEventsFromAKnownPosition : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
