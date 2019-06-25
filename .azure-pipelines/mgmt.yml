@@ -15,14 +15,14 @@ jobs:
       vmImage: 'VS2017-Win2016'
     variables:
       IgnoreBuildTokens: 'Microsoft.Rest.ClientRuntime.Tracing.Tests Microsoft.Azure.Services.AppAuthentication.IntegrationTests KeyVault\dataPlane LocationBasedServices Az.Auth.Tests Search Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests Batch\Support\FileConventions AzureBatchFileConventions.IntegrationTests Batch\DataPlane\Azure.Batch.Unit.Tests Batch\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests ContainerService\ContainerService.Tests Consumption\Consumption.Tests Billing\Billing.Tests ApplicationInsights\Management\ApplicationInsights.Tests Batch\Management\Management.Batch.Tests SecurityCenter\SecurityCenter.Tests AzureStack\Admin\FabricAdmin\Fabric.Admin.Tests IotHub\IotHub.Tests Monitor\Monitor.Tests Compute\Compute.Tests Reservations\Reservations.Tests NetApp\NetApp.Tests ContainerRegistry\ContainerRegistry.Tests OperationalInsights\Management\OperationalInsights.Test Subscription\Subscription.Tests WebSites\WebSites.Tests DataLake.Store EventGrid.Tests StorageSync.Tests ServiceFabric\ServiceFabric.Test AppAuthentication\Azure.Services.AppAuthentication.Unit.Tests Graph.RBAC\Graph.RBAC.Tests'
-      LoggingArgs: '/v:m /clp:ShowtimeStamp /flp:LogFile=msbuild.normal;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp2:warningsonly;logfile=msbuild.wrn /flp3:errorsonly;logfile=msbuild.err'
+      LoggingArgs: '/clp:ShowtimeStamp /flp:LogFile=msbuild.normal;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=msbuild.sum /flp2:warningsonly;logfile=msbuild.wrn /flp3:errorsonly;logfile=msbuild.err'
       RPScopeArgs: '/p:PullRequestNumber=$(System.PullRequest.PullRequestNumber) /p:RepoHtmlUrl=https://github.com/Azure/azure-sdk-for-net/'
 
     steps:
       - task: MSBuild@1
         inputs:
           solution: mgmt.proj
-          msbuildArguments: /t:RunTests $(LoggingArgs) $(RPScopeArgs)
+          msbuildArguments: /t:RunTests $(LoggingArgs) $(RPScopeArgs) /v:m
         displayName: 'Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -42,7 +42,7 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - script: dotnet msbuild mgmt.proj /t:RunTests $(LoggingArgs) $(RPScopeArgs)
+      - script: dotnet msbuild mgmt.proj /t:RunTests $(LoggingArgs) $(RPScopeArgs) /v:n
         displayName: 'Ubuntu Build and Run tests'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
