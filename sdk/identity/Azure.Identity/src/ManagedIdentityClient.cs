@@ -352,7 +352,7 @@ namespace Azure.Identity
 
             request.Method = HttpPipelineMethod.Post;
 
-            request.Headers.SetValue("Content-Type", "application/x-www-form-urlencoded");
+            request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
             request.UriBuilder.Uri = s_endpoint;
 
