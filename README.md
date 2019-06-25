@@ -1,6 +1,6 @@
-# Microsoft Azure SDK for .NET
+# Azure SDK for .NET
 
-This repository contains official .NET client libraries for Microsoft Azure services.
+This repository contains official .NET client libraries for Azure services.
 
 You can find NuGet packages for these libraries [here](packages.md).
 
