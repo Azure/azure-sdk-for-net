@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Sec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Tests", "Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj", "{6BEF56A3-A6B2-4F21-A4B6-895764A384F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Samples", "Azure.Security.KeyVault.Secrets\samples\Azure.Security.KeyVault.Secrets.Samples.csproj", "{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets.Samples", "Azure.Security.KeyVault.Secrets\samples\Azure.Security.KeyVault.Secrets.Samples.csproj", "{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys.Tests", "Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj", "{C361B52F-CD94-465D-AA79-1B2C0461A166}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Keys.Samples", "Azure.Security.KeyVault.Keys\samples\Azure.Security.KeyVault.Keys.Samples.csproj", "{2115943B-E46D-483D-84F4-486285BA8864}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{EBCE8579-EB89-4CDF-A9F6-5F74FE08E933}"
 EndProject
@@ -37,6 +39,10 @@ Global
 		{6BEF56A3-A6B2-4F21-A4B6-895764A384F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BEF56A3-A6B2-4F21-A4B6-895764A384F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BEF56A3-A6B2-4F21-A4B6-895764A384F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DA63E2C-3D93-4FD6-AA95-8CA8BEFE57EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,10 +59,10 @@ Global
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E74DABDD-50B0-475C-B83A-44465CF5515C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAC16CDD-8B28-4ECA-AE1F-C4903E55EF2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2115943B-E46D-483D-84F4-486285BA8864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
