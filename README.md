@@ -11,7 +11,7 @@ The following sections provide direct links to READMEs of the most commonly used
 
 ### Core services
 
-* [Azure.Messaging.EventHubs](/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
+* [Azure.Messaging.EventHubs](/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
 * [Azure.Identity.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
 * [Azure.Identity.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
 * [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
