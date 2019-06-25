@@ -15,8 +15,6 @@ namespace HealthcareApis.Tests.Helpers
     {
         public static bool IsTestTenant = false;
         private static HttpClientHandler Handler = null;
-
-        private static System.Guid testSubscription = System.Guid.Empty;
         private static Uri testUri = null;
 
         // These are used to create default accounts
@@ -159,8 +157,7 @@ namespace HealthcareApis.Tests.Helpers
 
         public static string CreateHealthcareApisServicesAccount(HealthcareApisManagementClient healthcareApisManagementClient, string rgname, string kind = null)
         {
-            string accountName = TestUtilities.GenerateName("csa");
-            return accountName;
+            return TestUtilities.GenerateName("csa");
         }
 
         public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
