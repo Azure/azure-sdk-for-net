@@ -22,7 +22,7 @@ namespace Azure.Core.Http
         public HttpRange(long? offset = default, long? count = default)
         {
             if (offset.HasValue && offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-            if (count.HasValue && count <= 0) throw new ArgumentOutOfRangeException(nameof(offset));
+            if (count.HasValue && count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
             this.Offset = offset ?? 0;
             this.Count = count;
