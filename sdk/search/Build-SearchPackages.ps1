@@ -1,9 +1,9 @@
 $scriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
-$packagesDir = "$scriptDir\..\..\binaries\packages"
+$engDir = "$scriptDir\..\..\eng\"
 
-if (!(Test-Path -Path $packagesDir)) {
-    mkdir $packagesDir
-}
+msbuild "$scriptDir\..\..\build.proj" /t:CreateNugetPackage /p:Scope="search"
 
-msbuild "$scriptDir\..\..\build.proj" /t:CreateNugetPackage /p:Scope="sdk\search\Microsoft.Azure.Management.Search"
-msbuild "$scriptDir\..\..\build.proj" /t:CreateNugetPackage /p:Scope="sdk\search"
+dotnet restore
+dotnet build "$engDir/service.proj" /p:ServiceDirectory="search"
+dotnet test "$engDir/service.proj" /p:ServiceDirectory="search"
+dotnet pack "$engDir/service.proj" /p:ServiceDirectory="search"

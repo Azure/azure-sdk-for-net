@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ExcludeFromBuild>true</ExcludeFromBuild>
-    <ExcludeFromTest>true</ExcludeFromTest>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
 
   <ItemGroup>
