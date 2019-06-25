@@ -252,6 +252,15 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
+        /// Create a <see cref="DirectoryClient"/> object for the root of the
+        /// share.  The new <see cref="DirectoryClient"/> uses the same request
+        /// policy pipeline as the <see cref="ShareClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
+        public virtual DirectoryClient GetRootDirectoryClient()
+            => this.GetDirectoryClient("");
+
+        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
