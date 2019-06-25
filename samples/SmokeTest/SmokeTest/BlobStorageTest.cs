@@ -20,7 +20,10 @@ namespace SmokeTest
             this.service = new BlobServiceClient(connectionString);
             this.blob = service.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
         }
-
+        /// <summary>
+        /// Test the Storage Blobs SDK
+        /// </summary>
+        /// <returns>true if passes, false if fails</returns>
         public async Task<bool> PerformFunctionalities()
         {
             Console.WriteLine("\n---------------------------------");
@@ -30,7 +33,6 @@ namespace SmokeTest
             Console.WriteLine("1.- Upload Blob Block");
             Console.WriteLine("2.- Delete that Blob Block" + '\n');
 
-            //Upload a new Blob (txt file in /BlobFiles folder)
             Console.Write("Uploading blob... ");
             var result1 = await UploadBlob();
             if(result1 != null)
@@ -47,7 +49,6 @@ namespace SmokeTest
                 Console.Write("Blob uploaded successfully\n");
             }
 
-            //Delete the Blob that was created
             Console.Write("Deleting blob... ");
             var result2 = await DeleteBlob();
             if (result2 != null)

@@ -18,6 +18,11 @@ namespace SmokeTest
             this.client = new SecretClient(new Uri(KeyVaultUri), new ClientSecretCredential(tenantid, clientid, clientsecret));
         }
 
+        
+        /// <summary>
+        /// Validates the Key Vault SDK
+        /// </summary>
+        /// <returns>true if passes, false if fails</returns>
         public async Task<bool> PerformFunctionalities()
         {
             Console.WriteLine("\n---------------------------------");
@@ -31,7 +36,6 @@ namespace SmokeTest
              
             var testPassed = true;
 
-            //Create a new Secret
             Console.Write("Set a secret... ");
             var result1 = await SetNewSecret();
             if (result1 != null)
@@ -48,7 +52,6 @@ namespace SmokeTest
                 Console.Error.Write("Secret created succesfully.\n");
             }
 
-            //Retrieve the Secret previously created
             Console.Write("Get that secret... ");
             var result2 = await GetSecret();
             if (result2 != null)
@@ -63,7 +66,6 @@ namespace SmokeTest
                 Console.WriteLine("Secret succesfully retreived.");
             }
 
-            //Clean up the resource (Delete the secret that was created)
             Console.Write("Cleaning up the resource... ");
             var result3 = await CleanUp();
             if (result3 != null)
@@ -95,8 +97,6 @@ namespace SmokeTest
             
             return null;
 
-            //return result.Value.Value;
-
         }
 
         private async Task<Exception> GetSecret()
@@ -112,7 +112,7 @@ namespace SmokeTest
                 return ex;
             }
 
-            //Verify that the secret received is the one that was sent previously
+            //Verify that the secret received is the one that was set previously
             if (secret.Value.Value == secretValue)
             {
                 return null;

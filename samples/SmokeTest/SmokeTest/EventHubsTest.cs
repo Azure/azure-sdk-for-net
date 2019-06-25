@@ -25,6 +25,10 @@ namespace SmokeTest
             this.client = new EventHubClient(connectionString);
         }
 
+        /// <summary>
+        /// Test the Event Hubs SDK by sending and receiving events
+        /// </summary>
+        /// <returns>true if pases, false if fails</returns>
         public async Task<bool> PerformFunctionalities()
         {
             Console.WriteLine("\n---------------------------------");
@@ -93,28 +97,22 @@ namespace SmokeTest
         {
             try
             {
-                //Start the receiver
-                await receiver.ReceiveAsync(1, TimeSpan.Zero);
-
-                //Create the event batch to send
                 var eventBatch = new[]
                     {
                     new EventData(Encoding.UTF8.GetBytes("First event data")),
                     new EventData(Encoding.UTF8.GetBytes("Second event data")),
                     new EventData(Encoding.UTF8.GetBytes("Third event data"))
                 };
+                var index = 0;
+                var receivedEvents = new List<EventData>();
 
-                //Send events
+                //Before sending any event, start the receiver
+                await receiver.ReceiveAsync(1, TimeSpan.Zero);
+
                 Console.Write("Ready to send a batch of " + eventBatch.Count().ToString() + " events... ");
                 await sender.SendAsync(eventBatch);
                 Console.Write("Sent\n");
-
-                //Receive the events
-                var receivedEvents = new List<EventData>();
-
-                //Why?
-                var index = 0;
-
+           
                 Console.Write("Receiving events... ");
                 while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
                 {
@@ -122,7 +120,7 @@ namespace SmokeTest
                 }
                 index = 0;
 
-                //Check if at least one event was received
+                //Check if at least one event was received in roder to start validation
                 if (receivedEvents.Count == 0)
                 {
                     throw new Exception(String.Format("Error, No events received."));
@@ -146,7 +144,6 @@ namespace SmokeTest
                     index++;
                 }
 
-                //Check if the number of events received match the number of events sent
                 if (index < eventBatch.Count())
                 {
                     throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + index.ToString() + "."));
