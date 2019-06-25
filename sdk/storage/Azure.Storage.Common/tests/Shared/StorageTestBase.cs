@@ -68,13 +68,16 @@ namespace Azure.Storage.Test.Shared
             this.GetOAuthCredential(
                 config.ActiveDirectoryTenantId,
                 config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+                config.ActiveDirectoryApplicationSecret,
+                new Uri(config.ActiveDirectoryAuthEndpoint));
 
-        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret) =>
+        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
             new ClientSecretCredential(
                 tenantId,
                 appId,
-                secret);
+                secret,
+                this.Recording.InstrumentClientOptions(
+                    new IdentityClientOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

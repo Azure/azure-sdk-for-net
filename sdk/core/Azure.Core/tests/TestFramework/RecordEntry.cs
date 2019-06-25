@@ -239,12 +239,23 @@ namespace Azure.Core.Testing
             }
         }
 
+        private static bool TryGetContentType(IDictionary<string, string[]> requestHeaders, out string contentType)
+        {
+            contentType = null;
+            if (requestHeaders.TryGetValue("Content-Type", out var contentTypes) &&
+                contentTypes.Length == 1)
+            {
+                contentType = contentTypes[0];
+                return true;
+            }
+            return false;
+        }
+
         private static bool IsTextContentType(IDictionary<string, string[]> requestHeaders, out Encoding encoding)
         {
             encoding = null;
-            return requestHeaders.TryGetValue("Content-Type", out var contentType) &&
-                   contentType.Length == 1 &&
-                   ContentTypeUtilities.TryGetTextEncoding(contentType[0], out encoding);
+            return TryGetContentType(requestHeaders, out string contentType) &&
+                   ContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
         }
 
         public void Sanitize(RecordedTestSanitizer sanitizer)
@@ -252,13 +263,14 @@ namespace Azure.Core.Testing
             RequestUri = sanitizer.SanitizeUri(RequestUri);
             if (RequestBody != null)
             {
+                TryGetContentType(RequestHeaders, out string contentType);
                 if (IsTextContentType(RequestHeaders, out Encoding encoding))
                 {
-                    RequestBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(encoding.GetString(RequestBody)));
+                    RequestBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(RequestBody)));
                 }
                 else
                 {
-                    RequestBody = sanitizer.SanitizeBody(RequestBody);
+                    RequestBody = sanitizer.SanitizeBody(contentType, RequestBody);
                 }
             }
 
@@ -266,13 +278,14 @@ namespace Azure.Core.Testing
 
             if (ResponseBody != null)
             {
+                TryGetContentType(ResponseHeaders, out string contentType);
                 if (IsTextContentType(ResponseHeaders, out Encoding encoding))
                 {
-                    ResponseBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(encoding.GetString(ResponseBody)));
+                    ResponseBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(ResponseBody)));
                 }
                 else
                 {
-                    ResponseBody = sanitizer.SanitizeBody(ResponseBody);
+                    ResponseBody = sanitizer.SanitizeBody(contentType, ResponseBody);
                 }
             }
 

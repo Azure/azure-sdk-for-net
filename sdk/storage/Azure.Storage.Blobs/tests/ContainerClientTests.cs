@@ -596,9 +596,7 @@ namespace Azure.Storage.Blobs.Test
             var duration = 15;
 
             // Act
-            var response = await container.AcquireLeaseAsync(
-                duration: duration,
-                proposedId: id);
+            var response = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
             // Assert
             Assert.AreEqual(id, response.Value.LeaseId);
@@ -624,9 +622,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id),
+                container.GetLeaseClient(id).AcquireAsync(duration: duration),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -648,10 +644,9 @@ namespace Azure.Storage.Blobs.Test
                 var duration = 15;
 
                 // Act
-                var response = await container.AcquireLeaseAsync(
+                var response = await container.GetLeaseClient(id).AcquireAsync(
                     duration: duration,
-                    proposedId: id,
-                    accessConditions: accessConditions);
+                    httpAccessConditions: accessConditions.HttpAccessConditions);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -685,10 +680,9 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                        container.AcquireLeaseAsync(
+                        container.GetLeaseClient(id).AcquireAsync(
                             duration: duration,
-                            proposedId: id,
-                            accessConditions: accessConditions),
+                            httpAccessConditions: accessConditions.HttpAccessConditions),
                         e => {});
                 }
             }
@@ -705,12 +699,11 @@ namespace Azure.Storage.Blobs.Test
             var id = this.Recording.Random.NewGuid().ToString();
             var duration = 15;
 
-            var leaseResponse = await container.AcquireLeaseAsync(
-                duration: duration,
-                proposedId: id); 
+            var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(
+                duration: duration); 
 
             // Act
-            var renewResponse = await container.RenewLeaseAsync(leaseResponse.Value.LeaseId);
+            var renewResponse = await container.GetLeaseClient(leaseResponse.Value.LeaseId).RenewAsync();
 
             // Assert
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
@@ -735,8 +728,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.ReleaseLeaseAsync(
-                    leaseId: id),
+                container.GetLeaseClient(id).ReleaseAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -756,14 +748,11 @@ namespace Azure.Storage.Blobs.Test
 
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
-                _ = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var lease = container.GetLeaseClient(id);
+                _ = await lease.AcquireAsync(duration: duration);
 
                 // Act
-                var response = await container.RenewLeaseAsync(
-                    leaseId: id,
-                    accessConditions: accessConditions);
+                var response = await lease.RenewAsync(httpAccessConditions: accessConditions.HttpAccessConditions);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -796,15 +785,12 @@ namespace Azure.Storage.Blobs.Test
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var lease = container.GetLeaseClient(id);
+                var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    container.RenewLeaseAsync(
-                        leaseId: id,
-                        accessConditions: accessConditions),
+                    lease.RenewAsync(httpAccessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
                 // cleanup
@@ -826,10 +812,10 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
-                var leaseResponse = await container.AcquireLeaseAsync(duration, id);
+                var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
 
                 // Act
-                var releaseResponse = await container.ReleaseLeaseAsync(leaseResponse.Value.LeaseId);
+                var releaseResponse = await container.GetLeaseClient(leaseResponse.Value.LeaseId).ReleaseAsync();
 
                 // Assert
                 var response = await container.GetPropertiesAsync();
@@ -849,8 +835,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.ReleaseLeaseAsync(
-                    leaseId: id),
+                container.GetLeaseClient(id).ReleaseAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -870,14 +855,11 @@ namespace Azure.Storage.Blobs.Test
                     var id = this.Recording.Random.NewGuid().ToString();
                     var duration = 15;
 
-                    var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                        duration: duration,
-                        proposedId: id);
+                    var lease = container.GetLeaseClient(id);
+                    var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
                     // Act
-                    var response = await container.ReleaseLeaseAsync(
-                        leaseId: id,
-                        accessConditions: accessConditions);
+                    var response = await lease.ReleaseAsync(httpAccessConditions: accessConditions.HttpAccessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -902,15 +884,12 @@ namespace Azure.Storage.Blobs.Test
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var lease = container.GetLeaseClient(id); ;
+                var aquireLeaseResponse = await lease.AcquireAsync(duration: duration);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    container.ReleaseLeaseAsync(
-                        leaseId: id,
-                        accessConditions: accessConditions),
+                    lease.ReleaseAsync(httpAccessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
                 // cleanup
@@ -932,11 +911,11 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
-                await container.AcquireLeaseAsync(duration, id);
+                await container.GetLeaseClient(id).AcquireAsync(duration);
                 var breakPeriod = 0;
 
                 // Act
-                var breakResponse = await container.BreakLeaseAsync(breakPeriod);
+                var breakResponse = await container.GetLeaseClient().BreakAsync(breakPeriod);
 
                 // Assert
                 var response = await container.GetPropertiesAsync();
@@ -955,7 +934,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.BreakLeaseAsync(),
+                container.GetLeaseClient().BreakAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -977,13 +956,11 @@ namespace Azure.Storage.Blobs.Test
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
                 // Act
-                var response = await container.BreakLeaseAsync(
-                    accessConditions: accessConditions);
+                var response = await container.GetLeaseClient().BreakAsync(
+                    httpAccessConditions: accessConditions.HttpAccessConditions);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1016,14 +993,12 @@ namespace Azure.Storage.Blobs.Test
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    container.BreakLeaseAsync(
-                        accessConditions: accessConditions),
+                    container.GetLeaseClient().BreakAsync(
+                        httpAccessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
                 // cleanup
@@ -1045,17 +1020,17 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 var id = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
-                var leaseResponse = await container.AcquireLeaseAsync(duration, id);
+                var leaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration);
                 var newId = this.Recording.Random.NewGuid().ToString();
 
                 // Act
-                var changeResponse = await container.ChangeLeaseAsync(leaseResponse.Value.LeaseId, newId);
+                var changeResponse = await container.GetLeaseClient(id).ChangeAsync(newId);
 
                 // Assert
                 Assert.AreEqual(newId, changeResponse.Value.LeaseId);
 
                 // Cleanup
-                await container.ReleaseLeaseAsync(changeResponse.Value.LeaseId);
+                await container.GetLeaseClient(changeResponse.Value.LeaseId).ReleaseAsync();
             }
         }
 
@@ -1069,7 +1044,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.ChangeLeaseAsync(id, id),
+                container.GetLeaseClient(id).ChangeAsync(id),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -1092,15 +1067,12 @@ namespace Azure.Storage.Blobs.Test
                 var newId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
                 // Act
-                var response = await container.ChangeLeaseAsync(
-                    leaseId: aquireLeaseResponse.Value.LeaseId,
+                var response = await container.GetLeaseClient(aquireLeaseResponse.Value.LeaseId).ChangeAsync(
                     proposedId: newId,
-                    accessConditions: accessConditions);
+                    httpAccessConditions: accessConditions.HttpAccessConditions);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -1134,16 +1106,13 @@ namespace Azure.Storage.Blobs.Test
                 var newId = this.Recording.Random.NewGuid().ToString();
                 var duration = 15;
 
-                var aquireLeaseResponse = await container.AcquireLeaseAsync(
-                    duration: duration,
-                    proposedId: id);
+                var aquireLeaseResponse = await container.GetLeaseClient(id).AcquireAsync(duration: duration);
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    container.ChangeLeaseAsync(
-                        leaseId: aquireLeaseResponse.Value.LeaseId,
+                    container.GetLeaseClient(aquireLeaseResponse.Value.LeaseId).ChangeAsync(
                         proposedId: newId,
-                        accessConditions: accessConditions),
+                        httpAccessConditions: accessConditions.HttpAccessConditions),
                     e => { });
 
                 // cleanup

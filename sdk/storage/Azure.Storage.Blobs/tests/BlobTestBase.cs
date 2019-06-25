@@ -275,7 +275,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await blob.AcquireLeaseAsync(-1);
+                lease = await blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
@@ -286,7 +286,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await container.AcquireLeaseAsync(-1);
+                lease = await container.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
