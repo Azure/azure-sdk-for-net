@@ -29,8 +29,8 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <summary>
         /// Initializes a new instance of the RestoreOptions class.
         /// </summary>
-        /// <param name="roleName">The Azure Stack role name for restore, use
-        /// "-" for infrastructure role</param>
+        /// <param name="roleName">The Azure Stack role name for restore, set
+        /// it to empty for all infrastructure role</param>
         /// <param name="decryptionCertBase64">The certificate file raw data in
         /// Base64 string. This should be the .pfx file with the private
         /// key.</param>
@@ -50,10 +50,10 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Azure Stack role name for restore, use "-" for
-        /// infrastructure role
+        /// Gets or sets the Azure Stack role name for restore, set it to empty
+        /// for all infrastructure role
         /// </summary>
-        [JsonProperty(PropertyName = "RoleName")]
+        [JsonProperty(PropertyName = "roleName")]
         public string RoleName { get; set; }
 
         /// <summary>
