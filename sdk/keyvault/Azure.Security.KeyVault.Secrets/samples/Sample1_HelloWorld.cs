@@ -61,14 +61,14 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.Delete(secretName);
 
             // To ensure secret is deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, secretName));
+            Assert.IsTrue(WaitForDeletedSecret(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             client.PurgeDeleted(secretName);
 
         }
 
-        private bool WaitForDeletedKey(SecretClient client, string secretName)
+        private bool WaitForDeletedSecret(SecretClient client, string secretName)
         {
             int maxIterations = 20;
             for (int i = 0; i < maxIterations; i++)

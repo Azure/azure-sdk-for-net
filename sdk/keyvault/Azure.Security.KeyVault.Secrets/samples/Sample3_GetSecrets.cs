@@ -77,8 +77,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.Delete(storageSecretName);
 
             // To ensure secrets are deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, bankSecretName));
-            Assert.IsTrue(WaitForDeletedKey(client, storageSecretName));
+            Assert.IsTrue(WaitForDeletedSecret(client, bankSecretName));
+            Assert.IsTrue(WaitForDeletedSecret(client, storageSecretName));
 
             // You can list all the deleted and non-purged secrets, assuming key vault is soft-delete enabled.
             IEnumerable<Response<DeletedSecret>> secretsDeleted = client.GetDeletedSecrets();
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.PurgeDeleted(storageSecretName);
         }
 
-        private bool WaitForDeletedKey(SecretClient client, string secretName)
+        private bool WaitForDeletedSecret(SecretClient client, string secretName)
         {
             int maxIterations = 20;
             for (int i = 0; i < maxIterations; i++)

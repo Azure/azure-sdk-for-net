@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.DeleteAsync(secretName);
 
             // To ensure secret is deleted on server side.
-            Assert.IsTrue(await WaitForDeletedKeyAsync(client, secretName));
+            Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             await client.PurgeDeletedAsync(secretName);
@@ -69,11 +69,11 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length);
                 restoreSecret = await client.RestoreAsync(result);
             }
-            
-            Assert.AreEqual((SecretBase)storedSecret, restoreSecret);
+
+            AssertSecretsEqual((SecretBase)storedSecret, restoreSecret);
         }
 
-        private async Task<bool> WaitForDeletedKeyAsync(SecretClient client, string secretName)
+        private async Task<bool> WaitForDeletedSecretAsync(SecretClient client, string secretName)
         {
             int maxIterations = 20;
             for (int i = 0; i < maxIterations; i++)

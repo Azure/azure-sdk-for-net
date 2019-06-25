@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             client.Delete(secretName);
 
             // To ensure secret is deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, secretName));
+            Assert.IsTrue(WaitForDeletedSecret(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
             client.PurgeDeleted(secretName);
@@ -58,10 +58,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
             SecretBase restoreSecret = client.Restore(File.ReadAllBytes(backupPath));
 
-            Assert.AreEqual((SecretBase)storedSecret, restoreSecret);
+            AssertSecretsEqual((SecretBase)storedSecret, restoreSecret);
         }
 
-        private bool WaitForDeletedKey(SecretClient client, string secretName)
+        private bool WaitForDeletedSecret(SecretClient client, string secretName)
         {
             int maxIterations = 20;
             for (int i = 0; i < maxIterations; i++)
@@ -77,6 +77,16 @@ namespace Azure.Security.KeyVault.Secrets.Samples
                 }
             }
             return false;
+        }
+
+        private void AssertSecretsEqual(SecretBase exp, SecretBase act)
+        {
+            Assert.AreEqual(exp.Name, act.Name);
+            Assert.AreEqual(exp.Version, act.Version);
+            Assert.AreEqual(exp.Managed, act.Managed);
+            Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
+            Assert.AreEqual(exp.Expires, act.Expires);
+            Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
     }
 }
