@@ -53,7 +53,7 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
         {
-            MsiType msiType = GetMsiType(cancellationToken);
+            MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
 
             // if msi is unavailable or we were unable to determine the type return a default access token
             if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
