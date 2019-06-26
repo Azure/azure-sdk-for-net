@@ -234,6 +234,36 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
+        /// The <see cref="Create"/> operation creates a new directory
+        /// at the specified <see cref="Uri"/>.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageDirectoryInfo> Create(
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            this.CreateAsync(
+                metadata,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         /// 

@@ -1497,6 +1497,7 @@ namespace Azure.Storage.Queues
                             message: new QueueMessage { MessageText = messageText },
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
+                            async: async,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1532,12 +1533,72 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
+        /// IEnumerable of <see cref="Response{IEnumerable{DequeuedMessage}}"/>.
+        /// </returns>
+        public virtual Response<IEnumerable<DequeuedMessage>> DequeueMessages(
+            int? maxMessages = default,
+            TimeSpan? visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            this.DequeueMessagesAsync(
+                maxMessages,
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <param name="maxMessages">
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{DequeuedMessage}}}"/>.
         /// </returns>
         public virtual async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
             int? maxMessages = default,
             TimeSpan? visibilityTimeout = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) =>
+            await this.DequeueMessagesAsync(
+                maxMessages,
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
+        /// </summary>
+        /// <param name="maxMessages">
+        /// Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. 
+        /// If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// IEnumerable of <see cref="Task{Response{IEnumerable{DequeuedMessage}}}"/>.
+        /// </returns>
+        private async Task<Response<IEnumerable<DequeuedMessage>>> DequeueMessagesAsync(
+            int? maxMessages,
+            TimeSpan? visibilityTimeout,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -1554,6 +1615,7 @@ namespace Azure.Storage.Queues
                         this._messagesUri,
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
+                        async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1581,11 +1643,61 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
+        /// IEnumerable of <see cref="Response{IEnumerable{PeekedMessage}}"/>.
+        /// </returns>
+        public virtual Response<IEnumerable<PeekedMessage>> PeekMessages(
+            int? maxMessages = default,
+            CancellationToken cancellationToken = default) =>
+            this.PeekMessagesAsync(
+                maxMessages,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        /// </summary>
+        /// <param name="maxMessages">
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// By default, a single message is peeked from the queue with this operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
         /// IEnumerable of <see cref="Task{Response{IEnumerable{PeekedMessage}}}"/>.
         /// </returns>
         public virtual async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
             int? maxMessages = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) =>
+            await this.PeekMessagesAsync(
+                maxMessages,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/peek-messages"/>.
+        /// </summary>
+        /// <param name="maxMessages">
+        /// Optional. A nonzero integer value that specifies the number of messages to peek from the queue, up to a maximum of 32. 
+        /// By default, a single message is peeked from the queue with this operation.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// IEnumerable of <see cref="Task{Response{IEnumerable{PeekedMessage}}}"/>.
+        /// </returns>
+        private async Task<Response<IEnumerable<PeekedMessage>>> PeekMessagesAsync(
+            int? maxMessages,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -1600,6 +1712,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         this._messagesUri,
                         numberOfMessages: maxMessages,
+                        async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1635,12 +1748,66 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
+        /// <see cref="Response"/>.
+        /// </returns>
+        public virtual Response DeleteMessage(
+            string messageId,
+            string popReceipt,
+            CancellationToken cancellationToken = default) =>
+            this.DeleteMessageAsync(
+                messageId,
+                popReceipt,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Permanently removes the specified message from its queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to delete.</param>
+        /// <param name="popReceipt">
+        /// Required. A valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
         /// <see cref="Task{Response}"/>.
         /// </returns>
         public virtual async Task<Response> DeleteMessageAsync(
             string messageId,
             string popReceipt,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) =>
+            await this.DeleteMessageAsync(
+                messageId,
+                popReceipt,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Permanently removes the specified message from its queue.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-message2"/>.
+        /// </summary>
+        /// <param name="messageId">ID of the message to delete.</param>
+        /// <param name="popReceipt">
+        /// Required. A valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Task{Response}"/>.
+        /// </returns>
+        private async Task<Response> DeleteMessageAsync(
+            string messageId,
+            string popReceipt,
+            bool async,
+            CancellationToken cancellationToken)
         {
             var uri = this.GetMessageUri(messageId);
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -1656,6 +1823,7 @@ namespace Azure.Storage.Queues
                         this._pipeline,
                         uri,
                         popReceipt: popReceipt,
+                        async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1691,6 +1859,43 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>.
         /// </param>
         /// <returns>
+        /// <see cref="Response{UpdatedMessage}"/>.
+        /// </returns>
+        public virtual Response<UpdatedMessage> UpdateMessage(
+            string messageText,
+            string messageId,
+            string popReceipt,
+            TimeSpan visibilityTimeout = default,
+            CancellationToken cancellationToken = default) =>
+            this.UpdateMessageAsync(
+                messageText,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Updated message text.
+        /// </param>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
         /// <see cref="Task{Response{UpdatedMessage}}"/>.
         /// </returns>
         public virtual async Task<Response<UpdatedMessage>> UpdateMessageAsync(
@@ -1698,7 +1903,48 @@ namespace Azure.Storage.Queues
             string messageId,
             string popReceipt,
             TimeSpan visibilityTimeout = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) =>
+            await this.UpdateMessageAsync(
+                messageText,
+                messageId,
+                popReceipt,
+                visibilityTimeout,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/update-message"/>.
+        /// </summary>
+        /// <param name="messageText">
+        /// Updated message text.
+        /// </param>
+        /// <param name="messageId">ID of the message to update.</param>
+        /// <param name="popReceipt">
+        /// Required. Specifies the valid pop receipt value returned from an earlier call to the Get Messages or Update Message operation.
+        /// </param>
+        /// <param name="visibilityTimeout">
+        /// Required. Specifies the new visibility timeout value, in seconds, relative to server time. The new value must be larger than 
+        /// or equal to 0, and cannot be larger than 7 days. The visibility timeout of a message cannot be set to a value later than the 
+        /// expiry time. A message can be updated until it has been deleted or has expired.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="Task{Response{UpdatedMessage}}"/>.
+        /// </returns>
+        private async Task<Response<UpdatedMessage>> UpdateMessageAsync(
+            string messageText,
+            string messageId,
+            string popReceipt,
+            TimeSpan visibilityTimeout,
+            bool async,
+            CancellationToken cancellationToken)
         {
             var uri = this.GetMessageUri(messageId);
             using (this._pipeline.BeginLoggingScope(nameof(QueueClient)))
@@ -1717,6 +1963,7 @@ namespace Azure.Storage.Queues
                         message: new QueueMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                        async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

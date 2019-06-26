@@ -248,6 +248,54 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
+        /// The <see cref="ListContainersSegment"/> operation returns a
+        /// single segment of containers in the storage account, starting
+        /// from the specified <paramref name="marker"/>.  Use an empty
+        /// <paramref name="marker"/> to start enumeration from the beginning
+        /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
+        /// empty to make subsequent calls to <see cref="ListContainersSegment"/>
+        /// to continue enumerating the containers segment by segment.
+        /// Containers are ordered lexicographically by name.
+        /// 
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
+        /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of containers to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
+        /// if the listing operation did not return all containers remaining
+        /// to be listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="options">
+        /// Specifies options for listing, filtering, and shaping the
+        /// containers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ContainersSegment}"/> describing a
+        /// segment of the containers in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ContainersSegment> ListContainersSegment(
+            string marker = default,
+            ContainersSegmentOptions? options = default,
+            CancellationToken cancellationToken = default) =>
+            this.ListContainersSegmentAsync(
+                marker,
+                options,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="ListContainersSegmentAsync"/> operation returns a
         /// single segment of containers in the storage account, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
