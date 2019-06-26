@@ -1695,6 +1695,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
         /// </summary>
+        /// <param name="blobName">The name of the blob to delete.</param>
         /// <param name="deleteOptions">
         /// Specifies options for deleting blob snapshots.
         /// </param>
