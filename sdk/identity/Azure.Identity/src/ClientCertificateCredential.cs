@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
+
 
 using Azure.Core;
 using System;
@@ -15,7 +15,7 @@ namespace Azure.Identity
         private string _tenantId;
         private string _clientId;
         private X509Certificate2 _clientCertificate;
-        private IdentityClient _client;
+        private AadIdentityClient _client;
 
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
             : this(tenantId, clientId, clientCertificate, null)
@@ -30,7 +30,7 @@ namespace Azure.Identity
 
             _clientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
-            _client = (options != null) ? new IdentityClient(options) : IdentityClient.SharedClient;
+            _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
         }
 
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
