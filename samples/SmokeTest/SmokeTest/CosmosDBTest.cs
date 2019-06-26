@@ -34,6 +34,9 @@ namespace SmokeTest
     class CosmosDBTest : TestBase
     {
         private DocumentClient client;
+        
+        private const string DataBaseName = "netSolarSystemDB";
+        private const string CollectionName = "netPlanetsCollection";
         private Planet planetEarth;
         private Planet planetMars;
 
@@ -43,7 +46,7 @@ namespace SmokeTest
         }
 
         /// <summary>
-        /// Test the Cosmos DB SDK by creating an example Database called 'SolarSystemDB' and a PlanetsCollection with planets on it.
+        /// Test the Cosmos DB SDK by creating an example Database called {DataBaseName} and a PlanetsCollection with planets on it.
         /// </summary>
         /// <returns></returns>
         public async Task<bool> RunTests()
@@ -60,7 +63,7 @@ namespace SmokeTest
 
             var testPassed = true;
 
-            Console.Write("Creating Database 'SolarSystemDB'... ");
+            Console.Write("Creating Database '"+DataBaseName+"'... ");
             var result1 = await ExcecuteTest(CreateDatabase);
             if(!result1)
             {
@@ -69,7 +72,7 @@ namespace SmokeTest
                 return false;
             }
 
-            Console.Write("Creating collection 'PlanetsCollection' ");
+            Console.Write("Creating collection '"+CollectionName+"' ");
             var result2 = await ExcecuteTest(CreateCollection);
             if (!result2)
             {
@@ -102,12 +105,12 @@ namespace SmokeTest
 
         private async Task CreateDatabase()
         {
-            await client.CreateDatabaseIfNotExistsAsync(new Database { Id = "SolarSystemDB" });
+            await client.CreateDatabaseIfNotExistsAsync(new Database { Id = DataBaseName });
         }
 
         private async Task CreateCollection()
         {
-            await client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri("SolarSystemDB"), new DocumentCollection { Id = "PlanetsCollection" });
+            await client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(DataBaseName), new DocumentCollection { Id = CollectionName });
         }
 
         private async Task CreateDocuments()
@@ -144,13 +147,13 @@ namespace SmokeTest
                 }
             };
 
-            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri("SolarSystemDB", "PlanetsCollection"), planetEarth);
-            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri("SolarSystemDB", "PlanetsCollection"), planetMars);
+            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetEarth);
+            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetMars);
 
         }
 
         private async Task ExecuteSimpleQuery(){
-            IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri("SolarSystemDB", "PlanetsCollection"), "SELECT * FROM c");
+            IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
 
             foreach (Planet planet in planetarySqlQuery)
             {
@@ -164,7 +167,7 @@ namespace SmokeTest
 
         private async Task DeleteDatabase()
         {
-            await client.DeleteDatabaseAsync(UriFactory.CreateDatabaseUri("SolarSystemDB"));
+            await client.DeleteDatabaseAsync(UriFactory.CreateDatabaseUri(DataBaseName));
         }
 
     }
