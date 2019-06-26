@@ -51,11 +51,11 @@ namespace SmokeTest
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("COSMOS DB");
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("Functionalities to test: #:");
+            Console.WriteLine("Functionalities to test: 5:");
             Console.WriteLine("1.- Create a Database");
             Console.WriteLine("2.- Create a Collection in the DB");
             Console.WriteLine("3.- Create 2 JSON Documents (Items) in the collection");
-            Console.WriteLine("4.- Excecute simple query to the DB");
+            Console.WriteLine("4.- Excecute simple query to the collection");
             Console.WriteLine("5.- Clean up the resource (Delete DB)\n");
 
             var testPassed = true;
