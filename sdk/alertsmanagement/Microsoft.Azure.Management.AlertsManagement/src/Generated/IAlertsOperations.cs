@@ -208,10 +208,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// severity).
         /// </summary>
         /// <param name='groupby'>
-        /// This parameter allows the result set to be grouped by input fields.
-        /// For example, groupby=severity,alertstate. Possible values include:
-        /// 'severity', 'alertState', 'monitorCondition', 'monitorService',
-        /// 'signalType', 'alertRule'
+        /// This parameter allows the result set to be grouped by input fields
+        /// (Maximum 2 comma separated fields supported). For example,
+        /// groupby=severity or groupby=severity,alertstate. Possible values
+        /// include: 'severity', 'alertState', 'monitorCondition',
+        /// 'monitorService', 'signalType', 'alertRule'
         /// </param>
         /// <param name='includeSmartGroupsCount'>
         /// Include count of the SmartGroups as part of the summary. Default

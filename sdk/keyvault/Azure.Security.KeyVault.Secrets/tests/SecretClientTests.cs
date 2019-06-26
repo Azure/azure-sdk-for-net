@@ -31,7 +31,9 @@ namespace Azure.Security.KeyVault.Test
         [Test]
         public void UpdateArgumentValidation()
         {
+            SecretBase secret = new SecretBase("secret-name");
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateAsync(secret));
         }
 
         [Test]

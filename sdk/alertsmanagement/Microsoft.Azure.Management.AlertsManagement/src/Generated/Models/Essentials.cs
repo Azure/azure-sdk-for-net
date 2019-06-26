@@ -39,10 +39,10 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         /// <param name="alertState">Alert object state, which can be modified
         /// by the user. Possible values include: 'New', 'Acknowledged',
         /// 'Closed'</param>
-        /// <param name="monitorCondition">Can be 'Fired' or 'Resolved', which
-        /// represents whether the underlying conditions have crossed the
-        /// defined alert rule thresholds. Possible values include: 'Fired',
-        /// 'Resolved'</param>
+        /// <param name="monitorCondition">Condition of the rule at the monitor
+        /// service. It represents whether the underlying conditions have
+        /// crossed the defined alert rule thresholds. Possible values include:
+        /// 'Fired', 'Resolved'</param>
         /// <param name="targetResource">Target ARM resource, on which alert
         /// got created.</param>
         /// <param name="targetResourceName">Name of the target ARM resource
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
         public string AlertState { get; private set; }
 
         /// <summary>
-        /// Gets can be 'Fired' or 'Resolved', which represents whether the
-        /// underlying conditions have crossed the defined alert rule
-        /// thresholds. Possible values include: 'Fired', 'Resolved'
+        /// Gets condition of the rule at the monitor service. It represents
+        /// whether the underlying conditions have crossed the defined alert
+        /// rule thresholds. Possible values include: 'Fired', 'Resolved'
         /// </summary>
         [JsonProperty(PropertyName = "monitorCondition")]
         public string MonitorCondition { get; private set; }

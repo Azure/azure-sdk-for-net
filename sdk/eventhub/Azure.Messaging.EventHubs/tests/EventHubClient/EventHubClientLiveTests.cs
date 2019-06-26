@@ -202,9 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ClientPartitionIdsMatchPartitionProperties()
         {
-            var partitionCount = 4;
-
-            await using (var scope = await EventHubScope.CreateAsync(partitionCount))
+            await using (var scope = await EventHubScope.CreateAsync(4))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 

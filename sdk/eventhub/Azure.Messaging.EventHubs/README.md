@@ -18,11 +18,11 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 ### Prerequisites
 
-To use Azure services, including Azure Event Hubs, you'll need a Microsoft Azure Subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index). 
+- **Microsoft Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index). 
 
-To interact with Azure Event Hubs, you'll also need to have an Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
+- **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub  available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-To quickly create the needed Event Hubs resources in Azure and view your connection string, you can deploy our sample template by clicking:
+To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:  
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%Azure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
@@ -146,18 +146,49 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond those discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the following set of samples is available:
+Beyond the scenarios discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a [project of samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples) to serve as an illustration for common scenarios.
 
-- Hello world
-- Create and Event Hub client with custom options
-- Inspect Event Hub and partition properties
-- Publish events to a specific Event Hub partition
-- Publish events with custom metadata
-- Consume events with as the owner of a partition/consumer group
-- Save the last read event and resume from that point
+The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.  
+
+Each of the samples is self-contained and focused on illustrating one specific scenario.  Each is numbered, with the lower numbers concentrating on basic scenarios and building to more complex scenarios as they increase; though each sample is independent, it will assume an understanding of the content discussed in earlier samples.
+
+The available samples are:
+
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample1_HelloWorld.cs)  
+  An introduction to Event Hubs, illustrating how to connect and query the service.
+
+- [Create an Event Hub client with custom options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample2_ClientWithCustomOptions.cs)  
+  An introduction to Event Hubs, exploring additional options for creating an Event Hub client.
+  
+- [Publish an event to an Event Hub](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample3_PublishAnEvent3.cs)  
+  An introduction to publishing events, using a simple Event Hub producer.
+  
+- [Publish events using a partition key](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample4_PublishEventsWithPartitionKey.cs)  
+  An introduction to publishing events, using a partition key to group them together.
+  
+- [Publish events to a specific Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample5_PublishEventsToSpecificPartitions.cs)  
+  An introduction to publishing events, using an Event Hub producer that is associated with a specific partition.
+  
+- [Publish events with custom metadata](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample6_PublishEventsWithCustomMetadata.cs)  
+  An example of publishing events, extending the event data with custom metadata.
+  
+- [Consume events from an Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample7_ConsumeEvents.cs)  
+  An introduction to consuming events, using a simple Event Hub consumer.
+  
+- [Consume events from an Event Hub partition in batches](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample8_ConsumeEventsByBatch.cs)   
+  An example of consuming events, using a batch approach to control throughput.
+  
+- [Consume events from a known position in the Event Hub partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample9_ConsumeEventsFromAKnownPosition.cs)  
+  An example of consuming events, starting at a well-known position in the Event Hub partition.
 
 ## Contributing  
 
-Please refer to our [contributing guide](https://raw.githubusercontent.com/jsquire/azure-sdk-for-net/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
   
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2FFREADME.png)
