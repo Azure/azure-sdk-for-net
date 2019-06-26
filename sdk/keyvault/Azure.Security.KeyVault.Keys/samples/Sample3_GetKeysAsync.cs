@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
     /// Sample demonstrates how to list keys and versions of a given key,
-    /// and list deleted keys in a soft-delete enabled key vault
+    /// and list deleted keys in a soft-delete enabled Key Vault
     /// using the asynchronous methods of the KeyClient.
     /// </summary>
     [Category("Live")]
@@ -31,8 +31,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
-            // Let's create EC and Rsa keys valid for 1 year. If the key
-            // already exists in the key vault, then a new version of the key is created.
+            // Let's create EC and RSA keys valid for 1 year. If the key
+            // already exists in the Key Vault, then a new version of the key is created.
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048)
             {
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             await client.CreateEcKeyAsync(ecKey);
 
-            // You need to check the type of keys that already exist in your key vault.
+            // You need to check the type of keys that already exist in your Key Vault.
             // Let's list the keys and print their types.
             // List operations don't return the keys with key material information.
             // So, for each returned key we call GetKey to get the key with its key material information.
@@ -59,9 +59,9 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyMaterial.KeyType}");
             }
 
-            // We need the Cloud Rsa key with bigger key size, so you want to update the key in key vault to ensure
+            // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
-            // Calling CreateRsaKey on an existing key creates a new version of the key in the key vault 
+            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault 
             // with the new specified size.
             var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
             {
@@ -70,15 +70,15 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             await client.CreateRsaKeyAsync(newRsaKey);
 
-            // You need to check all the different versions Cloud Rsa key had previously.
+            // You need to check all the different versions Cloud RSA key had previously.
             // Lets print all the versions of this key.
             await foreach (KeyBase key in client.GetKeyVersionsAsync(rsaKeyName))
             {
                 Debug.WriteLine($"Key's version {key.Version} with name {key.Name}");
             }
 
-            // The Cloud Rsa Key and the Cloud EC Key are no longer needed. 
-            // You need to delete them from the key vault.
+            // The Cloud RSA Key and the Cloud EC Key are no longer needed. 
+            // You need to delete them from the Key Vault.
             await client.DeleteKeyAsync(rsaKeyName);
             await client.DeleteKeyAsync(ecKeyName);
 
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Assert.IsTrue(await WaitForDeletedKeyAsync(client, rsaKeyName));
             Assert.IsTrue(await WaitForDeletedKeyAsync(client, ecKeyName));
 
-            // You can list all the deleted and non-purged keys, assuming key vault is soft-delete enabled.
+            // You can list all the deleted and non-purged keys, assuming Key Vault is soft-delete enabled.
             await foreach (DeletedKey key in client.GetDeletedKeysAsync())
             {
                 Debug.WriteLine($"Deleted key's recovery Id {key.RecoveryId}");
@@ -109,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    await Task.Delay(5000);
                 }
             }
             return false;

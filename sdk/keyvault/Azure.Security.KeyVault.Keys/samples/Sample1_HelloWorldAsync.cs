@@ -29,8 +29,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
-            // Let's create a Rsa key valid for 1 year. If the key
-            // already exists in the key vault, then a new version of the key is created.
+            // Let's create a RSA key valid for 1 year. If the key
+            // already exists in the Key Vault, then a new version of the key is created.
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048)
             {
@@ -39,19 +39,19 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             await client.CreateRsaKeyAsync(rsaKey);
 
-            // Let's Get the Cloud Rsa Key from the key vault.
+            // Let's Get the Cloud RSA Key from the Key Vault.
             Key cloudRsaKey = await client.GetKeyAsync(rsaKeyName);
             Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyMaterial.KeyType}");
 
-            // After one year, the Cloud Rsa Key is still required, we need to update the expiry time of the key.
+            // After one year, the Cloud RSA Key is still required, we need to update the expiry time of the key.
             // The update method can be used to update the expiry attribute of the key.
             cloudRsaKey.Expires.Value.AddYears(1);
             KeyBase updatedKey = await client.UpdateKeyAsync(cloudRsaKey, cloudRsaKey.KeyMaterial.KeyOps);
             Debug.WriteLine($"Key's updated expiry time is {updatedKey.Expires}");
 
-            // We need the Cloud Rsa key with bigger key size, so you want to update the key in key vault to ensure
+            // We need the Cloud RSA key with bigger key size, so you want to update the key in Key Vault to ensure
             // it has the required size.
-            // Calling CreateRsaKey on an existing key creates a new version of the key in the key vault 
+            // Calling CreateRsaKey on an existing key creates a new version of the key in the Key Vault 
             // with the new specified size.
             var newRsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 4096)
             {
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             await client.CreateRsaKeyAsync(newRsaKey);
 
-            // The Cloud Rsa Key is no longer needed, need to delete it from the key vault.
+            // The Cloud RSA Key is no longer needed, need to delete it from the Key Vault.
             await client.DeleteKeyAsync(rsaKeyName);
 
             // To ensure secret is deleted on server side.
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 }
                 catch
                 {
-                    Thread.Sleep(5000);
+                    await Task.Delay(5000);
                 }
             }
             return false;

@@ -11,7 +11,7 @@ using System.Threading;
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to backup and restore keys in the key vault
+    /// Sample demonstrates how to backup and restore keys in the Key Vault
     /// using the synchronous methods of the KeyClient.
     /// </summary>
     [Category("Live")]
@@ -23,15 +23,14 @@ namespace Azure.Security.KeyVault.Keys.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            string backupPath = Path.GetTempFileName();
-
+            
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
-            // Let's create a Rsa key valid for 1 year. If the key
-            // already exists in the key vault, then a new version of the key is created.
+            // Let's create a RSA key valid for 1 year. If the key
+            // already exists in the Key Vault, then a new version of the key is created.
             string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
             var rsaKey = new RsaKeyCreateOptions(rsaKeyName, hsm: false, keySize: 2048)
             {
@@ -42,21 +41,26 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             // Backups are good to have if in case keys get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file.
-            File.WriteAllBytes(backupPath, client.BackupKey(rsaKeyName));
+            byte[] backupKey = client.BackupKey(rsaKeyName);
 
-            // The storage account key is no longer in use, so you delete it.
-            client.DeleteKey(rsaKeyName);
+            using (var memoryStream = new MemoryStream())
+            {
+                memoryStream.Write(backupKey, 0, backupKey.Length);
 
-            // To ensure the key is deleted on server side.
-            Assert.IsTrue(WaitForDeletedKey(client, rsaKeyName));
+                // The storage account key is no longer in use, so you delete it.
+                client.DeleteKey(rsaKeyName);
 
-            // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
-            client.PurgeDeletedKey(rsaKeyName);
+                // To ensure the key is deleted on server side.
+                Assert.IsTrue(WaitForDeletedKey(client, rsaKeyName));
 
-            // After sometime, the key is required again. We can use the backup value to restore it in the key vault.
-            KeyBase restoredKey = client.RestoreKey(File.ReadAllBytes(backupPath));
+                // If the keyvault is soft-delete enabled, then for permanent deletion, deleted key needs to be purged.
+                client.PurgeDeletedKey(rsaKeyName);
 
-            AssertKeysEqual((KeyBase)storedKey, restoredKey);
+                // After sometime, the key is required again. We can use the backup value to restore it in the Key Vault.
+                KeyBase restoredKey = client.RestoreKey(memoryStream.ToArray());
+
+                AssertKeysEqual((KeyBase)storedKey, restoredKey);
+            }
         }
 
         private bool WaitForDeletedKey(KeyClient client, string keyName)
