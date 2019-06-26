@@ -19,6 +19,7 @@ namespace Azure.Identity
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         private const string ImdsApiVersion = "2018-02-01";
+        private const int ImdsAvailableTimeoutMs = 500;
 
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string MsiEndpointEnvironemntVariable = "MSI_ENDPOINT";
@@ -238,7 +239,7 @@ namespace Azure.Identity
 
                 request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
 
-                var imdsTimeout = new CancellationTokenSource(500).Token;
+                var imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
                 try
                 {
@@ -247,15 +248,14 @@ namespace Azure.Identity
                     return true;
                 }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
-                // this indicates that the request timed out and that imds is not available.  Otherwise the operation
-                // was user cancelled.  In this case we don't wan't to handle the exception so s_identityAvailable will
+                // this indicates that the request timed out and that imds is not available.  If the operation
+                // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
                 // remain unset, as we still haven't determined if the imds endpoint is available.
-                catch (OperationCanceledException) when (imdsTimeout.IsCancellationRequested)
+                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     return false;
                 }
             }
-
         }
 
         private async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
@@ -271,7 +271,7 @@ namespace Azure.Identity
 
                 request.UriBuilder.AppendQuery("api-version", ImdsApiVersion);
 
-                var imdsTimeout = new CancellationTokenSource(500).Token;
+                var imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
 
                 try
                 {
@@ -280,10 +280,10 @@ namespace Azure.Identity
                     return true;
                 }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
-                // this indicates that the request timed out and that imds is not available.  Otherwise the operation
-                // was user cancelled.  In this case we don't wan't to handle the exception so s_identityAvailable will
+                // this indicates that the request timed out and that imds is not available.  If the operation
+                // was user cancelled we don't wan't to handle the exception so s_identityAvailable will
                 // remain unset, as we still haven't determined if the imds endpoint is available.
-                catch (OperationCanceledException ex) when (ex.CancellationToken == imdsTimeout)
+                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     return false;
                 }
