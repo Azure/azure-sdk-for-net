@@ -15,6 +15,7 @@ namespace Azure.Core.Pipeline
             const string textContentTypePrefix = "text/";
             const string jsonSuffix = "json";
             const string xmlSuffix = "xml";
+            const string urlEncodedSuffix = "-urlencoded";
 
             if (contentType == null)
             {
@@ -35,7 +36,8 @@ namespace Azure.Core.Pipeline
 
             if (contentType.StartsWith(textContentTypePrefix) ||
                 contentType.EndsWith(jsonSuffix) ||
-                contentType.EndsWith(xmlSuffix))
+                contentType.EndsWith(xmlSuffix) ||
+                contentType.EndsWith(urlEncodedSuffix))
             {
                 encoding = Encoding.UTF8;
                 return true;

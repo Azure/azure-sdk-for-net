@@ -14,6 +14,20 @@ namespace Azure.Core.Http
     /// </summary>
     public readonly struct HttpRange : IEquatable<HttpRange>
     {
+        // We only support using the "bytes" unit.
+        private const string Unit = "bytes";
+
+        /// <summary>
+        /// Gets the starting offset of the <see cref="HttpRange"/>.
+        /// </summary>
+        public long Offset { get; }
+
+        /// <summary>
+        /// Gets the size of the <see cref="HttpRange"/>.  null means the range
+        /// extends all the way to the end.
+        /// </summary>
+        public long? Count { get; }
+
         /// <summary>
         /// Creates an instance of HttpRange
         /// </summary>
@@ -21,27 +35,18 @@ namespace Azure.Core.Http
         /// <param name="count">null means to the end</param>
         public HttpRange(long? offset = default, long? count = default)
         {
-            if (offset.HasValue && offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-            if (count.HasValue && count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+            if (offset.HasValue && offset < 0)
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            if (count.HasValue && count <= 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             this.Offset = offset ?? 0;
             this.Count = count;
         }
 
-        // An httpRange which has a zero-value offset, and a count with value CountToEnd indicates the entire resource.
-        // An httpRange which has a non zero-value offset but a count with value CountToEnd indicates from the offset to the resource's end.
-        public long Offset { get; }
-        public long? Count { get; }
-
-        private const string Unit = "bytes";
-        
         /// <summary>
-        /// Converts the specified range to a string adhering to the REST API specification.
-        /// Does not validate parameters.
-        /// </summary>
-        /// <param name="offset">Offset of the range in bytes.</param>
-        /// <param name="count">Size of the range in bytes. Or 0 to specify "until end."</param>
-        /// <returns>String representation understood by the REST API.</returns>
+        /// Converts the specified range to a string.
+        /// <returns>String representation of the range.</returns>
         /// <remarks>For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-the-range-header-for-file-service-operations. </remarks>
         public override string ToString()
         {
@@ -56,19 +61,46 @@ namespace Azure.Core.Http
         }
 
         /// <summary>
-        /// Returns Range headers for this range.
+        /// Returns Range header for this range.
         /// </summary>
         /// <returns></returns>
-        public HttpHeader ToRangeHeader() => new HttpHeader("Range", ToString());
+        public HttpHeader ToRangeHeader() => new HttpHeader(HttpHeader.Names.Range, ToString());
 
-        public static bool operator==(HttpRange left, HttpRange right) => left.Equals(right);
-        public static bool operator!=(HttpRange left, HttpRange right) => !(left == right);
+        /// <summary>
+        /// Check if two <see cref="HttpRange"/> instances are equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public static bool operator ==(HttpRange left, HttpRange right) => left.Equals(right);
 
+        /// <summary>
+        /// Check if two <see cref="HttpRange"/> instances are not equal.
+        /// </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns>True if they're not equal, false otherwise.</returns>
+        public static bool operator !=(HttpRange left, HttpRange right) => !(left == right);
+
+        /// <summary>
+        /// Check if two <see cref="HttpRange"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(HttpRange other) => this.Offset == other.Offset && this.Count == other.Count;
 
+        /// <summary>
+        /// Check if two <see cref="HttpRange"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HttpRange other && this.Equals(other);
 
+        /// <summary>
+        /// Get a hash code for the <see cref="HttpRange"/>.
+        /// </summary>
+        /// <returns>Hash code for the <see cref="HttpRange"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => HashCodeBuilder.Combine(Offset, Count);
     }
