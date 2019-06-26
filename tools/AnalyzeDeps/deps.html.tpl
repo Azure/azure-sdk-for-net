@@ -156,21 +156,26 @@ $(
         $($Deps.Count - $External.Count) internal and $($External.Count) external package <a href="#dependencies">$(Pluralize $Deps.Count 'dependency</a> was' 'dependencies</a> were') analyzed to determine if any packages declare inconsistent dependency versions.<br/>
         $(
           if ($Inconsistent) {
-            "<strong>$($Inconsistent.Count) inconsistent package dependency $(Pluralize $Inconsistent.Count 'version was' 'versions were') discovered.</strong><br/><br/>"
+            "<strong>$($Inconsistent.Count) inconsistent dependency $(Pluralize $Inconsistent.Count 'version was' 'versions were') discovered.</strong><br/><br/>"
           } else {
-            "No inconsistent package dependency versions were discovered.<br/><br/>"
+            "All dependencies verified, no inconsistent dependency versions were discovered.<br/><br/>"
           }
         )
         $(
           if ($Locked) {
             "$($Locked.Count) dependency $(Pluralize $Locked.Count 'version was' 'versions were') discovered in the <a href=""#lockfile"">lockfile</a>.<br/>"
-            if ($Overrides) {
-              "<strong>$($Overrides.Count) dependency version $(Pluralize $Overrides.Count 'override is' 'overrides are') present, causing package depenceny versions to differ from the version in the lockfile.</strong><br/>"
+            if ($MismatchedVersions -or $Unlocked) {
+              if ($MismatchedVersions) {
+                "<strong>$($MismatchedVersions.Count) dependency version $(Pluralize $MismatchedVersions.Count 'override is' 'overrides are') present, causing dependency versions to differ from the version in the lockfile.</strong><br/>"
+              }
+              if ($Unlocked) {
+                "<strong>$($Unlocked.Count) $(Pluralize $Unlocked.Count 'dependency is' 'dependencies are') missing from the lockfile.</strong><br/>"
+              }
             } else {
-              "All declared dependency versions were match those specified in the lockfile.<br/>"
+              "All declared dependency versions match those specified in the lockfile.<br/>"
             }
           } else {
-            "<strong>No lockfile was provided for this report, or the lockfile was empty. Declared dependency versions were not able to be validated.</strong><br/>"
+            "<strong>No lockfile was provided, or the lockfile was empty. Declared dependency versions were not able to be validated against the lockfile.</strong><br/>"
           }
         )
         <br/>This report scanned $($Pkgs.Count) <a href="#packages">$(Pluralize $Pkgs.Count 'package' 'packages')</a>.
@@ -225,7 +230,14 @@ $(
             if (-not $Deps.ContainsKey($LockedDep)) {
               "⚠️ No packages reference this dependency"
             } elseif ($MismatchedVersions.ContainsKey($LockedDep)) {
-              "❌ One or more packages reference a different version of this dependency"
+              "<div class=""tooltip"">❌ One or more packages reference a different version of this dependency<span class=""tooltiptext"">"
+              foreach ($MismatchedVer in ($MismatchedVersions[$LockedDep].Keys | sort)) {
+                  "Version $MismatchedVer is referenced by:<br/>"
+                foreach ($MismatchedDep in $MismatchedVersions[$LockedDep][$MismatchedVer]) {
+                  "&nbsp;&nbsp;&nbsp;&nbsp;$MismatchedDep<br/>"
+                }
+              }
+              "</span></div>"
             } else {
               "✅ All packages validated against this dependency and version"
             }

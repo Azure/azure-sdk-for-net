@@ -19,7 +19,6 @@ Function Get-Nuspec($NupkgPath) {
     $ZipFile = [IO.Compression.ZipFile]::OpenRead($NupkgPath)
     foreach ($Entry in $ZipFile.Entries) {
       if ($Entry.Name.EndsWith(".nuspec")) {
-        Write-Host "Nuspec: $Entry.Name"
         try {
           $Reader = New-Object -TypeName System.IO.StreamReader -ArgumentList $Entry.Open()
           return [xml]$Reader.ReadToEnd()
@@ -71,7 +70,6 @@ Function Save-Locked($Locked, $DepName, $DepVersion, $Condition) {
 $Pkgs = @{ }
 $Deps = @{ }
 foreach ($PkgFile in Resolve-Path $PackagesPath) {
-  Write-Host "File $PkgFile"
   $Nuspec = Get-Nuspec $PkgFile
   $LibraryName = $Nuspec.package.metadata.id
   $LibraryVer = $Nuspec.package.metadata.version
@@ -97,6 +95,8 @@ foreach ($PkgFile in Resolve-Path $PackagesPath) {
   }
 }
 
+Write-Host "Analyzing $($Pkgs.Count) packages..."
+
 # Analyze lockfile
 $Locked = @{ }
 if ($LockfilePath) {
@@ -113,6 +113,9 @@ if ($LockfilePath) {
       }
     }
   }
+  Write-Host "Discovered $($Locked.Count) versions pinned in the lockfile."
+} else {
+  Write-Warning "No lockfile was provided, or the lockfile was empty. Declared dependency versions were not able to be validated against the lockfile."
 }
 
 # Precompute some derived data for the template
@@ -142,5 +145,27 @@ foreach ($DepName in $Deps.Keys) {
   }
 }
 
+$ExitCode = 0
+if ($Inconsistent) {
+  Write-Warning "$($Inconsistent.Count) inconsistent dependency versions were discovered."
+  $ExitCode = 1
+} else {
+  Write-Host "All dependencies verified, no inconsistent dependency versions were discovered.')"
+}
+
+if ($MismatchedVersions -or $Unlocked) {
+  if ($MismatchedVersions) {
+    Write-Warning "$($MismatchedVersions.Count) dependency version overrides are present, causing dependency versions to differ from the version in the lockfile."
+  }
+  if ($Unlocked) {
+    Write-Warning "$($Unlocked.Count) dependencies are missing from the lockfile."
+  }
+}else {
+  Write-Host "All declared dependency versions match those specified in the lockfile."
+}
+
+Write-Host "Generating HTML report..."
 $__template__ = Get-Content 'deps.html.tpl' -Raw
 Invoke-Expression "@`"`r`n$__template__`r`n`"@" | Out-File -FilePath .\deps.html
+
+exit $ExitCode
