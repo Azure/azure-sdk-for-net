@@ -53,8 +53,8 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
           version: '$(DotNetCoreSDKVersion)'
-      #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+      - script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
+      - script: "dotnet msbuild mgmt.proj /v:n /t:FindRPScopeFromPR;CategorizeProjects /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id)"
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
