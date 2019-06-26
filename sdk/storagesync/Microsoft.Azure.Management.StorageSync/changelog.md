@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.StorageSync release notes
 
+### Changes in 2019-03-01
+
+- Support for Invoke Change Detection command
+
 ### Changes in 2019-02-01
 
 - Support for tracking parallel upload and download for server endpoints
