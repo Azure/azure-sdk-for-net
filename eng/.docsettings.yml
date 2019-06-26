@@ -9,7 +9,7 @@ omitted_paths:
 language: net
 root_check_enabled: True
 required_readme_sections:
-  - "Azure .+ client library for .NET"
+  - ^Azure .+ client library for .NET$
   - ^Getting started$
   - ^Key concepts$
   - ^Examples$
