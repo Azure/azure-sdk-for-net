@@ -15,7 +15,9 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
+#pragma warning disable IDE0060 // Remove unused parameter
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
+#pragma warning restore IDE0060 // Remove unused parameter
             : base(
                   false, // TODO: #6716: Replace with `async` once we've properly fixed the issue below
                   mode ?? GetModeFromEnvironment())

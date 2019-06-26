@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -752,13 +753,13 @@ namespace Azure.Storage.Files
                     response.Value.Content = RetriableStream.Create(
                         response.GetRawResponse(),
                         startOffset =>
-                            (this.StartDownloadAsync(
+                            this.StartDownloadAsync(
                                     range,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
                                     cancellationToken)
-                                .ConfigureAwait(false).GetAwaiter().GetResult())
+                                .ConfigureAwait(false).GetAwaiter().GetResult()
                             .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
@@ -832,7 +833,7 @@ namespace Azure.Storage.Files
                 range.Offset + startOffset,
                 range.Count.HasValue ?
                     range.Count.Value - startOffset :
-                    default);
+                    (long?)null);
             this._pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
             var response =
                 await FileRestClient.File.DownloadAsync(

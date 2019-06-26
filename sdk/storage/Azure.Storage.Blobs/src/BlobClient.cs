@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -409,14 +410,14 @@ namespace Azure.Storage.Blobs.Specialized
                     response.Value.Content = RetriableStream.Create(
                         response.GetRawResponse(),
                          startOffset =>
-                            (this.StartDownloadAsync(
+                            this.StartDownloadAsync(
                                     range,
                                     accessConditions,
                                     rangeGetContentHash,
                                     startOffset,
                                     async,
                                     cancellationToken)
-                                .ConfigureAwait(false).GetAwaiter().GetResult())
+                                .ConfigureAwait(false).GetAwaiter().GetResult()
                             .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
@@ -500,7 +501,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range.Offset + startOffset,
                 range.Count.HasValue ?
                     range.Count.Value - startOffset :
-                    default);
+                    (long?)null);
 
             this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
 
