@@ -267,6 +267,37 @@ namespace Azure.Storage.Queues
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
+        /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment. 
+        /// </remarks>
+        public virtual Response<QueuesSegment> ListQueuesSegment(
+            QueuesSegmentOptions? options = default,
+            string marker = default,
+            CancellationToken cancellationToken = default) =>
+            this.ListQueuesSegmentAsync(
+                options,
+                marker,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns a single segment of containers starting from the specified marker.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
+        /// </summary>
+        /// <param name="options">
+        /// <see cref="QueuesSegmentOptions"/>
+        /// </param>
+        /// <param name="marker">
+        /// Marker from the previous request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// A single segment of containers starting from the specified marker, including the next marker if appropriate.
+        /// </returns>
+        /// <remarks>
+        /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
         /// </remarks>
         internal async Task<Response<QueuesSegment>> GetQueuesAsync(

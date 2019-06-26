@@ -261,6 +261,42 @@ namespace Azure.Storage.Files
             => this.GetDirectoryClient("");
 
         /// <summary>
+        /// The <see cref="Create"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, the operation fails.
+        /// 
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInBytes">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareInfo> Create(
+            Metadata metadata = default,
+            int? quotaInBytes = default,
+            CancellationToken cancellationToken = default) =>
+            this.CreateAsync(
+                metadata,
+                quotaInBytes,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
