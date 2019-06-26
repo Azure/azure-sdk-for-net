@@ -8,6 +8,7 @@ jobs:
         displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
         inputs:
          version: '$(DotNetCoreSDKVersion)'
+      - script: echo Build.Repository.Uri '$(Build.Repository.Uri)'
       - script: dotnet msbuild mgmt.proj /v:n /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)
         displayName: "Build & Package"
         env:
