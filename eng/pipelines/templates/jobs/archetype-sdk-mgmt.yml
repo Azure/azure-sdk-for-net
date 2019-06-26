@@ -1,7 +1,3 @@
-variables:
-  loggingArgs: '/clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log'
-  RPScopeArgs: '/p:PullRequestNumber=$(System.PullRequest.PullRequestNumber) /p:RepoHtmlUrl=$(Build.Repository.Uri) /p:RepoId=$(Build.Repository.ID)'
-  
 jobs:
   - job: Build
 
