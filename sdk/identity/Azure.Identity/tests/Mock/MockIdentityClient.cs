@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests.Mock
         }
     }
 
-    internal class MockAadClient : AadClient
+    internal class MockAadClient : AadIdentityClient
     {
         private static AccessToken ExpiredTokenFactory(string[] scopes, string tenantId, string clientId, string clientSecret, CancellationToken cancellationToken)
         {

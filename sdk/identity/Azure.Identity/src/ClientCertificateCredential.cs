@@ -15,7 +15,7 @@ namespace Azure.Identity
         private string _tenantId;
         private string _clientId;
         private X509Certificate2 _clientCertificate;
-        private AadClient _client;
+        private AadIdentityClient _client;
 
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
             : this(tenantId, clientId, clientCertificate, null)
@@ -30,7 +30,7 @@ namespace Azure.Identity
 
             _clientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
 
-            _client = (options != null) ? new AadClient(options) : AadClient.SharedClient;
+            _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
         }
 
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)

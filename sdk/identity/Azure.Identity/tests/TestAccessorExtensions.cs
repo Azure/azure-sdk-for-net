@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
         {
             return typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as string;
         }
-        public static void _client(this ClientSecretCredential credential, AadClient client)
+        public static void _client(this ClientSecretCredential credential, AadIdentityClient client)
         {
             typeof(ClientSecretCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
