@@ -14,11 +14,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestFixture]
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public QueueClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

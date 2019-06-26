@@ -131,6 +131,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     let responseName = "_response";
     const resultName = "_result";
     const result = operation.response.model;
+    const sync = serviceModel.info.sync;
 
     const returnType = result.type === 'void' ?
         'Azure.Response' : 
@@ -149,15 +150,22 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
+    if (sync) {
+        w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
+    }
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType}</returns>`);
-    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);
+    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
             w.write(`${types.getDeclarationType(arg.model, arg.required, false, true)} ${naming.parameter(arg.clientName)}`);
             if (!arg.required) { w.write(` = default`); }
+        }
+        if (sync) {
+            if (separateParams()) {  w.line(`,`); }
+            w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
@@ -174,12 +182,23 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`))`);
         });
         w.scope('{', '}', () => {
-            w.line(`Azure.Response ${responseName} = await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false);`);
+            w.write(`Azure.Response ${responseName} = `);
+            const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
+            if (sync) {
+                w.write('async ?');
+                w.scope(() => {
+                    w.line(`${asyncCall} :`);
+                    w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
+                });
+            } else {
+                w.line(`${asyncCall};`);
+            }
             w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
             w.line(`return ${methodName}_CreateResponse(${responseName});`);
         });
     });
     w.line();
+    
     // #endregion Top level method
     
     // #region Create Request

@@ -15,16 +15,17 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
-        public StorageTestBase(RecordedTestMode? mode = null)
-            // TODO: Correctly parameterize this test with sync/async when we add sync overloads
-            : base(false, mode ?? GetModeFromEnvironment())
+        public StorageTestBase(bool async, RecordedTestMode? mode = null)
+            : base(
+                  false, // TODO: #6716: Replace with `async` once we've properly fixed the issue below
+                  mode ?? GetModeFromEnvironment())
         {
             this.Sanitizer = new StorageRecordedTestSanitizer();
             this.Matcher = new RecordMatcher(this.Sanitizer);
         }
 
         public override TClient InstrumentClient<TClient>(TClient client)
-            // TODO: Enable instrumentation when we add sync overloads (by deleting this override)
+            // TODO: #6716: Remove once we've investigated the instrumentation issue with service hiearchies
             => client;
 
         public DateTimeOffset GetUtcNow() => this.Recording.UtcNow;

@@ -79,6 +79,7 @@ export interface IServiceInfo {
     extensionsName: string,
     modelFactoryName: string,
     public: boolean,
+    sync: boolean,
     consumes: string[],
     produces: string[],
     license: {

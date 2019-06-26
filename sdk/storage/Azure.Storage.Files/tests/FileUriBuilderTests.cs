@@ -10,11 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class FileUriBuilderTests : FileTestBase
     {
-        public FileUriBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public FileUriBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

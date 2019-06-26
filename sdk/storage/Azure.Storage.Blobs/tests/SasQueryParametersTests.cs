@@ -10,11 +10,10 @@ using NUnit.Framework;
 namespace Azure.Storage.Blobs.Test
 {
     //TODO consider added SASQueryParametersTest for File and Queue
-    [TestFixture]
     public class SasQueryParametersTests : BlobTestBase
     {
-        public SasQueryParametersTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public SasQueryParametersTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

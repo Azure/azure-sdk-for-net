@@ -27,8 +27,8 @@ namespace Azure.Storage.Test.Shared
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
 
-        public BlobTestBase(RecordedTestMode? mode = null)
-            : base(mode)
+        public BlobTestBase(bool async, RecordedTestMode? mode = null)
+            : base(async, mode)
         {
         }
 

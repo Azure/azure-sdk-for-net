@@ -10,11 +10,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class BlobUriBuilderTests : BlobTestBase
     {
-        public BlobUriBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public BlobUriBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

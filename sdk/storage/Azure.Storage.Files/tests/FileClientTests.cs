@@ -18,11 +18,10 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class FileClientTests : FileTestBase
     {
-        public FileClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public FileClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

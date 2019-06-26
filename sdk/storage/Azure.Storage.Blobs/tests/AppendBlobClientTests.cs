@@ -19,11 +19,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class AppendBlobClientTests : BlobTestBase
     {
-        public AppendBlobClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public AppendBlobClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

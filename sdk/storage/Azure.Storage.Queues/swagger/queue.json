@@ -11,6 +11,7 @@
       "client-extensions-name": "QueueExtensions",
       "client-model-factory-name": "QueueModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },

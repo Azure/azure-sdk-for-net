@@ -13,14 +13,13 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class BlobSasBuilderTests : BlobTestBase
     {
         private const string Permissions = "rwd";
         private static readonly string Snapshot = "snapshot";
 
-        public BlobSasBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public BlobSasBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -19,7 +19,6 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class PageBlobClientTests : BlobTestBase
     {
         const string CacheControl = "control";
@@ -28,8 +27,8 @@ namespace Azure.Storage.Blobs.Test
         const string ContentLanguage = "language";
         const string ContentType = "type";
 
-        public PageBlobClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public PageBlobClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

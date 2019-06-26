@@ -20,8 +20,8 @@ namespace Azure.Storage.Queues.Tests
         public string GetNewQueueName() => $"test-queue-{this.Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{this.Recording.Random.NewGuid()}";
 
-        public QueueTestBase(RecordedTestMode? mode = null)
-            : base(mode)
+        public QueueTestBase(bool async, RecordedTestMode? mode = null)
+            : base(async, mode)
         {
         }
 

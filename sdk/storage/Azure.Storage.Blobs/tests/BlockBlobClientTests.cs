@@ -20,13 +20,12 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class BlockBlobClientTests : BlobTestBase
     {
         const long Size = 4 * Constants.KB;
 
-        public BlockBlobClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public BlockBlobClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

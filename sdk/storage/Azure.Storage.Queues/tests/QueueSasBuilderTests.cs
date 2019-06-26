@@ -10,13 +10,12 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestFixture]
     public class QueueSasBuilderTests : QueueTestBase
     {
         private const string Permissions = "raup";
 
-        public QueueSasBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public QueueSasBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

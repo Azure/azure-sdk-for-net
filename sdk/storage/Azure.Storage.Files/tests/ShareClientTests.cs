@@ -14,11 +14,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class ShareClientTests : FileTestBase
     {
-        public ShareClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public ShareClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

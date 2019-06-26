@@ -10,13 +10,12 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class FileSasBuilderTests : FileTestBase
     {
         private const string Permissions = "rcwd";
 
-        public FileSasBuilderTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public FileSasBuilderTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

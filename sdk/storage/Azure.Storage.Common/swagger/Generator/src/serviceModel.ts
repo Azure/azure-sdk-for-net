@@ -278,6 +278,7 @@ function createServiceInfo(project: IProject): IServiceInfo {
             title + ' ModelFactory'),
         versions: [ <string>required(() => project.swagger.info.version) ],
         public: isPublic,
+        sync: <boolean>optional(() => project.swagger.info[`x-ms-code-generation-settings`][`x-ms-include-sync-methods`], false),
         consumes: [`application/xml`],
         produces: [`application/xml`],
         host: serviceHost,

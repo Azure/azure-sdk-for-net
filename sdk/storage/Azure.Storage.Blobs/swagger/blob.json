@@ -11,6 +11,7 @@
       "client-extensions-name": "BlobExtensions",
       "client-model-factory-name": "BlobModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },

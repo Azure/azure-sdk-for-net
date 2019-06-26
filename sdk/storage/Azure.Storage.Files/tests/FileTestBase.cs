@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Tests
     {
         public static Uri InvalidUri = new Uri("https://error.file.core.windows.net");
 
-        public FileTestBase(RecordedTestMode? mode = null)
-            : base(mode)
+        public FileTestBase(bool async, RecordedTestMode? mode = null)
+            : base(false, mode)
         {
         }
 
