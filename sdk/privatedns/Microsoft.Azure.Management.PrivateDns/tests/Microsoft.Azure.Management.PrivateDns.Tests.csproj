@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromBuild>True</ExcludeFromBuild>
     <ExcludeFromTest>true</ExcludeFromTest>
   </PropertyGroup>
   <ItemGroup>
