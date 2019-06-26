@@ -7,6 +7,11 @@ namespace SmokeTest
 {
     abstract class TestBase
     {
+        /// <summary>
+        /// High order function to handle the exceptions of each test.
+        /// </summary>
+        /// <param name="testAction"></param>
+        /// <returns></returns>
         protected async Task<bool> ExcecuteTest(Func<Task> testAction)
         {
             try
@@ -20,7 +25,7 @@ namespace SmokeTest
                 return false;
             }
 
-            Console.WriteLine("DONE.");
+            Console.WriteLine("done");
             return true;
         }
     }

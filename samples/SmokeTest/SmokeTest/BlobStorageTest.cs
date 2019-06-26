@@ -9,7 +9,7 @@ namespace SmokeTest
 {
 
 
-    class BlobStorageTest
+    class BlobStorageTest : TestBase
     {
         
         private BlobServiceClient service;
@@ -20,11 +20,12 @@ namespace SmokeTest
             this.service = new BlobServiceClient(connectionString);
             this.blob = service.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
         }
+
         /// <summary>
         /// Test the Storage Blobs SDK
         /// </summary>
         /// <returns>true if passes, false if fails</returns>
-        public async Task<bool> PerformFunctionalities()
+        public async Task<bool> RunTests()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("STORAGE");
@@ -34,66 +35,37 @@ namespace SmokeTest
             Console.WriteLine("2.- Delete that Blob Block" + '\n');
 
             Console.Write("Uploading blob... ");
-            var result1 = await UploadBlob();
-            if(result1 != null)
+            var result1 = await ExcecuteTest(UploadBlob);
+            if (!result1)
             {
                 //If this test failed, then the othe one is going to fail too.
-                Console.Error.Write("FAILED.\n");
-                Console.Error.WriteLine(result1);
-                Console.Error.WriteLine("Cannot delete the Blob.");
+                Console.WriteLine("Cannot delete the Blob.");
                 return false;
-
-            }
-            else
-            {
-                Console.Write("Blob uploaded successfully\n");
             }
 
             Console.Write("Deleting blob... ");
-            var result2 = await DeleteBlob();
-            if (result2 != null)
+            var result2 = await ExcecuteTest(DeleteBlob);
+            if (!result2)
             {
-                Console.Error.Write("FAILED.\n");
-                Console.Error.WriteLine(result2);
                 return false;
-            }
-            else
-            {
-                Console.Write("Blob deleted successfully\n");
             }
 
             return true;
         }
 
-        private async Task<Exception> UploadBlob()
+        private async Task UploadBlob()
         {
             const string path = "./Resources/BlobTestSource.txt";
 
             using (FileStream data = File.OpenRead(path))
             {
-                try
-                {
-                    await blob.UploadAsync(data);
-                }
-                catch (Exception ex)
-                {
-                    return ex;
-                }
+                await blob.UploadAsync(data);
             }
-            return null;
         }
 
-        private async Task<Exception> DeleteBlob()
+        private async Task DeleteBlob()
         {
-            try
-            {
-                await blob.DeleteAsync();
-            }
-            catch (Exception ex)
-            {
-                return ex;
-            }
-            return null;
+            await blob.DeleteAsync();
         }
 
     }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    class EventHubsTest
+    class EventHubsTest : TestBase
     {
         private EventHubClient client;
         private EventSender sender;
@@ -29,7 +29,7 @@ namespace SmokeTest
         /// Test the Event Hubs SDK by sending and receiving events
         /// </summary>
         /// <returns>true if pases, false if fails</returns>
-        public async Task<bool> PerformFunctionalities()
+        public async Task<bool> RunTests()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("EVENT HUBS");
@@ -39,122 +39,92 @@ namespace SmokeTest
             Console.WriteLine("2.- Recieve those events\n");
 
             Console.Write("Creating the Sender and Receivers... ");
-            var result1 = await CreateSenderAndReceiver();
-            if(result1 != null)
+            var result1 = await ExcecuteTest(CreateSenderAndReceiver);
+            if(!result1)
             {
                 //If this test fail, the next one is going to fail too.
-                Console.Error.Write("FAILED\n");
-                Console.Error.WriteLine(result1);
-                Console.Error.WriteLine("Cannot send or receive events.");
+                Console.WriteLine("Cannot send or receive events.");
                 return false;
-            }
-            else
-            {
-                Console.Write("Done\n");
             }
 
-            var result2 = await SendAndReceiveEvents();
-            if(result2 != null)
+            var result2 = await ExcecuteTest(SendAndReceiveEvents);
+            if(!result2)
             {
-                Console.Error.Write("FAILED\n");
-                Console.Error.WriteLine(result2);
                 return false;
-            }
-            else
-            {
-                Console.WriteLine("Success.");
             }
 
             return true;
         }
 
-        private async Task<Exception> CreateSenderAndReceiver()
+        private async Task CreateSenderAndReceiver()
         {
-            try
+            var partition = (await client.GetPartitionIdsAsync()).First();
+            var senderOptions = new EventSenderOptions
             {
-                var partition = (await client.GetPartitionIdsAsync()).First();
-                var senderOptions = new EventSenderOptions
-                {
-                    PartitionId = partition
-                };
-                var receiverOptions = new EventReceiverOptions
-                {
-                    BeginReceivingAt = EventPosition.NewEventsOnly
-                };
-
-                sender = client.CreateSender(senderOptions);
-                receiver = client.CreateReceiver(partition, receiverOptions);
-            }
-            catch (Exception ex)
+                PartitionId = partition
+            };
+            var receiverOptions = new EventReceiverOptions
             {
-                return ex;
-            }
+                BeginReceivingAt = EventPosition.NewEventsOnly
+            };
 
-            return null;
+            sender = client.CreateSender(senderOptions);
+            receiver = client.CreateReceiver(partition, receiverOptions);
         }
 
-        private async Task<Exception> SendAndReceiveEvents()
+        private async Task SendAndReceiveEvents()
         {
-            try
-            {
-                var eventBatch = new[]
-                    {
-                    new EventData(Encoding.UTF8.GetBytes("First event data")),
-                    new EventData(Encoding.UTF8.GetBytes("Second event data")),
-                    new EventData(Encoding.UTF8.GetBytes("Third event data"))
-                };
-                var index = 0;
-                var receivedEvents = new List<EventData>();
+            var eventBatch = new[]
+                {
+                new EventData(Encoding.UTF8.GetBytes("First event data")),
+                new EventData(Encoding.UTF8.GetBytes("Second event data")),
+                new EventData(Encoding.UTF8.GetBytes("Third event data"))
+            };
+            var index = 0;
+            var receivedEvents = new List<EventData>();
 
-                //Before sending any event, start the receiver
-                await receiver.ReceiveAsync(1, TimeSpan.Zero);
+            //Before sending any event, start the receiver
+            await receiver.ReceiveAsync(1, TimeSpan.Zero);
 
-                Console.Write("Ready to send a batch of " + eventBatch.Count().ToString() + " events... ");
-                await sender.SendAsync(eventBatch);
-                Console.Write("Sent\n");
+            Console.Write("Ready to send a batch of " + eventBatch.Count().ToString() + " events... ");
+            await sender.SendAsync(eventBatch);
+            Console.Write("Sent\n");
            
-                Console.Write("Receiving events... ");
-                while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
-                {
-                    receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
-                }
-                index = 0;
-
-                //Check if at least one event was received in roder to start validation
-                if (receivedEvents.Count == 0)
-                {
-                    throw new Exception(String.Format("Error, No events received."));
-                }
-                Console.Write(receivedEvents.Count() + " events received.\n");
-
-                Console.WriteLine("Beggining validation...");
-                foreach (var receivedEvent in receivedEvents)
-                {
-                    var receivedEventMessage = Encoding.UTF8.GetString(receivedEvent.Body.ToArray());
-                    var sentEventMessage = Encoding.UTF8.GetString(eventBatch[index].Body.ToArray());
-
-                    if (receivedEventMessage == sentEventMessage)
-                    {
-                        Console.WriteLine("\tEvent '" + receivedEventMessage + "' correctly validated.");
-                    }
-                    else
-                    {
-                        throw new Exception(String.Format("Error, Event: '" + receivedEventMessage + "' was not expected."));                
-                    }
-                    index++;
-                }
-
-                if (index < eventBatch.Count())
-                {
-                    throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + index.ToString() + "."));
-                }
-            }
-            catch (Exception ex)
+            Console.Write("Receiving events... ");
+            while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
             {
-                return ex;
+                receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
             }
-            
-            return null;
+            index = 0;
+
+            //Check if at least one event was received in roder to start validation
+            if (receivedEvents.Count == 0)
+            {
+                throw new Exception(String.Format("Error, No events received."));
+            }
+            Console.Write(receivedEvents.Count() + " events received.\n");
+
+            Console.WriteLine("Beggining validation...");
+            foreach (var receivedEvent in receivedEvents)
+            {
+                var receivedEventMessage = Encoding.UTF8.GetString(receivedEvent.Body.ToArray());
+                var sentEventMessage = Encoding.UTF8.GetString(eventBatch[index].Body.ToArray());
+
+                if (receivedEventMessage == sentEventMessage)
+                {
+                    Console.WriteLine("\tEvent '" + receivedEventMessage + "' correctly validated.");
+                }
+                else
+                {
+                    throw new Exception(String.Format("Error, Event: '" + receivedEventMessage + "' was not expected."));                
+                }
+                index++;
+            }
+
+            if (index < eventBatch.Count())
+            {
+                throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + index.ToString() + "."));
+            }
         }
 
     }
