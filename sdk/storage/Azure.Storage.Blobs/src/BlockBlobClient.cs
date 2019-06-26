@@ -12,11 +12,10 @@ using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
     /// The <see cref="BlockBlobClient"/> allows you to manipulate Azure
@@ -79,7 +78,7 @@ namespace Azure.Storage.Blobs
     /// using a single step(rather than the two-step block upload-then-commit
     /// process).
     /// </summary>
-    public class BlockBlobClient : BlobClient
+    public class BlockBlobClient : BlobBaseClient
     {
         /// <summary>
         /// <see cref="BlockBlobMaxUploadBlobBytes"/> indicates the maximum number of bytes
@@ -258,7 +257,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
-        protected sealed override BlobClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
             return new BlockBlobClient(builder.ToUri(), this.Pipeline);
@@ -364,7 +363,7 @@ namespace Azure.Storage.Blobs
         /// Optional custom metadata to set for this block blob.
         /// </param>
         /// <param name="blobAccessConditions">
-        /// Optional <see cref="BlockBlobClient"/> to add
+        /// Optional <see cref="BlobAccessConditions"/> to add
         /// conditions on the creation of this new block blob.
         /// </param>
         /// <param name="progressHandler">
@@ -1413,5 +1412,29 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
+    /// creating <see cref="BlockBlobClient"/> instances.
+    /// </summary>
+    public static partial class SpecializedBlobExtensions
+    {
+        /// <summary>
+        /// Create a new <see cref="BlockBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <paramref name="client"/>'s
+        /// <see cref="BlobContainerClient.Uri"/>. The new
+        /// <see cref="BlockBlobClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
+        /// <param name="blobName">The name of the append blob.</param>
+        /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
+        public static BlockBlobClient GetBlockBlobClient(
+            this BlobContainerClient client,
+            string blobName)
+            => new BlockBlobClient(client.Uri.AppendToPath(blobName), client._pipeline);
     }
 }

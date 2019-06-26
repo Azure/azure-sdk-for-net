@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// in-place and are immediately committed to the blob. The maximum size
     /// for a page blob is 8 TB.
     /// </summary>
-    public class PageBlobClient : BlobClient
+    public class PageBlobClient : BlobBaseClient
     {
         /// <summary>
         /// <see cref="PageBlobPageBytes"/> indicates the number of bytes in a
@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
-        protected sealed override BlobClient WithSnapshotImpl(string snapshot)
+        protected sealed override BlobBaseClient WithSnapshotImpl(string snapshot)
         {
             var builder = new BlobUriBuilder(this.Uri) { Snapshot = snapshot };
             return new PageBlobClient(builder.ToUri(), this.Pipeline);
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns></returns>
         //public new PageBlobClient WithVersionId(string versionId) => (PageBlobUri)this.WithVersionIdImpl(versionId);
 
-        //protected sealed override BlobClient WithVersionIdImpl(string versionId)
+        //protected sealed override BlobBaseClient WithVersionIdImpl(string versionId)
         //{
         //    var builder = new BlobUriBuilder(this.Uri) { VersionId = versionId };
         //    return new PageBlobClient(builder.ToUri(), this.Pipeline);

@@ -1538,7 +1538,7 @@ namespace Azure.Storage.Blobs.Test
             public string SourceIfNoneMatch { get; set; }
         }
 
-        private async Task WaitForCopy(BlobClient blobUri, int milliWait = 200)
+        private async Task WaitForCopy(BlobBaseClient blobUri, int milliWait = 200)
         {
             var status = CopyStatus.Pending;
             var start = this.Recording.Now;

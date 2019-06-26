@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="BlobClient"/> to manage leases for.
         /// </summary>
-        private readonly BlobClient _blob;
+        private readonly BlobBaseClient _blob;
 
         /// <summary>
         /// The <see cref="BlobContainerClient"/> to manage leases for.
@@ -63,11 +63,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public LeaseClient(BlobClient client, string leaseId = null)
+        public LeaseClient(BlobBaseClient client, string leaseId = null)
         {
             this._blob = client ?? throw new ArgumentNullException(nameof(client));
             this._container = null;
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
@@ -85,14 +85,14 @@ namespace Azure.Storage.Blobs.Specialized
         {
             this._blob = null;
             this._container = client ?? throw new ArgumentNullException(nameof(client));
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
         /// Gets a unique lease ID.
         /// </summary>
         /// <returns>A unique lease ID.</returns>
-        private static string GetRandomLeaseId() => Guid.NewGuid().ToString();
+        private static string CreateUniqueLeaseId() => Guid.NewGuid().ToString();
 
         /// <summary>
         /// Ensure either the Blob or Container is present.
@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 // This can only happen if someone's not being careful while mocking
                 throw new InvalidOperationException(
-                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobClient)} or ${nameof(BlobContainerClient)}");
+                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobBaseClient)} or ${nameof(BlobContainerClient)}");
             }
         }
 
@@ -1042,7 +1042,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// ID will be created.
         /// </param>
         public static LeaseClient GetLeaseClient(
-            this BlobClient client,
+            this BlobBaseClient client,
             string leaseId = null) =>
             new LeaseClient(client, leaseId);
 

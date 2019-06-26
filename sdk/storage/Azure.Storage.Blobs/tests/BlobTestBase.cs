@@ -256,7 +256,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupBlobMatchCondition(BlobClient blob, string match)
+        public async Task<string> SetupBlobMatchCondition(BlobBaseClient blob, string match)
         {
             if (match == this.ReceivedETag)
             {
@@ -270,7 +270,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupBlobLeaseCondition(BlobClient blob, string leaseId, string garbageLeaseId)
+        public async Task<string> SetupBlobLeaseCondition(BlobBaseClient blob, string leaseId, string garbageLeaseId)
         {
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)

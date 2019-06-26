@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// maximum size of an append blob is therefore slightly more than 195 GB
     /// (4 MB X 50,000 blocks).
     /// </summary>
-    public class AppendBlobClient : BlobClient
+    public class AppendBlobClient : BlobBaseClient
     {
         /// <summary>
         /// <see cref="AppendBlobMaxAppendBlockBytes"/> indicates the maximum
