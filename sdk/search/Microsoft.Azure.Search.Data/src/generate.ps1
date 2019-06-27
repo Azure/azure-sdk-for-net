@@ -27,7 +27,6 @@ Param(
     [string] $SpecsRepoBranch = "master"
 )
 
-$repoRoot = "$PSScriptRoot\..\..\..\..\.."
 $generateFolder = "$PSScriptRoot\Generated"
 
 # TODO: Change AutoRestVersion back to "latest" when the hanging issue is fixed.

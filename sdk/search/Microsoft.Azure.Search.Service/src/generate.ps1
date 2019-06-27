@@ -28,7 +28,7 @@ Param(
 )
 
 $generateFolder = "$PSScriptRoot\Generated"
-$sharedGenerateFolder = "$generateFolder\..\..\Microsoft.Azure.Search.Common\Generated"
+$sharedGenerateFolder = "$PSScriptRoot\..\..\Microsoft.Azure.Search.Common\src\Generated"
 
 Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
 

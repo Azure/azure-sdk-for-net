@@ -27,7 +27,4 @@ Param(
     [string] $SpecsRepoBranch = "master"
 )
 
-$repoRoot = "$PSScriptRoot\..\..\..\..\.."
-$generateFolder = "$PSScriptRoot\Generated"
-
 Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
