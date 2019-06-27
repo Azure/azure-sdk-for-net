@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
+    /// <summary>
+    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order 
+    /// until one of the getToken methods returns a non-default <see cref="AccessToken"/>.
+    /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
         private TokenCredential[] _sources;
 
+        /// <summary>
+        /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
+        /// </summary>
+        /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
             if (sources == null) throw new ArgumentNullException(nameof(sources));
@@ -30,6 +38,12 @@ namespace Azure.Identity
             _sources = sources;
         }
 
+        /// <summary>
+        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// </summary>
+        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
@@ -42,6 +56,12 @@ namespace Azure.Identity
             return token;
         }
 
+        /// <summary>
+        /// Sequencially calls <see cref="TokenCredential.GetTokenAsync"/> on all the specified sources, returning the first non default <see cref="AccessToken"/>.
+        /// </summary>
+        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The first non default <see cref="AccessToken"/> returned by the specified sources.  If all credentials in the chain return default a default <see cref="AccessToken"/> is returned.</returns>
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
             AccessToken token = new AccessToken();
@@ -53,6 +73,5 @@ namespace Azure.Identity
 
             return token;
         }
-
     }
 }
