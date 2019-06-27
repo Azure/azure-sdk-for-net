@@ -20,10 +20,10 @@ namespace Azure.Security.KeyVault.Keys
         private const string RsaString = "RSA";
         private const string RsaHsmString = "RSA-HSM";
         private const string OctetString = "Octet";
+        private static readonly string[] s_mapping = new string[] { ECString, ECHsmString, RsaString, RsaHsmString, OctetString };
 
         private readonly KeyTypeValue _value;
         private readonly string _valueText;
-        private readonly string[] _enumMap;
 
         /// <summary>
         /// Supported JsonWebKey key types (kty) as enum
@@ -52,15 +52,23 @@ namespace Azure.Security.KeyVault.Keys
             if (value == KeyTypeValue.Other) throw new ArgumentOutOfRangeException(nameof(value));
             _value = value;
             _valueText = default;
-            _enumMap = new string[] { ECString, ECHsmString, RsaString, RsaHsmString, OctetString };
         }
 
         internal KeyType(string customValue)
         {
             if (string.IsNullOrEmpty(customValue)) throw new ArgumentNullException(nameof(customValue));
-            _value = KeyTypeValue.Other;
-            _valueText = customValue;
-            _enumMap = new string[] { ECString, ECHsmString, RsaString, RsaHsmString, OctetString };
+
+            var index = s_mapping.AsSpan().IndexOf(customValue);
+            if (index != -1)
+            {
+                _value = (KeyTypeValue)index + 1; // 0 = Other
+                _valueText = default;
+            }
+            else
+            {
+                _value = KeyTypeValue.Other;
+                _valueText = customValue;
+            }
         }
 
         public static implicit operator KeyTypeValue(KeyType keyType) => keyType.Value;
@@ -95,7 +103,7 @@ namespace Azure.Security.KeyVault.Keys
         public override string ToString()
         {
             if (Value == KeyTypeValue.Other) return _valueText;
-            return _enumMap[(uint)Value - 1];
+            return s_mapping[(uint)Value - 1]; // 0 is Other
         }
     }
 }
