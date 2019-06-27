@@ -9,7 +9,7 @@ jobs:
         inputs:
          version: '$(DotNetCoreSDKVersion)'
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - script: "dotnet msbuild mgmt.proj /v:n /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+      - script: "dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -55,21 +55,21 @@ jobs:
         inputs:
           version: '$(DotNetCoreSDKVersion)'
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
-      #- script: "dotnet msbuild mgmt.proj /v:n /t:FindRPScopeFromPR;CategorizeProjects /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id)"
+      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id)"
         displayName: "Build & Run Tests"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      # - task: PublishTestResults@2
-      #   condition: succeededOrFailed()
-      #   inputs:
-      #     testResultsFiles: "**/*.trx"
-      #     testRunTitle: "$(OSName) Test Results"
-      #     testResultsFormat: "VSTest"
-      #     mergeTestResults: true
-      # - task: PublishBuildArtifacts@1
-      #   condition: succeededOrFailed()
-      #   inputs:
-      #       pathtoPublish: $(msBuildLogDir)
-      #       artifactName: MsBuildLogs
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: "**/*.trx"
+          testRunTitle: "$(OSName) Test Results"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true
+      - task: PublishBuildArtifacts@1
+        condition: succeededOrFailed()
+        inputs:
+            pathtoPublish: $(msBuildLogDir)
+            artifactName: MsBuildLogs
