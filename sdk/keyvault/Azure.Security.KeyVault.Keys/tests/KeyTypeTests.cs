@@ -1,18 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Reflection;
-using Azure.Core.Testing;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys;
-using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
+using System;
+using System.Reflection;
 
-namespace Azure.Security.KeyVault.Test
+namespace Azure.Security.KeyVault.Keys.Tests
 {
     public class KeyTypeTests
     {
@@ -31,12 +25,10 @@ namespace Azure.Security.KeyVault.Test
         {
             KeyType kt = Create<KeyType>(keyName);
 
-            // Their string representation will be the same
-            Assert.AreEqual(expectedKeyType.ToString(), kt.ToString());
+            Assert.AreEqual(expectedKeyType, kt);
 
             // using the operators
-            //Assert.AreNotEqual(kt, expectedKeyType); // we are not going to have the same type (one is created based on the string, the other 
-            //Assert.IsFalse(kt != expectedKeyType);
+            Assert.IsFalse(kt != expectedKeyType);
         }
 
         [TestCaseSource(nameof(KeyTypeCombinationsToTestEnum))]
