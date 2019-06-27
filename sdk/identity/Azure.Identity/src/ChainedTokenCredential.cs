@@ -18,7 +18,7 @@ namespace Azure.Identity
         private TokenCredential[] _sources;
 
         /// <summary>
-        /// Creates a instance with the specified <see cref="TokenCredential"/> sources.
+        /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
         /// </summary>
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
