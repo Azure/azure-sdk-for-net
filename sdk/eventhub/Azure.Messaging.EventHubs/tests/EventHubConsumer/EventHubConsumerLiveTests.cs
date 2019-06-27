@@ -1305,6 +1305,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
         [Test]
         [Ignore("Identifiers are not supported in Track Two yet")]
         public async Task QuotaExceedExceptionMessageContainsExistingConsumersIdentifiers()
@@ -1351,6 +1356,41 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SmallReceiveWaitTimeDoesNotThrowEventHubsTimeoutException()
+        {
+            // Issue receives with 1 second so that some of the Receive calls will timeout while creating AMQP link.
+            // Even those Receive calls should return NULL instead of bubbling the exception up.
+
+            var receiveTimeoutInSeconds = 1;
+
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    var tasks = Enumerable.Range(0, 10)
+                        .Select(async i =>
+                        {
+                            await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                            {
+                                Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds)), Throws.Nothing);
+                            }
+                        });
+
+                    await Task.WhenAll(tasks);
                 }
             }
         }
