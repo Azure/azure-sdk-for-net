@@ -84,7 +84,7 @@
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
+    <UseProjectReferenceToAzureCore>false</UseProjectReferenceToAzureCore>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
