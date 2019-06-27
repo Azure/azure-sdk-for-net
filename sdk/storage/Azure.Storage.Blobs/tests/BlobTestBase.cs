@@ -43,15 +43,14 @@ namespace Azure.Storage.Test.Shared
                     {
                         Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
-                        LoggingPolicy = LoggingPolicy.Shared,
-                        RetryPolicy =
-                            new RetryPolicy()
-                            {
-                                Mode = RetryMode.Exponential,
-                                MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                                Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                                MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                            }
+                        Diagnostics = { DisableLogging = false },
+                        Retry =
+                        {
+                            Mode = RetryMode.Exponential,
+                            MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                            Delay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                            MaxDelay = TimeSpan.FromSeconds(this.Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                        }
                     });
 
         public BlobConnectionOptions GetFaultyBlobConnectionOptions(

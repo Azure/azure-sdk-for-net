@@ -94,7 +94,7 @@ namespace Azure.Storage.Test
             catch (T actualException)
             {
                 assertion(expectedException, actualException);
-   
+            }
         }
     }
 }
