@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The <see cref="LeaseClient"/> allows you to manipulate Azure
     /// Storage leases on containers and blobs.
     /// </summary>
-	public class LeaseClient
+    public class LeaseClient
     {
         /// <summary>
         /// The <see cref="BlobClient"/> to manage leases for.
@@ -44,7 +44,8 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => this._blob?.Pipeline ?? this._container._pipeline;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LeaseClient"/>  class.
+        /// Initializes a new instance of the <see cref="LeaseClient"/> class
+        /// for mocking.
         /// </summary>
         protected LeaseClient()
         {
@@ -88,9 +89,9 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Gets a random lease ID.
+        /// Gets a unique lease ID.
         /// </summary>
-        /// <returns>A random lease ID.</returns>
+        /// <returns>A unique lease ID.</returns>
         private static string GetRandomLeaseId() => Guid.NewGuid().ToString();
 
         /// <summary>
@@ -479,14 +480,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{IBlobOrContainerInfo}"/> describing the
+        /// A <see cref="Response{ReleaseObjectLeaseInfo}"/> describing the
         /// updated blob or container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<IBlobOrContainerInfo> Release(
+        public virtual Response<ReleasedObjectInfo> Release(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             this.ReleaseAsync(
@@ -515,14 +516,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{IBlobOrContainerInfo}}"/> describing the
+        /// A <see cref="Task{Response{ReleasedObjectInfo}}"/> describing the
         /// updated blob or container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<IBlobOrContainerInfo>> ReleaseAsync(
+        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             HttpAccessConditions? httpAccessConditions = default,
             CancellationToken cancellationToken = default) =>
             await this.ReleaseAsync(
@@ -554,14 +555,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{IBlobOrContainerInfo}}"/> describing the
+        /// A <see cref="Task{Response{ReleasedObjectInfo}}"/> describing the
         /// updated blob or container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<IBlobOrContainerInfo>> ReleaseAsync(
+        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             HttpAccessConditions? httpAccessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -591,9 +592,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 async: async,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return new Response<IBlobOrContainerInfo>(
+                        return new Response<ReleasedObjectInfo>(
                             response.GetRawResponse(),
-                            response.Value);
+                            new ReleasedObjectInfo(response.Value));
                     }
                     else
                     {
@@ -613,9 +614,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 async: async,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return new Response<IBlobOrContainerInfo>(
+                        return new Response<ReleasedObjectInfo>(
                             response.GetRawResponse(),
-                            response.Value);
+                            new ReleasedObjectInfo(response.Value));
                     }
                 }
                 catch (Exception ex)
@@ -1061,31 +1062,4 @@ namespace Azure.Storage.Blobs.Specialized
             string leaseId = null) =>
             new LeaseClient(client, leaseId);
     }
-}
-
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IBlobOrContainerInfo
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations
-        /// conditionally.  If the request version is 2011-08-18 or newer, the
-        /// ETag value will be in quotes.
-        /// </summary>
-        ETag ETag { get; }
-
-        /// <summary>
-        /// Returns the date and time the object was last modified. Any
-        /// operation that modifies the blob, including an update of the
-        /// object's metadata or properties, changes the last-modified time of
-        /// the object.
-        /// </summary>
-        DateTimeOffset LastModified { get; }
-    }
-
-    partial class BlobInfo : IBlobOrContainerInfo { }
-    partial class ContainerInfo : IBlobOrContainerInfo { }
 }

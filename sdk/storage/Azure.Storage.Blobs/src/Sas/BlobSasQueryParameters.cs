@@ -19,32 +19,32 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public new string KeyOid => base.KeyOid;
+        public string KeyObjectId => this.keyObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public new string KeyTid => base.KeyTid;
+        public string KeyTenantId => this.keyTenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public new DateTimeOffset KeyStart => base.KeyStart;
+        public DateTimeOffset KeyStart => this.keyStart;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public new DateTimeOffset KeyExpiry => base.KeyExpiry;
+        public DateTimeOffset KeyExpiry => this.keyExpiry;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public new string KeyService => base.KeyService;
+        public string KeyService => this.keyService;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public new string KeyVersion => base.KeyVersion;
+        public string KeyVersion => this.keyVersion;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.

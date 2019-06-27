@@ -23,20 +23,35 @@ namespace Azure.Storage.Blobs.Specialized
     /// </summary>
 	public class BlobClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the blob's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
+
+        #pragma warning disable IDE0032 // Use auto property
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// every request.
+        /// </summary>
+        private readonly HttpPipeline _pipeline;
+        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected internal HttpPipeline Pipeline { get; private set; }
+        protected internal HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected BlobClient()
         {
@@ -95,8 +110,8 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            this.Uri = builder.ToUri();
-            this.Pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            this._uri = builder.ToUri();
+            this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
@@ -181,8 +196,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this.Uri = blobUri;
-            this.Pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            this._uri = blobUri;
+            this._pipeline = (options ?? new BlobClientOptions()).Build(authentication);
         }
 
         /// <summary>
@@ -199,8 +214,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobClient(Uri blobUri, HttpPipeline pipeline)
         {
-            this.Uri = blobUri;
-            this.Pipeline = pipeline;
+            this._uri = blobUri;
+            this._pipeline = pipeline;
         }
 
         /// <summary>
@@ -411,14 +426,14 @@ namespace Azure.Storage.Blobs.Specialized
                         response.GetRawResponse(),
                          startOffset =>
                             this.StartDownloadAsync(
-                                    range,
-                                    accessConditions,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    async,
-                                    cancellationToken)
-                                .ConfigureAwait(false).GetAwaiter().GetResult()
-                            .GetRawResponse(),
+                                range,
+                                accessConditions,
+                                rangeGetContentHash,
+                                startOffset,
+                                async,
+                                cancellationToken)
+                                .EnsureCompleted()
+                                .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
                                 range,
@@ -428,7 +443,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                            .GetRawResponse(),
+                                .GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
                         // on BlobConnectionOptions so we'll do the same here
                         new ResponseClassifier(),

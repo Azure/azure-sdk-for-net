@@ -84,8 +84,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyOid);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTid);
+            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
@@ -144,8 +144,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyOid);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTid);
+            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
@@ -204,8 +204,8 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(String.Empty, sasQueryParameters.Identifier);
-            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyOid);
-            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTid);
+            Assert.AreEqual(constants.Sas.KeyOid, sasQueryParameters.KeyObjectId);
+            Assert.AreEqual(constants.Sas.KeyTid, sasQueryParameters.KeyTenantId);
             Assert.AreEqual(constants.Sas.KeyStart, sasQueryParameters.KeyStart);
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiry);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);

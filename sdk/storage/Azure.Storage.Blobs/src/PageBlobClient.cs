@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected PageBlobClient()
         {
@@ -1001,7 +1001,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetPageRangesDiff"/> operation returns the
         /// list of page ranges that differ between a
-        /// <paramref name="prevSnapshot"/> and this page blob. Changed pages
+        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages. 
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
@@ -1015,12 +1015,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// information from. For more information on working with blob snapshots,
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
         /// </param>
-        /// <param name="prevSnapshot">
+        /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// <paramref name="snapshot"/>, as long as the snapshot specified by
-        /// <paramref name="prevSnapshot"/> is the older of the two.
+        /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1041,13 +1041,13 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<PageRangesInfo> GetPageRangesDiff(
             HttpRange? range = default,
             string snapshot = default,
-            string prevSnapshot = default,
+            string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             this.GetPageRangesDiffAsync(
                 range,
                 snapshot,
-                prevSnapshot,
+                previousSnapshot,
                 accessConditions,
                 false, // async
                 cancellationToken)
@@ -1056,7 +1056,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetPageRangesDiffAsync"/> operation returns the
         /// list of page ranges that differ between a
-        /// <paramref name="prevSnapshot"/> and this page blob. Changed pages
+        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages. 
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
@@ -1070,12 +1070,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// information from. For more information on working with blob snapshots,
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
         /// </param>
-        /// <param name="prevSnapshot">
+        /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// <paramref name="snapshot"/>, as long as the snapshot specified by
-        /// <paramref name="prevSnapshot"/> is the older of the two.
+        /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1096,13 +1096,13 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
             HttpRange? range = default,
             string snapshot = default,
-            string prevSnapshot = default,
+            string previousSnapshot = default,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await this.GetPageRangesDiffAsync(
                 range,
                 snapshot,
-                prevSnapshot,
+                previousSnapshot,
                 accessConditions,
                 true, // async
                 cancellationToken)
@@ -1111,7 +1111,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetPageRangesDiffAsync"/> operation returns the
         /// list of page ranges that differ between a
-        /// <paramref name="prevSnapshot"/> and this page blob. Changed pages
+        /// <paramref name="previousSnapshot"/> and this page blob. Changed pages
         /// include both updated and cleared pages. 
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-page-ranges" />.
@@ -1125,12 +1125,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// information from. For more information on working with blob snapshots,
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
         /// </param>
-        /// <param name="prevSnapshot">
+        /// <param name="previousSnapshot">
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// <paramref name="snapshot"/>, as long as the snapshot specified by
-        /// <paramref name="prevSnapshot"/> is the older of the two.
+        /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1154,7 +1154,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
             HttpRange? range,
             string snapshot,
-            string prevSnapshot,
+            string previousSnapshot,
             PageBlobAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -1166,7 +1166,7 @@ namespace Azure.Storage.Blobs.Specialized
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
-                    $"{nameof(prevSnapshot)}: {prevSnapshot}\n" +
+                    $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
                     $"{nameof(accessConditions)}: {accessConditions}");
                 try
                 {
@@ -1174,7 +1174,7 @@ namespace Azure.Storage.Blobs.Specialized
                         this.Pipeline,
                         this.Uri,
                         snapshot: snapshot,
-                        prevsnapshot: prevSnapshot,
+                        prevsnapshot: previousSnapshot,
                         range: range?.ToString(),
                         leaseId: accessConditions?.LeaseAccessConditions?.LeaseId,
                         ifModifiedSince: accessConditions?.HttpAccessConditions?.IfModifiedSince,

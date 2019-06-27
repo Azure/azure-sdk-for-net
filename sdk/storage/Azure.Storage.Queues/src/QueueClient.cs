@@ -21,28 +21,22 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
-        private Uri _uri;
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// The Uri endpoint used by the object's messages.
         /// </summary>
-        private Uri _messagesUri;
+        private readonly Uri _messagesUri;
 
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
-        public Uri Uri
-        {
-            get => this._uri;
-            private set
-            {
-                this._uri = value;
-                this._messagesUri = value.AppendToPath("messages");
-            }
-        }
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The HttpPipeline used to send REST requests.
@@ -68,7 +62,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected QueueClient()
         {
@@ -120,7 +114,8 @@ namespace Azure.Storage.Queues
                 {
                     QueueName = queueName
                 };
-            this.Uri = builder.ToUri();
+            this._uri = builder.ToUri();
+            this._messagesUri = this._uri.AppendToPath("messages");
             this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
 
@@ -202,7 +197,8 @@ namespace Azure.Storage.Queues
         /// </param>
         internal QueueClient(Uri queueUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
-            this.Uri = queueUri;
+            this._uri = queueUri;
+            this._messagesUri = queueUri.AppendToPath("messages");
             this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
         }
 
@@ -219,7 +215,8 @@ namespace Azure.Storage.Queues
         /// </param>
         internal QueueClient(Uri queueUri, HttpPipeline pipeline)
         {
-            this.Uri = queueUri;
+            this._uri = queueUri;
+            this._messagesUri = queueUri.AppendToPath("messages");
             this._pipeline = pipeline;
         }
 
@@ -1429,7 +1426,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="updated">The message details.</param>
         /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>
         public DequeuedMessage Update(UpdatedMessage updated) =>
-            QueueModelFactory.DequeuedMessage(
+            QueuesModelFactory.DequeuedMessage(
                 this.MessageId,
                 this.InsertionTime,
                 this.ExpirationTime,

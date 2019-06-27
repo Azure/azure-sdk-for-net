@@ -20,10 +20,17 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileServiceClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the file service's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the file service's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
@@ -33,7 +40,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileServiceClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected FileServiceClient()
         {
@@ -74,7 +81,7 @@ namespace Azure.Storage.Files
         public FileServiceClient(string connectionString, FileClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            this.Uri = conn.FileEndpoint;
+            this._uri = conn.FileEndpoint;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -132,7 +139,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
         }
 
@@ -148,7 +155,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileServiceClient(Uri serviceUri, HttpPipeline pipeline)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = pipeline;
         }
 

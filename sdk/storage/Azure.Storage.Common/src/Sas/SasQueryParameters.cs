@@ -157,34 +157,25 @@ namespace Azure.Storage.Sas
 
         #region Blob Only Parameters
 #pragma warning disable IDE0032 // Use auto property
-
         // skoid
-        readonly string keyOid;
+        internal readonly string keyObjectId;
 
         // sktid
-        readonly string keyTid;
+        internal readonly string keyTenantId;
 
         // skt
-        readonly DateTimeOffset keyStart;
+        internal readonly DateTimeOffset keyStart;
 
         // ske
-        readonly DateTimeOffset keyExpiry;
+        internal readonly DateTimeOffset keyExpiry;
 
         // sks
-        readonly string keyService;
+        internal readonly string keyService;
 
         // skv
-        readonly string keyVersion;
+        internal readonly string keyVersion;
 #pragma warning restore IDE0032 // Use auto property
-
-        // Expose Blob only properties internally
-        internal string KeyOid => this.keyOid;
-        internal string KeyTid => this.keyTid;
-        internal DateTimeOffset KeyStart => this.keyStart;
-        internal DateTimeOffset KeyExpiry => this.keyExpiry;
-        internal string KeyService => this.keyService;
-        internal string KeyVersion => this.keyVersion;
-        #endregion Blob Only Properties
+        #endregion Blob Only Parameters
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -230,8 +221,8 @@ namespace Azure.Storage.Sas
             this.resource = resource ?? String.Empty;
             this.permissions = permissions ?? String.Empty;
             this.signature = signature ?? String.Empty;  // Should never be null
-            this.keyOid = keyOid;
-            this.keyTid = keyTid;
+            this.keyObjectId = keyOid;
+            this.keyTenantId = keyTid;
             this.keyStart = keyStart;
             this.keyExpiry = keyExpiry;
             this.keyService = keyService;
@@ -275,11 +266,11 @@ namespace Azure.Storage.Sas
 
                     // Optionally include Blob parameters
                     case Constants.Sas.Parameters.KeyOidUpper:
-                        if (includeBlobParameters) { this.keyOid = kv.Value; }
+                        if (includeBlobParameters) { this.keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyTidUpper:
-                        if (includeBlobParameters) { this.keyTid = kv.Value; }
+                        if (includeBlobParameters) { this.keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
                     case Constants.Sas.Parameters.KeyStartUpper:
@@ -395,34 +386,34 @@ namespace Azure.Storage.Sas
 
             if (includeBlobParameters)
             {
-                if (!String.IsNullOrWhiteSpace(this.KeyOid))
+                if (!String.IsNullOrWhiteSpace(this.keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyOid, this.KeyOid);
+                    AddToBuilder(Constants.Sas.Parameters.KeyOid, this.keyObjectId);
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.KeyTid))
+                if (!String.IsNullOrWhiteSpace(this.keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTid, this.KeyTid);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTid, this.keyTenantId);
                 }
 
-                if (this.KeyStart != DateTimeOffset.MinValue)
+                if (this.keyStart != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(this.KeyStart.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(this.keyStart.ToString(TimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (this.KeyExpiry != DateTimeOffset.MinValue)
+                if (this.keyExpiry != DateTimeOffset.MinValue)
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(this.KeyExpiry.ToString(TimeFormat, CultureInfo.InvariantCulture)));
+                    AddToBuilder(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(this.keyExpiry.ToString(TimeFormat, CultureInfo.InvariantCulture)));
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.KeyService))
+                if (!String.IsNullOrWhiteSpace(this.keyService))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyService, this.KeyService);
+                    AddToBuilder(Constants.Sas.Parameters.KeyService, this.keyService);
                 }
 
-                if (!String.IsNullOrWhiteSpace(this.KeyVersion))
+                if (!String.IsNullOrWhiteSpace(this.keyVersion))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, this.KeyVersion);
+                    AddToBuilder(Constants.Sas.Parameters.KeyVersion, this.keyVersion);
                 }
             }
 

@@ -8,8 +8,8 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Blobs",
       "client-name": "BlobRestClient",
-      "client-extensions-name": "BlobExtensions",
-      "client-model-factory-name": "BlobModelFactory",
+      "client-extensions-name": "BlobsExtensions",
+      "client-model-factory-name": "BlobsModelFactory",
       "x-ms-skip-path-components": true,
       "x-ms-include-sync-methods": true,
       "x-ms-public": false

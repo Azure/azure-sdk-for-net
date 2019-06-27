@@ -17,10 +17,17 @@ namespace Azure.Storage.Files
     /// </summary>
     public class DirectoryClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the directory's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
@@ -30,7 +37,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectoryClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected DirectoryClient()
         {
@@ -84,7 +91,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-            this.Uri = builder.ToUri();
+            this._uri = builder.ToUri();
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -148,7 +155,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal DirectoryClient(Uri directoryUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this.Uri = directoryUri;
+            this._uri = directoryUri;
             this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
         }
 
@@ -166,7 +173,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal DirectoryClient(Uri directoryUri, HttpPipeline pipeline)
         {
-            this.Uri = directoryUri;
+            this._uri = directoryUri;
             this._pipeline = pipeline;
         }
 

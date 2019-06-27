@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected AppendBlobClient()
         {

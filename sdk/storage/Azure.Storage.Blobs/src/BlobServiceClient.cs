@@ -21,10 +21,17 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public class BlobServiceClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the blob service's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
@@ -34,7 +41,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected BlobServiceClient()
         {
@@ -75,7 +82,7 @@ namespace Azure.Storage.Blobs
         public BlobServiceClient(string connectionString, BlobClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            this.Uri = conn.BlobEndpoint;
+            this._uri = conn.BlobEndpoint;
             this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
@@ -153,7 +160,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = (options ?? new BlobClientOptions()).Build(authentication);
         }
 
@@ -169,7 +176,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = pipeline;
         }
 

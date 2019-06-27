@@ -2653,9 +2653,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new QueueItem instance for mocking.
@@ -2782,9 +2782,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new QueuesSegment instance for mocking.
@@ -3007,9 +3007,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new GeoReplication instance for mocking.
@@ -3141,9 +3141,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new DequeuedMessage instance for mocking.
@@ -3226,9 +3226,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new PeekedMessage instance for mocking.
@@ -3307,9 +3307,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new EnqueuedMessage instance for mocking.
@@ -3389,9 +3389,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new QueueServiceStatistics instance for mocking.
@@ -3435,9 +3435,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new QueueProperties instance for mocking.
@@ -3475,9 +3475,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new UpdatedMessage instance for mocking.

@@ -8,8 +8,8 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Queues",
       "client-name": "QueueRestClient",
-      "client-extensions-name": "QueueExtensions",
-      "client-model-factory-name": "QueueModelFactory",
+      "client-extensions-name": "QueuesExtensions",
+      "client-model-factory-name": "QueuesModelFactory",
       "x-ms-skip-path-components": true,
       "x-ms-include-sync-methods": true,
       "x-ms-public": false

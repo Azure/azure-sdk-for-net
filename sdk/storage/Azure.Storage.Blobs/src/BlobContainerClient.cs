@@ -31,10 +31,17 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public const string LogsContainerName = "$logs";
 
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the container's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the container's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
@@ -44,7 +51,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected BlobContainerClient()
         {
@@ -92,7 +99,7 @@ namespace Azure.Storage.Blobs
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint) { ContainerName = containerName };
-            this.Uri = builder.ToUri();
+            this._uri = builder.ToUri();
             this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
@@ -156,7 +163,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobContainerClient(Uri containerUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this.Uri = containerUri;
+            this._uri = containerUri;
             this._pipeline = (options ?? new BlobClientOptions()).Build(authentication);
         }
 
@@ -173,7 +180,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline)
         {
-            this.Uri = containerUri;
+            this._uri = containerUri;
             this._pipeline = pipeline;
         }
 

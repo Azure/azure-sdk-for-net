@@ -759,7 +759,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     var response = await blob.GetPageRangesDiffAsync(
                         range: new HttpRange(0, Constants.KB),
-                        prevSnapshot: prevSnapshot,
+                        previousSnapshot: prevSnapshot,
                         accessConditions: accessConditions);
 
                     // Assert
@@ -807,7 +807,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
-                            prevSnapshot: prevSnapshot,
+                            previousSnapshot: prevSnapshot,
                             accessConditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }

@@ -20,10 +20,17 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the directory's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -41,7 +48,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected FileClient()
         {
@@ -98,7 +105,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            this.Uri = builder.ToUri();
+            this._uri = builder.ToUri();
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -160,7 +167,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileClient(Uri fileUri, HttpPipelinePolicy authentication, FileClientOptions options)
         {
-            this.Uri = fileUri;
+            this._uri = fileUri;
             this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
         }
 
@@ -176,7 +183,7 @@ namespace Azure.Storage.Files
         /// </param>
         internal FileClient(Uri fileUri, HttpPipeline pipeline)
         {
-            this.Uri = fileUri;
+            this._uri = fileUri;
             this._pipeline = pipeline;
         }
 
@@ -754,21 +761,22 @@ namespace Azure.Storage.Files
                         response.GetRawResponse(),
                         startOffset =>
                             this.StartDownloadAsync(
-                                    range,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    async,
-                                    cancellationToken)
-                                .ConfigureAwait(false).GetAwaiter().GetResult()
-                            .GetRawResponse(),
+                                range,
+                                rangeGetContentHash,
+                                startOffset,
+                                async,
+                                cancellationToken)
+                                .EnsureCompleted()
+                                .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
-                                    range,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    async,
-                                    cancellationToken)
-                                .ConfigureAwait(false)).GetRawResponse(),
+                                range,
+                                rangeGetContentHash,
+                                startOffset,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false))
+                                .GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
                         new ResponseClassifier(),

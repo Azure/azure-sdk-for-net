@@ -18,10 +18,17 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueServiceClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// The Uri endpoint used by the object.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The HttpPipeline used to send REST requests.
@@ -30,7 +37,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueServiceClient"/>
-        /// class.
+        /// class for mocking.
         /// </summary>
         protected QueueServiceClient()
         {
@@ -71,7 +78,7 @@ namespace Azure.Storage.Queues
         public QueueServiceClient(string connectionString, QueueClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-            this.Uri = conn.QueueEndpoint;
+            this._uri = conn.QueueEndpoint;
             this._pipeline = (options ?? new QueueClientOptions()).Build(conn.Credentials);
         }
 
@@ -149,7 +156,7 @@ namespace Azure.Storage.Queues
         /// </param>
         internal QueueServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, QueueClientOptions options)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = (options ?? new QueueClientOptions()).Build(authentication);
         }
 
@@ -165,7 +172,7 @@ namespace Azure.Storage.Queues
         /// </param>
         internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline)
         {
-            this.Uri = serviceUri;
+            this._uri = serviceUri;
             this._pipeline = pipeline;
         }
 
