@@ -21,6 +21,7 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
