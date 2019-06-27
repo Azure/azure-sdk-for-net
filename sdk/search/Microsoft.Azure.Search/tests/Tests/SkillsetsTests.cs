@@ -2,17 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+using System.Net;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Rest.Azure;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Rest.Azure;
-    using Xunit;
-
     public sealed class SkillsetsTests : SearchTestBase<SearchServiceFixture>
     {
         public const string InputImageFieldName = "image";
@@ -568,7 +566,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertSkillsetEqual(Skillset expected, Skillset actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<Skillset>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<Skillset>());
         }
 
         private static Skillset CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage ocrLanguageCode, KeyPhraseExtractionSkillLanguage keyPhraseLanguageCode)

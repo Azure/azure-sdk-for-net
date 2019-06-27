@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search.Tests", "Microsoft.Azure.Management.Search\tests\Microsoft.Azure.Management.Search.Tests.csproj", "{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Search", "Microsoft.Azure.Management.Search\src\Microsoft.Azure.Management.Search.csproj", "{385AB742-370A-4A66-89C2-797D851460AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{766B6848-B73A-4B61-8AA7-55C6D3FF5EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{385AB742-370A-4A66-89C2-797D851460AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{385AB742-370A-4A66-89C2-797D851460AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{385AB742-370A-4A66-89C2-797D851460AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{385AB742-370A-4A66-89C2-797D851460AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
