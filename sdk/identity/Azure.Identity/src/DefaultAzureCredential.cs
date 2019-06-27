@@ -30,9 +30,24 @@ namespace Azure.Identity
         /// Creates an instance of the DefaultAzureCredential class.
         /// </summary>
         public DefaultAzureCredential(IdentityClientOptions options)
-            : base(new EnvironmentCredential(options), new ManagedIdentityCredential(options: options))
+            : base(new EnvironmentCredential(options), new ManagedIdentityCredential(options: options), new CredentialNotFoundGuard())
         {
 
+        }
+
+        private class CredentialNotFoundGuard : TokenCredential
+        {
+            private const string CredentialNotFoundMessage = @"Failed to find a credential to use for authentication.  If running in an environment where a managed identity is not available ensure the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are set.";
+
+            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+            {
+                throw new AuthenticationFailedException(CredentialNotFoundMessage);
+            }
+
+            public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            {
+                throw new AuthenticationFailedException(CredentialNotFoundMessage);
+            }
         }
     }
 }

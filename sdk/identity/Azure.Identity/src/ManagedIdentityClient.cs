@@ -15,7 +15,11 @@ namespace Azure.Identity
     internal class ManagedIdentityClient
     {
         private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient());
-        
+
+        private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
+        private const string AuthenticationRequestFailedError = "The request to the identity service failed. See inner exception for details.";
+
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         private const string ImdsApiVersion = "2018-02-01";
@@ -61,18 +65,13 @@ namespace Azure.Identity
                 return default;
             }
 
-            using (Request request = CreateAuthRequest(msiType, scopes, clientId))
+            try
             {
-                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                if (response.Status == 200 || response.Status == 201)
-                {
-                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
-
-                    return result;
-                }
-
-                throw response.CreateRequestFailedException();
+                return await SendAuthRequestAsync(msiType, scopes, clientId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
             }
         }
 
@@ -86,11 +85,40 @@ namespace Azure.Identity
                 return default;
             }
 
+            try
+            {
+                return SendAuthRequest(msiType, scopes, clientId, cancellationToken);
+            }
+            catch(RequestFailedException ex)
+            {
+                throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+            }
+        }
+
+        private async Task<AccessToken> SendAuthRequestAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        {
+            using (Request request = CreateAuthRequest(msiType, scopes, clientId))
+            {
+                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                if (response.Status == 200)
+                {
+                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+
+                    return result;
+                }
+
+                throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+            }
+        }
+
+        private AccessToken SendAuthRequest(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        {
             using (Request request = CreateAuthRequest(msiType, scopes, clientId))
             {
                 var response = _pipeline.SendRequest(request, cancellationToken);
 
-                if (response.Status == 200 || response.Status == 201)
+                if (response.Status == 200)
                 {
                     var result = Deserialize(response.ContentStream);
 
@@ -117,7 +145,8 @@ namespace Azure.Identity
         }
 
         private async ValueTask<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
-        { // if we haven't already determined the msi type
+        { 
+            // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
             {
                 // aquire the init lock 
@@ -134,7 +163,14 @@ namespace Azure.Identity
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
                         {
-                            s_endpoint = new Uri(endpointEnvVar);
+                            try
+                            {
+                                s_endpoint = new Uri(endpointEnvVar);
+                            }
+                            catch (FormatException ex)
+                            {
+                                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
+                            }
 
                             // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
                             if (!string.IsNullOrEmpty(secretEnvVar))
@@ -190,7 +226,14 @@ namespace Azure.Identity
                         // if the env var MSI_ENDPOINT is set
                         if (!string.IsNullOrEmpty(endpointEnvVar))
                         {
-                            s_endpoint = new Uri(endpointEnvVar);
+                            try
+                            {
+                                s_endpoint = new Uri(endpointEnvVar);
+                            }
+                            catch(FormatException ex)
+                            {
+                                throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
+                            }
 
                             // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
                             if (!string.IsNullOrEmpty(secretEnvVar))
@@ -391,23 +434,35 @@ namespace Azure.Identity
 
             DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
 
-            if (json.TryGetProperty("access_token", out JsonElement accessTokenProp))
+            if (!json.TryGetProperty("access_token", out JsonElement accessTokenProp))
             {
-                accessToken = accessTokenProp.GetString();
+                throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
             }
 
-            if (json.TryGetProperty("expires_on", out JsonElement expiresOnProp))
+            accessToken = accessTokenProp.GetString();
+
+            if (!json.TryGetProperty("expires_on", out JsonElement expiresOnProp))
             {
-                // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
-                if (s_msiType == MsiType.AppService)
+                throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
+            }
+
+            // if s_msiType is AppService expires_on will be a string formatted datetimeoffset
+            if (s_msiType == MsiType.AppService)
+            {
+                if(!DateTimeOffset.TryParse(expiresOnProp.GetString(), out expiresOn))
                 {
-                    expiresOn = DateTimeOffset.Parse(expiresOnProp.GetString());
+                    throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }
-                // otherwise expires_on will be a unix timestamp seconds from epoch
-                else
+            }
+            // otherwise expires_on will be a unix timestamp seconds from epoch
+            else
+            {
+                if(!expiresOnProp.TryGetInt64(out long expiresOnSec))
                 {
-                    expiresOn = DateTimeOffset.FromUnixTimeMilliseconds(expiresOnProp.GetInt64());
+                    throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }
+
+                expiresOn = DateTimeOffset.FromUnixTimeSeconds(expiresOnSec);
             }
 
             return new AccessToken(accessToken, expiresOn);
