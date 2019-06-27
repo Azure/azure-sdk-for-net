@@ -2830,9 +2830,9 @@ namespace Azure.Storage.Queues.Models
     }
 
     /// <summary>
-    /// QueueModelFactory provides utilities for mocking.
+    /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class QueueModelFactory
+    public static partial class QueuesModelFactory
     {
         /// <summary>
         /// Creates a new QueuesSegment instance for mocking.

@@ -11151,9 +11151,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// BlobModelFactory provides utilities for mocking.
+    /// BlobsModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class BlobModelFactory
+    public static partial class BlobsModelFactory
     {
         /// <summary>
         /// Creates a new BlobsFlatSegment instance for mocking.
@@ -11214,9 +11214,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// BlobModelFactory provides utilities for mocking.
+    /// BlobsModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class BlobModelFactory
+    public static partial class BlobsModelFactory
     {
         /// <summary>
         /// Creates a new BlobPrefix instance for mocking.
@@ -11371,9 +11371,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// BlobModelFactory provides utilities for mocking.
+    /// BlobsModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class BlobModelFactory
+    public static partial class BlobsModelFactory
     {
         /// <summary>
         /// Creates a new BlobsHierarchySegment instance for mocking.
@@ -11964,9 +11964,9 @@ namespace Azure.Storage.Blobs.Models
     }
 
     /// <summary>
-    /// BlobModelFactory provides utilities for mocking.
+    /// BlobsModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class BlobModelFactory
+    public static partial class BlobsModelFactory
     {
         /// <summary>
         /// Creates a new ContainersSegment instance for mocking.

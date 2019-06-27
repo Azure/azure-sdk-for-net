@@ -4999,9 +4999,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new DirectoryItem instance for mocking.
@@ -5048,9 +5048,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new FileProperty instance for mocking.
@@ -5123,9 +5123,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new FileItem instance for mocking.
@@ -5403,9 +5403,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new FilesAndDirectoriesSegment instance for mocking.
@@ -5508,9 +5508,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new StorageHandlesSegment instance for mocking.
@@ -5818,9 +5818,9 @@ namespace Azure.Storage.Files.Models
     }
 
     /// <summary>
-    /// FileModelFactory provides utilities for mocking.
+    /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FileModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new SharesSegment instance for mocking.

@@ -21,6 +21,7 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The directory's primary <see cref="Uri"/> endpoint.
         /// </summary>

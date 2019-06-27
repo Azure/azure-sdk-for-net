@@ -23,6 +23,7 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public class BlobServiceClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
