@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -278,5 +280,36 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+#if FullNetFx
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubClient" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCannotRetrieveMetadataWhenProxyIsInvalid()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var clientOptions = new EventHubClientOptions
+                {
+                    Proxy = new WebProxy("http://1.2.3.4:9999"),
+                    TransportType = TransportType.AmqpWebSockets
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var invalidProxyClient = new EventHubClient(connectionString, clientOptions))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>());
+                }
+            }
+        }
+#endif
     }
 }
