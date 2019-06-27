@@ -21,6 +21,7 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
@@ -2106,7 +2107,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="updated">The message details.</param>
         /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>
         public DequeuedMessage Update(UpdatedMessage updated) =>
-            QueueModelFactory.DequeuedMessage(
+            QueuesModelFactory.DequeuedMessage(
                 this.MessageId,
                 this.InsertionTime,
                 this.ExpirationTime,
