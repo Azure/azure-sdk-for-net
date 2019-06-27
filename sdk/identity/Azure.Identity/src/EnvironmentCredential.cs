@@ -33,7 +33,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.  
-        /// If the expected environment variables are not found at this time, the getToken method will return the default <see cref="AccessToken"/> when invoked.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(IdentityClientOptions options)
