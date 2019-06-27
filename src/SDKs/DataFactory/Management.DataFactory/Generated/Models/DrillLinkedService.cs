@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="connectionString">An ODBC connection string. Type:
         /// string, SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="pwd">The Azure key vault secret reference of password

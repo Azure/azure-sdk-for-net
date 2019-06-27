@@ -79,7 +79,8 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties:
         {            
             tableName: ""$EncryptedString$MyEncryptedTableName""
-        }
+        },
+        schema:[]
     }
 }
 ";
@@ -99,7 +100,8 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties:
         {            
             tableName: ""$EncryptedString$MyEncryptedTableName""
-        }
+        },
+        schema:[]
     }
 }
 ";
@@ -875,7 +877,7 @@ namespace DataFactory.Tests.JsonSamples
         [JsonSample]
         public const string SapOpenHubDataset = @"
 {
-     ""name"": ""SAPBWOpenHubDataset"",
+    ""name"": ""SAPBWOpenHubDataset"",
     ""properties"": {
         ""type"": ""SapOpenHubTable"",
         ""linkedServiceName"": {
@@ -913,6 +915,79 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
-
+        [JsonSample]
+        public const string ParquetDataset = @"
+{
+    ""name"": ""ParquetDataset"",
+    ""properties"": {
+        ""type"": ""Parquet"",
+        ""linkedServiceName"": {
+            ""referenceName"": ""AzureBlobStorageLinkedService"",
+            ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+            ""location"": {
+                ""type"": ""AzureBlobStorageLocation"",
+                ""container"": ""ContainerName"",
+                ""folderPath"": ""dataflow/test/input"",
+                ""fileName"": ""data.parquet""
+            },
+            ""compressionCodec"": ""gzip""
+        },
+        schema:[
+        {
+          ""name"": ""col1"",
+          ""type"": ""INT_32""
+        },
+        {
+          ""name"": ""col2"",
+          ""type"": ""Decimal"",
+          ""precision"": ""38"",
+          ""scale"": ""2""
+        }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string DelimitedTextDataset = @"
+{
+    name: ""DelimitedTextDataset"",
+    properties: 
+    {
+        type: ""DelimitedText"",
+        linkedServiceName: 
+        {
+            referenceName: ""AzureBlobStorageLinkedService"",
+            type: ""LinkedServiceReference""
+        },
+        typeProperties: {
+            location: {
+                type: ""AzureBlobStorageLocation"",
+                folderPath: ""test"",
+                fileName: ""test01"",
+                container: ""xxxx""
+            },
+            columnDelimiter: ""\n"",
+            rowDelimiter: ""\t"",
+            encodingName: ""UTF-8"",
+            compressionCodec: ""bzip2"",
+            quoteChar: """",
+            firstRowAsHeader: false,
+            nullValue: """"
+        },
+        schema:[
+        {
+          name: ""col1"",
+          type: ""string""
+        },
+        {
+          name: ""col2"",
+          type: ""string""
+        }
+        ]
+    }
+}
+";
     }
 }

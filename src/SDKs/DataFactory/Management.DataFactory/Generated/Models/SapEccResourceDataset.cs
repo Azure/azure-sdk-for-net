@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public SapEccResourceDataset(LinkedServiceReference linkedServiceName, string path, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
+        public SapEccResourceDataset(LinkedServiceReference linkedServiceName, object path, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Path = path;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.path")]
-        public string Path { get; set; }
+        public object Path { get; set; }
 
         /// <summary>
         /// Validate the object.

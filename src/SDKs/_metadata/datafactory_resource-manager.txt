@@ -3,12 +3,40 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=F:\git\azure-sdk-for-net\src\SDKs
-2019-02-22 19:23:28 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      5df40b9b08b77fe7b78f90f6b7c470600b8ea063
-AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=D:\Public_swagger\azure-sdk-for-net\src\SDKs
+/node_modules/vscode-jsonrpc/lib/messageReader.js:65
+        headers.forEach(function (header) {
+                ^
+Error: Message header must separate key and value using :
+    at /node_modules/vscode-jsonrpc/lib/messageReader.js:68:23
+    at Array.forEach (<anonymous>)
+    at MessageBuffer.tryReadHeaders (/node_modules/vscode-jsonrpc/lib/messageReader.js:65:17)
+    at StreamMessageReader.onData (/node_modules/vscode-jsonrpc/lib/messageReader.js:194:43)
+    at Socket.<anonymous> (/node_modules/vscode-jsonrpc/lib/messageReader.js:185:19)
+    at Socket.emit (events.js:194:15)
+    at addChunk (_stream_readable.js:284:12)
+    at readableAddChunk (_stream_readable.js:265:11)
+    at Socket.Readable.push (_stream_readable.js:220:10)
+    at Pipe.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+
+System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
+   at System.Diagnostics.Process.EnsureState(State state)
+   at System.Diagnostics.Process.get_ProcessName()
+   at System.Diagnostics.Process.ToString()
+   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
+   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
+   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
+   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
+   at System.Management.Automation.CommandProcessorBase.Complete()
+AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md failed. Please try again

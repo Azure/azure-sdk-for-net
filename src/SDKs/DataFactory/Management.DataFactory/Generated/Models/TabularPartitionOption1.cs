@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for CopyBehaviorType.
+    /// Defines values for TabularPartitionOption1.
     /// </summary>
-    public static class CopyBehaviorType
+    public static class TabularPartitionOption1
     {
-        public const string PreserveHierarchy = "PreserveHierarchy";
-        public const string FlattenHierarchy = "FlattenHierarchy";
-        public const string MergeFiles = "MergeFiles";
+        public const string None = "None";
+        public const string PartitionOnInt = "PartitionOnInt";
+        public const string PartitionOnCalendarYear = "PartitionOnCalendarYear";
+        public const string PartitionOnCalendarMonth = "PartitionOnCalendarMonth";
+        public const string PartitionOnCalendarDate = "PartitionOnCalendarDate";
     }
 }

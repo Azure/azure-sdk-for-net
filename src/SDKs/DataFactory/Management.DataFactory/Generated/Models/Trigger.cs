@@ -38,11 +38,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        public Trigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string))
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the trigger.</param>
+        public Trigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>))
         {
             AdditionalProperties = additionalProperties;
             Description = description;
             RuntimeState = runtimeState;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -71,6 +74,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "runtimeState")]
         public string RuntimeState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of tags that can be used for describing the
+        /// trigger.
+        /// </summary>
+        [JsonProperty(PropertyName = "annotations")]
+        public IList<object> Annotations { get; set; }
 
     }
 }

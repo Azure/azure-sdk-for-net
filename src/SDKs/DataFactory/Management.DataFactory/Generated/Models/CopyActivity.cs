@@ -66,9 +66,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="redirectIncompatibleRowSettings">Redirect incompatible
         /// row settings when EnableSkipIncompatibleRow is true.</param>
         /// <param name="preserveRules">Preserve Rules.</param>
+        /// <param name="preserve">Preserve rules.</param>
         /// <param name="inputs">List of inputs for the activity.</param>
         /// <param name="outputs">List of outputs for the activity.</param>
-        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), CopyTranslator translator = default(CopyTranslator), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object dataIntegrationUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<object> preserveRules = default(IList<object>), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
+        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object translator = default(object), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object dataIntegrationUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<object> preserveRules = default(IList<object>), IList<object> preserve = default(IList<object>), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Source = source;
@@ -81,6 +82,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             EnableSkipIncompatibleRow = enableSkipIncompatibleRow;
             RedirectIncompatibleRowSettings = redirectIncompatibleRowSettings;
             PreserveRules = preserveRules;
+            Preserve = preserve;
             Inputs = inputs;
             Outputs = outputs;
             CustomInit();
@@ -108,7 +110,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// translator is used.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.translator")]
-        public CopyTranslator Translator { get; set; }
+        public object Translator { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether to copy data via an interim staging.
@@ -160,6 +162,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.preserveRules")]
         public IList<object> PreserveRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets preserve rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.preserve")]
+        public IList<object> Preserve { get; set; }
 
         /// <summary>
         /// Gets or sets list of inputs for the activity.

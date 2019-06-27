@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="query">SAP ECC OData query. For example, "$top=1".
         /// Type: string (or Expression with resultType string).</param>
-        public SapEccSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), string query = default(string))
+        public SapEccSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "query")]
-        public string Query { get; set; }
+        public object Query { get; set; }
 
     }
 }

@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for JsonFormatFilePattern.
+    /// Defines values for TabularPartitionOption2.
     /// </summary>
-    public static class JsonFormatFilePattern
+    public static class TabularPartitionOption2
     {
-        public const string SetOfObjects = "setOfObjects";
-        public const string ArrayOfObjects = "arrayOfObjects";
+        public const string None = "None";
+        public const string PhysicalPartitionsOfTable = "PhysicalPartitionsOfTable";
+        public const string DynamicRange = "DynamicRange";
     }
 }

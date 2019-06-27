@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="accountKey">Account key for the Azure Data Lake
         /// Storage Gen2 service. Type: string (or Expression with resultType
         /// string).</param>

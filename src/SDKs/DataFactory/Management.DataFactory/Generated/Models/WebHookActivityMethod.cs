@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for AzureSearchIndexWriteBehaviorType.
+    /// Defines values for WebHookActivityMethod.
     /// </summary>
-    public static class AzureSearchIndexWriteBehaviorType
+    public static class WebHookActivityMethod
     {
-        public const string Merge = "Merge";
-        public const string Upload = "Upload";
+        public const string POST = "POST";
     }
 }
