@@ -1304,5 +1304,55 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
+
+        [Test]
+        [Ignore("Identifiers are not supported in Track Two yet")]
+        public async Task QuotaExceedExceptionMessageContainsExistingConsumersIdentifiers()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+                    var consumers = new List<EventHubConsumer>();
+
+                    try
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            var consumerOptions = new EventHubConsumerOptions { Identifier = $"receiver{i}" };
+                            var newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest, consumerOptions);
+
+                            // Issue a receive call so link will become active.
+
+                            Assert.That(async () => await newConsumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                            consumers.Add(newConsumer);
+                        }
+
+                        // Attempt to create 6th consumer. This should fail.
+
+                        var failConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest);
+
+                        await failConsumer.ReceiveAsync(1, TimeSpan.Zero);
+
+                        throw new InvalidOperationException("6th receiver should have encountered QuotaExceededException.");
+                    }
+                    catch(TrackOne.QuotaExceededException)
+                    {
+                        foreach (var consumer in consumers)
+                        {
+                            //Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing receiver identifier '{consumer.Identifier}')");
+                        }
+                    }
+                    finally
+                    {
+                        await Task.WhenAll(consumers.Select(consumer => consumer.CloseAsync()));
+                    }
+                }
+            }
+        }
     }
 }
