@@ -14,6 +14,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class GuardTests
     {
         /// <summary>
@@ -117,6 +118,32 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ArgumentNotNullOrWhitespaceAllowsValidValues(string value)
         {
             Assert.That(() => Guard.ArgumentNotNullOrWhitespace(nameof(value), value), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("         ")]
+        public void ArgumentNotEmptyOrWhitespaceEnforcesInvariants(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.ArgumentException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Guard.ArgumentNotEmptyOrWhitespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("1")]
+        [TestCase("This is a thing")]
+        public void ArgumentNotEmptyOrWhitespaceAllowsValidValues(string value)
+        {
+            Assert.That(() => Guard.ArgumentNotEmptyOrWhitespace(nameof(value), value), Throws.Nothing);
         }
 
         /// <summary>

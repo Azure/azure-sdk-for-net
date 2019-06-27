@@ -30,7 +30,10 @@ namespace Azure.Storage.Test.Shared
             // Copy to a MemoryStream first because RetriableStreamImpl
             // doesn't support Position
             var intermediate = new MemoryStream();
-            await message.Response.ContentStream.CopyToAsync(intermediate);
+            if (message.Response.ContentStream != null)
+            {
+                await message.Response.ContentStream.CopyToAsync(intermediate);
+            }
             intermediate.Seek(0, SeekOrigin.Begin);
 
             // Use a faulty stream for the Response Content
@@ -59,47 +62,6 @@ namespace Azure.Storage.Test.Shared
                 this._exceptionToRaise);
         }
     }
-
-    /*
-    sealed class FaultyUploadHttpClientFactory : IPipelinePolicyFactory
-    {
-        static readonly HttpClient s_client = new HttpClient() { };
-
-        static readonly int retriesBeforeSuccess = 3;
-        static int currentCount = 0;
-
-        readonly Exception exceptionToRaise;
-
-        public FaultyUploadHttpClientFactory(Exception exceptionToRaise) => this.exceptionToRaise = exceptionToRaise;
-
-        IPipelinePolicy IPipelinePolicyFactory.Create(IPipelinePolicy nextPolicy, PipelinePolicyOptions options) => new FaultyUploadHttpClientPolicy(this.exceptionToRaise, options); // next & options are ignored
-
-        sealed class FaultyUploadHttpClientPolicy : IPipelinePolicy
-        {
-            readonly PipelinePolicyOptions options;
-            readonly Exception exceptionToRaise;
-
-            public FaultyUploadHttpClientPolicy(Exception exceptionToRaise, PipelinePolicyOptions options)
-            {
-                this.exceptionToRaise = exceptionToRaise;
-                this.options = options;
-            }
-
-            async Task<HttpResponseMessage> IPipelinePolicy.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                if ((++currentCount % retriesBeforeSuccess) == 0)
-                {
-                    return await s_client.SendAsync(request, cancellationToken);
-                }
-                else
-                {
-                    this.options.Logger.LogTrace($"Simulating fault");
-                    throw this.exceptionToRaise;
-                }
-            }
-        }
-    }
-    */
 
     class FaultyHttpContent : HttpContent
     {

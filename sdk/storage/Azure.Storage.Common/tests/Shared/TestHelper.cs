@@ -4,115 +4,97 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
     static partial class TestHelper
     {
-        public static string GetNewMetadataName() => $"test_metadata_{Guid.NewGuid().ToString().Replace("-", "_")}";
-
-        static int seed = Environment.TickCount;
-
-        static readonly ThreadLocal<Random> random =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
-
-        static Random Random => random.Value;
-
-        public static byte[] GetRandomBuffer(long size)
+        public static byte[] GetRandomBuffer(long size, Random random = null)
         {
+            random ??= new Random(Environment.TickCount);
             var buffer = new byte[size];
-            Random.NextBytes(buffer);
+            random.NextBytes(buffer);
             return buffer;
         }
 
-        public static string GetNewString(int length = 20)
+        public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
-            var buffer = new char[length];
-
-            for (var i = 0; i < length; i++)
-            {
-                buffer[i] = (char)('a' + Random.Next(0, 25));
-            }
-
-            return new string(buffer);
-        }
-        public static IPAddress GetIPAddress()
-        {
-            var ipString = $"{Random.Next(0, 256)}.{Random.Next(0, 256)}.{Random.Next(0, 256)}.{Random.Next(0, 256)}";
-            return IPAddress.Parse(ipString);
+            Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
+            Assert.IsTrue(actual.SequenceEqual(expected), "Actual sequence does not match expected sequence");
         }
 
-        public static void DoWith<T>(Action<T> action, params T[] args)
+        internal static Action<T, T> GetDefaultExceptionAssertion<T>(Func<T, T, bool> predicate)
+            where T : Exception
         {
-            foreach (var arg in args)
-            {
-                Console.WriteLine($"Case: {arg}");
-                action(arg);
-            }
-        }
+            predicate = predicate ?? new Func<T, T, bool>((e, a) => true);
 
-        public static async Task DoWith<T>(Func<T, Task> action, params T[] args)
-        {
-            foreach (var arg in args)
-            {
-                Console.WriteLine($"Case: {arg}");
-                await action(arg).ConfigureAwait(false);
-            }
-        }
-
-        public static Metadata BuildMetadata() =>
-            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                { "foo", "bar" },
-                { "meta", "data" }
-            };
-
-        public static async Task<string> GenerateOAuthToken(
-            string activeDirectoryAuthEndpoint,
-            string activeDirectoryTenantId,
-            string activeDirectoryApplicationId,
-            string activeDirectoryApplicationSecret)
-        {
-            var authority = String.Format(activeDirectoryAuthEndpoint + "/" + activeDirectoryTenantId);
-
-            var credential = new ClientCredential(activeDirectoryApplicationId, activeDirectoryApplicationSecret);
-
-            var context = new AuthenticationContext(authority);
-            var result = await context.AcquireTokenAsync("https://storage.azure.com", credential);
-
-            return result.AccessToken;
-        }
-
-        /// <summary>
-        /// Create and configure connection option instances to use a test
-        /// specific retry policy and response classifier.
-        ///
-        /// We're willing to wait longer and make gratuitous retries than our
-        /// default connection options for the sake of robust test execution.
-        /// </summary>
-        /// <typeparam name="T">The type of StorageConnectionOptions.</typeparam>
-        /// <param name="credentials">Optional credentials.</param>
-        /// <returns>The modified connection options.</returns>
-        public static T GetOptions<T>(IStorageCredentials credentials = default)
-            where T : StorageConnectionOptions, new()
-            =>  new T
+            return
+                (e, a) =>
                 {
-                    Credentials = credentials,
-                    ResponseClassifier = new TestResponseClassifier(),
-                    Diagnostics = { DisableLogging = false },
-                    Retry =
+                    if (predicate(e, a))
                     {
-                        Mode = RetryMode.Exponential,
-                        MaxRetries = Storage.Constants.MaxReliabilityRetries,
-                        Delay = TimeSpan.FromSeconds(0.5),
-                        MaxDelay = TimeSpan.FromSeconds(10)
+                        Assert.AreEqual(e.Message, a.Message);
                     }
-            };
+                    else
+                    {
+                        Assert.Fail($"Unexpected exception: {a.Message}");
+                    }
+                }
+                ;
+        }
+
+        public static void AssertExpectedException<T>(Action action, T expectedException, Func<T, T, bool> predicate = null)
+            where T : Exception
+            => AssertExpectedException(action, expectedException, GetDefaultExceptionAssertion(predicate));
+
+        public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate = null)
+            where T : Exception
+            => AssertExpectedException(action, default, GetDefaultExceptionAssertion<T>((_, a) => predicate(a)));
+
+        public static void AssertExpectedException<T>(Action action, T expectedException, Action<T, T> assertion)
+            where T : Exception
+        {
+            Assert.IsNotNull(expectedException);
+            Assert.IsNotNull(assertion);
+
+            try
+            {
+                action();
+
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T actualException)
+            {
+                assertion(expectedException, actualException);
+            }
+        }
+
+        public static Task AssertExpectedExceptionAsync<T>(Task task, T expectedException, Func<T, T, bool> predicate = null)
+            where T : Exception
+            => AssertExpectedExceptionAsync(task, expectedException, GetDefaultExceptionAssertion(predicate));
+
+        public static Task AssertExpectedExceptionAsync<T>(Task task, Action<T> assertion)
+            where T : Exception
+            => AssertExpectedExceptionAsync<T>(task, default, (_, a) => assertion(a));
+
+        public static async Task AssertExpectedExceptionAsync<T>(Task task, T expectedException, Action<T, T> assertion)
+            where T : Exception
+        {
+            Assert.IsNotNull(assertion);
+
+            try
+            {
+                await task.ConfigureAwait(false);
+
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T actualException)
+            {
+                assertion(expectedException, actualException);
+   
+        }
     }
 }

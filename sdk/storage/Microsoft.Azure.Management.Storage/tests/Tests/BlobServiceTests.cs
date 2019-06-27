@@ -67,8 +67,8 @@ namespace Storage.Tests
 
                     //Delete container, then no container in the storage account
                     storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
-                    ListContainerItems blobContainers = storageMgmtClient.BlobContainers.List(rgName, accountName);
-                    Assert.Equal(0, blobContainers.Value.Count);
+                    IPage<ListContainerItem> blobContainers = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                    Assert.Empty(blobContainers.ToList());
 
                     //Delete not exist container, won't fail (return 204)
                     storageMgmtClient.BlobContainers.Delete(rgName, accountName, containerName);
@@ -191,8 +191,8 @@ namespace Storage.Tests
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
                     //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
-                    ListContainerItems containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
-                    foreach (ListContainerItem blobContainerList in containerList.Value)
+                    IPage<ListContainerItem> containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                    foreach (ListContainerItem blobContainerList in containerList)
                     {
                         Assert.NotNull(blobContainer.Metadata);
                         Assert.NotNull(blobContainer.PublicAccess);

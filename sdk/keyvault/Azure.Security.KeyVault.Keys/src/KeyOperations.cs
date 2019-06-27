@@ -6,6 +6,9 @@ using System;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// Supported JsonWebKey operations
+    /// </summary>
     [Flags]
     public enum KeyOperations : uint
     {

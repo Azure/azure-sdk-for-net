@@ -19,7 +19,7 @@ namespace Microsoft.Azure.ServiceBus {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -75,6 +75,15 @@ namespace Microsoft.Azure.ServiceBus {
         internal static string AmqpMessageSizeExceeded {
             get {
                 return ResourceManager.GetString("AmqpMessageSizeExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following arguments must all be provided or none at all: {0}..
+        /// </summary>
+        internal static string ArgumentInvalidCombination {
+            get {
+                return ResourceManager.GetString("ArgumentInvalidCombination", resourceCulture);
             }
         }
         

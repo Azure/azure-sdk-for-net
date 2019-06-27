@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
     using System.Linq;
 
     /// <summary>
-    /// The billing information of the resource.(e.g. basic vs. standard)
+    /// The billing information of the SignalR resource.
     /// </summary>
     public partial class ResourceSku
     {
@@ -30,22 +30,22 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSku class.
         /// </summary>
-        /// <param name="name">The name of the SKU. This is typically a letter
-        /// + number code, such as A0 or P3.  Required (if sku is
-        /// specified)</param>
-        /// <param name="tier">Optional tier of this particular SKU. `Basic` is
-        /// deprecated, use `Standard` instead for Basic tier. Possible values
+        /// <param name="name">The name of the SKU. Required.
+        ///
+        /// Allowed values: Standard_S1, Free_F1</param>
+        /// <param name="tier">Optional tier of this particular SKU. 'Standard'
+        /// or 'Free'.
+        ///
+        /// `Basic` is deprecated, use `Standard` instead. Possible values
         /// include: 'Free', 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="size">Optional, string. When the name field is the
-        /// combination of tier and some other value, this would be the
-        /// standalone code.</param>
-        /// <param name="family">Optional, string. If the service has different
-        /// generations of hardware, for the same SKU, then that can be
-        /// captured here.</param>
-        /// <param name="capacity">Optional, integer. If the SKU supports scale
-        /// out/in then the capacity integer should be included. If scale
-        /// out/in is not
-        /// possible for the resource this may be omitted.</param>
+        /// <param name="size">Optional string. For future use.</param>
+        /// <param name="family">Optional string. For future use.</param>
+        /// <param name="capacity">Optional, integer. The unit count of SignalR
+        /// resource. 1 by default.
+        ///
+        /// If present, following values are allowed:
+        /// Free: 1
+        /// Standard: 1,2,5,10,20,50,100</param>
         public ResourceSku(string name, string tier = default(string), string size = default(string), string family = default(string), int? capacity = default(int?))
         {
             Name = name;
@@ -62,41 +62,42 @@ namespace Microsoft.Azure.Management.SignalR.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU. This is typically a letter +
-        /// number code, such as A0 or P3.  Required (if sku is specified)
+        /// Gets or sets the name of the SKU. Required.
+        ///
+        /// Allowed values: Standard_S1, Free_F1
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets optional tier of this particular SKU. `Basic` is
-        /// deprecated, use `Standard` instead for Basic tier. Possible values
+        /// Gets or sets optional tier of this particular SKU. 'Standard' or
+        /// 'Free'.
+        ///
+        /// `Basic` is deprecated, use `Standard` instead. Possible values
         /// include: 'Free', 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets optional, string. When the name field is the
-        /// combination of tier and some other value, this would be the
-        /// standalone code.
+        /// Gets or sets optional string. For future use.
         /// </summary>
         [JsonProperty(PropertyName = "size")]
         public string Size { get; set; }
 
         /// <summary>
-        /// Gets or sets optional, string. If the service has different
-        /// generations of hardware, for the same SKU, then that can be
-        /// captured here.
+        /// Gets or sets optional string. For future use.
         /// </summary>
         [JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
-        /// Gets or sets optional, integer. If the SKU supports scale out/in
-        /// then the capacity integer should be included. If scale out/in is
-        /// not
-        /// possible for the resource this may be omitted.
+        /// Gets or sets optional, integer. The unit count of SignalR resource.
+        /// 1 by default.
+        ///
+        /// If present, following values are allowed:
+        /// Free: 1
+        /// Standard: 1,2,5,10,20,50,100
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

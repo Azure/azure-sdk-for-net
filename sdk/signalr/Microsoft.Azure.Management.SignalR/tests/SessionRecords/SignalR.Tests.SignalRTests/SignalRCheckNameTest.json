@@ -55,7 +55,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService\",\r\n  \"namespace\": \"Microsoft.SignalRService\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"SignalR\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-03-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService\",\r\n  \"namespace\": \"Microsoft.SignalRService\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"SignalR\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"East US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2\",\r\n        \"North Europe\",\r\n        \"Australia East\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"Central US\",\r\n        \"Japan East\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-10-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -123,8 +123,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService/locations/East%20US/checkNameAvailability?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService/locations/East%20US/checkNameAvailability?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"type\": \"Microsoft.SignalRService/SignalR\",\r\n  \"name\": \"signalr-service-test3849\"\r\n}",
       "RequestHeaders": {
@@ -196,8 +196,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService/locations/East%20US/checkNameAvailability?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/providers/Microsoft.SignalRService/locations/East%20US/checkNameAvailability?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2lnbmFsUlNlcnZpY2UvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"type\": \"Microsoft.SignalRService/SignalR\",\r\n  \"name\": \"signalr-test5409\"\r\n}",
       "RequestHeaders": {
@@ -269,8 +269,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9TaWduYWxSL3NpZ25hbHItdGVzdDU0MDk/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDU0MDk/YXBpLXZlcnNpb249MjAxOC0xMC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Free_F1\",\r\n    \"tier\": \"Free\",\r\n    \"size\": \"F1\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -302,7 +302,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -345,8 +345,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -366,7 +366,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -406,8 +406,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -427,7 +427,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -467,8 +467,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -488,7 +488,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -528,8 +528,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -549,7 +549,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -589,8 +589,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -610,7 +610,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -650,8 +650,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -671,7 +671,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview"
+          "https://management.azure.com/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01"
         ],
         "Server": [
           "Kestrel"
@@ -711,8 +711,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/locations/eastus/operationResults/7534bbc3-6a62-465d-98b8-8c78a6e254e1/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvblJlc3VsdHMvNzUzNGJiYzMtNmE2Mi00NjVkLTk4YjgtOGM3OGE2ZTI1NGUxL1NpZ25hbFIvc2lnbmFsci10ZXN0NTQwOT9hcGktdmVyc2lvbj0yMDE4LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -769,8 +769,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/SignalR/signalr-test5409?api-version=2018-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9TaWduYWxSL3NpZ25hbHItdGVzdDU0MDk/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/signalr-test-rg6164/providers/Microsoft.SignalRService/SignalR/signalr-test5409?api-version=2018-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjA4NTA2NWItMDBmOC00Y2JhLTk2NzUtYmExNWY0ZDRhYjY2L3Jlc291cmNlR3JvdXBzL3NpZ25hbHItdGVzdC1yZzYxNjQvcHJvdmlkZXJzL01pY3Jvc29mdC5TaWduYWxSU2VydmljZS9zaWduYWxSL3NpZ25hbHItdGVzdDU0MDk/YXBpLXZlcnNpb249MjAxOC0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

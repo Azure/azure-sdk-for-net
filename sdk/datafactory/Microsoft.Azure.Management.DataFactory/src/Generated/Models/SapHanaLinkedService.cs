@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="connectionString">SAP HANA ODBC connection string.
+        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="authenticationType">The authentication type to be used
         /// to connect to the SAP HANA server. Possible values include:
         /// 'Basic', 'Windows'</param>
@@ -55,9 +57,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SapHanaLinkedService(object server, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public SapHanaLinkedService(object server, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             UserName = userName;
@@ -70,6 +73,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets SAP HANA ODBC connection string. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionString")]
+        public object ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets host name of the SAP HANA server. Type: string (or

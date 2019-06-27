@@ -2,27 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// A JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data
+    /// structure that represents a cryptographic key.
+    /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
+    /// </summary>
     public class JsonWebKey : Model
     {
         /// <summary>
-        /// Key Identifier
+        /// The identifier of the key.
         /// </summary>
         public string KeyId { get; set; }
 
         /// <summary>
-        /// Gets or sets supported JsonWebKey key types (kty) for Elliptic
-        /// Curve, RSA, HSM, Octet, usually RSA. Possible values include:
-        /// 'EC', 'RSA', 'RSA-HSM', 'oct'
+        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
+        /// For valid values, see <see cref="KeyType"/>.
         /// </summary>
         public KeyType KeyType { get; set; }
 
@@ -31,6 +30,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public IList<KeyOperations> KeyOps { get; set; }
 
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/>
+        /// </summary>
         public JsonWebKey()
         {
             KeyOps = new List<KeyOperations>();
@@ -166,9 +168,9 @@ namespace Azure.Security.KeyVault.Keys
                         KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
                         break;
                     case KeyOpsPropertyName:
-                        foreach (var element in prop.Value.EnumerateObject())
+                        foreach (var element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.Value.ToString()));
+                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.ToString()));
                         }
                         break;
                     case CurveNamePropertyName:

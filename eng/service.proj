@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <PropertyGroup>
+    <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj" />
+    <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj" />
     <ProjectReference Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(ExcludeMgmtLib)"/>
   </ItemGroup>
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />

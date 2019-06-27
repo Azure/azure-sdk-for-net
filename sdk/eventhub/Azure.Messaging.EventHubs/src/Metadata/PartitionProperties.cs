@@ -65,13 +65,6 @@ namespace Azure.Messaging.EventHubs.Metadata
         public bool IsEmpty { get; }
 
         /// <summary>
-        ///   The date and time, in UTC, that the information was retrieved from the
-        ///   Event Hub.
-        /// </summary>
-        ///
-        public DateTime PropertyRetrievalTimeUtc { get; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
         ///
@@ -82,7 +75,6 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueueUtc">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
-        /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
         internal PartitionProperties(string path,
                                       string partitionId,
@@ -90,8 +82,7 @@ namespace Azure.Messaging.EventHubs.Metadata
                                       long lastSequenceNumber,
                                       string lastOffset,
                                       DateTime lastEnqueueUtc,
-                                      bool isEmpty,
-                                      DateTime? retrievalTimeUtc = null)
+                                      bool isEmpty)
         {
             EventHubPath = path;
             Id = partitionId;
@@ -100,7 +91,6 @@ namespace Azure.Messaging.EventHubs.Metadata
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTimeUtc = lastEnqueueUtc;
             IsEmpty = isEmpty;
-            PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
         }
     }
 }

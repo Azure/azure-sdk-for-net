@@ -123,6 +123,9 @@
   <data name="ArgumentNullOrWhiteSpace" xml:space="preserve">
     <value>The argument '{0}' may not be null or white space.</value>
   </data>
+  <data name="ArgumentEmptyOrWhiteSpace" xml:space="preserve">
+    <value>The argument '{0}' may not be empty or white space, though it may be null.</value>
+  </data>
   <data name="ArgumentStringTooLong" xml:space="preserve">
     <value>The argument '{0}' cannot exceed {1} characters.</value>
   </data>
@@ -135,7 +138,7 @@
   <data name="MissingSystemProperty" xml:space="preserve">
     <value>System property '{0}' is missing in the event.</value>
   </data>
-  <data name="ReceiverIdentifierOverMaxValue" xml:space="preserve">
+  <data name="ConsumerIdentifierOverMaxValue" xml:space="preserve">
     <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
   </data>
   <data name="TimeoutMustBePositive" xml:space="preserve">
@@ -156,8 +159,11 @@
   <data name="InvalidConnectionString" xml:space="preserve">
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
-  <data name="MalformedEventHubClientConnectionString" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, the path to an Event Hub, and a Shared Access Signature (both the name and value) to be valid.</value>
+  <data name="MissingConnectionInformation" xml:space="preserve">
+    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid.  The path to an Event Hub must be included in the connection string or specified separately.</value>
+  </data>
+  <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
+    <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.</value>
   </data>
   <data name="UnknownConnectionType" xml:space="preserve">
     <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
@@ -175,6 +181,12 @@
     <value>The requested transport type, '{0}' is not supported.</value>
   </data>
   <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
-    <value>A sender created for a specific partition cannot send events using a partition key.  This sender is associated with partition '{0}'.</value>
+    <value>A producer created for a specific partition cannot send events using a partition key.  This producer is associated with partition '{0}'.</value>
+  </data>
+  <data name="UnsupportedCredential" xml:space="preserve">
+    <value>The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential.</value>
+  </data>
+  <data name="SharedKeyCredentialCannotGenerateTokens" xml:space="preserve">
+    <value>A shared key credential is unable to generate a token directly.  Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens.</value>
   </data>
 </root>

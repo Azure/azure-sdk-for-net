@@ -37,8 +37,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureSqlTableDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
-        /// <param name="tableName">The table name of the Azure SQL database.
-        /// Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
@@ -53,7 +51,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public AzureSqlTableDataset(LinkedServiceReference linkedServiceName, object tableName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
+        /// <param name="tableName">The table name of the Azure SQL database.
+        /// Type: string (or Expression with resultType string).</param>
+        public AzureSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TableName = tableName;
@@ -81,10 +81,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (TableName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TableName");
-            }
         }
     }
 }

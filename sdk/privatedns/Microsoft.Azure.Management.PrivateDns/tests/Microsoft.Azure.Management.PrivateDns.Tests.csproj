@@ -7,6 +7,10 @@
     <Description>PrivateDns.Tests Class Library</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>True</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.6.0" />
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />

@@ -24,8 +24,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4D0A040-DB1C-4B1D-B4D8-8004C58DB49D}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		ci.yml = ci.yml
 		Directory.Build.props = Directory.Build.props
 		generate.ps1 = generate.ps1
+		tests.yml = tests.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blobs", "Blobs", "{B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}"
