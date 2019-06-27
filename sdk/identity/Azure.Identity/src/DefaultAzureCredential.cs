@@ -37,7 +37,7 @@ namespace Azure.Identity
 
         private class CredentialNotFoundGuard : TokenCredential
         {
-            private const string CredentialNotFoundMessage = @"Failed to find a credential to use for authentication.  If running in an environment where a managed identity is not available ensure AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are set.";
+            private const string CredentialNotFoundMessage = @"Failed to find a credential to use for authentication.  If running in an environment where a managed identity is not available ensure the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are set.";
 
             public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
             {

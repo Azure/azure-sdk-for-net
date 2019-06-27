@@ -28,7 +28,7 @@ namespace Azure.Identity
 
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
-        private const string AuthenticationRequestFailedError = "The reqeust to the identity service failed.  See inner exception for details.";
+        private const string AuthenticationRequestFailedError = "The request to the identity service failed.  See inner exception for details.";
 
         public AadIdentityClient(IdentityClientOptions options = null)
         {
@@ -110,7 +110,7 @@ namespace Azure.Identity
                 return new Response<AccessToken>(response, result);
             }
 
-            throw await response.CreateRequestFailedExceptionAsync();
+            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
         }
 
         private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
