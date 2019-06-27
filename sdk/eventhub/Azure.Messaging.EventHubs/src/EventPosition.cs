@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventHubs
         private const string EndOfStreamOffset = "@latest";
 
         /// <summary>
-        ///   Corresponds to the location of the the first event present in the partition.  Use
-        ///   this position to begin receiving from the first event that was enqueued in the partition
+        ///   Corresponds to the location of the first event present in the partition.  Use this
+        ///   position to begin receiving from the first event that was enqueued in the partition
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
