@@ -1338,13 +1338,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         await failConsumer.ReceiveAsync(1, TimeSpan.Zero);
 
-                        throw new InvalidOperationException("6th receiver should have encountered QuotaExceededException.");
+                        throw new InvalidOperationException("6th consumer should have encountered QuotaExceededException.");
                     }
                     catch(TrackOne.QuotaExceededException)
                     {
                         foreach (var consumer in consumers)
                         {
-                            //Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing receiver identifier '{consumer.Identifier}')");
+                            //Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{consumer.Identifier}')");
                         }
                     }
                     finally
