@@ -68,8 +68,8 @@ jobs:
           testRunTitle: "$(OSName) Test Results"
           testResultsFormat: "VSTest"
           mergeTestResults: true
-      - task: PublishBuildArtifacts@1
-        condition: succeededOrFailed()
-        inputs:
-            pathtoPublish: $(msBuildLogDir)
-            artifactName: MsBuildLogs
+      # - task: PublishBuildArtifacts@1
+      #   condition: succeededOrFailed()
+      #   inputs:
+      #       pathtoPublish: $(msBuildLogDir)
+      #       artifactName: MsBuildLogs
