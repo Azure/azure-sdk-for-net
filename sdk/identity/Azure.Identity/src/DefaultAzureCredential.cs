@@ -13,7 +13,7 @@ namespace Azure.Identity
     /// types will be tried, in order:
     /// - <see cref="EnvironmentCredential"/>
     /// - <see cref="ManagedIdentityCredential"/>
-    /// Consult the documentation of these credential types for more information  on how they attempt authentication.
+    /// Consult the documentation of these credential types for more information on how they attempt authentication.
     /// </summary>
     public class DefaultAzureCredential : ChainedTokenCredential
     {
