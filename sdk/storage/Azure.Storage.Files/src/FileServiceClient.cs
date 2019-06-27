@@ -20,6 +20,7 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileServiceClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The file service's primary <see cref="Uri"/> endpoint.
         /// </summary>

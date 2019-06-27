@@ -19,6 +19,7 @@ namespace Azure.Storage.Files
     /// </summary>
     public class ShareClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The share's primary <see cref="Uri"/> endpoint.
         /// </summary>
