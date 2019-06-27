@@ -16,9 +16,9 @@ namespace Azure.Identity
     {
         private static Lazy<ManagedIdentityClient> s_sharedClient = new Lazy<ManagedIdentityClient>(() => new ManagedIdentityClient());
 
-        private const string AuthenticationResponseInvalidFormatError = "Invalid response. The authentication response was not in the expected format";
-        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri";
-        private const string AuthenticationRequestFailedError = "The reqeust to the identity service failed. See inner exception for details.";
+        private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
+        private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
+        private const string AuthenticationRequestFailedError = "The request to the identity service failed. See inner exception for details.";
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri ImdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
