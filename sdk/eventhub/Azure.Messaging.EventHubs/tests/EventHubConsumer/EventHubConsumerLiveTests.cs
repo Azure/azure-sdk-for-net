@@ -1693,7 +1693,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-#if FullNetFx
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumer" /> is able to
         ///   connect to the Event Hubs service and perform operations.
@@ -1723,6 +1722,5 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
-#endif
     }
 }
