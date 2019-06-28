@@ -17,19 +17,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure data lake store write settings.
     /// </summary>
-    public partial class AzureDataLakeStoreWriteSetting : ConnectorWriteSetting
+    public partial class AzureDataLakeStoreWriteSettings : StoreWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreWriteSetting
+        /// Initializes a new instance of the AzureDataLakeStoreWriteSettings
         /// class.
         /// </summary>
-        public AzureDataLakeStoreWriteSetting()
+        public AzureDataLakeStoreWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreWriteSetting
+        /// Initializes a new instance of the AzureDataLakeStoreWriteSettings
         /// class.
         /// </summary>
         /// <param name="type">The write setting type.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        public AzureDataLakeStoreWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        public AzureDataLakeStoreWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
             : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
         {
             CustomInit();

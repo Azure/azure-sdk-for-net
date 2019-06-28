@@ -19,18 +19,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Delimited text write settings.
     /// </summary>
-    public partial class DelimitedTextWriteSetting : FormatWriteSetting
+    public partial class DelimitedTextWriteSettings : FormatWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextWriteSetting class.
+        /// Initializes a new instance of the DelimitedTextWriteSettings class.
         /// </summary>
-        public DelimitedTextWriteSetting()
+        public DelimitedTextWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextWriteSetting class.
+        /// Initializes a new instance of the DelimitedTextWriteSettings class.
         /// </summary>
         /// <param name="type">The write setting type.</param>
         /// <param name="fileExtension">The file extension used to create the
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="quoteAllText">Indicates whether string values should
         /// always be enclosed with quotes. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public DelimitedTextWriteSetting(string type, object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object))
+        public DelimitedTextWriteSettings(string type, object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object))
             : base(type, additionalProperties)
         {
             QuoteAllText = quoteAllText;

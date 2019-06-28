@@ -17,28 +17,35 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Format read settings.
+    /// Connector write settings.
     /// </summary>
-    public partial class FormatReadSetting
+    public partial class StoreWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the FormatReadSetting class.
+        /// Initializes a new instance of the StoreWriteSettings class.
         /// </summary>
-        public FormatReadSetting()
+        public StoreWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FormatReadSetting class.
+        /// Initializes a new instance of the StoreWriteSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
+        /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public FormatReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
+        /// <param name="copyBehavior">The type of copy behavior for copy
+        /// sink.</param>
+        public StoreWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
         {
             AdditionalProperties = additionalProperties;
             Type = type;
+            MaxConcurrentConnections = maxConcurrentConnections;
+            CopyBehavior = copyBehavior;
             CustomInit();
         }
 
@@ -55,10 +62,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the read setting type.
+        /// Gets or sets the write setting type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum concurrent connection count for the source
+        /// data store. Type: integer (or Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxConcurrentConnections")]
+        public object MaxConcurrentConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of copy behavior for copy sink.
+        /// </summary>
+        [JsonProperty(PropertyName = "copyBehavior")]
+        public object CopyBehavior { get; set; }
 
         /// <summary>
         /// Validate the object.

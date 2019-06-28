@@ -914,5 +914,39 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string ParquetDataset = @"
+{
+  ""name"": ""ParquetDataset"",
+  ""properties"": {
+    ""type"": ""Parquet"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.parquet""
+      },
+      ""compressionCodec"": ""gzip""
+    },
+    ""schema"": [
+      {
+        ""name"": ""col1"",
+        ""type"": ""INT_32""
+      },
+      {
+        ""name"": ""col2"",
+        ""type"": ""Decimal"",
+        ""precision"": ""38"",
+        ""scale"": ""2""
+      }
+    ]
+  }
+}";
+
     }
 }

@@ -15,20 +15,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// File server write settings.
+    /// Azure blob write settings.
     /// </summary>
-    public partial class FileServerWriteSetting : ConnectorWriteSetting
+    public partial class AzureBlobStorageWriteSettings : StoreWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the FileServerWriteSetting class.
+        /// Initializes a new instance of the AzureBlobStorageWriteSettings
+        /// class.
         /// </summary>
-        public FileServerWriteSetting()
+        public AzureBlobStorageWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FileServerWriteSetting class.
+        /// Initializes a new instance of the AzureBlobStorageWriteSettings
+        /// class.
         /// </summary>
         /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -38,7 +40,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        public FileServerWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        public AzureBlobStorageWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
             : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
         {
             CustomInit();

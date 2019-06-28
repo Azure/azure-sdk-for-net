@@ -3,6 +3,11 @@
 ## Current version
 ###  Feature Additions
 
+## Version 4.0.1
+###  Feature Additions
+- Fixed Object types issue
+- Standardize some readSettings name 
+
 ## Version 4.0.0
 ###  Feature Additions
 ### Breaking Changes
