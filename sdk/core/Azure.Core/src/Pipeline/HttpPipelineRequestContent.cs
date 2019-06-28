@@ -44,10 +44,28 @@ namespace Azure.Core.Pipeline
                 _stream = stream;
             }
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
-                _stream.CopyTo(stream, CopyToBufferSize);
+
+                // this is not using CopyTo so that we can honor cancellations.
+                byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
+                try
+                {
+                    while (true)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        var read = _stream.Read(buffer, 0, buffer.Length);
+                        if (read == 0) { break; }
+                        cancellationToken.ThrowIfCancellationRequested();
+                        stream.Write(buffer, 0, read);
+                    }
+                }
+                finally
+                {
+                    stream.Flush();
+                    ArrayPool<byte>.Shared.Return(buffer, true);
+                }
             }
 
             public override bool TryComputeLength(out long length)
