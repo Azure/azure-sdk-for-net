@@ -12,7 +12,7 @@ schedules:
 trigger:
   branches:
     include:
-    - master
+    - refs/heads/master
   paths:
     include:
     - sdk/keyvault/
