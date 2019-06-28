@@ -652,10 +652,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        [Ignore("isInclusive parameter is not supported yet")]
-        public async Task ConsumerCanReceiveFromOffset(bool isInclusive)
+        public async Task ConsumerCanReceiveFromOffset()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -678,8 +675,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         var offset = int.Parse((await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedOffset);
 
-                        // We must remember to include the 'isInclusive' flag when creating the consumer.
-
                         await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromOffset(offset)))
                         {
                             // Send a single event which is expected to go to the end of stream.
@@ -693,16 +688,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
-                            var expectedEventsCount = isInclusive ? 2 : 1;
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
+                            while ((receivedEvents.Count < 2) && (++index < ReceiveRetryLimit))
                             {
                                 receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
                             }
 
-                            Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
+                            Assert.That(receivedEvents.Count, Is.EqualTo(2), "The number of received events should be 2.");
                             Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
 
                             // Next receive on this partition shouldn't return any more messages.
@@ -1615,7 +1609,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Identifiers are not supported in Track Two yet")]
         public async Task QuotaExceedExceptionMessageContainsExistingConsumersIdentifiers()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -1631,7 +1624,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            var consumerOptions = new EventHubConsumerOptions { Identifier = $"receiver{i}" };
+                            var consumerOptions = new EventHubConsumerOptions { Identifier = $"consumer{i}" };
                             var newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest, consumerOptions);
 
                             // Issue a receive call so link will become active.
@@ -1649,11 +1642,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         throw new InvalidOperationException("6th consumer should have encountered QuotaExceededException.");
                     }
-                    catch(TrackOne.QuotaExceededException)
+                    catch(TrackOne.QuotaExceededException ex)
                     {
-                        foreach (var consumer in consumers)
+                        for (var i = 0; i < 5; i++)
                         {
-                            //Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{consumer.Identifier}')");
+                            var identifier = $"consumer{i}";
+                            Assert.That(ex.Message.Contains(identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{identifier}')");
                         }
                     }
                     finally
