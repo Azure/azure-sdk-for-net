@@ -68,7 +68,7 @@ namespace Azure.Identity
 
             for(int i = 0; i < _sources.Length && token.Token == null; i++)
             {
-                token = await _sources[i].GetTokenAsync(scopes, cancellationToken);
+                token = await _sources[i].GetTokenAsync(scopes, cancellationToken).ConfigureAwait(false);
             }
 
             return token;

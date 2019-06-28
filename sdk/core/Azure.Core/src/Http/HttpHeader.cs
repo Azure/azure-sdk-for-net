@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException(nameof(name));
+                throw new ArgumentException("Name shouldn't be null or empty", nameof(name));
             }
 
             Name = name;
@@ -44,10 +44,12 @@ namespace Azure.Core.Pipeline
 
         public bool Equals(HttpHeader other)
         {
-            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Value.Equals(other.Value);
+            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Value.Equals(other.Value, StringComparison.Ordinal);
         }
 
+#pragma warning disable CA1034 // Nested types should not be visible
         public static class Names
+#pragma warning restore CA1034 // Nested types should not be visible
         {
             public static string Date => "Date";
             public static string XMsDate => "x-ms-date";
@@ -59,11 +61,15 @@ namespace Azure.Core.Pipeline
             public static string Range => "Range";
         }
 
+#pragma warning disable CA1034 // Nested types should not be visible
+#pragma warning disable CA1724 // Type name conflicts with standard namespace
         public static class Common
+#pragma warning restore CA1034 // Nested types should not be visible
+#pragma warning restore CA1724 // Type name conflicts with standard namespace
         {
-            static readonly string s_applicationJson = "application/json";
-            static readonly string s_applicationOctetStream = "application/octet-stream";
-            static readonly string s_applicationFormUrlEncoded = "application/x-www-form-urlencoded";
+            const string s_applicationJson = "application/json";
+            const string s_applicationOctetStream = "application/octet-stream";
+            const string s_applicationFormUrlEncoded = "application/x-www-form-urlencoded";
 
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
             public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, s_applicationJson);
