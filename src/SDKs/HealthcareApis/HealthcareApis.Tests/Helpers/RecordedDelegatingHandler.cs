@@ -20,13 +20,6 @@ namespace HealthcareApis.Tests.Helpers
             SubsequentStatusCodeToReturn = StatusCodeToReturn;
         }
 
-        public RecordedDelegatingHandler(HttpResponseMessage response)
-        {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
-            _response = response;
-        }
-
         public HttpStatusCode StatusCodeToReturn { get; set; }
 
         public HttpStatusCode SubsequentStatusCodeToReturn { get; set; }

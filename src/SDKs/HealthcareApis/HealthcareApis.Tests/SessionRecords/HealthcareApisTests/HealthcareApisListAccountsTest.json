@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/1.2.0-preview"
+          "Microsoft.Azure.Management.HealthcareApis.HealthcareApisManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/cc148bf2-42fb-4913-a3fb-2f284a69eb89/resourceGroups/res7089\",\r\n  \"name\": \"res7089\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",

@@ -53,7 +53,7 @@ namespace HealthcareApis.Tests
                 // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescriptionWithProperties();
 
                 // Create healthcareApis account
                 var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);

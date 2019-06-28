@@ -68,14 +68,12 @@ namespace HealthcareApis.Tests.Helpers
         {
             var serviceDescription = new ServicesDescription(DefaultLocation);
             return serviceDescription;
-
         }
 
         public static ServicesPatchDescription GetServicePatchDescription()
         {
             var servicePatchDescription = new ServicesPatchDescription(UpdateTags);
             return servicePatchDescription;
-
         }
 
         public static ServicesDescription GetServiceDescriptionWithProperties()
@@ -87,7 +85,6 @@ namespace HealthcareApis.Tests.Helpers
 
         public static ServicesProperties GetServiceProperties()
         {
-
             IList<ServiceAccessPolicyEntry> accessPolicies = new List<ServiceAccessPolicyEntry>();
             accessPolicies.Add(new ServiceAccessPolicyEntry(objectId));
 
@@ -99,11 +96,6 @@ namespace HealthcareApis.Tests.Helpers
             var serviceProperties = new ServicesProperties(accessPolicies, provisioningState, cosmosDbConfigurationInfo, authenticationConfigurationInfo);
 
             return serviceProperties;
-        }
-
-        public static string GetLocationFromProvider(this ResourceManagementClient resourceManagementClient)
-        {
-            return "westus2";
         }
 
         public static void VerifyAccountProperties(ServicesDescription account, bool useDefaults, string location = "westus")
@@ -158,11 +150,6 @@ namespace HealthcareApis.Tests.Helpers
             }
         }
 
-        public static string CreateHealthcareApisServicesAccount(HealthcareApisManagementClient healthcareApisManagementClient, string rgname, string kind = null)
-        {
-            return TestUtilities.GenerateName("csa");
-        }
-
         public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
         {
             var rgname = "res7089";
@@ -176,7 +163,6 @@ namespace HealthcareApis.Tests.Helpers
                         Location = DefaultLocation
                     });
             }
-
             return rgname;
         }
     }
