@@ -26,7 +26,7 @@ namespace Azure.Core.Pipeline
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            hashCode.Add(Name, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(Name, StringComparer.OrdinalIgnoreCase);
             hashCode.Add(Value);
             return hashCode.ToHashCode();
         }
@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
 
         public bool Equals(HttpHeader other)
         {
-            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Value.Equals(other.Value, StringComparison.Ordinal);
+            return string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase) && Value.Equals(other.Value, StringComparison.Ordinal);
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible
