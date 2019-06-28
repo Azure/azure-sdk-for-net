@@ -6,13 +6,13 @@ schedules:
   displayName: Scheduled
   branches:
     include:
-    - master
+    - refs/heads/master
   always: true
 
 trigger:
   branches:
     include:
-    - refs/heads/master
+    - master
   paths:
     include:
     - sdk/keyvault/
