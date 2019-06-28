@@ -583,15 +583,16 @@ namespace Azure.Messaging.EventHubs.Tests
                         // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
+                        var expectedEventsCount = 1;
                         var receivedEvents = new List<EventData>();
                         var index = 0;
 
-                        while ((receivedEvents.Count < 1) && (++index < ReceiveRetryLimit))
+                        while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(expectedEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
-                        Assert.That(receivedEvents.Count, Is.EqualTo(1), "The number of received events should be 1.");
+                        Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                         Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
 
                         // Next receive on this partition shouldn't return any more messages.
@@ -623,7 +624,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         // Sending some events beforehand so the partition has some information.
 
-                        for (int i = 0; i < 10; i++)
+                        var expectedEventsCount = 10;
+
+                        for (int i = 0; i < expectedEventsCount; i++)
                         {
                             await producer.SendAsync(new EventData(new byte[1]));
                         }
@@ -635,12 +638,12 @@ namespace Azure.Messaging.EventHubs.Tests
                         var receivedEvents = new List<EventData>();
                         var index = 0;
 
-                        while ((receivedEvents.Count < 10) && (++index < ReceiveRetryLimit))
+                        while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            receivedEvents.AddRange(await consumer.ReceiveAsync(20, TimeSpan.FromMilliseconds(25)));
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(expectedEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
-                        Assert.That(receivedEvents.Count, Is.EqualTo(10), "The number of received events should be 10.");
+                        Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                     }
                 }
             }
@@ -688,15 +691,16 @@ namespace Azure.Messaging.EventHubs.Tests
                             // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
+                            var expectedEventsCount = 2;
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while ((receivedEvents.Count < 2) && (++index < ReceiveRetryLimit))
+                            while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(expectedEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
-                            Assert.That(receivedEvents.Count, Is.EqualTo(2), "The number of received events should be 2.");
+                            Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                             Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
 
                             // Next receive on this partition shouldn't return any more messages.
@@ -751,15 +755,16 @@ namespace Azure.Messaging.EventHubs.Tests
                             // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
+                            var expectedEventsCount = 1;
                             var receivedEvents = new List<EventData>();
                             var index = 0;
 
-                            while ((receivedEvents.Count < 1) && (++index < ReceiveRetryLimit))
+                            while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(expectedEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
-                            Assert.That(receivedEvents.Count, Is.EqualTo(1), "The number of received events should be 1.");
+                            Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                             Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
 
                             // Next receive on this partition shouldn't return any more messages.
@@ -821,7 +826,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                             {
-                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(expectedEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                             }
 
                             Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
@@ -1619,10 +1624,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
                     var consumers = new List<EventHubConsumer>();
+                    var maximumConsumersQuota = 5;
 
                     try
                     {
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < maximumConsumersQuota; i++)
                         {
                             var consumerOptions = new EventHubConsumerOptions { Identifier = $"consumer{i}" };
                             var newConsumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest, consumerOptions);
@@ -1644,7 +1650,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
                     catch(TrackOne.QuotaExceededException ex)
                     {
-                        for (var i = 0; i < 5; i++)
+                        for (var i = 0; i < maximumConsumersQuota; i++)
                         {
                             var identifier = $"consumer{i}";
                             Assert.That(ex.Message.Contains(identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{identifier}')");
