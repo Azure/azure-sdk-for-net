@@ -136,11 +136,11 @@ namespace Azure.ApplicationModel.Configuration
             if (!response.Headers.TryGetValue(s_link, out var headerValue)) return false;
 
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
-            var afterIndex = headerValue.IndexOf(s_after, StringComparison.InvariantCulture);
+            var afterIndex = headerValue.IndexOf(s_after, StringComparison.Ordinal);
             if (afterIndex < 0) return false;
 
             int beginingToken = afterIndex + s_after.Length;
-            int endToken = headerValue.IndexOf(">", StringComparison.InvariantCulture);
+            int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
             int tokenLenght = endToken - beginingToken;
             afterValue = headerValue.Substring(beginingToken, tokenLenght);
             return true;

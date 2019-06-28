@@ -23,7 +23,7 @@ namespace Azure.Core.Pipeline
                 return false;
             }
 
-            var charsetIndex = contentType.IndexOf(charsetMarker, StringComparison.InvariantCultureIgnoreCase);
+            var charsetIndex = contentType.IndexOf(charsetMarker, StringComparison.OrdinalIgnoreCase);
             if (charsetIndex != -1)
             {
                 ReadOnlySpan<char> charset = contentType.AsSpan().Slice(charsetIndex + charsetMarker.Length);
