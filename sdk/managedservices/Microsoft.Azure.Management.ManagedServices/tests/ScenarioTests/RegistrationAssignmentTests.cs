@@ -64,12 +64,6 @@ namespace ManagedServices.Tests.ScenarioTests
                         expandRegistrationDefinition: true);
 
                     Assert.NotNull(registrationAssignemntResponses);
-                    Assert.Single(registrationAssignemntResponses);
-
-                    foreach (var assignment in registrationAssignemntResponses)
-                    {
-                        Assert.NotNull(assignment.Properties.RegistrationDefinition.Plan);
-                    }   
 
                     //4. Get registration assignment collections expanded
                     registrationAssignemntResponses = testFixture.ManagedServicesClient.RegistrationAssignments
@@ -79,10 +73,9 @@ namespace ManagedServices.Tests.ScenarioTests
                         expandRegistrationDefinition: true);
 
                     Assert.NotNull(registrationAssignemntResponses);
-                    Assert.Single(registrationAssignemntResponses);                    
 
                     //5. Delete registration assignment
-                    registrationAssignemntResponse = testFixture.ManagedServicesClient.RegistrationAssignments
+                    testFixture.ManagedServicesClient.RegistrationAssignments
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
@@ -97,8 +90,10 @@ namespace ManagedServices.Tests.ScenarioTests
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
-                    Assert.NotNull(registrationAssignemntResponses);
-                    Assert.Empty(registrationAssignemntResponses);
+                    foreach (var assignment in registrationAssignemntResponses)
+                    {
+                        Assert.False(assignment.Name == ManagedServicesTestUtilities.registrationAssignmentId);
+                    }
                 }
             }
         }
