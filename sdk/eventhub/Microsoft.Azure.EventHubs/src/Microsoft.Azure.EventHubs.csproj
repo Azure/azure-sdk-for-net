@@ -2,10 +2,14 @@
   <PropertyGroup>
     <Description>This is the next generation Azure Event Hubs .NET Standard client library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <VersionPrefix>4.0.1</VersionPrefix>
+    <VersionPrefix>4.0.0</VersionPrefix>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.xml</DocumentationFile>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
+    <Version>4.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
