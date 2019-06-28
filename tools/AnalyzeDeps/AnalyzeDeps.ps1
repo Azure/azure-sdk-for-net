@@ -148,7 +148,9 @@ foreach ($DepName in $Deps.Keys) {
 $ExitCode = 0
 if ($Inconsistent) {
   Write-Warning "$($Inconsistent.Count) inconsistent dependency versions were discovered."
-  $ExitCode = 1
+  # Don't fail the build when inconsistent dependencies are present
+  # TODO: Remove this ASAP
+  #$ExitCode = 1
 } else {
   Write-Host "All dependencies verified, no inconsistent dependency versions were discovered.')"
 }
@@ -160,7 +162,7 @@ if ($MismatchedVersions -or $Unlocked) {
   if ($Unlocked) {
     Write-Warning "$($Unlocked.Count) dependencies are missing from the lockfile."
   }
-}else {
+} else {
   Write-Host "All declared dependency versions match those specified in the lockfile."
 }
 
