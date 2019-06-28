@@ -546,6 +546,308 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ConsumerCanReceiveFromLatestEvent()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    {
+                        // Sending some events beforehand so the partition has some information.
+                        // We are not expecting to receive these.
+
+                        for (int i = 0; i < 10; i++)
+                        {
+                            await producer.SendAsync(new EventData(new byte[1]));
+                        }
+
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        Assert.That(async () => await consumer.ReceiveAsync(1, TimeSpan.Zero), Throws.Nothing);
+
+                        // Send a single event.
+
+                        var stampEvent = new EventData(new byte[1]);
+                        stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
+
+                        await producer.SendAsync(stampEvent);
+
+                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < 1) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count, Is.EqualTo(1), "The number of received events should be 1.");
+                        Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+
+                        // Next receive on this partition shouldn't return any more messages.
+
+                        Assert.That(await consumer.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerCanReceiveFromEarliestEvent()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Earliest))
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    {
+                        // Sending some events beforehand so the partition has some information.
+
+                        for (int i = 0; i < 10; i++)
+                        {
+                            await producer.SendAsync(new EventData(new byte[1]));
+                        }
+
+                        // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        while ((receivedEvents.Count < 10) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(20, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        Assert.That(receivedEvents.Count, Is.EqualTo(10), "The number of received events should be 10.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("isInclusive parameter is not supported yet")]
+        public async Task ConsumerCanReceiveFromOffset(bool isInclusive)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    {
+                        // Sending some events beforehand so the partition has some information.
+
+                        for (var i = 0; i < 10; i++)
+                        {
+                            await producer.SendAsync(new EventData(new byte[1]));
+                        }
+
+                        // Store last enqueued offset.
+
+                        var offset = int.Parse((await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedOffset);
+
+                        // We must remember to include the 'isInclusive' flag when creating the consumer.
+
+                        await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromOffset(offset)))
+                        {
+                            // Send a single event which is expected to go to the end of stream.
+
+                            var stampEvent = new EventData(new byte[1]);
+                            stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
+
+                            await producer.SendAsync(stampEvent);
+
+                            // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                            // to account for availability delays.
+
+                            var expectedEventsCount = isInclusive ? 2 : 1;
+                            var receivedEvents = new List<EventData>();
+                            var index = 0;
+
+                            while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
+                            {
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                            }
+
+                            Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
+                            Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+
+                            // Next receive on this partition shouldn't return any more messages.
+
+                            Assert.That(await consumer.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ConsumerCanReceiveFromEnqueuedTime()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    {
+                        // Sending some events beforehand so the partition has some information.
+
+                        for (var i = 0; i < 10; i++)
+                        {
+                            await producer.SendAsync(new EventData(new byte[1]));
+                        }
+
+                        // Store last enqueued time.
+
+                        var enqueuedTime = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedTimeUtc;
+
+                        await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromEnqueuedTime(enqueuedTime)))
+                        {
+                            // Send a single event which is expected to go to the end of stream.
+                            // We are expecting to receive only this message.
+
+                            var stampEvent = new EventData(new byte[1]);
+                            stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
+
+                            await producer.SendAsync(stampEvent);
+
+                            // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                            // to account for availability delays.
+
+                            var receivedEvents = new List<EventData>();
+                            var index = 0;
+
+                            while ((receivedEvents.Count < 1) && (++index < ReceiveRetryLimit))
+                            {
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                            }
+
+                            Assert.That(receivedEvents.Count, Is.EqualTo(1), "The number of received events should be 1.");
+                            Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+
+                            // Next receive on this partition shouldn't return any more messages.
+
+                            Assert.That(await consumer.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ConsumerCanReceiveFromSequenceNumber(bool isInclusive)
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
+                    {
+                        // Sending some events beforehand so the partition has some information.
+
+                        for (var i = 0; i < 10; i++)
+                        {
+                            await producer.SendAsync(new EventData(new byte[1]));
+                        }
+
+                        // Store last enqueued sequence number.
+
+                        var sequenceNumber = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedSequenceNumber;
+
+                        await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromSequenceNumber(sequenceNumber, isInclusive)))
+                        {
+                            // Send a single event which is expected to go to the end of stream.
+
+                            var stampEvent = new EventData(new byte[1]);
+                            stampEvent.Properties["stamp"] = Guid.NewGuid().ToString();
+
+                            await producer.SendAsync(stampEvent);
+
+                            // Receive and validate the events; because there is some non-determinism in the messaging flow, the
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                            // to account for availability delays.
+
+                            var expectedEventsCount = isInclusive ? 2 : 1;
+                            var receivedEvents = new List<EventData>();
+                            var index = 0;
+
+                            while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
+                            {
+                                receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                            }
+
+                            Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
+                            Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+
+                            // Next receive on this partition shouldn't return any more messages.
+
+                            Assert.That(await consumer.ReceiveAsync(10, TimeSpan.FromSeconds(2)), Is.Empty);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task ConsumerCannotReceiveWhenClosed(bool sync)
