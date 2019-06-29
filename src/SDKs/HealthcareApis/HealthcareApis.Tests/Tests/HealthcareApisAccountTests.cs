@@ -5,6 +5,7 @@ using HealthcareApis.Tests.Helpers;
 using Microsoft.Azure.Management.HealthcareApis;
 using Microsoft.Azure.Management.HealthcareApis.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System.Linq;
 using System.Net;
 using Xunit;
 
@@ -104,7 +105,7 @@ namespace HealthcareApis.Tests
 
                 var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
 
-                //// Create healthcareApis account
+                // Create healthcareApis account
                 var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
 
                 var servicePatchDescription = HealthcareApisManagementTestUtilities.GetServicePatchDescription();
@@ -128,7 +129,7 @@ namespace HealthcareApis.Tests
         }
 
         [Fact]
-        public void HealthcareApisListAccountsTest()
+        public void HealthcareApisListAccountByResourceGroupTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -140,8 +141,19 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                var serviceAccountsLists = healthCareApisMgmtClient.Services.ListByResourceGroupWithHttpMessagesAsync(rgname);
-                Assert.NotNull(serviceAccountsLists);
+                var accounts = healthCareApisMgmtClient.Services.ListByResourceGroup(rgname);
+
+                Assert.Empty(accounts);
+
+                string accountName1 = HealthcareApisManagementTestUtilities.CreateHealthcareApisAccount(healthCareApisMgmtClient, rgname);
+                string accountName2 = HealthcareApisManagementTestUtilities.CreateHealthcareApisAccount(healthCareApisMgmtClient, rgname);
+
+                accounts = healthCareApisMgmtClient.Services.ListByResourceGroup(rgname);
+
+                Assert.Equal(2, accounts.Count());
+
+                HealthcareApisManagementTestUtilities.VerifyAccountProperties(accounts.First(), true);
+                HealthcareApisManagementTestUtilities.VerifyAccountProperties(accounts.Skip(1).First(), true);
             }
         }
 

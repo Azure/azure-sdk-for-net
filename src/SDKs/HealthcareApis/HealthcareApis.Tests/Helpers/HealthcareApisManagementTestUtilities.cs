@@ -98,6 +98,17 @@ namespace HealthcareApis.Tests.Helpers
             return serviceProperties;
         }
 
+        public static string CreateHealthcareApisAccount(HealthcareApisManagementClient healthcareApisManagementClient, string rgname, string kind = null)
+        {
+            // Generate account name
+            string accountName = TestUtilities.GenerateName("hca");
+
+            // Create healthcareApis account
+            var createdAccount = healthcareApisManagementClient.Services.CreateOrUpdate(rgname, accountName, GetServiceDescriptionWithProperties());
+
+            return accountName;
+        }
+
         public static void VerifyAccountProperties(ServicesDescription account, bool useDefaults, string location = "westus")
         {
             // verifies that the account is actually created

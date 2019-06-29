@@ -56,7 +56,7 @@
     <None Update="SessionRecords\HealthcareApisTests\HealthcareApisGetAccountTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisListAccountsTest.json">
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisListAccountByResourceGroupTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
