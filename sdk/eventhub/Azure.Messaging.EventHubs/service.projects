@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)**\Azure.Messaging.EventHubs.TrackOne.csproj" />
+  </ItemGroup>
+</Project>
