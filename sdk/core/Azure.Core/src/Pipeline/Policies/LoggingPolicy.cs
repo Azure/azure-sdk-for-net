@@ -13,7 +13,7 @@ namespace Azure.Core.Pipeline.Policies
 {
     public class LoggingPolicy : HttpPipelinePolicy
     {
-        private const long s_delayWarningThreshold = 3000; // 3000ms
+        private const long DelayWarningThreshold = 3000; // 3000ms
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
@@ -157,7 +157,7 @@ namespace Azure.Core.Pipeline.Policies
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > s_delayWarningThreshold)
+            if (elapsedMilliseconds > DelayWarningThreshold)
             {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }

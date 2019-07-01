@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("Name shouldn't be null or empty", nameof(name));
+                throw new ArgumentException($"{nameof(name)} shouldn't be null or empty", nameof(name));
             }
 
             Name = name;
@@ -67,14 +67,14 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1034 // Nested types should not be visible
 #pragma warning restore CA1724 // Type name conflicts with standard namespace
         {
-            const string s_applicationJson = "application/json";
-            const string s_applicationOctetStream = "application/octet-stream";
-            const string s_applicationFormUrlEncoded = "application/x-www-form-urlencoded";
+            const string ApplicationJson = "application/json";
+            const string ApplicationOctetStream = "application/octet-stream";
+            const string ApplicationFormUrlEncoded = "application/x-www-form-urlencoded";
 
-            public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
-            public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, s_applicationJson);
-            public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
-            public static readonly HttpHeader FormUrlEncodedContentType = new HttpHeader(Names.ContentType, s_applicationFormUrlEncoded);
+            public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, ApplicationJson);
+            public static readonly HttpHeader JsonAccept = new HttpHeader(Names.Accept, ApplicationJson);
+            public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, ApplicationOctetStream);
+            public static readonly HttpHeader FormUrlEncodedContentType = new HttpHeader(Names.ContentType, ApplicationFormUrlEncoded);
         }
     }
 }

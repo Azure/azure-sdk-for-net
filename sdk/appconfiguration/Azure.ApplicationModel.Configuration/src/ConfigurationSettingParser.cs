@@ -128,18 +128,18 @@ namespace Azure.ApplicationModel.Configuration
             return new SettingBatch(settings, nextBatchUri);
         }
 
-        private const string s_link = "Link";
-        private const string s_after = "after=";
+        private const string Link = "Link";
+        private const string After = "after=";
         static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            if (!response.Headers.TryGetValue(s_link, out var headerValue)) return false;
+            if (!response.Headers.TryGetValue(Link, out var headerValue)) return false;
 
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
-            var afterIndex = headerValue.IndexOf(s_after, StringComparison.Ordinal);
+            var afterIndex = headerValue.IndexOf(After, StringComparison.Ordinal);
             if (afterIndex < 0) return false;
 
-            int beginingToken = afterIndex + s_after.Length;
+            int beginingToken = afterIndex + After.Length;
             int endToken = headerValue.IndexOf(">", StringComparison.Ordinal);
             int tokenLenght = endToken - beginingToken;
             afterValue = headerValue.Substring(beginingToken, tokenLenght);
