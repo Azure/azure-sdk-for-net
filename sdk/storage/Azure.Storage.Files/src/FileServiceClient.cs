@@ -342,7 +342,7 @@ namespace Azure.Storage.Files
             this.GetPropertiesAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation gets the properties
@@ -451,7 +451,7 @@ namespace Azure.Storage.Files
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetPropertiesAsync"/> operation sets properties for

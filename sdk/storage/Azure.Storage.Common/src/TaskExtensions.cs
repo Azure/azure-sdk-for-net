@@ -18,13 +18,8 @@ namespace Azure.Storage
         /// </summary>
         /// <typeparam name="T">Task's return type.</typeparam>
         /// <param name="task">The task.</param>
-        /// <param name="syncOverAsync">
-        /// A flag indicating whether synchronously we're making a call we know
-        /// is async.  This is a temporary measure until we have a fully
-        /// synchronous transport layer.
-        /// </param>
         /// <returns>The result of executing the task.</returns>
-        public static T EnsureCompleted<T>(this Task<T> task, bool syncOverAsync = false)
+        public static T EnsureCompleted<T>(this Task<T> task)
         {
             VerifyTaskCompleted(task);
             return task.ConfigureAwait(false).GetAwaiter().GetResult();
@@ -34,12 +29,7 @@ namespace Azure.Storage
         /// Ensure the Task has finished executing.
         /// </summary>
         /// <param name="task">The task.</param>
-        /// <param name="syncOverAsync">
-        /// A flag indicating whether synchronously we're making a call we know
-        /// is async.  This is a temporary measure until we have a fully
-        /// synchronous transport layer.
-        /// </param>
-        public static void EnsureCompleted(this Task task, bool syncOverAsync = false)
+        public static void EnsureCompleted(this Task task)
         {
             VerifyTaskCompleted(task);
             task.ConfigureAwait(false).GetAwaiter().GetResult();

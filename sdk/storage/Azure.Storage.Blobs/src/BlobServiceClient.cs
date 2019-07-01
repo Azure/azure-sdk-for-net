@@ -369,7 +369,7 @@ namespace Azure.Storage.Blobs
             this.GetAccountInfoAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
@@ -467,7 +467,7 @@ namespace Azure.Storage.Blobs
             this.GetPropertiesAsync(
                 false, //async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation gets the properties
@@ -575,7 +575,7 @@ namespace Azure.Storage.Blobs
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetPropertiesAsync"/> operation sets properties for
@@ -695,7 +695,7 @@ namespace Azure.Storage.Blobs
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetStatisticsAsync"/> operation retrieves
@@ -811,7 +811,7 @@ namespace Azure.Storage.Blobs
                 expiry,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
