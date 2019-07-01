@@ -17,7 +17,7 @@ namespace Azure.Core.Extensions.Tests
 
             var factory = new ConfigurationClientFactory();
             var clientOptions = new TestClientOptions();
-            var client = (TestClient)factory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration);
+            var client = (TestClient)ConfigurationClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration);
 
             Assert.AreEqual("CS", client.ConnectionString);
             Assert.AreSame(clientOptions, client.Options);
@@ -30,7 +30,7 @@ namespace Azure.Core.Extensions.Tests
 
             var factory = new ConfigurationClientFactory();
             var clientOptions = new TestClientOptions();
-            var client = (TestClient)factory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration);
+            var client = (TestClient)ConfigurationClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration);
 
             Assert.AreEqual("http://localhost/", client.Uri.ToString());
             Assert.AreSame(clientOptions, client.Options);
@@ -41,9 +41,8 @@ namespace Azure.Core.Extensions.Tests
         {
             IConfiguration configuration = GetConfiguration();
 
-            var factory = new ConfigurationClientFactory();
             var clientOptions = new TestClientOptions();
-            var exception = Assert.Throws<InvalidOperationException>(() => factory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration));
+            var exception = Assert.Throws<InvalidOperationException>(() => ConfigurationClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration));
             Assert.AreEqual("Unable to find matching constructor. Define one of the follow sets of configuration parameters:" + Environment.NewLine +
                 "1. connectionString" + Environment.NewLine +
                 "2. uri" + Environment.NewLine,

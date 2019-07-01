@@ -3,7 +3,7 @@
 
 namespace Azure.Core.Pipeline
 {
-    public enum HttpPipelineMethod : byte
+    public enum HttpPipelineMethod
     {
         Get,
         Post,
