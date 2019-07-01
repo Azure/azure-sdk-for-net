@@ -19,7 +19,6 @@ namespace Azure.Storage.Files
     /// </summary>
     public class ShareClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The share's primary <see cref="Uri"/> endpoint.
         /// </summary>
@@ -295,7 +294,7 @@ namespace Azure.Storage.Files
                 quotaInBytes,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new share
@@ -424,7 +423,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Creates a read-only snapshot of a share.
@@ -539,7 +538,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -660,7 +659,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -777,7 +776,7 @@ namespace Azure.Storage.Files
                 quotaInBytes,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Sets the maximum size of the share.
@@ -889,7 +888,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined 
@@ -1001,7 +1000,7 @@ namespace Azure.Storage.Files
             this.GetAccessPolicyAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
@@ -1108,7 +1107,7 @@ namespace Azure.Storage.Files
                 permissions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
@@ -1222,7 +1221,7 @@ namespace Azure.Storage.Files
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Retrieves statistics related to the share.

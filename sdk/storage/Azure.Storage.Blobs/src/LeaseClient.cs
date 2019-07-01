@@ -160,7 +160,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="AcquireAsync"/> operation acquires a lease on
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="RenewAsync"/> operation renews the blob or
@@ -504,7 +504,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ReleaseAsync"/> operation releases the 
@@ -677,7 +677,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ChangeAsync"/> operation changes the lease 
@@ -863,7 +863,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="BreakAsync"/> operation breaks the blob or
