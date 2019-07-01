@@ -1,2 +1,1 @@
-Start-AutoRestCodeGenerationWithLocalConfig -ResourceProvider "healthcareapis/resource-manager" -AutoRestVersion "2.0.4283" -LocalConfigFilePath "C:/dev/yazanmsft/azure-rest-api-specs/specification/healthcareapis/resource-manager/readme.md" -SdkDirectory "C:/dev/yazanmsft/azure-sdk-for-net/src/SDKs/HealthcareApis/Management.HealthcareApis/Generated" -Namespace Microsoft.Azure.Management.HealthcareApis
-# Start-AutoRestCodeGeneration -ResourceProvider "healthcareapis/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "healthcareapis/resource-manager" -AutoRestVersion "latest"

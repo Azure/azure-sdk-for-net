@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>HealthcareApis.Tests</PackageId>
+    <Description>HealthcareApis.Tests Class Library</Description>
+    <AssemblyName>HealthcareApis.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;netcoreapp20;DebugInVS</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>obj\Debug\netcoreapp2.0\HealthcareApis.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="2.1.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.22.2" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.HealthcareApis\Microsoft.Azure.Management.HealthcareApis.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisAccountUpdateWithCreateTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisCheckNameAvailabilityTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisCreateAccountErrorTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisCreateTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisCreateWithParametersTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisDeleteAccountErrorTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisDeleteTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisGetAccountTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\HealthcareApisTests\HealthcareApisListAccountByResourceGroupTest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

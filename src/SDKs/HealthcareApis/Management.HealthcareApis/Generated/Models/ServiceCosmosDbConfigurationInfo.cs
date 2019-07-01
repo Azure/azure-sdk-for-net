@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.Management.HealthcareApis.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -46,5 +47,22 @@ namespace Microsoft.Azure.Management.HealthcareApis.Models
         [JsonProperty(PropertyName = "offerThroughput")]
         public int? OfferThroughput { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (OfferThroughput > 10000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "OfferThroughput", 10000);
+            }
+            if (OfferThroughput < 400)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "OfferThroughput", 400);
+            }
+        }
     }
 }
