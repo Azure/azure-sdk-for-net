@@ -355,7 +355,7 @@ namespace Azure.Storage.Queues
             this.GetPropertiesAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Gets the properties of the queue service.
@@ -437,7 +437,7 @@ namespace Azure.Storage.Queues
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Sets the properties of the queue service.
@@ -528,7 +528,7 @@ namespace Azure.Storage.Queues
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Retrieves statistics related to replication for the Blob service. It is

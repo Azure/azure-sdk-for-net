@@ -242,7 +242,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new 0-length
@@ -425,7 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AppendBlockAsync"/> operation commits a new block
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AppendBlockFromUriAsync"/> operation commits a new

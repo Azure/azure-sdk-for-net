@@ -249,7 +249,7 @@ namespace Azure.Storage.Queues
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Creates a queue.
@@ -338,7 +338,7 @@ namespace Azure.Storage.Queues
             this.DeleteAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Deletes a queue.
@@ -416,7 +416,7 @@ namespace Azure.Storage.Queues
             this.GetPropertiesAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Retrieves queue properties and user-defined metadata and properties on the specified queue.
@@ -500,7 +500,7 @@ namespace Azure.Storage.Queues
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Sets user-defined metadata on the specified queue. Metadata is associated with the queue as name-value pairs.
@@ -588,7 +588,7 @@ namespace Azure.Storage.Queues
             this.GetAccessPolicyAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Returns details about any stored access policies specified on the queue that may be used with
@@ -672,7 +672,7 @@ namespace Azure.Storage.Queues
                 permissions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// SetAccessPolicyAsync sets stored access policies for the queue that may be used with Shared Access Signatures.
@@ -1524,7 +1524,7 @@ namespace Azure.Storage.Queues
                 timeToLive,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
@@ -1653,7 +1653,7 @@ namespace Azure.Storage.Queues
                 visibilityTimeout,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
@@ -1761,7 +1761,7 @@ namespace Azure.Storage.Queues
                 maxMessages,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue but does not alter the visibility of the message.
@@ -1868,7 +1868,7 @@ namespace Azure.Storage.Queues
                 popReceipt,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Permanently removes the specified message from its queue.
@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Queues
                 visibilityTimeout,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Changes a message's visibility timeout and contents. The message content must be a UTF-8 encoded string that is up to 64KB in size.
