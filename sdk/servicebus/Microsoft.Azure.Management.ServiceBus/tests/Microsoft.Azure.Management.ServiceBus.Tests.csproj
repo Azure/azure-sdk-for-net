@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Management.ServiceBus.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.ServiceBus.csproj" />
   </ItemGroup>
 
   <ItemGroup>
