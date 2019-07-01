@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
             return new Page<StorageHandle>(
                 response.Value.Handles.ToArray(),
                 response.Value.NextMarker,
@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
             return new Page<StorageHandle>(
                 response.Value.Handles.ToArray(),
                 response.Value.NextMarker,

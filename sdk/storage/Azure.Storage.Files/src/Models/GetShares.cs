@@ -145,7 +145,7 @@ namespace Azure.Storage.Files.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
 
             return new Page<ShareItem>(
                 response.Value.ShareItems.ToArray(),

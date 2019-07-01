@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
             return new Page<ContainerItem>(
                 response.Value.ContainerItems.ToArray(),
                 response.Value.NextMarker,

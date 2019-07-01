@@ -132,7 +132,7 @@ namespace Azure.Storage.Queues.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
 
             return new Page<QueueItem>(
                 response.Value.QueueItems.ToArray(),

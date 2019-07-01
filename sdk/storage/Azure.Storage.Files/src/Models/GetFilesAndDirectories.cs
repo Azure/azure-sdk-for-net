@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
 
             var items = new List<StorageFileItem>();
             items.AddRange(response.Value.DirectoryItems.Select(d => new StorageFileItem(true, d.Name)));

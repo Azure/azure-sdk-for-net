@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
             return new Page<BlobItem>(
                 response.Value.BlobItems.ToArray(),
                 response.Value.NextMarker,
@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken);
             var response = isAsync ?
                 await task.ConfigureAwait(false) :
-                task.EnsureCompleted(syncOverAsync: true);
+                task.EnsureCompleted();
 
             var items = new List<BlobHierarchyItem>();
             items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));
