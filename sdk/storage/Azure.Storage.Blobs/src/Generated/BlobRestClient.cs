@@ -9252,12 +9252,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// The date-time the key is active in ISO 8601 UTC time
         /// </summary>
-        public string Start { get; set; }
+        public System.DateTimeOffset? Start { get; set; }
 
         /// <summary>
         /// The date-time the key expires in ISO 8601 UTC time
         /// </summary>
-        public string Expiry { get; set; }
+        public System.DateTimeOffset Expiry { get; set; }
 
         /// <summary>
         /// Serialize a KeyInfo instance as XML.
@@ -9270,12 +9270,15 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Start", ""),
-                value.Start));
+            if (value.Start != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Start", ""),
+                    value.Start.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Expiry", ""),
-                value.Expiry));
+                value.Expiry.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
             return _element;
         }
     }

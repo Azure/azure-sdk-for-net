@@ -52,9 +52,6 @@ namespace Azure.Storage.Sas
         // srt
         readonly string resourceTypes;
 
-        // Use auto property
-#pragma warning disable IDE0032
-
         // spr
         readonly SasProtocol protocol;
 
@@ -66,9 +63,6 @@ namespace Azure.Storage.Sas
 
         // sip
         readonly IPRange ipRange;
-
-        // Use auto property
-#pragma warning restore IDE0032 
 
         // si
         readonly string identifier;
@@ -156,7 +150,6 @@ namespace Azure.Storage.Sas
         public string Signature => this.signature ?? String.Empty;
 
         #region Blob Only Parameters
-#pragma warning disable IDE0032 // Use auto property
         // skoid
         internal readonly string keyObjectId;
 
@@ -174,7 +167,6 @@ namespace Azure.Storage.Sas
 
         // skv
         internal readonly string keyVersion;
-#pragma warning restore IDE0032 // Use auto property
         #endregion Blob Only Parameters
 
         /// <summary>

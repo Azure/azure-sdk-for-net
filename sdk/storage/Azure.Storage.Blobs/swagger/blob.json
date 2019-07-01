@@ -4969,20 +4969,17 @@
   "definitions": {
     "KeyInfo": {
       "type": "object",
-      "required": [
-        "Start",
-        "Expiry"
-      ],
+      "required": [ "Expiry" ],
       "description": "Key information",
       "x-ms-public": false,
       "properties": {
         "Start": {
           "description": "The date-time the key is active in ISO 8601 UTC time",
-          "type": "string"
+          "type": "date-time-8601"
         },
         "Expiry": {
           "description": "The date-time the key expires in ISO 8601 UTC time",
-          "type": "string"
+          "type": "date-time-8601"
         }
       }
     },

@@ -330,14 +330,13 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadAsync(
+            new BlockBlobClient(this.Uri, this.Pipeline).Upload(
                 content,
                 blobAccessConditions: blobAccessConditions,
                 blobHttpHeaders: blobHttpHeaders,
                 metadata: metadata,
                 progressHandler: progressHandler,
-                cancellationToken: cancellationToken)
-                .EnsureCompleted();
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block blob

@@ -15,20 +15,12 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
-#pragma warning disable IDE0060 // Remove unused parameter
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-#pragma warning restore IDE0060 // Remove unused parameter
-            : base(
-                  false, // TODO: #6716: Replace with `async` once we've properly fixed the issue below
-                  mode ?? GetModeFromEnvironment())
+            : base(async, mode ?? GetModeFromEnvironment())
         {
             this.Sanitizer = new StorageRecordedTestSanitizer();
             this.Matcher = new RecordMatcher(this.Sanitizer);
         }
-
-        public override TClient InstrumentClient<TClient>(TClient client)
-            // TODO: #6716: Remove once we've investigated the instrumentation issue with service hiearchies
-            => client;
 
         public DateTimeOffset GetUtcNow() => this.Recording.UtcNow;
 

@@ -20,6 +20,8 @@ namespace Azure.Storage.Queues.Tests
         public string GetNewQueueName() => $"test-queue-{this.Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{this.Recording.Random.NewGuid()}";
 
+        public QueueTestBase(bool async) : this(async, null) { }
+
         public QueueTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
@@ -75,12 +77,9 @@ namespace Azure.Storage.Queues.Tests
         public IDisposable GetNewQueue(out QueueClient queue, QueueServiceClient service = default, IDictionary<string, string> metadata = default)
         {
             var containerName = this.GetNewQueueName();
-            service = service ?? this.GetServiceClient_SharedKey();
-            var result = new DisposingQueue(
-                this.InstrumentClient(service.GetQueueClient(containerName)),
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
-            queue = this.InstrumentClient(result.QueueClient);
-            return result;
+            service ??= this.GetServiceClient_SharedKey();
+            queue = this.InstrumentClient(service.GetQueueClient(containerName));
+            return new DisposingQueue(queue, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()

@@ -23,25 +23,35 @@ namespace Azure.Storage.Blobs.Specialized
         private readonly BlobBaseClient _blob;
 
         /// <summary>
+        /// Gets the <see cref="BlobClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobBaseClient BlobClient => this._blob;
+
+        /// <summary>
         /// The <see cref="BlobContainerClient"/> to manage leases for.
         /// </summary>
         private readonly BlobContainerClient _container;
 
         /// <summary>
+        /// Gets the <see cref="BlobContainerClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobContainerClient ContainerClient => this._container;
+
+        /// <summary>
         /// Gets the URI of the object being leased.
         /// </summary>
-        public Uri Uri => this._blob?.Uri ?? this._container?.Uri;
+        public Uri Uri => this.BlobClient?.Uri ?? this.ContainerClient?.Uri;
 
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public string LeaseId { get; private set; }
+        public virtual string LeaseId { get; private set; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => this._blob?.Pipeline ?? this._container._pipeline;
+        private HttpPipeline Pipeline => this.BlobClient?.Pipeline ?? this.ContainerClient.Pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LeaseClient"/> class
@@ -99,7 +109,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         private void EnsureClient()
         {
-            if (this._blob == null && this._container == null)
+            if (this.BlobClient == null && this.ContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
                 throw new InvalidOperationException(
@@ -150,7 +160,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="AcquireAsync"/> operation acquires a lease on
@@ -251,7 +261,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(duration)}: {duration}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.AcquireLeaseAsync(
                             this.Pipeline,
@@ -332,7 +342,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="RenewAsync"/> operation renews the blob or
@@ -415,7 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.RenewLeaseAsync(
                             this.Pipeline,
@@ -494,7 +504,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ReleaseAsync"/> operation releases the 
@@ -578,7 +588,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         var response =
                             await BlobRestClient.Blob.ReleaseLeaseAsync(
@@ -667,7 +677,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ChangeAsync"/> operation changes the lease 
@@ -752,7 +762,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.ChangeLeaseAsync(
                             this.Pipeline,
@@ -853,7 +863,7 @@ namespace Azure.Storage.Blobs.Specialized
                 httpAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="BreakAsync"/> operation breaks the blob or
@@ -976,7 +986,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return (await BlobRestClient.Blob.BreakLeaseAsync(
                             this.Pipeline,

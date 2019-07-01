@@ -24,15 +24,26 @@ namespace Azure.Storage.Blobs.Specialized
 	public class BlobBaseClient
     {
         /// <summary>
+        /// The blob's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        private readonly Uri _uri;
+
+        /// <summary>
         /// Gets the blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected internal HttpPipeline Pipeline { get; private set; }
+        private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send
+        /// every request.
+        /// </summary>
+        protected internal virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
@@ -95,8 +106,8 @@ namespace Azure.Storage.Blobs.Specialized
                     ContainerName = containerName,
                     BlobName = blobName
                 };
-            this.Uri = builder.ToUri();
-            this.Pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
+            this._uri = builder.ToUri();
+            this._pipeline = (options ?? new BlobClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
@@ -181,8 +192,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
         {
-            this.Uri = blobUri;
-            this.Pipeline = (options ?? new BlobClientOptions()).Build(authentication);
+            this._uri = blobUri;
+            this._pipeline = (options ?? new BlobClientOptions()).Build(authentication);
         }
 
         /// <summary>
@@ -199,8 +210,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline)
         {
-            this.Uri = blobUri;
-            this.Pipeline = pipeline;
+            this._uri = blobUri;
+            this._pipeline = pipeline;
         }
 
         /// <summary>
@@ -383,7 +394,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="DownloadAsync"/> operation downloads a blob from
@@ -672,7 +683,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="StartCopyFromUriAsync"/> operation copies data at
@@ -869,7 +880,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="AbortCopyFromUriAsync"/> operation aborts a pending
@@ -1010,7 +1021,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
@@ -1148,7 +1159,7 @@ namespace Azure.Storage.Blobs.Specialized
             this.UndeleteAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="UndeleteAsync"/> operation restores the contents
@@ -1255,7 +1266,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -1390,7 +1401,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
@@ -1545,7 +1556,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
@@ -1693,7 +1704,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
@@ -1841,7 +1852,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetTierAsync"/> operation sets the tier on a blob.
@@ -2186,6 +2197,6 @@ namespace Azure.Storage.Blobs.Models
         public static BlobBaseClient GetBlobClient(
             this BlobContainerClient client,
             string blobName)
-            => new BlobBaseClient(client.Uri.AppendToPath(blobName), client._pipeline);
+            => new BlobBaseClient(client.Uri.AppendToPath(blobName), client.Pipeline);
     }
 }

@@ -27,8 +27,6 @@ namespace Azure.Storage
 
         public const string CloseAllHandles = "*";
 
-        public const string ISO8601Format = "yyyy-MM-ddTHH:mm:ssZ";
-
         internal static class Sas
         {
             internal static class Permissions

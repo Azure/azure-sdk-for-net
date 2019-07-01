@@ -27,6 +27,8 @@ namespace Azure.Storage.Test.Shared
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
 
+        public BlobTestBase(bool async) : this(async, null) { }
+
         public BlobTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
@@ -156,14 +158,13 @@ namespace Azure.Storage.Test.Shared
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default)
         {
-            containerName = containerName ?? this.GetNewContainerName();
-            service = service ?? this.GetServiceClient_SharedKey();
-            var result = new DisposingContainer(
-                this.InstrumentClient(service.GetBlobContainerClient(containerName)),
+            containerName ??= this.GetNewContainerName();
+            service ??= this.GetServiceClient_SharedKey();
+            container = this.InstrumentClient(service.GetBlobContainerClient(containerName));
+            return new DisposingContainer(
+                container,
                 metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
                 publicAccessType ?? PublicAccessType.Container);
-            container = this.InstrumentClient(result.ContainerClient);
-            return result;
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
@@ -275,7 +276,7 @@ namespace Azure.Storage.Test.Shared
             Lease lease = null;
             if (leaseId == this.ReceivedLeaseId || leaseId == garbageLeaseId)
             {
-                lease = await blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()).AcquireAsync(-1);
+                lease = await this.InstrumentClient(blob.GetLeaseClient(this.Recording.Random.NewGuid().ToString())).AcquireAsync(-1);
             }
             return leaseId == this.ReceivedLeaseId ? lease.LeaseId : leaseId;
         }

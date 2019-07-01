@@ -17,23 +17,27 @@ namespace Azure.Storage.Files
     /// </summary>
     public class DirectoryClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
-        /// Gets the directory's primary <see cref="Uri"/> endpoint.
+        /// The directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri => this._uri;
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// every request.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectoryClient"/>
@@ -186,7 +190,7 @@ namespace Azure.Storage.Files
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="FileClient"/> instance.</returns>
         public virtual FileClient GetFileClient(string fileName)
-            => new FileClient(this.Uri.AppendToPath(fileName), this._pipeline);
+            => new FileClient(this.Uri.AppendToPath(fileName), this.Pipeline);
 
         /// <summary>
         /// Creates a new <see cref="DirectoryClient"/> object by appending
@@ -197,7 +201,7 @@ namespace Azure.Storage.Files
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new DirectoryClient(this.Uri.AppendToPath(subdirectoryName), this._pipeline);
+            => new DirectoryClient(this.Uri.AppendToPath(subdirectoryName), this.Pipeline);
 
         /// <summary>
         /// The <see cref="Create"/> operation creates a new directory
@@ -227,7 +231,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new directory
@@ -288,15 +292,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Directory.CreateAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -305,12 +309,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -335,7 +339,7 @@ namespace Azure.Storage.Files
             this.DeleteAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation removes the specified empty directory.
@@ -381,15 +385,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Directory.DeleteAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -397,12 +401,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -439,7 +443,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -508,9 +512,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -518,7 +522,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
@@ -527,12 +531,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -564,7 +568,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets one or more
@@ -623,15 +627,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Directory.SetMetadataAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -640,12 +644,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -695,7 +699,7 @@ namespace Azure.Storage.Files
                 options,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ListFilesAndDirectoriesSegmentAsync"/> operation returns a
@@ -788,9 +792,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -799,7 +803,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ListFilesAndDirectoriesSegmentAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
@@ -811,12 +815,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -864,7 +868,7 @@ namespace Azure.Storage.Files
                 recursive,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on a directory or a file.
@@ -955,9 +959,9 @@ namespace Azure.Storage.Files
         {
             // TODO Support share snapshot
 
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -967,7 +971,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ListHandlesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         maxresults: maxResults,
@@ -978,12 +982,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }
@@ -1040,7 +1044,7 @@ namespace Azure.Storage.Files
                 recursive,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory 
@@ -1149,9 +1153,9 @@ namespace Azure.Storage.Files
         {
             // TODO Support share snapshot
 
-            using (this._pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(DirectoryClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1161,7 +1165,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Directory.ForceCloseHandlesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         handleId: handleId,
@@ -1172,12 +1176,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(DirectoryClient));
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
                 }
             }
         }

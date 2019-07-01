@@ -19,23 +19,27 @@ namespace Azure.Storage.Files
     /// </summary>
     public class ShareClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
-        /// Gets the share's primary <see cref="Uri"/> endpoint.
+        /// The share's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
-
+        
         /// <summary>
         /// Gets the share's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri => this._uri;
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// every request.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
@@ -188,7 +192,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), this._pipeline);
+            return new ShareClient(p.ToUri(), this.Pipeline);
         }
 
         /// <summary>
@@ -200,7 +204,7 @@ namespace Azure.Storage.Files
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DirectoryClient"/> instance.</returns>
         public virtual DirectoryClient GetDirectoryClient(string directoryName)
-            => new DirectoryClient(this.Uri.AppendToPath(directoryName), this._pipeline);
+            => new DirectoryClient(this.Uri.AppendToPath(directoryName), this.Pipeline);
 
         /// <summary>
         /// Create a <see cref="DirectoryClient"/> object for the root of the
@@ -245,7 +249,7 @@ namespace Azure.Storage.Files
                 quotaInBytes,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new share
@@ -317,9 +321,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -327,7 +331,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.CreateAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         quota: quotaInBytes,
@@ -337,12 +341,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -374,7 +378,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Creates a read-only snapshot of a share.
@@ -433,15 +437,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Share.CreateSnapshotAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -450,12 +454,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -489,7 +493,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -552,9 +556,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -562,7 +566,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.DeleteAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
@@ -571,12 +575,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -610,7 +614,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -673,9 +677,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -683,7 +687,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
@@ -692,12 +696,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -727,7 +731,7 @@ namespace Azure.Storage.Files
                 quotaInBytes,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Sets the maximum size of the share.
@@ -782,9 +786,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -792,7 +796,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.Share.SetQuotaAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         quota: quotaInBytes,
                         async: async,
@@ -801,12 +805,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -839,7 +843,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined 
@@ -900,15 +904,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Share.SetMetadataAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -917,12 +921,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -951,7 +955,7 @@ namespace Azure.Storage.Files
             this.GetAccessPolicyAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
@@ -1002,15 +1006,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetAccessPolicyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1018,12 +1022,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1058,7 +1062,7 @@ namespace Azure.Storage.Files
                 permissions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
@@ -1123,15 +1127,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Share.SetAccessPolicyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         permissions: permissions,
                         async: async,
@@ -1140,12 +1144,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }
@@ -1172,7 +1176,7 @@ namespace Azure.Storage.Files
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Retrieves statistics related to the share.
@@ -1222,15 +1226,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(ShareClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(ShareClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.Share.GetStatisticsAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1238,12 +1242,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(ShareClient));
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
                 }
             }
         }

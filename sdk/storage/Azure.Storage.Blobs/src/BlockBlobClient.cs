@@ -337,7 +337,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block  blob,
@@ -570,7 +570,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="StageBlockAsync"/> operation creates a new block as
@@ -819,7 +819,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 true, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="StageBlockFromUriAsync"/> operation creates a new
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Blobs.Specialized
                 blobAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="CommitBlockListAsync"/> operation writes a blob by
@@ -1280,7 +1280,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetBlockListAsync"/> operation operation retrieves
@@ -1435,6 +1435,6 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlockBlobClient GetBlockBlobClient(
             this BlobContainerClient client,
             string blobName)
-            => new BlockBlobClient(client.Uri.AppendToPath(blobName), client._pipeline);
+            => new BlockBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
     }
 }
