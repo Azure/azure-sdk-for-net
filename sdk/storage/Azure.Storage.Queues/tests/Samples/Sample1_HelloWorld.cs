@@ -35,7 +35,10 @@ namespace Azure.Storage.Samples
                 await queueClient.CreateAsync();
 
                 // List Queues
-                Response<QueuesSegment> listResponse = await queueServiceClient.ListQueuesSegmentAsync();
+                await foreach (QueueItem queue in queueServiceClient.GetQueuesAsync())
+                {
+                    Console.WriteLine(queue.Name);
+                }
             }
             finally
             {

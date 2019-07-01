@@ -36,7 +36,10 @@ namespace Azure.Storage.Samples
                 await shareClient.CreateAsync();
 
                 // List Shares
-                Response<SharesSegment> listResponse = await fileServiceClient.ListSharesSegmentAsync();
+                await foreach (var share in fileServiceClient.GetSharesAsync())
+                {
+                    Console.WriteLine(share.Value.Name);
+                }
             }
             finally
             { 
@@ -72,7 +75,11 @@ namespace Azure.Storage.Samples
                 await subDirectoryClient.CreateAsync();
 
                 // List Files and Directories
-                Response<FilesAndDirectoriesSegment> listResponse = await directoryClient.ListFilesAndDirectoriesSegmentAsync();
+                await foreach (StorageFileItem item in directoryClient.GetFilesAndDirectoriesAsync())
+                {
+                    var type = item.IsDirectory ? "dir" : "file";
+                    Console.WriteLine($"{type}: {item.Name}");
+                }
 
                 // Delete sub directory in the Service
                 await subDirectoryClient.DeleteAsync();

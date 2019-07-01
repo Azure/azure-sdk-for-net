@@ -2727,7 +2727,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary>
     /// The object returned when calling List Queues on a Queue Service.
     /// </summary>
-    public partial class QueuesSegment
+    internal partial class QueuesSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -2827,33 +2827,6 @@ namespace Azure.Storage.Queues.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.QueuesSegment value);
-    }
-
-    /// <summary>
-    /// QueuesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class QueuesModelFactory
-    {
-        /// <summary>
-        /// Creates a new QueuesSegment instance for mocking.
-        /// </summary>
-        public static QueuesSegment QueuesSegment(
-            string serviceEndpoint,
-            string prefix = default,
-            string marker = default,
-            int? maxResults = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueItem> queueItems = default,
-            string nextMarker = default)
-        {
-            var _model = new QueuesSegment();
-            _model.ServiceEndpoint = serviceEndpoint;
-            _model.Prefix = prefix;
-            _model.Marker = marker;
-            _model.MaxResults = maxResults;
-            _model.QueueItems = queueItems;
-            _model.NextMarker = nextMarker;
-            return _model;
-        }
     }
 }
 #endregion class QueuesSegment

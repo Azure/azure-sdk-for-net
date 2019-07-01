@@ -65,10 +65,9 @@ namespace Azure.Storage.Blobs.Test
                     await blob.UploadAsync(stream);
                 }
 
-                var blobs = await container.ListBlobsFlatSegmentAsync();
-                Assert.IsNull(blobs.Value.Marker);
-                Assert.AreEqual(1, blobs.Value.BlobItems.Count());
-                Assert.AreEqual(name, blobs.Value.BlobItems.First().Name);
+                var blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(name, blobs.First().Value.Name);
 
                 var download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();

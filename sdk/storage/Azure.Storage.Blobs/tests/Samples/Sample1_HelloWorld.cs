@@ -36,8 +36,17 @@ namespace Azure.Storage.Samples
                 // Create new Container in the Service
                 await blobContainerClient.CreateAsync();
 
-                // List Containers
-                Response<ContainersSegment> listResponse = await blobServiceClient.ListContainersSegmentAsync();
+                // List All Containers
+                await foreach (var container in blobServiceClient.GetContainersAsync())
+                {
+                    Assert.IsNotNull(container.Value.Name);
+                }
+
+                // List Containers By Page
+                await foreach (var page in blobServiceClient.GetContainersAsync().ByPage())
+                {
+                    Assert.NotZero(page.Values.Length);
+                }
             }
             finally
             {

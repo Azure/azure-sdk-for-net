@@ -5312,6 +5312,7 @@
       "description": "An enumeration of blobs",
       "x-ms-client-name": "BlobsFlatSegment",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint",
         "ContainerName",
@@ -5347,7 +5348,7 @@
           "type": "array",
           "xml": {
             "name": "Blobs",
-            "wrapped":  true
+            "wrapped": true
           },
           "items": {
             "$ref": "#/definitions/BlobItem"
@@ -5365,6 +5366,7 @@
       "description": "An enumeration of blobs",
       "x-ms-client-name": "BlobsHierarchySegment",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint",
         "ContainerName",
@@ -5423,6 +5425,7 @@
     },
     "BlobPrefix": {
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "Name"
       ],
@@ -5574,6 +5577,7 @@
       },
       "description": "An enumeration of containers",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint",
         "NextMarker",

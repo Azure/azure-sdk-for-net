@@ -963,10 +963,9 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                var listBlobsFlatResult = await container.ListBlobsFlatSegmentAsync();
-                Assert.IsNull(listBlobsFlatResult.Value.Marker);
-                Assert.AreEqual(1, listBlobsFlatResult.Value.BlobItems.Count());
-                Assert.AreEqual(blockBlobName, listBlobsFlatResult.Value.BlobItems.First().Name);
+                var blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blockBlobName, blobs.First().Value.Name);
 
                 var downloadResponse = await blob.DownloadAsync();
                 var actual = new MemoryStream();
@@ -1175,10 +1174,9 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Assert
-                var listBlobsFlatResult = await container.ListBlobsFlatSegmentAsync();
-                Assert.IsNull(listBlobsFlatResult.Value.Marker);
-                Assert.AreEqual(1, listBlobsFlatResult.Value.BlobItems.Count());
-                Assert.AreEqual(blockBlobName, listBlobsFlatResult.Value.BlobItems.First().Name);
+                var blobs = await container.GetBlobsAsync().ToListAsync();
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blockBlobName, blobs.First().Value.Name);
 
                 var getPropertiesResponse = await blob.GetPropertiesAsync();
                 this.AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
