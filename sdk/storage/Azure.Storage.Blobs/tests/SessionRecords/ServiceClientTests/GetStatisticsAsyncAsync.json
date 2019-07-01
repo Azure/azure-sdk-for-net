@@ -1,0 +1,36 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting-secondary.blob.core.windows.net/?restype=service\u0026comp=stats",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "5d4fac5d08d9216b59f06b7163b7831d",
+        "x-ms-date": "Mon, 01 Jul 2019 21:58:03 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Mon, 01 Jul 2019 21:58:02 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-request-id": "5c7f73fa-e01e-003b-1858-30705e000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c/Status\u003e\u003cLastSyncTime\u003eMon, 01 Jul 2019 21:55:55 GMT\u003c/LastSyncTime\u003e\u003c/GeoReplication\u003e\u003c/StorageServiceStats\u003e"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "708868856"
+  }
+}
