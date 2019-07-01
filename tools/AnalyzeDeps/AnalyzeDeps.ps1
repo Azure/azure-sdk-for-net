@@ -174,7 +174,7 @@ if ($MismatchedVersions -or $Unlocked) {
 
 if ($OutPath) {
   Write-Host "Generating HTML report..."
-  $__template__ = Get-Content 'deps.html.tpl' -Raw
+  $__template__ = Get-Content "$PSScriptRoot/deps.html.tpl" -Raw
   Invoke-Expression "@`"`r`n$__template__`r`n`"@" | Out-File -FilePath $OutPath
 }
 
