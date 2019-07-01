@@ -242,7 +242,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new 0-length
@@ -425,7 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AppendBlockAsync"/> operation commits a new block
@@ -546,15 +546,16 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var appendAttempt = 0;
-                    return await ReliableOperation.DoAsync(
+                    return await ReliableOperation.DoSyncOrAsync(
+                        async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
                         predicate: e => true,
                         maximumRetries: Constants.MaxReliabilityRetries,
                         operation:
-                            async () =>
+                            () =>
                             {
                                 this.Pipeline.LogTrace($"Append attempt {++appendAttempt}");
-                                return await BlobRestClient.AppendBlob.AppendBlockAsync(
+                                return BlobRestClient.AppendBlob.AppendBlockAsync(
                                     this.Pipeline,
                                     this.Uri,
                                     body: content,
@@ -568,8 +569,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,                                    
                                     async: async,
-                                    cancellationToken: cancellationToken)
-                                    .ConfigureAwait(false);
+                                    cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
                         .ConfigureAwait(false);
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AppendBlockFromUriAsync"/> operation commits a new

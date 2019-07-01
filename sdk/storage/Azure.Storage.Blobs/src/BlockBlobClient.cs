@@ -337,7 +337,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block  blob,
@@ -570,7 +570,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="StageBlockAsync"/> operation creates a new block as
@@ -709,15 +709,16 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var uploadAttempt = 0;
-                    return await ReliableOperation.DoAsync(
+                    return await ReliableOperation.DoSyncOrAsync(
+                        async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
                         predicate: e => true,
                         maximumRetries: Constants.MaxReliabilityRetries,
                         operation:
-                            async () =>
+                            () =>
                             {
                                 this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return await BlobRestClient.BlockBlob.StageBlockAsync(
+                                return BlobRestClient.BlockBlob.StageBlockAsync(
                                     this.Pipeline,
                                     this.Uri,
                                     blockId: base64BlockId,
@@ -726,8 +727,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     transactionalContentHash: transactionalContentHash,
                                     leaseId: leaseAccessConditions?.LeaseId,
                                     async: async,
-                                    cancellationToken: cancellationToken)
-                                    .ConfigureAwait(false);
+                                    cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
                         .ConfigureAwait(false);
@@ -817,9 +817,9 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceContentHash,
                 sourceAccessConditions,
                 leaseAccessConditions,
-                true, // async
+                false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="StageBlockFromUriAsync"/> operation creates a new
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Blobs.Specialized
                 blobAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CommitBlockListAsync"/> operation writes a blob by
@@ -1280,7 +1280,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetBlockListAsync"/> operation operation retrieves

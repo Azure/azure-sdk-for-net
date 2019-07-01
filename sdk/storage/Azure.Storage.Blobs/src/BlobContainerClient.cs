@@ -245,7 +245,7 @@ namespace Azure.Storage.Blobs
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new container
@@ -396,7 +396,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
@@ -527,7 +527,7 @@ namespace Azure.Storage.Blobs
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -679,7 +679,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets one or more
@@ -820,7 +820,7 @@ namespace Azure.Storage.Blobs
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
@@ -965,7 +965,7 @@ namespace Azure.Storage.Blobs
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
@@ -1155,7 +1155,7 @@ namespace Azure.Storage.Blobs
                 options,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ListBlobsFlatSegmentAsync"/> operation returns a
@@ -1350,7 +1350,7 @@ namespace Azure.Storage.Blobs
                 options,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ListBlobsHierarchySegmentAsync"/> operation returns
