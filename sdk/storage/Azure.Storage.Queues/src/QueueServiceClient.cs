@@ -18,7 +18,6 @@ namespace Azure.Storage.Queues
     /// </summary>
     public class QueueServiceClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The Uri endpoint used by the object.
         /// </summary>
@@ -349,7 +348,7 @@ namespace Azure.Storage.Queues
             this.GetPropertiesAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Gets the properties of the queue service.
@@ -431,7 +430,7 @@ namespace Azure.Storage.Queues
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Sets the properties of the queue service.
@@ -522,7 +521,7 @@ namespace Azure.Storage.Queues
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Retrieves statistics related to replication for the Blob service. It is
