@@ -39,7 +39,9 @@ namespace Azure.Core
         public ArrayBufferWriter(int initialCapacity)
         {
             if (initialCapacity <= 0)
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(nameof(initialCapacity));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
             _buffer = new T[initialCapacity];
             _index = 0;
@@ -98,7 +100,9 @@ namespace Azure.Core
         public void Advance(int count)
         {
             if (count < 0)
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(nameof(count));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
             if (_index > _buffer.Length - count)
                 ThrowInvalidOperationException_AdvancedTooFar(_buffer.Length);
@@ -155,7 +159,9 @@ namespace Azure.Core
         private void CheckAndResizeBuffer(int sizeHint)
         {
             if (sizeHint < 0)
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(nameof(sizeHint));
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
 
             if (sizeHint == 0)
             {

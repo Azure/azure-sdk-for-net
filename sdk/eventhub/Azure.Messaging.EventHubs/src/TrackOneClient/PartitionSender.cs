@@ -96,7 +96,7 @@ namespace TrackOne
         /// <code>
         /// EventHubClient client = EventHubClient.Create("__connectionString__");
         /// PartitionSender senderToPartitionOne = client.CreatePartitionSender("1");
-        ///         
+        ///
         /// while (true)
         /// {
         ///     var events = new List&lt;EventData&gt;();
@@ -110,10 +110,10 @@ namespace TrackOne
         ///         sendEvent.Properties = applicationProperties;
         ///         events.Add(sendEvent);
         ///     }
-        ///         
+        ///
         ///     await senderToPartitionOne.SendAsync(events);
         ///     Console.WriteLine("Sent Batch... Size: {0}", events.Count);
-        ///     
+        ///
         /// }
         /// </code>
         /// </example>
@@ -130,27 +130,7 @@ namespace TrackOne
                 throw Fx.Exception.InvalidOperation(Resources.PartitionSenderInvalidWithPartitionKeyOnBatch);
             }
 
-            int count = EventDataSender.ValidateEvents(eventDatas);
-            EventHubsEventSource.Log.EventSendStart(this.ClientId, count, null);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, count);
-
-            Task sendTask = null;
-            try
-            {
-                sendTask = this.InnerSender.SendAsync(eventDatas, null);
-                await sendTask.ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, exception);
-                throw;
-            }
-            finally
-            {
-                EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, this.PartitionId, eventDatas, sendTask);
-            }
+            await  this.InnerSender.SendAsync(eventDatas, null).ConfigureAwait(false);
         }
 
         /// <summary>

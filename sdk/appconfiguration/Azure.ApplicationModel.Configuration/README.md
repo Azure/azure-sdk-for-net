@@ -201,7 +201,7 @@ This will enable the project-to-project references:
 set UseProjectReferenceToAzureBase=true
 ```
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FAzure.ApplicationModel.Configuration%2Fdata-plane%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.ApplicationModel.Configuration%2FREADME.png)
 
 <!-- LINKS -->
 [azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/

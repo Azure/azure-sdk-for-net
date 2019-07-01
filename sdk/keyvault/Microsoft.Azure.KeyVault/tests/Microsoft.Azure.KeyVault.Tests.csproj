@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.0, 4.0.0)" />
   </ItemGroup>
 
   <ItemGroup>

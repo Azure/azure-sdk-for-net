@@ -9,15 +9,18 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
+        /// <summary>
+        /// Specifies whether the key is enabled and useable for cryptographic operations.
+        /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
         /// </summary>
         public System.DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the key must not be used.
         /// </summary>
         public System.DateTimeOffset? Expires { get; set; }
 
@@ -42,64 +45,41 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         public string RecoveryLevel { get; private set; }
 
+        private const string EnabledPropertyName = "enabled";
+        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private const string NotBeforePropertyName = "nbf";
+        private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private const string ExpiresPropertyName = "exp";
+        private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+        private const string RecoveryLevelPropertyName = "recoveryLevel";
+
         internal void ReadProperties(JsonElement json)
         {
-            if (json.TryGetProperty("enabled", out JsonElement enabled))
+            foreach (JsonProperty prop in json.EnumerateObject())
             {
-                Enabled = enabled.GetBoolean();
-            }
-
-            if (json.TryGetProperty("nbf", out JsonElement nbf))
-            {
-                if (nbf.Type == JsonValueType.Null)
+                switch (prop.Name)
                 {
-                    NotBefore = null;
+                    case EnabledPropertyName:
+                        Enabled = prop.Value.GetBoolean();
+                        break;
+                    case NotBeforePropertyName:
+                        NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        break;
+                    case ExpiresPropertyName:
+                        Expires = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        break;
+                    case CreatedPropertyName:
+                        Created = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        break;
+                    case UpdatedPropertyName:
+                        Updated = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        break;
+                    case RecoveryLevelPropertyName:
+                        RecoveryLevel = prop.Value.GetString();
+                        break;
                 }
-                else
-                {
-                    NotBefore = DateTimeOffset.Parse(nbf.GetString());
-                }
-            }
-
-            if (json.TryGetProperty("exp", out JsonElement exp))
-            {
-                if (exp.Type == JsonValueType.Null)
-                {
-                    Expires = null;
-                }
-                else
-                {
-                    Expires = DateTimeOffset.Parse(exp.GetString());
-                }
-            }
-
-            if (json.TryGetProperty("created", out JsonElement created))
-            {
-                if (created.Type == JsonValueType.Null)
-                {
-                    Created = null;
-                }
-                else
-                {
-                    Created = DateTimeOffset.Parse(created.GetString());
-                }
-            }
-
-            if (json.TryGetProperty("updated", out JsonElement updated))
-            {
-                if (updated.Type == JsonValueType.Null)
-                {
-                    Updated = null;
-                }
-                else
-                {
-                    Updated = DateTimeOffset.Parse(updated.GetString());
-                }
-            }
-
-            if (json.TryGetProperty("recoveryLevel", out JsonElement recoveryLevel))
-            {
-                RecoveryLevel = recoveryLevel.GetString();
             }
         }
 
@@ -107,17 +87,17 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (Enabled.HasValue)
             {
-                json.WriteBoolean("enabled", Enabled.Value);
+                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
             }
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeMilliseconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber("exp", Expires.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeMilliseconds());
             }
 
             // Created is read-only don't serialize

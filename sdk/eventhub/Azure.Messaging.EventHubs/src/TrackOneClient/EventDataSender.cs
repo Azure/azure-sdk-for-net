@@ -5,6 +5,7 @@ namespace TrackOne
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -24,10 +25,30 @@ namespace TrackOne
 
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
-            var processedEvents = await this.ProcessEvents(eventDatas).ConfigureAwait(false);
+            int count = ValidateEvents(eventDatas);
 
-            await this.OnSendAsync(processedEvents, partitionKey)
-                .ConfigureAwait(false);
+            EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, count);
+
+            Task sendTask = null;
+            try
+            {
+                var processedEvents = await this.ProcessEvents(eventDatas).ConfigureAwait(false);
+
+                sendTask = this.OnSendAsync(processedEvents, partitionKey);
+                await sendTask.ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, exception);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.EventSendStop(this.ClientId);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, sendTask);
+            }
         }
 
         protected abstract Task OnSendAsync(IEnumerable<EventData> eventDatas, string partitionKey);

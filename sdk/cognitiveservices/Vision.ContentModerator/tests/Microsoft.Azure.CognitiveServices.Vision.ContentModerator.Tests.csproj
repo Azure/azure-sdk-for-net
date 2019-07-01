@@ -18,7 +18,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Net.Http" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.CognitiveServices.Vision.ContentModerator.csproj" />

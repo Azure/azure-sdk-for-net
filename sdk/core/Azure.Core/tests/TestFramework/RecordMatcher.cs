@@ -20,6 +20,7 @@ namespace Azure.Core.Testing
         public HashSet<string> ExcludeHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
+            "x-ms-date",
             "x-ms-client-request-id",
             "User-Agent"
         };

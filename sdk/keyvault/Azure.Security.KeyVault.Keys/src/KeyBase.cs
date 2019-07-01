@@ -5,38 +5,106 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
 {
-    public class KeyBase
+    /// <summary>
+    /// KeyBase is the resource containing all the properties of the key except <see cref="JsonWebKey"/> properties.
+    /// </summary>
+    public class KeyBase : Model
     {
-        private KeyAttributes _attributes;
-        
-        public string Name { get; private set; }
-        public Uri VaultId { get; private set; }
-        public Uri VaultUri { get; private set; }
-        public string Version { get; private set; }
-        public bool Managed { get; private set; }
-        public IDictionary<string, string> Tags { get; set; }
+        internal KeyBase() { }
 
-        public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
-
-        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
-
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
-
-        public DateTimeOffset? Created => _attributes.Created;
-
-        public DateTimeOffset? Updated => _attributes.Updated;
-
-        public string RecoveryLevel => _attributes.RecoveryLevel;
-
+        /// <summary>
+        /// Initializes a new instance of the KeyBase class.
+        /// </summary>
+        /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
             Name = name;
         }
 
-        private void ParseId(string id)
+        private KeyAttributes _attributes;
+
+        /// <summary>
+        /// Name of the key.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Key identifier.
+        /// </summary>
+        public Uri VaultId { get; private set; }
+
+        /// <summary>
+        /// Vault base URL.
+        /// </summary>
+        public Uri VaultUri { get; private set; }
+
+        /// <summary>
+        /// Version of the key.
+        /// </summary>
+        public string Version { get; private set; }
+
+        /// <summary>
+        /// Set to true if the key's lifetime is managed by key vault. If this
+        /// is a key backing a KV certificate, then managed will be true.
+        /// </summary>
+        public bool Managed { get; private set; }
+
+        /// <summary>
+        /// A dictionary of tags with specific metadata about the key.
+        /// </summary>
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Specifies whether the key is enabled and useable for cryptographic operations.
+        /// </summary>
+        public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
+
+        /// <summary>
+        /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
+        /// </summary>
+        public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
+
+        /// <summary>
+        /// Identifies the expiration time (in UTC) on or after which the key must not be used.
+        /// </summary>
+        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+
+        /// <summary>
+        /// Creation time in UTC.
+        /// </summary>
+        public DateTimeOffset? Created => _attributes.Created;
+
+        /// <summary>
+        /// Last updated time in UTC.
+        /// </summary>
+        public DateTimeOffset? Updated => _attributes.Updated;
+
+        /// <summary>
+        /// Reflects the deletion recovery level currently in effect for
+        /// keys in the current vault. If it contains 'Purgeable', the
+        /// key can be permanently deleted by a privileged user; otherwise,
+        /// only the system can purge the key, at the end of the retention
+        /// interval. Possible values include: 'Purgeable',
+        /// 'Recoverable+Purgeable', 'Recoverable',
+        /// 'Recoverable+ProtectedSubscription'
+        /// </summary>
+        public string RecoveryLevel => _attributes.RecoveryLevel;
+
+        private const string KeyIdPropertyName = "kid";
+        private const string ManagedPropertyName = "managed";
+        private const string AttributesPropertyName = "attributes";
+        private const string TagsPropertyName = "tags";
+
+        /// <summary>
+        /// Parses the key identifier into the vaultUri, name, and version of the key.
+        /// </summary>
+        /// <param name="id">The key vault object identifier.</param>
+        protected void ParseId(string id)
         {
             var idToParse = new Uri(id, UriKind.Absolute); ;
 
@@ -50,6 +118,34 @@ namespace Azure.Security.KeyVault.Keys
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
+        }
+
+        internal override void WriteProperties(Utf8JsonWriter json) { }
+        
+        internal override void ReadProperties(JsonElement json)
+        {
+            foreach(JsonProperty prop in json.EnumerateObject())
+            {
+                switch (prop.Name)
+                {
+                    case KeyIdPropertyName:
+                        ParseId(prop.Value.GetString());
+                        break;
+                    case ManagedPropertyName:
+                        Managed = prop.Value.GetBoolean();
+                        break;
+                    case AttributesPropertyName:
+                        _attributes.ReadProperties(prop.Value);
+                        break;
+                    case TagsPropertyName:
+                        Tags = new Dictionary<string, string>();
+                        foreach (var tagProp in prop.Value.EnumerateObject())
+                        {
+                            Tags[tagProp.Name] = tagProp.Value.GetString();
+                        }
+                        break;
+                }
+            }
         }
     }
 }

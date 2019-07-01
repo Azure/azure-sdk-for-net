@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Metadata
 {
@@ -17,25 +16,25 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   that contains it.
         /// </summary>
         ///
-        public string EventHubPath { get; private set; }
+        public string EventHubPath { get; }
 
         /// <summary>
         ///   The identifier of the partition, unique to the Event Hub which contains it.
         /// </summary>
         ///
-        public string Id { get; private set; }
+        public string Id { get; }
 
         /// <summary>
         ///   The first sequence number available for events in the partition.
         /// </summary>
         ///
-        public long BeginningSequenceNumber { get; private set; }
+        public long BeginningSequenceNumber { get; }
 
         /// <summary>
         ///   The sequence number observed the last event to be enqueued in the partition.
         /// </summary>
         ///
-        public long LastEnqueuedSequenceNumber { get; private set; }
+        public long LastEnqueuedSequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the last event to be enqueued in the partition.
@@ -47,13 +46,13 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public string LastEnqueuedOffset { get; private set; }
+        public string LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTime LastEnqueuedTimeUtc { get; private set; }
+        public DateTime LastEnqueuedTimeUtc { get; }
 
         /// <summary>
         ///   Indicates whether or not the partition is currently empty.
@@ -63,45 +62,35 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   <c>true</c> if the partition is empty; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsEmpty { get; private set;}
-
-        /// <summary>
-        ///   The date and time, in UTC, that the information was retrieved from the
-        ///   Event Hub.
-        /// </summary>
-        ///
-        public DateTime PropertyRetrievalTimeUtc { get; private set;}
+        public bool IsEmpty { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
         ///
         /// <param name="path">The path of the Event Hub that contains the partitions.</param>
-        /// <param name="key">The identifier of the partition.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueueUtc">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
-        /// <param name="retrievalTimeUtc">the date and time, in UTC, that the information was retrieved from the service; if not provided, the current date/time will be used.</param>
         ///
-        internal PartitionProperties(string    path,
-                                      string    key,
-                                      long      beginningSequenceNumber,
-                                      long      lastSequenceNumber,
-                                      string    lastOffset,
-                                      DateTime  lastEnqueueUtc,
-                                      bool      isEmpty,
-                                      DateTime? retrievalTimeUtc = null)
+        internal PartitionProperties(string path,
+                                      string partitionId,
+                                      long beginningSequenceNumber,
+                                      long lastSequenceNumber,
+                                      string lastOffset,
+                                      DateTime lastEnqueueUtc,
+                                      bool isEmpty)
         {
             EventHubPath = path;
-            Id = key;
+            Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTimeUtc = lastEnqueueUtc;
             IsEmpty = isEmpty;
-            PropertyRetrievalTimeUtc = retrievalTimeUtc ?? DateTime.UtcNow;
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Setup default project properties -->
   <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
-    <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
     <LangVersion>latest</LangVersion>
     <!--
       Disable NuGet Pack warning that the version is SemVer 2.0.
@@ -13,6 +10,11 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- CentralPackageVersions properties -->
+  <PropertyGroup>
+    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,7 +29,7 @@
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
 
-    <RequiredTargetFrameworks>net452;netstandard1.4</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net461;netstandard2.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
@@ -45,26 +47,6 @@
     <IsTargetingNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsTargetingNetCoreApp>
 
     <DefineConstants Condition="'$(IsTargetingNetFx)' == 'true'">$(DefineConstants);FullNetFx</DefineConstants>
-  </PropertyGroup>
-
-  <!-- Setup common output paths -->
-  <PropertyGroup>
-    <ArtifactsDir Condition="'$(ArtifactsDir)' == ''">$(RepoRoot)artifacts\</ArtifactsDir>
-    <ArtifactsObjDir>$(ArtifactsDir)obj\</ArtifactsObjDir>
-    <ArtifactsBinDir>$(ArtifactsDir)bin\</ArtifactsBinDir>
-    <ArtifactsPackagesDir>$(ArtifactsDir)packages\$(Configuration)\</ArtifactsPackagesDir>
-
-    <OutDirName Condition="'$(OutDirName)' == ''">$(MSBuildProjectName)</OutDirName>
-
-    <BaseOutputPath Condition="'$(BaseOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsBinDir)$(OutDirName)\'))</BaseOutputPath>
-    <OutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseOutputPath)$(Configuration)\</OutputPath>
-    <OutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseOutputPath)$(PlatformName)\$(Configuration)\</OutputPath>
-
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">$([System.IO.Path]::GetFullPath('$(ArtifactsObjDir)$(OutDirName)\'))</BaseIntermediateOutputPath>
-    <IntermediateOutputPath Condition="'$(PlatformName)' == 'AnyCPU'">$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
-    <IntermediateOutputPath Condition="'$(PlatformName)' != 'AnyCPU'">$(BaseIntermediateOutputPath)$(PlatformName)\$(Configuration)\</IntermediateOutputPath>
-
-    <PackageOutputPath>$(ArtifactsPackagesDir)</PackageOutputPath>
   </PropertyGroup>
 
   <!-- Common library and package properties -->
@@ -102,7 +84,7 @@
     <DelaySign>false</DelaySign>
     <PublicSign>false</PublicSign>
     <ImportDefaultReferences>false</ImportDefaultReferences>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
+    <UseProjectReferenceToAzureCore>false</UseProjectReferenceToAzureCore>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
 

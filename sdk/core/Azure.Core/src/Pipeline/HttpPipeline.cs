@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {
@@ -53,25 +49,6 @@ namespace Azure.Core.Pipeline
             message.ResponseClassifier = _responseClassifier;
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
             return message.Response;
-        }
-
-        public static HttpPipeline Build(HttpClientOptions options, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] clientPolicies)
-        {
-            var policies = new List<HttpPipelinePolicy>();
-
-            policies.AddRange(options.PerCallPolicies);
-
-            policies.Add(options.TelemetryPolicy);
-
-            policies.AddRange(clientPolicies);
-
-            policies.AddRange(options.PerRetryPolicies);
-
-            policies.Add(options.LoggingPolicy);
-
-            policies.RemoveAll(policy => policy == null);
-
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier);
         }
     }
 }

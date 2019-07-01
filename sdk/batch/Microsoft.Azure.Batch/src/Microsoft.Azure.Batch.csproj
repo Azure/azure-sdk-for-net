@@ -11,33 +11,20 @@
     <NoWarn>1591;NU5105</NoWarn>
   </PropertyGroup>
 
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog </PackageReleaseNotes>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Web" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.1.2" />
-    <!--
-    Disable this temporarily until we can find a workaround for ReferenceOutputAssembly being broken
-    <ProjectReference Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-    <Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
-    -->
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
     <!--
     Disable this temporarily until we can find a workaround for ReferenceOutputAssembly being broken
     <ProjectReference Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">

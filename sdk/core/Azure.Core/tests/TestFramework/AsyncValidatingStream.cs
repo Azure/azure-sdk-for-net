@@ -80,6 +80,11 @@ namespace Azure.Core.Testing
             return _innerStream.CopyToAsync(destination, bufferSize, cancellationToken);
         }
 
+        public override void Close()
+        {
+            _innerStream.Close();
+        }
+
         public override bool CanRead => _innerStream.CanRead;
         public override bool CanSeek => _innerStream.CanSeek;
         public override bool CanWrite => _innerStream.CanWrite;
