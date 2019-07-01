@@ -18,6 +18,8 @@ Param(
   [Parameter(Mandatory = $false)][string]$OutPath
 )
 
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+
 Function Get-Nuspec($NupkgPath) {
   try {
     $ZipFile = [IO.Compression.ZipFile]::OpenRead($NupkgPath)
