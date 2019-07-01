@@ -2,29 +2,60 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Security.KeyVault.Keys
 {
+    /// <summary>
+    /// Represents the attributes to assign to an Elliptic Curve key at creation.
+    /// </summary>
     public class EcKeyCreateOptions : KeyCreateOptions
     {
-        public KeyCurveName Curve { get; set; }
-        public KeyType KeyType { get; set; }
+        /// <summary>
+        /// The name of the key to create.
+        /// </summary>
+        public string Name { get; set; }
 
-        public EcKeyCreateOptions()
-        {
-            KeyType = KeyType.EllipticCurve;
-        }
+        /// <summary>
+        /// Supported JsonWebKey key types (kty) based on the cryptographic algorithm used for the key.
+        /// Possible values 'EC', 'EC-HSM.'
+        /// </summary>
+        public KeyType KeyType { get; private set; }
 
-        public EcKeyCreateOptions(KeyCurveName curve, List<KeyOperations> keyOps, DateTimeOffset? notBefore, DateTimeOffset? expires, Dictionary<string, string> tags)
+        /// <summary>
+        /// Elliptic curve name. For valid values, see <see cref="KeyCurveName"/>. Possible values include: 'P-256', 'P-384',
+        /// 'P-521', 'P-256K'.
+        /// </summary>
+        public KeyCurveName? Curve { get; set; }
+
+        /// <summary> 
+        /// Determines whether or not a hardware key (HSM) is used for creation.
+        /// </summary>
+        ///
+        /// <value><c>true</c> to use a hardware key; <c>false</c> to use a software key</value>
+        public bool Hsm { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the EcKeyCreateOptions class.
+        /// </summary>
+        /// <param name="name">The name of the key.</param>
+        /// <param name="hsm">Whether to import as a hardware key (HSM) or software key.</param>
+        /// <param name="curveName">Elliptic curve name.</param>
+        public EcKeyCreateOptions(string name, bool hsm, KeyCurveName? curveName = null)
         {
-            Curve = curve;
-            KeyOperations = keyOps;
-            KeyType = KeyType.EllipticCurve;
-            NotBefore = notBefore;
-            Expires = expires;
-            Tags = new Dictionary<string, string>(tags);
+            Name = name;
+            Hsm = hsm;
+            if(hsm)
+            {
+                KeyType = KeyType.EllipticCurveHsm;
+            }
+            else
+            {
+                KeyType = KeyType.EllipticCurve;
+            }
+
+            if (curveName.HasValue)
+            {
+                Curve = curveName.Value;
+            }
         }
     }
 }

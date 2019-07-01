@@ -10,7 +10,7 @@ namespace Azure.Storage.Test
     using System.Linq;
     using System.Xml.Linq;
     using Azure.Storage.Common;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     public class TestConfigurations
     {

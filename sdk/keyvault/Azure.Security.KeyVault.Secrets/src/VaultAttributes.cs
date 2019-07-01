@@ -9,27 +9,30 @@ namespace Azure.Security.KeyVault.Secrets
 {
     internal struct VaultAttributes
     {
+        /// <summary>
+        /// Specifies whether the secret is enabled and useable.
+        /// </summary>
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets not before date in UTC.
+        /// Identifies the time (in UTC) before which the secret data should not be retrieved.
         /// </summary>
-        public System.DateTime? NotBefore { get; set; }
+        public System.DateTimeOffset? NotBefore { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date in UTC.
+        /// Identifies the expiration time (in UTC) on or after which the secret data should not be retrieved.
         /// </summary>
-        public System.DateTime? Expires { get; set; }
+        public System.DateTimeOffset? Expires { get; set; }
 
         /// <summary>
         /// Gets creation time in UTC.
         /// </summary>
-        public System.DateTime? Created { get; private set; }
+        public System.DateTimeOffset? Created { get; private set; }
 
         /// <summary>
         /// Gets last updated time in UTC.
         /// </summary>
-        public System.DateTime? Updated { get; private set; }
+        public System.DateTimeOffset? Updated { get; private set; }
 
         /// <summary>
         /// Gets reflects the deletion recovery level currently in effect for
@@ -51,22 +54,22 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (json.TryGetProperty("nbf", out JsonElement nbf))
             {
-                NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(nbf.GetInt64()).UtcDateTime;
+                NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(nbf.GetInt64());
             }
 
             if (json.TryGetProperty("exp", out JsonElement exp))
             {
-                Expires = DateTimeOffset.FromUnixTimeMilliseconds(exp.GetInt64()).UtcDateTime;
+                Expires = DateTimeOffset.FromUnixTimeMilliseconds(exp.GetInt64());
             }
 
             if (json.TryGetProperty("created", out JsonElement created))
             {
-                Created = DateTimeOffset.FromUnixTimeMilliseconds(created.GetInt64()).UtcDateTime;
+                Created = DateTimeOffset.FromUnixTimeMilliseconds(created.GetInt64());
             }
 
             if (json.TryGetProperty("updated", out JsonElement updated))
             {
-                Updated = DateTimeOffset.FromUnixTimeMilliseconds(updated.GetInt64()).UtcDateTime;
+                Updated = DateTimeOffset.FromUnixTimeMilliseconds(updated.GetInt64());
             }
 
             if (json.TryGetProperty("recoveryLevel", out JsonElement recoveryLevel))
@@ -84,12 +87,12 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber("nbf", new DateTimeOffset(NotBefore.Value).ToUnixTimeMilliseconds());
+                json.WriteNumber("nbf", NotBefore.Value.ToUnixTimeMilliseconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber("exp", new DateTimeOffset(Expires.Value).ToUnixTimeMilliseconds());
+                json.WriteNumber("exp", Expires.Value.ToUnixTimeMilliseconds());
             }
 
             // Created is read-only don't serialize

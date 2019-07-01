@@ -31,7 +31,7 @@ namespace Azure.Core.Testing
             Mode = mode;
         }
 
-        private static RecordedTestMode GetModeFromEnvironment()
+        internal static RecordedTestMode GetModeFromEnvironment()
         {
             string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 
@@ -69,7 +69,7 @@ namespace Azure.Core.Testing
         [TearDown]
         public virtual void StopTestRecording()
         {
-            Recording.Dispose();
+            Recording?.Dispose(TestContext.CurrentContext.Result.FailCount == 0);
         }
     }
 }

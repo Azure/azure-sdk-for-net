@@ -7,26 +7,25 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Identity
 {
-    public class IdentityClientOptions : HttpClientOptions
+    /// <summary>
+    /// Options to configure requests made to Azure Identity Services
+    /// </summary>
+    public class IdentityClientOptions : ClientOptions
     {
         private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
         private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
 
-        public RetryPolicy RetryPolicy { get; set; }
-
+        /// <summary>
+        /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com
+        /// </summary>
         public Uri AuthorityHost { get; set; }
 
-        public TimeSpan RefreshBuffer { get; set; }
-
+        /// <summary>
+        /// Creates an instance of IdentityClientOptions with default settings.
+        /// </summary>
         public IdentityClientOptions()
         {
             AuthorityHost = DefaultAuthorityHost;
-            RefreshBuffer = DefaultRefreshBuffer;
-            RetryPolicy = new ExponentialRetryPolicy()
-            {
-                Delay = TimeSpan.FromMilliseconds(800),
-                MaxRetries = 3
-            };
         }
     }
 }

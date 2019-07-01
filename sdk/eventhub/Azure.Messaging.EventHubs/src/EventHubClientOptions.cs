@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Net;
 
 namespace Azure.Messaging.EventHubs
@@ -16,20 +15,20 @@ namespace Azure.Messaging.EventHubs
     public class EventHubClientOptions
     {
         /// <summary>The value to use as the default for the <see cref="DefaultTimeout" /> property.</summary>
-        protected static readonly TimeSpan DefaultTimeoutValue = TimeSpan.FromMinutes(1);
+        private static readonly TimeSpan DefaultTimeoutValue = TimeSpan.FromMinutes(1);
 
         /// <summary>The retry policy to apply to operations.</summary>
-        protected Retry _retry = Retry.Default;
+        private Retry _retry = Retry.Default;
 
         /// <summary>the timeout that will be used by default for operations.</summary>
-        protected TimeSpan _defaultTimeout = DefaultTimeoutValue;
+        private TimeSpan _defaultTimeout = DefaultTimeoutValue;
 
         /// <summary>
-        ///   The type of connection that will be used for communicating with the Event Hubs
+        ///   The type of protocol and transport that will be used for communicating with the Event Hubs
         ///   service.
         /// </summary>
         ///
-        public ConnectionType ConnectionType { get; set; } = ConnectionType.AmqpTcp;
+        public TransportType TransportType { get; set; } = TransportType.AmqpTcp;
 
         /// <summary>
         ///   The proxy to use for communication over web sockets.  If not specified,
@@ -121,7 +120,7 @@ namespace Azure.Messaging.EventHubs
             new EventHubClientOptions
             {
                 Retry = this.Retry.Clone(),
-                ConnectionType = this.ConnectionType,
+                TransportType = this.TransportType,
                 DefaultTimeout = this.DefaultTimeout,
                 Proxy = this.Proxy
             };
@@ -133,7 +132,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="timeout">The time period to validate.</param>
         ///
-        protected virtual void ValidateDefaultTimeout(TimeSpan timeout)
+        private void ValidateDefaultTimeout(TimeSpan timeout)
         {
             if (timeout < TimeSpan.Zero)
             {
@@ -147,7 +146,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="retry">The time period to validae.</param>
         ///
-        protected virtual void ValidateRetry(Retry retry)
+        private void ValidateRetry(Retry retry)
         {
             if (retry == null)
             {

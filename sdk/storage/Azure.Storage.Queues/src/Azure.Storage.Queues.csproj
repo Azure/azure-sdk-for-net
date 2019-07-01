@@ -5,7 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
-    <PackageTags>Microsoft Azure Storage Queues, Microsoft, Azure, Blob, StorageScalable, azureofficial</PackageTags>
+    <PackageTags>Microsoft Azure Storage Queues, Microsoft, Azure, Queues, Queue, Storage, StorageScalable, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage Queue service for storing messages that may be accessed by a client.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/Changelog.txt

@@ -261,6 +261,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// * Adding/deleting faces to/from a same person will be processed
             /// sequentially. Adding/deleting faces to/from different persons are processed
             /// in parallel.
+            /// * The minimum detectable face size is 36x36 pixels in an image no larger
+            /// than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels
+            /// will need a proportionally larger minimum face size.
+            /// * Different 'detectionModel' values can be provided. To use and compare
+            /// different detection models, please refer to [How to specify a detection
+            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+            /// | Model | Recommended use-case(s) |
+            /// | ---------- | -------- |
+            /// | 'detection_01': | The default detection model for [LargePersonGroup
+            /// Person - Add
+            /// Face](/docs/services/563879b61984550e40cbbe8d/operations/599adf2a3a7b9412a4d53f42).
+            /// Recommend for near frontal face detection. For scenarios with exceptionally
+            /// large angle (head-pose) faces, occluded faces or wrong image orientation,
+            /// the faces in such cases may not be detected. |
+            /// | 'detection_02': | Detection model released in 2019 May with improved
+            /// accuracy especially on small, side and blurry faces. |
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -285,20 +301,73 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// targetFace is required to specify which face to add. No targetFace means
             /// there is only one face detected in the entire image.
             /// </param>
+            /// <param name='detectionModel'>
+            /// Name of detection model. Detection model is used to detect faces in the
+            /// submitted image. A detection model name can be provided when performing
+            /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
+            /// Face. The default value is 'detection_01', if another model is needed,
+            /// please explicitly specify it. Possible values include: 'detection_01',
+            /// 'detection_02'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddFaceFromUrlAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromUrlAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddFaceFromUrlWithHttpMessagesAsync(largePersonGroupId, personId, url, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromUrlWithHttpMessagesAsync(largePersonGroupId, personId, url, userData, targetFace, detectionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Add a representative face to a person for identification. The input face is
-            /// specified as an image with a targetFace rectangle.
+            /// Add a face to a person into a large person group for face identification or
+            /// verification. To deal with an image contains multiple faces, input face can
+            /// be specified as an image with a targetFace rectangle. It returns a
+            /// persistedFaceId representing the added face. No image will be stored. Only
+            /// the extracted face feature will be stored on server until [LargePersonGroup
+            /// PersonFace -
+            /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/599ae2966ac60f11b48b5aa3),
+            /// [LargePersonGroup Person -
+            /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/599ade5c6ac60f11b48b5aa2)
+            /// or [LargePersonGroup -
+            /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/599adc216ac60f11b48b5a9f)
+            /// is called.
+            /// &lt;br /&gt; Note persistedFaceId is different from faceId generated by
+            /// [Face -
+            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+            /// * Higher face image quality means better recognition precision. Please
+            /// consider high-quality faces: frontal, clear, and face size is 200x200
+            /// pixels (100 pixels between eyes) or bigger.
+            /// * Each person entry can hold up to 248 faces.
+            /// * JPEG, PNG, GIF (the first frame), and BMP format are supported. The
+            /// allowed image file size is from 1KB to 6MB.
+            /// * "targetFace" rectangle should contain one face. Zero or multiple faces
+            /// will be regarded as an error. If the provided "targetFace" rectangle is not
+            /// returned from [Face -
+            /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236),
+            /// there’s no guarantee to detect and add the face successfully.
+            /// * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose,
+            /// or large occlusions will cause failures.
+            /// * Adding/deleting faces to/from a same person will be processed
+            /// sequentially. Adding/deleting faces to/from different persons are processed
+            /// in parallel.
+            /// * The minimum detectable face size is 36x36 pixels in an image no larger
+            /// than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels
+            /// will need a proportionally larger minimum face size.
+            /// * Different 'detectionModel' values can be provided. To use and compare
+            /// different detection models, please refer to [How to specify a detection
+            /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
+            /// | Model | Recommended use-case(s) |
+            /// | ---------- | -------- |
+            /// | 'detection_01': | The default detection model for [LargePersonGroup
+            /// Person - Add
+            /// Face](/docs/services/563879b61984550e40cbbe8d/operations/599adf2a3a7b9412a4d53f42).
+            /// Recommend for near frontal face detection. For scenarios with exceptionally
+            /// large angle (head-pose) faces, occluded faces or wrong image orientation,
+            /// the faces in such cases may not be detected. |
+            /// | 'detection_02': | Detection model released in 2019 May with improved
+            /// accuracy especially on small, side and blurry faces. |
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,12 +392,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// targetFace is required to specify which face to add. No targetFace means
             /// there is only one face detected in the entire image.
             /// </param>
+            /// <param name='detectionModel'>
+            /// Name of detection model. Detection model is used to detect faces in the
+            /// submitted image. A detection model name can be provided when performing
+            /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
+            /// Face. The default value is 'detection_01', if another model is needed,
+            /// please explicitly specify it. Possible values include: 'detection_01',
+            /// 'detection_02'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PersistedFace> AddFaceFromStreamAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PersistedFace> AddFaceFromStreamAsync(this ILargePersonGroupPerson operations, string largePersonGroupId, System.Guid personId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), string detectionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(largePersonGroupId, personId, image, userData, targetFace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddFaceFromStreamWithHttpMessagesAsync(largePersonGroupId, personId, image, userData, targetFace, detectionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

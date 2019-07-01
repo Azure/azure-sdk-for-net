@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    public static class ConfigurationClientModelFactory
+    public static class ConfigurationModelFactory
     {
         public static ConfigurationSetting ConfigurationSetting(
             string key,

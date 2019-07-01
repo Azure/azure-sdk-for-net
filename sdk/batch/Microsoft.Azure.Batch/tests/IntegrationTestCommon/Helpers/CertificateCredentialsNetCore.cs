@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.Batch.IntegrationTestCommon.Tests.Helpers
 {
+#if !FullNetFx
     /// <summary>
     /// Work around due being unavailable in .netcore
     /// </summary>
@@ -21,4 +22,5 @@ namespace Microsoft.Azure.Batch.IntegrationTestCommon.Tests.Helpers
             handler.ClientCertificates.Add(this.cert);
         }
     }
+#endif
 }

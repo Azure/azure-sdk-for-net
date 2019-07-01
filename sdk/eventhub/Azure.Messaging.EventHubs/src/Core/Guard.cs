@@ -65,6 +65,48 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
+        ///   Ensures that an argument's value is a string comprised of only whitespace, though
+        ///   <c>null</c> is considered a valid value.  An <see cref="ArgumentException" /> is thrown
+        ///   if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        ///
+        public static void ArgumentNotEmptyOrWhitespace(string argumentName,
+                                                       string argumentValue)
+        {
+            if (argumentValue == null)
+            {
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(argumentValue))
+            {
+                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentEmptyOrWhiteSpace, argumentName), argumentName);
+            }
+        }
+
+        /// <summary>
+        ///   Ensures that a string argument's length is below a maximum allowed threshold,
+        ///   throwing an <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentName">The name of the argument being considered.</param>
+        /// <param name="argumentValue">The value of the argument to verify.</param>
+        /// <param name="maxmimumLength">The maximum allowable length for the <paramref name="argumentValue"/>; its length must be less than or equal to this value.</param>
+        ///
+        public static void ArgumentNotTooLong(string argumentName,
+                                              string argumentValue,
+                                              int maxmimumLength)
+        {
+            if (argumentValue?.Length > maxmimumLength)
+            {
+                throw new ArgumentOutOfRangeException(String.Format(CultureInfo.CurrentCulture, Resources.ArgumentStringTooLong, argumentName, maxmimumLength), argumentName);
+            }
+        }
+
+        /// <summary>
         ///   Ensures that an argument's value is not a negative value, throwing an
         ///   <see cref="ArgumentOutOfRangeException" /> if that invariant is not met.
         /// </summary>
@@ -72,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="argumentName">The name of the argument being considered.</param>
         /// <param name="argumentValue">The value of the argument to verify.</param>
         ///
-        public static void ArgumentNotNegative(string   argumentName,
+        public static void ArgumentNotNegative(string argumentName,
                                                TimeSpan argumentValue)
         {
             if (argumentValue < TimeSpan.Zero)
@@ -92,9 +134,9 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="maximumValue">The maximum to use for comparison; <paramref name="argumentValue"/> must be less than or equal to this value.</param>
         ///
         public static void ArgumentInRange(string argumentName,
-                                           int    argumentValue,
-                                           int    minimumValue,
-                                           int    maximumValue)
+                                           int argumentValue,
+                                           int minimumValue,
+                                           int maximumValue)
         {
             if ((argumentValue < minimumValue) || (argumentValue > maximumValue))
             {

@@ -24,13 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.3.7" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
-    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.5.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Reflection.TypeExtensions" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
@@ -40,6 +40,6 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 </Project>

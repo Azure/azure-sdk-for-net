@@ -20,8 +20,6 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extracts information from forms and images into structured data based
-    /// on a model created by a set of representative training forms.
     /// </summary>
     public partial interface IFormRecognizerClient : System.IDisposable
     {
@@ -56,19 +54,20 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// Train Model
         /// </summary>
         /// <remarks>
-        /// The train request must include a source parameter that is either an
-        /// externally accessible Azure Storage blob container Uri (preferably
-        /// a Shared Access Signature Uri) or valid path to a data folder in a
-        /// locally mounted drive. When local paths are specified, they must
-        /// follow the Linux/Unix path format and be an absolute path rooted to
-        /// the input mount configuration
+        /// Create and train a custom model. The train request must include a
+        /// source parameter that is either an externally accessible Azure
+        /// Storage blob container Uri (preferably a Shared Access Signature
+        /// Uri) or valid path to a data folder in a locally mounted drive.
+        /// When local paths are specified, they must follow the Linux/Unix
+        /// path format and be an absolute path rooted to the input mount
+        /// configuration
         /// setting value e.g., if '{Mounts:Input}' configuration setting value
         /// is '/input' then a valid source path would be
-        /// '/input/contosodataset'. All data to be trained are expected to be
-        /// under the source. Models are trained using documents that are of
-        /// the following content type - 'application/pdf', 'image/jpeg' and
-        /// 'image/png'."
-        /// Other content is ignored when training a model.
+        /// '/input/contosodataset'. All data to be trained is expected to be
+        /// directly under the source folder. Subfolders are not supported.
+        /// Models are trained using documents that are of the following
+        /// content type - 'application/pdf', 'image/jpeg' and 'image/png'."
+        /// Other type of content is ignored.
         /// </remarks>
         /// <param name='trainRequest'>
         /// Request object for training.
@@ -85,8 +84,8 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// Get Keys
         /// </summary>
         /// <remarks>
-        /// Use the API to retrieve the keys that were
-        /// extracted by the specified model.
+        /// Retrieve the keys that were
+        /// extracted during the training of the specified model.
         /// </remarks>
         /// <param name='id'>
         /// Model identifier.
@@ -103,7 +102,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// Get Models
         /// </summary>
         /// <remarks>
-        /// Get information about all trained models
+        /// Get information about all trained custom models
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -151,11 +150,10 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// Analyze Form
         /// </summary>
         /// <remarks>
-        /// The document to analyze must be of a supported content type -
-        /// 'application/pdf', 'image/jpeg' or 'image/png'. The response
-        /// contains not just the extracted information of the analyzed form
-        /// but also information about content that was not extracted along
-        /// with a reason.
+        /// Extract key-value pairs from a given document. The input document
+        /// must be of one of the supported content types - 'application/pdf',
+        /// 'image/jpeg' or 'image/png'. A success response is returned in
+        /// JSON.
         /// </remarks>
         /// <param name='id'>
         /// Model Identifier to analyze the document with.
@@ -173,6 +171,57 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<AnalyzeResult>> AnalyzeWithCustomModelWithHttpMessagesAsync(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Batch Read Receipt operation. The response contains a field called
+        /// 'Operation-Location', which contains the URL that you must use for
+        /// your 'Get Read Receipt Result' operation.
+        /// </summary>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationHeaderResponse<BatchReadReceiptHeaders>> BatchReadReceiptWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This interface is used for getting the analysis results of a 'Batch
+        /// Read Receipt' operation. The URL to this interface should be
+        /// retrieved from the 'Operation-Location' field returned from the
+        /// 'Batch Read Receipt' operation.
+        /// </summary>
+        /// <param name='operationId'>
+        /// Id of read operation returned in the response of a 'Batch Read
+        /// Receipt' operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ReadReceiptResult>> GetReadReceiptResultWithHttpMessagesAsync(string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Read Receipt operation. When you use the 'Batch Read Receipt'
+        /// interface, the response contains a field called
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
+        /// URL that you must use for your 'Get Read Receipt Result' operation.
+        /// </summary>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationHeaderResponse<BatchReadReceiptInStreamHeaders>> BatchReadReceiptInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

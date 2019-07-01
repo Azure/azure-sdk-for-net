@@ -4,6 +4,8 @@ omitted_paths:
   - tools/*
   - src/*
   - Documentation/*
+  - sdk/*mgmt*/*
+  - sdk/*/*.Management.*/*
 language: net
 root_check_enabled: True
 required_readme_sections:
@@ -21,6 +23,7 @@ known_presence_issues:
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
+  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement','#5499']
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
   - ['sdk/storage','azure-sdk-tools/issues/43']
@@ -47,12 +50,16 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Language.TextAnalytics','#5499']
   - ['sdk/cognitiveservices/Search.BingLocalSearch','#5499']
   - ['sdk/cognitiveservices/Search.BingCustomImageSearch','#5499']
+  - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
+  - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
+  - ['sdk/search','#5499']
+
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
-  - ['sdk/eventhub/Azure.Messaging.EventHubs/README.md','#5499']
+  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','#5499']
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md','#5499']
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/tests/Readme.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
@@ -63,7 +70,8 @@ known_content_issues:
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
-  
+  - ['sdk/batch/Microsoft.Azure.Batch.FilesConventions/README.md','#5499']
+
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'
