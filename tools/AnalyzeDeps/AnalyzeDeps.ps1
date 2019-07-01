@@ -7,11 +7,15 @@
 
   .PARAMETER LockfilePath
   The path to the lockfile to analyze.
+
+  .PARAMETER OutPath
+  The path to the write the HTML-formatted report.
 #>
 
 Param(
   [Parameter(Mandatory = $true)][string]$PackagesPath,
-  [Parameter(Mandatory = $false)][string]$LockfilePath
+  [Parameter(Mandatory = $false)][string]$LockfilePath,
+  [Parameter(Mandatory = $false)][string]$OutPath
 )
 
 Function Get-Nuspec($NupkgPath) {
@@ -166,8 +170,10 @@ if ($MismatchedVersions -or $Unlocked) {
   Write-Host "All declared dependency versions match those specified in the lockfile."
 }
 
-Write-Host "Generating HTML report..."
-$__template__ = Get-Content 'deps.html.tpl' -Raw
-Invoke-Expression "@`"`r`n$__template__`r`n`"@" | Out-File -FilePath .\deps.html
+if ($OutPath) {
+  Write-Host "Generating HTML report..."
+  $__template__ = Get-Content 'deps.html.tpl' -Raw
+  Invoke-Expression "@`"`r`n$__template__`r`n`"@" | Out-File -FilePath $OutPath
+}
 
 exit $ExitCode
