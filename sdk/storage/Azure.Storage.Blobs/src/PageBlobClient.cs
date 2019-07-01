@@ -279,7 +279,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new page blob of
@@ -496,7 +496,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UploadPagesAsync"/> operation writes
@@ -711,7 +711,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ClearPagesAsync"/> operation clears one or more
@@ -875,7 +875,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPageRangesAsync"/> operation returns the list of
@@ -1051,7 +1051,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPageRangesDiffAsync"/> operation returns the
@@ -1236,7 +1236,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ResizeAsync"/> operation resizes the page blob to
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UpdateSequenceNumberAsync"/> operation changes the
@@ -2049,7 +2049,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UploadPagesFromUriAsync"/> operation writes a range
