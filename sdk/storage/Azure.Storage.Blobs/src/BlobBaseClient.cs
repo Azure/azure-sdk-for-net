@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadAsync"/> operation downloads a blob from
@@ -684,7 +684,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="StartCopyFromUriAsync"/> operation copies data at
@@ -881,7 +881,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="AbortCopyFromUriAsync"/> operation aborts a pending
@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
@@ -1160,7 +1160,7 @@ namespace Azure.Storage.Blobs.Specialized
             this.UndeleteAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UndeleteAsync"/> operation restores the contents
@@ -1267,7 +1267,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -1402,7 +1402,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
@@ -1705,7 +1705,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateSnapshotAsync"/> operation creates a
@@ -1853,7 +1853,7 @@ namespace Azure.Storage.Blobs.Specialized
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetTierAsync"/> operation sets the tier on a blob.

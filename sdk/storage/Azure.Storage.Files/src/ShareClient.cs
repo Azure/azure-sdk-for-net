@@ -423,7 +423,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Creates a read-only snapshot of a share.
@@ -538,7 +538,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
@@ -659,7 +659,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -776,7 +776,7 @@ namespace Azure.Storage.Files
                 quotaInBytes,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Sets the maximum size of the share.
@@ -888,7 +888,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined 
@@ -1000,7 +1000,7 @@ namespace Azure.Storage.Files
             this.GetAccessPolicyAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
@@ -1107,7 +1107,7 @@ namespace Azure.Storage.Files
                 permissions,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Files
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
+                .EnsureCompleted();
 
         /// <summary>
         /// Retrieves statistics related to the share.
