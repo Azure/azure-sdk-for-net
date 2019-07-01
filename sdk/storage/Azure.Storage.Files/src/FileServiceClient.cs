@@ -20,7 +20,6 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileServiceClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The file service's primary <see cref="Uri"/> endpoint.
         /// </summary>
@@ -270,7 +269,7 @@ namespace Azure.Storage.Files
                 options,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ListSharesSegmentAsync"/> operation returns a
@@ -421,7 +420,7 @@ namespace Azure.Storage.Files
             this.GetPropertiesAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation gets the properties
@@ -530,7 +529,7 @@ namespace Azure.Storage.Files
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetPropertiesAsync"/> operation sets properties for

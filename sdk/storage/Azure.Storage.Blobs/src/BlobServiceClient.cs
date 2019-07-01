@@ -21,7 +21,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public class BlobServiceClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.Storage.Blobs
                 options,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ListContainersSegmentAsync"/> operation returns a
@@ -445,7 +444,7 @@ namespace Azure.Storage.Blobs
             this.GetAccountInfoAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
@@ -543,7 +542,7 @@ namespace Azure.Storage.Blobs
             this.GetPropertiesAsync(
                 false, //async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation gets the properties
@@ -651,7 +650,7 @@ namespace Azure.Storage.Blobs
                 properties,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetPropertiesAsync"/> operation sets properties for
@@ -771,7 +770,7 @@ namespace Azure.Storage.Blobs
             this.GetStatisticsAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetStatisticsAsync"/> operation retrieves
@@ -887,7 +886,7 @@ namespace Azure.Storage.Blobs
                 expiry,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a

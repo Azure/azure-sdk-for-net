@@ -20,7 +20,6 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// The directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
@@ -255,7 +254,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Creates a new file or replaces an existing file.
@@ -406,7 +405,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
@@ -535,7 +534,7 @@ namespace Azure.Storage.Files
                 copyId,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
@@ -660,7 +659,7 @@ namespace Azure.Storage.Files
                 rangeGetContentHash,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="DownloadAsync"/> operation reads or downloads a file from the system, including its metadata and properties.
@@ -771,7 +770,7 @@ namespace Azure.Storage.Files
                                 startOffset,
                                 async,
                                 cancellationToken)
-                                .EnsureCompleted()
+                                .EnsureCompleted(syncOverAsync: true)
                                 .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
@@ -882,7 +881,7 @@ namespace Azure.Storage.Files
             this.DeleteAsync(
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation immediately removes the file from the storage account.
@@ -986,7 +985,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -1116,7 +1115,7 @@ namespace Azure.Storage.Files
                 httpHeaders,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
@@ -1253,7 +1252,7 @@ namespace Azure.Storage.Files
                 metadata,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
@@ -1395,7 +1394,7 @@ namespace Azure.Storage.Files
                 progressHandler,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="UploadRangeAsync"/> operation writes
@@ -1584,7 +1583,7 @@ namespace Azure.Storage.Files
                 shareSnapshot,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// Returns the list of valid ranges for a file.
@@ -1722,7 +1721,7 @@ namespace Azure.Storage.Files
                 maxResults,
                 false, // async
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on the file.
@@ -1883,7 +1882,7 @@ namespace Azure.Storage.Files
                 marker,
                 false, // async,
                 cancellationToken)
-                .EnsureCompleted();
+                .EnsureCompleted(syncOverAsync: true);
 
         /// <summary>
         /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a file
