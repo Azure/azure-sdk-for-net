@@ -2033,5 +2033,24 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string SapTableLinkedService = @"
+{
+    ""name"": ""SapTableLinkedService"",
+    ""properties"": {
+        ""type"": ""SapTable"",
+        ""typeProperties"": {
+            ""server"": ""fakeserver"",
+            ""systemNumber"" : ""00"",
+            ""clientId"" : ""000"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
     }
 }

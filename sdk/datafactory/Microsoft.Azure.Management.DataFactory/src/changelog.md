@@ -3,22 +3,17 @@
 ## Current version
 ###  Feature Additions
 
-## Version 4.0.1
-###  Feature Additions
-- Fixed Object types issue
-- Standardize some readSettings name 
-
 ## Version 4.0.0
 ###  Feature Additions
 ### Breaking Changes
 - Added support for the follwoing new datasets in ADF - ParquetDataset, DelimitedTextDataset, SapTableResourceDataset
-- ParquetDataset will support follwoing locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- ParquetDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
 - Added support for parameterization to a number of properties
 - The table name is not required anymore for AzureSqlTable, AzureSqlDWTable, SqlServerTable
 - Added a new property dataProxyProperties to Integration Runtime
 - Added new SapTable Linked Services type 
-- Added types for Read and Write Connector settings in activities - AzureBlobStorageReadSetting, AzureBlobFSReadSetting, AzureDataLakeStoreReadSetting, AmazonS3ReadSetting, FileServerReadSetting, FtpReadSetting, SftpReadSetting, HttpReadSetting, HdfsReadSetting,
-AzureBlobStorageWriteSetting, AzureBlobFSWriteSetting, AzureDataLakeStoreWriteSetting, FileServerWriteSetting, FormatReadSetting, DelimitedTextReadSetting, FormatWriteSetting, DelimitedTextWriteSetting
+- Added types for Read and Write Connector settings in activities - AzureBlobStorageReadSettings, AzureBlobFSReadSettings, AzureDataLakeStoreReadSettings, AmazonS3ReadSettings, FileServerReadSettings, FtpReadSettings, SftpReadSettings, HttpReadSettings, HdfsReadSettings,
+AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWriteSettings, FileServerWriteSettings, FormatReadSettings, DelimitedTextReadSettings, FormatWriteSettings, DelimitedTextWriteSettings
 - Added new Copy sources - SapTableSource, SqlServerSource, AzureSqlSource
 - Added new Copy sinks - ParquetSink, SqlServerSink, AzureSqlSink
 
