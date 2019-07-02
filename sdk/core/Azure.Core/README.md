@@ -13,7 +13,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Configuring service clients, e.g. configuring retries, logging.
 - Accessing HTTP response details.
 - Calling long running operations (LROs).
-- Paging and asynchronous streams (```IAsyncEnumerable<T>``) 
+- Paging and asynchronous streams (```IAsyncEnumerable<T>```) 
 - Exceptions for reporting errors from service requests in a consistent fashion.
 - Abstractions for representing Azure SDK credentials.
 
@@ -100,14 +100,43 @@ public async Task UsingResponseOfT()
 }
 ```
 
+### Mocking
+One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking. 
+Mocking is enabled by:
+
+- providing a protected parameterless constructor on client types.
+- making service methods virtual.
+- providing APIs for constructing model types returned from virtual service methods. To find these factory methods look for types with the _ModelFactory_ suffix, e.g. `ConfigurationModelFactory`.
+
+For example, the ConfigurationClient.Get method can be mocked (with [Moq](https://github.com/moq/moq4)) as follows:
+
+```c#
+// Create a mock response
+var mockResponse = new Mock<Response>();
+
+// Create a client mock
+var mock = new Mock<ConfigurationClient>();
+
+// Setup client method
+mock.Setup(c => 
+    c.Get("Key", It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()))
+    .Returns(new Response<ConfigurationSetting>(mockResponse.Object, 
+         // factory for the model type
+         ConfigurationModelFactory.ConfigurationSetting("Key", "Value")
+    )
+);
+
+// Use the client mock
+ConfigurationClient client = mock.Object;
+ConfigurationSetting setting = client.Get("Key");
+Assert.AreEqual("Value", setting.Value);
+```
+
 ### Reporting Errors ```RequestFailedException```
 Coming soon ...
 
 ### Consuming Service Methods Returning ```IAsyncEnumerable<T>```
 Coming soon ...
 
-### Consuming Long Running Operations Using ```OperationT<T>```
-Comming soon ...
-
-### Mocking
+### Consuming Long Running Operations Using ```Operation<T>```
 Comming soon ...

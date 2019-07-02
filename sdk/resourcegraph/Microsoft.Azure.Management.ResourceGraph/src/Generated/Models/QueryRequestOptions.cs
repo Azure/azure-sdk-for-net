@@ -39,11 +39,14 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// <param name="skip">The number of rows to skip from the beginning of
         /// the results. Overrides the next page offset when ```$skipToken```
         /// property is present.</param>
-        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?))
+        /// <param name="resultFormat">Defines in which format query result
+        /// returned. Possible values include: 'table', 'objectArray'</param>
+        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?))
         {
             SkipToken = skipToken;
             Top = top;
             Skip = skip;
+            ResultFormat = resultFormat;
             CustomInit();
         }
 
@@ -74,6 +77,13 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </summary>
         [JsonProperty(PropertyName = "$skip")]
         public int? Skip { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines in which format query result returned.
+        /// Possible values include: 'table', 'objectArray'
+        /// </summary>
+        [JsonProperty(PropertyName = "resultFormat")]
+        public ResultFormat? ResultFormat { get; set; }
 
         /// <summary>
         /// Validate the object.

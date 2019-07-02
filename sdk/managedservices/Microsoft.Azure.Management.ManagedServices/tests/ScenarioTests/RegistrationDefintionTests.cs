@@ -49,24 +49,24 @@ namespace ManagedServices.Tests.ScenarioTests
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
                     Assert.NotNull(registrationDefinitionsResponse);
-                    Assert.Single(registrationDefinitionsResponse);
 
                     //4. Delete Registration Defintion
-                    registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
+                    testFixture.ManagedServicesClient.RegistrationDefinitions
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
                         registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
-                    Assert.NotNull(registrationDefinitionResponse);
-
-                    //5. Get Registration Defintion collection
+                    //5. Get Registration Defintion (make sure it is deleted)
                     registrationDefinitionsResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .List(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
-                    Assert.Empty(registrationDefinitionsResponse);
+                    foreach (var definition in registrationDefinitionsResponse)
+                    {
+                        Assert.False(definition.Name == ManagedServicesTestUtilities.registratonDefinitionId);
+                    }
                 }
             }
         }

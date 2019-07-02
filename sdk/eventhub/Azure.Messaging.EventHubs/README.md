@@ -24,7 +24,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:  
 
-[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%Azure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
+[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
@@ -58,9 +58,9 @@ var client = new EventHubClient(connectionString, eventHubName);
 
 - A **partition** is an ordered sequence of events that is held in an Event Hub. Partitions are a means of data organization associated with the parallelism required by event consumers.  Azure Event Hubs provides message streaming through a partitioned consumer pattern in which each consumer only reads a specific subset, or partition, of the message stream. As newer events arrive, they are added to the end of this sequence. The number of partitions is specified at the time an Event Hub is created and cannot be changed.
 
-- A **consumer group** is a view of an entire Event Hub. Consumer groups enable multiple consuming applications to each have a separate view of the event stream, and to read the stream independently at their own pace and from their own position.  There can be at most 5 concurrent readers on a partition per consumer group; however it is recommended that there is only one active consumer for a given partition and consumer group pairing. Each active reader receives all of the events from its partition; ff there are multiple readers on the same partition, then they will receive duplicate events. 
+- A **consumer group** is a view of an entire Event Hub. Consumer groups enable multiple consuming applications to each have a separate view of the event stream, and to read the stream independently at their own pace and from their own position.  There can be at most 5 concurrent readers on a partition per consumer group; however it is recommended that there is only one active consumer for a given partition and consumer group pairing. Each active reader receives all of the events from its partition; if there are multiple readers on the same partition, then they will receive duplicate events. 
 
-For more concepts and deeper discussion, see: [Event Hubs Features](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features)
+For more concepts and deeper discussion, see: [Event Hubs Features](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features).
 
 ## Examples
 
@@ -75,6 +75,27 @@ var eventHubName = "<< NAME OF THE EVENT HUB >>";
 await using (var client = new EventHubClient(connectionString, eventHubName))
 {
     string[] partitionIds = await client.GetPartitionIdsAsync();
+}
+```
+
+### Publish events to an Event Hub
+
+In order to publish events, you'll need to create an `EventHubProducer`.  Producers may be dedicated to a specific partition, or allow the Event Hubs service to decide which partition events should be published to.  It is recommended to use automatic routing when the publishing of events needs to be highly available or when event data should be distributed evenly among the partitions.  In the our example, we will take advantage of automatic routing.
+
+```csharp
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+await using (var client = new EventHubClient(connectionString, eventHubName))
+await using (EventHubProducer producer = client.CreateProducer())
+{
+    var eventsToPublish = new EventData[]
+    {
+        new EventData(Encoding.UTF8.GetBytes("First")),
+        new EventData(Encoding.UTF8.GetBytes("Second"))
+    };
+    
+    await producer.SendAsync(eventsToPublish);
 }
 ```
 
@@ -100,27 +121,6 @@ await using (var client = new EventHubClient(connectionString, eventHubName))
         // At this point, the eventBatch may have no events or may have as many as the maximum size requested, 
         // depending on how many events were available in the partition.
     }
-}
-```
-
-### Publish events to an Event Hub
-
-In order to publish events, you'll need to create an `EventHubProducer`.  Producers may be dedicated to a specific partition, or allow the Event Hubs service to decide which partition events should be published to.  It is recommended to use automatic routing when the publishing of events needs to be highly available or when event data should be distributed evenly among the partitions.  In the our example, we will take advantage of automatic routing.
-
-```csharp
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-var eventHubName = "<< NAME OF THE EVENT HUB >>";
-
-await using (var client = new EventHubClient(connectionString, eventHubName))
-await using (EventHubProducer producer = client.CreateProducer())
-{
-    var eventsToPublish = new EventData[]
-    {
-        new EventData(Encoding.UTF8.GetBytes("First")),
-        new EventData(Encoding.UTF8.GetBytes("Second"))
-    };
-    
-    await producer.SendAsync(eventsToPublish);
 }
 ```
 

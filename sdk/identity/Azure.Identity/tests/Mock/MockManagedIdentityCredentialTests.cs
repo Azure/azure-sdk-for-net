@@ -53,7 +53,7 @@ namespace Azure.Identity.Tests.Mock
 
             var expectedToken = "mock-msi-access-token";
 
-            response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_in\": 3600 }}");
+            response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": 3600 }}");
 
             var mockTransport = new MockTransport(pingResponse, response);
 

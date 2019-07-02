@@ -5,7 +5,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files client library</AssemblyTitle>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
-    <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, StorageScalable, azureofficial</PackageTags>
+    <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, Files, Storage, StorageScalable, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage File service for storing binary and text data.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/Changelog.txt

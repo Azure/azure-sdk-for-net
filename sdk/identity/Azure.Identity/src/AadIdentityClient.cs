@@ -28,6 +28,8 @@ namespace Azure.Identity
 
         private const string ClientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 
+        private const string AuthenticationRequestFailedError = "The request to the identity service failed.  See inner exception for details.";
+
         public AadIdentityClient(IdentityClientOptions options = null)
         {
             _options = options ?? new IdentityClientOptions();
@@ -42,16 +44,14 @@ namespace Azure.Identity
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
-                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                if (response.Status == 200 || response.Status == 201)
+                try
                 {
-                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
-
-                    return new Response<AccessToken>(response, result);
+                    return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
                 }
-
-                throw await response.CreateRequestFailedExceptionAsync();
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
         }
 
@@ -59,16 +59,14 @@ namespace Azure.Identity
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
-                var response = _pipeline.SendRequest(request, cancellationToken);
-
-                if (response.Status == 200 || response.Status == 201)
+                try
                 {
-                    var result = Deserialize(response.ContentStream);
-
-                    return new Response<AccessToken>(response, result);
+                    return SendAuthRequest(request, cancellationToken);
                 }
-
-                throw response.CreateRequestFailedException();
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
         }
 
@@ -76,16 +74,14 @@ namespace Azure.Identity
         {
             using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
             {
-                var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                if (response.Status == 200 || response.Status == 201)
+                try
                 {
-                    var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
-
-                    return new Response<AccessToken>(response, result);
+                    return await SendAuthRequestAsync(request, cancellationToken).ConfigureAwait(false);
                 }
-
-                throw await response.CreateRequestFailedExceptionAsync();
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
         }
 
@@ -93,17 +89,42 @@ namespace Azure.Identity
         {
             using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
             {
-                var response = _pipeline.SendRequest(request, cancellationToken);
-
-                if (response.Status == 200 || response.Status == 201)
+                try
                 {
-                    var result = Deserialize(response.ContentStream);
-
-                    return new Response<AccessToken>(response, result);
+                    return SendAuthRequest(request, cancellationToken);
                 }
-
-                throw response.CreateRequestFailedException();
+                catch (RequestFailedException ex)
+                {
+                    throw new AuthenticationFailedException(AuthenticationRequestFailedError, ex);
+                }
             }
+        }
+        private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
+        {
+            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (response.Status == 200 || response.Status == 201)
+            {
+                var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
+
+                return new Response<AccessToken>(response, result);
+            }
+
+            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+        }
+
+        private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
+        {
+            var response = _pipeline.SendRequest(request, cancellationToken);
+
+            if (response.Status == 200 || response.Status == 201)
+            {
+                var result = Deserialize(response.ContentStream);
+
+                return new Response<AccessToken>(response, result);
+            }
+
+            throw response.CreateRequestFailedException();
         }
 
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
@@ -154,7 +175,7 @@ namespace Azure.Identity
             return request;
         }
 
-        private string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
+        private static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
         {
             var headerBuff = new ArrayBufferWriter<byte>();
 
@@ -200,7 +221,7 @@ namespace Azure.Identity
             return flattenedJws + "." + Base64Url.Encode(signature);
         }
 
-        private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+        private static async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
             {
@@ -208,7 +229,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(Stream content)
+        private static AccessToken Deserialize(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content))
             {
@@ -216,7 +237,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(JsonElement json)
+        private static AccessToken Deserialize(JsonElement json)
         {
             string accessToken = null;
 

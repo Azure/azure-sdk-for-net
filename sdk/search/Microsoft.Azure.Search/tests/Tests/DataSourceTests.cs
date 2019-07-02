@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertDataSourcesEqual(DataSource expected, DataSource actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<DataSource>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<DataSource>());
         }
 
         private static DataSource CreateTestDataSource()

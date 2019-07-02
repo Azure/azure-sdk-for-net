@@ -4,6 +4,8 @@
     <VersionPrefix>3.0.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>TrackOne</RootNamespace>
+    <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
