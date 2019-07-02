@@ -11,7 +11,7 @@ namespace Azure.Identity
 {
     internal static class ScopeUtilities
     {
-        private const string DefaultSuffix = "/.defualt";
+        private const string DefaultSuffix = "/.default";
 
 
         public static string ScopesToResource(string[] scopes)
