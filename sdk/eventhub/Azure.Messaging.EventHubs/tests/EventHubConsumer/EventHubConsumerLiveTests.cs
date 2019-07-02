@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Recieve and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -261,7 +261,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -381,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -447,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await Task.Delay(TimeSpan.FromSeconds(5));
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -580,7 +580,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(stampEvent);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var expectedEventsCount = 1;
@@ -632,7 +632,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -688,7 +688,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await producer.SendAsync(stampEvent);
 
                             // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                            // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
                             var expectedEventsCount = 2;
@@ -752,7 +752,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await producer.SendAsync(stampEvent);
 
                             // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                            // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
                             var expectedEventsCount = 1;
@@ -817,7 +817,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             await producer.SendAsync(stampEvent);
 
                             // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                            // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
                             var expectedEventsCount = isInclusive ? 2 : 1;
@@ -1427,7 +1427,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
@@ -1482,7 +1482,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive and validate the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         var receivedEvents = new List<EventData>();
