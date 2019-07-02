@@ -250,7 +250,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         await client.CloseAsync();
                     }
 
-                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<OperationCanceledException>());
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+
+                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<ObjectDisposedException>());
                     Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<ObjectDisposedException>());
                     Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<ObjectDisposedException>());
                 }
