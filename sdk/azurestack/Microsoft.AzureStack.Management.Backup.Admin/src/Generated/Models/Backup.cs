@@ -40,7 +40,6 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="tags">List of key value pairs.</param>
         /// <param name="backupDataVersion">Version of the backup data.</param>
-        /// <param name="backupId">Unique GUID for the backup.</param>
         /// <param name="roleStatus">Backup status for each role.</param>
         /// <param name="status">Current status of the backup. Possible values
         /// include: 'Creating', 'Queued', 'Running', 'Deleted', 'Failed',
@@ -54,11 +53,10 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <param name="oemVersion">OEM version.</param>
         /// <param name="encryptionCertThumbprint">The thumbprint of the
         /// certificate used to encrypt the backup encryption key.</param>
-        public Backup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupDataVersion = default(string), string backupId = default(string), IList<RoleOperationStatus> roleStatus = default(IList<RoleOperationStatus>), OperationStatus? status = default(OperationStatus?), System.DateTime? createdDateTime = default(System.DateTime?), string timeTakenToCreate = default(string), string deploymentID = default(string), string stampVersion = default(string), string oemVersion = default(string), string encryptionCertThumbprint = default(string))
+        public Backup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupDataVersion = default(string), IList<RoleOperationStatus> roleStatus = default(IList<RoleOperationStatus>), OperationStatus? status = default(OperationStatus?), System.DateTime? createdDateTime = default(System.DateTime?), string timeTakenToCreate = default(string), string deploymentID = default(string), string stampVersion = default(string), string oemVersion = default(string), string encryptionCertThumbprint = default(string))
             : base(id, name, type, location, tags)
         {
             BackupDataVersion = backupDataVersion;
-            BackupId = backupId;
             RoleStatus = roleStatus;
             Status = status;
             CreatedDateTime = createdDateTime;
@@ -80,12 +78,6 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupInfo.backupDataVersion")]
         public string BackupDataVersion { get; private set; }
-
-        /// <summary>
-        /// Gets unique GUID for the backup.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.backupInfo.backupId")]
-        public string BackupId { get; private set; }
 
         /// <summary>
         /// Gets backup status for each role.
