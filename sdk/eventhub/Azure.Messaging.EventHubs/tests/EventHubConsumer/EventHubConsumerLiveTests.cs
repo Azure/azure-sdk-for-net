@@ -426,7 +426,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     new EventData(new byte[1000000])
                 };
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 {
                     var partition = (await client.GetPartitionIdsAsync()).First();
 
@@ -1648,12 +1648,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         throw new InvalidOperationException("6th consumer should have encountered QuotaExceededException.");
                     }
-                    catch(TrackOne.QuotaExceededException ex)
+                    catch (TrackOne.QuotaExceededException ex)
                     {
-                        for (var i = 0; i < maximumConsumersQuota; i++)
+                        foreach (var consumer in consumers)
                         {
-                            var identifier = $"consumer{i}";
-                            Assert.That(ex.Message.Contains(identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{identifier}')");
+                            Assert.That(ex.Message.Contains(consumer.Identifier), Is.True, $"QuotaExceededException message is missing consumer identifier '{consumer.Identifier}')");
                         }
                     }
                     finally
