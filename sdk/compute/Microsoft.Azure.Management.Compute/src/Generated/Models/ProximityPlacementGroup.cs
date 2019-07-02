@@ -41,8 +41,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="proximityPlacementGroupType">Specifies the type of the
         /// proximity placement group. &lt;br&gt;&lt;br&gt; Possible values
-        /// are: &lt;br&gt;&lt;br&gt; **Standard** &lt;br&gt;&lt;br&gt;
-        /// **Ultra**. Possible values include: 'Standard', 'Ultra'</param>
+        /// are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within
+        /// an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt;
+        /// **Ultra** : For future use. Possible values include: 'Standard',
+        /// 'Ultra'</param>
         /// <param name="virtualMachines">A list of references to all virtual
         /// machines in the proximity placement group.</param>
         /// <param name="virtualMachineScaleSets">A list of references to all
@@ -68,9 +70,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the type of the proximity placement group.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Standard**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Ultra**. Possible values
-        /// include: 'Standard', 'Ultra'
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Standard** : Co-locate
+        /// resources within an Azure region or Availability Zone.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Ultra** : For future use.
+        /// Possible values include: 'Standard', 'Ultra'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroupType")]
         public string ProximityPlacementGroupType { get; set; }
