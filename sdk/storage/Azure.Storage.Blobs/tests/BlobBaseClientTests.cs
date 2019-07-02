@@ -272,11 +272,13 @@ namespace Azure.Storage.Blobs.Test
                 var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
 
                 // Act
-                var response = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                var operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
-                Assert.AreEqual(CopyStatus.Success, response.Value.CopyStatus);
+                await operation.WaitCompletionAsync();
+                Assert.IsTrue(operation.HasCompleted);
+                Assert.IsTrue(operation.HasValue);
             }
         }
 
@@ -470,12 +472,12 @@ namespace Azure.Storage.Blobs.Test
                 {
                     var destBlob = this.InstrumentClient(destContainer.GetBlockBlobClient(this.GetNewBlobName()));
 
-                    var copyResponse = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+                    var operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
 
                     // Act
                     try
                     {
-                        var response = await destBlob.AbortCopyFromUriAsync(copyResponse.Value.CopyId);
+                        var response = await destBlob.AbortCopyFromUriAsync(operation.Id);
 
                         // Assert
                         Assert.IsNotNull(response.Headers.RequestId);
@@ -515,7 +517,7 @@ namespace Azure.Storage.Blobs.Test
                     var lease = this.InstrumentClient(destBlob.GetLeaseClient(this.Recording.Random.NewGuid().ToString()));
                     var leaseResponse = await lease.AcquireAsync(duration);
 
-                    var copyResponse = await destBlob.StartCopyFromUriAsync(
+                    var operation = await destBlob.StartCopyFromUriAsync(
                         source: srcBlob.Uri,
                         destinationAccessConditions: new BlobAccessConditions
                         {
@@ -530,7 +532,7 @@ namespace Azure.Storage.Blobs.Test
                     try
                     {
                         var response = await destBlob.AbortCopyFromUriAsync(
-                            copyId: copyResponse.Value.CopyId,
+                            copyId: operation.Id,
                             leaseAccessConditions: new LeaseAccessConditions
                             {
                                 LeaseId = leaseResponse.Value.LeaseId
@@ -570,8 +572,7 @@ namespace Azure.Storage.Blobs.Test
                         await destBlob.UploadAsync(stream);
                     }
 
-                    var copyResponse = await destBlob.StartCopyFromUriAsync(
-                        source: srcBlob.Uri);
+                    var operation = await destBlob.StartCopyFromUriAsync(source: srcBlob.Uri);
 
                     var leaseId = this.Recording.Random.NewGuid().ToString();
 
@@ -580,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             destBlob.AbortCopyFromUriAsync(
-                                copyId: copyResponse.Value.CopyId,
+                                copyId: operation.Id,
                                 leaseAccessConditions: new LeaseAccessConditions
                                 {
                                     LeaseId = leaseId
