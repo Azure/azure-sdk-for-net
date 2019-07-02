@@ -15,11 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class ServiceClientTests : BlobTestBase
     {
-        public ServiceClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public ServiceClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -29,7 +28,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -281,7 +280,8 @@ namespace Azure.Storage.Blobs.Test
             var service = this.InstrumentClient(
                 new BlobServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
-                    this.GetOptions(this.GetNewSharedKeyCredentials())));
+                    this.GetNewSharedKeyCredentials(),
+                    this.GetOptions()));
 
             // Act
             var response = await service.GetStatisticsAsync();
@@ -294,7 +294,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
 
             // Act
             var response = await service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1));
@@ -319,12 +319,41 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.Now.AddHours(1)),
                 e => Assert.AreEqual("expiry must be UTC", e.Message));
+        }
+
+        [Test]
+        public async Task CreateBlobContainerAsync()
+        {
+            var name = this.GetNewContainerName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var container = (await service.CreateBlobContainerAsync(name)).Value;
+                var properties = await container.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+            finally
+            {
+                await service.DeleteBlobContainerAsync(name);
+            }
+        }
+
+        [Test]
+        public async Task DeleteBlobContainerAsync()
+        {
+            var name = this.GetNewContainerName();
+            var service = this.GetServiceClient_SharedKey();
+            var container = (await service.CreateBlobContainerAsync(name)).Value;
+
+            await service.DeleteBlobContainerAsync(name);
+            Assert.ThrowsAsync<StorageRequestFailedException>(
+                async () => await container.GetPropertiesAsync());
         }
     }
 }

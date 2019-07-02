@@ -59,25 +59,20 @@ namespace Azure.Storage.Samples
                 await queueClient.CreateAsync();
 
                 // Instantiate a new MessagesClient
-                MessagesClient messagesClient = queueClient.GetMessagesClient();
-
                 // Enqueue a message to the queue
-                Response<IEnumerable<EnqueuedMessage>> enqueueResponse = await messagesClient.EnqueueAsync("my message");
+                Response<EnqueuedMessage> enqueueResponse = await queueClient.EnqueueMessageAsync("my message");
 
                 // Peek message
-                Response<IEnumerable<PeekedMessage>> peekResponse = await messagesClient.PeekAsync();
-
-                // Instantiate a new MessageIdClient
-                MessageIdClient messageIdClient = messagesClient.GetMessageIdClient(enqueueResponse.Value.First().MessageId);
+                Response<IEnumerable<PeekedMessage>> peekResponse = await queueClient.PeekMessagesAsync();
 
                 // Update message
-                await messageIdClient.UpdateAsync("new message", enqueueResponse.Value.First().PopReceipt);
+                await queueClient.UpdateMessageAsync("new message", enqueueResponse.Value.MessageId, enqueueResponse.Value.PopReceipt);
 
                 // Dequeue message
-                Response<IEnumerable<DequeuedMessage>> dequeueResponse = await messagesClient.DequeueAsync();
+                Response<IEnumerable<DequeuedMessage>> dequeueResponse = await queueClient.DequeueMessagesAsync();
 
                 // Delete Message
-                await messageIdClient.DeleteAsync(dequeueResponse.Value.First().PopReceipt);
+                await queueClient.DeleteMessageAsync(enqueueResponse.Value.MessageId, dequeueResponse.Value.First().PopReceipt);
             }
             finally
             {

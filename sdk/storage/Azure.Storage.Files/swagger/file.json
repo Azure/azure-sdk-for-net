@@ -8,8 +8,10 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Files",
       "client-name": "FileRestClient",
-      "client-extensions-name": "FileExtensions",
+      "client-extensions-name": "FilesExtensions",
+      "client-model-factory-name": "FilesModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },
@@ -2566,7 +2568,7 @@
         "ContainerQuotaDowngradeNotAllowed"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "FileErrorCode",
         "modelAsString": true
       }
     },

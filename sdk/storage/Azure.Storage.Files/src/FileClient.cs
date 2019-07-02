@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -19,10 +20,17 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileClient
     {
+        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri { get; }
+        private readonly Uri _uri;
+        #pragma warning restore IDE0032 // Use auto property
+
+        /// <summary>
+        /// Gets the directory's primary <see cref="Uri"/> endpoint.
+        /// </summary>
+        public Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
@@ -37,6 +45,14 @@ namespace Azure.Storage.Files
 
         //// FileMaxSizeInBytes indicates the maxiumum file size, in bytes.
         //public const Int64 FileMaxSizeInBytes = 1 * Constants.TB; // 1TB
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileClient"/>
+        /// class for mocking.
+        /// </summary>
+        protected FileClient()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileClient"/> class.
@@ -54,63 +70,120 @@ namespace Azure.Storage.Files
         /// <param name="filePath">
         /// The path of the file in the storage account to reference.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="FileConnectionOptions"/> that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
+        public FileClient(string connectionString, string shareName, string filePath)
+            : this(connectionString, shareName, filePath, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileClient"/> class.
+        /// </summary>
+        /// <param name="connectionString">
+        /// A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        ///
+        /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <remarks>
-        /// The credentials on <paramref name="connectionString"/> will override those on <paramref name="connectionOptions"/>.
-        /// </remarks>
-        public FileClient(string connectionString, string shareName, string filePath, FileConnectionOptions connectionOptions = default)
+        /// <param name="shareName">
+        /// The name of the share in the storage account to reference.
+        /// </param>
+        /// <param name="filePath">
+        /// The path of the file in the storage account to reference.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="FileClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public FileClient(string connectionString, string shareName, string filePath, FileClientOptions options)
         {
             var conn = StorageConnectionString.Parse(connectionString);
-
             var builder =
                 new FileUriBuilder(conn.FileEndpoint)
                 {
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-
-            // TODO: perform a copy of the options instead
-            var connOptions = connectionOptions ?? new FileConnectionOptions();
-            connOptions.Credentials = conn.Credentials;
-
-            this.Uri = builder.ToUri();
-            this._pipeline = connOptions.Build();
+            this._uri = builder.ToUri();
+            this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileClient"/> class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="fileUri">
         /// A <see cref="Uri"/> referencing the file that includes the
-        /// name of the account, the name of the share, and the path of the file.
+        /// name of the account, the name of the share, and the path of the
+        /// file.
         /// </param>
-        /// <param name="connectionOptions">
-        /// Optional <see cref="FileConnectionOptions"/> that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
+        /// <param name="options">
+        /// Optional <see cref="FileClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
         /// </param>
-        public FileClient(Uri primaryUri, FileConnectionOptions connectionOptions = default)
-            : this(primaryUri, (connectionOptions ?? new FileConnectionOptions()).Build())
+        public FileClient(Uri fileUri, FileClientOptions options = default)
+            : this(fileUri, (HttpPipelinePolicy)null, options)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileClient"/> class.
         /// </summary>
-        /// <param name="primaryUri">
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="FileClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        public FileClient(Uri fileUri, StorageSharedKeyCredential credential, FileClientOptions options = default)
+            : this(fileUri, credential.AsPolicy(), options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal FileClient(Uri fileUri, HttpPipelinePolicy authentication, FileClientOptions options)
+        {
+            this._uri = fileUri;
+            this._pipeline = (options ?? new FileClientOptions()).Build(authentication);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileClient"/> class.
+        /// </summary>
+        /// <param name="fileUri">
         /// A <see cref="Uri"/> referencing the file that includes the
         /// name of the account, the name of the share, and the path of the file.
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal FileClient(Uri primaryUri, HttpPipeline pipeline)
+        internal FileClient(Uri fileUri, HttpPipeline pipeline)
         {
-            this.Uri = primaryUri;
+            this._uri = fileUri;
             this._pipeline = pipeline;
         }
 
@@ -130,11 +203,54 @@ namespace Azure.Storage.Files
         /// <returns>
         /// A new <see cref="FileClient"/> instance.
         /// </returns>
-        public FileClient WithSnapshot(string shareSnapshot)
+        public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
             return new FileClient(builder.ToUri(), this._pipeline);
         }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRange"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileInfo> Create(
+            long maxSize,
+            FileHttpHeaders? httpHeaders = default,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            this.CreateAsync(
+                maxSize,
+                httpHeaders,
+                metadata,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// Creates a new file or replaces an existing file.
@@ -154,7 +270,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -166,11 +282,55 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> CreateAsync(
+        public virtual async Task<Response<StorageFileInfo>> CreateAsync(
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.CreateAsync(
+                maxSize,
+                httpHeaders,
+                metadata,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRangeAsync"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileInfo}}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileInfo>> CreateAsync(
+            long maxSize,
+            FileHttpHeaders? httpHeaders,
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -193,7 +353,8 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -219,7 +380,41 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileCopyInfo> StartCopy(
+            Uri sourceUri,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            this.StartCopyAsync(
+                sourceUri,
+                metadata,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -231,10 +426,51 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
+        public virtual async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
             Uri sourceUri,
             Metadata metadata = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.StartCopyAsync(
+                sourceUri,
+                metadata,
+                true, // async
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileInfo}}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileCopyInfo>> StartCopyAsync(
+            Uri sourceUri,
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -250,7 +486,8 @@ namespace Azure.Storage.Files
                         this.Uri,
                         copySource: sourceUri,
                         metadata: metadata,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -275,7 +512,35 @@ namespace Azure.Storage.Files
         /// <param name="copyId">
         /// String identifier for the copy operation.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully aborting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response AbortCopy(
+            string copyId,
+            CancellationToken cancellationToken = default) =>
+            this.AbortCopyAsync(
+                copyId,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// </summary>
+        /// <param name="copyId">
+        /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -286,9 +551,41 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> AbortCopyAsync(
+        public virtual async Task<Response> AbortCopyAsync(
             string copyId,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.AbortCopyAsync(
+                copyId,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/abort-copy-file"/>.
+        /// </summary>
+        /// <param name="copyId">
+        /// String identifier for the copy operation.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}"/> on successfully aborting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response> AbortCopyAsync(
+            string copyId,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -303,7 +600,8 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         copyId: copyId,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -317,6 +615,47 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="Download"/> operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information <see cref="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Only download the bytes of the file in the specified
+        /// range.  If not provided, download the entire file.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="StorageFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileDownloadInfo> Download(
+            HttpRange range = default,
+            bool rangeGetContentHash = default,
+            CancellationToken cancellationToken = default) =>
+            this.DownloadAsync(
+                range,
+                rangeGetContentHash,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadAsync"/> operation reads or downloads a file from the system, including its metadata and properties.
@@ -335,7 +674,7 @@ namespace Azure.Storage.Files
         /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
         /// is thrown.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -348,10 +687,55 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
+        public virtual async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.DownloadAsync(
+                range,
+                rangeGetContentHash,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadAsync"/> operation reads or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information <see cref="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Only download the bytes of the file in the specified
+        /// range.  If not provided, download the entire file.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="StorageRequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileDownloadInfo}}"/> describing the
+        /// downloaded file.  <see cref="StorageFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileDownloadInfo>> DownloadAsync(
+            HttpRange range,
+            bool rangeGetContentHash,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -366,7 +750,8 @@ namespace Azure.Storage.Files
                     var response = await this.StartDownloadAsync(
                         range,
                         rangeGetContentHash,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     // Wrap the response Content in a RetriableStream so we
@@ -375,20 +760,23 @@ namespace Azure.Storage.Files
                     response.Value.Content = RetriableStream.Create(
                         response.GetRawResponse(),
                         startOffset =>
-                            (this.StartDownloadAsync(
-                                    range,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    cancellation)
-                                .ConfigureAwait(false).GetAwaiter().GetResult())
-                            .GetRawResponse(),
+                            this.StartDownloadAsync(
+                                range,
+                                rangeGetContentHash,
+                                startOffset,
+                                async,
+                                cancellationToken)
+                                .EnsureCompleted()
+                                .GetRawResponse(),
                         async startOffset =>
                             (await this.StartDownloadAsync(
-                                    range,
-                                    rangeGetContentHash,
-                                    startOffset,
-                                    cancellation)
-                                .ConfigureAwait(false)).GetRawResponse(),
+                                range,
+                                rangeGetContentHash,
+                                startOffset,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false))
+                                .GetRawResponse(),
                         // TODO: For now we're using the default ResponseClassifier
                         // on FileConnectionOptions so we'll do the same here
                         new ResponseClassifier(),
@@ -430,7 +818,10 @@ namespace Azure.Storage.Files
         /// <param name="startOffset">
         /// Optional. Starting offset to request - in the event of a retry.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -440,35 +831,60 @@ namespace Azure.Storage.Files
         /// the file's data.
         /// </returns>
         private async Task<Response<FlattenedStorageFileProperties>> StartDownloadAsync(
-        HttpRange range = default,
+            HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
-            CancellationToken cancellation = default)
+            bool async = true,
+            CancellationToken cancellationToken = default)
         {
             var pageRange = new HttpRange(
                 range.Offset + startOffset,
                 range.Count.HasValue ?
                     range.Count.Value - startOffset :
-                    default);
+                    (long?)null);
             this._pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
             var response =
                 await FileRestClient.File.DownloadAsync(
                     this._pipeline,
                     this.Uri,
-                    range: pageRange.ToRange(),
+                    range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
-                    cancellation: cancellation)
+                    async: async,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this._pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return response;
         }
 
         /// <summary>
+        /// The <see cref="Delete"/> operation immediately removes the file from the storage account.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response Delete(
+            CancellationToken cancellationToken = default) =>
+            this.DeleteAsync(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="DeleteAsync"/> operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -479,8 +895,35 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response> DeleteAsync(
-            CancellationToken cancellation = default)
+        public virtual async Task<Response> DeleteAsync(
+            CancellationToken cancellationToken = default) =>
+            await this.DeleteAsync(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteAsync"/> operation immediately removes the file from the storage account.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response> DeleteAsync(
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -492,7 +935,8 @@ namespace Azure.Storage.Files
                     return await FileRestClient.File.DeleteAsync(
                         this._pipeline,
                         this.Uri,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -508,6 +952,38 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
+        /// The <see cref="GetProperties"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the
+        /// file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// </summary>
+        /// <param name="shareSnapshot">
+        /// Optional. The snapshot identifier.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileProperties}"/> describing the
+        /// file's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileProperties> GetProperties(
+            string shareSnapshot = default,
+            CancellationToken cancellationToken = default) =>
+            this.GetPropertiesAsync(
+                shareSnapshot,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the file. It does not return the content of the
@@ -518,7 +994,7 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. The snapshot identifier.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -530,9 +1006,45 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileProperties>> GetPropertiesAsync(
+        public virtual async Task<Response<StorageFileProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.GetPropertiesAsync(
+                shareSnapshot,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the
+        /// file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// </summary>
+        /// <param name="shareSnapshot">
+        /// Optional. The snapshot identifier.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileProperties}}"/> describing the
+        /// file's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileProperties>> GetPropertiesAsync(
+            string shareSnapshot,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -547,7 +1059,8 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -561,6 +1074,44 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="SetHttpHeaders"/> operation sets system
+        /// properties on the file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// </summary>
+        /// <param name="newSize">
+        /// Optional. Resizes a file to the specified size.
+        /// If the specified byte value is less than the current size
+        /// of the file, then all ranges above the specified byte value
+        /// are cleared.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileInfo> SetHttpHeaders(
+            long? newSize = default,
+            FileHttpHeaders? httpHeaders = default,
+            CancellationToken cancellationToken = default) =>
+            this.SetHttpHeadersAsync(
+                newSize,
+                httpHeaders,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync"/> operation sets system
@@ -577,7 +1128,7 @@ namespace Azure.Storage.Files
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -589,10 +1140,49 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
+        public virtual async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.SetHttpHeadersAsync(
+                newSize,
+                httpHeaders,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// properties on the file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
+        /// </summary>
+        /// <param name="newSize">
+        /// Optional. Resizes a file to the specified size.
+        /// If the specified byte value is less than the current size
+        /// of the file, then all ranges above the specified byte value
+        /// are cleared.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileInfo}}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
+            long? newSize,
+            FileHttpHeaders? httpHeaders,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -614,7 +1204,8 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -630,6 +1221,36 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
+        /// The <see cref="SetMetadata"/> operation sets user-defined
+        /// metadata for the specified file as one or more name-value pairs.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the updated
+        /// file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileInfo> SetMetadata(
+            Metadata metadata,
+            CancellationToken cancellationToken = default) =>
+            this.SetMetadataAsync(
+                metadata,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
@@ -638,7 +1259,7 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Custom metadata to set for this file.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -650,9 +1271,43 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileInfo>> SetMetadataAsync(
+        public virtual async Task<Response<StorageFileInfo>> SetMetadataAsync(
             Metadata metadata,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.SetMetadataAsync(
+                metadata,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
+        /// metadata for the specified file as one or more name-value pairs.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileInfo}}"/> describing the updated
+        /// file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileInfo>> SetMetadataAsync(
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -664,8 +1319,9 @@ namespace Azure.Storage.Files
                     return await FileRestClient.File.SetMetadataAsync(
                         this._pipeline,
                         this.Uri,
-                         metadata: metadata,
-                        cancellation: cancellation)
+                        metadata: metadata,
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -679,6 +1335,62 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="UploadRange"/> operation writes
+        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="writeType">Required. Specifies whether to update or clear the range.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="FileRangeWriteType.Clear"/>.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileUploadInfo}}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileUploadInfo> UploadRange(
+            FileRangeWriteType writeType,
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash = null,
+            IProgress<StorageProgress> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            this.UploadRangeAsync(
+                writeType,
+                range,
+                content,
+                transactionalContentHash,
+                progressHandler,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UploadRangeAsync"/> operation writes
@@ -707,7 +1419,7 @@ namespace Azure.Storage.Files
         /// Optional <see cref="IProgress{StorageProgress}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -719,13 +1431,73 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
             FileRangeWriteType writeType,
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash = null,
             IProgress<StorageProgress> progressHandler = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.UploadRangeAsync(
+                writeType,
+                range,
+                content,
+                transactionalContentHash,
+                progressHandler,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeAsync"/> operation writes
+        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="writeType">Required. Specifies whether to update or clear the range.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="FileRangeWriteType.Clear"/>.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="StorageRequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileUploadInfo}}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileUploadInfo>> UploadRangeAsync(
+            FileRangeWriteType writeType,
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash,
+            IProgress<StorageProgress> progressHandler,
+            bool async,
+            CancellationToken cancellationToken)
         {
             // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
 
@@ -753,10 +1525,11 @@ namespace Azure.Storage.Files
                                     this.Uri,
                                     optionalbody: content,
                                     contentLength: content.Length,
-                                    range: range.ToRange(),
+                                    range: range.ToString(),
                                     fileRangeWrite: writeType,
                                     contentHash: transactionalContentHash,
-                                    cancellation: cancellation)
+                                    async: async,
+                                    cancellationToken: cancellationToken)
                                     .ConfigureAwait(false);
                             },
                         cleanup: () => { })
@@ -772,70 +1545,6 @@ namespace Azure.Storage.Files
                     this._pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
-            /*
-            using (this.Pipeline.Logger.BeginScope($"{nameof(FileUri)} {nameof(this.UploadRangeAsync)}"))
-            {
-                this.Pipeline.Logger.LogMethodEnter(
-                    className: nameof(FileUri),
-                    message:
-                    $"{nameof(this.Uri)}: {this.Uri}\n"
-                    + $"{nameof(writeType)}: {writeType}\n");
-                    //+ $"{nameof(contentLength)}: {contentLength}");
-
-                cancelContext = cancelContext ?? CancelContext.None;
-
-                var exception = default(ExceptionDispatchInfo);
-
-                body = body.WithNoDispose().WithProgress(progressHandler);
-
-                var uploadAttempt = 0;
-
-                var result =
-                    await ReliableOperation.DoAsync(
-                        operation: async () =>
-                        {
-                            this.Pipeline.Logger.LogTrace("Upload attempt {uploadAttempt}", ++uploadAttempt);
-
-                            var responseHeaders = default(IFileUploadRangeCreatedResponseHeaders);
-
-                            await this.StorageClient.FileUploadRange(
-                                resourceUri: this.Uri,
-                                pipeline: this.Pipeline,
-                                context: cancelContext,
-                                timeout: default,
-                                range: range.ToRange(),
-                                fileRangeWrite: writeType,
-                                contentLength: default,
-                                contentMD5: contentHash,
-                                body: body,
-
-                                onCreated:
-                                (response, headers) =>
-                                {
-                                    responseHeaders = headers;
-                                },
-
-                                onDefault:
-                                (response, error, errorHeaders) =>
-                                {
-                                    exception = ExceptionDispatchInfo.Capture(new StorageErrorException(error.Message, errorHeaders.ErrorCode, response));
-                                }
-                                ).ConfigureAwait(false);
-
-                            return responseHeaders;
-                        },
-                        reset: () => body.Seek(0, SeekOrigin.Begin),
-                        cleanup: () => { },
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries
-                        ).ConfigureAwait(false);
-
-                this.Pipeline.Logger.LogAndThrow(exception);
-                this.Pipeline.Logger.LogMethodExit(className: nameof(FileUri));
-
-                return result;
-            }
-            */
         }
 
         /// <summary>
@@ -849,7 +1558,41 @@ namespace Azure.Storage.Files
         /// <param name="shareSnapshot">
         /// Optional. Specifies the share snapshot to query.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileRangeInfo}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileRangeInfo> GetRangeList(
+            HttpRange range,
+            string shareSnapshot = default,
+            CancellationToken cancellationToken = default) =>
+            this.GetRangeListAsync(
+                range,
+                shareSnapshot,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="shareSnapshot">
+        /// Optional. Specifies the share snapshot to query.
+        /// </param>
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -861,10 +1604,48 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
+        public virtual async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
             string shareSnapshot = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.GetRangeListAsync(
+                range,
+                shareSnapshot,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/list-ranges"/>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="shareSnapshot">
+        /// Optional. Specifies the share snapshot to query.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageFileRangeInfo}}"/> describing the
+        /// valid ranges for this file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageFileRangeInfo>> GetRangeListAsync(
+            HttpRange range,
+            string shareSnapshot,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -879,8 +1660,9 @@ namespace Azure.Storage.Files
                         this._pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
-                        range: range.ToRange(),
-                        cancellation: cancellation)
+                        range: range.ToString(),
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -894,6 +1676,48 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="ListHandles"/> operation returns a list of open handles on the file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of items to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
+        /// if the listing operation did not return all items remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="maxResults">
+        /// Optional. Specifies the maximum number of handles to return.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageHandlesSegment}"/> describing a
+        /// segment of the handles on the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageHandlesSegment> ListHandles(
+            string marker = default,
+            int? maxResults = default,
+            CancellationToken cancellationToken = default) =>
+            this.ListHandlesAsync(
+                marker,
+                maxResults,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on the file.
@@ -914,7 +1738,7 @@ namespace Azure.Storage.Files
         /// <param name="maxResults">
         /// Optional. Specifies the maximum number of handles to return.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -926,10 +1750,56 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+        public virtual async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
             string marker = default,
             int? maxResults = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.ListHandlesAsync(
+                marker,
+                maxResults,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on the file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of items to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
+        /// if the listing operation did not return all items remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="maxResults">
+        /// Optional. Specifies the maximum number of handles to return.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageHandlesSegment}}"/> describing a
+        /// segment of the handles on the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+            string marker,
+            int? maxResults,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -946,7 +1816,8 @@ namespace Azure.Storage.Files
                         this.Uri,
                         marker: marker,
                         maxresults: maxResults,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -960,6 +1831,54 @@ namespace Azure.Storage.Files
                 }
             }
         }
+
+        /// <summary>
+        /// The <see cref="ForceCloseHandles"/> operation closes a handle or handles opened on a file
+        /// at the service. It supports closing a single handle specified by <paramref name="handleId"/> or
+        /// or closing all handles opened on that resource.
+        ///
+        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that
+        /// block operations. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
+        /// or alternative for SMB close.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// </summary>
+        /// <param name="handleId">
+        /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
+        /// </param>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the handles
+        /// to be closed with the next call to <see cref="ForceCloseHandles"/>.  The
+        /// operation returns a non-empty <see cref="StorageClosedHandlesSegment.NextMarker"/>
+        /// if the operation did not return all items remaining to be
+        /// closed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the closure of the next segment of handles.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageClosedHandlesSegment}"/> describing a
+        /// segment of the handles closed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageClosedHandlesSegment> ForceCloseHandles(
+            string handleId = Constants.CloseAllHandles,
+            string marker = default,
+            CancellationToken cancellationToken = default) =>
+            this.ForceCloseHandlesAsync(
+                handleId,
+                marker,
+                false, // async,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a file
@@ -986,7 +1905,7 @@ namespace Azure.Storage.Files
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the closure of the next segment of handles.
         /// </param>
-        /// <param name="cancellation">
+        /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
@@ -998,10 +1917,62 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+        public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
-            CancellationToken cancellation = default)
+            CancellationToken cancellationToken = default) =>
+            await this.ForceCloseHandlesAsync(
+                handleId,
+                marker,
+                true, // async,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a file
+        /// at the service. It supports closing a single handle specified by <paramref name="handleId"/> or
+        /// or closing all handles opened on that resource.
+        ///
+        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that
+        /// block operations. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
+        /// or alternative for SMB close.
+        ///
+        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
+        /// </summary>
+        /// <param name="handleId">
+        /// Optional. Specifies the handle ID to be closed. If not specified, or if equal to &quot;*&quot;, will close all handles.
+        /// </param>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the handles
+        /// to be closed with the next call to <see cref="ForceCloseHandlesAsync"/>.  The
+        /// operation returns a non-empty <see cref="StorageClosedHandlesSegment.NextMarker"/>
+        /// if the operation did not return all items remaining to be
+        /// closed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the closure of the next segment of handles.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{StorageClosedHandlesSegment}}"/> describing a
+        /// segment of the handles closed.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
+            string handleId,
+            string marker,
+            bool async,
+            CancellationToken cancellationToken)
         {
             using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
             {
@@ -1018,7 +1989,8 @@ namespace Azure.Storage.Files
                         this.Uri,
                         marker: marker,
                         handleId: handleId,
-                        cancellation: cancellation)
+                        async: async,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

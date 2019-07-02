@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
@@ -20,13 +21,12 @@ using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class BlockBlobClientTests : BlobTestBase
     {
         const long Size = 4 * Constants.KB;
 
-        public BlockBlobClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public BlockBlobClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Act
                     var response = await blob.StageBlockAsync(
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         content: stream);
 
                     // Assert
@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // Act
                     var response = await blob.StageBlockAsync(
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         content: stream,
                         leaseAccessConditions: new LeaseAccessConditions
                         {
@@ -167,7 +167,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.StageBlockAsync(
-                            base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                            base64BlockId: this.ToBase64(this.GetNewBlockName()),
                             content: stream,
                             leaseAccessConditions: new LeaseAccessConditions
                             {
@@ -185,11 +185,12 @@ namespace Azure.Storage.Blobs.Test
 
             using (this.GetNewContainer(out var container))
             {
-                var credentials = new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
                 var blockBlobName = this.GetNewBlobName();
@@ -206,7 +207,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.StageBlockAsync(this.ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
 
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
 
@@ -315,7 +316,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
-                    base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                    base64BlockId: this.ToBase64(this.GetNewBlockName()),
                     sourceContentHash: MD5.Create().ComputeHash(data));
             }
         }
@@ -341,7 +342,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
                     actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
                 );
@@ -376,7 +377,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
-                    base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                    base64BlockId: this.ToBase64(this.GetNewBlockName()),
                     leaseAccessConditions: leaseAccessConditions);
             }
         }
@@ -410,7 +411,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         leaseAccessConditions: leaseAccessConditions),
                     actualException => Assert.AreEqual("LeaseNotPresentWithBlobOperation", actualException.ErrorCode)
                 );
@@ -442,7 +443,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
-                        base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
                         sourceAccessConditions: sourceAccessConditions);
                 }
             }
@@ -474,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
-                            base64BlockID: this.ToBase64(this.GetNewBlockName()),
+                            base64BlockId: this.ToBase64(this.GetNewBlockName()),
                             sourceAccessConditions: sourceAccessConditions),
                         e => { });
                 }
@@ -547,7 +548,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     blobHttpHeaders: new BlobHttpHeaders
                     {
                         CacheControl = constants.CacheControl,
@@ -589,7 +590,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     metadata: metadata);
 
                 // Assert
@@ -619,7 +620,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 var response = await blob.CommitBlockListAsync(
-                    base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                    base64BlockIds: new string[] { this.ToBase64(blockName) },
                     blobAccessConditions: new BlobAccessConditions
                     {
                         LeaseAccessConditions = new LeaseAccessConditions
@@ -653,7 +654,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                     blob.CommitBlockListAsync(
-                        base64BlockIDs: new string[] { this.ToBase64(this.GetNewBlockName()) },
+                        base64BlockIds: new string[] { this.ToBase64(this.GetNewBlockName()) },
                         blobAccessConditions: new BlobAccessConditions
                         {
                             LeaseAccessConditions = new LeaseAccessConditions
@@ -698,7 +699,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     var response = await blob.CommitBlockListAsync(
-                        base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                        base64BlockIds: new string[] { this.ToBase64(blockName) },
                         blobAccessConditions: new BlobAccessConditions
                         {
                             HttpAccessConditions = accessConditions
@@ -746,7 +747,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.CommitBlockListAsync(
-                            base64BlockIDs: new string[] { this.ToBase64(blockName) },
+                            base64BlockIds: new string[] { this.ToBase64(blockName) },
                             blobAccessConditions: new BlobAccessConditions
                             {
                                 HttpAccessConditions = accessConditions
@@ -1092,7 +1093,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     using (var stream = new MemoryStream(data))
                     {
-                        await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response<BlobContentInfo>>(
+                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                             blob.UploadAsync(
                                 content: stream,
                                 blobAccessConditions: new BlobAccessConditions
@@ -1118,7 +1119,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
-                    await this.AssertExpectedExceptionAsync<StorageRequestFailedException, Response<BlobContentInfo>>(
+                    await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.UploadAsync(
                             content: stream,
                             blobAccessConditions: new BlobAccessConditions
@@ -1141,11 +1142,12 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var credentials = new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 var blockBlobName = this.GetNewBlobName();
                 var blobFaulty = this.InstrumentClient(containerFaulty.GetBlockBlobClient(blockBlobName));
@@ -1160,7 +1162,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
 
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
 

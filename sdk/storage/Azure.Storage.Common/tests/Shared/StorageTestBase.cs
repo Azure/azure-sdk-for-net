@@ -6,24 +6,28 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
-        public StorageTestBase(RecordedTestMode? mode = null)
-            // TODO: Correctly parameterize this test with sync/async when we add sync overloads
-            : base(false, mode ?? GetModeFromEnvironment())
+#pragma warning disable IDE0060 // Remove unused parameter
+        public StorageTestBase(bool async, RecordedTestMode? mode = null)
+#pragma warning restore IDE0060 // Remove unused parameter
+            : base(
+                  false, // TODO: #6716: Replace with `async` once we've properly fixed the issue below
+                  mode ?? GetModeFromEnvironment())
         {
             this.Sanitizer = new StorageRecordedTestSanitizer();
             this.Matcher = new RecordMatcher(this.Sanitizer);
         }
 
         public override TClient InstrumentClient<TClient>(TClient client)
-            // TODO: Enable instrumentation when we add sync overloads (by deleting this override)
+            // TODO: #6716: Remove once we've investigated the instrumentation issue with service hiearchies
             => client;
 
         public DateTimeOffset GetUtcNow() => this.Recording.UtcNow;
@@ -60,18 +64,23 @@ namespace Azure.Storage.Test.Shared
             return IPAddress.Parse(ipString);
         }
 
-        public async Task<string> GenerateOAuthToken(
-            string activeDirectoryAuthEndpoint,
-            string activeDirectoryTenantId,
-            string activeDirectoryApplicationId,
-            string activeDirectoryApplicationSecret)
-        {
-            var authority = String.Format(activeDirectoryAuthEndpoint + "/" + activeDirectoryTenantId);
-            var credential = new ClientCredential(activeDirectoryApplicationId, activeDirectoryApplicationSecret);
-            var context = new AuthenticationContext(authority);
-            var result = await context.AcquireTokenAsync("https://storage.azure.com", credential);
-            return result.AccessToken;
-        }
+        public TokenCredential GetOAuthCredential() =>
+            this.GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant);
+
+        public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
+            this.GetOAuthCredential(
+                config.ActiveDirectoryTenantId,
+                config.ActiveDirectoryApplicationId,
+                config.ActiveDirectoryApplicationSecret,
+                new Uri(config.ActiveDirectoryAuthEndpoint));
+
+        public TokenCredential GetOAuthCredential(string tenantId, string appId, string secret, Uri authorityHost) =>
+            new ClientSecretCredential(
+                tenantId,
+                appId,
+                secret,
+                this.Recording.InstrumentClientOptions(
+                    new IdentityClientOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

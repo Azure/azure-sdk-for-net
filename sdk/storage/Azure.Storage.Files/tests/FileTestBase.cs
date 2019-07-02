@@ -9,8 +9,8 @@ using System.Net;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Tests
     {
         public static Uri InvalidUri = new Uri("https://error.file.core.windows.net");
 
-        public FileTestBase(RecordedTestMode? mode = null)
-            : base(mode)
+        public FileTestBase(bool async, RecordedTestMode? mode = null)
+            : base(false, mode)
         {
         }
 
@@ -29,11 +29,10 @@ namespace Azure.Storage.Files.Tests
         public string GetNewDirectoryName() => $"test-directory-{this.Recording.Random.NewGuid()}";
         public string GetNewFileName() => $"test-file-{this.Recording.Random.NewGuid()}";
 
-        public FileConnectionOptions GetOptions(IStorageCredentials credentials = null)
+        public FileClientOptions GetOptions()
             => this.Recording.InstrumentClientOptions(
-                    new FileConnectionOptions
+                    new FileClientOptions
                     {
-                        Credentials = credentials,
                         ResponseClassifier = new TestResponseClassifier(),
                         LoggingPolicy = LoggingPolicy.Shared,
                         RetryPolicy =
@@ -67,13 +66,12 @@ namespace Azure.Storage.Files.Tests
             return disposingShare;
         }
 
-        public FileConnectionOptions GetFaultyFileConnectionOptions(
-            SharedKeyCredentials credentials = null,
+        public FileClientOptions GetFaultyFileConnectionOptions(
             int raiseAt = default,
             Exception raise = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
-            var options = this.GetOptions(credentials);
+            var options = this.GetOptions();
             options.AddPolicy(HttpPipelinePosition.PerCall, new FaultyDownloadPipelinePolicy(raiseAt, raise));
             return options;
         }
@@ -82,24 +80,24 @@ namespace Azure.Storage.Files.Tests
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri(TestConfigurations.DefaultTargetTenant.FileServiceEndpoint),
-                    this.GetOptions(
-                        new SharedKeyCredentials(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey))));
+                    new StorageSharedKeyCredential(
+                        TestConfigurations.DefaultTargetTenant.AccountName,
+                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                    this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_AccountSas(SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
-        public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, SharedKeyCredentials sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
+        public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
                     new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
@@ -115,24 +113,24 @@ namespace Azure.Storage.Files.Tests
             return result;
         }
 
-        public SharedKeyCredentials GetNewSharedKeyCredentials()
-            => new SharedKeyCredentials(
+        public StorageSharedKeyCredential GetNewSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
                 TestConfigurations.DefaultTargetTenant.AccountName,
                 TestConfigurations.DefaultTargetTenant.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(SharedKeyCredentials sharedKeyCredentials = default)
-            => new AccountSasSignatureValues
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+            => new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = new AccountSasServices { File = true }.ToString(),
+                Services = new AccountSasServices { Files = true }.ToString(),
                 ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new FileAccountSasPermissions { Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials);
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new FileSasBuilder
             {
                 ShareName = shareName,
@@ -140,10 +138,10 @@ namespace Azure.Storage.Files.Tests
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new ShareSasPermissions { Read = true, Write = true, List = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
-        public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, SharedKeyCredentials sharedKeyCredentials = default)
+        public SasQueryParameters GetNewFileServiceSasCredentialsFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default)
             => new FileSasBuilder
             {
                 ShareName = shareName,
@@ -152,7 +150,7 @@ namespace Azure.Storage.Files.Tests
                 StartTime = this.Recording.UtcNow.AddHours(-1),
                 ExpiryTime = this.Recording.UtcNow.AddHours(+1),
                 Permissions = new FileSasPermissions { Read = true, Write = true, Create = true, Delete = true }.ToString(),
-                IPRange = new IPRange { Start = IPAddress.None, End = IPAddress.None }
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
             }.ToSasQueryParameters(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials());
 
         public SignedIdentifier[] BuildSignedIdentifiers() =>

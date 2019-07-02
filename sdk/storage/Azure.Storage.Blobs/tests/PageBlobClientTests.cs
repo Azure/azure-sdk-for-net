@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -19,7 +20,6 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [TestFixture]
     public class PageBlobClientTests : BlobTestBase
     {
         const string CacheControl = "control";
@@ -28,8 +28,8 @@ namespace Azure.Storage.Blobs.Test
         const string ContentLanguage = "language";
         const string ContentType = "type";
 
-        public PageBlobClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public PageBlobClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -406,13 +406,14 @@ namespace Azure.Storage.Blobs.Test
 
             using (this.GetNewContainer(out var container))
             {
-                var credentials = new SharedKeyCredentials(
+                var credentials = new StorageSharedKeyCredential(
                     TestConfigurations.DefaultTargetTenant.AccountName,
                     TestConfigurations.DefaultTargetTenant.AccountKey);
                 var containerClientFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
-                        this.GetFaultyBlobConnectionOptions(credentials)));
+                        credentials,
+                        this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange
                 var pageBlobName = this.GetNewBlobName();
@@ -431,7 +432,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
                 {
                     await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
-                    await this.Delay(1000, 25); // wait 1s to allow lingering progress events to execute
+                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     var lastProgress = progressList.Last();
                     Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
@@ -758,7 +759,7 @@ namespace Azure.Storage.Blobs.Test
                     // Act
                     var response = await blob.GetPageRangesDiffAsync(
                         range: new HttpRange(0, Constants.KB),
-                        prevSnapshot: prevSnapshot,
+                        previousSnapshot: prevSnapshot,
                         accessConditions: accessConditions);
 
                     // Assert
@@ -806,7 +807,7 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                         blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
-                            prevSnapshot: prevSnapshot,
+                            previousSnapshot: prevSnapshot,
                             accessConditions: accessConditions),
                         e => Assert.IsTrue(true));
                 }

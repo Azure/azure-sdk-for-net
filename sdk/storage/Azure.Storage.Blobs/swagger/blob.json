@@ -8,8 +8,10 @@
       "strictSpecAdherence": false,
       "namespace": "Azure.Storage.Blobs",
       "client-name": "BlobRestClient",
-      "client-extensions-name": "BlobExtensions",
+      "client-extensions-name": "BlobsExtensions",
+      "client-model-factory-name": "BlobsModelFactory",
       "x-ms-skip-path-components": true,
+      "x-ms-include-sync-methods": true,
       "x-ms-public": false
     }
   },
@@ -1385,48 +1387,6 @@
           "type": "string",
           "enum": [
             "list"
-          ]
-        }
-      ]
-    },
-    "/{containerName}?restype=account&comp=properties": {
-      "get": {
-        "tags": [
-          "container"
-        ],
-        "operationId": "Container_GetAccountInfo",
-        "description": "Returns the sku name and account kind",
-        "parameters": [
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/AccountInfo"
-          },
-          "default": {
-            "$ref": "#/responses/Failure"
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "restype",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "enum": [
-            "account"
-          ]
-        },
-        {
-          "name": "comp",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "enum": [
-            "properties"
           ]
         }
       ]
@@ -3494,48 +3454,6 @@
         }
       ]
     },
-    "/{containerName}/{blob}?restype=account&comp=properties": {
-      "get": {
-        "tags": [
-          "blob"
-        ],
-        "operationId": "Blob_GetAccountInfo",
-        "description": "Returns the sku name and account kind ",
-        "parameters": [
-          {
-            "$ref": "#/parameters/ApiVersionParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/AccountInfo"
-          },
-          "default": {
-            "$ref": "#/responses/Failure"
-          }
-        }
-      },
-      "parameters": [
-        {
-          "name": "restype",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "enum": [
-            "account"
-          ]
-        },
-        {
-          "name": "comp",
-          "in": "query",
-          "required": true,
-          "type": "string",
-          "enum": [
-            "properties"
-          ]
-        }
-      ]
-    },
     "/{containerName}/{blob}?comp=block": {
       "put": {
         "tags": [
@@ -5056,6 +4974,7 @@
         "Expiry"
       ],
       "description": "Key information",
+      "x-ms-public": false,
       "properties": {
         "Start": {
           "description": "The date-time the key is active in ISO 8601 UTC time",
@@ -5559,6 +5478,7 @@
     },
     "BlockLookupList": {
       "type": "object",
+      "x-ms-public": false,
       "properties": {
         "Committed": {
           "type": "array",
@@ -5838,7 +5758,7 @@
         "BlobNotArchived"
       ],
       "x-ms-enum": {
-        "name": "StorageErrorCode",
+        "name": "BlobErrorCode",
         "modelAsString": true
       }
     },

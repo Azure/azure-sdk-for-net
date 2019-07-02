@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
@@ -65,7 +66,7 @@ namespace Azure.Storage.Samples
                 await directoryClient.CreateAsync();
 
                 // Instantiate new DirectoryClient
-                DirectoryClient subDirectoryClient = directoryClient.GetDirectoryClient("mysubdirectory");
+                DirectoryClient subDirectoryClient = directoryClient.GetSubdirectoryClient("mysubdirectory");
 
                 // Create sub directory
                 await subDirectoryClient.CreateAsync();
