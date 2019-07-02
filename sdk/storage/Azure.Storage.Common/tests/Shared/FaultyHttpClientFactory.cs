@@ -26,40 +26,43 @@ namespace Azure.Storage.Test.Shared
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-
-            // Copy to a MemoryStream first because RetriableStreamImpl
-            // doesn't support Position
-            var intermediate = new MemoryStream();
-            if (message.Response.ContentStream != null)
-            {
-                await message.Response.ContentStream.CopyToAsync(intermediate);
-            }
-            intermediate.Seek(0, SeekOrigin.Begin);
-
-            // Use a faulty stream for the Response Content
-            message.Response.ContentStream = new FaultyStream(
-                intermediate,
-                this._raiseExceptionAt,
-                1,
-                this._exceptionToRaise);
+            await this.InjectFaultAsync(message, pipeline, isAsync: true).ConfigureAwait(false);
         }
-
+        
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
+            this.InjectFaultAsync(message, pipeline, isAsync: false).EnsureCompleted();
+        }
 
-            // Copy to a MemoryStream first because RetriableStreamImpl
-            // doesn't support Position
-            var intermediate = new MemoryStream();
-            message.Response.ContentStream.CopyTo(intermediate);
-            intermediate.Seek(0, SeekOrigin.Begin);
+        private async Task InjectFaultAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        {
+            if (message.Response != null)
+            {
+                // Copy to a MemoryStream first because RetriableStreamImpl
+                // doesn't support Position
+                var intermediate = new MemoryStream();
+                if (message.Response.ContentStream != null)
+                {
+                    if (isAsync)
+                    {
+                        await message.Response.ContentStream.CopyToAsync(intermediate).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        message.Response.ContentStream.CopyTo(intermediate);
+                    }
+                    
+                    intermediate.Seek(0, SeekOrigin.Begin);
+                }
 
-            // Use a faulty stream for the Response Content
-            message.Response.ContentStream = new FaultyStream(
-                intermediate,
-                this._raiseExceptionAt,
-                1,
-                this._exceptionToRaise);
+                // Use a faulty stream for the Response Content
+                message.Response.ContentStream = new FaultyStream(
+                    intermediate,
+                    this._raiseExceptionAt,
+                    1,
+                    this._exceptionToRaise);
+            }
         }
     }
 

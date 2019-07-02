@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// maximum size of an append blob is therefore slightly more than 195 GB
     /// (4 MB X 50,000 blocks).
     /// </summary>
-    public class AppendBlobClient : BlobClient
+    public class AppendBlobClient : BlobBaseClient
     {
         /// <summary>
         /// <see cref="AppendBlobMaxAppendBlockBytes"/> indicates the maximum
@@ -546,15 +546,16 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var appendAttempt = 0;
-                    return await ReliableOperation.DoAsync(
+                    return await ReliableOperation.DoSyncOrAsync(
+                        async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
                         predicate: e => true,
                         maximumRetries: Constants.MaxReliabilityRetries,
                         operation:
-                            async () =>
+                            () =>
                             {
                                 this.Pipeline.LogTrace($"Append attempt {++appendAttempt}");
-                                return await BlobRestClient.AppendBlob.AppendBlockAsync(
+                                return BlobRestClient.AppendBlob.AppendBlockAsync(
                                     this.Pipeline,
                                     this.Uri,
                                     body: content,
@@ -568,8 +569,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                                     ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,                                    
                                     async: async,
-                                    cancellationToken: cancellationToken)
-                                    .ConfigureAwait(false);
+                                    cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
                         .ConfigureAwait(false);
@@ -854,6 +854,6 @@ namespace Azure.Storage.Blobs.Specialized
         public static AppendBlobClient GetAppendBlobClient(
             this BlobContainerClient client,
             string blobName)
-            => new AppendBlobClient(client.Uri.AppendToPath(blobName), client._pipeline);
+            => new AppendBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
     }
 }

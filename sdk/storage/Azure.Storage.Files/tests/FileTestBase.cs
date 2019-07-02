@@ -20,8 +20,10 @@ namespace Azure.Storage.Files.Tests
     {
         public static Uri InvalidUri = new Uri("https://error.file.core.windows.net");
 
+        public FileTestBase(bool async) : this(async, null) { }
+
         public FileTestBase(bool async, RecordedTestMode? mode = null)
-            : base(false, mode)
+            : base(async, mode)
         {
         }
 
@@ -106,11 +108,8 @@ namespace Azure.Storage.Files.Tests
         public IDisposable GetNewShare(out ShareClient share, string shareName = default, FileServiceClient service = default, IDictionary<string, string> metadata = default)
         {
             service ??= this.GetServiceClient_SharedKey();
-            var result = new DisposingShare(
-                this.InstrumentClient(service.GetShareClient(shareName ?? this.GetNewShareName())),
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
-            share = this.InstrumentClient(result.ShareClient);
-            return result;
+            share = this.InstrumentClient(service.GetShareClient(shareName ?? this.GetNewShareName()));
+            return new DisposingShare(share, metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase));
         }
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()

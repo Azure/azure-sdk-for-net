@@ -48,7 +48,7 @@ namespace Azure.Core.Testing
                 // Check if there is an async alternative to sync call
                 if (asyncAlternative != null)
                 {
-                    throw new InvalidOperationException("Async method call expected");
+                    throw new InvalidOperationException($"Async method call expected for {methodName}");
                 }
                 else
                 {

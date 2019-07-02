@@ -21,23 +21,27 @@ namespace Azure.Storage.Blobs
     /// </summary>
     public class BlobServiceClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri => this._uri;
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send 
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// every request.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
@@ -192,7 +196,8 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
-        public virtual BlobContainerClient GetBlobContainerClient(string containerName) => new BlobContainerClient(this.Uri.AppendToPath(containerName), this._pipeline);
+        public virtual BlobContainerClient GetBlobContainerClient(string containerName) =>
+            new BlobContainerClient(this.Uri.AppendToPath(containerName), this.Pipeline);
 
         /// <summary>
         /// The <see cref="ListContainersSegment"/> operation returns a
@@ -336,9 +341,9 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -347,7 +352,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.ListContainersSegmentAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
@@ -359,12 +364,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }
@@ -441,13 +446,13 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                this.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await BlobRestClient.Service.GetAccountInfoAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -455,12 +460,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }
@@ -543,13 +548,13 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                this.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await BlobRestClient.Service.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -557,12 +562,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }
@@ -662,9 +667,9 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -672,7 +677,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.SetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         properties,
                         async: async,
@@ -681,12 +686,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }
@@ -775,13 +780,13 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                this.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await BlobRestClient.Service.GetStatisticsAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -789,12 +794,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }
@@ -902,9 +907,9 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
             {
-                this._pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
+                this.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     if (start.HasValue && start.Value.Offset != TimeSpan.Zero)
@@ -917,14 +922,10 @@ namespace Azure.Storage.Blobs
                         throw new ArgumentException($"{nameof(expiry)} must be UTC");
                     }
 
-                    var keyInfo = new KeyInfo
-                    {
-                        Start = start.HasValue ? start.Value.ToString(Constants.ISO8601Format, CultureInfo.InvariantCulture) : String.Empty,
-                        Expiry = expiry.ToString(Constants.ISO8601Format, CultureInfo.InvariantCulture)
-                    };
+                    var keyInfo = new KeyInfo { Start = start, Expiry = expiry };
 
                     return await BlobRestClient.Service.GetUserDelegationKeyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         keyInfo: keyInfo,
                         async: async,
@@ -933,12 +934,12 @@ namespace Azure.Storage.Blobs
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    this.Pipeline.LogMethodExit(nameof(BlobServiceClient));
                 }
             }
         }

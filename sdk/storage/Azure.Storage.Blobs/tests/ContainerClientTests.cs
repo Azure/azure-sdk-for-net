@@ -1583,6 +1583,19 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadBlobAsync()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                var name = this.GetNewBlobName();
+                using var stream = new MemoryStream(this.GetRandomBuffer(100));
+                await container.UploadBlobAsync(name, stream);
+                var properties = await container.GetBlobClient(name).GetPropertiesAsync();
+                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
+            }
+        }
+
+        [Test]
         public async Task DeleteBlobAsync()
         {
             using (this.GetNewContainer(out var container))

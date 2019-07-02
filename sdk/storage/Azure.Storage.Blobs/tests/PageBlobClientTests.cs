@@ -432,10 +432,15 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
                 {
                     await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
-                    await this.Delay(1000, 50); // wait 1s to allow lingering progress events to execute
+
+                    var attempts = 0;
+                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
+                    {
+                        // wait to allow lingering progress events to execute
+                        await this.Delay(500, 100).ConfigureAwait(false);
+                    }
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
-                    var lastProgress = progressList.Last();
-                    Assert.AreEqual(data.LongLength, lastProgress.BytesTransferred, "Final progress has unexpected value");
+                    Assert.AreEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert
@@ -1538,7 +1543,7 @@ namespace Azure.Storage.Blobs.Test
             public string SourceIfNoneMatch { get; set; }
         }
 
-        private async Task WaitForCopy(BlobClient blobUri, int milliWait = 200)
+        private async Task WaitForCopy(BlobBaseClient blobUri, int milliWait = 200)
         {
             var status = CopyStatus.Pending;
             var start = this.Recording.Now;

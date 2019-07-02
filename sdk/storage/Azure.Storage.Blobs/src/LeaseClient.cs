@@ -20,7 +20,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="BlobClient"/> to manage leases for.
         /// </summary>
-        private readonly BlobClient _blob;
+        private readonly BlobBaseClient _blob;
+
+        /// <summary>
+        /// Gets the <see cref="BlobClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobBaseClient BlobClient => this._blob;
 
         /// <summary>
         /// The <see cref="BlobContainerClient"/> to manage leases for.
@@ -28,20 +33,25 @@ namespace Azure.Storage.Blobs.Specialized
         private readonly BlobContainerClient _container;
 
         /// <summary>
+        /// Gets the <see cref="BlobContainerClient"/> to manage leases for.
+        /// </summary>
+        protected virtual BlobContainerClient ContainerClient => this._container;
+
+        /// <summary>
         /// Gets the URI of the object being leased.
         /// </summary>
-        public Uri Uri => this._blob?.Uri ?? this._container?.Uri;
+        public Uri Uri => this.BlobClient?.Uri ?? this.ContainerClient?.Uri;
 
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public string LeaseId { get; private set; }
+        public virtual string LeaseId { get; private set; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => this._blob?.Pipeline ?? this._container._pipeline;
+        private HttpPipeline Pipeline => this.BlobClient?.Pipeline ?? this.ContainerClient.Pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LeaseClient"/> class
@@ -63,11 +73,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public LeaseClient(BlobClient client, string leaseId = null)
+        public LeaseClient(BlobBaseClient client, string leaseId = null)
         {
             this._blob = client ?? throw new ArgumentNullException(nameof(client));
             this._container = null;
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
@@ -85,25 +95,25 @@ namespace Azure.Storage.Blobs.Specialized
         {
             this._blob = null;
             this._container = client ?? throw new ArgumentNullException(nameof(client));
-            this.LeaseId = leaseId ?? GetRandomLeaseId();
+            this.LeaseId = leaseId ?? CreateUniqueLeaseId();
         }
 
         /// <summary>
         /// Gets a unique lease ID.
         /// </summary>
         /// <returns>A unique lease ID.</returns>
-        private static string GetRandomLeaseId() => Guid.NewGuid().ToString();
+        private static string CreateUniqueLeaseId() => Guid.NewGuid().ToString();
 
         /// <summary>
         /// Ensure either the Blob or Container is present.
         /// </summary>
         private void EnsureClient()
         {
-            if (this._blob == null && this._container == null)
+            if (this.BlobClient == null && this.ContainerClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
                 throw new InvalidOperationException(
-                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobClient)} or ${nameof(BlobContainerClient)}");
+                    $"{nameof(LeaseClient)} requires either a ${nameof(BlobBaseClient)} or ${nameof(BlobContainerClient)}");
             }
         }
 
@@ -251,7 +261,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(duration)}: {duration}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.AcquireLeaseAsync(
                             this.Pipeline,
@@ -270,7 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -415,7 +425,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.RenewLeaseAsync(
                             this.Pipeline,
@@ -433,7 +443,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -578,7 +588,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         var response =
                             await BlobRestClient.Blob.ReleaseLeaseAsync(
@@ -600,7 +610,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -752,7 +762,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return await BlobRestClient.Blob.ChangeLeaseAsync(
                             this.Pipeline,
@@ -771,7 +781,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -976,7 +986,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpAccessConditions)}: {httpAccessConditions}");
                 try
                 {
-                    if (this._blob != null)
+                    if (this.BlobClient != null)
                     {
                         return (await BlobRestClient.Blob.BreakLeaseAsync(
                             this.Pipeline,
@@ -995,7 +1005,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -1042,7 +1052,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// ID will be created.
         /// </param>
         public static LeaseClient GetLeaseClient(
-            this BlobClient client,
+            this BlobBaseClient client,
             string leaseId = null) =>
             new LeaseClient(client, leaseId);
 

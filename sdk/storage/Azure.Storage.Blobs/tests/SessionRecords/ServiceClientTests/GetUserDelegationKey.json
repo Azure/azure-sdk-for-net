@@ -19,18 +19,18 @@
         "Cache-Control": "no-store, no-cache",
         "Content-Length": "1233",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jun 2019 01:36:59 GMT",
+        "Date": "Mon, 01 Jul 2019 03:37:03 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=AnWuuv-PrSJDijV1hrPxs1qzwZ5-AQAAALtxo9QOAAAA; expires=Thu, 25-Jul-2019 01:37:00 GMT; path=/; secure; HttpOnly",
+          "fpc=Ah8Or4D-mXlFgdItCIsIhcSzwZ5-BwAAAN12q9QOAAAA; expires=Wed, 31-Jul-2019 03:37:04 GMT; path=/; secure; HttpOnly",
           "x-ms-gateway-slice=estsfd; path=/; secure; HttpOnly",
-          "stsservicecookie=estsfd; path=/; secure; HttpOnly"
+          "stsservicecookie=ests; path=/; secure; HttpOnly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "7dbda20b-ff17-4bb4-8ba1-f25e81550900"
+        "x-ms-request-id": "812dd676-f481-43f8-99a1-ce5b4bf33000"
       },
       "ResponseBody": {
         "token_type": "Bearer",
@@ -44,7 +44,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "81",
+        "Content-Length": "62",
         "Content-Type": "application/xml",
         "User-Agent": [
           "azsdk-net-Storage.Blobs/1.0.0.0",
@@ -56,27 +56,26 @@
       },
       "RequestBody": [
         "\u003cKeyInfo\u003e\r\n",
-        "  \u003cStart\u003e\u003c/Start\u003e\r\n",
-        "  \u003cExpiry\u003e2019-06-25T02:36:59Z\u003c/Expiry\u003e\r\n",
+        "  \u003cExpiry\u003e2019-07-01T04:37:01Z\u003c/Expiry\u003e\r\n",
         "\u003c/KeyInfo\u003e"
       ],
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Tue, 25 Jun 2019 01:37:00 GMT",
+        "Date": "Mon, 01 Jul 2019 03:37:04 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "f77be8b1-501e-0033-5af6-2ad03e000000",
+        "x-ms-request-id": "3f056c98-301e-00ee-60be-2f25bc000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cUserDelegationKey\u003e\u003cSignedOid\u003edbfe680e-330c-4c7e-bb1c-5da5ef3ef1fd\u003c/SignedOid\u003e\u003cSignedTid\u003e72f988bf-86f1-41af-91ab-2d7cd011db47\u003c/SignedTid\u003e\u003cSignedStart\u003e2019-06-25T01:37:00Z\u003c/SignedStart\u003e\u003cSignedExpiry\u003e2019-06-25T02:36:59Z\u003c/SignedExpiry\u003e\u003cSignedService\u003eb\u003c/SignedService\u003e\u003cSignedVersion\u003e2018-11-09\u003c/SignedVersion\u003e\u003cValue\u003eL2nqzIVUBBS3Hsi/eoG7kowDo3AA1xenvcCc5pSLNtg=\u003c/Value\u003e\u003c/UserDelegationKey\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cUserDelegationKey\u003e\u003cSignedOid\u003edbfe680e-330c-4c7e-bb1c-5da5ef3ef1fd\u003c/SignedOid\u003e\u003cSignedTid\u003e72f988bf-86f1-41af-91ab-2d7cd011db47\u003c/SignedTid\u003e\u003cSignedStart\u003e2019-07-01T03:37:04Z\u003c/SignedStart\u003e\u003cSignedExpiry\u003e2019-07-01T04:37:01Z\u003c/SignedExpiry\u003e\u003cSignedService\u003eb\u003c/SignedService\u003e\u003cSignedVersion\u003e2018-11-09\u003c/SignedVersion\u003e\u003cValue\u003e1\u002bw7bd\u002b3sm3rh58UXml6VICJJ1HnLEozpywrhcCSlVc=\u003c/Value\u003e\u003c/UserDelegationKey\u003e"
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-24T18:36:59.9800144-07:00",
+    "DateTimeOffsetNow": "2019-06-30T20:37:01.6520961-07:00",
     "RandomSeed": "1670484557"
   }
 }

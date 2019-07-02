@@ -20,23 +20,27 @@ namespace Azure.Storage.Files
     /// </summary>
     public class FileClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
-        /// Gets the directory's primary <see cref="Uri"/> endpoint.
+        /// The directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
         private readonly Uri _uri;
-        #pragma warning restore IDE0032 // Use auto property
 
         /// <summary>
         /// Gets the directory's primary <see cref="Uri"/> endpoint.
         /// </summary>
-        public Uri Uri => this._uri;
+        public virtual Uri Uri => this._uri;
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary>
+        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
+        /// every request.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline => this._pipeline;
 
         //const string fileType = "file";
 
@@ -206,7 +210,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.ToUri(), this._pipeline);
+            return new FileClient(builder.ToUri(), this.Pipeline);
         }
 
         /// <summary>
@@ -332,9 +336,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -343,7 +347,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.CreateAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         fileContentLength: maxSize,
                         fileContentType: httpHeaders?.ContentType,
@@ -359,12 +363,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -472,9 +476,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -482,7 +486,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.StartCopyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         copySource: sourceUri,
                         metadata: metadata,
@@ -492,12 +496,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -587,9 +591,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -597,7 +601,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.AbortCopyAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         copyId: copyId,
                         async: async,
@@ -606,12 +610,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -737,9 +741,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -788,12 +792,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -842,17 +846,17 @@ namespace Azure.Storage.Files
                 range.Count.HasValue ?
                     range.Count.Value - startOffset :
                     (long?)null);
-            this._pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
+            this.Pipeline.LogTrace($"Download {this.Uri} with range: {pageRange}");
             var response =
                 await FileRestClient.File.DownloadAsync(
-                    this._pipeline,
+                    this.Pipeline,
                     this.Uri,
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
-            this._pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
+            this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return response;
         }
 
@@ -925,15 +929,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.File.DeleteAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -941,12 +945,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1046,9 +1050,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1056,7 +1060,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.GetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
@@ -1065,12 +1069,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1184,9 +1188,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1195,7 +1199,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.SetPropertiesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         fileContentLength: newSize,
                         fileContentType: httpHeaders?.ContentType,
@@ -1210,12 +1214,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1309,15 +1313,15 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
                     return await FileRestClient.File.SetMetadataAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
@@ -1326,12 +1330,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1501,9 +1505,9 @@ namespace Azure.Storage.Files
         {
             // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
 
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1512,16 +1516,17 @@ namespace Azure.Storage.Files
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var uploadAttempt = 0;
-                    return await ReliableOperation.DoAsync(
+                    return await ReliableOperation.DoSyncOrAsync(
+                        async,
                         reset: () => content.Seek(0, SeekOrigin.Begin),
                         predicate: e => true,
                         maximumRetries: Constants.MaxReliabilityRetries,
                         operation:
-                            async () =>
+                            () =>
                             {
-                                this._pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return await FileRestClient.File.UploadRangeAsync(
-                                    this._pipeline,
+                                this.Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
+                                return FileRestClient.File.UploadRangeAsync(
+                                    this.Pipeline,
                                     this.Uri,
                                     optionalbody: content,
                                     contentLength: content.Length,
@@ -1529,20 +1534,19 @@ namespace Azure.Storage.Files
                                     fileRangeWrite: writeType,
                                     contentHash: transactionalContentHash,
                                     async: async,
-                                    cancellationToken: cancellationToken)
-                                    .ConfigureAwait(false);
+                                    cancellationToken: cancellationToken);
                             },
                         cleanup: () => { })
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1647,9 +1651,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1657,7 +1661,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.GetRangeListAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         range: range.ToString(),
@@ -1667,12 +1671,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1801,9 +1805,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1812,7 +1816,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.ListHandlesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         maxresults: maxResults,
@@ -1822,12 +1826,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
@@ -1974,9 +1978,9 @@ namespace Azure.Storage.Files
             bool async,
             CancellationToken cancellationToken)
         {
-            using (this._pipeline.BeginLoggingScope(nameof(FileClient)))
+            using (this.Pipeline.BeginLoggingScope(nameof(FileClient)))
             {
-                this._pipeline.LogMethodEnter(
+                this.Pipeline.LogMethodEnter(
                     nameof(FileClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
@@ -1985,7 +1989,7 @@ namespace Azure.Storage.Files
                 try
                 {
                     return await FileRestClient.File.ForceCloseHandlesAsync(
-                        this._pipeline,
+                        this.Pipeline,
                         this.Uri,
                         marker: marker,
                         handleId: handleId,
@@ -1995,12 +1999,12 @@ namespace Azure.Storage.Files
                 }
                 catch (Exception ex)
                 {
-                    this._pipeline.LogException(ex);
+                    this.Pipeline.LogException(ex);
                     throw;
                 }
                 finally
                 {
-                    this._pipeline.LogMethodExit(nameof(FileClient));
+                    this.Pipeline.LogMethodExit(nameof(FileClient));
                 }
             }
         }
