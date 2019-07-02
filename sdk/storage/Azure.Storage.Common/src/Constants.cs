@@ -27,6 +27,12 @@ namespace Azure.Storage
 
         public const string CloseAllHandles = "*";
 
+        /// <summary>
+        /// The default format we use for block names.  There are 50,000
+        /// maximum blocks so we pad the size with up to 4 leading zeros.
+        /// </summary>
+        public const string BlockNameFormat = "Block_{0:D5}";
+
         internal static class Sas
         {
             internal static class Permissions
