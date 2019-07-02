@@ -43,7 +43,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
@@ -145,7 +148,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
@@ -256,7 +262,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ListSharesSegmentAsync_CreateResponse(_response);
@@ -380,7 +389,10 @@ namespace Azure.Storage.Files
                     quota))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
@@ -502,7 +514,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
@@ -631,7 +646,10 @@ namespace Azure.Storage.Files
                     deleteSnapshots))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
@@ -728,7 +746,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return CreateSnapshotAsync_CreateResponse(_response);
@@ -852,7 +873,10 @@ namespace Azure.Storage.Files
                     quota))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetQuotaAsync_CreateResponse(_response);
@@ -967,7 +991,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
@@ -1084,7 +1111,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetAccessPolicyAsync_CreateResponse(_response);
@@ -1190,7 +1220,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetAccessPolicyAsync_CreateResponse(_response);
@@ -1315,7 +1348,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetStatisticsAsync_CreateResponse(_response);
@@ -1425,7 +1461,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
@@ -1544,7 +1583,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
@@ -1667,7 +1709,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
@@ -1758,7 +1803,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
@@ -1887,7 +1935,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
@@ -2010,7 +2061,10 @@ namespace Azure.Storage.Files
                     recursive))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ListHandlesAsync_CreateResponse(_response);
@@ -2136,7 +2190,10 @@ namespace Azure.Storage.Files
                     recursive))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ForceCloseHandlesAsync_CreateResponse(_response);
@@ -2296,7 +2353,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
@@ -2453,7 +2513,10 @@ namespace Azure.Storage.Files
                     rangeGetContentHash))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return DownloadAsync_CreateResponse(_response);
@@ -2775,7 +2838,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
@@ -2959,7 +3025,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
@@ -3067,7 +3136,10 @@ namespace Azure.Storage.Files
                     fileContentDisposition))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
@@ -3213,7 +3285,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
@@ -3348,7 +3423,10 @@ namespace Azure.Storage.Files
                     contentHash))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return UploadRangeAsync_CreateResponse(_response);
@@ -3491,7 +3569,10 @@ namespace Azure.Storage.Files
                     range))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return GetRangeListAsync_CreateResponse(_response);
@@ -3621,7 +3702,10 @@ namespace Azure.Storage.Files
                     metadata))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return StartCopyAsync_CreateResponse(_response);
@@ -3754,7 +3838,10 @@ namespace Azure.Storage.Files
                     timeout))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return AbortCopyAsync_CreateResponse(_response);
@@ -3859,7 +3946,10 @@ namespace Azure.Storage.Files
                     sharesnapshot))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ListHandlesAsync_CreateResponse(_response);
@@ -3975,7 +4065,10 @@ namespace Azure.Storage.Files
                     sharesnapshot))
                 {
                     Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
                         await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
                         pipeline.SendRequest(_request, cancellationToken);
                     cancellationToken.ThrowIfCancellationRequested();
                     return ForceCloseHandlesAsync_CreateResponse(_response);

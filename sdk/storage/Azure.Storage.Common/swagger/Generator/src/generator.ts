@@ -187,7 +187,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             if (sync) {
                 w.write('async ?');
                 w.scope(() => {
+                    w.line(`// Send the request asynchronously if we're being called via an async path`);
                     w.line(`${asyncCall} :`);
+                    w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
+                    w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
                     w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
                 });
             } else {
