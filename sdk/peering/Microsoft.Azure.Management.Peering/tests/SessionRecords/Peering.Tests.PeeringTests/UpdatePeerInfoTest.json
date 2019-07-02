@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQ0NWJmMTEtNjFjNC00MzZmLWE5NDAtNjAxOTRmOGFjYTU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQ0NWJmMTEtNjFjNC00MzZmLWE5NDAtNjAxOTRmOGFjYTU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 65000,\r\n    \"peerContactInfo\": {\r\n      \"emails\": [\r\n        \"noc65000@contoso.com\"\r\n      ],\r\n      \"phone\": [\r\n        \"9999999\"\r\n      ]\r\n    },\r\n    \"peerName\": \"Contoso65000\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dd2ad06b-e132-4932-98e6-c6b35fd599e0"
+          "f5fe5324-45b1-4d83-8fab-89301940cb36"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27129.04",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
@@ -32,17 +32,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-request-id": [
-          "85a0fcfb-00ff-43c7-8f71-d64e82ff547b"
+        "x-ms-failure-cause": [
+          "gateway"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+        "x-ms-request-id": [
+          "a8fe90c0-ec3d-4cca-afe8-d8cf5818bfbc"
         ],
         "x-ms-correlation-request-id": [
-          "bc282718-4970-476e-b8ab-a97d10d7199d"
+          "a8fe90c0-ec3d-4cca-afe8-d8cf5818bfbc"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190321T222653Z:bc282718-4970-476e-b8ab-a97d10d7199d"
+          "NORTHEUROPE:20190702T220818Z:a8fe90c0-ec3d-4cca-afe8-d8cf5818bfbc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,35 +51,35 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 21 Mar 2019 22:26:53 GMT"
-        ],
-        "Content-Length": [
-          "442"
+          "Tue, 02 Jul 2019 22:08:18 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "228"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 65000,\r\n    \"peerContactInfo\": {\r\n      \"emails\": [\r\n        \"noc65000@contoso.com\"\r\n      ],\r\n      \"phone\": [\r\n        \"9999999\"\r\n      ]\r\n    },\r\n    \"peerName\": \"Contoso65000\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"Contoso65000\",\r\n  \"id\": \"/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns/Contoso65000\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
-      "StatusCode": 201
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'peerAsns' could not be found in the namespace 'Microsoft.Peering' for api version '2019-06-01-preview'. The supported api-versions are '2019-03-01-preview'.\"\r\n  }\r\n}",
+      "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns/Contoso65000?api-version=2019-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQ0NWJmMTEtNjFjNC00MzZmLWE5NDAtNjAxOTRmOGFjYTU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9Db250b3NvNjUwMDA/YXBpLXZlcnNpb249MjAxOS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQ0NWJmMTEtNjFjNC00MzZmLWE5NDAtNjAxOTRmOGFjYTU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucz9hcGktdmVyc2lvbj0yMDE5LTA2LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b670305-f100-49d6-8b7b-e121b12ddfd1"
+          "0ab34020-2600-43f2-8baf-12a6d22c16be"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27129.04",
+          "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
@@ -92,17 +92,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-request-id": [
-          "ca878d52-add9-46b3-bd5b-988c608fe885"
+        "x-ms-failure-cause": [
+          "gateway"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+        "x-ms-request-id": [
+          "3b26cfe9-b5cf-4ae9-9560-f4fa7de4b4a6"
         ],
         "x-ms-correlation-request-id": [
-          "bd9c7b53-4221-4512-a4e4-8cb9140a5a42"
+          "3b26cfe9-b5cf-4ae9-9560-f4fa7de4b4a6"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190321T222654Z:bd9c7b53-4221-4512-a4e4-8cb9140a5a42"
+          "NORTHEUROPE:20190702T220818Z:3b26cfe9-b5cf-4ae9-9560-f4fa7de4b4a6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,20 +111,20 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 21 Mar 2019 22:26:53 GMT"
-        ],
-        "Content-Length": [
-          "442"
+          "Tue, 02 Jul 2019 22:08:18 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "228"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 65000,\r\n    \"peerContactInfo\": {\r\n      \"emails\": [\r\n        \"noc65000@contoso.com\"\r\n      ],\r\n      \"phone\": [\r\n        \"9999999\"\r\n      ]\r\n    },\r\n    \"peerName\": \"Contoso65000\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"Contoso65000\",\r\n  \"id\": \"/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/peerAsns/Contoso65000\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'peerAsns' could not be found in the namespace 'Microsoft.Peering' for api version '2019-06-01-preview'. The supported api-versions are '2019-03-01-preview'.\"\r\n  }\r\n}",
+      "StatusCode": 404
     }
   ],
   "Names": {},

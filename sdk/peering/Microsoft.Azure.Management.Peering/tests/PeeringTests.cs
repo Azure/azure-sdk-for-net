@@ -11,11 +11,13 @@ namespace Peering.Tests
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Net.Mail;
     using Microsoft.Azure.Management.Peering;
     using Microsoft.Azure.Management.Peering.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using Xunit;
@@ -31,6 +33,25 @@ namespace Peering.Tests
         public PeeringManagementClient client { get; set; }
         public ResourceManagementClient resourcesClient { get; set; }
 
+        public PeeringTests()
+        {
+            this.Setup();
+        }
+        
+        private void Setup()
+        {
+            var mode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+            var connectionstring = System.Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+
+            if (mode == null)
+
+                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+
+            if (connectionstring == null)
+
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=4445bf11-61c4-436f-a940-60194f8aca57;ServicePrincipal=a66ad4b3-4c1b-43bf-a0bd-91c8c2c9a6d8;ServicePrincipalSecret=EO84mEYKj9hbJfn/GfkgFCsZmEjDpUqm4ys7CEQpAuY=;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;HttpRecorderMode=Record;");
+        }
 
         [Fact]
         public void PeeringOperationsTest()
