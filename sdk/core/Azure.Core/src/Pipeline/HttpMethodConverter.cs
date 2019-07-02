@@ -38,34 +38,34 @@ namespace Azure.Core.Pipeline
             // Fast-path common values
             if (method.Length == 3)
             {
-                if (string.Equals(method, "GET", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "GET", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Get;
                 }
 
-                if (string.Equals(method, "PUT", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "PUT", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Put;
                 }
             }
             else if (method.Length == 4)
             {
-                if (string.Equals(method, "POST", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Post;
                 }
-                if (string.Equals(method, "HEAD", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "HEAD", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Head;
                 }
             }
             else
             {
-                if (string.Equals(method, "PATCH", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "PATCH", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Patch;
                 }
-                if (string.Equals(method, "DELETE", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(method, "DELETE", StringComparison.OrdinalIgnoreCase))
                 {
                     return HttpPipelineMethod.Delete;
                 }

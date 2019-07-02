@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Azure.Core.Pipeline
 {
-    public class ContentTypeUtilities
+    public static class ContentTypeUtilities
     {
         public static bool TryGetTextEncoding(string contentType, out Encoding encoding)
         {
@@ -23,7 +23,7 @@ namespace Azure.Core.Pipeline
                 return false;
             }
 
-            var charsetIndex = contentType.IndexOf(charsetMarker, StringComparison.InvariantCultureIgnoreCase);
+            var charsetIndex = contentType.IndexOf(charsetMarker, StringComparison.OrdinalIgnoreCase);
             if (charsetIndex != -1)
             {
                 ReadOnlySpan<char> charset = contentType.AsSpan().Slice(charsetIndex + charsetMarker.Length);
@@ -34,10 +34,10 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            if (contentType.StartsWith(textContentTypePrefix) ||
-                contentType.EndsWith(jsonSuffix) ||
-                contentType.EndsWith(xmlSuffix) ||
-                contentType.EndsWith(urlEncodedSuffix))
+            if (contentType.StartsWith(textContentTypePrefix, StringComparison.OrdinalIgnoreCase) ||
+                contentType.EndsWith(jsonSuffix, StringComparison.OrdinalIgnoreCase) ||
+                contentType.EndsWith(xmlSuffix, StringComparison.OrdinalIgnoreCase) ||
+                contentType.EndsWith(urlEncodedSuffix, StringComparison.OrdinalIgnoreCase))
             {
                 encoding = Encoding.UTF8;
                 return true;

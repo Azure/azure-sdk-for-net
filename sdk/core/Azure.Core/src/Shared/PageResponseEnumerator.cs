@@ -28,7 +28,7 @@ namespace Azure.Core
             string nextLink = null;
             do
             {
-                PageResponse<T> pageResponse = await pageFunc(nextLink);
+                PageResponse<T> pageResponse = await pageFunc(nextLink).ConfigureAwait(false);
                 foreach (T setting in pageResponse.Values)
                 {
                     yield return new Response<T>(pageResponse.Response, setting);

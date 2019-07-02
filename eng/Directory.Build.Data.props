@@ -7,6 +7,26 @@
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
     -->
     <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <!--
+      Disable some FxCop rules
+     -->
+    <NoWarn>
+      $(NoWarn);
+      CA1716; <!-- avoid using method names that are reserved in other languages -->
+      CA1308; <!-- prefer ToUpperInvariant  -->
+      CA1819; <!-- Properties should not return arrays -->
+      CA1710; <!-- Use Collection sufix -->
+      CA1028; <!-- Enum backing type should be int -->
+      CA1032; <!-- Add default exception ctors -->
+      CA1063; <!-- Dispose implementation -->
+      CA1066; <!-- Implement IEquatable -->
+      CA1815; <!-- Equality members on structs -->
+      CA2231; <!-- Override Equality operators -->
+      CA2237; <!-- [Serializeable] on exceptions -->
+      CA2225; <!-- Provide alternative to implicit operators -->
+      CA1714; <!-- Flags should have plural names -->
+    </NoWarn>
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -21,6 +41,7 @@
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <EnableClientSdkAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true'">true</EnableClientSdkAnalyzers>
+    <EnableFxCopAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true'">true</EnableFxCopAnalyzers>
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->

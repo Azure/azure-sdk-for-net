@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Globalization;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -67,7 +68,7 @@ namespace Azure.Core.Extensions
             logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
         }
 
-        private LogLevel MapLevel(EventLevel level)
+        private static LogLevel MapLevel(EventLevel level)
         {
             switch (level)
             {
@@ -91,7 +92,7 @@ namespace Azure.Core.Extensions
             var eventData = eventSourceEvent.EventData;
             if (eventData.Message != null)
             {
-                return string.Format(eventData.Message, eventData.Payload);
+                return string.Format(CultureInfo.InvariantCulture, eventData.Message, eventData.Payload);
             }
 
             var stringBuilder = new StringBuilder();
