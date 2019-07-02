@@ -11,7 +11,7 @@ namespace Azure.Core.Extensions
 {
     internal class ConfigurationClientFactory
     {
-        public object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration)
+        public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration)
         {
             List<object> arguments = new List<object>();
             foreach (var constructor in clientType.GetConstructors())
@@ -54,13 +54,13 @@ namespace Azure.Core.Extensions
             throw new InvalidOperationException(BuildErrorMessage(clientType, optionsType));
         }
 
-        private bool IsOptionsParameter(ParameterInfo parameter, Type optionsType)
+        private static bool IsOptionsParameter(ParameterInfo parameter, Type optionsType)
         {
             return parameter.ParameterType.IsAssignableFrom(optionsType) &&
                    parameter.Position == ((ConstructorInfo)parameter.Member).GetParameters().Length - 1;
         }
 
-        private string BuildErrorMessage(Type clientType, Type optionsType)
+        private static string BuildErrorMessage(Type clientType, Type optionsType)
         {
             var builder = new StringBuilder();
             builder.AppendLine("Unable to find matching constructor. Define one of the follow sets of configuration parameters:");
@@ -103,7 +103,7 @@ namespace Azure.Core.Extensions
 
             return builder.ToString();
         }
-        private bool IsApplicableConstructor(ConstructorInfo constructorInfo, Type optionsType)
+        private static bool IsApplicableConstructor(ConstructorInfo constructorInfo, Type optionsType)
         {
             var parameters = constructorInfo.GetParameters();
 
@@ -112,7 +112,7 @@ namespace Azure.Core.Extensions
                    IsOptionsParameter(parameters[parameters.Length - 1], optionsType);
         }
 
-        private object ConvertArgument(string value, ParameterInfo parameter)
+        private static object ConvertArgument(string value, ParameterInfo parameter)
         {
             if (parameter.ParameterType == typeof(string))
             {

@@ -1,4 +1,5 @@
 $(
+  $repo_name = 'azure-sdk-for-net'
   $branch    = if ($Env:SYSTEM_PULLREQUEST_SOURCEBRANCH) { "$Env:SYSTEM_PULLREQUEST_SOURCEBRANCH" } else { "$Env:BUILD_SOURCEBRANCHNAME" }
   $build     = "$Env:BUILD_BUILDNUMBER"
   $build_url = "$Env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI$Env:SYSTEM_TEAMPROJECT/_build/results?buildId=$Env:BUILD_BUILDID"
