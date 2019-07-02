@@ -3,7 +3,7 @@
 | Component | Build Status |
 | --------- | ------------ |
 | Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/529?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master) |
-| Client Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/290?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master)[![Dependencies](https://img.shields.io/badge/dependencies-analyzed-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-python/dependencies/dependencies.html) |
+| Client Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/290?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) [![Dependencies](https://img.shields.io/badge/dependencies-analyzed-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/dependencies/dependencies.html) |
 
 This repository contains official .NET client libraries for Azure services.
 
