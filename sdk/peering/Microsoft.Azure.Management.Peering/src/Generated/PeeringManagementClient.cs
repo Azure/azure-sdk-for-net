@@ -96,6 +96,31 @@ namespace Microsoft.Azure.Management.Peering
         public virtual IPeeringsOperations Peerings { get; private set; }
 
         /// <summary>
+        /// Gets the IPeeringServiceLocationsOperations.
+        /// </summary>
+        public virtual IPeeringServiceLocationsOperations PeeringServiceLocations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPeeringServicePrefixesOperations.
+        /// </summary>
+        public virtual IPeeringServicePrefixesOperations PeeringServicePrefixes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrefixesOperations.
+        /// </summary>
+        public virtual IPrefixesOperations Prefixes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPeeringServiceProvidersOperations.
+        /// </summary>
+        public virtual IPeeringServiceProvidersOperations PeeringServiceProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the IPeeringServicesOperations.
+        /// </summary>
+        public virtual IPeeringServicesOperations PeeringServices { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the PeeringManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -301,6 +326,11 @@ namespace Microsoft.Azure.Management.Peering
             PeerAsns = new PeerAsnsOperations(this);
             PeeringLocations = new PeeringLocationsOperations(this);
             Peerings = new PeeringsOperations(this);
+            PeeringServiceLocations = new PeeringServiceLocationsOperations(this);
+            PeeringServicePrefixes = new PeeringServicePrefixesOperations(this);
+            Prefixes = new PrefixesOperations(this);
+            PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
+            PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2019-06-01-preview";
             AcceptLanguage = "en-US";
