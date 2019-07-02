@@ -471,7 +471,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
+                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
 
                     return await BlobRestClient.Container.DeleteAsync(
@@ -762,7 +762,7 @@ namespace Azure.Storage.Blobs
                         accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.BlobConditionsMustBeDefault(
+                        throw BlobErrors.BlobConditionsMustBeDefault(
                             nameof(HttpAccessConditions.IfUnmodifiedSince),
                             nameof(HttpAccessConditions.IfMatch),
                             nameof(HttpAccessConditions.IfNoneMatch));
@@ -1082,7 +1082,7 @@ namespace Azure.Storage.Blobs
                     if (accessConditions?.HttpAccessConditions?.IfMatch != default ||
                         accessConditions?.HttpAccessConditions?.IfNoneMatch != default)
                     {
-                        throw Errors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
+                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(HttpAccessConditions.IfMatch), nameof(HttpAccessConditions.IfNoneMatch));
                     }
 
                     return await BlobRestClient.Container.SetAccessPolicyAsync(

@@ -280,7 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -610,7 +610,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -781,7 +781,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
@@ -1005,7 +1005,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         if (httpAccessConditions?.IfMatch != default || httpAccessConditions?.IfNoneMatch != default)
                         {
-                            throw Errors.BlobConditionsMustBeDefault(
+                            throw BlobErrors.BlobConditionsMustBeDefault(
                                 nameof(HttpAccessConditions.IfMatch),
                                 nameof(HttpAccessConditions.IfNoneMatch));
                         }
