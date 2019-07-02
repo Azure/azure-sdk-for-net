@@ -10,16 +10,18 @@ namespace Azure.Identity
 {
     /// <summary>
     /// Enables authentication to Azure Active Directory using a client secret that was generated for an App Registration.  More information on how
-    /// to configure a client secret can be found here: 
+    /// to configure a client secret can be found here:
     /// https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
-        private string _tenantId;
-        private string _clientId;
-        private string _clientSecret;
-        private AadIdentityClient _client;
+        private readonly AadIdentityClient _client;
 
+        public string TenantId { get; }
+
+        public string ClientId { get; }
+
+        public string ClientSecret { get; }
 
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a client secret.
@@ -41,9 +43,9 @@ namespace Azure.Identity
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, IdentityClientOptions options)
         {
-            _tenantId = tenantId;
-            _clientId = clientId;
-            _clientSecret = clientSecret;
+            TenantId = tenantId;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
 
             _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
         }
@@ -56,7 +58,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return await this._client.AuthenticateAsync(_tenantId, _clientId, _clientSecret, scopes, cancellationToken).ConfigureAwait(false);
+            return await this._client.AuthenticateAsync(TenantId, ClientId, ClientSecret, scopes, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return this._client.Authenticate(_tenantId, _clientId, _clientSecret, scopes, cancellationToken);
+            return this._client.Authenticate(TenantId, ClientId, ClientSecret, scopes, cancellationToken);
         }
     }
 }

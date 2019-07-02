@@ -5,6 +5,16 @@ using System;
 
 namespace Azure.Core.Extensions.Tests
 {
+    internal class TestClientWithCredentials : TestClient
+    {
+        public TokenCredential Credential { get; }
+
+        public TestClientWithCredentials(Uri uri, TokenCredential credential, TestClientOptions options) : base(uri, options)
+        {
+            Credential = credential;
+        }
+    }
+
     internal class TestClient
     {
         public Uri Uri { get; }

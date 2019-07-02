@@ -27,5 +27,20 @@ namespace Azure.Core.Extensions.Tests
             builder.RegisterClient<TestClient, TestClientOptions>(name, configuration);
             return builder;
         }
+
+        public static TBuilder AddTestClientWithCredentials<TBuilder, TConfiguration>(this TBuilder builder, string name, TConfiguration configuration)
+            where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
+        {
+            builder.RegisterClient<TestClientWithCredentials, TestClientOptions>(name, configuration);
+            return builder;
+        }
+
+        public static TBuilder AddTestClientWithCredentials<TBuilder>(this TBuilder builder, string name, Uri uri, TokenCredential tokenCredential = null, Action<TestClientOptions> configureOptions = null)
+            where TBuilder: IAzureClientsBuilderWithCredential
+        {
+            builder.RegisterClient<TestClientWithCredentials, TestClientOptions>(name, (options, cred) => new TestClientWithCredentials(uri, cred, options), configureOptions, tokenCredential);
+            return builder;
+        }
+
     }
 }

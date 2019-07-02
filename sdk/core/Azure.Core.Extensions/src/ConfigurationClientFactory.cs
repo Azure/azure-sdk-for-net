@@ -4,14 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core.Extensions
 {
-    internal class ConfigurationClientFactory
+    internal class ClientFactory
     {
-        public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration)
+        public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {
             List<object> arguments = new List<object>();
             foreach (var constructor in clientType.GetConstructors())
@@ -26,6 +28,12 @@ namespace Azure.Core.Extensions
                 bool match = true;
                 foreach (var parameter in constructor.GetParameters())
                 {
+                    if (IsCredentialParameter(parameter))
+                    {
+                        arguments.Add(credential);
+                        continue;
+                    }
+
                     if (IsOptionsParameter(parameter, optionsType))
                     {
                         break;
@@ -52,6 +60,53 @@ namespace Azure.Core.Extensions
             }
 
             throw new InvalidOperationException(BuildErrorMessage(clientType, optionsType));
+        }
+
+        internal static TokenCredential CreateCredentials(IConfiguration configuration, IdentityClientOptions identityClientOptions = null)
+        {
+            var clientId = configuration["clientId"];
+            var tenantId = configuration["tenantId"];
+            var clientSecret = configuration["clientSecret"];
+            var certificate = configuration["clientCertificate"];
+            var certificateStore = configuration["clientCertificateStore"];
+
+            if (!string.IsNullOrWhiteSpace(tenantId) &&
+                !string.IsNullOrWhiteSpace(clientId) &&
+                !string.IsNullOrWhiteSpace(clientSecret))
+            {
+                return new ClientSecretCredential(tenantId, clientId, clientSecret, identityClientOptions);
+            }
+
+            if (!string.IsNullOrWhiteSpace(tenantId) &&
+                !string.IsNullOrWhiteSpace(clientId) &&
+                !string.IsNullOrWhiteSpace(certificate))
+            {
+                var storeLocation = string.Equals(certificateStore, "machine", StringComparison.OrdinalIgnoreCase)
+                    ? StoreLocation.LocalMachine
+                    : StoreLocation.CurrentUser;;
+
+                using var store = new X509Store(storeLocation);
+                store.Open(OpenFlags.ReadOnly);
+                X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificate, false);
+
+                if (certs.Count == 0)
+                {
+                    throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
+                }
+
+                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], identityClientOptions);
+                store.Close();
+
+                return credential;
+            }
+
+            // TODO: More logging
+            return null;
+        }
+
+        private static bool IsCredentialParameter(ParameterInfo parameter)
+        {
+            return parameter.ParameterType == typeof(TokenCredential);
         }
 
         private static bool IsOptionsParameter(ParameterInfo parameter, Type optionsType)

@@ -39,18 +39,13 @@ namespace Azure.Core.Extensions
 
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (_loggerFactory == null)
-            {
-                return;
-            }
-
             base.OnEventSourceCreated(eventSource);
 
             if (_filter == null)
             {
                 _eventSources.Add(eventSource);
             }
-            else if (_filter(eventSource))
+            else if (_filter(eventSource) && _loggerFactory != null)
             {
                 var logger = _loggerFactory.CreateLogger(eventSource.Name);
                 _loggers[eventSource.Name] = logger;

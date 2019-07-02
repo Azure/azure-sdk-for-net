@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -177,6 +178,131 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.AreSame(otherException, exception);
             Assert.AreEqual(exception.Message, "Throwing");
+        }
+
+        [Test]
+        public void CanSetGlobalOptions()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient("Default", "TestClient1");
+                builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"));
+                builder.ConfigureDefaults(options => options.TelemetryPolicy.ApplicationId = "GlobalAppId");
+            });
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
+            TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
+            TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
+
+            Assert.AreEqual("GlobalAppId", testClient.Options.TelemetryPolicy.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.TelemetryPolicy.ApplicationId);
+        }
+
+        [Test]
+        public void CanSetGlobalOptionsUsingConfiguration()
+        {
+            var configuration = GetConfiguration(new KeyValuePair<string, string>("TelemetryPolicy:ApplicationId", "GlobalAppId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient("Default", "TestClient1");
+                builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"));
+                builder.UseDefaultConfiguration(configuration);
+            });
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+
+            TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
+            TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
+
+            Assert.AreEqual("GlobalAppId", testClient.Options.TelemetryPolicy.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.TelemetryPolicy.ApplicationId);
+        }
+
+        [Test]
+        public void ResolvesDefaultClientByDefault()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", "Connection string"));
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            var client = provider.GetService<TestClient>();
+
+            Assert.AreEqual("Connection string", client.ConnectionString);
+        }
+
+        [Test]
+        public void UsesProvidedCredentialIfOverGlobal()
+        {
+            var serviceCollection = new ServiceCollection();
+            var defaultAzureCredential = new ManagedIdentityCredential();
+            serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"), defaultAzureCredential));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.AreSame(defaultAzureCredential, client.Credential);
+        }
+
+        [Test]
+        public void UsesGlobalCredential()
+        {
+            var serviceCollection = new ServiceCollection();
+            var defaultAzureCredential = new ManagedIdentityCredential();
+            serviceCollection.AddAzureClients(builder => builder
+                .AddTestClientWithCredentials("Default", new Uri("http://localhost"))
+                .UseDefaultCredential(defaultAzureCredential));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.AreSame(defaultAzureCredential, client.Credential);
+        }
+
+        [Test]
+        public void UsesCredentialFromGlobalConfiguration()
+        {
+            var configuration = GetConfiguration(new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("clientSecret", "ConfigurationClientSecret"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder
+                .AddTestClientWithCredentials("Default", new Uri("http://localhost"))
+                .UseDefaultConfiguration(configuration));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            var clientSecretCredential = (ClientSecretCredential)client.Credential;
+
+            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
+            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+        }
+
+        [Test]
+        public void UsesCredentialFromConfiguration()
+        {
+            var configuration = GetConfiguration(
+                new KeyValuePair<string, string>("uri", "http://localhost/"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("clientSecret", "ConfigurationClientSecret"),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"));
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder => builder
+                .AddTestClientWithCredentials("Default", configuration));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
+
+            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            var clientSecretCredential = (ClientSecretCredential)client.Credential;
+
+            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
+            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
+            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
