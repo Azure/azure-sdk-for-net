@@ -5777,8 +5777,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -5909,8 +5909,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadPagesAsync_CreateResponse(
+            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -5919,7 +5919,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -5941,8 +5941,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -5979,8 +5979,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> ClearPagesAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -6095,8 +6095,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> ClearPagesAsync_CreateResponse(
+            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6105,7 +6105,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -6127,8 +6127,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -6172,8 +6172,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesFromUriAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -6335,8 +6335,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadPagesFromUriAsync_CreateResponse(
+            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6345,7 +6345,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -6367,8 +6367,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -6779,8 +6779,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ResizeAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -6874,8 +6874,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ResizeAsync_CreateResponse(
+            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6884,7 +6884,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobInfo _value = new Azure.Storage.Blobs.Models.BlobInfo();
+                        Azure.Storage.Blobs.Models.PageBlobInfo _value = new Azure.Storage.Blobs.Models.PageBlobInfo();
 
                         // Get response headers
                         string _header;
@@ -6896,10 +6896,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
+                        {
+                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
                                 response,
                                 _value);
 
@@ -6933,8 +6937,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> UpdateSequenceNumberAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -7033,8 +7037,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> UpdateSequenceNumberAsync_CreateResponse(
+            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -7043,7 +7047,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobInfo _value = new Azure.Storage.Blobs.Models.BlobInfo();
+                        Azure.Storage.Blobs.Models.PageBlobInfo _value = new Azure.Storage.Blobs.Models.PageBlobInfo();
 
                         // Get response headers
                         string _header;
@@ -7055,10 +7059,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
+                        {
+                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
                                 response,
                                 _value);
 
@@ -8153,8 +8161,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8253,8 +8261,8 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> StageBlockAsync_CreateResponse(
+            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8263,30 +8271,18 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.BlockInfo _value = new Azure.Storage.Blobs.Models.BlockInfo();
 
                         // Get response headers
                         string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
-                        {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
                                 response,
                                 _value);
 
@@ -8323,8 +8319,8 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockFromUriAsync(
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8446,8 +8442,8 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> StageBlockFromUriAsync_CreateResponse(
+            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8456,30 +8452,18 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.BlockInfo _value = new Azure.Storage.Blobs.Models.BlockInfo();
 
                         // Get response headers
                         string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
-                        {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
                                 response,
                                 _value);
 
@@ -13616,6 +13600,41 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobCopyInfo
 
+#region class BlockInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlockInfo
+    /// </summary>
+    public partial class BlockInfo
+    {
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlockInfo instance for mocking.
+        /// </summary>
+        public static BlockInfo BlockInfo(
+            byte[] contentHash)
+        {
+            var _model = new BlockInfo();
+            _model.ContentHash = contentHash;
+            return _model;
+        }
+    }
+}
+#endregion class BlockInfo
+
 #region class GetBlockListOperation
 namespace Azure.Storage.Blobs.Models
 {
@@ -13674,6 +13693,62 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class GetBlockListOperation
+
+#region class PageInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// PageInfo
+    /// </summary>
+    public partial class PageInfo
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// The current sequence number for the page blob.  This is only returned for page blobs.
+        /// </summary>
+        public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageInfo instance for mocking.
+        /// </summary>
+        public static PageInfo PageInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            long blobSequenceNumber)
+        {
+            var _model = new PageInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
+    }
+}
+#endregion class PageInfo
 
 #region class PageRangesInfo
 namespace Azure.Storage.Blobs.Models
@@ -13736,6 +13811,53 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class PageRangesInfo
+
+#region class PageBlobInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// PageBlobInfo
+    /// </summary>
+    public partial class PageBlobInfo
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The current sequence number for the page blob.  This is only returned for page blobs.
+        /// </summary>
+        public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageBlobInfo instance for mocking.
+        /// </summary>
+        public static PageBlobInfo PageBlobInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            long blobSequenceNumber)
+        {
+            var _model = new PageBlobInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
+    }
+}
+#endregion class PageBlobInfo
 
 #region class BlobAppendInfo
 namespace Azure.Storage.Blobs.Models

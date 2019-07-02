@@ -474,14 +474,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> UploadPages(
+        public virtual Response<PageInfo> UploadPages(
             Stream content,
             long offset,
             byte[] transactionalContentHash = default,
@@ -535,14 +535,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadPagesAsync(
+        public virtual async Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
             byte[] transactionalContentHash = default,
@@ -599,14 +599,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> UploadPagesAsync(
+        private async Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
             byte[] transactionalContentHash,
@@ -695,14 +695,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> ClearPages(
+        public virtual Response<PageInfo> ClearPages(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -737,14 +737,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> ClearPagesAsync(
+        public virtual async Task<Response<PageInfo>> ClearPagesAsync(
             HttpRange range,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -782,14 +782,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> ClearPagesAsync(
+        private async Task<Response<PageInfo>> ClearPagesAsync(
             HttpRange range,
             PageBlobAccessConditions? accessConditions,
             bool async,
@@ -1220,14 +1220,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the resized
+        /// A <see cref="Response{PageBlobInfo}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> Resize(
+        public virtual Response<PageBlobInfo> Resize(
             long size,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1261,14 +1261,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the resized
+        /// A <see cref="Task{Response{PageBlobInfo}}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobInfo>> ResizeAsync(
+        public virtual async Task<Response<PageBlobInfo>> ResizeAsync(
             long size,
             PageBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
@@ -1305,14 +1305,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the resized
+        /// A <see cref="Task{Response{PageBlobInfo}}"/> describing the resized
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> ResizeAsync(
+        private async Task<Response<PageBlobInfo>> ResizeAsync(
             long size, 
             PageBlobAccessConditions? accessConditions,
             bool async,
@@ -1389,14 +1389,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Response{PageBlobInfo}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> UpdateSequenceNumber(
+        public virtual Response<PageBlobInfo> UpdateSequenceNumber(
             SequenceNumberAction action,
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
@@ -1504,14 +1504,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobInfo}}"/> describing the updated
+        /// A <see cref="Task{Response{PageBlobInfo}}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> UpdateSequenceNumberAsync(
+        private async Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
             SequenceNumberAction action,
             long? sequenceNumber,
             PageBlobAccessConditions? accessConditions,
@@ -2025,14 +2025,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobAppendInfo}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Response{PageInfo}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobContentInfo> UploadPagesFromUri(
+        public virtual Response<PageInfo> UploadPagesFromUri(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
@@ -2100,14 +2100,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
+        public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
@@ -2178,14 +2178,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
-        /// state of the updated page blob.
+        /// A <see cref="Task{Response{PageInfo}}"/> describing the
+        /// state of the updated pages.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> UploadPagesFromUriAsync(
+        private async Task<Response<PageInfo>> UploadPagesFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
