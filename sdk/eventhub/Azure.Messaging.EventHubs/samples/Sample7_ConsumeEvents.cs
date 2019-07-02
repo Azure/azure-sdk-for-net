@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to consuming events, using a simple <see cref="EventHubConsumer" />.
     /// </summary>
     ///
-    public class Sample7_ConsumeEvents : ISample
+    public class Sample7_ConsumeEvents : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // that is created with an Event Hub.  Our consumer will begin watching the partition at the very end, reading only new events
                 // that we will publish for it.
 
-                await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, firstPartition, EventPosition.Latest))
+                await using (EventHubConsumer consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, firstPartition, EventPosition.Latest))
                 await using (EventHubProducer producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = firstPartition }))
                 {
                     // Because our consumer is reading from the latest position, it won't see events that have previously

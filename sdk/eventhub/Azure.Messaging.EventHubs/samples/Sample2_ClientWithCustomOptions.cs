@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to Event Hubs, exploring additional options for creating an <see cref="EventHubClient" />.
     /// </summary>
     ///
-    public class Sample2_ClientWithCustomOptions : ISample
+    public class Sample2_ClientWithCustomOptions : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.

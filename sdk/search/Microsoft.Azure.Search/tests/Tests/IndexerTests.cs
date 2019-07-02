@@ -450,7 +450,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertIndexersEqual(Indexer expected, Indexer actual)
         {
-            Assert.Equal(expected, actual, new ModelComparer<Indexer>());
+            Assert.Equal(expected, actual, new DataPlaneModelComparer<Indexer>());
         }
 
         private static void ExpectSameStartTime(Indexer expected, Indexer actual)

@@ -66,6 +66,9 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='versionId'>
         /// Version of the published blueprint definition.
         /// </param>
+        /// <param name='publishedBlueprint'>
+        /// Published Blueprint to create or update.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -87,7 +90,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string scope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string scope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -105,6 +108,10 @@ namespace Microsoft.Azure.Management.Blueprint
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
+            if (publishedBlueprint != null)
+            {
+                publishedBlueprint.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -115,6 +122,7 @@ namespace Microsoft.Azure.Management.Blueprint
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("blueprintName", blueprintName);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("publishedBlueprint", publishedBlueprint);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -167,6 +175,12 @@ namespace Microsoft.Azure.Management.Blueprint
 
             // Serialize Request
             string _requestContent = null;
+            if(publishedBlueprint != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(publishedBlueprint, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

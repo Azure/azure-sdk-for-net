@@ -244,12 +244,12 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         /// <returns>The set of samples defined in the solution.</returns>
         ///
-        private static IReadOnlyList<ISample> LocateSamples() =>
+        private static IReadOnlyList<IEventHubsSample> LocateSamples() =>
             typeof(Program)
               .Assembly
               .ExportedTypes
-              .Where(type => (type.IsClass && typeof(ISample).IsAssignableFrom(type)))
-              .Select(type => (ISample)Activator.CreateInstance(type))
+              .Where(type => (type.IsClass && typeof(IEventHubsSample).IsAssignableFrom(type)))
+              .Select(type => (IEventHubsSample)Activator.CreateInstance(type))
               .ToList();
 
         /// <summary>

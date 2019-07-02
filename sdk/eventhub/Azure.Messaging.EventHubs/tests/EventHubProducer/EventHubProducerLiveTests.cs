@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event
@@ -330,7 +330,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event
@@ -623,7 +623,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             for (var index = 0; index < partitions; index++)
                             {
-                                consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
+                                consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest));
 
                                 // Initiate an operation to force the consumer to connect and set its position at the
                                 // end of the event stream.
@@ -700,7 +700,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
+                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.
@@ -775,7 +775,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         for (var index = 0; index < partitions; index++)
                         {
-                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroup, partitionIds[index], EventPosition.Latest));
+                            consumers.Add(client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partitionIds[index], EventPosition.Latest));
 
                             // Initiate an operation to force the consumer to connect and set its position at the
                             // end of the event stream.

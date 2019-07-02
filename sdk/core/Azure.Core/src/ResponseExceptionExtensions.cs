@@ -37,7 +37,7 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
-            message = await CreateRequestFailedMessageAsync(message, response, async);
+            message = await CreateRequestFailedMessageAsync(message, response, async).ConfigureAwait(false);
             return new RequestFailedException(response.Status, message);
         }
 

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search.Tests
         private static Document Deserialize(string json) => JsonConvert.DeserializeObject<Document>(json, Settings);
 
         private static void AssertDocumentsEqual(Document expectedDoc, Document actualDoc) =>
-            Assert.Equal(expectedDoc, actualDoc, new ModelComparer<Document>());
+            Assert.Equal(expectedDoc, actualDoc, new DataPlaneModelComparer<Document>());
 
         // Functional tests that ensure expected behavior of DocumentConverter.
         public sealed class Functional

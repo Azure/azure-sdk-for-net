@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Certificates
@@ -57,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
                 else
                 {
-                    NotBefore = DateTimeOffset.Parse(nbf.GetString());
+                    NotBefore = DateTimeOffset.Parse(nbf.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
@@ -69,7 +70,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
                 else
                 {
-                    Expires = DateTimeOffset.Parse(exp.GetString());
+                    Expires = DateTimeOffset.Parse(exp.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
@@ -81,7 +82,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
                 else
                 {
-                    Created = DateTimeOffset.Parse(created.GetString());
+                    Created = DateTimeOffset.Parse(created.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 
@@ -93,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
                 else
                 {
-                    Updated = DateTimeOffset.Parse(updated.GetString());
+                    Updated = DateTimeOffset.Parse(updated.GetString(), CultureInfo.InvariantCulture);
                 }
             }
 

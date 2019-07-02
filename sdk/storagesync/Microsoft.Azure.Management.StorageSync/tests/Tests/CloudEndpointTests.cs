@@ -195,5 +195,66 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
                 StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
             }
         }
+
+        [Fact]
+        public void CloudEndpointInvokeChangeDetectionTest()
+        {
+
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                IResourceManagementClient resourcesClient = StorageSyncManagementTestUtilities.GetResourceManagementClient(context, handler);
+                IStorageSyncManagementClient storageSyncManagementClient = StorageSyncManagementTestUtilities.GetStorageSyncManagementClient(context, handler);
+
+                // Create ResourceGroup
+                string resourceGroupName = StorageSyncManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create CloudEndpoint Name
+                string storageSyncServiceName = TestUtilities.GenerateName("sss-cepchangedetection");
+                string syncGroupName = TestUtilities.GenerateName("sg-cepchangedetection");
+                string cloudEndpointName = TestUtilities.GenerateName("cepchangedetection");
+
+                var storageSyncServiceParameters = StorageSyncManagementTestUtilities.GetDefaultStorageSyncServiceParameters();
+                var syncGroupParameters = StorageSyncManagementTestUtilities.GetDefaultSyncGroupParameters();
+                var cloudEndpointParameters = StorageSyncManagementTestUtilities.GetDefaultCloudEndpointParameters();
+
+                StorageSyncService storageSyncServiceResource = storageSyncManagementClient.StorageSyncServices.Create(resourceGroupName, storageSyncServiceName, storageSyncServiceParameters);
+                Assert.NotNull(storageSyncServiceResource);
+                StorageSyncManagementTestUtilities.VerifyStorageSyncServiceProperties(storageSyncServiceResource, true);
+
+                SyncGroup syncGroupResource = storageSyncManagementClient.SyncGroups.Create(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, syncGroupParameters);
+                Assert.NotNull(syncGroupResource);
+                StorageSyncManagementTestUtilities.VerifySyncGroupProperties(syncGroupResource, true);
+
+                CloudEndpoint cloudEndpointResource = storageSyncManagementClient.CloudEndpoints.Create(resourceGroupName, storageSyncServiceResource.Name, syncGroupResource.Name, cloudEndpointName, cloudEndpointParameters);
+                Assert.NotNull(cloudEndpointResource);
+                StorageSyncManagementTestUtilities.VerifyCloudEndpointProperties(cloudEndpointResource, true);
+
+                // invoke with directory path
+                storageSyncManagementClient.CloudEndpoints.TriggerChangeDetection(
+                    resourceGroupName: resourceGroupName,
+                    storageSyncServiceName: storageSyncServiceName,
+                    syncGroupName: syncGroupName,
+                    cloudEndpointName: cloudEndpointName,
+                    parameters: new TriggerChangeDetectionParameters(
+                        directoryPath: "",
+                        changeDetectionMode: ChangeDetectionMode.Recursive));
+
+                // invoke with individual paths
+                storageSyncManagementClient.CloudEndpoints.TriggerChangeDetection(
+                    resourceGroupName: resourceGroupName,
+                    storageSyncServiceName: storageSyncServiceName,
+                    syncGroupName: syncGroupName,
+                    cloudEndpointName: cloudEndpointName,
+                    parameters: new TriggerChangeDetectionParameters(
+                        paths: new string[] { "dir1/subdir1", "file.txt" } ));
+
+                storageSyncManagementClient.CloudEndpoints.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName, cloudEndpointName);
+                storageSyncManagementClient.SyncGroups.Delete(resourceGroupName, storageSyncServiceResource.Name, syncGroupName);
+                storageSyncManagementClient.StorageSyncServices.Delete(resourceGroupName, storageSyncServiceResource.Name);
+                StorageSyncManagementTestUtilities.RemoveResourceGroup(resourcesClient, resourceGroupName);
+            }
+        }
     }
 }

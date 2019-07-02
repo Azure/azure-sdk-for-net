@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-		<Version>2.0.1-preview</Version>
+		<Version>2.0.2-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
 		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
 		<PackageReleaseNotes>

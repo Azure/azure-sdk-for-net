@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.ResourceMustMatchSharedAccessSignature, resource, Credential.Resource), nameof(resource));
             }
 
-            var accessToken = await Credential.GetTokenAsync(EventHubsDefaultScopes, CancellationToken.None);
+            var accessToken = await Credential.GetTokenAsync(EventHubsDefaultScopes, CancellationToken.None).ConfigureAwait(false);
 
             return new TrackOneGenericToken
             (

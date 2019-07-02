@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search.Tests
                     indexAnalyzerName: expectedField.IndexAnalyzer,
                     synonymMaps: expectedField.SynonymMaps);
 
-            Assert.Equal(expectedField, actualField, new ModelComparer<Field>());
+            Assert.Equal(expectedField, actualField, new DataPlaneModelComparer<Field>());
         }
 
         [Theory]
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Search.Tests
                     isFacetable: expectedField.IsFacetable.Value,
                     synonymMaps: expectedField.SynonymMaps);
 
-            Assert.Equal(expectedField, actualField, new ModelComparer<Field>());
+            Assert.Equal(expectedField, actualField, new DataPlaneModelComparer<Field>());
         }
 
         [Fact]
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Search.Tests
                     isFacetable: expectedField.IsFacetable.Value,
                     synonymMaps: expectedField.SynonymMaps);
 
-            Assert.Equal(expectedField, actualField, new ModelComparer<Field>());
+            Assert.Equal(expectedField, actualField, new DataPlaneModelComparer<Field>());
         }
 
         [Theory]

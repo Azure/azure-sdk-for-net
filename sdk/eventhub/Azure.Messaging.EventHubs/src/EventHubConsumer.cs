@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs
     public class EventHubConsumer : IAsyncDisposable
     {
         /// <summary>The name of the default consumer group in the Event Hubs service.</summary>
-        public const string DefaultConsumerGroup = "$Default";
+        public const string DefaultConsumerGroupName = "$Default";
 
         /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
@@ -61,6 +61,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public EventPosition StartingPosition { get; protected set; }
+
+        /// <summary>
+        ///   The text-based identifier label that has optionally been assigned to the consumer.
+        /// </summary>
+        ///
+        public string Identifier => Options?.Identifier;
 
         /// <summary>
         ///   The set of consumer options used for creation of this consumer.
@@ -126,7 +132,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Receives a bach of <see cref="EventData" /> from the the Event Hub partition.
+        ///   Receives a bach of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>

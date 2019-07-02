@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using an <see cref="EventHubProducer" /> that is associated with a specific partition.
     /// </summary>
     ///
-    public class Sample5_PublishEventsToSpecificPartitions : ISample
+    public class Sample5_PublishEventsToSpecificPartitions : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     // If you attempt to use a partition key with an Event Hub producer that is associated with a partition, an exception
                     // will occur.  Otherwise, publishing to a specific partition is exactly the same as other publishing scenarios.
 
-                    // We will publish a small batch of events based on simple sentances.
+                    // We will publish a small batch of events based on simple sentences.
 
                     var eventBatch = new EventData[]
                     {

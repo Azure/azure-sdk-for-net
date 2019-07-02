@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine.</param>
         /// <param name="osVersion">The version of Operating System running on
         /// the virtual machine.</param>
+        /// <param name="hyperVGeneration">Specifies the HyperVGeneration Type
+        /// associated with a resource. Possible values include: 'V1',
+        /// 'V2'</param>
         /// <param name="rdpThumbPrint">The Remote desktop certificate
         /// thumbprint.</param>
         /// <param name="vmAgent">The VM Agent running on the virtual
@@ -55,13 +58,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables
         /// you to see a screenshot of the VM from the hypervisor.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string computerName = default(string), string osName = default(string), string osVersion = default(string), string hyperVGeneration = default(string), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
             ComputerName = computerName;
             OsName = osName;
             OsVersion = osVersion;
+            HyperVGeneration = hyperVGeneration;
             RdpThumbPrint = rdpThumbPrint;
             VmAgent = vmAgent;
             MaintenanceRedeployStatus = maintenanceRedeployStatus;
@@ -107,6 +111,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the HyperVGeneration Type associated with a
+        /// resource. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
 
         /// <summary>
         /// Gets or sets the Remote desktop certificate thumbprint.

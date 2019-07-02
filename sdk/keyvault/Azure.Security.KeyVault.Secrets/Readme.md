@@ -3,7 +3,7 @@ Azure Key Vault is a cloud service that provides a secure storage of secrets, su
 
 Secret client library allows you to securely store and control the access to tokens, passwords, API keys, and other secrets. This library offers operations to create, retrieve, update, delete, purge, backup, restore and list the secrets and its versions.
 
-[Source code][secrets_client_src] | Package (NuGet) (coming soon) | [API reference documentation] (coming soon) | [Product documentation][keyvault_docs] | [Samples] (coming soon)
+[Source code][secret_client_src] | [Package (NuGet)][secret_client_nuget_package] | [API reference documentation] (coming soon) | [Product documentation][keyvault_docs] | [Samples][secret_client_samples]
 
 ## Getting started
 
@@ -225,16 +225,16 @@ Headers:
 
 ## Next steps
 Several Key Vault Secrets client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
-* [helloWorld.cs](TODO) and [helloWorldAsync.cs](TODO) - for working with Azure Key Vault, including:
+* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault, including:
   * Create a secret
   * Get an existing secret
   * Update an existing secret
   * Delete secret
 
-* [TestExamples.cs](TODO) and [TestExamplesAsync.cs](TODO) - Contains the code snippets working with Key Vault secrets, including:
+* [BackupAndRestore.cs][backup_and_restore_sync] and [BackupAndRestoreAsync.cs][backup_and_restore_async] - Contains the code snippets working with Key Vault secrets, including:
   * Backup and recover a secret
 
-* [GetSecrets.cs](TODO) and [GetSecretsAsync.cs](TODO) - Example code for working with Key Vault secrets, including:
+* [GetSecrets.cs][get_secrets_sync] and [GetSecretsAsync.cs][get_secrets_async] - Example code for working with Key Vault secrets, including:
   * Create secrets
   * List all secrets in the Key Vault
   * Update secrets in the Key Vault
@@ -258,14 +258,22 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
+[backup_and_restore_async]:samples/Sample2_BackupAndRestoreAsync.cs
+[backup_and_restore_sync]:samples/Sample2_BackupAndRestore.cs
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[secret_client_class]: src/SecretClient.cs
+[get_secrets_async]: samples/Sample3_GetSecretsAsync.cs
+[get_secrets_sync]: samples/Sample3_GetSecrets.cs
+[hello_world_async]: samples/Sample1_HelloWorldAsync.cs
+[hello_world_sync]: samples/Sample1_HelloWorld.cs
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
 [keyvault_docs]: https://docs.microsoft.com/en-us/azure/key-vault/
 [keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
 [nuget]: https://www.nuget.org/
-[secrets_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
+[secret_client_class]: src/SecretClient.cs
+[secret_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets/
+[secret_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples
+[secret_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
 [soft_delete]: https://docs.microsoft.com/en-us/azure/key-vault/key-vault-ovw-soft-delete
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FFREADME.png)

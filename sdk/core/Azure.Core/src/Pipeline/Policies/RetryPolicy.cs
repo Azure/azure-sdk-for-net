@@ -89,7 +89,7 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
                     {
-                        GetDelay(message, lastException, attempt, out delay);
+                        GetDelay(attempt, out delay);
                     }
                     else
                     {
@@ -122,7 +122,7 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await WaitAsync(delay, message.CancellationToken);
+                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -191,7 +191,7 @@ namespace Azure.Core.Pipeline.Policies
             }
         }
 
-        private void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+        private void GetDelay(int attempted, out TimeSpan delay)
         {
             delay = CalculateExponentialDelay(attempted);
         }

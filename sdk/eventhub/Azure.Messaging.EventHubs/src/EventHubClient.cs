@@ -15,7 +15,7 @@ using Azure.Messaging.EventHubs.Metadata;
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The main point of interaction with Azure Event Hubs, the client offers a
+    ///   The main point of interaction with the Azure Event Hubs service, the client offers a
     ///   connection to a specific Event Hub within the Event Hubs namespace and offers operations
     ///   for sending event data, receiving events, and inspecting the connected Event Hub.
     /// </summary>
@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs
                                                                              CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, cancellationToken);
 
         /// <summary>
-        ///   Creates an Event Hub producer responsible for transmitting <see cref="EventData" /> to the
+        ///   Creates an Event Hub producer responsible for publishing <see cref="EventData" /> to the
         ///   Event Hub, either as a single item or grouped together in batches.  Depending on the
         ///   <paramref name="producerOptions"/> specified, the producer may be created to allow event
         ///   data to be automatically routed to an available partition or specific to a partition.
@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Creates an Event Hub consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
-        ///   and as a member of a specific consumer group.
+        ///   in the context of a specific consumer group.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
         ///   group to ensure that only one consumer from that group is reading the from the partition.

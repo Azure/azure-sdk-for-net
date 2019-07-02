@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false.
+        /// Specifies whether to reimage temp disk. Default value: false. Note:
+        /// This temp disk reimage parameter is only supported for VM/VMSS with
+        /// Ephemeral OS disk.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -431,7 +433,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The instance ID of the virtual machine.
         /// </param>
         /// <param name='tempDisk'>
-        /// Specifies whether to reimage temp disk. Default value: false.
+        /// Specifies whether to reimage temp disk. Default value: false. Note:
+        /// This temp disk reimage parameter is only supported for VM/VMSS with
+        /// Ephemeral OS disk.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

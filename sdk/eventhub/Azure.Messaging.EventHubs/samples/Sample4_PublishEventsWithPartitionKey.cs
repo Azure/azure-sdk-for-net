@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to publishing events, using a partition key to group them together.
     /// </summary>
     ///
-    public class Sample4_PublishEventsWithPartitionKey : ISample
+    public class Sample4_PublishEventsWithPartitionKey : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
@@ -47,13 +47,13 @@ namespace Azure.Messaging.EventHubs.Samples
                 //
                 // The partition key is NOT the identifier of a specific partition.  Rather, it is an arbitrary piece of string data
                 // that Event Hubs uses as the basis to compute a hash value.  Event Hubs will associate the hash value with a specific
-                // partition, ensuring that any events published with the same partition key are reouted to the same partition.
+                // partition, ensuring that any events published with the same partition key are routed to the same partition.
                 //
                 // Note that there is no means of accurately predicting which partition will be associated with a given partition key;
                 // we can only be assured that it will be a consistent choice of partition.  If you have a need to understand which
                 // exact partition an event is published to, you will need to use an Event Hub producer associated with that partition.
 
-                // We will publish a small batch of events based on simple sentances.
+                // We will publish a small batch of events based on simple sentences.
 
                 var eventBatch = new EventData[]
                 {
