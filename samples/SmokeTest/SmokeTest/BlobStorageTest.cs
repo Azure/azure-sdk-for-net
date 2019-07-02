@@ -32,7 +32,7 @@ namespace SmokeTest
             Console.WriteLine("2.- Delete that Blob Block" + '\n');
 
             Console.Write("Uploading blob... ");
-            var result1 = await ExcecuteTest(UploadBlob);
+            var result1 = await ExecuteTest(UploadBlob);
             if (!result1)
             {
                 //If this test failed, then the othe one is going to fail too.
@@ -41,7 +41,7 @@ namespace SmokeTest
             }
 
             Console.Write("Deleting blob... ");
-            var result2 = await ExcecuteTest(DeleteBlob);
+            var result2 = await ExecuteTest(DeleteBlob);
             if (!result2)
             {
                 return false;

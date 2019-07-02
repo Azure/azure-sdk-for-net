@@ -35,7 +35,7 @@ namespace SmokeTest
             var testPassed = true;
 
             Console.Write("Set a secret... ");
-            var result1 = await ExcecuteTest(SetNewSecret);
+            var result1 = await ExecuteTest(SetNewSecret);
             if (!result1)
             {
                 //If this test failes, the other ones are going to fail too.
@@ -44,14 +44,14 @@ namespace SmokeTest
             }
 
             Console.Write("Get that secret... ");
-            var result2 = await ExcecuteTest(GetSecret);
+            var result2 = await ExecuteTest(GetSecret);
             if (!result2)
             {
                 testPassed = false;
             }
 
             Console.Write("Cleaning up the resource... ");
-            var result3 = await ExcecuteTest(CleanUp);
+            var result3 = await ExecuteTest(CleanUp);
             if (!result3)
             {
                 testPassed = false;

@@ -12,7 +12,7 @@ namespace SmokeTest
         /// </summary>
         /// <param name="testAction"></param>
         /// <returns></returns>
-        protected async Task<bool> ExcecuteTest(Func<Task> testAction)
+        protected async Task<bool> ExecuteTest(Func<Task> testAction)
         {
             try
             {

@@ -39,7 +39,7 @@ namespace SmokeTest
             Console.WriteLine("2.- Recieve those events\n");
 
             Console.Write("Creating the Sender and Receivers... ");
-            var result1 = await ExcecuteTest(CreateSenderAndReceiver);
+            var result1 = await ExecuteTest(CreateSenderAndReceiver);
             if(!result1)
             {
                 //If this test fail, the next one is going to fail too.
@@ -47,7 +47,7 @@ namespace SmokeTest
                 return false;
             }
 
-            var result2 = await ExcecuteTest(SendAndReceiveEvents);
+            var result2 = await ExecuteTest(SendAndReceiveEvents);
             if(!result2)
             {
                 return false;

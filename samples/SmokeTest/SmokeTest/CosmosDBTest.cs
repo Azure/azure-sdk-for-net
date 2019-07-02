@@ -61,7 +61,7 @@ namespace SmokeTest
             var testPassed = true;
 
             Console.Write("Creating Database '"+DataBaseName+"'... ");
-            var result1 = await ExcecuteTest(CreateDatabase);
+            var result1 = await ExecuteTest(CreateDatabase);
             if(!result1)
             {
                 //If this test failed, the next ones are going to fail too
@@ -70,28 +70,28 @@ namespace SmokeTest
             }
 
             Console.Write("Creating collection '"+CollectionName+"' ");
-            var result2 = await ExcecuteTest(CreateCollection);
+            var result2 = await ExecuteTest(CreateCollection);
             if (!result2)
             {
                 testPassed = false;
             }
 
             Console.Write("Inserting 'Earth' and 'Mars' JSON Documents... ");
-            var result3 = await ExcecuteTest(CreateDocuments);
+            var result3 = await ExecuteTest(CreateDocuments);
             if (!result3)
             {
                 testPassed = false;
             }
 
             Console.Write("Querying... ");
-            var result4 = await ExcecuteTest(ExecuteSimpleQuery);
+            var result4 = await ExecuteTest(ExecuteSimpleQuery);
             if (!result4)
             {
                 testPassed = false;
             }
             
             Console.Write("Cleaning up the resource... ");
-            var result5 = await ExcecuteTest(DeleteDatabase);
+            var result5 = await ExecuteTest(DeleteDatabase);
             if (!result5)
             {
                 testPassed = false;
