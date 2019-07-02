@@ -27,10 +27,10 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
     public sealed class EventHubScope : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttemps = 5;
+        private const int RetryMaximumAttemps = 8;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 1.0;
+        private const double RetryExponentialBackoffSeconds = 0.5;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
         private const double RetryBaseJitterSeconds = 3.0;

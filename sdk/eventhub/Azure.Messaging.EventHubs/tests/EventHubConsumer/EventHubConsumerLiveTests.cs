@@ -1146,9 +1146,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(20)]
-        [TestCase(40)]
-        [TestCase(60)]
+        [TestCase(2)]
+        [TestCase(4)]
+        [TestCase(15)]
         public async Task ReceiveStopsWhenMaximumWaitTimeIsReached(int maximumWaitTimeInSecs)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -1188,9 +1188,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(20)]
-        [TestCase(40)]
-        [TestCase(60)]
+        [TestCase(3)]
+        [TestCase(7)]
+        [TestCase(12)]
         public async Task ReceiveStopsWhenDefaultMaximumWaitTimeIsReachedIfMaximumWaitTimeIsNotProvided(int defaultMaximumWaitTimeInSecs)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
