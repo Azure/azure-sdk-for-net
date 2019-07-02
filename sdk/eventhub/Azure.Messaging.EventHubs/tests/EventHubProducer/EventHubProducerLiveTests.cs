@@ -641,7 +641,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
 
                             // Receive the events; because there is some non-determinism in the messaging flow, the
-                            // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                            // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
                             // to account for availability delays.
 
                             foreach (var consumer in consumers)
@@ -715,7 +715,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         await producer.SendAsync(eventBatch);
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         foreach (var consumer in consumers)
@@ -795,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // sent events may not be immediately available. Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
                         foreach (var consumer in consumers)
