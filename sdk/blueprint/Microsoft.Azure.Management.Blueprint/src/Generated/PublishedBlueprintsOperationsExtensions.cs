@@ -40,9 +40,12 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='versionId'>
             /// Version of the published blueprint definition.
             /// </param>
-            public static PublishedBlueprint Create(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId)
+            /// <param name='publishedBlueprint'>
+            /// Published Blueprint to create or update.
+            /// </param>
+            public static PublishedBlueprint Create(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint))
             {
-                return operations.CreateAsync(scope, blueprintName, versionId).GetAwaiter().GetResult();
+                return operations.CreateAsync(scope, blueprintName, versionId, publishedBlueprint).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,12 +67,15 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='versionId'>
             /// Version of the published blueprint definition.
             /// </param>
+            /// <param name='publishedBlueprint'>
+            /// Published Blueprint to create or update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PublishedBlueprint> CreateAsync(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PublishedBlueprint> CreateAsync(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, blueprintName, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(scope, blueprintName, versionId, publishedBlueprint, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

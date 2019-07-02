@@ -22,6 +22,6 @@ namespace Azure.Security.KeyVault.Certificates
         public DateTimeOffset Updated { get; set; }
         public DateTimeOffset Created { get; set; }
         public bool Enabled { get; set; }
-        public List<LifeTimeAction> LifeTimeActions { get; set; }
+        public List<LifeTimeAction> LifeTimeActions { get; } = new List<LifeTimeAction>();
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Get, () => new Secret(), cancellationToken, SecretsPath, name, "/", version);
+            return await SendRequestAsync(HttpPipelineMethod.Get, () => new Secret(), cancellationToken, SecretsPath, name, "/", version).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.Security.KeyVault.Secrets
             if (secret == null) throw new ArgumentNullException(nameof(secret));
             if (secret.Version == null) throw new ArgumentNullException($"{nameof(secret)}.{nameof(secret.Version)}");
 
-            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version);
+            return await SendRequestAsync(HttpPipelineMethod.Patch, secret, () => new SecretBase(), cancellationToken, SecretsPath, secret.Name, "/", secret.Version).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (secret == null) throw new ArgumentNullException(nameof(secret));
 
-            return await SendRequestAsync(HttpPipelineMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name);
+            return await SendRequestAsync(HttpPipelineMethod.Put, secret, () => new Secret(), cancellationToken, SecretsPath, secret.Name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<Secret>> SetAsync(string name, string value, CancellationToken cancellationToken = default)
         {
-            return await SetAsync(new Secret(name, value), cancellationToken);
+            return await SetAsync(new Secret(name, value), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name);
+            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedSecret(), cancellationToken, SecretsPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Get, () => new DeletedSecret(), cancellationToken, DeletedSecretsPath, name);
+            return await SendRequestAsync(HttpPipelineMethod.Get, () => new DeletedSecret(), cancellationToken, DeletedSecretsPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, () => new SecretBase(), cancellationToken, DeletedSecretsPath, name, "/recover");
+            return await SendRequestAsync(HttpPipelineMethod.Post, () => new SecretBase(), cancellationToken, DeletedSecretsPath, name, "/recover").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedSecretsPath, name);
+            return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedSecretsPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
 
-            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup");
+            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new VaultBackup(), cancellationToken, SecretsPath, name, "/backup").ConfigureAwait(false);
 
             return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
@@ -490,7 +490,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "restore");
+            return await SendRequestAsync(HttpPipelineMethod.Post, new VaultBackup { Value = backup }, () => new SecretBase(), cancellationToken, SecretsPath, "restore").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace Azure.Security.KeyVault.Secrets
             {
                 request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return CreateResponse(response, resultFactory());
             }
@@ -542,7 +542,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             using (Request request = CreateRequest(method, path))
             {
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return CreateResponse(response, resultFactory());
             }
@@ -562,7 +562,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             using (Request request = CreateRequest(method, path))
             {
-                return await SendRequestAsync(request, cancellationToken);
+                return await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -576,7 +576,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            var response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             switch (response.Status)
             {
@@ -585,7 +585,7 @@ namespace Azure.Security.KeyVault.Secrets
                 case 204:
                     return response;
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync();
+                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
             }
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
@@ -614,7 +614,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
             {
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 // read the respose
                 Page<T> responseAsPage = new Page<T>(itemFactory);

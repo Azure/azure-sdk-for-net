@@ -1407,7 +1407,7 @@
       "RequestUri": "/subscriptions/0004fee6-aec7-40be-8b4e-197a7eca2e0f/resourcegroups/System.local/providers/Microsoft.Backup.Admin/backupLocations/local/backups/ca6faa24-c5b4-47f4-84d1-dcb250b82368/restore?api-version=2018-09-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDAwNGZlZTYtYWVjNy00MGJlLThiNGUtMTk3YTdlY2EyZTBmL3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvYmFja3Vwcy9jYTZmYWEyNC1jNWI0LTQ3ZjQtODRkMS1kY2IyNTBiODIzNjgvcmVzdG9yZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"decryptionCertBase64\": \"decryptionCert\",\r\n  \"decryptionCertPassword\": \"decryptionCertPassword\"\r\n}",
+      "RequestBody": "{\r\n  \"roleName\": \"-\",\r\n  \"decryptionCertBase64\": \"decryptionCert\",\r\n  \"decryptionCertPassword\": \"decryptionCertPassword\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "52966e7b-616e-4838-83a6-fafc94febd64"

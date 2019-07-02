@@ -20,12 +20,12 @@ namespace Azure.Identity
 
             if (scopes.Length != 1) throw new ArgumentException("To convert to a resource string the specified array must be exactly length 1", nameof(scopes));
 
-            if (!scopes[0].EndsWith(DefaultSuffix))
+            if (!scopes[0].EndsWith(DefaultSuffix, StringComparison.Ordinal))
             {
                 return scopes[0];
             }
 
-            return scopes[0].Remove(scopes[0].LastIndexOf(DefaultSuffix));
+            return scopes[0].Remove(scopes[0].LastIndexOf(DefaultSuffix, StringComparison.Ordinal));
         }
 
         public static string[] ResourceToScopes(string resource)

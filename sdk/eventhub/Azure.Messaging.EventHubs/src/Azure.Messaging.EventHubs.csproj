@@ -6,6 +6,7 @@
     <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Azure.Messaging.EventHubs.xml</DocumentationFile>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,14 +51,28 @@
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
-  <!-- Track One Source, for the first preview only -->
+  <!-- 
+      TRACK ONE DEPENDENCIES::TO BE REMOVED
+      Dependencies needed only for the Track One client.        
+  -->
   <ItemGroup>
-    <Compile Remove="TrackOneClient\**" />
-    <EmbeddedResource Remove="TrackOneClient\**" />
-    <None Remove="TrackOneClient\**" />
-  </ItemGroup>
+    <Folder Include="TrackOneClient\" />
 
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)TrackOneClient\Azure.Messaging.EventHubs.TrackOne.csproj" />
+    <Compile Update="TrackOneClient\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>      
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TrackOneClient\Resources.resx</DependentUpon>
+    </Compile>
+
+    <EmbeddedResource Update="TrackOneClient\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TrackOneClient\Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" PrivateAssets="All" />
+    <PackageReference Include="System.Net.Http" PrivateAssets="All" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" PrivateAssets="All" />
   </ItemGroup>
+  <!-- END TRACK ONE DEPENDENCIES -->  
 </Project>

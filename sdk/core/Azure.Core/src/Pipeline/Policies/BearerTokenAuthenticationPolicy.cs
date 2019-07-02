@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline.Policies
 
             if (async)
             {
-                await ProcessNextAsync(message, pipeline);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
