@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-
-
     class BlobStorageTest : TestBase
     {
-        
         private BlobServiceClient service;
         private BlockBlobClient blob;
 
@@ -67,6 +64,5 @@ namespace SmokeTest
         {
             await blob.DeleteAsync();
         }
-
     }
 }

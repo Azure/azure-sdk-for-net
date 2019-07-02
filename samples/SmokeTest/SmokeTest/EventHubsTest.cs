@@ -67,7 +67,6 @@ namespace SmokeTest
             {
                 BeginReceivingAt = EventPosition.NewEventsOnly
             };
-
             sender = client.CreateSender(senderOptions);
             receiver = client.CreateReceiver(partition, receiverOptions);
         }
@@ -126,6 +125,5 @@ namespace SmokeTest
                 throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + index.ToString() + "."));
             }
         }
-
     }
 }

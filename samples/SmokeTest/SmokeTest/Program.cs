@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-
     class Program
     {
         static async Task<int> Main(string[] args)
@@ -28,7 +27,6 @@ namespace SmokeTest
             {
                 return 1;
             }
-
             return 0;
         }
     }

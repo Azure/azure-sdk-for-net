@@ -18,7 +18,6 @@ namespace SmokeTest
             this.client = new SecretClient(new Uri(KeyVaultUri), new ClientSecretCredential(tenantid, clientid, clientsecret));
         }
 
-        
         /// <summary>
         /// Validates the Key Vault SDK
         /// </summary>
@@ -71,7 +70,6 @@ namespace SmokeTest
         {
             Azure.Response<Secret> secret;
             secret = await client.GetAsync(secretName);                
-
             //Verify that the secret received is the one that was set previously
             if (secret.Value.Value != secretValue)
             {
@@ -83,6 +81,5 @@ namespace SmokeTest
         {
             await client.DeleteAsync(secretName);
         }
-
     }
 }

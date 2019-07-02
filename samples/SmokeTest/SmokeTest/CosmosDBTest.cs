@@ -30,11 +30,9 @@ namespace SmokeTest
         public string Name { get; set; }
     }
 
-
     class CosmosDBTest : TestBase
     {
         private DocumentClient client;
-        
         private const string DataBaseName = "netSolarSystemDB";
         private const string CollectionName = "netPlanetsCollection";
         private Planet planetEarth;
@@ -60,7 +58,6 @@ namespace SmokeTest
             Console.WriteLine("3.- Create 2 JSON Documents (Items) in the collection");
             Console.WriteLine("4.- Excecute simple query to the collection");
             Console.WriteLine("5.- Clean up the resource (Delete DB)\n");
-
             var testPassed = true;
 
             Console.Write("Creating Database '"+DataBaseName+"'... ");
@@ -128,7 +125,6 @@ namespace SmokeTest
                     }
                 }
             };
-
             planetMars = new Planet
             {
                 Id = "Mars",
@@ -149,7 +145,6 @@ namespace SmokeTest
 
             await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetEarth);
             await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetMars);
-
         }
 
         private async Task ExecuteSimpleQuery(){
@@ -169,6 +164,5 @@ namespace SmokeTest
         {
             await client.DeleteDatabaseAsync(UriFactory.CreateDatabaseUri(DataBaseName));
         }
-
     }
 }
