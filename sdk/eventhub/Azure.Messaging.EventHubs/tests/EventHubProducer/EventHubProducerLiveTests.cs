@@ -231,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
-                    // Actual limit is 1046520 for a single event
+                    // Actual limit is 1046520 for a single event.
                     var singleEvent = new EventData(new byte[1000000]);
                     var eventBatch = new[] { new EventData(new byte[1000000]) };
 
@@ -256,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 await using (var producer = client.CreateProducer())
                 {
-                    // Actual limit is 1046520 for a single event
+                    // Actual limit is 1046520 for a single event.
                     var singleEvent = new EventData(new byte[1500000]);
                     var eventBatch = new[] { new EventData(new byte[1500000]) };
 
@@ -335,7 +335,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
-                    // Actual limit is 1046520 for a single event
+                    // Actual limit is 1046520 for a single event.
                     var events = new[]
                     {
                         new EventData(new byte[1000000 / 3]),
@@ -363,7 +363,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 await using (var producer = client.CreateProducer())
                 {
-                    // Actual limit is 1046520 for a single event
+                    // Actual limit is 1046520 for a single event.
                     var events = new[]
                     {
                         new EventData(new byte[1500000 / 3]),
@@ -514,7 +514,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
                     {
-                        // Sending events beforehand so the partition has some information
+                        // Sending events beforehand so the partition has some information.
 
                         await producer.SendAsync(events);
 
@@ -528,13 +528,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         Assert.That(newPartitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
 
-                        // The following properties should not have been altered
+                        // The following properties should not have been altered.
 
                         Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
                         Assert.That(newPartitionProperties.EventHubPath, Is.EqualTo(oldPartitionProperties.EventHubPath));
                         Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
 
-                        // The following properties should have been updated
+                        // The following properties should have been updated.
 
                         Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
                         Assert.That(newPartitionProperties.LastEnqueuedOffset, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffset));
@@ -563,7 +563,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await using (var producer0 = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionIds[0] }))
                     await using (var producer1 = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionIds[1] }))
                     {
-                        // Sending events beforehand so the partition has some information
+                        // Sending events beforehand so the partition has some information.
 
                         await producer0.SendAsync(events);
 
@@ -577,7 +577,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         Assert.That(newPartitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
 
-                        // All properties should remain the same
+                        // All properties should remain the same.
 
                         Assert.That(newPartitionProperties.Id, Is.EqualTo(oldPartitionProperties.Id));
                         Assert.That(newPartitionProperties.EventHubPath, Is.EqualTo(oldPartitionProperties.EventHubPath));
