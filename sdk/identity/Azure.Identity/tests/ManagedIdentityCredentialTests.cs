@@ -182,6 +182,7 @@ namespace Azure.Identity.Tests
         public async Task VerifyCloudShellMsiRequestMockAsync()
         {
             using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
+            using (new TestEnvVar("MSI_SECRET", null))
             {
                 var response = new MockResponse(200);
 
@@ -226,6 +227,7 @@ namespace Azure.Identity.Tests
         public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync()
         {
             using (new TestEnvVar("MSI_ENDPOINT", "https://mock.msi.endpoint/"))
+            using (new TestEnvVar("MSI_SECRET", null))
             {
                 var response = new MockResponse(200);
 
