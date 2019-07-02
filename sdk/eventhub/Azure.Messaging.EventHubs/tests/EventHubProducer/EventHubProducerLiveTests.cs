@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event
@@ -330,7 +330,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMinutes(2) }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event

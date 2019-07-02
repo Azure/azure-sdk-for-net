@@ -63,6 +63,12 @@ namespace Azure.Messaging.EventHubs
         public EventPosition StartingPosition { get; protected set; }
 
         /// <summary>
+        ///   The text-based identifier label that has optionally been assigned to the consumer.
+        /// </summary>
+        ///
+        public string Identifier => Options?.Identifier;
+
+        /// <summary>
         ///   The set of consumer options used for creation of this consumer.
         /// </summary>
         ///
