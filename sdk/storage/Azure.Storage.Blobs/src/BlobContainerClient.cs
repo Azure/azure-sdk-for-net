@@ -248,52 +248,6 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new container
-        /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
-        /// 
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
-        /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
-        /// read via anonymous request, but container data is not available.
-        /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this container.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> describing the newly
-        /// created container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<ContainerInfo> Create(
-            PublicAccessType? publicAccessType = default,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
-                publicAccessType,
-                metadata,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
