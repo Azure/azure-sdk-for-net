@@ -33,14 +33,6 @@ namespace Azure.Storage.Files.Models
         public string ShareSnapshot { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of items to return.
-        /// </summary>
-        /// <remarks>
-        /// The service may return fewer results than requested.
-        /// </remarks>
-        public int? PageSizeHint { get; set; }
-
-        /// <summary>
         /// Check if two GetFilesAndDirectoriesOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
@@ -56,8 +48,7 @@ namespace Azure.Storage.Files.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             (this.ShareSnapshot?.GetHashCode() ?? 0) ^
-            (this.Prefix?.GetHashCode() ?? 0) ^
-            this.PageSizeHint.GetHashCode();
+            (this.Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two GetFilesAndDirectoriesOptions instances are equal.
@@ -84,8 +75,7 @@ namespace Azure.Storage.Files.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetFilesAndDirectoriesOptions other) =>
             this.ShareSnapshot == other.ShareSnapshot &&
-            this.Prefix == other.Prefix &&
-            this.PageSizeHint == other.PageSizeHint;
+            this.Prefix == other.Prefix;
     }
 
     internal class GetFilesAndDirectoriesAsyncCollection : StorageAsyncCollection<StorageFileItem>
@@ -101,18 +91,18 @@ namespace Azure.Storage.Files.Models
         {
             this._client = client;
             this._options = options;
-            this.PageSizeHint = options?.PageSizeHint;
         }
 
         protected override async Task<Page<StorageFileItem>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetFilesAndDirectoriesAsync(
                 continuationToken,
                 this._options,
-                this.PageSizeHint,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?

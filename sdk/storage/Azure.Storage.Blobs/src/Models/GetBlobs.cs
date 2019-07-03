@@ -26,28 +26,11 @@ namespace Azure.Storage.Blobs.Models
         public string Prefix { get; set; }  // No Prefix header is produced if ""
 
         /// <summary>
-        /// Gets or sets the maximum number of blobs to return. If the
-        /// request does not specify <see cref="PageSizeHint"/>, or specifies a
-        /// value greater than 5000, the server will return up to 5000 items.
-        /// 
-        /// Note that if the listing operation crosses a partition boundary,
-        /// then the service will return a <see cref="BlobsFlatSegment.NextMarker"/>
-        /// or <see cref="BlobsHierarchySegment.NextMarker"/> for retrieving
-        /// the remainder of the results.  For this reason, it is possible that
-        /// the service will return fewer results than specified by
-        /// <see cref="PageSizeHint"/>, or than the default of 5000. 
-        /// 
-        /// If the parameter is set to a value less than or equal to zero, 
-        /// a <see cref="StorageRequestFailedException"/> will be thrown.
-        /// </summary>
-        public int? PageSizeHint { get; set; }
-
-        /// <summary>
         /// Gets or sets a flag specifing that metadata related to any current
         /// or previous <see cref="Specialized.BlobClient.StartCopyFromUriAsync"/>
         /// operation should be included.
         /// </summary>
-        public bool IncludeCopyMetadata { get; set; }
+        public bool IncludeCopyOperationStatus { get; set; }
 
         /// <summary>
         /// Gets or sets a flag specifing that the blob's metadata should be
@@ -84,7 +67,7 @@ namespace Azure.Storage.Blobs.Models
             // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
             // TODO: Remove this requirement by pushing it closer to header generation. 
             var items = new List<ListBlobsIncludeItem>();
-            if (this.IncludeCopyMetadata) { items.Add(ListBlobsIncludeItem.Copy); }
+            if (this.IncludeCopyOperationStatus) { items.Add(ListBlobsIncludeItem.Copy); }
             if (this.IncludeDeletedBlobs) { items.Add(ListBlobsIncludeItem.Deleted); }
             if (this.IncludeMetadata) { items.Add(ListBlobsIncludeItem.Metadata); }
             if (this.IncludeSnapshots) { items.Add(ListBlobsIncludeItem.Snapshots); }
@@ -107,13 +90,12 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>Hash code for the GetBlobsOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
-            ((this.IncludeCopyMetadata     ? 0b00001 : 0) +
-             (this.IncludeDeletedBlobs     ? 0b00010 : 0) +
-             (this.IncludeMetadata         ? 0b00100 : 0) +
-             (this.IncludeSnapshots        ? 0b01000 : 0) +
-             (this.IncludeUncommittedBlobs ? 0b10000 : 0)) ^
-            (this.Prefix?.GetHashCode() ?? 0) ^
-            this.PageSizeHint.GetHashCode();
+            ((this.IncludeCopyOperationStatus ? 0b00001 : 0) +
+             (this.IncludeDeletedBlobs        ? 0b00010 : 0) +
+             (this.IncludeMetadata            ? 0b00100 : 0) +
+             (this.IncludeSnapshots           ? 0b01000 : 0) +
+             (this.IncludeUncommittedBlobs    ? 0b10000 : 0)) ^
+            (this.Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two GetBlobsOptions instances are equal.
@@ -139,13 +121,12 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetBlobsOptions other) =>
-            this.IncludeCopyMetadata == other.IncludeCopyMetadata &&
+            this.IncludeCopyOperationStatus == other.IncludeCopyOperationStatus &&
             this.IncludeDeletedBlobs == other.IncludeDeletedBlobs &&
             this.IncludeMetadata == other.IncludeMetadata &&
             this.IncludeSnapshots == other.IncludeSnapshots &&
             this.IncludeUncommittedBlobs == other.IncludeUncommittedBlobs &&
-            this.Prefix == other.Prefix &&
-            this.PageSizeHint == other.PageSizeHint;
+            this.Prefix == other.Prefix;
     }
 
     internal class GetBlobsAsyncCollection : StorageAsyncCollection<BlobItem>
@@ -161,18 +142,18 @@ namespace Azure.Storage.Blobs.Models
         {
             this._client = client;
             this._options = options;
-            this.PageSizeHint = options?.PageSizeHint;
         }
 
         protected override async Task<Page<BlobItem>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetBlobsAsync(
                 continuationToken,
                 this._options,
-                this.PageSizeHint,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?
@@ -201,19 +182,19 @@ namespace Azure.Storage.Blobs.Models
             this._client = client;
             this._delimiter = delimiter;
             this._options = options;
-            this.PageSizeHint = options?.PageSizeHint;
         }
 
         protected override async Task<Page<BlobHierarchyItem>> GetNextPageAsync(
             string continuationToken,
+            int? pageHintSize,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetBlobsByHierarchyAsync(
                 continuationToken,
                 this._delimiter,
                 this._options,
-                this.PageSizeHint,
+                pageHintSize,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?

@@ -196,7 +196,7 @@ namespace Azure.Storage.Queues
 
         /// <summary>
         /// The <see cref="GetQueues"/> operation returns an async
-        /// collection of queues in the storage account.  Enumerating the
+        /// sequence of queues in the storage account.  Enumerating the
         /// queues may make multiple requests to the service while fetching
         /// all the values.  Queue names are returned in lexicographic order.
         /// 

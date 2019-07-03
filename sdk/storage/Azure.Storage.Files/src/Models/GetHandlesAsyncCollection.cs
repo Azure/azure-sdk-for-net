@@ -14,22 +14,21 @@ namespace Azure.Storage.Files.Models
 
         public GetFileHandlesAsyncCollection(
             FileClient client,
-            int? pageSizeHint,
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
             this._client = client;
-            this.PageSizeHint = pageSizeHint;
         }
 
         protected override async Task<Page<StorageHandle>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetHandlesAsync(
                 continuationToken,
-                this.PageSizeHint,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?
@@ -49,24 +48,23 @@ namespace Azure.Storage.Files.Models
 
         public GetDirectoryHandlesAsyncCollection(
             DirectoryClient client,
-            int? pageSizeHint,
             bool? recursive,
             CancellationToken cancellationToken)
             : base(cancellationToken)
         {
             this._client = client;
             this._recursive = recursive;
-            this.PageSizeHint = pageSizeHint;
         }
 
         protected override async Task<Page<StorageHandle>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetHandlesAsync(
                 continuationToken,
-                this.PageSizeHint,
+                pageSizeHint,
                 this._recursive,
                 isAsync,
                 cancellationToken);

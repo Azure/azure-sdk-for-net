@@ -24,23 +24,6 @@ namespace Azure.Storage.Queues.Models
         public string Prefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of queues to return. If the
-        /// request does not specify <see cref="MaxResults"/>, or specifies a
-        /// value greater than 5000, the server will return up to 5000 items.
-        /// 
-        /// Note that if the listing operation crosses a partition boundary,
-        /// then the service will return a <see cref="Page{T}.ContinuationToken"/>
-        /// for retrieving the remainder of the results.  For this reason, it
-        /// is possible that the service will return fewer results than
-        /// specified by <see cref="PageSizeHint"/>, or than the default of
-        /// 5000. 
-        /// 
-        /// If the parameter is set to a value less than or equal to zero, 
-        /// a <see cref="StorageRequestFailedException"/> will be thrown.
-        /// </summary>
-        public int? PageSizeHint { get; set; }
-
-        /// <summary>
         /// Gets or sets a flag specifing that the queue's metadata should
         /// be included.
         /// </summary>
@@ -71,8 +54,7 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             this.IncludeMetadata.GetHashCode() ^
-            (this.Prefix?.GetHashCode() ?? 0) ^
-            this.PageSizeHint.GetHashCode();
+            (this.Prefix?.GetHashCode() ?? 0);
 
         /// <summary>
         /// Check if two <see cref="GetQueuesOptions"/> instances are equal.
@@ -99,8 +81,7 @@ namespace Azure.Storage.Queues.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetQueuesOptions other) =>
             this.IncludeMetadata == other.IncludeMetadata &&
-            this.Prefix == other.Prefix &&
-            this.PageSizeHint == other.PageSizeHint;
+            this.Prefix == other.Prefix;
     }
 
     internal class GetQueuesAsyncCollection : StorageAsyncCollection<QueueItem>
@@ -116,18 +97,18 @@ namespace Azure.Storage.Queues.Models
         {
             this._client = client;
             this._options = options;
-            this.PageSizeHint = options?.PageSizeHint;
         }
 
         protected override async Task<Page<QueueItem>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetQueuesAsync(
                 continuationToken,
                 this._options,
-                this.PageSizeHint,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?

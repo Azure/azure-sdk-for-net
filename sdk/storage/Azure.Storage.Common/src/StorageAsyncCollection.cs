@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Azure.Storage
     /// Abstract the Storage pattern for async iteration
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal abstract class StorageAsyncCollection<T> : AsyncCollection<T>
+    internal abstract class StorageAsyncCollection<T> : AsyncCollection<T>, IEnumerable<Response<T>>
     {
         // for mocking
         protected StorageAsyncCollection()
@@ -47,8 +48,9 @@ namespace Azure.Storage
         /// <returns>The next <see cref="Page{T}"/> of values.</returns>
         protected abstract Task<Page<T>> GetNextPageAsync(
             string continuationToken,
+            int? pageHintSize,
             bool isAsync,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Determine if the iteration can continue.
@@ -71,15 +73,22 @@ namespace Azure.Storage
         /// A continuation token indicating where to resume paging or null to
         /// begin paging from the beginning.
         /// </param>
+        /// <param name="pageSizeHint">
+        /// The size of <see cref="Page{T}"/>s that should be requested (from
+        /// service operations that support it).
+        /// </param>
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default)
+        public override async IAsyncEnumerable<Page<T>> ByPage(
+            string continuationToken = default,
+            int? pageHintSize = default)
         {
             do
             {
                 var page = await this.GetNextPageAsync(
                     continuationToken,
+                    pageHintSize,
                     isAsync: true,
                     cancellationToken: this.CancellationToken)
                     .ConfigureAwait(false);
@@ -111,6 +120,7 @@ namespace Azure.Storage
             {
                 var page = await this.GetNextPageAsync(
                     continuationToken,
+                    null, 
                     isAsync: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -138,6 +148,7 @@ namespace Azure.Storage
             {
                 var page = this.GetNextPageAsync(
                     continuationToken,
+                    null,
                     isAsync: false,
                     cancellationToken: this.CancellationToken)
                     .EnsureCompleted();
@@ -148,5 +159,8 @@ namespace Azure.Storage
                 }
             } while (this.CanContinue(continuationToken));
         }
+
+        IEnumerator<Response<T>> IEnumerable<Response<T>>.GetEnumerator() => this.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
 }

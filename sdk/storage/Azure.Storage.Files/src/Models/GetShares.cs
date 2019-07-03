@@ -25,22 +25,6 @@ namespace Azure.Storage.Files.Models
         public string Prefix { get; set; } // No Prefix header is produced if ""
 
         /// <summary>
-        /// Gets or sets the maximum number of shares to return. If the
-        /// request does not specify <see cref="PageSizeHint"/>, or specifies a
-        /// value greater than 5000, the server will return up to 5000 items.
-        /// 
-        /// Note that if the listing operation crosses a partition boundary,
-        /// then the service will return a <see cref="SharesSegment.NextMarker"/>
-        /// for retrieving the remainder of the results.  For this reason, it
-        /// is possible that the service will return fewer results than
-        /// specified by maxresults, or than the default of 5000. 
-        /// 
-        /// If the parameter is set to a value less than or equal to zero, 
-        /// a <see cref="StorageRequestFailedException"/> will be thrown.
-        /// </summary>
-        public int? PageSizeHint { get; set; }
-
-        /// <summary>
         /// Gets or sets a flag specifing that the share's metadata should be
         /// included.
         /// </summary>
@@ -82,7 +66,6 @@ namespace Azure.Storage.Files.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() =>
             (this.Prefix?.GetHashCode() ?? 0) ^
-            this.PageSizeHint.GetHashCode() ^
             ((this.IncludeMetadata  ? 0b01 : 0) +
              (this.IncludeSnapshots ? 0b10 : 0));
 
@@ -111,7 +94,6 @@ namespace Azure.Storage.Files.Models
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetSharesOptions other) =>
             this.Prefix == other.Prefix &&
-            this.PageSizeHint == other.PageSizeHint &&
             this.IncludeMetadata == other.IncludeMetadata &&
             this.IncludeSnapshots == other.IncludeSnapshots;
     }
@@ -129,18 +111,18 @@ namespace Azure.Storage.Files.Models
         {
             this._client = client;
             this._options = options;
-            this.PageSizeHint = options?.PageSizeHint;
         }
 
         protected override async Task<Page<ShareItem>> GetNextPageAsync(
             string continuationToken,
+            int? pageSizeHint,
             bool isAsync,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var task = this._client.GetSharesAsync(
                 continuationToken,
                 this._options,
-                this.PageSizeHint,
+                pageSizeHint,
                 isAsync,
                 cancellationToken);
             var response = isAsync ?

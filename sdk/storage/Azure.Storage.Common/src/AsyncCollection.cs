@@ -3,14 +3,11 @@
 // license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Storage;
 
-// TODO: Move these types into the Azure.Core package next release?
+// TODO: #6807: Move these types into the Azure.Core package next release?
 
 namespace Azure
 {
@@ -19,19 +16,13 @@ namespace Azure
     /// iterate over.
     /// </summary>
     /// <typeparam name="T">The type of the values.</typeparam>
-    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>>, IEnumerable<Response<T>>
+    public abstract class AsyncCollection<T> : IAsyncEnumerable<Response<T>>
     {
         /// <summary>
         /// Gets a <see cref="CancellationToken"/> used for requests made while
         /// enumerating asynchronously.
         /// </summary>
         protected virtual CancellationToken CancellationToken { get; private set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating the size of <see cref="Page{T}"/>s
-        /// that should be requested from service operations that support it.
-        /// </summary>
-        public virtual int? PageSizeHint { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncCollection{T}"/>
@@ -59,10 +50,16 @@ namespace Azure
         /// A continuation token indicating where to resume paging or null to
         /// begin paging from the beginning.
         /// </param>
+        /// <param name="pageSizeHint">
+        /// The size of <see cref="Page{T}"/>s that should be requested (from
+        /// service operations that support it).
+        /// </param>
         /// <returns>
         /// An async sequence of <see cref="Page{T}"/>s.
         /// </returns>
-        public abstract IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default);
+        public abstract IAsyncEnumerable<Page<T>> ByPage(
+            string continuationToken = default,
+            int? pageSizeHint = default);
 
         /// <summary>
         /// Enumerate the values in the collection asynchronously.  This may
@@ -86,18 +83,43 @@ namespace Azure
         /// <returns>A sequence of values.</returns>
         protected abstract IEnumerator<Response<T>> GetEnumerator();
 
-        // Explicitly implement these so customers don't accidentally foreach an async enumerable
-        IEnumerator<Response<T>> IEnumerable<Response<T>>.GetEnumerator() => this.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        /// <summary>
+        /// Creates a string representation of an <see cref="AsyncCollection{T}"/>.
+        /// </summary>
+        /// <returns>
+        /// A string representation of an <see cref="AsyncCollection{T}"/>.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
 
+        /// <summary>
+        /// Check if two <see cref="AsyncCollection{T}"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="AsyncCollection{T}"/>.
+        /// </summary>
+        /// <returns>Hash code for the <see cref="Page{T}"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
     }
 
+#pragma warning disable CA1815 // Override equals and operator equals on value types
+#pragma warning disable CA2231 // Overload operator equals on overriding value type Equals
+#pragma warning disable CA1066 // Type {0} should implement IEquatable<T> because it overrides Equals
     /// <summary>
     /// A single <see cref="Page{T}"/> of values from a request that may return
     /// zero or more <see cref="Page{T}"/>s of values.
     /// </summary>
     /// <typeparam name="T">The type of values.</typeparam>
-    public readonly struct Page<T> : IEquatable<Page<T>>
+    public readonly struct Page<T>
+#pragma warning restore CA1066 // Type {0} should implement IEquatable<T> because it overrides Equals
+#pragma warning restore CA2231 // Overload operator equals on overriding value type Equals
+#pragma warning restore CA1815 // Override equals and operator equals on value types
     {
 // TODO: Should this be Items instead of Values?
 // - Probably not with Response.Values
@@ -162,46 +184,13 @@ namespace Azure
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is Page<T> other && this.Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="Page{T}"/>.
         /// </summary>
         /// <returns>Hash code for the <see cref="Page{T}"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            (this.Values?.GetHashCode() ?? 0) ^
-            (this.ContinuationToken?.GetHashCode() ?? 0) ^
-            (this._response?.GetHashCode() ?? 0);
-
-        /// <summary>
-        /// Check if two <see cref="Page{T}"/> instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(Page<T> left, Page<T> right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two <see cref="Page{T}"/> instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(Page<T> left, Page<T> right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two <see cref="Page{T}"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(Page<T> other) =>
-            // Reference equality is fine here
-            this.Values == other.Values &&
-            this.ContinuationToken == other.ContinuationToken &&
-            this._response == other._response;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

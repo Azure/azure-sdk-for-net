@@ -1156,7 +1156,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="GetBlobs"/> operation returns an async collection
+        /// The <see cref="GetBlobs"/> operation returns an async sequence
         /// of blobs in this container.  Enumerating the blobs may make
         /// multiple requests to the service while fetching all the values.
         /// Blobs are ordered lexicographically by name.
@@ -1186,7 +1186,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="GetBlobsAsync"/> operation returns an async
-        /// collection of blobs in this container.  Enumerating the blobs may
+        /// sequence of blobs in this container.  Enumerating the blobs may
         /// make multiple requests to the service while fetching all the
         /// values.  Blobs are ordered lexicographically by name.
         /// 
@@ -1201,7 +1201,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{BlobsFlatSegment}"/> describing the
+        /// A <see cref="AsyncCollection{BlobItem}"/> describing the
         /// blobs in the container.
         /// </returns>
         /// <remarks>

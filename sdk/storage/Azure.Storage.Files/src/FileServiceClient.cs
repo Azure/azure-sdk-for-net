@@ -178,7 +178,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient GetShareClient(string shareName) => new ShareClient(this.Uri.AppendToPath(shareName), this.Pipeline);
 
         /// <summary>
-        /// The <see cref="GetShares"/> operation returns an async collection
+        /// The <see cref="GetShares"/> operation returns an async sequence
         /// of the shares in the storage account.  Enumerating the shares may
         /// make multiple requests to the service while fetching all the
         /// values.

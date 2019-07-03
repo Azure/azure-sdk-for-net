@@ -69,10 +69,9 @@ namespace Azure.Storage.Blobs.Test
                 var marker = default(string);
                 var containers = new List<ContainerItem>();
 
-                var enumerator = service.GetContainersAsync().ByPage(marker).GetAsyncEnumerator();
-                while (await enumerator.MoveNextAsync())
+                await foreach (var page in service.GetContainersAsync().ByPage(marker))
                 {
-                    containers.AddRange(enumerator.Current.Values);
+                    containers.AddRange(page.Values);
                 }
 
                 Assert.AreNotEqual(0, containers.Count);
@@ -91,8 +90,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 // Act
                 var page = await
-                    service.GetContainersAsync(new GetContainersOptions { PageSizeHint = 1 })
-                    .ByPage()
+                    service.GetContainersAsync()
+                    .ByPage(pageSizeHint: 1)
                     .FirstAsync();
 
                 // Assert

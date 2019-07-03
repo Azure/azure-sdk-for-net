@@ -203,7 +203,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="GetContainers"/> operation returns an async
-        /// collection of containers in the storage account.  Enumerating the
+        /// sequence of containers in the storage account.  Enumerating the
         /// containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         /// 

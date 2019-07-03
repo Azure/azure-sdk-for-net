@@ -1158,7 +1158,7 @@ namespace Azure.Storage.Blobs.Test
                 await this.SetUpContainerForListing(container);
 
                 // Act
-                var page = await container.GetBlobsAsync(new GetBlobsOptions { PageSizeHint = 2 }).ByPage().FirstAsync();
+                var page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
                 
                 // Assert
                 Assert.AreEqual(2, page.Values.Length);
@@ -1360,10 +1360,8 @@ namespace Azure.Storage.Blobs.Test
                 var delimiter = "/";
 
                 // Act
-                var page = await container.GetBlobsByHierarchyAsync(
-                    delimiter: delimiter,
-                    options: new GetBlobsOptions { PageSizeHint = 2 })
-                    .ByPage()
+                var page = await container.GetBlobsByHierarchyAsync(delimiter: delimiter)
+                    .ByPage(pageSizeHint: 2)
                     .FirstAsync();
 
                 // Assert

@@ -687,7 +687,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectories"/> operation returns an async
-        /// collection of files and subdirectories in this directory.
+        /// sequence of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         /// 
@@ -820,16 +820,13 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
-        /// The <see cref="GetHandles"/> operation returns an async collection
+        /// The <see cref="GetHandles"/> operation returns an async sequence
         /// of the open handles on a directory or a file.  Enumerating the
         /// handles may make multiple requests to the service while fetching
         /// all the values.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <param name="pageSizeHint">
-        /// Optional. Specifies the maximum number of handles taken on files and/or directories to return.
-        /// </param>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
@@ -846,22 +843,18 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual IEnumerable<Response<StorageHandle>> GetHandles(
-            int? pageSizeHint = default,
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, pageSizeHint, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns an async
-        /// collection of the open handles on a directory or a file.
+        /// sequence of the open handles on a directory or a file.
         /// Enumerating the handles may make multiple requests to the service
         /// while fetching all the values.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <param name="pageSizeHint">
-        /// Optional. Specifies the maximum number of handles taken on files and/or directories to return.
-        /// </param>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
@@ -878,10 +871,9 @@ namespace Azure.Storage.Files
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
-            int? pageSizeHint = default,
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            new GetDirectoryHandlesAsyncCollection(this, pageSizeHint, recursive, cancellationToken);
+            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
 
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns a list of open

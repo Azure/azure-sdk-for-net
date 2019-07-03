@@ -694,7 +694,12 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var handles = await file.GetHandlesAsync(pageSizeHint: 5).ToListAsync();
+                var handles =
+                    (await file.GetHandlesAsync()
+                    .ByPage(pageSizeHint: 5)
+                    .ToListAsync())
+                    .SelectMany(p => p.Values)
+                    .ToList();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);

@@ -259,7 +259,11 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewDirectory(out var directory))
             {
                 // Act
-                var handles = await directory.GetHandlesAsync(pageSizeHint: 5, recursive: true).ToListAsync();
+                var handles = (await directory.GetHandlesAsync(recursive: true)
+                    .ByPage(pageSizeHint: 5)
+                    .ToListAsync())
+                    .SelectMany(p => p.Values)
+                    .ToList();
 
                 // Assert
                 Assert.AreEqual(0, handles.Count);

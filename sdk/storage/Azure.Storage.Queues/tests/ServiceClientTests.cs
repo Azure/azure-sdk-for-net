@@ -60,10 +60,10 @@ namespace Azure.Storage.Queues.Test
             using (this.GetNewQueue(out var queue, service: service)) // Ensure at least two queues
             {
                 var page = await
-                    service.GetQueuesAsync(new GetQueuesOptions { PageSizeHint = 1 })
-                    .ByPage()
+                    service.GetQueuesAsync()
+                    .ByPage(pageSizeHint: 1)
                     .FirstAsync();
-                Assert.AreEqual(1, page.Values.Count());
+                Assert.AreEqual(1, page.Values.Length);
             }
         }
 
