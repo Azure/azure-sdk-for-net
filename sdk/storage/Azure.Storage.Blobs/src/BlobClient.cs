@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -459,6 +460,8 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
+
             var client = new BlockBlobClient(this.Uri, this.Pipeline);
             var blockList = new List<string>();
             var uploadTask = ChunkedUploader.UploadAsync(
