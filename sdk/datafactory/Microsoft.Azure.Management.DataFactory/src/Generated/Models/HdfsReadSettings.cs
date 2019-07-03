@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// HDFS read settings.
     /// </summary>
-    public partial class HdfsReadSetting : ConnectorReadSetting
+    public partial class HdfsReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the HdfsReadSetting class.
+        /// Initializes a new instance of the HdfsReadSettings class.
         /// </summary>
-        public HdfsReadSetting()
+        public HdfsReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HdfsReadSetting class.
+        /// Initializes a new instance of the HdfsReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         /// <param name="distcpSettings">Specifies Distcp-related
         /// settings.</param>
-        public HdfsReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
+        public HdfsReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;

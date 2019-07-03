@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure blobFS read settings.
     /// </summary>
-    public partial class AzureBlobFSReadSetting : ConnectorReadSetting
+    public partial class AzureBlobFSReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureBlobFSReadSetting class.
+        /// Initializes a new instance of the AzureBlobFSReadSettings class.
         /// </summary>
-        public AzureBlobFSReadSetting()
+        public AzureBlobFSReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureBlobFSReadSetting class.
+        /// Initializes a new instance of the AzureBlobFSReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AzureBlobFSReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public AzureBlobFSReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;

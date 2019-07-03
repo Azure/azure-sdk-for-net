@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Sftp read settings.
+    /// Azure data lake store read settings.
     /// </summary>
-    public partial class SftpReadSetting : ConnectorReadSetting
+    public partial class AmazonS3ReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the SftpReadSetting class.
+        /// Initializes a new instance of the AmazonS3ReadSettings class.
         /// </summary>
-        public SftpReadSetting()
+        public AmazonS3ReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SftpReadSetting class.
+        /// Initializes a new instance of the AmazonS3ReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -40,22 +40,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        /// <param name="wildcardFolderPath">Sftp wildcardFolderPath. Type:
+        /// <param name="wildcardFolderPath">AmazonS3 wildcardFolderPath. Type:
         /// string (or Expression with resultType string).</param>
-        /// <param name="wildcardFileName">Sftp wildcardFileName. Type: string
-        /// (or Expression with resultType string).</param>
+        /// <param name="wildcardFileName">AmazonS3 wildcardFileName. Type:
+        /// string (or Expression with resultType string).</param>
+        /// <param name="prefix">The prefix filter for the S3 object name.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="enablePartitionDiscovery">Indicates whether to enable
+        /// partition discovery.</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public SftpReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public AmazonS3ReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            Prefix = prefix;
+            EnablePartitionDiscovery = enablePartitionDiscovery;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
             CustomInit();
@@ -75,18 +81,31 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Recursive { get; set; }
 
         /// <summary>
-        /// Gets or sets sftp wildcardFolderPath. Type: string (or Expression
-        /// with resultType string).
+        /// Gets or sets amazonS3 wildcardFolderPath. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFolderPath")]
         public object WildcardFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets sftp wildcardFileName. Type: string (or Expression
+        /// Gets or sets amazonS3 wildcardFileName. Type: string (or Expression
         /// with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prefix filter for the S3 object name. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "prefix")]
+        public object Prefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether to enable partition discovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
+        public bool? EnablePartitionDiscovery { get; set; }
 
         /// <summary>
         /// Gets or sets the start of file's modified datetime. Type: string

@@ -17,28 +17,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Format write settings.
+    /// Connector read setting.
     /// </summary>
-    public partial class FormatWriteSetting
+    public partial class StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the FormatWriteSetting class.
+        /// Initializes a new instance of the StoreReadSettings class.
         /// </summary>
-        public FormatWriteSetting()
+        public StoreReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FormatWriteSetting class.
+        /// Initializes a new instance of the StoreReadSettings class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
+        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public FormatWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
+        public StoreReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object))
         {
             AdditionalProperties = additionalProperties;
             Type = type;
+            MaxConcurrentConnections = maxConcurrentConnections;
             CustomInit();
         }
 
@@ -55,10 +59,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the write setting type.
+        /// Gets or sets the read setting type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum concurrent connection count for the source
+        /// data store. Type: integer (or Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxConcurrentConnections")]
+        public object MaxConcurrentConnections { get; set; }
 
         /// <summary>
         /// Validate the object.

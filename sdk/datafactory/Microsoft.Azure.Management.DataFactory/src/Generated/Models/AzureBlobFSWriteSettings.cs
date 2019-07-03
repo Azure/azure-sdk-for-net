@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure blobFS write settings.
     /// </summary>
-    public partial class AzureBlobFSWriteSetting : ConnectorWriteSetting
+    public partial class AzureBlobFSWriteSettings : StoreWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureBlobFSWriteSetting class.
+        /// Initializes a new instance of the AzureBlobFSWriteSettings class.
         /// </summary>
-        public AzureBlobFSWriteSetting()
+        public AzureBlobFSWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureBlobFSWriteSetting class.
+        /// Initializes a new instance of the AzureBlobFSWriteSettings class.
         /// </summary>
         /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        public AzureBlobFSWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        public AzureBlobFSWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
             : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
         {
             CustomInit();
