@@ -68,7 +68,8 @@ namespace Azure.Core.Extensions
             var tenantId = configuration["tenantId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
-            var certificateStore = configuration["clientCertificateStore"];
+            var certificateStoreName = configuration["clientCertificateStoreName"];
+            var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
@@ -81,11 +82,19 @@ namespace Azure.Core.Extensions
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(certificate))
             {
-                var storeLocation = string.Equals(certificateStore, "machine", StringComparison.OrdinalIgnoreCase)
-                    ? StoreLocation.LocalMachine
-                    : StoreLocation.CurrentUser;;
+                StoreLocation storeLocation = StoreLocation.CurrentUser;
 
-                using var store = new X509Store(storeLocation);
+                if (!string.IsNullOrWhiteSpace(certificateStoreLocation))
+                {
+                    storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), certificateStoreLocation, true);
+                }
+
+                if (string.IsNullOrWhiteSpace(certificateStoreName))
+                {
+                    certificateStoreName = "MY"; // MY is the default used in X509Store
+                }
+
+                using var store = new X509Store(certificateStoreName, storeLocation);
                 store.Open(OpenFlags.ReadOnly);
                 X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificate, false);
 

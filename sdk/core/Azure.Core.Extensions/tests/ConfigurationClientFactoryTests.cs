@@ -52,12 +52,12 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Theory]
-        [TestCase("user", StoreLocation.CurrentUser)]
-        [TestCase("machine", StoreLocation.LocalMachine)]
-        [TestCase(null, StoreLocation.CurrentUser)]
-        public void CreatesCertificateCredentials(string storeName, StoreLocation expectedStore)
+        [TestCase("currentUser", StoreLocation.CurrentUser, "my", StoreName.My)]
+        [TestCase("localMachine", StoreLocation.LocalMachine, "root", StoreName.Root)]
+        [TestCase(null, StoreLocation.CurrentUser, null, StoreName.My)]
+        public void CreatesCertificateCredentials(string storeLocation, StoreLocation expectedStore, string storeName, StoreName expectedName)
         {
-            var localCert = new X509Store(expectedStore);
+            var localCert = new X509Store(expectedName, expectedStore);
             localCert.Open(OpenFlags.ReadOnly);
             var someLocalCert = localCert.Certificates[0].Thumbprint;
             localCert.Close();
@@ -65,7 +65,8 @@ namespace Azure.Core.Extensions.Tests
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
                 new KeyValuePair<string, string>("clientCertificate", someLocalCert),
-                new KeyValuePair<string, string>("clientCertificateStore", storeName),
+                new KeyValuePair<string, string>("clientCertificateStoreLocation", storeLocation),
+                new KeyValuePair<string, string>("clientCertificateStoreName", storeName),
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
             );
 
