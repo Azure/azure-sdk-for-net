@@ -208,7 +208,7 @@ namespace Azure.Core.Extensions.Tests
             serviceCollection.AddAzureClients(builder => {
                 builder.AddTestClient("TestClient1");
                 builder.AddTestClientWithCredentials(new Uri("http://localhost"));
-                builder.UseDefaultConfiguration(configuration);
+                builder.ConfigureDefaults(configuration);
             });
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
 
@@ -269,7 +269,7 @@ namespace Azure.Core.Extensions.Tests
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => {
                 builder.AddTestClientWithCredentials(new Uri("http://localhost"));
-                builder.UseDefaultConfiguration(configuration);
+                builder.ConfigureDefaults(configuration);
             });
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();

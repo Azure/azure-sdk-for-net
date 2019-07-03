@@ -41,7 +41,7 @@ namespace Azure.Core.Extensions.Samples
                 builder.UseCredential(new DefaultAzureCredential());
 
                 // This would use configuration for auth and client settings
-                builder.UseDefaultConfiguration(Configuration.GetSection("Default"));
+                builder.ConfigureDefaults(Configuration.GetSection("Default"));
 
                 // Configure global defaults
                 builder.ConfigureDefaults(options => options.RetryPolicy.Mode = RetryMode.Exponential);
