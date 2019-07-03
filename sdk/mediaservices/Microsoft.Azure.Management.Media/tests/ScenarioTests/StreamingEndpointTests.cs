@@ -12,7 +12,7 @@ namespace Media.Tests.ScenarioTests
 {
     public class StreamingEndpointTests : MediaScenarioTestBase
     {
-        [Fact]
+        [Fact(Skip = "Need to rerun for 2019-05-01-preview")]
         public void CustomStreamingEndpointTest()
         {
             using (MockContext context = this.StartMockContextAndInitializeClients(this.GetType().FullName))

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="liveBackoffDuration">The relative to end right
         /// edge.</param>
         /// <param name="timescale">The time scale of time stamps.</param>
-        /// <param name="forceEndTimestamp">The indicator of forcing exsiting
+        /// <param name="forceEndTimestamp">The indicator of forcing existing
         /// of end time stamp.</param>
         public PresentationTimeRange(long? startTimestamp = default(long?), long? endTimestamp = default(long?), long? presentationWindowDuration = default(long?), long? liveBackoffDuration = default(long?), long? timescale = default(long?), bool? forceEndTimestamp = default(bool?))
         {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public long? Timescale { get; set; }
 
         /// <summary>
-        /// Gets or sets the indicator of forcing exsiting of end time stamp.
+        /// Gets or sets the indicator of forcing existing of end time stamp.
         /// </summary>
         [JsonProperty(PropertyName = "forceEndTimestamp")]
         public bool? ForceEndTimestamp { get; set; }

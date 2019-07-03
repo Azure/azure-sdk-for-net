@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the AbsoluteClipTime class.
         /// </summary>
         /// <param name="time">The time position on the timeline of the input
-        /// media. It is usually speicified as an ISO8601 period. e.g PT30S for
+        /// media. It is usually specified as an ISO8601 period. e.g PT30S for
         /// 30 seconds.</param>
         public AbsoluteClipTime(System.TimeSpan time)
         {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets the time position on the timeline of the input media.
-        /// It is usually speicified as an ISO8601 period. e.g PT30S for 30
+        /// It is usually specified as an ISO8601 period. e.g PT30S for 30
         /// seconds.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
