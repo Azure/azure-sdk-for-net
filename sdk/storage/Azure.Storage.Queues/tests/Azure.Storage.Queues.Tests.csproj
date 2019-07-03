@@ -15,6 +15,5 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
-    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 </Project>
