@@ -16,22 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure blob read settings.
+    /// Ftp read settings.
     /// </summary>
-    public partial class AzureBlobStorageReadSetting : ConnectorReadSetting
+    public partial class FtpReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureBlobStorageReadSetting
-        /// class.
+        /// Initializes a new instance of the FtpReadSettings class.
         /// </summary>
-        public AzureBlobStorageReadSetting()
+        public FtpReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureBlobStorageReadSetting
-        /// class.
+        /// Initializes a new instance of the FtpReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -42,27 +40,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        /// <param name="wildcardFolderPath">Azure blob wildcardFolderPath.
-        /// Type: string (or Expression with resultType string).</param>
-        /// <param name="wildcardFileName">Azure blob wildcardFileName. Type:
+        /// <param name="wildcardFolderPath">Ftp wildcardFolderPath. Type:
         /// string (or Expression with resultType string).</param>
-        /// <param name="enablePartitionDiscovery">Indicates whether to enable
-        /// partition discovery.</param>
-        /// <param name="modifiedDatetimeStart">The start of file's modified
-        /// datetime. Type: string (or Expression with resultType
-        /// string).</param>
-        /// <param name="modifiedDatetimeEnd">The end of file's modified
-        /// datetime. Type: string (or Expression with resultType
-        /// string).</param>
-        public AzureBlobStorageReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        /// <param name="wildcardFileName">Ftp wildcardFileName. Type: string
+        /// (or Expression with resultType string).</param>
+        /// <param name="useBinaryTransfer">Specify whether to use binary
+        /// transfer mode for FTP stores.</param>
+        public FtpReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
-            EnablePartitionDiscovery = enablePartitionDiscovery;
-            ModifiedDatetimeStart = modifiedDatetimeStart;
-            ModifiedDatetimeEnd = modifiedDatetimeEnd;
+            UseBinaryTransfer = useBinaryTransfer;
             CustomInit();
         }
 
@@ -80,38 +70,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Recursive { get; set; }
 
         /// <summary>
-        /// Gets or sets azure blob wildcardFolderPath. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets ftp wildcardFolderPath. Type: string (or Expression
+        /// with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFolderPath")]
         public object WildcardFolderPath { get; set; }
 
         /// <summary>
-        /// Gets or sets azure blob wildcardFileName. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets ftp wildcardFileName. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether to enable partition discovery.
+        /// Gets or sets specify whether to use binary transfer mode for FTP
+        /// stores.
         /// </summary>
-        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
-        public bool? EnablePartitionDiscovery { get; set; }
-
-        /// <summary>
-        /// Gets or sets the start of file's modified datetime. Type: string
-        /// (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "modifiedDatetimeStart")]
-        public object ModifiedDatetimeStart { get; set; }
-
-        /// <summary>
-        /// Gets or sets the end of file's modified datetime. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "modifiedDatetimeEnd")]
-        public object ModifiedDatetimeEnd { get; set; }
+        [JsonProperty(PropertyName = "useBinaryTransfer")]
+        public bool? UseBinaryTransfer { get; set; }
 
         /// <summary>
         /// Validate the object.

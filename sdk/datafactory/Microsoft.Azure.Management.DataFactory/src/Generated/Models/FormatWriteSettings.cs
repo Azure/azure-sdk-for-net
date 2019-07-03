@@ -17,35 +17,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Connector write settings.
+    /// Format write settings.
     /// </summary>
-    public partial class ConnectorWriteSetting
+    public partial class FormatWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the ConnectorWriteSetting class.
+        /// Initializes a new instance of the FormatWriteSettings class.
         /// </summary>
-        public ConnectorWriteSetting()
+        public FormatWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ConnectorWriteSetting class.
+        /// Initializes a new instance of the FormatWriteSettings class.
         /// </summary>
         /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="maxConcurrentConnections">The maximum concurrent
-        /// connection count for the source data store. Type: integer (or
-        /// Expression with resultType integer).</param>
-        /// <param name="copyBehavior">The type of copy behavior for copy
-        /// sink.</param>
-        public ConnectorWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        public FormatWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
             Type = type;
-            MaxConcurrentConnections = maxConcurrentConnections;
-            CopyBehavior = copyBehavior;
             CustomInit();
         }
 
@@ -66,19 +59,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum concurrent connection count for the source
-        /// data store. Type: integer (or Expression with resultType integer).
-        /// </summary>
-        [JsonProperty(PropertyName = "maxConcurrentConnections")]
-        public object MaxConcurrentConnections { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of copy behavior for copy sink.
-        /// </summary>
-        [JsonProperty(PropertyName = "copyBehavior")]
-        public object CopyBehavior { get; set; }
 
         /// <summary>
         /// Validate the object.

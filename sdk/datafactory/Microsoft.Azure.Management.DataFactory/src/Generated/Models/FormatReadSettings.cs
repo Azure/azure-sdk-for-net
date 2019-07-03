@@ -10,37 +10,35 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Delimited text read settings.
+    /// Format read settings.
     /// </summary>
-    public partial class DelimitedTextReadSetting : FormatReadSetting
+    public partial class FormatReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextReadSetting class.
+        /// Initializes a new instance of the FormatReadSettings class.
         /// </summary>
-        public DelimitedTextReadSetting()
+        public FormatReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextReadSetting class.
+        /// Initializes a new instance of the FormatReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="skipLineCount">Indicates the number of non-empty rows
-        /// to skip when reading data from input files. Type: integer (or
-        /// Expression with resultType integer).</param>
-        public DelimitedTextReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object))
-            : base(type, additionalProperties)
+        public FormatReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
-            SkipLineCount = skipLineCount;
+            AdditionalProperties = additionalProperties;
+            Type = type;
             CustomInit();
         }
 
@@ -50,22 +48,30 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates the number of non-empty rows to skip when
-        /// reading data from input files. Type: integer (or Expression with
-        /// resultType integer).
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
         /// </summary>
-        [JsonProperty(PropertyName = "skipLineCount")]
-        public object SkipLineCount { get; set; }
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the read setting type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
         }
     }
 }

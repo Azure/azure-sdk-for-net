@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Sftp read settings.
     /// </summary>
-    public partial class HttpReadSetting : ConnectorReadSetting
+    public partial class HttpReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the HttpReadSetting class.
+        /// Initializes a new instance of the HttpReadSettings class.
         /// </summary>
-        public HttpReadSetting()
+        public HttpReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HttpReadSetting class.
+        /// Initializes a new instance of the HttpReadSettings class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="requestTimeout">Specifies the timeout for a HTTP
         /// client to get HTTP response from HTTP server.</param>
-        public HttpReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object))
+        public HttpReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object requestTimeout = default(object))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             RequestMethod = requestMethod;

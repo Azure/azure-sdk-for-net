@@ -18,19 +18,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure data lake store read settings.
     /// </summary>
-    public partial class AzureDataLakeStoreReadSetting : ConnectorReadSetting
+    public partial class AzureDataLakeStoreReadSettings : StoreReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreReadSetting
+        /// Initializes a new instance of the AzureDataLakeStoreReadSettings
         /// class.
         /// </summary>
-        public AzureDataLakeStoreReadSetting()
+        public AzureDataLakeStoreReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreReadSetting
+        /// Initializes a new instance of the AzureDataLakeStoreReadSettings
         /// class.
         /// </summary>
         /// <param name="type">The read setting type.</param>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AzureDataLakeStoreReadSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public AzureDataLakeStoreReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(type, additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;

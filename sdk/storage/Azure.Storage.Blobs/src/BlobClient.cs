@@ -491,7 +491,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
             // Upload a single chunk of the stream
-            Task<Response<BlobContentInfo>> StageBlockAsync(
+            Task<Response<BlockInfo>> StageBlockAsync(
                 Stream chunk,
                 int blockNumber,
                 bool async,

@@ -10,39 +10,37 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Azure blob write settings.
+    /// Delimited text read settings.
     /// </summary>
-    public partial class AzureBlobStorageWriteSetting : ConnectorWriteSetting
+    public partial class DelimitedTextReadSettings : FormatReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureBlobStorageWriteSetting
-        /// class.
+        /// Initializes a new instance of the DelimitedTextReadSettings class.
         /// </summary>
-        public AzureBlobStorageWriteSetting()
+        public DelimitedTextReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureBlobStorageWriteSetting
-        /// class.
+        /// Initializes a new instance of the DelimitedTextReadSettings class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
+        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="maxConcurrentConnections">The maximum concurrent
-        /// connection count for the source data store. Type: integer (or
+        /// <param name="skipLineCount">Indicates the number of non-empty rows
+        /// to skip when reading data from input files. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="copyBehavior">The type of copy behavior for copy
-        /// sink.</param>
-        public AzureBlobStorageWriteSetting(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
-            : base(type, additionalProperties, maxConcurrentConnections, copyBehavior)
+        public DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object))
+            : base(type, additionalProperties)
         {
+            SkipLineCount = skipLineCount;
             CustomInit();
         }
 
@@ -50,6 +48,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets indicates the number of non-empty rows to skip when
+        /// reading data from input files. Type: integer (or Expression with
+        /// resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "skipLineCount")]
+        public object SkipLineCount { get; set; }
 
         /// <summary>
         /// Validate the object.

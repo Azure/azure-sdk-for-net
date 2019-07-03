@@ -14,10 +14,10 @@ Each service might have a number of libraries available from each of the followi
 * [Client - Stable](#Client-Stable)
 * [Management](#Management)
 
+
 ### Client: July 2019 Preview
 New wave of packages that we are currently releasing in **preview**.
 These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
-
 These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs. 
 
 The libraries released in the July 2019 preview:
