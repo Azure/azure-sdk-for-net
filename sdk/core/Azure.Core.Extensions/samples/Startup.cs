@@ -31,12 +31,12 @@ namespace Azure.Core.Extensions.Samples
 
             services.AddAzureClients(builder => {
 
-                builder.AddKeyVaultSecrets(Configuration.GetSection("KeyVault"))
+                builder.AddSecretClient(Configuration.GetSection("KeyVault"))
                     .WithName("Default")
                     .WithCredential(new DefaultAzureCredential())
                     .ConfigureOptions(options => options.RetryPolicy.MaxRetries = 10);
 
-                builder.AddKeyVaultSecrets(new Uri("http://my.keyvault.com"));
+                builder.AddSecretClient(new Uri("http://my.keyvault.com"));
 
                 builder.UseCredential(new DefaultAzureCredential());
 
