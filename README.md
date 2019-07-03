@@ -16,7 +16,7 @@ Each service might have a number of libraries available from each of the followi
 
 ### Client: July 2019 Preview
 New wave of packages that we are currently releasing in **preview**.
-These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features [here](/sdk/core/Azure.Core/README.md).
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
 
 These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs. 
 
@@ -28,15 +28,14 @@ The libraries released in the July 2019 preview:
 * [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
 * [Azure.Storage.Files](/sdk/storage/Azure.Storage.Files/README.md)
 * [Azure.Storage.Queues](/sdk/storage/Azure.Storage.Queues/README.md)
-* [Azure.Core](/sdk/core/Azure.Core/README.md) (shared library)
 
 >NOTE: If you need to ensure your code is ready for production, use one of the stable libraries.
 
 ### Client: Stable
-Last stable versions of packages that are production-ready. These libraries provide similar functionalities to the preview packages, as they allow you to use and consume existing resources and interact with them, for example: upload a storage blob. Stable library directories typicaly contain 'Microsoft.Azure' in their names, e.g. 'Microsoft.Azure.KeyVault'.
+Last stable versions of packages that are production-ready. These libraries provide similar functionalities to the preview packages, as they allow you to use and consume existing resources and interact with them, for example: upload a storage blob. Stable library directories typically contain 'Microsoft.Azure' in their names, e.g. 'Microsoft.Azure.KeyVault'.
 
 ### Management
-Libraries which enable you to provision specific server resources. They are directly mirroring Azure service's REST endpoints. Management library directories typicaly contain the word 'Management' in their names, e.g. 'Microsoft.Azure.Management.Storage'.
+Libraries which enable you to provision specific server resources. They are directly mirroring Azure service's REST endpoints. Management library directories typically contain the word 'Management' in their names, e.g. 'Microsoft.Azure.Management.Storage'.
 
 ## Need help?
 * For reference documentation visit the [Azure SDK for .NET API Reference](http://aka.ms/net-docs).
@@ -51,3 +50,5 @@ For details on contributing to this repository, see the [contributing guide](CON
 | --------- | ------------ |
 | Client Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/290?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) [![Dependencies](https://img.shields.io/badge/dependencies-analyzed-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/dependencies/dependencies.html) |
 | Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/529?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master) |
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2FREADME.png)
