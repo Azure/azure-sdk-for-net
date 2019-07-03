@@ -3,7 +3,11 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,7 +25,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
 	public class BlobClient : BlobBaseClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class for mocking.
@@ -331,13 +334,15 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            new BlockBlobClient(this.Uri, this.Pipeline).Upload(
+            this.StagedUploadAsync(
                 content,
-                blobAccessConditions: blobAccessConditions,
-                blobHttpHeaders: blobHttpHeaders,
-                metadata: metadata,
-                progressHandler: progressHandler,
-                cancellationToken: cancellationToken);
+                blobHttpHeaders,
+                metadata,
+                blobAccessConditions,
+                progressHandler,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block blob
@@ -388,14 +393,138 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await new BlockBlobClient(this.Uri, this.Pipeline)
-                .UploadAsync(
+            await this.StagedUploadAsync(
+                content,
+                blobHttpHeaders,
+                metadata,
+                blobAccessConditions,
+                progressHandler,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="StagedUploadAsync"/> operation will create a new
+        /// block blob of arbitrary size by uploading it as indiviually staged
+        /// blocks if it's larger than the
+        /// <paramref name="singleBlockThreshold"/>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="blobHttpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// block blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this block blob.
+        /// </param>
+        /// <param name="blobAccessConditions">
+        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="singleBlockThreshold">
+        /// The maximum size stream that we'll upload as a single block.  The
+        /// default value is 256MB.
+        /// </param>
+        /// <param name="blockSize">
+        /// The size of individually staged blocks.  The default value is 4MB.
+        /// </param>
+        /// <param name="async">
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
+            Stream content,
+            BlobHttpHeaders? blobHttpHeaders,
+            Metadata metadata,
+            BlobAccessConditions? blobAccessConditions,
+            IProgress<StorageProgress> progressHandler,
+            long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
+            int blockSize = Constants.DefaultBufferSize,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
+
+            var client = new BlockBlobClient(this.Uri, this.Pipeline);
+            var blockList = new List<string>();
+            var uploadTask = ChunkedUploader.UploadAsync(
+                UploadStreamAsync,
+                StageBlockAsync,
+                CommitBlockListAsync,
+                content,
+                singleBlockThreshold,
+                blockSize,
+                async,
+                cancellationToken);
+            return async ?
+                await uploadTask.ConfigureAwait(false) :
+                uploadTask.EnsureCompleted();
+
+            // Upload the entire stream
+            Task<Response<BlobContentInfo>> UploadStreamAsync(
+                Stream content,
+                bool async,
+                CancellationToken cancellation) =>
+                client.UploadAsync(
                     content,
-                    blobAccessConditions: blobAccessConditions,
-                    blobHttpHeaders: blobHttpHeaders,
-                    metadata: metadata,
-                    progressHandler: progressHandler,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                    blobHttpHeaders,
+                    metadata,
+                    blobAccessConditions,
+                    progressHandler,
+                    async,
+                    cancellationToken);
+
+            // Upload a single chunk of the stream
+            Task<Response<BlobContentInfo>> StageBlockAsync(
+                Stream chunk,
+                int blockNumber,
+                bool async,
+                CancellationToken cancellation)
+            {
+                // Create a new block ID
+                var blockId = Constants.BlockNameFormat;
+                blockId = String.Format(CultureInfo.InvariantCulture, blockId, blockNumber);
+                blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockId));
+                blockList.Add(blockId);
+
+                // Upload the block
+                return client.StageBlockAsync(
+                    blockId,
+                    chunk,
+                    null,
+                    blobAccessConditions?.LeaseAccessConditions,
+                    progressHandler,
+                    async,
+                    cancellationToken);
+            }
+
+            // Commit a series of chunks
+            Task<Response<BlobContentInfo>> CommitBlockListAsync(
+                bool async,
+                CancellationToken cancellation) =>
+                client.CommitBlockListAsync(
+                    blockList,
+                    blobHttpHeaders,
+                    metadata,
+                    blobAccessConditions,
+                    async,
+                    cancellationToken);
+        }
     }
 }

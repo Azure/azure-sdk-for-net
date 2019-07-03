@@ -120,5 +120,64 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
         }
+
+        private async Task UploadAndVerify(
+            long size,
+            long singleBlockThreshold,
+            int blockSize)
+        {
+            var data = this.GetRandomBuffer(size);
+            using (this.GetNewContainer(out var container))
+            {
+                var name = this.GetNewBlobName();
+                var blob = this.InstrumentClient(container.GetBlobClient(name));
+
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StagedUploadAsync(
+                        stream,
+                        null,
+                        null,
+                        null,
+                        null,
+                        singleBlockThreshold: singleBlockThreshold,
+                        blockSize: blockSize,
+                        async: true);
+                }
+
+                var download = await blob.DownloadAsync();
+                using var actual = new MemoryStream();
+                await download.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+        }
+
+        [Test]
+        [TestCase(512)]
+        [TestCase(1 * Constants.KB)]
+        [TestCase(2 * Constants.KB)]
+        [TestCase(4 * Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(20 * Constants.KB)]
+        [TestCase(30 * Constants.KB)]
+        [TestCase(50 * Constants.KB)]
+        [TestCase(501 * Constants.KB)]
+        public async Task UploadAsync_SmallBlobs(long size) =>
+            // Use a 1KB threshold so we get a lot of indiviaul blocks
+            await this.UploadAndVerify(size, Constants.KB, Constants.KB);
+
+        [Test]
+        [Category("Live")]
+        [TestCase(33 * Constants.MB)]
+        [TestCase(257 * Constants.MB)]
+        [TestCase(1 * Constants.GB)]
+        public async Task UploadAsync_LargeBlobs(long size)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            if (this.Mode == RecordedTestMode.Live)
+            {
+                await this.UploadAndVerify(size, 16 * Constants.MB, Constants.MB);
+            }
+        }
     }
 }

@@ -901,7 +901,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{PageRangesInfo}}"/> describing the
+        /// A <see cref="Response{PageRangesInfo}"/> describing the
         /// valid page ranges for this blob.
         /// </returns>
         /// <remarks>

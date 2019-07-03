@@ -445,7 +445,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> UploadAsync(
+        internal async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
@@ -688,7 +688,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> StageBlockAsync(
+        internal async Task<Response<BlobContentInfo>> StageBlockAsync(
             string base64BlockId, 
             Stream content, 
             byte[] transactionalContentHash, 
@@ -1180,7 +1180,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+        internal async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
