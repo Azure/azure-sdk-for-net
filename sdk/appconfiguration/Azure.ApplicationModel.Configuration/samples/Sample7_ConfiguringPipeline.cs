@@ -25,7 +25,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.Transport = new HttpClientTransport(s_client);
 
             // remove logging policy
-            options.Diagnostics.DisableLogging = true;
+            options.Diagnostics.IsLoggingEnabled = false;
 
             // specify custom retry policy options
             options.Retry.Mode = RetryMode.Fixed;

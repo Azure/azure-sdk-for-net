@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Tests
                     new FileClientOptions
                     {
                         ResponseClassifier = new TestResponseClassifier(),
-                        Diagnostics = { DisableLogging = false },
+                        Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
                             Mode = RetryMode.Exponential,

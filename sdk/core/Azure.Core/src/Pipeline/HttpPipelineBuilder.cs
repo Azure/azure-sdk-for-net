@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ClientRequestIdPolicy.Shared);
 
-            if (!options.Diagnostics.DisableTelemetry)
+            if (options.Diagnostics.IsTelemetryEnabled)
             {
                 policies.Add(CreateTelemetryPolicy(options));
             }
@@ -30,7 +30,7 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
-            if (!options.Diagnostics.DisableLogging)
+            if (options.Diagnostics.IsLoggingEnabled)
             {
                 policies.Add(LoggingPolicy.Shared);
             }

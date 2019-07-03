@@ -47,7 +47,7 @@ namespace Azure.Storage.Test.Shared
                     new BlobClientOptions
                     {
                         ResponseClassifier = new TestResponseClassifier(),
-                        Diagnostics = { DisableLogging = false },
+                        Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
                             Mode = RetryMode.Exponential,

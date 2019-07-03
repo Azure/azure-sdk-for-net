@@ -9,13 +9,13 @@ namespace Azure.Core.Pipeline
     {
         public DiagnosticsOptions()
         {
-            DisableTelemetry = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;;
+            IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             ApplicationId = DefaultApplicationId;
         }
 
-        public bool DisableLogging { get; set; }
+        public bool IsLoggingEnabled { get; set; } = true;
 
-        public bool DisableTelemetry { get; set; }
+        public bool IsTelemetryEnabled { get; set; }
 
         public string ApplicationId { get; set; }
 

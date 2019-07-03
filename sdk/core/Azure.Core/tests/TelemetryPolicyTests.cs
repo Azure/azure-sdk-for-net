@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
                 Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
 
                 var testOptions = new TestOptions();
-                Assert.True(testOptions.Diagnostics.DisableTelemetry);
+                Assert.False(testOptions.Diagnostics.IsTelemetryEnabled);
             }
             finally
             {

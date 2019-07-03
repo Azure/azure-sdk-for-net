@@ -26,6 +26,6 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Gets os sets retry mode
         /// </summary>
-        public RetryMode Mode { get; set; } = RetryMode.Fixed;
+        public RetryMode Mode { get; set; } = RetryMode.Exponential;
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Storage.Queues.Tests
                     new QueueClientOptions
                     {
                         ResponseClassifier = new TestResponseClassifier(),
-                        Diagnostics = { DisableLogging = false },
+                        Diagnostics = { IsLoggingEnabled = true },
                         Retry =
                         {
                             Mode = RetryMode.Exponential,
