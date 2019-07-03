@@ -1,7 +1,9 @@
 trigger:
-  - GenerateDocsForGitHub
+  - master
 jobs:
   - job: CreateDocs
+    variables:
+      skipComponentGovernanceDetection: true
     pool:
       vmImage: vs2017-win2016
     steps:
@@ -19,7 +21,7 @@ jobs:
       - powershell: ls
         workingDirectory: $(Build.SourcesDirectory)/docfx_project/
       - powershell: |
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
         displayName: Copy over docfx.json
       - task: CmdLine@2
         displayName: Generate MetaData
@@ -30,32 +32,33 @@ jobs:
       - task: PythonScript@0
         displayName: "Arrange Yaml files into Folders"
         inputs:
-          scriptPath: "$(Build.SourcesDirectory)/Documentation/script/MoveYmlFiles.py"
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/MoveYmlFiles.py"
           arguments: $(Build.SourcesDirectory)
           failOnStderr: true
       - task: PythonScript@0
         displayName: "Create Toc.yml for each service directory"
         inputs:
-          scriptPath: "$(Build.SourcesDirectory)/Documentation/script/CreateTocYml.py"
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYml.py"
           arguments: $(Build.SourcesDirectory)
       - powershell: |
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/api/*" -Destination "$(Build.SourcesDirectory)/docfx_project/api/" -Recurse
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/articles/*" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/" -Recurse
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/index/*" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Recurse
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/*" -Destination "$(Build.SourcesDirectory)/docfx_project/api/" -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/api/index.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/intro.md" -Force
+          Copy-Item "$(Build.SourcesDirectory)/Documentation/*" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/index/*" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
           Copy-Item "$(Build.SourcesDirectory)/CONTRIBUTING.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
           Copy-Item "$(Build.SourcesDirectory)/packages.md" -Destination "$(Build.SourcesDirectory)/docfx_project/articles/"
-          Copy-Item "$(Build.SourcesDirectory)/Documentation/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/docfx.json" -Destination "$(Build.SourcesDirectory)/docfx_project/" -Force
         displayName: Copy over Yaml and Md files
       - task: PythonScript@0
-        displayName: "Copy Over all ReadMes inthe Repo"
+        displayName: "Copy Over all ReadMes in the Repo"
         inputs:
-          scriptPath: "$(Build.SourcesDirectory)/Documentation/script/CopyReadMes.py"
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CopyReadMes.py"
           arguments: $(Build.SourcesDirectory)
           failOnStderr: true
       - task: PythonScript@0
         displayName: "Create Toc.yml for articles"
         inputs:
-          scriptPath: "$(Build.SourcesDirectory)/Documentation/script/CreateTocYmlForArticles.py"
+          scriptPath: "$(Build.SourcesDirectory)/eng/docgeneration/script/CreateTocYmlForArticles.py"
           arguments: $(Build.SourcesDirectory)
           failOnStderr: true
       - powershell: ls
@@ -66,8 +69,11 @@ jobs:
           script: $(Build.BinariesDirectory)/docfx/docfx.exe build
           workingDirectory: $(Build.SourcesDirectory)/docfx_project/
           failOnStderr: true
+      - powershell: |
+          Copy-Item "$(Build.SourcesDirectory)/eng/docgeneration/assets/*" -Destination "$(Build.SourcesDirectory)/docfx_project/_site/" -Force
+        displayName: Replace site assets
       - task: CopyFiles@2
-        displayName: Copy HTML to Artificats Directory
+        displayName: Copy HTML to Artifacts Directory
         inputs:
           sourceFolder: $(Build.SourcesDirectory)/docfx_project/
           content: '**\*'

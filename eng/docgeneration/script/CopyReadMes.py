@@ -1,4 +1,4 @@
-# Copy All ReadMes in the Repo
+# Copy All Markdown files in the Repo
 import os
 import shutil
 import sys

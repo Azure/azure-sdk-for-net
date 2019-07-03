@@ -1,5 +1,4 @@
-# This Script Arranges the Yaml files into directories
-# This causes the API generated to be grouped by their service names
+# This Script Creates the Toc.yml file that groups the User Documentation page
 import os
 import re
 import sys
@@ -64,7 +63,6 @@ try:
                     print('Write ', line, ': ', tocDir)
             else:
                 currentTocFile.write(line)
-
 except IOError:
     print("Error: File does not appear to exist")
 

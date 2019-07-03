@@ -7,7 +7,7 @@ import sys
 
 
 sourceDir = sys.argv[1]
-apiDirPath = "{0}/docfx_project//api".format(sourceDir)
+apiDirPath = "{0}/docfx_project/api".format(sourceDir)
 
 # Map Api to Service Folders
 FileToFolderMap = {
@@ -38,7 +38,7 @@ for item in folders:
     if not os.path.exists(path):
         os.makedirs(path)
 
-os.makedirs(os.path.join(apiDirPath, 'OtherApis')) # For Apis that dont fit under a Dir
+os.makedirs(os.path.join(apiDirPath, 'OtherApis')) # For Apis that don't fit under a Dir
 
 for item in os.listdir(apiDirPath):
     if item == '.gitignore' or item == '.manifest' or item == 'index.md' or item == 'toc.yml':
@@ -54,7 +54,7 @@ for item in os.listdir(apiDirPath):
                 print('Moved ', item , 'to', itemDest)
                 shutil.move(itemPath, os.path.join(apiDirPath, itemDest))
                 continue
-        # Get first two word Seperated by dots
+        # Get first two words Seperated by dots
         matchedTwo = re.match(r'(^.*?\..*?)\..*', item, re.S)
         if matchedTwo is not None:
             if matchedTwo.group(1) in FileToFolderMap.keys():

@@ -19,8 +19,8 @@ try:
             if file.startswith('intro') or file.startswith('toc'):
                 continue
             if not file.startswith('-'):
-                articlesToc.write('    - name: {0}\n'.format(file))
-                articlesToc.write('      href: {0}\n'.format(file[:-3]))
+                articlesToc.write('    - name: {0}\n'.format(file[:-3]))
+                articlesToc.write('      href: {0}\n'.format(file))
 
         articlesToc.write('- name: ReadMes\n')
         articlesToc.write('  items:\n')
@@ -32,6 +32,5 @@ try:
             if file.startswith('-'):
                 articlesToc.write('    - name: {0}\n'.format(file[1:-3]))
                 articlesToc.write('      href: {0}\n'.format(file))
-
 except IOError:
     print("Error: File does not appear to exist")
