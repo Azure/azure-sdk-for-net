@@ -207,60 +207,10 @@ namespace Azure.Storage.Files
             new GetSharesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListSharesSegment"/> operation returns a
-        /// single segment of shares in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="SharesSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListSharesSegment"/>
-        /// to continue enumerating the shares segment by segment.
-        /// 
-        /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
-        /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of shares to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="SharesSegment.NextMarker"/>
-        /// if the listing operation did not return all shares remaining
-        /// to be listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="options">
-        /// Specifies options for listing, filtering, and shaping the
-        /// shares.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Task{Response{SharesSegment}}"/> describing a
-        /// segment of the shares in the storage account.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<SharesSegment> ListSharesSegment(
-            string marker = default,
-            SharesSegmentOptions? options = default,
-            CancellationToken cancellationToken = default) =>
-            this.ListSharesSegmentAsync(
-                marker,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted(syncOverAsync: true);
-
-        /// <summary>
-        /// The <see cref="ListSharesSegmentAsync"/> operation returns a
-        /// single segment of shares in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="SharesSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListSharesSegmentAsync"/>
-        /// to continue enumerating the shares segment by segment.
+        /// The <see cref="GetSharesAsync"/> operation returns an async collection
+        /// of the shares in the storage account.  Enumerating the shares may
+        /// make multiple requests to the service while fetching all the
+        /// values.
         /// 
         /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-shares"/>.
         /// </summary>

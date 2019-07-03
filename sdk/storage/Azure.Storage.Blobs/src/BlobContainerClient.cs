@@ -248,52 +248,6 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new container
-        /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
-        /// 
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
-        /// </summary>
-        /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
-        /// read via anonymous request, but container data is not available.
-        /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  If this parameter is null, container data is private to
-        /// the account owner.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this container.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> describing the newly
-        /// created container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<ContainerInfo> Create(
-            PublicAccessType? publicAccessType = default,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
-                publicAccessType,
-                metadata,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
@@ -1577,47 +1531,6 @@ namespace Azure.Storage.Blobs
                     content,
                     cancellationToken)
                     .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="DeleteBlob"/> operation marks the specified
-        /// blob or snapshot for deletion. The blob is later deleted during
-        /// garbage collection.
-        ///
-        /// Note that in order to delete a blob, you must delete all of its
-        /// snapshots. You can delete both at the same time using
-        /// <see cref="DeleteSnapshotsOption.Include"/>.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob" />.
-        /// </summary>
-        /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="deleteOptions">
-        /// Specifies options for deleting blob snapshots.
-        /// </param>
-        /// <param name="accessConditions">
-        /// Optional <see cref="BlobAccessConditions"/> to add conditions on
-        /// deleting this blob.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Task{Response}"/> on successfully deleting.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response DeleteBlob(
-            string blobName,
-            DeleteSnapshotsOption? deleteOptions = default,
-            BlobAccessConditions? accessConditions = default,
-            CancellationToken cancellationToken = default) =>
-            this.GetBlobClient(blobName)
-                .Delete(
-                    deleteOptions,
-                    accessConditions,
-                    cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteBlob"/> operation marks the specified
