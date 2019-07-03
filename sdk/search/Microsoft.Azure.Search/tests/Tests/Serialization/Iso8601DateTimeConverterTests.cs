@@ -2,26 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Azure.Search.Serialization.Internal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using Microsoft.Azure.Search.Serialization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Xunit;
-
-    public sealed class DateTimeConverterTests
+    public sealed class Iso8601DateTimeConverterTests
     {
         private readonly JsonSerializerSettings _serializerSettings =
-            new JsonSerializerSettings() { Converters = new List<JsonConverter>() { new DateTimeConverter() } };
+            new JsonSerializerSettings() { Converters = new[] { CustomJsonConverters.CreateDateTimeConverter() } };
 
         private readonly JsonSerializerSettings _deserializerSettings =
             new JsonSerializerSettings() 
             { 
                 DateParseHandling = DateParseHandling.DateTimeOffset,
-                Converters = new List<JsonConverter>() { new DateTimeConverter() }
+                Converters = new[] { CustomJsonConverters.CreateDateTimeConverter() }
             };
 
         [Fact]

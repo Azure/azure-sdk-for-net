@@ -2,19 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Search.Serialization;
+using Microsoft.Azure.Search.Serialization.Internal;
+using Microsoft.Spatial;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System.Collections.Generic;
-    using Microsoft.Azure.Search.Serialization;
-    using Microsoft.Spatial;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Xunit;
-
-    public sealed class GeographyPointConverterTests
+    public sealed class GeoJsonPointConverterTests
     {
         private readonly JsonSerializerSettings _jsonSettings = 
-            new JsonSerializerSettings() { Converters = new List<JsonConverter>() { new GeographyPointConverter() } };
+            new JsonSerializerSettings() { Converters = new[] { CustomJsonConverters.CreateGeoJsonPointConverter() } };
 
         [Fact]
         public void CanWriteGeoPoint()
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Search.Tests
             // This is the one case where you can deserialize something to a GeographyPoint that isn't recognized as Geo-JSON.
             JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(Json);
             Assert.Null(dynamicPoint);
-            Assert.False(GeographyPointConverter.IsGeoJson(dynamicPoint), "Null should not be recognized as Geo-JSON");
+            Assert.False(dynamicPoint.IsGeoJsonPoint(), "Null should not be recognized as Geo-JSON");
 
             var point = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
 
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(json);
             Assert.True(
-                GeographyPointConverter.IsGeoJson(dynamicPoint), 
+                dynamicPoint.IsGeoJsonPoint(), 
                 $"Expected given JSON to be recognized as Geo-JSON: <{json}>");
 
             return JsonConvert.DeserializeObject<GeographyPoint>(json, _jsonSettings);
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(json);
             Assert.False(
-                GeographyPointConverter.IsGeoJson(dynamicPoint), 
+                dynamicPoint.IsGeoJsonPoint(),
                 $"Expected given JSON to NOT be recognized as Geo-JSON: <{json}>");
 
             Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<GeographyPoint>(json, _jsonSettings));
