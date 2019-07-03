@@ -62,7 +62,7 @@ namespace Azure.Core.Extensions
 
             if (credentialsFromConfig != null)
             {
-                UseDefaultCredential(credentialsFromConfig);
+                UseCredential(credentialsFromConfig);
             }
 
             return this;
@@ -91,12 +91,12 @@ namespace Azure.Core.Extensions
         }
 
 
-        public AzureClientsBuilder UseDefaultCredential(TokenCredential tokenCredential)
+        public AzureClientsBuilder UseCredential(TokenCredential tokenCredential)
         {
-            return UseDefaultCredential(_ => tokenCredential);
+            return UseCredential(_ => tokenCredential);
         }
 
-        public AzureClientsBuilder UseDefaultCredential(Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
+        public AzureClientsBuilder UseCredential(Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.Credential = tokenCredentialFactory);
             return this;

@@ -249,7 +249,7 @@ namespace Azure.Core.Extensions.Tests
             var defaultAzureCredential = new ManagedIdentityCredential();
             serviceCollection.AddAzureClients(builder => builder
                 .AddTestClientWithCredentials("Default", new Uri("http://localhost"))
-                .UseDefaultCredential(defaultAzureCredential));
+                .UseCredential(defaultAzureCredential));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();

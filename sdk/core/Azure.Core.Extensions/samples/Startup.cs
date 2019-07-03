@@ -32,12 +32,20 @@ namespace Azure.Core.Extensions.Samples
 
             services.AddAzureClients(builder => {
                 builder.AddKeyVaultSecrets("Default", Configuration.GetSection("KeyVault"));
+                builder.AddKeyVaultSecrets("SomeClient", new Uri("http://my.keyvault.com"));
+
+                builder.UseCredential(new DefaultAzureCredential());
+                builder.UseCredential<SecretClient>("Default", new ChainedTokenCredential());
+
 
                 // This would use configuration for auth and client settings
                 builder.UseDefaultConfiguration(Configuration.GetSection("Default"));
 
                 // Configure global defaults
-                builder.ConfigureDefaults((options, provider) => options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DIEnabledPolicy>()));
+                builder.ConfigureDefaults(options => options.RetryPolicy.Mode = RetryMode.Exponential);
+
+                // Advanced configure global defaults
+                builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DIEnabledPolicy>()));
 
                 // Configure default credential
                 // builder.UseDefaultCredential(new ClientSecretCredential("tenantId","clientId","clientSecret"));
