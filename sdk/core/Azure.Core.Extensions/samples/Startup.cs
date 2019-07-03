@@ -31,12 +31,15 @@ namespace Azure.Core.Extensions.Samples
             services.AddSingleton<DIEnabledPolicy>();
 
             services.AddAzureClients(builder => {
-                builder.AddKeyVaultSecrets("Default", Configuration.GetSection("KeyVault"));
-                builder.AddKeyVaultSecrets("SomeClient", new Uri("http://my.keyvault.com"));
+
+                builder.AddKeyVaultSecrets(Configuration.GetSection("KeyVault"))
+                    .WithName("Default")
+                    .WithCredential(new DefaultAzureCredential())
+                    .ConfigureOptions(options => options.RetryPolicy.MaxRetries = 10);
+
+                builder.AddKeyVaultSecrets(new Uri("http://my.keyvault.com"));
 
                 builder.UseCredential(new DefaultAzureCredential());
-                builder.UseCredential<SecretClient>("Default", new ChainedTokenCredential());
-
 
                 // This would use configuration for auth and client settings
                 builder.UseDefaultConfiguration(Configuration.GetSection("Default"));

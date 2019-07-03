@@ -14,7 +14,7 @@ namespace Azure.Core.Extensions
     {
         private readonly IServiceCollection _serviceCollection;
 
-        private const string DefaultClientName = "Default";
+        internal const string DefaultClientName = "Default";
 
         internal AzureClientsBuilder(IServiceCollection serviceCollection)
         {
@@ -23,22 +23,17 @@ namespace Azure.Core.Extensions
             _serviceCollection.TryAddSingleton<EventSourceLogForwarder>();
         }
 
-        void IAzureClientsBuilder.RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory, Action<TOptions> configureOptions)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientsBuilder.RegisterClient<TClient, TOptions>(Func<TOptions, TClient> clientFactory)
         {
-            ((IAzureClientsBuilderWithCredential)this).RegisterClient<TClient, TOptions>(
-                name,
-                (options, _) => clientFactory(options),
-                configureOptions,
-                null);
+            return ((IAzureClientsBuilderWithCredential)this).RegisterClient<TClient, TOptions>((options, _) => clientFactory(options));
         }
 
-        void IAzureClientsBuilderWithConfiguration<IConfiguration>.RegisterClient<TClient, TOptions>(string name, IConfiguration configuration)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientsBuilderWithConfiguration<IConfiguration>.RegisterClient<TClient, TOptions>(IConfiguration configuration)
         {
-            ((IAzureClientsBuilderWithCredential)this).RegisterClient<TClient, TOptions>(
-                name,
-                (options, credentials) => (TClient)ClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration, credentials),
-                options => configuration.Bind(options),
-                ClientFactory.CreateCredentials(configuration));
+            return ((IAzureClientsBuilderWithCredential)this).RegisterClient<TClient, TOptions>(
+                (options, credentials) => (TClient)ClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration, credentials))
+                .ConfigureOptions(configuration)
+                .WithCredential(ClientFactory.CreateCredentials(configuration));
         }
 
         public AzureClientsBuilder ConfigureDefaults(Action<ClientOptions> configureOptions)
@@ -68,26 +63,19 @@ namespace Azure.Core.Extensions
             return this;
         }
 
-        void IAzureClientsBuilderWithCredential.RegisterClient<TClient, TOptions>(string name, Func<TOptions, TokenCredential, TClient> clientFactory, Action<TOptions> configureOptions, TokenCredential providedCredential)
+        IAzureClientBuilder<TClient, TOptions> IAzureClientsBuilderWithCredential.RegisterClient<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory)
         {
-            _serviceCollection.AddSingleton(new ClientRegistration<TClient, TOptions>(name, clientFactory));
+            var clientRegistration = new ClientRegistration<TClient, TOptions>(DefaultClientName, clientFactory);
+            _serviceCollection.AddSingleton(clientRegistration);
 
-            _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<AzureClientOptions<TClient>>), typeof(DefaultCredentialClientOptionsSetup<TClient>));
+            _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<AzureClientCredentialOptions<TClient>>), typeof(DefaultCredentialClientOptionsSetup<TClient>));
             _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<TOptions>), typeof(DefaultClientOptionsSetup<TOptions>));
             _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<TClient>), typeof(AzureClientFactory<TClient, TOptions>));
             _serviceCollection.TryAddSingleton(
                 typeof(TClient),
                 provider => provider.GetService<IAzureClientFactory<TClient>>().CreateClient(DefaultClientName));
 
-            if (configureOptions != null)
-            {
-                _serviceCollection.Configure<TOptions>(name, configureOptions);
-            }
-
-            if (providedCredential != null)
-            {
-                UseCredential<TClient>(name, providedCredential);
-            }
+            return new AzureClientBuilder<TClient, TOptions>(clientRegistration, _serviceCollection);
         }
 
 
@@ -99,17 +87,6 @@ namespace Azure.Core.Extensions
         public AzureClientsBuilder UseCredential(Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.Credential = tokenCredentialFactory);
-            return this;
-        }
-
-        public AzureClientsBuilder UseCredential<TClient>(string name, TokenCredential tokenCredential)
-        {
-            return UseCredential<TClient>(name, _ => tokenCredential);
-        }
-
-        public AzureClientsBuilder UseCredential<TClient>(string name, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
-        {
-            _serviceCollection.Configure<AzureClientOptions<TClient>>(name, options => options.CredentialFactory = tokenCredentialFactory);
             return this;
         }
     }

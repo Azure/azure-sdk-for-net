@@ -3,10 +3,11 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Extensions
 {
+
     public interface IAzureClientsBuilderWithConfiguration<in TConfiguration>: IAzureClientsBuilder
     {
-        void RegisterClient<TClient, TOptions>(string name, TConfiguration configuration) where TOptions : ClientOptions;
+        IAzureClientBuilder<TClient, TOptions> RegisterClient<TClient, TOptions>(TConfiguration configuration) where TOptions : ClientOptions;
     }
 }

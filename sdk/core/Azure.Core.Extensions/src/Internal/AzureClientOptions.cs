@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Core.Extensions
 {
-    internal class AzureClientOptions<TClient>
+    internal class AzureClientCredentialOptions<TClient>
     {
         public Func<IServiceProvider, TokenCredential> CredentialFactory { get; set; }
     }

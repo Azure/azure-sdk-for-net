@@ -13,6 +13,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>

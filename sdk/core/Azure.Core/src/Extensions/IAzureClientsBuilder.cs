@@ -4,10 +4,10 @@
 using System;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure.Core.Extensions
 {
     public interface IAzureClientsBuilder
     {
-        void RegisterClient<TClient, TOptions>(string name, Func<TOptions, TClient> clientFactory, Action<TOptions> configureOptions) where TOptions : ClientOptions;
+        IAzureClientBuilder<TClient, TOptions> RegisterClient<TClient, TOptions>(Func<TOptions, TClient> clientFactory) where TOptions : ClientOptions;
     }
 }

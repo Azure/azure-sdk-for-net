@@ -16,7 +16,7 @@ namespace Azure.Core.Extensions.Tests
         public void AllowsResolvingFactoryAndCreatingClientInstance()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -31,7 +31,7 @@ namespace Azure.Core.Extensions.Tests
         public void ReturnsSameInstanceWhenResolvedMultipleTimes()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -47,7 +47,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder =>
-                builder.AddTestClient("Default", new Uri("http://localhost/"), options => options.Property = "Value"));
+                builder.AddTestClient(new Uri("http://localhost/")).ConfigureOptions(options => options.Property = "Value"));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -62,7 +62,7 @@ namespace Azure.Core.Extensions.Tests
         public void ExecutesConfigureDelegateOnOptions()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
             serviceCollection.Configure<TestClientOptions>("Default", options => options.Property = "Value");
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -78,8 +78,8 @@ namespace Azure.Core.Extensions.Tests
         public void SubsequentRegistrationOverrides()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://otherhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://otherhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -93,9 +93,10 @@ namespace Azure.Core.Extensions.Tests
         public void CanRegisterMultipleClients()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder
-                .AddTestClient("Default", new Uri("http://localhost/"), options => options.Property = "Value1")
-                .AddTestClient("OtherClient", new Uri("http://otherhost/"), options => options.Property = "Value2"));
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClient(new Uri("http://localhost/")).ConfigureOptions(options => options.Property = "Value1");
+                builder.AddTestClient(new Uri("http://otherhost/")).WithName("OtherClient").ConfigureOptions(options => options.Property = "Value2");
+            });
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -117,7 +118,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost/"));
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", configuration));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -139,7 +140,7 @@ namespace Azure.Core.Extensions.Tests
                 );
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", configuration));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -156,7 +157,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreateClientThrowsWhenClientIsNotRegistered()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", new Uri("http://localhost/")));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient(new Uri("http://localhost/")));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
@@ -169,7 +170,7 @@ namespace Azure.Core.Extensions.Tests
         public void RetrhowsExceptionFromClientCreation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", "throw"));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("throw"));
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
 
@@ -185,8 +186,8 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => {
-                builder.AddTestClient("Default", "TestClient1");
-                builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"));
+                builder.AddTestClient("TestClient1");
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
                 builder.ConfigureDefaults(options => options.TelemetryPolicy.ApplicationId = "GlobalAppId");
             });
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -205,8 +206,8 @@ namespace Azure.Core.Extensions.Tests
 
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => {
-                builder.AddTestClient("Default", "TestClient1");
-                builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"));
+                builder.AddTestClient("TestClient1");
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
                 builder.UseDefaultConfiguration(configuration);
             });
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
@@ -222,7 +223,7 @@ namespace Azure.Core.Extensions.Tests
         public void ResolvesDefaultClientByDefault()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Default", "Connection string"));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClient("Connection string"));
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             var client = provider.GetService<TestClient>();
 
@@ -234,7 +235,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             var defaultAzureCredential = new ManagedIdentityCredential();
-            serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials("Default", new Uri("http://localhost"), defaultAzureCredential));
+            serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials(new Uri("http://localhost")).WithCredential(defaultAzureCredential));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
@@ -247,9 +248,10 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             var defaultAzureCredential = new ManagedIdentityCredential();
-            serviceCollection.AddAzureClients(builder => builder
-                .AddTestClientWithCredentials("Default", new Uri("http://localhost"))
-                .UseCredential(defaultAzureCredential));
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.UseCredential(defaultAzureCredential);
+            });
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
@@ -265,9 +267,10 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"));
 
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddAzureClients(builder => builder
-                .AddTestClientWithCredentials("Default", new Uri("http://localhost"))
-                .UseDefaultConfiguration(configuration));
+            serviceCollection.AddAzureClients(builder => {
+                builder.AddTestClientWithCredentials(new Uri("http://localhost"));
+                builder.UseDefaultConfiguration(configuration);
+            });
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
@@ -291,7 +294,7 @@ namespace Azure.Core.Extensions.Tests
 
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => builder
-                .AddTestClientWithCredentials("Default", configuration));
+                .AddTestClientWithCredentials(configuration));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();

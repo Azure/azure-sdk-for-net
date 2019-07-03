@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Azure.Core.Extensions
 {
-    internal class DefaultCredentialClientOptionsSetup<T> : IConfigureNamedOptions<AzureClientOptions<T>>
+    internal class DefaultCredentialClientOptionsSetup<T> : IConfigureNamedOptions<AzureClientCredentialOptions<T>>
     {
         private readonly IOptions<AzureClientsGlobalOptions> _defaultOptions;
 
@@ -14,7 +14,7 @@ namespace Azure.Core.Extensions
             _defaultOptions = defaultOptions;
         }
 
-        public void Configure(AzureClientOptions<T> options)
+        public void Configure(AzureClientCredentialOptions<T> options)
         {
             if (options.CredentialFactory == null)
             {
@@ -22,7 +22,7 @@ namespace Azure.Core.Extensions
             }
         }
 
-        public void Configure(string name, AzureClientOptions<T> options)
+        public void Configure(string name, AzureClientCredentialOptions<T> options)
         {
             Configure(options);
         }

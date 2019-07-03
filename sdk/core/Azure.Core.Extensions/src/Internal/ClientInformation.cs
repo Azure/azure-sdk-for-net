@@ -8,7 +8,7 @@ namespace Azure.Core.Extensions
 {
     internal class ClientRegistration<TClient, TOptions>
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
         private readonly Func<TOptions, TokenCredential, TClient> _factory;
 

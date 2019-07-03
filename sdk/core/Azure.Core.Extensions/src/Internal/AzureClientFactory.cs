@@ -13,7 +13,7 @@ namespace Azure.Core.Extensions
 
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly IOptionsMonitor<AzureClientOptions<TClient>> _clientsOptions;
+        private readonly IOptionsMonitor<AzureClientCredentialOptions<TClient>> _clientsOptions;
 
         private readonly IOptionsMonitor<TOptions> _monitor;
 
@@ -21,7 +21,7 @@ namespace Azure.Core.Extensions
 
         public AzureClientFactory(
             IServiceProvider serviceProvider,
-            IOptionsMonitor<AzureClientOptions<TClient>> clientsOptions,
+            IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
             IEnumerable<ClientRegistration<TClient, TOptions>> clientRegistrations, IOptionsMonitor<TOptions> monitor,
             EventSourceLogForwarder logForwarder)
         {
