@@ -25,7 +25,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
 	public class BlobClient : BlobBaseClient
     {
-        #pragma warning disable IDE0032 // Use auto property
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class for mocking.
@@ -492,7 +491,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
             // Upload a single chunk of the stream
-            Task<Response<BlobContentInfo>> StageBlockAsync(
+            Task<Response<BlockInfo>> StageBlockAsync(
                 Stream chunk,
                 int blockNumber,
                 bool async,

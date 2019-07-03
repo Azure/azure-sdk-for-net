@@ -688,7 +688,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> StageBlockAsync(
+        internal async Task<Response<BlockInfo>> StageBlockAsync(
             string base64BlockId, 
             Stream content, 
             byte[] transactionalContentHash, 

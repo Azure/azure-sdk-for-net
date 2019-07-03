@@ -1445,14 +1445,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Task{Response{PageBlobInfo}}"/> describing the updated
         /// page blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> UpdateSequenceNumber(
+        public virtual async Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
             SequenceNumberAction action,
             long? sequenceNumber = default,
             PageBlobAccessConditions? accessConditions = default,
