@@ -49,7 +49,7 @@ namespace Azure.Core.Extensions
             return this;
         }
 
-        public AzureClientsBuilder UseDefaultConfiguration(IConfiguration configuration)
+        public AzureClientsBuilder ConfigureDefaults(IConfiguration configuration)
         {
             ConfigureDefaults(options => configuration.Bind(options));
 
