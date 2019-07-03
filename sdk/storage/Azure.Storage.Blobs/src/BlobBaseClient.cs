@@ -664,20 +664,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// A <see cref="CopyFromUriOperation"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobCopyInfo> StartCopyFromUri(
+        public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
-            CancellationToken cancellationToken = default) =>
-            this.StartCopyFromUriAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var response = this.StartCopyFromUriAsync(
                 source,
                 metadata,
                 sourceAccessConditions,
@@ -685,6 +686,12 @@ namespace Azure.Storage.Blobs.Specialized
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
 
         /// <summary>
         /// The <see cref="StartCopyFromUriAsync"/> operation copies data at
@@ -726,20 +733,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobCopyInfo}}"/> describing the
+        /// A <see cref="Task{CopyFromUriOperation}"/> describing the
         /// state of the copy operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobCopyInfo>> StartCopyFromUriAsync(
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
             BlobAccessConditions? sourceAccessConditions = default,
             BlobAccessConditions? destinationAccessConditions = default,
-            CancellationToken cancellationToken = default) =>
-            await this.StartCopyFromUriAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var response = await this.StartCopyFromUriAsync(
                 source,
                 metadata,
                 sourceAccessConditions,
@@ -747,6 +755,84 @@ namespace Azure.Storage.Blobs.Specialized
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Get an existing copy <see cref="{Operation{Int64}}"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// </summary>
+        /// <param name="copyId">
+        /// The ID of a copy operation that's already beeen started.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{CopyFromUriOperation}"/> representing the copy
+        /// operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual CopyFromUriOperation StartCopyFromUri(
+            string copyId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = this.GetPropertiesAsync(
+                null,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+            return new CopyFromUriOperation(
+                this,
+                copyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Get an existing copy <see cref="{Operation{Int64}}"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// </summary>
+        /// <param name="copyId">
+        /// The ID of a copy operation that's already beeen started.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task{CopyFromUriOperation}"/> representing the copy
+        /// operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
+            string copyId,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await this.GetPropertiesAsync(
+                null,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+            return new CopyFromUriOperation(
+                this,
+                copyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
 
         /// <summary>
         /// The <see cref="StartCopyFromUriAsync"/> operation copies data at

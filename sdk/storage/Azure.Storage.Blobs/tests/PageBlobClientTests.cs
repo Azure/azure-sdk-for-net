@@ -1049,11 +1049,10 @@ namespace Azure.Storage.Blobs.Test
                 var destinationBlob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
 
                 // Act
-                var response = await destinationBlob.StartCopyIncrementalAsync(
+                var operation = await destinationBlob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
-
-                await this.WaitForCopy(destinationBlob);
+                await operation.WaitCompletionAsync();
 
                 // Assert
 
@@ -1115,11 +1114,10 @@ namespace Azure.Storage.Blobs.Test
 
                     var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
 
-                    await blob.StartCopyIncrementalAsync(
+                    var operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
-
-                    await this.WaitForCopy(blob);
+                    await operation.WaitCompletionAsync();
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
 
@@ -1170,11 +1168,11 @@ namespace Azure.Storage.Blobs.Test
 
                     var blob = this.InstrumentClient(container.GetPageBlobClient(this.GetNewBlobName()));
 
-                    await blob.StartCopyIncrementalAsync(
+                    var operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
 
-                    await this.WaitForCopy(blob);
+                    await operation.WaitCompletionAsync();
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);
                     await this.SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
@@ -1542,22 +1540,6 @@ namespace Azure.Storage.Blobs.Test
             public DateTimeOffset? SourceIfUnmodifiedSince { get; set; }
             public string SourceIfMatch { get; set; }
             public string SourceIfNoneMatch { get; set; }
-        }
-
-        private async Task WaitForCopy(BlobBaseClient blobUri, int milliWait = 200)
-        {
-            var status = CopyStatus.Pending;
-            var start = this.Recording.Now;
-            while (status != CopyStatus.Success)
-            {
-                status = (await blobUri.GetPropertiesAsync()).Value.CopyStatus;
-                var currentTime = this.Recording.Now;
-                if (status == CopyStatus.Failed || currentTime.AddMinutes(-1) > start)
-                {
-                    throw new Exception("Copy failed or took too long");
-                }
-                await this.Delay(milliWait);
-            }
         }
     }
 }

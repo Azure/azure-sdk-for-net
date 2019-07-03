@@ -246,18 +246,11 @@ namespace Azure.Storage.Queues
         /// Returns a single segment of containers starting from the specified marker.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
+        /// <param name="options">
+        /// <see cref="QueuesSegmentOptions"/>
+        /// </param>
         /// <param name="marker">
         /// Marker from the previous request.
-        /// </param>
-        /// <param name="options">
-        /// <see cref="GetQueuesOptions"/>
-        /// </param>
-        /// <param name="pageSizeHint">
-        /// Gets or sets a value indicating the size of the page that should be
-        /// requested.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
