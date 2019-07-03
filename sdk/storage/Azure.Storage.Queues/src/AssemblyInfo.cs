@@ -11,4 +11,4 @@ using Azure.Core;
     "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
     "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
     "aa7b11b4")]
-[assembly: AzureSdkClientLibrary("storage-queues")]
+[assembly: AzureSdkClientLibrary("Storage.Queues")]

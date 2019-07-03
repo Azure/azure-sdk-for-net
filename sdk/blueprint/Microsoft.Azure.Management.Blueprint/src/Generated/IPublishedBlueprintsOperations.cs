@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='versionId'>
         /// Version of the published blueprint definition.
         /// </param>
+        /// <param name='publishedBlueprint'>
+        /// Published Blueprint to create or update.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -56,7 +59,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string scope, string blueprintName, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PublishedBlueprint>> CreateWithHttpMessagesAsync(string scope, string blueprintName, string versionId, PublishedBlueprint publishedBlueprint = default(PublishedBlueprint), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a published version of a blueprint definition.
         /// </summary>

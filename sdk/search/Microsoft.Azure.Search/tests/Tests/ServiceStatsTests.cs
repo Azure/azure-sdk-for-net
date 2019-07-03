@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Tests
                 };
 
                 ServiceStatistics stats = searchClient.GetServiceStatistics();
-                Assert.Equal(expectedStats, stats, new ModelComparer<ServiceStatistics>());
+                Assert.Equal(expectedStats, stats, new DataPlaneModelComparer<ServiceStatistics>());
             });
         }
     }

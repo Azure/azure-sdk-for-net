@@ -14,11 +14,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Test
 {
-    [TestFixture]
     public class ShareClientTests : FileTestBase
     {
-        public ShareClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public ShareClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -28,7 +27,7 @@ namespace Azure.Storage.Files.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -162,7 +161,7 @@ namespace Azure.Storage.Files.Test
                     share.CreateAsync(quotaInBytes: 1),
                     e =>
                     {
-                        Assert.AreEqual(StorageErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
+                        Assert.AreEqual(FileErrorCode.AuthorizationFailure.ToString(), e.ErrorCode);
                         pass = true;
                     }
                     );
@@ -415,6 +414,32 @@ namespace Azure.Storage.Files.Test
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
                 share.DeleteAsync(),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+        }
+
+        [Test]
+        public async Task CreateDirectoryAsync()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                var dir = (await share.CreateDirectoryAsync(this.GetNewDirectoryName())).Value;
+
+                var properties = await dir.GetPropertiesAsync();
+                Assert.IsNotNull(properties.Value);
+            }
+        }
+
+        [Test]
+        public async Task DeleteDirectoryAsync()
+        {
+            using (this.GetNewShare(out var share))
+            {
+                var name = this.GetNewDirectoryName();
+                var dir = (await share.CreateDirectoryAsync(name)).Value;
+
+                await share.DeleteDirectoryAsync(name);
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await dir.GetPropertiesAsync());
+            }
         }
     }
 }

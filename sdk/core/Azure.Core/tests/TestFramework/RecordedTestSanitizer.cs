@@ -28,12 +28,12 @@ namespace Azure.Core.Testing
             }
         }
 
-        public virtual string SanitizeTextBody(string body)
+        public virtual string SanitizeTextBody(string contentType, string body)
         {
             return body;
         }
 
-        public virtual byte[] SanitizeBody(byte[] body)
+        public virtual byte[] SanitizeBody(string contentType, byte[] body)
         {
             return body;
         }

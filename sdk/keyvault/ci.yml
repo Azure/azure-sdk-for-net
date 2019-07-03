@@ -3,10 +3,10 @@
 
 schedules:
 - cron: "0 0 * * *"
-  displayName: Nightly
+  displayName: Scheduled
   branches:
     include:
-    - master
+    - refs/heads/master
   always: true
 
 trigger:

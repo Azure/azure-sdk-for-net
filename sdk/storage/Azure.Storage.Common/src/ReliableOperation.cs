@@ -79,5 +79,39 @@ namespace Azure.Storage.Common
                 }
             }
         }
+
+        public static async Task<T> DoSyncOrAsync<T>(bool isAsync, Func<Task<T>> operation, Action reset, Action cleanup, Func<Exception, bool> predicate, int maximumRetries)
+        {
+            while (true)
+            {
+                try
+                {
+                    var result = isAsync ?
+                        await operation().ConfigureAwait(false) :
+                        operation().EnsureCompleted();
+                    return result;
+                }
+                catch (OperationCanceledException)
+                {
+                    cleanup();
+                    throw;
+                }
+                catch (Exception e) when (predicate(e))
+                {
+                    if (maximumRetries-- <= 0)
+                    {
+                        cleanup();
+                        throw;
+                    }
+
+                    reset();
+                }
+                catch
+                {
+                    cleanup();
+                    throw;
+                }
+            }
+        }
     }
 }

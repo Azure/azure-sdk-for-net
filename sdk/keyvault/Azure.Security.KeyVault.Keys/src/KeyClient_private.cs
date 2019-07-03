@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return this.CreateResponse(response, resultFactory());
             }
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             using (Request request = CreateRequest(method, path))
             {
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return this.CreateResponse(response, resultFactory());
             }
@@ -41,13 +41,13 @@ namespace Azure.Security.KeyVault.Keys
         {
             using (Request request = CreateRequest(method, path))
             {
-                return await SendRequestAsync(request, cancellationToken);
+                return await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
             }
         }
 
         private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+            Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             switch (response.Status)
             {
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys
                 case 204:
                     return response;
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync();
+                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Security.KeyVault.Keys
 
             using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
             {
-                Response response = await SendRequestAsync(request, cancellationToken);
+                Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 // read the respose
                 Page<T> responseAsPage = new Page<T>(itemFactory);

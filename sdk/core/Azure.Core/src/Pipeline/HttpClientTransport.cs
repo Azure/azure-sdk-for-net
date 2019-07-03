@@ -377,8 +377,8 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                await EnsureStreamAsync();
-                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken);
+                await EnsureStreamAsync().ConfigureAwait(false);
+                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -440,7 +440,7 @@ namespace Azure.Core.Pipeline
             {
                 async Task EnsureStreamAsyncImpl()
                 {
-                    _contentStream = await _contentTask;
+                    _contentStream = await _contentTask.ConfigureAwait(false);
                 }
 
                 return _contentStream == null ? EnsureStreamAsyncImpl() : Task.CompletedTask;

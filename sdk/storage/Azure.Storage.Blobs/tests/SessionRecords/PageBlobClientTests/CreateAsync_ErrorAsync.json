@@ -1,0 +1,103 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4a4a3b7a-a288-60fb-e80d-6492ccfc1134?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "3d8b2421680a26ce231f0fe36b75a4f6",
+        "x-ms-date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "ETag": "\u00220x8D6FE6F07E2F614\u0022",
+        "Last-Modified": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6f4f5ee1-601e-0037-7a57-309fa2000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4a4a3b7a-a288-60fb-e80d-6492ccfc1134/test-blob-c64227d0-d0c6-010e-47ab-4bd43285b20f",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-blob-content-length": "511",
+        "x-ms-blob-type": "PageBlob",
+        "x-ms-client-request-id": "38b9f1df228211b56c2426689218f573",
+        "x-ms-date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "333",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "InvalidHeaderValue",
+        "x-ms-request-id": "6f4f5eec-601e-0037-0257-309fa2000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidHeaderValue\u003c/Code\u003e\u003cMessage\u003eThe value for one of the HTTP headers is not in the correct format.\n",
+        "RequestId:6f4f5eec-601e-0037-0257-309fa2000000\n",
+        "Time:2019-07-01T21:56:54.6783611Z\u003c/Message\u003e\u003cHeaderName\u003ex-ms-blob-content-length\u003c/HeaderName\u003e\u003cHeaderValue\u003e511\u003c/HeaderValue\u003e\u003c/Error\u003e"
+      ]
+    },
+    {
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-4a4a3b7a-a288-60fb-e80d-6492ccfc1134?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "a5c16e684bb9516e168af55e1df9f49e",
+        "x-ms-date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Mon, 01 Jul 2019 21:56:54 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "6f4f5ef2-601e-0037-0857-309fa2000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1818888232"
+  }
+}

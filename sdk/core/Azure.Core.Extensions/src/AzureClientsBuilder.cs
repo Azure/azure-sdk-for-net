@@ -11,7 +11,6 @@ namespace Azure.Core.Extensions
     public sealed class AzureClientsBuilder : IAzureClientsBuilderWithConfiguration<IConfiguration>
     {
         private readonly IServiceCollection _serviceCollection;
-        private static readonly ConfigurationClientFactory ConfigurationClientFactory = new ConfigurationClientFactory();
 
         internal AzureClientsBuilder(IServiceCollection serviceCollection)
         {

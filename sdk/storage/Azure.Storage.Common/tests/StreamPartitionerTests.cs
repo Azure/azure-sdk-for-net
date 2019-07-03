@@ -133,7 +133,7 @@ namespace Azure.Storage.Common.Test
                         }
                     }
 
-                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DEFAULT_BUFFER_SIZE); // TODO Assuming at most 8 buffers allocated
+                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
                 }
                 while (true);
             }
@@ -144,8 +144,8 @@ namespace Azure.Storage.Common.Test
             //logger.LogInformation($"{nameof(memoryStart)} = {memoryStart}; {nameof(memoryEnd)} = {memoryEnd}");
             //logger.LogInformation($"delta = {memoryEnd - memoryStart}");
 
-            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DEFAULT_BUFFER_SIZE), buffersRead);
-            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DEFAULT_BUFFER_SIZE); // TODO Assuming at most 8 buffers allocated
+            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DefaultBufferSize), buffersRead);
+            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace Azure.Storage.Common.Test
                         }
                     }
 
-                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DEFAULT_BUFFER_SIZE); // TODO Assuming at most 8 buffers allocated
+                    Assert.IsTrue(GC.GetTotalMemory(true) - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
                 }
                 while (true);
             }
@@ -200,8 +200,8 @@ namespace Azure.Storage.Common.Test
             //logger.LogInformation($"{nameof(memoryStart)} = {memoryStart}; {nameof(memoryEnd)} = {memoryEnd}");
             //logger.LogInformation($"delta = {memoryEnd - memoryStart}");
 
-            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DEFAULT_BUFFER_SIZE), buffersRead);
-            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DEFAULT_BUFFER_SIZE); // TODO Assuming at most 8 buffers allocated
+            Assert.AreEqual(Math.Ceiling(1d * length / Constants.DefaultBufferSize), buffersRead);
+            Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
         }
 
         class NonSeekableStream : MemoryStream
@@ -223,6 +223,13 @@ namespace Azure.Storage.Common.Test
 
         class MockNonSeekableStream : Stream
         {
+            static int seed = Environment.TickCount;
+
+            static readonly ThreadLocal<Random> random =
+                new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
+
+            public static Random Random => random.Value;
+
             public MockNonSeekableStream(long length, bool randomizeData = false)
             {
                 this.Length = length;
@@ -262,7 +269,7 @@ namespace Azure.Storage.Common.Test
 
                         for (i = 0; i < count && this.position < this.Length; i++)
                         {
-                            buffer[offset + i] = (byte)Constants.Random.Next(256);
+                            buffer[offset + i] = (byte)Random.Next(256);
                             Interlocked.Increment(ref this.position);
                         }
 

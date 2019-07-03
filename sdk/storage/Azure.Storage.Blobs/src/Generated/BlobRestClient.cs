@@ -26,7 +26,8 @@ namespace Azure.Storage.Blobs
             /// <param name="blobServiceProperties">The StorageService properties.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -34,7 +35,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -43,8 +45,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -132,14 +139,16 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Storage Service Properties.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -147,8 +156,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -233,14 +247,16 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Statistics for the storage service.</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetStatisticsAsync_CreateRequest(
                     pipeline,
@@ -248,8 +264,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetStatisticsAsync_CreateResponse(_response);
                 }
             }
@@ -338,7 +359,8 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify that the container's metadata be returned as part of the response body.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of containers</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>> ListContainersSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -349,7 +371,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.ListContainersIncludeType? include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListContainersSegmentAsync_CreateRequest(
                     pipeline,
@@ -361,8 +384,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListContainersSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -459,7 +487,8 @@ namespace Azure.Storage.Blobs
             /// <param name="keyInfo">Key information</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>A user delegation key</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -467,7 +496,8 @@ namespace Azure.Storage.Blobs
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetUserDelegationKeyAsync_CreateRequest(
                     pipeline,
@@ -476,8 +506,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetUserDelegationKeyAsync_CreateResponse(_response);
                 }
             }
@@ -573,19 +608,26 @@ namespace Azure.Storage.Blobs
             /// Returns the sku name and account kind 
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
                     pipeline,
                     resourceUri))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccountInfoAsync_CreateResponse(_response);
                 }
             }
@@ -684,7 +726,8 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -693,7 +736,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 Azure.Storage.Blobs.Models.PublicAccessType? access = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -703,8 +747,13 @@ namespace Azure.Storage.Blobs
                     access,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -810,7 +859,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -818,7 +868,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -827,8 +878,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -972,7 +1028,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -982,7 +1039,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
@@ -993,8 +1051,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -1080,7 +1143,8 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1090,7 +1154,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -1101,8 +1166,13 @@ namespace Azure.Storage.Blobs
                     ifModifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -1212,7 +1282,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1220,7 +1291,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetAccessPolicyAsync_CreateRequest(
                     pipeline,
@@ -1229,8 +1301,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1343,7 +1420,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1355,7 +1433,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetAccessPolicyAsync_CreateRequest(
                     pipeline,
@@ -1368,8 +1447,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetAccessPolicyAsync_CreateResponse(_response);
                 }
             }
@@ -1496,7 +1580,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1507,7 +1592,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
@@ -1519,8 +1605,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AcquireLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1635,7 +1726,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1645,7 +1737,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
@@ -1656,8 +1749,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ReleaseLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1769,7 +1867,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1779,7 +1878,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
@@ -1790,8 +1890,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return RenewLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -1907,7 +2012,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1917,7 +2023,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
@@ -1928,8 +2035,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return BreakLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -2054,7 +2166,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2065,7 +2178,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
@@ -2077,8 +2191,13 @@ namespace Azure.Storage.Blobs
                     ifUnmodifiedSince,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ChangeLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -2202,7 +2321,8 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2213,7 +2333,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListBlobsIncludeItem> include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListBlobsFlatSegmentAsync_CreateRequest(
                     pipeline,
@@ -2225,8 +2346,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListBlobsFlatSegmentAsync_CreateResponse(_response);
                 }
             }
@@ -2328,7 +2454,8 @@ namespace Azure.Storage.Blobs
             /// <param name="include">Include this parameter to specify one or more datasets to include in the response.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>An enumeration of blobs</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2340,7 +2467,8 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListBlobsIncludeItem> include = default,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ListBlobsHierarchySegmentAsync_CreateRequest(
                     pipeline,
@@ -2353,8 +2481,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ListBlobsHierarchySegmentAsync_CreateResponse(_response);
                 }
             }
@@ -2446,105 +2579,6 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Container.ListBlobsHierarchySegmentAsync
-
-            #region Container.GetAccountInfoAsync
-            /// <summary>
-            /// Returns the sku name and account kind
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
-            {
-                using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
-                    pipeline,
-                    resourceUri))
-                {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
-                    return GetAccountInfoAsync_CreateResponse(_response);
-                }
-            }
-
-            /// <summary>
-            /// Create the Container.GetAccountInfoAsync request.
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <returns>The Container.GetAccountInfoAsync Request.</returns>
-            internal static Azure.Request GetAccountInfoAsync_CreateRequest(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-
-                // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
-
-                // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "account");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-
-                return _request;
-            }
-
-            /// <summary>
-            /// Create the Container.GetAccountInfoAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 200:
-                    {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
-                        {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
-                        {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
-                        }
-
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
-
-                        return _result;
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion Container.GetAccountInfoAsync
         }
         #endregion Container operations
 
@@ -2569,7 +2603,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -2584,7 +2619,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DownloadAsync_CreateRequest(
                     pipeline,
@@ -2600,8 +2636,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DownloadAsync_CreateResponse(_response);
                 }
             }
@@ -2992,7 +3033,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobProperties></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3005,7 +3047,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
@@ -3019,8 +3062,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPropertiesAsync_CreateResponse(_response);
                 }
             }
@@ -3278,7 +3326,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> DeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3292,7 +3341,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
@@ -3307,8 +3357,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return DeleteAsync_CreateResponse(_response);
                 }
             }
@@ -3402,14 +3457,16 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> UndeleteAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UndeleteAsync_CreateRequest(
                     pipeline,
@@ -3417,8 +3474,13 @@ namespace Azure.Storage.Blobs
                     timeout,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UndeleteAsync_CreateResponse(_response);
                 }
             }
@@ -3503,7 +3565,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3521,7 +3584,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string blobContentDisposition = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetHttpHeadersAsync_CreateRequest(
                     pipeline,
@@ -3540,8 +3604,13 @@ namespace Azure.Storage.Blobs
                     blobContentDisposition,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetHttpHeadersAsync_CreateResponse(_response);
                 }
             }
@@ -3700,7 +3769,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3713,7 +3783,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
@@ -3727,8 +3798,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetMetadataAsync_CreateResponse(_response);
                 }
             }
@@ -3867,7 +3943,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -3880,7 +3957,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
@@ -3894,8 +3972,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AcquireLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4017,7 +4100,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4029,7 +4113,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
@@ -4042,8 +4127,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ReleaseLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4162,7 +4252,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4174,7 +4265,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
@@ -4187,8 +4279,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return RenewLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4312,7 +4409,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4325,7 +4423,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
@@ -4339,8 +4438,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ChangeLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4470,7 +4574,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4482,7 +4587,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
@@ -4495,8 +4601,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return BreakLeaseAsync_CreateResponse(_response);
                 }
             }
@@ -4628,7 +4739,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4641,7 +4753,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateSnapshotAsync_CreateRequest(
                     pipeline,
@@ -4655,8 +4768,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateSnapshotAsync_CreateResponse(_response);
                 }
             }
@@ -4788,7 +4906,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4806,7 +4925,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StartCopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -4825,8 +4945,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StartCopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -4980,7 +5105,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -4998,7 +5124,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -5017,8 +5144,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -5164,7 +5296,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> AbortCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5173,7 +5306,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AbortCopyFromUriAsync_CreateRequest(
                     pipeline,
@@ -5183,8 +5317,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AbortCopyFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -5271,7 +5410,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response</returns>
             public static async System.Threading.Tasks.Task<Azure.Response> SetTierAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5280,7 +5420,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 string leaseId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = SetTierAsync_CreateRequest(
                     pipeline,
@@ -5290,8 +5431,13 @@ namespace Azure.Storage.Blobs
                     requestId,
                     leaseId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return SetTierAsync_CreateResponse(_response);
                 }
             }
@@ -5371,105 +5517,6 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Blob.SetTierAsync
-
-            #region Blob.GetAccountInfoAsync
-            /// <summary>
-            /// Returns the sku name and account kind 
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Threading.CancellationToken cancellation = default)
-            {
-                using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
-                    pipeline,
-                    resourceUri))
-                {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
-                    return GetAccountInfoAsync_CreateResponse(_response);
-                }
-            }
-
-            /// <summary>
-            /// Create the Blob.GetAccountInfoAsync request.
-            /// </summary>
-            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
-            /// <returns>The Blob.GetAccountInfoAsync Request.</returns>
-            internal static Azure.Request GetAccountInfoAsync_CreateRequest(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-
-                // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
-
-                // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
-                _request.UriBuilder.Uri = resourceUri;
-                _request.UriBuilder.AppendQuery("restype", "account");
-                _request.UriBuilder.AppendQuery("comp", "properties");
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-
-                return _request;
-            }
-
-            /// <summary>
-            /// Create the Blob.GetAccountInfoAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 200:
-                    {
-                        // Create the result
-                        Azure.Storage.Blobs.Models.AccountInfo _value = new Azure.Storage.Blobs.Models.AccountInfo();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("x-ms-sku-name", out _header))
-                        {
-                            _value.SkuName = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseSkuName(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-account-kind", out _header))
-                        {
-                            _value.AccountKind = (Azure.Storage.Blobs.Models.AccountKind)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.AccountKind), _header, false);
-                        }
-
-                        // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>(
-                                response,
-                                _value);
-
-                        return _result;
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion Blob.GetAccountInfoAsync
         }
         #endregion Blob operations
 
@@ -5501,7 +5548,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -5523,7 +5571,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -5546,8 +5595,13 @@ namespace Azure.Storage.Blobs
                     blobSequenceNumber,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -5721,9 +5775,10 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -5740,7 +5795,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadPagesAsync_CreateRequest(
                     pipeline,
@@ -5760,8 +5816,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadPagesAsync_CreateResponse(_response);
                 }
             }
@@ -5848,8 +5909,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadPagesAsync_CreateResponse(
+            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -5858,7 +5919,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -5880,8 +5941,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -5916,9 +5977,10 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> ClearPagesAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -5933,7 +5995,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ClearPagesAsync_CreateRequest(
                     pipeline,
@@ -5951,8 +6014,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ClearPagesAsync_CreateResponse(_response);
                 }
             }
@@ -6027,8 +6095,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> ClearPagesAsync_CreateResponse(
+            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6037,7 +6105,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -6059,8 +6127,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -6102,9 +6170,10 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadPagesFromUriAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -6126,7 +6195,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadPagesFromUriAsync_CreateRequest(
                     pipeline,
@@ -6151,8 +6221,13 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadPagesFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -6260,8 +6335,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadPagesFromUriAsync_CreateResponse(
+            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6270,7 +6345,7 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.PageInfo _value = new Azure.Storage.Blobs.Models.PageInfo();
 
                         // Get response headers
                         string _header;
@@ -6292,8 +6367,8 @@ namespace Azure.Storage.Blobs
                         }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageInfo>(
                                 response,
                                 _value);
 
@@ -6339,7 +6414,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6353,7 +6429,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPageRangesAsync_CreateRequest(
                     pipeline,
@@ -6368,8 +6445,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPageRangesAsync_CreateResponse(_response);
                 }
             }
@@ -6512,7 +6594,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6527,7 +6610,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetPageRangesDiffAsync_CreateRequest(
                     pipeline,
@@ -6543,8 +6627,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetPageRangesDiffAsync_CreateResponse(_response);
                 }
             }
@@ -6688,9 +6777,10 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ResizeAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -6701,7 +6791,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = ResizeAsync_CreateRequest(
                     pipeline,
@@ -6715,8 +6806,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return ResizeAsync_CreateResponse(_response);
                 }
             }
@@ -6778,8 +6874,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ResizeAsync_CreateResponse(
+            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6788,7 +6884,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobInfo _value = new Azure.Storage.Blobs.Models.BlobInfo();
+                        Azure.Storage.Blobs.Models.PageBlobInfo _value = new Azure.Storage.Blobs.Models.PageBlobInfo();
 
                         // Get response headers
                         string _header;
@@ -6800,10 +6896,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
+                        {
+                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
                                 response,
                                 _value);
 
@@ -6835,9 +6935,10 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> UpdateSequenceNumberAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -6849,7 +6950,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UpdateSequenceNumberAsync_CreateRequest(
                     pipeline,
@@ -6864,8 +6966,13 @@ namespace Azure.Storage.Blobs
                     blobSequenceNumber,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UpdateSequenceNumberAsync_CreateResponse(_response);
                 }
             }
@@ -6930,8 +7037,8 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> UpdateSequenceNumberAsync_CreateResponse(
+            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -6940,7 +7047,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobInfo _value = new Azure.Storage.Blobs.Models.BlobInfo();
+                        Azure.Storage.Blobs.Models.PageBlobInfo _value = new Azure.Storage.Blobs.Models.PageBlobInfo();
 
                         // Get response headers
                         string _header;
@@ -6952,10 +7059,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
+                        {
+                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>(
                                 response,
                                 _value);
 
@@ -6985,7 +7096,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -6997,7 +7109,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CopyIncrementalAsync_CreateRequest(
                     pipeline,
@@ -7010,8 +7123,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CopyIncrementalAsync_CreateResponse(_response);
                 }
             }
@@ -7153,7 +7271,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7173,7 +7292,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CreateAsync_CreateRequest(
                     pipeline,
@@ -7194,8 +7314,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CreateAsync_CreateResponse(_response);
                 }
             }
@@ -7361,7 +7486,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7378,7 +7504,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AppendBlockAsync_CreateRequest(
                     pipeline,
@@ -7396,8 +7523,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AppendBlockAsync_CreateResponse(_response);
                 }
             }
@@ -7558,7 +7690,8 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7580,7 +7713,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = AppendBlockFromUriAsync_CreateRequest(
                     pipeline,
@@ -7603,8 +7737,13 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return AppendBlockFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -7799,7 +7938,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7820,7 +7960,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = UploadAsync_CreateRequest(
                     pipeline,
@@ -7842,8 +7983,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return UploadAsync_CreateResponse(_response);
                 }
             }
@@ -8013,9 +8159,10 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8025,7 +8172,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StageBlockAsync_CreateRequest(
                     pipeline,
@@ -8038,8 +8186,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StageBlockAsync_CreateResponse(_response);
                 }
             }
@@ -8108,8 +8261,8 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> StageBlockAsync_CreateResponse(
+            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8118,30 +8271,18 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.BlockInfo _value = new Azure.Storage.Blobs.Models.BlockInfo();
 
                         // Get response headers
                         string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
-                        {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
                                 response,
                                 _value);
 
@@ -8176,9 +8317,10 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
-            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> StageBlockFromUriAsync(
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8193,7 +8335,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? sourceIfMatch = default,
                 Azure.ETag? sourceIfNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = StageBlockFromUriAsync_CreateRequest(
                     pipeline,
@@ -8211,8 +8354,13 @@ namespace Azure.Storage.Blobs
                     sourceIfNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return StageBlockFromUriAsync_CreateResponse(_response);
                 }
             }
@@ -8294,8 +8442,8 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> StageBlockFromUriAsync_CreateResponse(
+            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
                 // Process the response
@@ -8304,30 +8452,18 @@ namespace Azure.Storage.Blobs
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobContentInfo _value = new Azure.Storage.Blobs.Models.BlobContentInfo();
+                        Azure.Storage.Blobs.Models.BlockInfo _value = new Azure.Storage.Blobs.Models.BlockInfo();
 
                         // Get response headers
                         string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
-                        if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
-                        {
-                            _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
 
                         // Create the response
-                        Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> _result =
-                            new Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>(
+                        Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> _result =
+                            new Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>(
                                 response,
                                 _value);
 
@@ -8378,7 +8514,8 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8398,7 +8535,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = CommitBlockListAsync_CreateRequest(
                     pipeline,
@@ -8419,8 +8557,13 @@ namespace Azure.Storage.Blobs
                     ifNoneMatch,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return CommitBlockListAsync_CreateResponse(_response);
                 }
             }
@@ -8588,7 +8731,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
-            /// <param name="cancellation">Cancellation token.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation></returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8598,7 +8742,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string leaseId = default,
                 string requestId = default,
-                System.Threading.CancellationToken cancellation = default)
+                bool async = true,
+                System.Threading.CancellationToken cancellationToken = default)
             {
                 using (Azure.Request _request = GetBlockListAsync_CreateRequest(
                     pipeline,
@@ -8609,8 +8754,13 @@ namespace Azure.Storage.Blobs
                     leaseId,
                     requestId))
                 {
-                    Azure.Response _response = await pipeline.SendRequestAsync(_request, cancellation).ConfigureAwait(false);
-                    cancellation.ThrowIfCancellationRequested();
+                    Azure.Response _response = async ?
+                        // Send the request asynchronously if we're being called via an async path
+                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                        // Send the request synchronously through the API that blocks if we're being called via a sync path
+                        // (this is safe because the Task will complete before the user can call Wait)
+                        pipeline.SendRequest(_request, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                     return GetBlockListAsync_CreateResponse(_response);
                 }
             }
@@ -9081,17 +9231,17 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Key information
     /// </summary>
-    public partial class KeyInfo
+    internal partial class KeyInfo
     {
         /// <summary>
         /// The date-time the key is active in ISO 8601 UTC time
         /// </summary>
-        public string Start { get; set; }
+        public System.DateTimeOffset? Start { get; set; }
 
         /// <summary>
         /// The date-time the key expires in ISO 8601 UTC time
         /// </summary>
-        public string Expiry { get; set; }
+        public System.DateTimeOffset Expiry { get; set; }
 
         /// <summary>
         /// Serialize a KeyInfo instance as XML.
@@ -9104,12 +9254,15 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("Start", ""),
-                value.Start));
+            if (value.Start != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Start", ""),
+                    value.Start.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("Expiry", ""),
-                value.Expiry));
+                value.Expiry.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ", System.Globalization.CultureInfo.InvariantCulture)));
             return _element;
         }
     }
@@ -9989,6 +10142,35 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.UserDelegationKey value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        public static UserDelegationKey UserDelegationKey(
+            string signedOid,
+            string signedTid,
+            System.DateTimeOffset signedStart,
+            System.DateTimeOffset signedExpiry,
+            string signedService,
+            string signedVersion,
+            string value)
+        {
+            var _model = new UserDelegationKey();
+            _model.SignedOid = signedOid;
+            _model.SignedTid = signedTid;
+            _model.SignedStart = signedStart;
+            _model.SignedExpiry = signedExpiry;
+            _model.SignedService = signedService;
+            _model.SignedVersion = signedVersion;
+            _model.Value = value;
+            return _model;
+        }
+    }
 }
 #endregion class UserDelegationKey
 
@@ -10635,6 +10817,81 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemProperties value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        public static BlobItemProperties BlobItemProperties(
+            string copyId = default,
+            System.DateTimeOffset? creationTime = default,
+            Azure.ETag? eTag = default,
+            long? contentLength = default,
+            string contentType = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            byte[] contentHash = default,
+            string contentDisposition = default,
+            string cacheControl = default,
+            long? blobSequenceNumber = default,
+            Azure.Storage.Blobs.Models.BlobType? blobType = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            System.DateTimeOffset? lastModified = default,
+            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            System.Uri copySource = default,
+            string copyProgress = default,
+            System.DateTimeOffset? copyCompletionTime = default,
+            string copyStatusDescription = default,
+            bool? serverEncrypted = default,
+            bool? incrementalCopy = default,
+            string destinationSnapshot = default,
+            System.DateTimeOffset? deletedTime = default,
+            int? remainingRetentionDays = default,
+            Azure.Storage.Blobs.Models.AccessTier accessTier = default,
+            bool? accessTierInferred = default,
+            Azure.Storage.Blobs.Models.ArchiveStatus archiveStatus = default,
+            System.DateTimeOffset? accessTierChangeTime = default)
+        {
+            var _model = new BlobItemProperties();
+            _model.CopyId = copyId;
+            _model.CreationTime = creationTime;
+            _model.ETag = eTag;
+            _model.ContentLength = contentLength;
+            _model.ContentType = contentType;
+            _model.ContentEncoding = contentEncoding;
+            _model.ContentLanguage = contentLanguage;
+            _model.ContentHash = contentHash;
+            _model.ContentDisposition = contentDisposition;
+            _model.CacheControl = cacheControl;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            _model.BlobType = blobType;
+            _model.LeaseStatus = leaseStatus;
+            _model.LeaseState = leaseState;
+            _model.LeaseDuration = leaseDuration;
+            _model.LastModified = lastModified;
+            _model.CopyStatus = copyStatus;
+            _model.CopySource = copySource;
+            _model.CopyProgress = copyProgress;
+            _model.CopyCompletionTime = copyCompletionTime;
+            _model.CopyStatusDescription = copyStatusDescription;
+            _model.ServerEncrypted = serverEncrypted;
+            _model.IncrementalCopy = incrementalCopy;
+            _model.DestinationSnapshot = destinationSnapshot;
+            _model.DeletedTime = deletedTime;
+            _model.RemainingRetentionDays = remainingRetentionDays;
+            _model.AccessTier = accessTier;
+            _model.AccessTierInferred = accessTierInferred;
+            _model.ArchiveStatus = archiveStatus;
+            _model.AccessTierChangeTime = accessTierChangeTime;
+            return _model;
+        }
+    }
 }
 #endregion class BlobItemProperties
 
@@ -10729,6 +10986,31 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItem value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
+        public static BlobItem BlobItem(
+            string name,
+            Azure.Storage.Blobs.Models.BlobItemProperties properties,
+            bool? deleted = default,
+            string snapshot = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new BlobItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Deleted = deleted;
+            _model.Snapshot = snapshot;
+            _model.Metadata = metadata;
+            return _model;
+        }
+    }
 }
 #endregion class BlobItem
 
@@ -10738,7 +11020,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An enumeration of blobs
     /// </summary>
-    public partial class BlobsFlatSegment
+    internal partial class BlobsFlatSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -10860,7 +11142,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlobPrefix
     /// </summary>
-    public partial class BlobPrefix
+    internal partial class BlobPrefix
     {
         /// <summary>
         /// Name
@@ -10892,7 +11174,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An enumeration of blobs
     /// </summary>
-    public partial class BlobsHierarchySegment
+    internal partial class BlobsHierarchySegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -11061,6 +11343,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.Block value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new Block instance for mocking.
+        /// </summary>
+        public static Block Block(
+            string name,
+            int size)
+        {
+            var _model = new Block();
+            _model.Name = name;
+            _model.Size = size;
+            return _model;
+        }
+    }
 }
 #endregion class Block
 
@@ -11143,6 +11444,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlockList value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlockList instance for mocking.
+        /// </summary>
+        public static BlockList BlockList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> committedBlocks = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.Block> uncommittedBlocks = default)
+        {
+            var _model = new BlockList();
+            _model.CommittedBlocks = committedBlocks;
+            _model.UncommittedBlocks = uncommittedBlocks;
+            return _model;
+        }
+    }
 }
 #endregion class BlockList
 
@@ -11152,7 +11472,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlockLookupList
     /// </summary>
-    public partial class BlockLookupList
+    internal partial class BlockLookupList
     {
         /// <summary>
         /// Committed
@@ -11313,6 +11633,37 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerProperties value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerProperties instance for mocking.
+        /// </summary>
+        public static ContainerProperties ContainerProperties(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
+            bool? hasLegalHold = default)
+        {
+            var _model = new ContainerProperties();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.LeaseStatus = leaseStatus;
+            _model.LeaseState = leaseState;
+            _model.LeaseDuration = leaseDuration;
+            _model.PublicAccess = publicAccess;
+            _model.HasImmutabilityPolicy = hasImmutabilityPolicy;
+            _model.HasLegalHold = hasLegalHold;
+            return _model;
+        }
+    }
 }
 #endregion class ContainerProperties
 
@@ -11387,6 +11738,27 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ContainerItem value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerItem instance for mocking.
+        /// </summary>
+        public static ContainerItem ContainerItem(
+            string name,
+            Azure.Storage.Blobs.Models.ContainerProperties properties,
+            System.Collections.Generic.IDictionary<string, string> metadata = default)
+        {
+            var _model = new ContainerItem();
+            _model.Name = name;
+            _model.Properties = properties;
+            _model.Metadata = metadata;
+            return _model;
+        }
+    }
 }
 #endregion class ContainerItem
 
@@ -11396,7 +11768,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An enumeration of containers
     /// </summary>
-    public partial class ContainersSegment
+    internal partial class ContainersSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -11496,241 +11868,241 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class ContainersSegment
 
-#region enum strings StorageErrorCode
+#region enum strings BlobErrorCode
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Error codes returned by the service
     /// </summary>
-    public partial struct StorageErrorCode : System.IEquatable<StorageErrorCode>
+    public partial struct BlobErrorCode : System.IEquatable<BlobErrorCode>
     {
         #pragma warning disable CA2211 // Non-constant fields should not be visible
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists = @"AccountAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountBeingCreated = @"AccountBeingCreated";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated = @"AccountBeingCreated";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AccountIsDisabled = @"AccountIsDisabled";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled = @"AccountIsDisabled";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AuthenticationFailed = @"AuthenticationFailed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed = @"AuthenticationFailed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AuthorizationFailure = @"AuthorizationFailure";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure = @"AuthorizationFailure";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported = @"ConditionHeadersNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ConditionNotMet = @"ConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet = @"ConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey = @"EmptyMetadataKey";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions = @"InsufficientAccountPermissions";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InternalError = @"InternalError";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InternalError = @"InternalError";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo = @"InvalidAuthenticationInfo";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue = @"InvalidHeaderValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb = @"InvalidHttpVerb";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidInput = @"InvalidInput";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput = @"InvalidInput";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidMd5 = @"InvalidMd5";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 = @"InvalidMd5";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidMetadata = @"InvalidMetadata";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata = @"InvalidMetadata";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue = @"InvalidQueryParameterValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidRange = @"InvalidRange";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange = @"InvalidRange";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidResourceName = @"InvalidResourceName";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName = @"InvalidResourceName";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidUri = @"InvalidUri";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri = @"InvalidUri";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument = @"InvalidXmlDocument";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue = @"InvalidXmlNodeValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode Md5Mismatch = @"Md5Mismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch = @"Md5Mismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MetadataTooLarge = @"MetadataTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge = @"MetadataTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader = @"MissingContentLengthHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter = @"MissingRequiredQueryParameter";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader = @"MissingRequiredHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode = @"MissingRequiredXmlNode";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported = @"MultipleConditionHeadersNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OperationTimedOut = @"OperationTimedOut";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut = @"OperationTimedOut";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OutOfRangeInput = @"OutOfRangeInput";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput = @"OutOfRangeInput";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue = @"OutOfRangeQueryParameterValue";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge = @"RequestBodyTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch = @"ResourceTypeMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse = @"RequestUrlFailedToParse";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists = @"ResourceAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ResourceNotFound = @"ResourceNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound = @"ResourceNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ServerBusy = @"ServerBusy";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy = @"ServerBusy";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedHeader = @"UnsupportedHeader";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader = @"UnsupportedHeader";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode = @"UnsupportedXmlNode";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter = @"UnsupportedQueryParameter";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb = @"UnsupportedHttpVerb";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode AppendPositionConditionNotMet = @"AppendPositionConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet = @"AppendPositionConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobAlreadyExists = @"BlobAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists = @"BlobAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobNotFound = @"BlobNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound = @"BlobNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobOverwritten = @"BlobOverwritten";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten = @"BlobOverwritten";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobTierInadequateForContentLength = @"BlobTierInadequateForContentLength";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength = @"BlobTierInadequateForContentLength";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlockCountExceedsLimit = @"BlockCountExceedsLimit";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit = @"BlockCountExceedsLimit";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlockListTooLong = @"BlockListTooLong";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong = @"BlockListTooLong";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CannotChangeToLowerTier = @"CannotChangeToLowerTier";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier = @"CannotChangeToLowerTier";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CannotVerifyCopySource = @"CannotVerifyCopySource";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource = @"CannotVerifyCopySource";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerAlreadyExists = @"ContainerAlreadyExists";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists = @"ContainerAlreadyExists";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerBeingDeleted = @"ContainerBeingDeleted";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted = @"ContainerBeingDeleted";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerDisabled = @"ContainerDisabled";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled = @"ContainerDisabled";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContainerNotFound = @"ContainerNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound = @"ContainerNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode ContentLengthLargerThanTierLimit = @"ContentLengthLargerThanTierLimit";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit = @"ContentLengthLargerThanTierLimit";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CopyAcrossAccountsNotSupported = @"CopyAcrossAccountsNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported = @"CopyAcrossAccountsNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode CopyIdMismatch = @"CopyIdMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch = @"CopyIdMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode FeatureVersionMismatch = @"FeatureVersionMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch = @"FeatureVersionMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopyBlobMismatch = @"IncrementalCopyBlobMismatch";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch = @"IncrementalCopyBlobMismatch";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed = @"IncrementalCopyOfEralierVersionSnapshotNotAllowed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed = @"IncrementalCopyOfEralierVersionSnapshotNotAllowed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode IncrementalCopySourceMustBeSnapshot = @"IncrementalCopySourceMustBeSnapshot";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot = @"IncrementalCopySourceMustBeSnapshot";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InfiniteLeaseDurationRequired = @"InfiniteLeaseDurationRequired";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired = @"InfiniteLeaseDurationRequired";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobOrBlock = @"InvalidBlobOrBlock";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock = @"InvalidBlobOrBlock";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobTier = @"InvalidBlobTier";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier = @"InvalidBlobTier";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlobType = @"InvalidBlobType";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType = @"InvalidBlobType";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlockId = @"InvalidBlockId";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId = @"InvalidBlockId";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidBlockList = @"InvalidBlockList";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList = @"InvalidBlockList";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidOperation = @"InvalidOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation = @"InvalidOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidPageRange = @"InvalidPageRange";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange = @"InvalidPageRange";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidSourceBlobType = @"InvalidSourceBlobType";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType = @"InvalidSourceBlobType";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidSourceBlobUrl = @"InvalidSourceBlobUrl";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl = @"InvalidSourceBlobUrl";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode InvalidVersionForPageBlobOperation = @"InvalidVersionForPageBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation = @"InvalidVersionForPageBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseAlreadyPresent = @"LeaseAlreadyPresent";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent = @"LeaseAlreadyPresent";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseAlreadyBroken = @"LeaseAlreadyBroken";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken = @"LeaseAlreadyBroken";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithBlobOperation = @"LeaseIdMismatchWithBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation = @"LeaseIdMismatchWithBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithContainerOperation = @"LeaseIdMismatchWithContainerOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation = @"LeaseIdMismatchWithContainerOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMismatchWithLeaseOperation = @"LeaseIdMismatchWithLeaseOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation = @"LeaseIdMismatchWithLeaseOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIdMissing = @"LeaseIdMissing";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing = @"LeaseIdMissing";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBreakingAndCannotBeAcquired = @"LeaseIsBreakingAndCannotBeAcquired";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired = @"LeaseIsBreakingAndCannotBeAcquired";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBreakingAndCannotBeChanged = @"LeaseIsBreakingAndCannotBeChanged";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged = @"LeaseIsBreakingAndCannotBeChanged";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseIsBrokenAndCannotBeRenewed = @"LeaseIsBrokenAndCannotBeRenewed";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed = @"LeaseIsBrokenAndCannotBeRenewed";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseLost = @"LeaseLost";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost = @"LeaseLost";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithBlobOperation = @"LeaseNotPresentWithBlobOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation = @"LeaseNotPresentWithBlobOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithContainerOperation = @"LeaseNotPresentWithContainerOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation = @"LeaseNotPresentWithContainerOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode LeaseNotPresentWithLeaseOperation = @"LeaseNotPresentWithLeaseOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation = @"LeaseNotPresentWithLeaseOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode MaxBlobSizeConditionNotMet = @"MaxBlobSizeConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet = @"MaxBlobSizeConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode NoPendingCopyOperation = @"NoPendingCopyOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation = @"NoPendingCopyOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode OperationNotAllowedOnIncrementalCopyBlob = @"OperationNotAllowedOnIncrementalCopyBlob";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob = @"OperationNotAllowedOnIncrementalCopyBlob";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PendingCopyOperation = @"PendingCopyOperation";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation = @"PendingCopyOperation";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotCannotBeNewer = @"PreviousSnapshotCannotBeNewer";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer = @"PreviousSnapshotCannotBeNewer";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotNotFound = @"PreviousSnapshotNotFound";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound = @"PreviousSnapshotNotFound";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode PreviousSnapshotOperationNotSupported = @"PreviousSnapshotOperationNotSupported";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported = @"PreviousSnapshotOperationNotSupported";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SequenceNumberConditionNotMet = @"SequenceNumberConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet = @"SequenceNumberConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SequenceNumberIncrementTooLarge = @"SequenceNumberIncrementTooLarge";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge = @"SequenceNumberIncrementTooLarge";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnapshotCountExceeded = @"SnapshotCountExceeded";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded = @"SnapshotCountExceeded";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnaphotOperationRateExceeded = @"SnaphotOperationRateExceeded";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded = @"SnaphotOperationRateExceeded";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SnapshotsPresent = @"SnapshotsPresent";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent = @"SnapshotsPresent";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SourceConditionNotMet = @"SourceConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet = @"SourceConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode SystemInUse = @"SystemInUse";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse = @"SystemInUse";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode TargetConditionNotMet = @"TargetConditionNotMet";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet = @"TargetConditionNotMet";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode UnauthorizedBlobOverwrite = @"UnauthorizedBlobOverwrite";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite = @"UnauthorizedBlobOverwrite";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobBeingRehydrated = @"BlobBeingRehydrated";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated = @"BlobBeingRehydrated";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobArchived = @"BlobArchived";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived = @"BlobArchived";
 
-        public static Azure.Storage.Blobs.Models.StorageErrorCode BlobNotArchived = @"BlobNotArchived";
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived = @"BlobNotArchived";
         #pragma warning restore CA2211 // Non-constant fields should not be visible
 
         private readonly string _value;
-        private StorageErrorCode(string value) { this._value = value; }
-        public bool Equals(Azure.Storage.Blobs.Models.StorageErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
-        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.StorageErrorCode other && this.Equals(other);
+        private BlobErrorCode(string value) { this._value = value; }
+        public bool Equals(Azure.Storage.Blobs.Models.BlobErrorCode other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);
+        public override bool Equals(object o) => o is Azure.Storage.Blobs.Models.BlobErrorCode other && this.Equals(other);
         public override int GetHashCode() => this._value.GetHashCode();
         public override string ToString() => this._value;
         #pragma warning disable CA2225 // Operator overloads have named alternates
-        public static implicit operator StorageErrorCode(string value) => new Azure.Storage.Blobs.Models.StorageErrorCode(value);
+        public static implicit operator BlobErrorCode(string value) => new Azure.Storage.Blobs.Models.BlobErrorCode(value);
         #pragma warning restore CA2225 // Operator overloads have named alternates
-        public static implicit operator string(Azure.Storage.Blobs.Models.StorageErrorCode o) => o._value;
-        public static bool operator ==(Azure.Storage.Blobs.Models.StorageErrorCode a, Azure.Storage.Blobs.Models.StorageErrorCode b) => a.Equals(b);
-        public static bool operator !=(Azure.Storage.Blobs.Models.StorageErrorCode a, Azure.Storage.Blobs.Models.StorageErrorCode b) => !a.Equals(b);
+        public static implicit operator string(Azure.Storage.Blobs.Models.BlobErrorCode o) => o._value;
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => a.Equals(b);
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode a, Azure.Storage.Blobs.Models.BlobErrorCode b) => !a.Equals(b);
     }
 }
-#endregion enum strings StorageErrorCode
+#endregion enum strings BlobErrorCode
 
 #region enum GeoReplicationStatus
 namespace Azure.Storage.Blobs.Models
@@ -11823,6 +12195,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.GeoReplication value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new GeoReplication instance for mocking.
+        /// </summary>
+        public static GeoReplication GeoReplication(
+            Azure.Storage.Blobs.Models.GeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            var _model = new GeoReplication();
+            _model.Status = status;
+            _model.LastSyncTime = lastSyncTime;
+            return _model;
+        }
+    }
 }
 #endregion class GeoReplication
 
@@ -11861,6 +12252,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageRange value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageRange instance for mocking.
+        /// </summary>
+        public static PageRange PageRange(
+            long start,
+            long end)
+        {
+            var _model = new PageRange();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
+    }
 }
 #endregion class PageRange
 
@@ -11898,6 +12308,25 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.ClearRange value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new ClearRange instance for mocking.
+        /// </summary>
+        public static ClearRange ClearRange(
+            long start,
+            long end)
+        {
+            var _model = new ClearRange();
+            _model.Start = start;
+            _model.End = end;
+            return _model;
+        }
     }
 }
 #endregion class ClearRange
@@ -11964,6 +12393,25 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.PageList value);
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageList instance for mocking.
+        /// </summary>
+        public static PageList PageList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.PageRange> pageRange = default,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ClearRange> clearRange = default)
+        {
+            var _model = new PageList();
+            _model.PageRange = pageRange;
+            _model.ClearRange = clearRange;
+            return _model;
+        }
+    }
 }
 #endregion class PageList
 
@@ -12020,6 +12468,23 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobServiceStatistics value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobServiceStatistics instance for mocking.
+        /// </summary>
+        public static BlobServiceStatistics BlobServiceStatistics(
+            Azure.Storage.Blobs.Models.GeoReplication geoReplication = default)
+        {
+            var _model = new BlobServiceStatistics();
+            _model.GeoReplication = geoReplication;
+            return _model;
+        }
     }
 }
 #endregion class BlobServiceStatistics
@@ -12121,6 +12586,25 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public Azure.Storage.Blobs.Models.AccountKind AccountKind { get; internal set; }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new AccountInfo instance for mocking.
+        /// </summary>
+        public static AccountInfo AccountInfo(
+            Azure.Storage.Blobs.Models.SkuName skuName,
+            Azure.Storage.Blobs.Models.AccountKind accountKind)
+        {
+            var _model = new AccountInfo();
+            _model.SkuName = skuName;
+            _model.AccountKind = accountKind;
+            return _model;
+        }
+    }
 }
 #endregion class AccountInfo
 
@@ -12141,6 +12625,25 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerInfo instance for mocking.
+        /// </summary>
+        public static ContainerInfo ContainerInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new ContainerInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class ContainerInfo
@@ -12260,6 +12763,29 @@ namespace Azure.Storage.Blobs.Models
             this.SignedIdentifiers = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.SignedIdentifier>();
         }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new ContainerAccessPolicy instance for mocking.
+        /// </summary>
+        public static ContainerAccessPolicy ContainerAccessPolicy(
+            Azure.Storage.Blobs.Models.PublicAccessType blobPublicAccess,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> signedIdentifiers)
+        {
+            var _model = new ContainerAccessPolicy();
+            _model.BlobPublicAccess = blobPublicAccess;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.SignedIdentifiers = signedIdentifiers;
+            return _model;
+        }
+    }
 }
 #endregion class ContainerAccessPolicy
 
@@ -12285,6 +12811,27 @@ namespace Azure.Storage.Blobs.Models
         /// Uniquely identifies a container or blob's lease
         /// </summary>
         public string LeaseId { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new Lease instance for mocking.
+        /// </summary>
+        public static Lease Lease(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string leaseId)
+        {
+            var _model = new Lease();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.LeaseId = leaseId;
+            return _model;
+        }
     }
 }
 #endregion class Lease
@@ -12694,6 +13241,83 @@ namespace Azure.Storage.Blobs.Models
             this.ContentLanguage = new System.Collections.Generic.List<string>();
         }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        public static BlobProperties BlobProperties(
+            System.DateTimeOffset lastModified,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
+            string destinationSnapshot,
+            string contentType,
+            Azure.ETag eTag,
+            byte[] contentHash,
+            System.Collections.Generic.IEnumerable<string> contentEncoding,
+            string contentDisposition,
+            bool isIncrementalCopy,
+            System.Collections.Generic.IEnumerable<string> contentLanguage,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string cacheControl,
+            System.Uri copySource,
+            long blobSequenceNumber,
+            string copyProgress,
+            string acceptRanges,
+            string copyId,
+            int blobCommittedBlockCount,
+            string copyStatusDescription,
+            bool isServerEncrypted,
+            System.DateTimeOffset copyCompletionTime,
+            string accessTier,
+            Azure.Storage.Blobs.Models.BlobType blobType,
+            bool accessTierInferred,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            string archiveStatus,
+            System.DateTimeOffset creationTime,
+            System.DateTimeOffset accessTierChangeTime,
+            long contentLength)
+        {
+            var _model = new BlobProperties();
+            _model.LastModified = lastModified;
+            _model.LeaseDuration = leaseDuration;
+            _model.LeaseState = leaseState;
+            _model.LeaseStatus = leaseStatus;
+            _model.DestinationSnapshot = destinationSnapshot;
+            _model.ContentType = contentType;
+            _model.ETag = eTag;
+            _model.ContentHash = contentHash;
+            _model.ContentEncoding = contentEncoding;
+            _model.ContentDisposition = contentDisposition;
+            _model.IsIncrementalCopy = isIncrementalCopy;
+            _model.ContentLanguage = contentLanguage;
+            _model.CopyStatus = copyStatus;
+            _model.CacheControl = cacheControl;
+            _model.CopySource = copySource;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            _model.CopyProgress = copyProgress;
+            _model.AcceptRanges = acceptRanges;
+            _model.CopyId = copyId;
+            _model.BlobCommittedBlockCount = blobCommittedBlockCount;
+            _model.CopyStatusDescription = copyStatusDescription;
+            _model.IsServerEncrypted = isServerEncrypted;
+            _model.CopyCompletionTime = copyCompletionTime;
+            _model.AccessTier = accessTier;
+            _model.BlobType = blobType;
+            _model.AccessTierInferred = accessTierInferred;
+            _model.Metadata = metadata;
+            _model.ArchiveStatus = archiveStatus;
+            _model.CreationTime = creationTime;
+            _model.AccessTierChangeTime = accessTierChangeTime;
+            _model.ContentLength = contentLength;
+            return _model;
+        }
+    }
 }
 #endregion class BlobProperties
 
@@ -12726,6 +13350,29 @@ namespace Azure.Storage.Blobs.Models
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        public static BlobContentInfo BlobContentInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            long blobSequenceNumber)
+        {
+            var _model = new BlobContentInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
     }
 }
 #endregion class BlobContentInfo
@@ -12830,6 +13477,25 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        public static BlobInfo BlobInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new BlobInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
+    }
 }
 #endregion class BlobInfo
 
@@ -12855,6 +13521,27 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobSnapshotInfo instance for mocking.
+        /// </summary>
+        public static BlobSnapshotInfo BlobSnapshotInfo(
+            string snapshot,
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified)
+        {
+            var _model = new BlobSnapshotInfo();
+            _model.Snapshot = snapshot;
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            return _model;
+        }
     }
 }
 #endregion class BlobSnapshotInfo
@@ -12887,8 +13574,66 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get; internal set; }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobCopyInfo instance for mocking.
+        /// </summary>
+        public static BlobCopyInfo BlobCopyInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string copyId,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus)
+        {
+            var _model = new BlobCopyInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.CopyId = copyId;
+            _model.CopyStatus = copyStatus;
+            return _model;
+        }
+    }
 }
 #endregion class BlobCopyInfo
+
+#region class BlockInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlockInfo
+    /// </summary>
+    public partial class BlockInfo
+    {
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlockInfo instance for mocking.
+        /// </summary>
+        public static BlockInfo BlockInfo(
+            byte[] contentHash)
+        {
+            var _model = new BlockInfo();
+            _model.ContentHash = contentHash;
+            return _model;
+        }
+    }
+}
+#endregion class BlockInfo
 
 #region class GetBlockListOperation
 namespace Azure.Storage.Blobs.Models
@@ -12949,6 +13694,62 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class GetBlockListOperation
 
+#region class PageInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// PageInfo
+    /// </summary>
+    public partial class PageInfo
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// The current sequence number for the page blob.  This is only returned for page blobs.
+        /// </summary>
+        public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageInfo instance for mocking.
+        /// </summary>
+        public static PageInfo PageInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            long blobSequenceNumber)
+        {
+            var _model = new PageInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
+    }
+}
+#endregion class PageInfo
+
 #region class PageRangesInfo
 namespace Azure.Storage.Blobs.Models
 {
@@ -12985,8 +13786,78 @@ namespace Azure.Storage.Blobs.Models
             this.Body = new Azure.Storage.Blobs.Models.PageList();
         }
     }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageRangesInfo instance for mocking.
+        /// </summary>
+        public static PageRangesInfo PageRangesInfo(
+            System.DateTimeOffset lastModified,
+            Azure.ETag eTag,
+            long blobContentLength,
+            Azure.Storage.Blobs.Models.PageList body)
+        {
+            var _model = new PageRangesInfo();
+            _model.LastModified = lastModified;
+            _model.ETag = eTag;
+            _model.BlobContentLength = blobContentLength;
+            _model.Body = body;
+            return _model;
+        }
+    }
 }
 #endregion class PageRangesInfo
+
+#region class PageBlobInfo
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// PageBlobInfo
+    /// </summary>
+    public partial class PageBlobInfo
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The current sequence number for the page blob.  This is only returned for page blobs.
+        /// </summary>
+        public long BlobSequenceNumber { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new PageBlobInfo instance for mocking.
+        /// </summary>
+        public static PageBlobInfo PageBlobInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            long blobSequenceNumber)
+        {
+            var _model = new PageBlobInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.BlobSequenceNumber = blobSequenceNumber;
+            return _model;
+        }
+    }
+}
+#endregion class PageBlobInfo
 
 #region class BlobAppendInfo
 namespace Azure.Storage.Blobs.Models
@@ -13027,6 +13898,33 @@ namespace Azure.Storage.Blobs.Models
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobAppendInfo instance for mocking.
+        /// </summary>
+        public static BlobAppendInfo BlobAppendInfo(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            byte[] contentHash,
+            string blobAppendOffset,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted)
+        {
+            var _model = new BlobAppendInfo();
+            _model.ETag = eTag;
+            _model.LastModified = lastModified;
+            _model.ContentHash = contentHash;
+            _model.BlobAppendOffset = blobAppendOffset;
+            _model.BlobCommittedBlockCount = blobCommittedBlockCount;
+            _model.IsServerEncrypted = isServerEncrypted;
+            return _model;
+        }
     }
 }
 #endregion class BlobAppendInfo
