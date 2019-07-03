@@ -14,7 +14,6 @@
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.ApplicationModel.Configuration;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 using Azure.Identity;
