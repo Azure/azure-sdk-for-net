@@ -694,11 +694,15 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var response = await file.ListHandlesAsync(maxResults: 5);
+                var handles =
+                    (await file.GetHandlesAsync()
+                    .ByPage(pageSizeHint: 5)
+                    .ToListAsync())
+                    .SelectMany(p => p.Values)
+                    .ToList();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -709,11 +713,10 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewFile(out var file))
             {
                 // Act
-                var response = await file.ListHandlesAsync();
+                var handles = await file.GetHandlesAsync().ToListAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -727,7 +730,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    file.ListHandlesAsync(),
+                    file.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
             }

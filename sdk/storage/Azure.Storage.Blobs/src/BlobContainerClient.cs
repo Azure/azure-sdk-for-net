@@ -1110,26 +1110,13 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="ListBlobsFlatSegment"/> operation returns a
-        /// single segment of blobs in this container, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsFlatSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsFlatSegment"/>
-        /// to continue enumerating the blobs segment by segment. Blobs are
-        /// ordered lexicographically by name.
+        /// The <see cref="GetBlobs"/> operation returns an async sequence
+        /// of blobs in this container.  Enumerating the blobs may make
+        /// multiple requests to the service while fetching all the values.
+        /// Blobs are ordered lexicographically by name.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsFlatSegment.NextMarker"/>
-        /// if the listing operation did not return all blobs remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
@@ -1139,45 +1126,26 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobsFlatSegment}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="IEnumerable{Response{BlobItem}}"/> describing the
+        /// blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobsFlatSegment> ListBlobsFlatSegment(
-            string marker = default,
-            BlobsSegmentOptions? options = default,
+        public virtual IEnumerable<Response<BlobItem>> GetBlobs(
+            GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListBlobsFlatSegmentAsync(
-                marker,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetBlobsAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListBlobsFlatSegmentAsync"/> operation returns a
-        /// single segment of blobs in this container, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsFlatSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsFlatSegmentAsync"/>
-        /// to continue enumerating the blobs segment by segment. Blobs are
-        /// ordered lexicographically by name.
+        /// The <see cref="GetBlobsAsync"/> operation returns an async
+        /// sequence of blobs in this container.  Enumerating the blobs may
+        /// make multiple requests to the service while fetching all the
+        /// values.  Blobs are ordered lexicographically by name.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsFlatSegment.NextMarker"/>
-        /// if the listing operation did not return all blobs remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
@@ -1187,31 +1155,25 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobsFlatSegment}}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="AsyncCollection{BlobItem}"/> describing the
+        /// blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
-            string marker = default,
-            BlobsSegmentOptions? options = default,
+        public virtual AsyncCollection<BlobItem> GetBlobsAsync(
+            GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListBlobsFlatSegmentAsync(
-                marker,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetBlobsAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListBlobsFlatSegmentAsync"/> operation returns a
+        /// The <see cref="GetBlobsAsync"/> operation returns a
         /// single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
         /// and the <see cref="BlobsFlatSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsFlatSegmentAsync"/>
+        /// empty to make subsequent calls to <see cref="GetBlobsAsync"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
         /// 
@@ -1229,6 +1191,10 @@ namespace Azure.Storage.Blobs
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1245,9 +1211,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobsFlatSegment>> ListBlobsFlatSegmentAsync(
+        internal async Task<Response<BlobsFlatSegment>> GetBlobsAsync(
             string marker,
-            BlobsSegmentOptions? options,
+            GetBlobsOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1266,8 +1233,8 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        include: options?.Details?.ToArray(),
+                        maxresults: pageSizeHint,
+                        include: options?.AsIncludeItems(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1285,41 +1252,29 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="ListBlobsHierarchySegment"/> operation returns
-        /// a single segment of blobs in this container, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsHierarchySegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsHierarchySegment"/>
-        /// to continue enumerating the blobs segment by segment. Blobs are
-        /// ordered lexicographically by name.   A <paramref name="delimiter"/>
-        /// can be used to traverse a virtual hierarchy of blobs as though
-        /// it were a file system.
+        /// The <see cref="GetBlobsByHierarchy"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// <paramref name="delimiter"/> can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsHierarchySegment.NextMarker"/>
-        /// if the listing operation did not return all blobs remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="delimiter">
         /// A <paramref name="delimiter"/> that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
         /// delimiter may be a single character or a string.
-        /// <see cref="BlobsHierarchySegment.BlobPrefixes"/> will be returned
+        /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
         /// in place of all blobs whose names begin with the same substring up
         /// to the appearance of the delimiter character.  The value of a
-        /// <see cref="BlobPrefix.Name"/> is substring+delimiter, where
-        /// substring is the common substring that begins one or more blob 
-        /// names, and delimiter is the value of <paramref name="delimiter"/>.
-        /// You can use the value of BlobPrefix to make a subsequent call to
-        /// list the blobs that begin with this prefix, by specifying the 
-        /// value of the BlobPrefix for the <see cref="BlobsSegmentOptions.Prefix"/>.
+        /// prefix is substring+delimiter, where substring is the common
+        /// substring that begins one or more blob  names, and delimiter is the
+        /// value of <paramref name="delimiter"/>. You can use the value of
+        /// prefix to make a subsequent call to list the blobs that begin with
+        /// this prefix, by specifying the value of the prefix for the
+        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// 
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
         /// </param>
@@ -1332,62 +1287,43 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobsHierarchySegment}}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="IEnumerable{Response{BlobHierarchyItem}}"/> describing
+        /// the blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobsHierarchySegment> ListBlobsHierarchySegment(
-            string marker = default,
+        public virtual IEnumerable<Response<BlobHierarchyItem>> GetBlobsByHierarchy(
             string delimiter = default,
-            BlobsSegmentOptions? options = default,
+            GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListBlobsHierarchySegmentAsync(
-                marker,
-                delimiter,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListBlobsHierarchySegmentAsync"/> operation returns
-        /// a single segment of blobs in this container, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="BlobsHierarchySegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsHierarchySegmentAsync"/>
-        /// to continue enumerating the blobs segment by segment. Blobs are
-        /// ordered lexicographically by name.   A <paramref name="delimiter"/>
-        /// can be used to traverse a virtual hierarchy of blobs as though
-        /// it were a file system.
+        /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// <paramref name="delimiter"/> can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobsHierarchySegment.NextMarker"/>
-        /// if the listing operation did not return all blobs remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="delimiter">
         /// A <paramref name="delimiter"/> that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
         /// delimiter may be a single character or a string.
-        /// <see cref="BlobsHierarchySegment.BlobPrefixes"/> will be returned
+        /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
         /// in place of all blobs whose names begin with the same substring up
         /// to the appearance of the delimiter character.  The value of a
-        /// <see cref="BlobPrefix.Name"/> is substring+delimiter, where
-        /// substring is the common substring that begins one or more blob 
-        /// names, and delimiter is the value of <paramref name="delimiter"/>.
-        /// You can use the value of BlobPrefix to make a subsequent call to
-        /// list the blobs that begin with this prefix, by specifying the 
-        /// value of the BlobPrefix for the <see cref="BlobsSegmentOptions.Prefix"/>.
+        /// prefix is substring+delimiter, where substring is the common
+        /// substring that begins one or more blob  names, and delimiter is the
+        /// value of <paramref name="delimiter"/>. You can use the value of
+        /// prefix to make a subsequent call to list the blobs that begin with
+        /// this prefix, by specifying the value of the prefix for the
+        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// 
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
         /// </param>
@@ -1400,33 +1336,26 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobsHierarchySegment}}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="AsyncCollection{BlobHierarchyItem}"/> describing the
+        /// blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
-            string marker = default,
+        public virtual AsyncCollection<BlobHierarchyItem> GetBlobsByHierarchyAsync(
             string delimiter = default,
-            BlobsSegmentOptions? options = default,
+            GetBlobsOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListBlobsHierarchySegmentAsync(
-                marker,
-                delimiter,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListBlobsHierarchySegmentAsync"/> operation returns
+        /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
         /// a single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
         /// and the <see cref="BlobsHierarchySegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListBlobsHierarchySegmentAsync"/>
+        /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.   A <paramref name="delimiter"/>
         /// can be used to traverse a virtual hierarchy of blobs as though
@@ -1447,21 +1376,26 @@ namespace Azure.Storage.Blobs
         /// A <paramref name="delimiter"/> that can be used to traverse a
         /// virtual hierarchy of blobs as though it were a file system.  The
         /// delimiter may be a single character or a string.
-        /// <see cref="BlobsHierarchySegment.BlobPrefixes"/> will be returned
+        /// <see cref="BlobHierarchyItem.Prefix"/> will be returned
         /// in place of all blobs whose names begin with the same substring up
         /// to the appearance of the delimiter character.  The value of a
-        /// <see cref="BlobPrefix.Name"/> is substring+delimiter, where
-        /// substring is the common substring that begins one or more blob 
-        /// names, and delimiter is the value of <paramref name="delimiter"/>.
-        /// You can use the value of BlobPrefix to make a subsequent call to
-        /// list the blobs that begin with this prefix, by specifying the 
-        /// value of the BlobPrefix for the <see cref="BlobsSegmentOptions.Prefix"/>.
+        /// prefix is substring+delimiter, where substring is the common
+        /// substring that begins one or more blob  names, and delimiter is the
+        /// value of <paramref name="delimiter"/>. You can use the value of
+        /// prefix to make a subsequent call to list the blobs that begin with
+        /// this prefix, by specifying the value of the prefix for the
+        /// <see cref="GetBlobsOptions.Prefix"/>.
+        /// 
         /// Note that each BlobPrefix element returned counts toward the
         /// maximum result, just as each Blob element does.
         /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// blobs.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1478,10 +1412,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobsHierarchySegment>> ListBlobsHierarchySegmentAsync(
+        internal async Task<Response<BlobsHierarchySegment>> GetBlobsByHierarchyAsync(
             string marker,
             string delimiter,
-            BlobsSegmentOptions? options,
+            GetBlobsOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1501,8 +1436,8 @@ namespace Azure.Storage.Blobs
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        include: options?.Details?.ToArray(),
+                        maxresults: pageSizeHint,
+                        include: options?.AsIncludeItems(),
                         delimiter: delimiter,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -1682,218 +1617,3 @@ namespace Azure.Storage.Blobs
     }
 }
 
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Specifies options for listing blobs with the 
-    /// <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/> and
-    /// <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
-    /// operations.
-    /// </summary>
-    public struct BlobsSegmentOptions : IEquatable<BlobsSegmentOptions>
-    {
-        /// <summary>
-        /// Gets or sets the details about each blob that should be
-        /// returned with the request.
-        /// </summary>
-        public BlobListingDetails? Details { get; set; } // No IncludeType header is produced if ""
-
-        /// <summary>
-        /// Gets or sets a string that filters the results to return only
-        /// blobs whose name begins with the specified prefix.
-        /// </summary>
-        public string Prefix { get; set; }             // No Prefix header is produced if ""
-
-        /// <summary>
-        /// Gets or sets the maximum number of blobs to return. If the
-        /// request does not specify <see cref="MaxResults"/>, or specifies a
-        /// value greater than 5000, the server will return up to 5000 items.
-        /// 
-        /// Note that if the listing operation crosses a partition boundary,
-        /// then the service will return a <see cref="BlobsFlatSegment.NextMarker"/>
-        /// or <see cref="BlobsHierarchySegment.NextMarker"/> for retrieving
-        /// the remainder of the results.  For this reason, it is possible that
-        /// the service will return fewer results than specified by
-        /// <see cref="MaxResults"/>, or than the default of 5000. 
-        /// 
-        /// If the parameter is set to a value less than or equal to zero, 
-        /// a <see cref="StorageRequestFailedException"/> will be thrown.
-        /// </summary>
-        public int? MaxResults { get; set; }
-
-        /// <summary>
-        /// Check if two BlobsSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is BlobsSegmentOptions other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the BlobsSegmentOptions.
-        /// </summary>
-        /// <returns>Hash code for the BlobsSegmentOptions.</returns>
-        public override int GetHashCode()
-            => this.Details.GetHashCode()
-            ^ this.Prefix.GetHashCode()
-            ^ this.MaxResults.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two BlobsSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobsSegmentOptions left, BlobsSegmentOptions right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobsSegmentOptions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobsSegmentOptions left, BlobsSegmentOptions right) => !(left == right);
-
-        /// <summary>
-        /// Check if two BlobsSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobsSegmentOptions other)
-            => this.Details == other.Details
-            && this.Prefix == other.Prefix
-            && this.MaxResults == other.MaxResults
-            ;
-    }
-
-    /// <summary>
-    /// Specifies the additional details about each blob that should be
-    /// returned from the <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/>
-    /// and <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
-    /// operations.
-    /// </summary>
-	public struct BlobListingDetails : IEquatable<BlobListingDetails>
-    {
-        /// <summary>
-        /// Gets or sets a flag specifing that metadata related to any current
-        /// or previous <see cref="Specialized.BlobClient.StartCopyFromUriAsync"/>
-        /// operation should be included.
-        /// </summary>
-        public bool Copy { get; set; }
-
-        /// <summary>
-        /// Gets or sets a flag specifing that the blob's metadata should be
-        /// included.
-        /// </summary>
-        public bool Metadata { get; set; }
-
-        /// <summary>
-        /// Gets or sets a flag specifing that the blob's snapshots should be
-        /// included.  Snapshots are listed from oldest to newest.
-        /// </summary>
-        public bool Snapshots { get; set; }
-
-        /// <summary>
-        /// Gets or sets a flag specifing that blobs for which blocks have
-        /// been uploaded, but which have not been committed using
-        /// <see cref="BlockBlobClient.CommitBlockListAsync"/> should be
-        /// included.
-        /// </summary>
-        public bool UncommittedBlobs { get; set; }
-
-        /// <summary>
-        /// Gets or sets a flag specifing that soft deleted blobs should be
-        /// included in the response.
-        /// </summary>
-        public bool Deleted { get; set; }
-
-        /// <summary>
-        /// Convert the details into ListBlobsIncludeItem values.
-        /// </summary>
-        /// <returns>ListBlobsIncludeItem values</returns>
-        internal ListBlobsIncludeItem[] ToArray()
-        {
-            // NOTE: Multiple strings MUST be appended in alphabetic order or signing the string for authentication fails!
-            // TODO: Remove this requirement by pushing it closer to header generation. 
-
-            var items = new List<ListBlobsIncludeItem>();
-
-            if (this.Copy)
-            {
-                items.Add(ListBlobsIncludeItem.Copy);
-            }
-
-            if (this.Deleted)
-            {
-                items.Add(ListBlobsIncludeItem.Deleted);
-            }
-
-            if (this.Metadata)
-            {
-                items.Add(ListBlobsIncludeItem.Metadata);
-            }
-
-            if (this.Snapshots)
-            {
-                items.Add(ListBlobsIncludeItem.Snapshots);
-            }
-
-            if (this.UncommittedBlobs)
-            {
-                items.Add(ListBlobsIncludeItem.Uncommittedblobs);
-            }
-
-            return items.ToArray();
-        }
-
-        /// <summary>
-        /// Check if two BlobListingDetails instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is BlobListingDetails other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the BlobListingDetails.
-        /// </summary>
-        /// <returns>Hash code for the BlobListingDetails.</returns>
-        public override int GetHashCode()
-            => (this.Copy ? 0b00001 : 0)
-             + (this.Deleted ? 0b00010 : 0)
-             + (this.Metadata ? 0b00100 : 0)
-             + (this.Snapshots ? 0b01000 : 0)
-             + (this.UncommittedBlobs ? 0b10000 : 0)
-            ;
-
-        /// <summary>
-        /// Check if two BlobListingDetails instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(BlobListingDetails left, BlobListingDetails right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two BlobListingDetails instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(BlobListingDetails left, BlobListingDetails right) => !(left == right);
-
-        /// <summary>
-        /// Check if two BlobListingDetails instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(BlobListingDetails other)
-            => this.Copy == other.Copy
-            && this.Deleted == other.Deleted
-            && this.Metadata == other.Metadata
-            && this.Snapshots == other.Snapshots
-            && this.UncommittedBlobs == other.UncommittedBlobs
-            ;
-    }
-}

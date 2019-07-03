@@ -1054,6 +1054,7 @@
       },
       "description": "The object returned when calling List Queues on a Queue Service.",
       "type": "object",
+      "x-ms-public": false,
       "required": [
         "ServiceEndpoint"
       ],

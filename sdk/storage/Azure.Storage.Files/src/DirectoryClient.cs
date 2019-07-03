@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -655,24 +656,13 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
-        /// The <see cref="ListFilesAndDirectoriesSegment"/> operation returns a
-        /// single segment of files and subdirectories in this directory, starting
-        /// from the specified <paramref name="marker"/>.
+        /// The <see cref="GetFilesAndDirectories"/> operation returns an async
+        /// sequence of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="FilesAndDirectoriesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the items.
         /// </param>
@@ -681,45 +671,26 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FilesAndDirectoriesSegment}"/> describing a
-        /// segment of the items in the directory.
+        /// A <see cref="IEnumerable{Response{StorageFileItem}}"/> describing 
+        /// the items in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FilesAndDirectoriesSegment> ListFilesAndDirectoriesSegment(
-            string marker = default,
-            string shareSnapshot = default,
-            FilesAndDirectoriesSegmentOptions? options = default,
+        public virtual IEnumerable<Response<StorageFileItem>> GetFilesAndDirectories(
+            GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListFilesAndDirectoriesSegmentAsync(
-                marker,
-                shareSnapshot,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListFilesAndDirectoriesSegmentAsync"/> operation returns a
-        /// single segment of files and subdirectories in this directory, starting
-        /// from the specified <paramref name="marker"/>.
+        /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
+        /// async collection of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
         /// 
         /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="FilesAndDirectoriesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the items.
         /// </param>
@@ -728,28 +699,20 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{FilesAndDirectoriesSegment}}"/> describing a
-        /// segment of the items in the directory.
+        /// A <see cref="AsyncCollection{StorageFileItem}"/> describing the
+        /// items in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
-            string marker = default,
-            string shareSnapshot = default,
-            FilesAndDirectoriesSegmentOptions? options = default,
+        public virtual AsyncCollection<StorageFileItem> GetFilesAndDirectoriesAsync(
+            GetFilesAndDirectoriesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListFilesAndDirectoriesSegmentAsync(
-                marker,
-                shareSnapshot,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetFilesAndDirectoriesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListFilesAndDirectoriesSegmentAsync"/> operation returns a
+        /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns a
         /// single segment of files and subdirectories in this directory, starting
         /// from the specified <paramref name="marker"/>.
         /// 
@@ -764,11 +727,12 @@ namespace Azure.Storage.Files
         /// be used as the value for the <paramref name="marker"/> parameter
         /// in a subsequent call to request the next segment of list items.
         /// </param>
-        /// <param name="shareSnapshot">
-        /// Optional. Specifies the share snapshot to query.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the items.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -785,10 +749,10 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FilesAndDirectoriesSegment>> ListFilesAndDirectoriesSegmentAsync(
+        internal async Task<Response<FilesAndDirectoriesSegment>> GetFilesAndDirectoriesAsync(
             string marker,
-            string shareSnapshot,
-            FilesAndDirectoriesSegmentOptions? options,
+            GetFilesAndDirectoriesOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -807,8 +771,8 @@ namespace Azure.Storage.Files
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        sharesnapshot: shareSnapshot,
+                        maxresults: pageSizeHint,
+                        sharesnapshot: options?.ShareSnapshot,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -826,22 +790,13 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
-        /// The <see cref="ListHandles"/> operation returns a list of open handles on a directory or a file.
+        /// The <see cref="GetHandles"/> operation returns an async sequence
+        /// of the open handles on a directory or a file.  Enumerating the
+        /// handles may make multiple requests to the service while fetching
+        /// all the values.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="maxResults">
-        /// Optional. Specifies the maximum number of handles taken on files and/or directories to return.
-        /// </param>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
@@ -850,43 +805,26 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageHandlesSegment}"/> describing a
-        /// segment of the handles in the directory.
+        /// A <see cref="IEnumerable{Response{StorageHandle}}"/> describing the
+        /// handles in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<StorageHandlesSegment> ListHandles(
-            string marker = default,
-            int? maxResults = default,
+        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            this.ListHandlesAsync(
-                marker,
-                maxResults,
-                recursive,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on a directory or a file.
+        /// The <see cref="GetHandlesAsync"/> operation returns an async
+        /// sequence of the open handles on a directory or a file.
+        /// Enumerating the handles may make multiple requests to the service
+        /// while fetching all the values.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="maxResults">
-        /// Optional. Specifies the maximum number of handles taken on files and/or directories to return.
-        /// </param>
         /// <param name="recursive">
         /// Optional. A boolean value that specifies if the operation should also apply to the files and subdirectories of the directory specified.
         /// </param>
@@ -895,28 +833,21 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{StorageHandlesSegment}}"/> describing a
-        /// segment of the handles in the directory.
+        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// handles on the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
-            string marker = default,
-            int? maxResults = default,
+        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListHandlesAsync(
-                marker,
-                maxResults,
-                recursive,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetDirectoryHandlesAsyncCollection(this, recursive, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on a directory or a file.
+        /// The <see cref="GetHandlesAsync"/> operation returns a list of open
+        /// handles on a directory or a file.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
@@ -950,7 +881,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+        internal async Task<Response<StorageHandlesSegment>> GetHandlesAsync(
             string marker,
             int? maxResults,
             bool? recursive,
@@ -998,7 +929,7 @@ namespace Azure.Storage.Files
         /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
         /// handles on subresources when the resource is a directory.
         /// 
-        /// This API is intended to be used alongside <see cref="ListHandles"/> to force close handles that 
+        /// This API is intended to be used alongside <see cref="GetHandles"/> to force close handles that 
         /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
@@ -1052,7 +983,7 @@ namespace Azure.Storage.Files
         /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
         /// handles on subresources when the resource is a directory.
         /// 
-        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that 
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that 
         /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
@@ -1106,7 +1037,7 @@ namespace Azure.Storage.Files
         /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
         /// handles on subresources when the resource is a directory.
         /// 
-        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that 
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that 
         /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
@@ -1427,73 +1358,5 @@ namespace Azure.Storage.Files
             await this.GetFileClient(fileName)
                 .DeleteAsync(cancellationToken)
                 .ConfigureAwait(false);
-    }
-}
-
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// Specifies options for listing files and directories with the 
-    /// <see cref="DirectoryClient.ListFilesAndDirectoriesSegmentAsync"/>
-    /// operation.
-    /// </summary>
-    public struct FilesAndDirectoriesSegmentOptions : IEquatable<FilesAndDirectoriesSegmentOptions>
-    {
-        /// <summary>
-        /// Gets or sets a string that filters the results to return only
-        /// files and directories whose name begins with the specified prefix.
-        /// </summary>
-        public string Prefix { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of items to return.
-        /// </summary>
-        /// <remarks>
-        /// The service may return fewer results than requested.
-        /// </remarks>
-        public int? MaxResults { get; set; }
-
-        /// <summary>
-        /// Check if two FilesAndDirectoriesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is FilesAndDirectoriesSegmentOptions other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the FilesAndDirectoriesSegmentOptions.
-        /// </summary>
-        /// <returns>Hash code for the FilesAndDirectoriesSegmentOptions.</returns>
-        public override int GetHashCode()
-            => this.Prefix.GetHashCode()
-            ^ this.MaxResults.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two FilesAndDirectoriesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(FilesAndDirectoriesSegmentOptions left, FilesAndDirectoriesSegmentOptions right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two FilesAndDirectoriesSegmentOptions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(FilesAndDirectoriesSegmentOptions left, FilesAndDirectoriesSegmentOptions right) => !(left == right);
-
-        /// <summary>
-        /// Check if two FilesAndDirectoriesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(FilesAndDirectoriesSegmentOptions other)
-            => this.Prefix == other.Prefix
-            && this.MaxResults == other.MaxResults
-            ;
     }
 }

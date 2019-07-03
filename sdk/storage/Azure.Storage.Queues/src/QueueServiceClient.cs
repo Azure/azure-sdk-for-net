@@ -195,76 +195,66 @@ namespace Azure.Storage.Queues
             => new QueueClient(this.Uri.AppendToPath(queueName), this.Pipeline);
 
         /// <summary>
-        /// Returns a single segment of containers starting from the specified marker.
+        /// The <see cref="GetQueues"/> operation returns an async
+        /// sequence of queues in the storage account.  Enumerating the
+        /// queues may make multiple requests to the service while fetching
+        /// all the values.  Queue names are returned in lexicographic order.
+        /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
-        /// </param>
-        /// <param name="marker">
-        /// Marker from the previous request.
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// A single segment of containers starting from the specified marker, including the next marker if appropriate.
+        /// The queues in the storage account.
+        /// </returns>
+        public virtual IEnumerable<Response<QueueItem>> GetQueues(
+            GetQueuesOptions? options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetQueuesAsyncCollection(this, options, cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetQueuesAsync"/> operation returns an async
+        /// collection of queues in the storage account.  Enumerating the
+        /// queues may make multiple requests to the service while fetching
+        /// all the values.  Queue names are returned in lexicographic order.
+        /// 
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
+        /// </summary>
+        /// <param name="options">
+        /// <see cref="GetQueuesOptions"/>
+        /// </param>
+        /// <param name="cancellationToken">
+        /// <see cref="CancellationToken"/>
+        /// </param>
+        /// <returns>
+        /// The queues in the storage account.
         /// </returns>
         /// <remarks>
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegment again (passing in the next marker) to get the next segment. 
         /// </remarks>
-        public virtual Response<QueuesSegment> ListQueuesSegment(
-            QueuesSegmentOptions? options = default,
-            string marker = default,
+        public virtual AsyncCollection<QueueItem> GetQueuesAsync(
+            GetQueuesOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListQueuesSegmentAsync(
-                options,
-                marker,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetQueuesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
         /// Returns a single segment of containers starting from the specified marker.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
-        /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
-        /// </param>
         /// <param name="marker">
         /// Marker from the previous request.
         /// </param>
-        /// <param name="cancellationToken">
-        /// <see cref="CancellationToken"/>
-        /// </param>
-        /// <returns>
-        /// A single segment of containers starting from the specified marker, including the next marker if appropriate.
-        /// </returns>
-        /// <remarks>
-        /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
-        /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
-        /// </remarks>
-        public virtual async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
-            QueuesSegmentOptions? options = default,
-            string marker = default,
-            CancellationToken cancellationToken = default) =>
-            await this.ListQueuesSegmentAsync(
-                options,
-                marker,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Returns a single segment of containers starting from the specified marker.
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
-        /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
-        /// <param name="marker">
-        /// Marker from the previous request.
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -279,9 +269,10 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
         /// </remarks>
-        private async Task<Response<QueuesSegment>> ListQueuesSegmentAsync(
-            QueuesSegmentOptions? options,
+        internal async Task<Response<QueuesSegment>> GetQueuesAsync(
             string marker,
+            GetQueuesOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -300,8 +291,8 @@ namespace Azure.Storage.Queues
                         this.Uri,
                         marker: marker,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        include: options?.Detail.AsIncludeType(),
+                        maxresults: pageSizeHint,
+                        include: options?.AsIncludeTypes(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -665,116 +656,5 @@ namespace Azure.Storage.Queues
             await this.GetQueueClient(queueName)
                 .DeleteAsync(cancellationToken)
                 .ConfigureAwait(false);
-    }
-}
-
-namespace Azure.Storage.Queues.Models
-{
-    /// <summary>
-    /// QueuesSegmentOptions defines options available when calling ListQueues.
-    /// </summary>
-    public struct QueuesSegmentOptions : IEquatable<QueuesSegmentOptions>
-    {
-        public ListQueuesSegmentDetail Detail { get; set; }
-        public string Prefix { get; set; }
-        public int? MaxResults { get; set; }
-
-        public override bool Equals(object obj)
-            => obj is QueuesSegmentOptions other
-            && this.Equals(other)
-            ;
-
-        /// <summary>
-        /// Get a hash code for the QueuesSegmentOptions.
-        /// </summary>
-        /// <returns>Hash code for the QueuesSegmentOptions.</returns>
-        public override int GetHashCode()
-            => this.Detail.GetHashCode()
-            ^ this.Prefix.GetHashCode()
-            ^ this.MaxResults.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(QueuesSegmentOptions left, QueuesSegmentOptions right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(QueuesSegmentOptions left, QueuesSegmentOptions right) => !(left == right);
-
-        /// <summary>
-        /// Check if two QueuesSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(QueuesSegmentOptions other)
-            => this.Detail == other.Detail
-            && this.Prefix == other.Prefix
-            && this.MaxResults == other.MaxResults
-            ;
-    }
-
-    /// <summary>
-    /// ListQueuesSegmentDetail indicates what additional information the service should return with each queue.
-    /// </summary>
-    public struct ListQueuesSegmentDetail : IEquatable<ListQueuesSegmentDetail>
-    {
-        public bool Metadata { get; set; }
-
-        internal IEnumerable<ListQueuesIncludeType> AsIncludeType()
-            => this.Metadata ?
-                new ListQueuesIncludeType[] { ListQueuesIncludeType.Metadata } :
-                Array.Empty<ListQueuesIncludeType>();
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is ListQueuesSegmentDetail other
-            && this.Equals(other)
-            ;
-
-        /// <summary>
-        /// Get a hash code for the ListQueuesSegmentDetail.
-        /// </summary>
-        /// <returns>Hash code for the ListQueuesSegmentDetail.</returns>
-        public override int GetHashCode()
-            => this.Metadata.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ListQueuesSegmentDetail left, ListQueuesSegmentDetail right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ListQueuesSegmentDetail left, ListQueuesSegmentDetail right) => !(left == right);
-
-        /// <summary>
-        /// Check if two ListQueuesSegmentDetail instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ListQueuesSegmentDetail other)
-            => this.Metadata == other.Metadata
-            ;
     }
 }

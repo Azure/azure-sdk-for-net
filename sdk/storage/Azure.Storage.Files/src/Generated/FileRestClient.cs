@@ -4974,7 +4974,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// A listed directory item.
     /// </summary>
-    public partial class DirectoryItem
+    internal partial class DirectoryItem
     {
         /// <summary>
         /// Name
@@ -4997,23 +4997,6 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.DirectoryItem value);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new DirectoryItem instance for mocking.
-        /// </summary>
-        public static DirectoryItem DirectoryItem(
-            string name)
-        {
-            var _model = new DirectoryItem();
-            _model.Name = name;
-            return _model;
-        }
-    }
 }
 #endregion class DirectoryItem
 
@@ -5023,7 +5006,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// File properties.
     /// </summary>
-    public partial class FileProperty
+    internal partial class FileProperty
     {
         /// <summary>
         /// Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties.
@@ -5046,23 +5029,6 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileProperty value);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileProperty instance for mocking.
-        /// </summary>
-        public static FileProperty FileProperty(
-            long contentLength)
-        {
-            var _model = new FileProperty();
-            _model.ContentLength = contentLength;
-            return _model;
-        }
-    }
 }
 #endregion class FileProperty
 
@@ -5072,7 +5038,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// A listed file item.
     /// </summary>
-    public partial class FileItem
+    internal partial class FileItem
     {
         /// <summary>
         /// Name
@@ -5120,25 +5086,6 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FileItem value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileItem instance for mocking.
-        /// </summary>
-        public static FileItem FileItem(
-            string name,
-            Azure.Storage.Files.Models.FileProperty properties)
-        {
-            var _model = new FileItem();
-            _model.Name = name;
-            _model.Properties = properties;
-            return _model;
-        }
     }
 }
 #endregion class FileItem
@@ -5263,7 +5210,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// An enumeration of directories and files.
     /// </summary>
-    public partial class FilesAndDirectoriesSegment
+    internal partial class FilesAndDirectoriesSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -5401,41 +5348,6 @@ namespace Azure.Storage.Files.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.FilesAndDirectoriesSegment value);
     }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new FilesAndDirectoriesSegment instance for mocking.
-        /// </summary>
-        public static FilesAndDirectoriesSegment FilesAndDirectoriesSegment(
-            string serviceEndpoint,
-            string shareName,
-            string directoryPath,
-            string nextMarker,
-            string shareSnapshot = default,
-            string prefix = default,
-            string marker = default,
-            int? maxResults = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.DirectoryItem> directoryItems = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.FileItem> fileItems = default)
-        {
-            var _model = new FilesAndDirectoriesSegment();
-            _model.ServiceEndpoint = serviceEndpoint;
-            _model.ShareName = shareName;
-            _model.DirectoryPath = directoryPath;
-            _model.NextMarker = nextMarker;
-            _model.ShareSnapshot = shareSnapshot;
-            _model.Prefix = prefix;
-            _model.Marker = marker;
-            _model.MaxResults = maxResults;
-            _model.DirectoryItems = directoryItems;
-            _model.FileItems = fileItems;
-            return _model;
-        }
-    }
 }
 #endregion class FilesAndDirectoriesSegment
 
@@ -5445,7 +5357,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// An enumeration of handles.
     /// </summary>
-    public partial class StorageHandlesSegment
+    internal partial class StorageHandlesSegment
     {
         /// <summary>
         /// Handles
@@ -5505,25 +5417,6 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.StorageHandlesSegment value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new StorageHandlesSegment instance for mocking.
-        /// </summary>
-        public static StorageHandlesSegment StorageHandlesSegment(
-            string nextMarker,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.StorageHandle> handles = default)
-        {
-            var _model = new StorageHandlesSegment();
-            _model.NextMarker = nextMarker;
-            _model.Handles = handles;
-            return _model;
-        }
     }
 }
 #endregion class StorageHandlesSegment
@@ -5719,7 +5612,7 @@ namespace Azure.Storage.Files.Models
     /// <summary>
     /// An enumeration of shares.
     /// </summary>
-    public partial class SharesSegment
+    internal partial class SharesSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -5815,33 +5708,6 @@ namespace Azure.Storage.Files.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Models.SharesSegment value);
-    }
-
-    /// <summary>
-    /// FilesModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class FilesModelFactory
-    {
-        /// <summary>
-        /// Creates a new SharesSegment instance for mocking.
-        /// </summary>
-        public static SharesSegment SharesSegment(
-            string serviceEndpoint,
-            string nextMarker,
-            string prefix = default,
-            string marker = default,
-            int? maxResults = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.ShareItem> shareItems = default)
-        {
-            var _model = new SharesSegment();
-            _model.ServiceEndpoint = serviceEndpoint;
-            _model.NextMarker = nextMarker;
-            _model.Prefix = prefix;
-            _model.Marker = marker;
-            _model.MaxResults = maxResults;
-            _model.ShareItems = shareItems;
-            return _model;
-        }
     }
 }
 #endregion class SharesSegment

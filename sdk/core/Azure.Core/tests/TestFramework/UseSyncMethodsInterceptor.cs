@@ -79,12 +79,23 @@ namespace Azure.Core.Testing
             {
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
-
                 // Map IEnumerable to IAsyncEnumerable
                 if (returnsIEnumerable)
                 {
-                    invocation.ReturnValue = Activator.CreateInstance(
-                        typeof(AsyncEnumerableWrapper<>).MakeGenericType(returnType.GenericTypeArguments), new[] { result });
+                    if (invocation.Method.ReturnType.IsGenericType &&
+                        invocation.Method.ReturnType.GetGenericTypeDefinition().Name == "AsyncCollection`1")
+                    {
+                        // AsyncCollection can be used as either a sync or async
+                        // collection so there's no need to wrap it in an
+                        // IAsyncEnumerable
+                        invocation.ReturnValue = result;
+                    }
+                    else
+                    {
+                        invocation.ReturnValue = Activator.CreateInstance(
+                            typeof(AsyncEnumerableWrapper<>).MakeGenericType(returnType.GenericTypeArguments),
+                            new[] { result });
+                    }
                 }
                 else
                 {

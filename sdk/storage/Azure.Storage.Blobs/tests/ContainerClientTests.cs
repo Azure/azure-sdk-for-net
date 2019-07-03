@@ -1133,17 +1133,12 @@ namespace Azure.Storage.Blobs.Test
                 // Arrange
                 await this.SetUpContainerForListing(container);
 
-                var blobs = new List<BlobItem>();
-                var marker = default(string);
-
                 // Act
-                do
+                var blobs = new List<BlobItem>();
+                await foreach (var page in container.GetBlobsAsync().ByPage())
                 {
-                    var response = await container.ListBlobsFlatSegmentAsync(marker);
-                    blobs.AddRange(response.Value.BlobItems);
-                    marker = response.Value.NextMarker;
+                    blobs.AddRange(page.Values);
                 }
-                while (!String.IsNullOrWhiteSpace(marker));
 
                 // Assert
                 Assert.AreEqual(this.BlobNames.Length, blobs.Count);
@@ -1163,15 +1158,10 @@ namespace Azure.Storage.Blobs.Test
                 await this.SetUpContainerForListing(container);
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        MaxResults = 2
-                    });
-
-
+                var page = await container.GetBlobsAsync().ByPage(pageSizeHint: 2).FirstAsync();
+                
                 // Assert
-                Assert.AreEqual(2, response.Value.BlobItems.Count());
+                Assert.AreEqual(2, page.Values.Length);
             }
         }
         
@@ -1186,17 +1176,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Metadata = true
-                        }
-                    });
+                var blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeMetadata = true }).ToListAsync();
 
                 // Assert
-                this.AssertMetadataEquality(metadata, response.Value.BlobItems.First().Metadata);
+                this.AssertMetadataEquality(metadata, blobs.First().Value.Metadata);
             }
         }
 
@@ -1214,23 +1197,15 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Deleted = true
-                        }
-                    });
+                var blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                if (response.Value.BlobItems.Count() == 0)
+                if (blobs.Count == 0)
                 {
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
-                Assert.AreEqual(1, response.Value.BlobItems.Count());
-                Assert.AreEqual(blobName, response.Value.BlobItems.First().Name);
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Value.Name);
 
                 // Cleanup
                 await this.DisableSoftDelete();
@@ -1256,19 +1231,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            UncommittedBlobs = true
-                        }
-                    });
+                var blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                Assert.AreEqual(1, response.Value.BlobItems.Count());
-                Assert.AreEqual(blobName, response.Value.BlobItems.First().Name);
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Value.Name);
             }
         }
 
@@ -1283,19 +1250,11 @@ namespace Azure.Storage.Blobs.Test
                 var snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Snapshots = true
-                        }
-                    });
+                var blobs = await container.GetBlobsAsync(new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                Assert.AreEqual(2, response.Value.BlobItems.Count());
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), response.Value.BlobItems.First().Snapshot);
+                Assert.AreEqual(2, blobs.Count);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Snapshot);
             }
         }
 
@@ -1308,15 +1267,10 @@ namespace Azure.Storage.Blobs.Test
                 await this.SetUpContainerForListing(container);
 
                 // Act
-                var response = await container.ListBlobsFlatSegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Prefix = "foo"
-                    });
-
+                var blobs = await container.GetBlobsAsync(new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual(3, response.Value.BlobItems.Count());
+                Assert.AreEqual(3, blobs.Count);
             }
         }
 
@@ -1330,7 +1284,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.ListBlobsFlatSegmentAsync(),
+                container.GetBlobsAsync().ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
@@ -1347,9 +1301,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
                     await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
-                    var response = await container.ListBlobsFlatSegmentAsync();
-                    var blobItem = response.Value.BlobItems.First();
-                    Assert.AreEqual(blobName, blobItem.Name);
+                    var blobItem = await container.GetBlobsAsync().FirstAsync();
+                    Assert.AreEqual(blobName, blobItem.Value.Name);
                 }
             }
         }
@@ -1363,24 +1316,20 @@ namespace Azure.Storage.Blobs.Test
                 await this.SetUpContainerForListing(container);
 
                 var blobs = new List<BlobItem>();
-                var prefixes = new List<BlobPrefix>();
-                var marker = default(string);
+                var prefixes = new List<string>();
                 var delimiter = "/";
 
-                do
+                await foreach (var page in container.GetBlobsByHierarchyAsync(delimiter).ByPage())
                 {
-                    var response = await container.ListBlobsHierarchySegmentAsync(marker, delimiter);
-                    blobs.AddRange(response.Value.BlobItems);
-                    prefixes.AddRange(response.Value.BlobPrefixes);
-                    marker = response.Value.NextMarker;
+                    blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
+                    prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
                 }
-                while (!String.IsNullOrWhiteSpace(marker));
 
                 Assert.AreEqual(3, blobs.Count);
                 Assert.AreEqual(2, prefixes.Count);
 
                 var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
-                var foundBlobPrefixes = prefixes.Select(prefix => prefix.Name).ToArray();
+                var foundBlobPrefixes = prefixes.ToArray();
                 var expectedPrefixes =
                     this.BlobNames
                     .Where(blobName => blobName.Contains(delimiter))
@@ -1411,15 +1360,12 @@ namespace Azure.Storage.Blobs.Test
                 var delimiter = "/";
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    delimiter: delimiter,
-                    options: new BlobsSegmentOptions
-                    {
-                        MaxResults = 2
-                    });
+                var page = await container.GetBlobsByHierarchyAsync(delimiter: delimiter)
+                    .ByPage(pageSizeHint: 2)
+                    .FirstAsync();
 
                 // Assert
-                Assert.AreEqual(2, response.Value.BlobItems.Count());
+                Assert.AreEqual(2, page.Values.Length);
             }
         }
         
@@ -1434,17 +1380,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.CreateAsync(metadata: metadata);
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Metadata = true
-                        }
-                    });
+                var item = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
-                this.AssertMetadataEquality(metadata, response.Value.BlobItems.First().Metadata);
+                this.AssertMetadataEquality(metadata, item.Value.Blob.Metadata);
             }
         }
 
@@ -1462,23 +1401,15 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DeleteAsync();
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Deleted = true
-                        }
-                    });
+                var blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeDeletedBlobs = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                if (response.Value.BlobItems.Count() == 0)
+                if (blobs.Count == 0)
                 {
                     Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
                 }
-                Assert.AreEqual(1, response.Value.BlobItems.Count());
-                Assert.AreEqual(blobName, response.Value.BlobItems.First().Name);
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
 
                 // Cleanup
                 await this.DisableSoftDelete();
@@ -1504,19 +1435,11 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            UncommittedBlobs = true
-                        }
-                    });
+                var blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeUncommittedBlobs = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                Assert.AreEqual(1, response.Value.BlobItems.Count());
-                Assert.AreEqual(blobName, response.Value.BlobItems.First().Name);
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Value.Blob.Name);
             }
         }
 
@@ -1531,19 +1454,11 @@ namespace Azure.Storage.Blobs.Test
                 var snapshotResponse = await blob.CreateSnapshotAsync();
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Details = new BlobListingDetails
-                        {
-                            Snapshots = true
-                        }
-                    });
+                var blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { IncludeSnapshots = true }).ToListAsync();
 
                 // Assert
-                Assert.AreEqual("", response.Value.NextMarker);
-                Assert.AreEqual(2, response.Value.BlobItems.Count());
-                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), response.Value.BlobItems.First().Snapshot);
+                Assert.AreEqual(2, blobs.Count);
+                Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Value.Blob.Snapshot);
             }
         }
 
@@ -1556,15 +1471,11 @@ namespace Azure.Storage.Blobs.Test
                 await this.SetUpContainerForListing(container);
 
                 // Act
-                var response = await container.ListBlobsHierarchySegmentAsync(
-                    options: new BlobsSegmentOptions
-                    {
-                        Prefix = "foo"
-                    });
+                var blobs = await container.GetBlobsByHierarchyAsync(options: new GetBlobsOptions { Prefix = "foo" }).ToListAsync();
 
 
                 // Assert
-                Assert.AreEqual(3, response.Value.BlobItems.Count());
+                Assert.AreEqual(3, blobs.Count);
             }
         }
 
@@ -1578,7 +1489,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                container.ListBlobsHierarchySegmentAsync(),
+                container.GetBlobsByHierarchyAsync().ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
         }
 

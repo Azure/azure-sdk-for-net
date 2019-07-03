@@ -215,19 +215,15 @@ namespace Azure.Storage.Files.Test
                     await subDir.CreateAsync();
                 }
 
-                var directories = new List<DirectoryItem>();
-                var files = new List<FileItem>();
-                var marker = default(string);
+                var directories = new List<StorageFileItem>();
+                var files = new List<StorageFileItem>();
 
                 // Act
-                do
+                await foreach (var page in directory.GetFilesAndDirectoriesAsync().ByPage())
                 {
-                    var response = await directory.ListFilesAndDirectoriesSegmentAsync(marker: marker);
-                    directories.AddRange(response.Value.DirectoryItems);
-                    files.AddRange(response.Value.FileItems);
-                    marker = response.Value.NextMarker;
+                    directories.AddRange(page.Values.Where(item => item.IsDirectory));
+                    files.AddRange(page.Values.Where(item => !item.IsDirectory));
                 }
-                while (!String.IsNullOrWhiteSpace(marker));
 
                 // Assert
                 Assert.AreEqual(directoryNames.Length, directories.Count);
@@ -251,7 +247,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    directory.ListFilesAndDirectoriesSegmentAsync(),
+                    directory.GetFilesAndDirectoriesAsync().ToListAsync(),
                     e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
             }
         }
@@ -263,13 +259,14 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewDirectory(out var directory))
             {
                 // Act
-                var response = await directory.ListHandlesAsync(
-                    maxResults: 5,
-                    recursive: true);
+                var handles = (await directory.GetHandlesAsync(recursive: true)
+                    .ByPage(pageSizeHint: 5)
+                    .ToListAsync())
+                    .SelectMany(p => p.Values)
+                    .ToList();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -280,11 +277,10 @@ namespace Azure.Storage.Files.Test
             using (this.GetNewDirectory(out var directory))
             {
                 // Act
-                var response = await directory.ListHandlesAsync();
+                var handles = await directory.GetHandlesAsync().ToListAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.Handles.Count());
-                Assert.AreEqual(String.Empty, response.Value.NextMarker);
+                Assert.AreEqual(0, handles.Count);
             }
         }
 
@@ -298,7 +294,7 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    directory.ListHandlesAsync(),
+                    directory.GetHandlesAsync().ToListAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
             }

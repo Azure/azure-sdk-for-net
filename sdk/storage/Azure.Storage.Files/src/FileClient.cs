@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1682,91 +1683,56 @@ namespace Azure.Storage.Files
         }
 
         /// <summary>
-        /// The <see cref="ListHandles"/> operation returns a list of open handles on the file.
+        /// The <see cref="GetHandles"/> operation returns an async sequence
+        /// of the open handles on a directory or a file.  Enumerating the
+        /// handles may make multiple requests to the service while fetching
+        /// all the values.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="maxResults">
-        /// Optional. Specifies the maximum number of handles to return.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageHandlesSegment}"/> describing a
-        /// segment of the handles on the file.
+        /// A <see cref="IEnumerable{Response{StorageHandle}}"/> describing the
+        /// handles in the directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<StorageHandlesSegment> ListHandles(
-            string marker = default,
-            int? maxResults = default,
+        public virtual IEnumerable<Response<StorageHandle>> GetHandles(
             CancellationToken cancellationToken = default) =>
-            this.ListHandlesAsync(
-                marker,
-                maxResults,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetFileHandlesAsyncCollection(this, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on the file.
+        /// The <see cref="GetHandlesAsync"/> operation returns an async
+        /// sequence of the open handles on a directory or a file.
+        /// Enumerating the handles may make multiple requests to the service
+        /// while fetching all the values.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of items to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="StorageHandlesSegment.NextMarker"/>
-        /// if the listing operation did not return all items remaining to be
-        /// listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
-        /// <param name="maxResults">
-        /// Optional. Specifies the maximum number of handles to return.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{StorageHandlesSegment}}"/> describing a
-        /// segment of the handles on the file.
+        /// A <see cref="AsyncCollection{StorageHandle}"/> describing the
+        /// handles on the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
-            string marker = default,
-            int? maxResults = default,
+        public virtual AsyncCollection<StorageHandle> GetHandlesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.ListHandlesAsync(
-                marker,
-                maxResults,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetFileHandlesAsyncCollection(this, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListHandlesAsync"/> operation returns a list of open handles on the file.
+        /// The <see cref="GetHandlesAsync"/> operation returns a list of open
+        /// handles on the file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
@@ -1799,7 +1765,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<StorageHandlesSegment>> ListHandlesAsync(
+        internal async Task<Response<StorageHandlesSegment>> GetHandlesAsync(
             string marker,
             int? maxResults,
             bool async,
@@ -1841,7 +1807,7 @@ namespace Azure.Storage.Files
         /// at the service. It supports closing a single handle specified by <paramref name="handleId"/> or
         /// or closing all handles opened on that resource.
         ///
-        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
         /// block operations. These handles may have leaked or been lost track of by
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
@@ -1889,7 +1855,7 @@ namespace Azure.Storage.Files
         /// at the service. It supports closing a single handle specified by <paramref name="handleId"/> or
         /// or closing all handles opened on that resource.
         ///
-        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
         /// block operations. These handles may have leaked or been lost track of by
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
@@ -1937,7 +1903,7 @@ namespace Azure.Storage.Files
         /// at the service. It supports closing a single handle specified by <paramref name="handleId"/> or
         /// or closing all handles opened on that resource.
         ///
-        /// This API is intended to be used alongside <see cref="ListHandlesAsync"/> to force close handles that
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
         /// block operations. These handles may have leaked or been lost track of by
         /// SMB clients. The API has client-side impact on the handle being closed, including user visible
         /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement

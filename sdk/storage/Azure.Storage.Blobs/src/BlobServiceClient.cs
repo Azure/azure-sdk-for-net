@@ -3,7 +3,9 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -200,26 +202,13 @@ namespace Azure.Storage.Blobs
             new BlobContainerClient(this.Uri.AppendToPath(containerName), this.Pipeline);
 
         /// <summary>
-        /// The <see cref="ListContainersSegment"/> operation returns a
-        /// single segment of containers in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListContainersSegment"/>
-        /// to continue enumerating the containers segment by segment.
-        /// Containers are ordered lexicographically by name.
+        /// The <see cref="GetContainers"/> operation returns an async
+        /// sequence of containers in the storage account.  Enumerating the
+        /// containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
-        /// if the listing operation did not return all containers remaining
-        /// to be listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// containers.
@@ -229,26 +218,20 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainersSegment}"/> describing a
-        /// segment of the containers in the storage account.
+        /// A <see cref="IEnumerable{Response{ContainerItem}}"/> describing the
+        /// containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<ContainersSegment> ListContainersSegment(
-            string marker = default,
-            ContainersSegmentOptions? options = default,
+        public virtual IEnumerable<Response<ContainerItem>> GetContainers(
+            GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            this.ListContainersSegmentAsync(
-                marker,
-                options,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            new GetContainersAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListContainersSegmentAsync"/> operation returns a
+        /// The <see cref="GetContainersAsync"/> operation returns a
         /// single segment of containers in the storage account, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
@@ -259,15 +242,6 @@ namespace Azure.Storage.Blobs
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
-        /// <param name="marker">
-        /// An optional string value that identifies the segment of the list
-        /// of containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
-        /// if the listing operation did not return all containers remaining
-        /// to be listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
-        /// in a subsequent call to request the next segment of list items.
-        /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// containers.
@@ -277,48 +251,46 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainersSegment}}"/> describing a
-        /// segment of the containers in the storage account.
+        /// An <see cref="AsyncCollection{ContainerItem}"/> describing the
+        /// containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ContainersSegment>> ListContainersSegmentAsync(
-            string marker = default,
-            ContainersSegmentOptions? options = default,
+        public virtual AsyncCollection<ContainerItem> GetContainersAsync(
+            GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            await this.ListContainersSegmentAsync(
-                marker,
-                options,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            new GetContainersAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="ListContainersSegmentAsync"/> operation returns a
+        /// The <see cref="GetContainersAsync"/> operation returns a
         /// single segment of containers in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
+        /// from the specified <paramref name="continuationToken"/>.  Use an empty
+        /// <paramref name="continuationToken"/> to start enumeration from the beginning
         /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListContainersSegmentAsync"/>
+        /// empty to make subsequent calls to <see cref="GetContainersAsync"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
-        /// <param name="marker">
+        /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
         /// of containers to be returned with the next listing operation.  The
         /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
         /// if the listing operation did not return all containers remaining
         /// to be listed with the current segment.  The NextMarker value can
-        /// be used as the value for the <paramref name="marker"/> parameter
+        /// be used as the value for the <paramref name="continuationToken"/> parameter
         /// in a subsequent call to request the next segment of list items.
         /// </param>
         /// <param name="options">
         /// Specifies options for listing, filtering, and shaping the
         /// containers.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Gets or sets a value indicating the size of the page that should be
+        /// requested.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -335,9 +307,10 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainersSegment>> ListContainersSegmentAsync(
-            string marker,
-            ContainersSegmentOptions? options,
+        internal async Task<Response<ContainersSegment>> GetContainersAsync(
+            string continuationToken,
+            GetContainersOptions? options,
+            int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -347,17 +320,17 @@ namespace Azure.Storage.Blobs
                     nameof(BlobServiceClient),
                     message:
                     $"{nameof(this.Uri)}: {this.Uri}\n" +
-                    $"{nameof(marker)}: {marker}\n" +
+                    $"{nameof(continuationToken)}: {continuationToken}\n" +
                     $"{nameof(options)}: {options}");
                 try
                 {
                     return await BlobRestClient.Service.ListContainersSegmentAsync(
                         this.Pipeline,
                         this.Uri,
-                        marker: marker,
+                        marker: continuationToken,
                         prefix: options?.Prefix,
-                        maxresults: options?.MaxResults,
-                        include: options?.Details?.AsIncludeType(),
+                        maxresults: pageSizeHint,
+                        include: options?.AsIncludeType(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1111,146 +1084,5 @@ namespace Azure.Storage.Blobs
                     accessConditions,
                     cancellationToken)
                     .ConfigureAwait(false);
-    }
-}
-
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Specifies options for listing containers with the 
-    /// <see cref="BlobServiceClient.ListContainersSegmentAsync"/> operation.
-    /// </summary>
-    public struct ContainersSegmentOptions : IEquatable<ContainersSegmentOptions>
-    {
-        /// <summary>
-        /// Gets or sets a string that filters the results to return only
-        /// containers whose name begins with the specified prefix.
-        /// </summary>
-        public string Prefix { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of containers to return. If the
-        /// request does not specify <see cref="MaxResults"/>, or specifies a
-        /// value greater than 5000, the server will return up to 5000 items.
-        /// 
-        /// Note that if the listing operation crosses a partition boundary,
-        /// then the service will return a <see cref="ContainersSegment.NextMarker"/>
-        /// for retrieving the remainder of the results.  For this reason, it
-        /// is possible that the service will return fewer results than
-        /// specified by maxresults, or than the default of 5000. 
-        /// 
-        /// If the parameter is set to a value less than or equal to zero, 
-        /// a <see cref="StorageRequestFailedException"/> will be thrown.
-        /// </summary>
-        public int? MaxResults { get; set; }                                                                  
-
-        /// <summary>
-        /// Gets or sets the details about each container that should be
-        /// returned with the request.
-        /// </summary>
-        public ContainerListingDetails? Details { get; set; }
-
-        /// <summary>
-        /// Check if two ContainersSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is ContainersSegmentOptions other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the ContainersSegmentOptions.
-        /// </summary>
-        /// <returns>Hash code for the ContainersSegmentOptions.</returns>
-        public override int GetHashCode()
-            => this.Details.GetHashCode()
-            ^ this.Prefix.GetHashCode()
-            ^ this.MaxResults.GetHashCode()
-            ;
-
-        /// <summary>
-        /// Check if two ContainersSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ContainersSegmentOptions left, ContainersSegmentOptions right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two ContainersSegmentOptions instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ContainersSegmentOptions left, ContainersSegmentOptions right) => !(left == right);
-
-        /// <summary>
-        /// Check if two ContainersSegmentOptions instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ContainersSegmentOptions other)
-            => this.Details == other.Details
-            && this.MaxResults == other.MaxResults
-            && this.Prefix == other.Prefix
-            ;
-    }
-
-    /// <summary>
-    /// Specifies the additional details about each container that should be
-    /// returned from the <see cref="BlobServiceClient.ListContainersSegmentAsync"/>
-    /// operation.
-    /// </summary>
-    public struct ContainerListingDetails : IEquatable<ContainerListingDetails>
-    {
-        /// <summary>
-        /// Gets or sets a flag specifing that the container's metadata should
-        /// be included.
-        /// </summary>
-        public bool Metadata { get; set; }
-
-        /// <summary>
-        /// Convert the details into a ListContainersIncludeType value.
-        /// </summary>
-        /// <returns>A ListContainersIncludeType value.</returns>
-        internal ListContainersIncludeType? AsIncludeType()
-            => this.Metadata ? ListContainersIncludeType.Metadata : default;
-
-        /// <summary>
-        /// Check if two ContainerListingDetails instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public override bool Equals(object obj)
-            => obj is ContainerListingDetails other && this.Equals(other);
-
-        /// <summary>
-        /// Get a hash code for the ContainerListingDetails.
-        /// </summary>
-        /// <returns>Hash code for the ContainerListingDetails.</returns>
-        public override int GetHashCode() => this.Metadata ? 0b00001 : 0;
-
-        /// <summary>
-        /// Check if two ContainerListingDetails instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(ContainerListingDetails left, ContainerListingDetails right) => left.Equals(right);
-
-        /// <summary>
-        /// Check if two ContainerListingDetails instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(ContainerListingDetails left, ContainerListingDetails right) => !(left == right);
-
-        /// <summary>
-        /// Check if two ContainerListingDetails instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(ContainerListingDetails other) => this.Metadata == other.Metadata;
     }
 }

@@ -1602,8 +1602,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         /// 
         /// The <see cref="BlobClient.GetProperties"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegment"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegment"/>
+        /// <see cref="BlobContainerClient.GetBlobs"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchy"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
@@ -1700,8 +1700,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         /// 
         /// The <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
+        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
@@ -1801,8 +1801,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         /// 
         /// The <see cref="BlobClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.ListBlobsFlatSegmentAsync"/>, and
-        /// <see cref="BlobContainerClient.ListBlobsHierarchySegmentAsync"/>
+        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are

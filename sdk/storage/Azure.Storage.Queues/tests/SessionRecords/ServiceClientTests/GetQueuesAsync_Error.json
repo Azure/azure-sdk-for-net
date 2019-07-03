@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/?comp=list\u0026marker=garbage",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/1.0.0.0",
+          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "f957c124c83b062208c6c8ea10c2d430",
+        "x-ms-date": "Mon, 01 Jul 2019 12:33:30 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Length": "226",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 01 Jul 2019 12:33:32 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-error-code": "OutOfRangeInput",
+        "x-ms-request-id": "5ddb7499-9003-007e-1009-30dd49000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": [
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eOutOfRangeInput\u003c/Code\u003e\u003cMessage\u003eOne of the request inputs is out of range.\n",
+        "RequestId:5ddb7499-9003-007e-1009-30dd49000000\n",
+        "Time:2019-07-01T12:33:32.9447187Z\u003c/Message\u003e\u003c/Error\u003e"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1258385372"
+  }
+}
