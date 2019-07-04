@@ -538,7 +538,11 @@ namespace Azure.Messaging.EventHubs.Tests
             protected override Task<EventHubPartitionRuntimeInformation> OnGetPartitionRuntimeInformationAsync(string partitionId)
             {
                 GetPartitionRuntimePartitionInvokedWith = partitionId;
-                return Task.FromResult(new EventHubPartitionRuntimeInformation());
+
+                var ehPartitionRuntimeInformation = new EventHubPartitionRuntimeInformation();
+                ehPartitionRuntimeInformation.LastEnqueuedOffset = "-1";
+
+                return Task.FromResult(ehPartitionRuntimeInformation);
             }
 
             protected override Task<EventHubRuntimeInformation> OnGetRuntimeInformationAsync()

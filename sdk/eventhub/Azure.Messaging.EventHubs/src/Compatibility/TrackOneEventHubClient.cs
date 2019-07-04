@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 runtimeInformation.PartitionId,
                 runtimeInformation.BeginSequenceNumber,
                 runtimeInformation.LastEnqueuedSequenceNumber,
-                runtimeInformation.LastEnqueuedOffset,
+                int.Parse(runtimeInformation.LastEnqueuedOffset),
                 runtimeInformation.LastEnqueuedTimeUtc,
                 runtimeInformation.IsEmpty
             );
