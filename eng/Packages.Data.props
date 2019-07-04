@@ -69,7 +69,7 @@
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
-    <PackageReference Update="PublicApiGenerator" Version="9.0.0" />
+    <PackageReference Update="PublicApiGenerator" Version="9.1.0" />
     <PackageReference Update="System.Buffers" Version="4.5.0" />
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
