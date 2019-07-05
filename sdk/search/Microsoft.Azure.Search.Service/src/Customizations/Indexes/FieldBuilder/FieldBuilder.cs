@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Spatial;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+
 namespace Microsoft.Azure.Search
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Spatial;
-    using Newtonsoft.Json.Serialization;
-    using Newtonsoft.Json;
-    using System.Collections.ObjectModel;
-
     /// <summary>
     /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
     /// </summary>
@@ -107,20 +107,18 @@ namespace Microsoft.Azure.Search
                     continue;
                 }
 
-                DataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
-                DataType dataType = dataTypeInfo.DataType;
-                Type underlyingClrType = dataTypeInfo.UnderlyingClrType;
+                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
 
-                if (processedTypes.Contains(underlyingClrType))
-                {
-                    // Skip recursive types.
-                    continue;
-                }
-
-                Field CreateComplexField()
+                Field CreateComplexField(DataType dataType, Type underlyingClrType)
                 {
                     try
                     {
+                        if (processedTypes.Contains(underlyingClrType))
+                        {
+                            // Skip recursive types.
+                            return null;
+                        }
+
                         processedTypes.Push(underlyingClrType);
                         IList<Field> subFields = BuildForTypeRecursive(underlyingClrType, contractResolver, processedTypes);
                         return new Field(prop.PropertyName, dataType, subFields);
@@ -131,7 +129,7 @@ namespace Microsoft.Azure.Search
                     }
                 }
 
-                Field CreateSimpleField()
+                Field CreateSimpleField(DataType dataType)
                 {
                     var field = new Field(prop.PropertyName, dataType);
 
@@ -190,20 +188,28 @@ namespace Microsoft.Azure.Search
                     return field;
                 }
 
-                fields.Add(dataType.IsComplex() ? CreateComplexField() : CreateSimpleField());
+                Field newField =
+                    dataTypeInfo.Match(
+                        onSimpleDataType: CreateSimpleField,
+                        onComplexDataType: CreateComplexField);
+
+                if (newField != null)
+                {
+                    fields.Add(newField);
+                }
             }
 
             return fields;
         }
 
-        private static DataTypeInfo GetDataTypeInfo(Type propertyType)
+        private static IDataTypeInfo GetDataTypeInfo(Type propertyType)
         {
             bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             if (PrimitiveTypeMap.TryGetValue(propertyType, out DataType dataType))
             {
-                return new DataTypeInfo(dataType, propertyType);
+                return DataTypeInfo.Simple(dataType);
             }
             else if (IsNullableType(propertyType))
             {
@@ -211,12 +217,12 @@ namespace Microsoft.Azure.Search
             }
             else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
-                DataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType);
-                return new DataTypeInfo(DataType.Collection(elementTypeInfo.DataType), elementTypeInfo.UnderlyingClrType);
+                IDataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType);
+                return DataTypeInfo.AsCollection(elementTypeInfo);
             }
             else
             {
-                return new DataTypeInfo(DataType.Complex, propertyType);
+                return DataTypeInfo.Complex(DataType.Complex, propertyType);
             }
         }
 
@@ -253,18 +259,57 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        // Avoid dependency on ValueTuple for now.
-        private struct DataTypeInfo
+        private interface IDataTypeInfo
         {
-            public DataTypeInfo(DataType dataType, Type underlyingClrType)
+            T Match<T>(
+                Func<DataType, T> onSimpleDataType,
+                Func<DataType, Type, T> onComplexDataType);
+        }
+
+        private static class DataTypeInfo
+        {
+            public static IDataTypeInfo Simple(DataType dataType) => new SimpleDataTypeInfo(dataType);
+
+            public static IDataTypeInfo Complex(DataType dataType, Type underlyingClrType) =>
+                new ComplexDataTypeInfo(dataType, underlyingClrType);
+
+            public static IDataTypeInfo AsCollection(IDataTypeInfo dataTypeInfo) =>
+                dataTypeInfo.Match(
+                    onSimpleDataType: dataType => Simple(DataType.Collection(dataType)),
+                    onComplexDataType: (dataType, underlyingClrType) =>
+                        Complex(DataType.Collection(dataType), underlyingClrType));
+
+            private sealed class SimpleDataTypeInfo : IDataTypeInfo
             {
-                DataType = dataType;
-                UnderlyingClrType = underlyingClrType;
+                private readonly DataType _dataType;
+
+                public SimpleDataTypeInfo(DataType dataType)
+                {
+                    _dataType = dataType;
+                }
+
+                public T Match<T>(
+                    Func<DataType, T> onSimpleDataType,
+                    Func<DataType, Type, T> onComplexDataType)
+                    => onSimpleDataType(_dataType);
             }
 
-            public DataType DataType { get; }
+            private sealed class ComplexDataTypeInfo : IDataTypeInfo
+            {
+                private readonly DataType _dataType;
+                private readonly Type _underlyingClrType;
 
-            public Type UnderlyingClrType { get; }
+                public ComplexDataTypeInfo(DataType dataType, Type underlyingClrType)
+                {
+                    _dataType = dataType;
+                    _underlyingClrType = underlyingClrType;
+                }
+
+                public T Match<T>(
+                    Func<DataType, T> onSimpleDataType,
+                    Func<DataType, Type, T> onComplexDataType)
+                    => onComplexDataType(_dataType, _underlyingClrType);
+            }
         }
     }
 }
