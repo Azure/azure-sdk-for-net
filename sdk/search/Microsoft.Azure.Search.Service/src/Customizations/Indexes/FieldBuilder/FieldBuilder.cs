@@ -94,10 +94,27 @@ namespace Microsoft.Azure.Search
         /// <returns>A collection of fields.</returns>
         public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver)
         {
-            var contract = (JsonObjectContract)contractResolver.ResolveContract(modelType);
+            ArgumentException FailOnNonObjectDataType()
+            {
+                string errorMessage =
+                    $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
+                    "class or struct with public properties.";
 
-            // Use Stack to avoid a dependency on ImmutableStack for now.
-            return BuildForTypeRecursive(modelType, contract, contractResolver, new Stack<Type>(new[] { modelType }));
+                throw new ArgumentException(errorMessage, nameof(modelType));
+            }
+
+            if (contractResolver.ResolveContract(modelType) is JsonObjectContract contract)
+            {
+                if (contract.Properties.Count == 0)
+                {
+                    throw FailOnNonObjectDataType();
+                }
+
+                // Use Stack to avoid a dependency on ImmutableStack for now.
+                return BuildForTypeRecursive(modelType, contract, contractResolver, new Stack<Type>(new[] { modelType }));
+            }
+
+            throw FailOnNonObjectDataType();
         }
 
         private static IList<Field> BuildForTypeRecursive(

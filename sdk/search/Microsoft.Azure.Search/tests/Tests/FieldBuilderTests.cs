@@ -313,8 +313,9 @@ namespace Microsoft.Azure.Search.Tests
         [Theory]
         [InlineData(typeof(ModelWithEnum), nameof(ModelWithEnum.Direction))]
         [InlineData(typeof(ModelWithUnsupportedPrimitiveType), nameof(ModelWithUnsupportedPrimitiveType.Price))]
+        [InlineData(typeof(ModelWithUnsupportedEnumerableType), nameof(ModelWithUnsupportedEnumerableType.Buffer))]
         [InlineData(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
-        public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType, string invalidPropertyName)
+        public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedPropertyTypes(Type modelType, string invalidPropertyName)
         {
             var e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
 
@@ -322,6 +323,29 @@ namespace Microsoft.Azure.Search.Tests
                 $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', which does " +
                 "not map to an Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] and " +
                 $"define the field by creating a Field object.\r\nParameter name: {nameof(modelType)}";
+
+            Assert.Equal(nameof(modelType), e.ParamName);
+            Assert.Equal(expectedErrorMessage, e.Message);
+        }
+
+        [Theory]
+        [InlineData(typeof(int))]
+        [InlineData(typeof(string))]
+        [InlineData(typeof(DateTimeOffset))]
+        [InlineData(typeof(Direction))]
+        [InlineData(typeof(object))]
+        [InlineData(typeof(int[]))]
+        [InlineData(typeof(IEnumerable<ReflectableModel>))]
+        [InlineData(typeof(IList<ReflectableStructModel>))]
+        [InlineData(typeof(List<string>))]
+        [InlineData(typeof(ICollection<decimal>))]
+        public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType)
+        {
+            var e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+
+            string expectedErrorMessage =
+                $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
+                $"class or struct with public properties.\r\nParameter name: {nameof(modelType)}";
 
             Assert.Equal(nameof(modelType), e.ParamName);
             Assert.Equal(expectedErrorMessage, e.Message);
@@ -441,13 +465,22 @@ namespace Microsoft.Azure.Search.Tests
             public decimal Price { get; set; }
         }
 
-        private class ModelWithUnsupportedCollectionType
+        private class ModelWithUnsupportedEnumerableType
         {
             [KeyField]
             public string ID { get; set; }
 
             [IsFilterable]
             public IEnumerable<byte> Buffer { get; set; }
+        }
+
+        private class ModelWithUnsupportedCollectionType
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            [IsFilterable]
+            public ICollection<char> Buffer { get; set; }
         }
     }
 }
