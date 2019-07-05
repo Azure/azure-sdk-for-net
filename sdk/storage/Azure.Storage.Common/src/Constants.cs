@@ -16,28 +16,22 @@ namespace Azure.Storage
 
         public const int MaxReliabilityRetries = 5;
 
-        public const int DEFAULT_BUFFER_SIZE = 4 * Constants.MB;
-        public const int DEFAULT_MAX_TOTAL_BUFFER_ALLOWED = 100 * Constants.MB;
+        /// <summary>
+        /// Gets the default service version to use when building shared access
+        /// signatures.
+        /// </summary>
+        public const string DefaultSasVersion = "2018-11-09";
 
-        static int seed = Environment.TickCount;
-
-        static readonly ThreadLocal<Random> random =
-            new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
-
-        public static Random Random => random.Value;
+        public const int DefaultBufferSize = 4 * Constants.MB;
+        public const int DefaultMaxTotalBufferAllowed = 100 * Constants.MB;
 
         public const string CloseAllHandles = "*";
 
-        public const string TargetStorageVersion = "2018-03-28";
-        public const string ClientRequestIdHeader = "x-ms-client-request-id";
-        public const string SnapshotParameter = "snapshot";
-        public const string HttpsScheme = "https";
-
-        public const string Redacted = "REDACTED";
-        public const string Authorization = "Authorization";
-        public const string CopySource = "x-ms-copy-source";
-
-        public const string ISO8601Format = "yyyy-MM-ddTHH:mm:ssZ";
+        /// <summary>
+        /// The default format we use for block names.  There are 50,000
+        /// maximum blocks so we pad the size with up to 4 leading zeros.
+        /// </summary>
+        public const string BlockNameFormat = "Block_{0:D5}";
 
         internal static class Sas
         {

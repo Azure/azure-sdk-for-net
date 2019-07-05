@@ -4,6 +4,7 @@
 
 using System;
 using System.Net;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Queues
 {

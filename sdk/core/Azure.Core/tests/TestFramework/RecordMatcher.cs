@@ -25,7 +25,7 @@ namespace Azure.Core.Testing
             "User-Agent"
         };
 
-        public virtual int FindMatch(Request request, IList<RecordEntry> entries)
+        public virtual int FindMatch(Request request, IList<RecordEntry> entries, out string failureMessage)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
@@ -40,42 +40,65 @@ namespace Azure.Core.Testing
 
             string uri = _sanitizer.SanitizeUri(request.UriBuilder.ToString());
 
+            int bestScore = int.MaxValue;
+            var messagePrefix = failureMessage = $"Unable to find recorded request for {request.Method} {request.UriBuilder.ToString()}";
+
             for (int i = 0; i < entries.Count; i++)
             {
                 RecordEntry entry = entries[i];
 
-                if (entry.RequestUri == uri &&
-                    entry.RequestMethod == request.Method &&
-                    CompareHeaderDictionaries(headers, entry.RequestHeaders))
+                if (entry.RequestUri == uri && entry.RequestMethod == request.Method)
                 {
-                    return i;
+                    int score = CompareHeaderDictionaries(headers, entry.RequestHeaders, out var diff);
+                    if (score == 0)
+                    {
+                        failureMessage = null;
+                        return i;
+                    }
+                    else if (score < bestScore)
+                    {
+                        bestScore = score;
+                        failureMessage = $"{messagePrefix} (Best match: {diff})";
+                    }
                 }
             }
 
+            if (bestScore == int.MaxValue && entries.Count == 1)
+            {
+                failureMessage = $"{messagePrefix} (Best match: {entries[0].RequestMethod} {entries[0].RequestUri})";
+            }
+            
             return -1;
         }
 
-        private bool CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders)
+        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, out string diff)
         {
-            if (headers.Count != entryHeaders.Count)
-            {
-                return false;
-            }
-
+            List<string> deltas = new List<string>();
+            var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
             foreach (KeyValuePair<string, string[]> header in headers)
             {
-                if (ExcludeHeaders.Contains(header.Key))
+                if (remaining.TryGetValue(header.Key, out string[] values))
                 {
-                    continue;
+                    remaining.Remove(header.Key);
+                    if (!ExcludeHeaders.Contains(header.Key) &&
+                        !values.SequenceEqual(header.Value))
+                    {
+                        var expected = string.Join(",", header.Value);
+                        var actual = string.Join(",", values);
+                        deltas.Add($"{header.Key} expects <{expected}> not <{actual}>");
+                    }
                 }
-                if (!entryHeaders.TryGetValue(header.Key, out string[] values) ||
-                    !values.SequenceEqual(header.Value))
+                else
                 {
-                    return false;
+                    deltas.Add($"Missing {header.Key}");
                 }
             }
-
-            return true;
+            foreach (KeyValuePair<string, string[]> header in remaining)
+            {
+                deltas.Add($"Extra {header.Key}");
+            }
+            diff = string.Join("; ", deltas);
+            return deltas.Count;
         }
     }
 }

@@ -76,6 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF
 		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

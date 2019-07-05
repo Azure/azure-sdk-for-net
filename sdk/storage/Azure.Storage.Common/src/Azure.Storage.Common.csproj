@@ -6,6 +6,9 @@
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
+    <PackageReleaseNotes>
+      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+    </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Common/changelog.txt
@@ -16,22 +19,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!--
-    .shproj Shared Code Projects aren't supported outside of VS/Windows, so
-    we're hacking around that by manually sharing a couple folders of code.
-
-    The Common project is the most sensible place for shared code to live.
-    Unfortunately that shared code isn't used by the common project (and
-    will actually break if you include it) so we're explicitly excluding it
-    here.
-    -->
-    <Compile Remove="Shared\**" />
-    <EmbeddedResource Remove="Shared\**" />
-    <None Remove="Shared\**" />
-
-    <!--
     Compile in ArrayBufferWriter which is needed for our recorded tests
     (and shared via InternalsVisibleTo with the other libraries)
     -->
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

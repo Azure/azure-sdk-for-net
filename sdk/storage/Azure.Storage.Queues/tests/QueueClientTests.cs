@@ -14,11 +14,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
 {
-    [TestFixture]
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests()
-            : base(/* Use RecordedTestMode.Record here to re-record just these tests */)
+        public QueueClientTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -28,7 +27,7 @@ namespace Azure.Storage.Queues.Test
             var accountName = "accountName";
             var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
 
-            var credentials = new SharedKeyCredentials(accountName, accountKey);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
@@ -67,11 +66,28 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public async Task CreateAsync_FromService()
+        {
+            var name = this.GetNewQueueName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var result = await service.CreateQueueAsync(name);
+                var properties = await result.Value.GetPropertiesAsync();
+                Assert.AreEqual(0, properties.Value.ApproximateMessagesCount);
+            }
+            finally
+            {
+                await service.DeleteQueueAsync(name);
+            }
+        }
+
+        [Test]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
             var queueName = this.GetNewQueueName();
-            var service = await this.GetServiceClient_OauthAccount();
+            var service = this.GetServiceClient_OauthAccount();
             var queue = this.InstrumentClient(service.GetQueueClient(queueName));
 
             try
@@ -311,6 +327,26 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
         }
+
+        [Test]
+        public async Task DeleteAsync_FromService()
+        {
+            var name = this.GetNewQueueName();
+            var service = this.GetServiceClient_SharedKey();
+            try
+            {
+                var queue = (await service.CreateQueueAsync(name)).Value;
+                await service.DeleteQueueAsync(name);
+
+                // Ensure the queue no longer returns values
+                Assert.ThrowsAsync<StorageRequestFailedException>(
+                    async () => await queue.GetPropertiesAsync());
+            }
+            finally
+            {
+            }
+        }
+
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [Test]

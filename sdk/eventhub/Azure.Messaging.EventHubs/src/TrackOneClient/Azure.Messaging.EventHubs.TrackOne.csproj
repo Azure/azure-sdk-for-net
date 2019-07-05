@@ -5,6 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>TrackOne</RootNamespace>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

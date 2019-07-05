@@ -255,7 +255,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var mockTransport = new MockTransport(new MockResponse(503), response);
 
             var options = new ConfigurationClientOptions();
-            options.TelemetryPolicy.ApplicationId = "test_application";
+            options.Diagnostics.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
             var client = CreateClient<ConfigurationClient>(connectionString, options);

@@ -457,7 +457,10 @@ namespace Azure.Identity
             // otherwise expires_on will be a unix timestamp seconds from epoch
             else
             {
-                if(!expiresOnProp.TryGetInt64(out long expiresOnSec))
+                // the seconds from epoch may be returned as a Json number or a Json string which is a number
+                // depending on the environment.  If neither of these are the case we throw an AuthException.
+                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) && 
+                    !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }
