@@ -1,6 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+- Added support for the follwoing new datasets in ADF - AvroDataset
+- AvroDataset will support following locations  AzureBlobStorageLocation, AzureBlobFSLocation, AzureDataLakeStoreLocation, AmazonS3Location, FileServerLocation, FtpServerLocation, SftpLocation, HttpServerLocation, HdfsLocation
+- Added new Copy sources - AvroSource
+- Added new Copy sinks - AvroSink
 ###  Feature Additions
 
 ## Version 4.0.0

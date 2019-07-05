@@ -947,6 +947,43 @@ namespace DataFactory.Tests.JsonSamples
     ]
   }
 }";
+        [JsonSample]
+        public const string AvroDataset = @"
+{
+  ""name"": ""AvroDataset"",
+  ""properties"": {
+    ""type"": ""Avro"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.avro""
+      },
+      ""avroCompressionCodec"": ""deflate"",
+      ""avroCompressionLevel"": 4
+    },
+    ""schema"": {
+	    ""type"": ""record"",
+	    ""namespace"": ""com.example"",
+	    ""name"": ""test"",
+	    ""fields"": [
+	      {
+		    ""name"": ""first"",
+		    ""type"": ""string""
+	      },
+	      {
+		    ""name"": ""last"",
+		    ""type"": ""int""
+	      }
+	    ]
+    }
+  }
+}";
 
         [JsonSample]
         public const string SapTableDataset = @"

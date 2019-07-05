@@ -3598,6 +3598,53 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string CopyActivity_Avro_Adls = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""AvroSource"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreReadSetting"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true
+            }
+          },
+          ""sink"": {
+            ""type"": ""AvroSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSetting"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""AvroWriteSettings"",
+              ""recordName"": ""testavro"",
+              ""recordNamespace"": ""microsoft.datatransfer.test""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
 
         [JsonSample]
         public const string CopyActivity_DelimitedText_Adls = @"{
