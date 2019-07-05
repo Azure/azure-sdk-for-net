@@ -28,7 +28,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
 
             using Request request = transport.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
 
             using Request request = transport.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
 
             await pipeline.SendRequestAsync(request, CancellationToken.None);
