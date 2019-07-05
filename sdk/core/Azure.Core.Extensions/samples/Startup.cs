@@ -34,7 +34,7 @@ namespace Azure.Core.Extensions.Samples
                 builder.AddSecretClient(Configuration.GetSection("KeyVault"))
                     .WithName("Default")
                     .WithCredential(new DefaultAzureCredential())
-                    .ConfigureOptions(options => options.RetryPolicy.MaxRetries = 10);
+                    .ConfigureOptions(options => options.Retry.MaxRetries = 10);
 
                 builder.AddSecretClient(new Uri("http://my.keyvault.com"));
 
@@ -44,7 +44,7 @@ namespace Azure.Core.Extensions.Samples
                 builder.ConfigureDefaults(Configuration.GetSection("Default"));
 
                 // Configure global defaults
-                builder.ConfigureDefaults(options => options.RetryPolicy.Mode = RetryMode.Exponential);
+                builder.ConfigureDefaults(options => options.Retry.Mode = RetryMode.Exponential);
 
                 // Advanced configure global defaults
                 builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DIEnabledPolicy>()));

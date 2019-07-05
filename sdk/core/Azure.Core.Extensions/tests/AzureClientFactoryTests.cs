@@ -188,21 +188,21 @@ namespace Azure.Core.Extensions.Tests
             serviceCollection.AddAzureClients(builder => {
                 builder.AddTestClient("TestClient1");
                 builder.AddTestClientWithCredentials(new Uri("http://localhost"));
-                builder.ConfigureDefaults(options => options.TelemetryPolicy.ApplicationId = "GlobalAppId");
+                builder.ConfigureDefaults(options => options.Diagnostics.ApplicationId = "GlobalAppId");
             });
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
 
             TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
             TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
 
-            Assert.AreEqual("GlobalAppId", testClient.Options.TelemetryPolicy.ApplicationId);
-            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.TelemetryPolicy.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
         }
 
         [Test]
         public void CanSetGlobalOptionsUsingConfiguration()
         {
-            var configuration = GetConfiguration(new KeyValuePair<string, string>("TelemetryPolicy:ApplicationId", "GlobalAppId"));
+            var configuration = GetConfiguration(new KeyValuePair<string, string>("Diagnostics:ApplicationId", "GlobalAppId"));
 
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder => {
@@ -215,8 +215,8 @@ namespace Azure.Core.Extensions.Tests
             TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
             TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
 
-            Assert.AreEqual("GlobalAppId", testClient.Options.TelemetryPolicy.ApplicationId);
-            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.TelemetryPolicy.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
+            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
         }
 
         [Test]
