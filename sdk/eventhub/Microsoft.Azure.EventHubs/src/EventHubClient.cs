@@ -98,7 +98,7 @@ namespace Microsoft.Azure.EventHubs
             Uri endpointAddress,
             string path,
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
+            string authority,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
