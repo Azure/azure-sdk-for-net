@@ -48,15 +48,25 @@ namespace Azure.Core.Pipeline
         // internal for testing
         internal static TelemetryPolicy CreateTelemetryPolicy(ClientOptions options)
         {
+            const string PackagePrefix = "Azure.";
+
             Assembly clientAssembly = options.GetType().Assembly;
-            AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
+
+            AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
             {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+                throw new InvalidOperationException("Client SDK assemblies are required to have InformationalVersionAttribute");
             }
 
-            return new TelemetryPolicy(componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString(), options.Diagnostics.ApplicationId);
+            string version = versionAttribute.InformationalVersion;
+
+            string assemblyName = clientAssembly.GetName().Name;
+            if (assemblyName.StartsWith(PackagePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                assemblyName = assemblyName.Substring(PackagePrefix.Length);
+            }
+
+            return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);
         }
     }
 }
