@@ -197,10 +197,14 @@ namespace Microsoft.Azure.Search
                                 break;
 
                             default:
+                                Type attributeType = attribute.GetType();
+
                                 // Match on name to avoid dependency - don't want to force people not using
                                 // this feature to bring in the annotations component.
-                                Type attributeType = attribute.GetType();
-                                if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
+                                //
+                                // Also, ignore key attributes on sub-fields.
+                                if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute" &&
+                                    processedTypes.Count <= 1)
                                 {
                                     field.IsKey = true;
                                 }

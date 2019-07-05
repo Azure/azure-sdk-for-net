@@ -332,6 +332,24 @@ namespace Microsoft.Azure.Search.Tests
             Test(typeof(RecursiveModel), RunTest);
         }
 
+        [Fact]
+        public void NestedKeyAttributesAreIgnored()
+        {
+            var expectedFields = new[]
+            {
+                Field.New("ID", DataType.String, isKey: true),
+                Field.NewComplex("Inner", isCollection: false, fields: new[]
+                {
+                    Field.New("InnerID", DataType.String, isKey: false),
+                    Field.New("OtherField", DataType.Int32, isFilterable: true)
+                })
+            };
+
+            var actualFields = FieldBuilder.BuildForType<ModelWithNestedKey>();
+
+            Assert.Equal(expectedFields, actualFields, new DataPlaneModelComparer<Field>());
+        }
+
         [Theory]
         [InlineData(typeof(ModelWithEnum), nameof(ModelWithEnum.Direction))]
         [InlineData(typeof(ModelWithUnsupportedPrimitiveType), nameof(ModelWithUnsupportedPrimitiveType.Price))]
@@ -398,10 +416,10 @@ namespace Microsoft.Azure.Search.Tests
 
         private static IEnumerable<(Type, DataType, string)> CombineTestData(
             IEnumerable<Type> modelTypes,
-            IEnumerable<(DataType, string)> testData) =>
+            IEnumerable<(DataType dataType, string fieldName)> testData) =>
             from type in modelTypes
             from tuple in testData
-            select (type, tuple.Item1, tuple.Item2);
+            select (type, tuple.dataType, tuple.fieldName);
 
         private void OnlyTrueFor(Type modelType, Func<Field, bool> check, params string[] expectedFieldNames)
         {
@@ -503,6 +521,23 @@ namespace Microsoft.Azure.Search.Tests
 
             [IsFilterable]
             public ICollection<char> Buffer { get; set; }
+        }
+
+        private class InnerModelWithKey
+        {
+            [KeyField]
+            public string InnerID { get; set; }
+
+            [IsFilterable]
+            public int OtherField { get; set; }
+        }
+
+        private class ModelWithNestedKey
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            public InnerModelWithKey Inner { get; set; }
         }
     }
 }
