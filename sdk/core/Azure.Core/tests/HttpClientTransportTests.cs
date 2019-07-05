@@ -112,6 +112,7 @@ namespace Azure.Core.Tests
             new object[] { RequestMethod.Post, "POST" },
             new object[] { RequestMethod.Put, "PUT" },
             new object[] { RequestMethod.Head, "HEAD" },
+            new object[] { new RequestMethod("custom"), "CUSTOM" },
         };
 
         [Theory]

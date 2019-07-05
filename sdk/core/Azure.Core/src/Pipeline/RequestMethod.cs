@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
 
         public RequestMethod(string method)
         {
+            if (method == null) throw new ArgumentNullException(nameof(method));
+
             Method = method.ToUpperInvariant();
         }
 
@@ -64,7 +66,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            throw new ArgumentException($"'{method}' is not a known HTTP method");
+            return new RequestMethod(method);
         }
 
         public bool Equals(RequestMethod other)
@@ -79,7 +81,7 @@ namespace Azure.Core.Pipeline
 
         public override int GetHashCode()
         {
-            return Method.GetHashCode();
+            return Method?.GetHashCode() ?? 0;
         }
 
         public static bool operator ==(RequestMethod left, RequestMethod right)
@@ -94,7 +96,7 @@ namespace Azure.Core.Pipeline
 
         public override string ToString()
         {
-            return Method;
+            return Method ?? "<null>";
         }
     }
 }

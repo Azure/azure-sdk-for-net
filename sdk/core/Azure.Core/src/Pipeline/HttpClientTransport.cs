@@ -241,7 +241,7 @@ namespace Azure.Core.Pipeline
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
 
-            public static HttpMethod ToHttpClientMethod(RequestMethod method)
+            private static HttpMethod ToHttpClientMethod(RequestMethod method)
             {
                 switch (method.Method)
                 {
@@ -257,9 +257,8 @@ namespace Azure.Core.Pipeline
                         return s_patch;
                     case "HEAD":
                         return HttpMethod.Head;
-
                     default:
-                        throw new NotImplementedException();
+                        return new HttpMethod(method.Method);
                 }
             }
 
