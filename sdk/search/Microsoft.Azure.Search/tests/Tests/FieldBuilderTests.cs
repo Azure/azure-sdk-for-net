@@ -2,16 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Rest.Serialization;
+using Xunit;
+using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Rest.Serialization;
-    using Xunit;
-
     public class FieldBuilderTests : SearchTestBase<IndexFixture>
     {
         private static IEnumerable<Type> TestModelTypes
@@ -309,6 +310,23 @@ namespace Microsoft.Azure.Search.Tests
             Test(typeof(RecursiveModel), RunTest);
         }
 
+        [Theory]
+        [InlineData(typeof(ModelWithEnum), nameof(ModelWithEnum.Direction))]
+        [InlineData(typeof(ModelWithUnsupportedPrimitiveType), nameof(ModelWithUnsupportedPrimitiveType.Price))]
+        [InlineData(typeof(ModelWithUnsupportedCollectionType), nameof(ModelWithUnsupportedCollectionType.Buffer))]
+        public void FieldBuilderFailsWithHelpfulErrorMessageOnUnsupportedTypes(Type modelType, string invalidPropertyName)
+        {
+            var e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
+
+            string expectedErrorMessage =
+                $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', which does " +
+                "not map to an Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] and " +
+                $"define the field by creating a Field object.\r\nParameter name: {nameof(modelType)}";
+
+            Assert.Equal(nameof(modelType), e.ParamName);
+            Assert.Equal(expectedErrorMessage, e.Message);
+        }
+
         [Fact]
         public void FieldBuilderCreatesIndexEquivalentToManuallyDefinedIndex()
         {
@@ -397,6 +415,39 @@ namespace Microsoft.Azure.Search.Tests
 
             var fieldMap = fields.SelectMany(f => GetSelfAndDescendants(f)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             run(fieldMap);
+        }
+
+        private enum Direction
+        {
+            Up,
+            Down
+        }
+
+        private class ModelWithEnum
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            [IsFilterable, IsSearchable, IsSortable, IsFacetable]
+            public Direction Direction { get; set; }
+        }
+
+        private class ModelWithUnsupportedPrimitiveType
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            [IsFilterable]
+            public decimal Price { get; set; }
+        }
+
+        private class ModelWithUnsupportedCollectionType
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            [IsFilterable]
+            public IEnumerable<byte> Buffer { get; set; }
         }
     }
 }
