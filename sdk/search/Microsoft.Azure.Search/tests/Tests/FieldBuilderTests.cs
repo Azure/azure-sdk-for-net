@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Microsoft.Rest.Serialization;
+using Newtonsoft.Json;
 using Xunit;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -385,6 +386,25 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void PropertiesMarkedAsIgnoredAreIgnored(bool useCustomResolver)
+        {
+            var expectedFields = new[]
+            {
+                Field.New(nameof(ModelWithIgnoredProperties.ID), DataType.String, isKey: true),
+                Field.NewComplex(nameof(ModelWithIgnoredProperties.Inner), isCollection: true, fields: new[]
+                {
+                    Field.New(nameof(InnerModelWithIgnoredProperties.OtherField), DataType.Int32, isFilterable: true)
+                })
+            };
+
+            IList<Field> actualFields = BuildForType(typeof(ModelWithIgnoredProperties), useCustomResolver);
+
+            Assert.Equal(expectedFields, actualFields, new DataPlaneModelComparer<Field>());
+        }
+
+        [Theory]
         [InlineData(typeof(ModelWithEnum), nameof(ModelWithEnum.Direction))]
         [InlineData(typeof(ModelWithUnsupportedPrimitiveType), nameof(ModelWithUnsupportedPrimitiveType.Price))]
         [InlineData(typeof(ModelWithUnsupportedEnumerableType), nameof(ModelWithUnsupportedEnumerableType.Buffer))]
@@ -394,9 +414,10 @@ namespace Microsoft.Azure.Search.Tests
             var e = Assert.Throws<ArgumentException>(() => FieldBuilder.BuildForType(modelType));
 
             string expectedErrorMessage =
-                $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', which does " +
-                "not map to an Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] and " +
-                $"define the field by creating a Field object.\r\nParameter name: {nameof(modelType)}";
+                $"Property '{invalidPropertyName}' is of type '{modelType.GetProperty(invalidPropertyName).PropertyType}', " +
+                "which does not map to an Azure Search data type. Please use a supported data type or mark the property with " +
+                "[JsonIgnore] or [FieldBuilderIgnore] and define the field by creating a Field object." +
+                $"\r\nParameter name: {nameof(modelType)}";
 
             Assert.Equal(nameof(modelType), e.ParamName);
             Assert.Equal(expectedErrorMessage, e.Message);
@@ -574,6 +595,33 @@ namespace Microsoft.Azure.Search.Tests
             public string ID { get; set; }
 
             public InnerModelWithKey Inner { get; set; }
+        }
+
+        private class InnerModelWithIgnoredProperties
+        {
+            [IsFilterable]
+            public int OtherField { get; set; }
+
+            [JsonIgnore]
+            public string JsonIgnored { get; set; }
+
+            [FieldBuilderIgnore]
+            [JsonIgnore]
+            public DateTimeOffset[] FieldBuilderIgnored { get; set; }
+        }
+
+        private class ModelWithIgnoredProperties
+        {
+            [KeyField]
+            public string ID { get; set; }
+
+            [JsonIgnore]
+            public int[] JsonIgnored { get; set; }
+
+            [FieldBuilderIgnore]
+            public Direction FieldBuilderIgnored { get; set; }
+
+            public InnerModelWithIgnoredProperties[] Inner { get; set; }
         }
     }
 }

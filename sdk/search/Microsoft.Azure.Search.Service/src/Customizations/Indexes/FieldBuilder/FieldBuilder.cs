@@ -125,8 +125,11 @@ namespace Microsoft.Azure.Search
         {
             Field BuildField(JsonProperty prop)
             {
+                bool ShouldIgnore(Attribute attribute) =>
+                    attribute is JsonIgnoreAttribute || attribute is FieldBuilderIgnoreAttribute;
+
                 IList<Attribute> attributes = prop.AttributeProvider.GetAttributes(true);
-                if (attributes.Any(attr => attr is JsonIgnoreAttribute))
+                if (attributes.Any(ShouldIgnore))
                 {
                     return null;
                 }
@@ -218,9 +221,9 @@ namespace Microsoft.Azure.Search
                 ArgumentException FailOnUnknownDataType()
                 {
                     string errorMessage =
-                        $"Property '{prop.PropertyName}' is of type '{prop.PropertyType}', which does not map to an Azure Search data " +
-                        "type. Please use a supported data type or mark the property with [JsonIgnore] and define the field by creating " +
-                        "a Field object.";
+                        $"Property '{prop.PropertyName}' is of type '{prop.PropertyType}', which does not map to an " +
+                        "Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] or " +
+                        "[FieldBuilderIgnore] and define the field by creating a Field object.";
 
                     return new ArgumentException(errorMessage, nameof(modelType));
                 }
