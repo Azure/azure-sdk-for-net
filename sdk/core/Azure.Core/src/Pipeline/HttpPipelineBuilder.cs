@@ -55,13 +55,13 @@ namespace Azure.Core.Pipeline
             AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
-                throw new InvalidOperationException("Client SDK assemblies are required to have InformationalVersionAttribute");
+                throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
             }
 
             string version = versionAttribute.InformationalVersion;
 
             string assemblyName = clientAssembly.GetName().Name;
-            if (assemblyName.StartsWith(PackagePrefix, StringComparison.OrdinalIgnoreCase))
+            if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
