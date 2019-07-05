@@ -3,7 +3,7 @@
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
+    internal class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
     {
         private const string ClientRequestIdHeader = "x-ms-client-request-id";
         private const string EchoClientRequestId = "x-ms-return-client-request-id";

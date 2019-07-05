@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
+using Azure.Core.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
