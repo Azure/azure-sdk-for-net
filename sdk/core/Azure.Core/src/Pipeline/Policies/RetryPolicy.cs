@@ -10,7 +10,7 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class RetryPolicy : HttpPipelinePolicy
+    internal class RetryPolicy : HttpPipelinePolicy
     {
         private readonly RetryMode _mode;
         private readonly TimeSpan _delay;
