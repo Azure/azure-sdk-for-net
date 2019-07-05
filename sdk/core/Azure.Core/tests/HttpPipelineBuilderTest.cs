@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -34,6 +35,27 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(200, response.Status);
             Assert.AreEqual(expectedCount, policy.ExecutionCount);
+        }
+
+        [Test]
+        public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettings()
+        {
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions();
+            options.Transport = transport;
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
+
+            using Request request = transport.CreateRequest();
+            request.Method = HttpPipelineMethod.Get;
+            request.UriBuilder.Uri = new Uri("http://example.com");
+
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+            StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
         }
 
         private class TestOptions : ClientOptions
