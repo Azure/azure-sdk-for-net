@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(sasCredential.SharedAccessSignature.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
             Assert.That(sasCredential.SharedAccessSignature.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The shared access key name should match.");
             Assert.That(sasCredential.SharedAccessSignature.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The shared access key should match.");
-            Assert.That(sasCredential.SharedAccessSignature.ExpirationUtc, Is.EqualTo(signature.ExpirationUtc).Within(TimeSpan.FromSeconds(5)), "The expiration should match.");
+            Assert.That(sasCredential.SharedAccessSignature.ExpirationTime, Is.EqualTo(signature.ExpirationTime).Within(TimeSpan.FromSeconds(5)), "The expiration should match.");
         }
     }
 }
