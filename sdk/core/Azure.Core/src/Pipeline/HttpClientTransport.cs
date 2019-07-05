@@ -156,9 +156,9 @@ namespace Azure.Core.Pipeline
                 ClientRequestId = Guid.NewGuid().ToString();
             }
 
-            public override HttpPipelineMethod Method
+            public override RequestMethod Method
             {
-                get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
+                get => RequestMethod.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
@@ -228,7 +228,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 _wasSent = true;
-
                 return currentRequest;
             }
 
@@ -242,21 +241,21 @@ namespace Azure.Core.Pipeline
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
 
-            public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
+            public static HttpMethod ToHttpClientMethod(RequestMethod method)
             {
-                switch (method)
+                switch (method.Method)
                 {
-                    case HttpPipelineMethod.Get:
+                    case "GET":
                         return HttpMethod.Get;
-                    case HttpPipelineMethod.Post:
+                    case "POST":
                         return HttpMethod.Post;
-                    case HttpPipelineMethod.Put:
+                    case "PUT":
                         return HttpMethod.Put;
-                    case HttpPipelineMethod.Delete:
+                    case "DELETE":
                         return HttpMethod.Delete;
-                    case HttpPipelineMethod.Patch:
+                    case "PATCH":
                         return s_patch;
-                    case HttpPipelineMethod.Head:
+                    case "HEAD":
                         return HttpMethod.Head;
 
                     default:
