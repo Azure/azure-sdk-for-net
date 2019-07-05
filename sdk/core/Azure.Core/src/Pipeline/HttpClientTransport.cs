@@ -239,27 +239,48 @@ namespace Azure.Core.Pipeline
 
             public override string ToString() => _requestMessage.ToString();
 
-            readonly static HttpMethod s_patch = new HttpMethod("PATCH");
+            private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
 
-            private static HttpMethod ToHttpClientMethod(RequestMethod method)
+            private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
             {
-                switch (method.Method)
+                var method = requestMethod.Method;
+                // Fast-path common values
+                if (method.Length == 3)
                 {
-                    case "GET":
+                    if (string.Equals(method, "GET", StringComparison.OrdinalIgnoreCase))
+                    {
                         return HttpMethod.Get;
-                    case "POST":
-                        return HttpMethod.Post;
-                    case "PUT":
+                    }
+
+                    if (string.Equals(method, "PUT", StringComparison.OrdinalIgnoreCase))
+                    {
                         return HttpMethod.Put;
-                    case "DELETE":
-                        return HttpMethod.Delete;
-                    case "PATCH":
-                        return s_patch;
-                    case "HEAD":
-                        return HttpMethod.Head;
-                    default:
-                        return new HttpMethod(method.Method);
+                    }
                 }
+                else if (method.Length == 4)
+                {
+                    if (string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Post;
+                    }
+                    if (string.Equals(method, "HEAD", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Head;
+                    }
+                }
+                else
+                {
+                    if (string.Equals(method, "PATCH", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return s_patch;
+                    }
+                    if (string.Equals(method, "DELETE", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Delete;
+                    }
+                }
+
+                return new HttpMethod(method);
             }
 
             private void EnsureContentInitialized()
