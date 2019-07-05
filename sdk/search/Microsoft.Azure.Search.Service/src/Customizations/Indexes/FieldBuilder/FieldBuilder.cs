@@ -98,16 +98,14 @@ namespace Microsoft.Azure.Search
         private static IList<Field> BuildForTypeRecursive(Type modelType, IContractResolver contractResolver, Stack<Type> processedTypes)
         {
             var contract = (JsonObjectContract)contractResolver.ResolveContract(modelType);
-            var fields = new List<Field>();
-            foreach (JsonProperty prop in contract.Properties)
+
+            Field BuildField(JsonProperty prop)
             {
                 IList<Attribute> attributes = prop.AttributeProvider.GetAttributes(true);
                 if (attributes.Any(attr => attr is JsonIgnoreAttribute))
                 {
-                    continue;
+                    return null;
                 }
-
-                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
 
                 Field CreateComplexField(DataType dataType, Type underlyingClrType)
                 {
@@ -188,18 +186,14 @@ namespace Microsoft.Azure.Search
                     return field;
                 }
 
-                Field newField =
-                    dataTypeInfo.Match(
-                        onSimpleDataType: CreateSimpleField,
-                        onComplexDataType: CreateComplexField);
+                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
 
-                if (newField != null)
-                {
-                    fields.Add(newField);
-                }
+                return dataTypeInfo.Match(
+                    onSimpleDataType: CreateSimpleField,
+                    onComplexDataType: CreateComplexField);
             }
 
-            return fields;
+            return contract.Properties.Select(BuildField).Where(field => field != null).ToArray();
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType)
