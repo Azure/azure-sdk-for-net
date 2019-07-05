@@ -11,7 +11,7 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class LoggingPolicy : HttpPipelinePolicy
+    internal class LoggingPolicy : HttpPipelinePolicy
     {
         private const long DelayWarningThreshold = 3000; // 3000ms
         private static readonly long s_frequency = Stopwatch.Frequency;
