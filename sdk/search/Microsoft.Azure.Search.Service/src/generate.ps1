@@ -27,6 +27,8 @@ Param(
     [string] $SpecsRepoBranch = "master"
 )
 
+"$PSScriptRoot\..\..\Install-BuildTools.ps1"
+
 $generateFolder = "$PSScriptRoot\Generated"
 $sharedGenerateFolder = "$PSScriptRoot\..\..\Microsoft.Azure.Search.Common\src\Generated"
 
