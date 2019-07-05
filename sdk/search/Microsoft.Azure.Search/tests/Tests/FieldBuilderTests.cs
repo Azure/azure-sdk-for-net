@@ -32,7 +32,30 @@ namespace Microsoft.Azure.Search.Tests
         {
             get
             {
-                (DataType, string)[] primitivePropertyTestData = new[]
+                (DataType dataType, string fieldName)[] primitiveSubFieldTestData = new[]
+                {
+                    (DataType.String, nameof(ReflectableComplexObject.Name)),
+                    (DataType.Int32, nameof(ReflectableComplexObject.Rating)),
+                    (DataType.String, nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.String, nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country))
+                };
+
+                var complexFields = new[]
+                {
+                    nameof(ReflectableModel.Complex),
+                    nameof(ReflectableModel.ComplexArray),
+                    nameof(ReflectableModel.ComplexIList),
+                    nameof(ReflectableModel.ComplexList),
+                    nameof(ReflectableModel.ComplexIEnumerable),
+                    nameof(ReflectableModel.ComplexICollection)
+                };
+
+                var allSubFieldTestData =
+                    from topLevelFieldName in complexFields
+                    from typeAndField in primitiveSubFieldTestData
+                    select (typeAndField.dataType, topLevelFieldName + "/" + typeAndField.fieldName);
+
+                (DataType, string)[] primitiveFieldTestData = new[]
                 {
                     (DataType.String, nameof(ReflectableModel.Text)),
                     (DataType.Int32, nameof(ReflectableModel.Id)),
@@ -41,28 +64,11 @@ namespace Microsoft.Azure.Search.Tests
                     (DataType.Boolean, nameof(ReflectableModel.Flag)),
                     (DataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (DataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
-                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
-                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name)),
-                    (DataType.AsString.Int32, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating)),
-                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
-                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name)),
-                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name)),
-                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Rating)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name)),
-                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name)),
-                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
-                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country))
+                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
                 };
+
+                (DataType, string)[] primitivePropertyTestData =
+                    primitiveFieldTestData.Concat(allSubFieldTestData).ToArray();
 
                 return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, primitivePropertyTestData));
             }
@@ -78,38 +84,47 @@ namespace Microsoft.Azure.Search.Tests
                     (DataType.String, nameof(ReflectableModel.StringIList)),
                     (DataType.String, nameof(ReflectableModel.StringIEnumerable)),
                     (DataType.String, nameof(ReflectableModel.StringList)),
+                    (DataType.String, nameof(ReflectableModel.StringICollection)),
                     (DataType.AsString.Int32, nameof(ReflectableModel.IntArray)),
                     (DataType.AsString.Int32, nameof(ReflectableModel.IntIList)),
                     (DataType.AsString.Int32, nameof(ReflectableModel.IntIEnumerable)),
                     (DataType.AsString.Int32, nameof(ReflectableModel.IntList)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.IntICollection)),
                     (DataType.AsString.Int64, nameof(ReflectableModel.LongArray)),
                     (DataType.AsString.Int64, nameof(ReflectableModel.LongIList)),
                     (DataType.AsString.Int64, nameof(ReflectableModel.LongIEnumerable)),
                     (DataType.AsString.Int64, nameof(ReflectableModel.LongList)),
+                    (DataType.AsString.Int64, nameof(ReflectableModel.LongICollection)),
                     (DataType.AsString.Double, nameof(ReflectableModel.DoubleArray)),
                     (DataType.AsString.Double, nameof(ReflectableModel.DoubleIList)),
                     (DataType.AsString.Double, nameof(ReflectableModel.DoubleIEnumerable)),
                     (DataType.AsString.Double, nameof(ReflectableModel.DoubleList)),
+                    (DataType.AsString.Double, nameof(ReflectableModel.DoubleICollection)),
                     (DataType.AsString.Boolean, nameof(ReflectableModel.BoolArray)),
                     (DataType.AsString.Boolean, nameof(ReflectableModel.BoolIList)),
                     (DataType.AsString.Boolean, nameof(ReflectableModel.BoolIEnumerable)),
                     (DataType.AsString.Boolean, nameof(ReflectableModel.BoolList)),
+                    (DataType.AsString.Boolean, nameof(ReflectableModel.BoolICollection)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeArray)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeIList)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeIEnumerable)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeICollection)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetArray)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIList)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
                     (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointICollection)),
                     (DataType.AsString.Complex, nameof(ReflectableModel.ComplexArray)),
                     (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIList)),
                     (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIEnumerable)),
-                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexList))
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexList)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexICollection))
                 };
 
                 return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, collectionPropertyTestData));
@@ -127,7 +142,8 @@ namespace Microsoft.Azure.Search.Tests
                     nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address),
                     nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address),
                     nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address),
-                    nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address)
+                    nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address)
                 };
 
                 return new TheoryData<Type, string>().PopulateFrom(
@@ -190,7 +206,9 @@ namespace Microsoft.Azure.Search.Tests
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
-                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
         }
 
         [Theory]
@@ -210,7 +228,9 @@ namespace Microsoft.Azure.Search.Tests
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating),
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
                 nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating),
-                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
         }
 
         [Theory]
@@ -232,7 +252,8 @@ namespace Microsoft.Azure.Search.Tests
                 nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
                 nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
-                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
         }
 
         [Theory]
@@ -254,7 +275,8 @@ namespace Microsoft.Azure.Search.Tests
                 nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
-                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name));
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexICollection) + "/" + nameof(ReflectableComplexObject.Name));
         }
 
         [Theory]
