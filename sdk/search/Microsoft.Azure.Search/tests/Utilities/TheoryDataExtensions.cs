@@ -28,11 +28,25 @@ namespace Xunit
             return testData;
         }
 
-        public static TheoryData<T1, T2, T3> PopulateFrom<T1, T2, T3>(this TheoryData<T1, T2, T3> testData, IEnumerable<(T1, T2, T3)> source)
+        public static TheoryData<T1, T2, T3> PopulateFrom<T1, T2, T3>(
+            this TheoryData<T1, T2, T3> testData, 
+            IEnumerable<(T1, T2, T3)> source)
         {
             foreach (var (t1, t2, t3) in source)
             {
                 testData.Add(t1, t2, t3);
+            }
+
+            return testData;
+        }
+
+        public static TheoryData<T1, T2, T3, T4> PopulateFrom<T1, T2, T3, T4>(
+            this TheoryData<T1, T2, T3, T4> testData,
+            IEnumerable<(T1, T2, T3, T4)> source)
+        {
+            foreach (var (t1, t2, t3, t4) in source)
+            {
+                testData.Add(t1, t2, t3, t4);
             }
 
             return testData;
