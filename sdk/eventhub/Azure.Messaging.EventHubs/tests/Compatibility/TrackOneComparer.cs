@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (String.Equals(trackOnePosition.Offset, trackTwoPosition.Offset, StringComparison.Ordinal))
                  && (trackOnePosition.SequenceNumber == trackTwoPosition.SequenceNumber)
                  && (trackOnePosition.IsInclusive == trackTwoPosition.IsInclusive)
-                 && (trackOnePosition.EnqueuedTimeUtc == trackTwoPosition.EnqueuedTimeUtc)
+                 && (trackOnePosition.EnqueuedTimeUtc == trackTwoPosition.EnqueuedTime)
             );
         }
     }

@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var position = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-25T12:00:00Z"));
             var priority = 8765;
             var identifier = "ThisIsAnAwesomeConsumer!";
-            var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTimeUtc.Value), priority, new ReceiverOptions { Identifier = identifier });
+            var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTime.Value.UtcDateTime), priority, new ReceiverOptions { Identifier = identifier });
             var consumer = new TrackOneEventHubConsumer(() => mock);
 
             // Invoke an operation to force the consumer to be lazily instantiated.  Otherwise,

@@ -63,9 +63,9 @@ namespace Azure.Messaging.EventHubs
         ///   The enqueue time of the event identified by this position.
         /// </summary>
         ///
-        /// <value>Excpected to be <c>null</c> if the event position represents an offset or sequence number.</value>
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or sequence number.</value>
         ///
-        internal DateTime? EnqueuedTimeUtc { get; set; }
+        internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
         ///   The sequence number of the event identified by this poistion;
@@ -112,18 +112,18 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued after the
-        ///   requested <paramref name="enqueuedTimeUtc" /> will become the current position.
+        ///   requested <paramref name="enqueuedTime" /> will become the current position.
         /// </summary>
         ///
-        /// <param name="enqueuedTimeUtc">The date and time, in UTC, from which the next available event should be chosen.</param>
+        /// <param name="enqueuedTime">The date and time from which the next available event should be chosen.</param>
         ///
         /// <returns>The position of the specified event.</returns>
         ///
-        public static EventPosition FromEnqueuedTime(DateTime enqueuedTimeUtc)
+        public static EventPosition FromEnqueuedTime(DateTimeOffset enqueuedTime)
         {
             return new EventPosition
             {
-                EnqueuedTimeUtc = enqueuedTimeUtc
+                EnqueuedTime = enqueuedTime
             };
         }
 
