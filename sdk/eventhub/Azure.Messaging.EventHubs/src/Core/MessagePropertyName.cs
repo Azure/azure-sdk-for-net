@@ -12,8 +12,8 @@
     ///
     internal static class MessagePropertyName
     {
-        /// <summary>The date and time, in UTC, that a message was enqueued.</summary>
-        public const string EnqueuedTimeUtc = "x-opt-enqueued-time";
+        /// <summary>The date and time that a message was enqueued.</summary>
+        public const string EnqueuedTime = "x-opt-enqueued-time";
 
         /// <summary>The sequence number assigned to a message.</summary>
         public const string SequenceNumber = "x-opt-sequence-number";
