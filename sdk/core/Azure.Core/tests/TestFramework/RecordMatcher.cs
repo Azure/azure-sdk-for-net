@@ -94,7 +94,9 @@ namespace Azure.Core.Testing
 
             if (uri != bestScoreEntry.RequestUri)
             {
-                builder.AppendLine($"Uri doesn't match, request <{uri}>, record <{bestScoreEntry.RequestUri}>");
+                builder.AppendLine("Uri doesn't match:");
+                builder.AppendLine($"    request <{uri}>");
+                builder.AppendLine($"    record  <{bestScoreEntry.RequestUri}>");
             }
 
             builder.AppendLine("Header differences:");

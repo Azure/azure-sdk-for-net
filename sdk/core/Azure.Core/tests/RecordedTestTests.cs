@@ -100,7 +100,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
-                "Uri doesn't match, request <http://localhost/>, record <http://remote-host>" + Environment.NewLine +
+                "Uri doesn't match:" + Environment.NewLine +
+                "    request <http://localhost/>" + Environment.NewLine +
+                "    record  <http://remote-host>" + Environment.NewLine +
                 "Header differences:" + Environment.NewLine +
                 "    <Some-Header> values differ, request <Random value>, record <Non-Random value>" + Environment.NewLine +
                 "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
