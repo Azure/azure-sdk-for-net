@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+  
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+  
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.HealthcareApis.Tests</PackageId>
+    <Description>Microsoft.Azure.Management.HealthcareApis.Tests Class Library</Description>
+    <AssemblyName>HealthcareApis.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Authors>Microsoft Corporation</Authors>
+    <Version>1.0.0</Version>
+    <ProjectGuid>{FC36BDC8-F7B8-474D-BC49-15C11CA3C46A}</ProjectGuid>
+  </PropertyGroup>
+  
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.HealthcareApis.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="SessionRecords\*\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
