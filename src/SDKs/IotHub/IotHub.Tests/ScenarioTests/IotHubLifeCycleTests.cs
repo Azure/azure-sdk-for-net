@@ -96,7 +96,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 Assert.Contains(quotaMetrics, q => q.Name.Equals("TotalDeviceCount", StringComparison.OrdinalIgnoreCase) &&
                                                   q.CurrentValue == 0 &&
-                                                  q.MaxValue == 500000);
+                                                  q.MaxValue == 1000000);
 
                 // Get all Iot Hubs in a resource group
                 var iotHubs = this.iotHubClient.IotHubResource.ListByResourceGroup(IotHubTestUtilities.DefaultResourceGroupName);
@@ -177,6 +177,17 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.True(hubReadOperation.Count().Equals(1));
                 Assert.Equal("Microsoft Devices", hubReadOperation.First().Display.Provider, ignoreCase: true);
                 Assert.Equal("Get IotHub(s)", hubReadOperation.First().Display.Operation, ignoreCase: true);
+
+                // Initiate manual failover
+                var iotHubBeforeFailover = this.iotHubClient.IotHubResource.Get(
+                    IotHubTestUtilities.DefaultResourceGroupName,
+                    IotHubTestUtilities.DefaultIotHubName);
+                var failoverInput = new FailoverInput(IotHubTestUtilities.DefaultFailoverLocation);
+                this.iotHubClient.IotHub.ManualFailover(IotHubTestUtilities.DefaultIotHubName, failoverInput, IotHubTestUtilities.DefaultResourceGroupName);
+                var iotHubAfterFailover = this.iotHubClient.IotHubResource.Get(
+                    IotHubTestUtilities.DefaultResourceGroupName,
+                    IotHubTestUtilities.DefaultIotHubName);
+                Assert.DoesNotMatch(iotHubBeforeFailover.Etag, iotHubAfterFailover.Etag);
             }
         }
 
