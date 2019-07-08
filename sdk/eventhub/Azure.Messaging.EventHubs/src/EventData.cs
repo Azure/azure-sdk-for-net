@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs
         public int Offset => SystemProperties.Offset;
 
         /// <summary>
-        ///   The date and time of when the event was enqueued in the Event Hub partition.
+        ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
         public DateTimeOffset EnqueuedTime => SystemProperties.EnqueuedTime;
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs
             /// </summary>
             ///
             /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
-            /// <param name="enqueuedTime">The date and time that the event was received by the partition.</param>
+            /// <param name="enqueuedTime">The date and time, in UTC, that the event was received by the partition.</param>
             /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
             /// <param name="partitionKey">The partition hashing key associated with the batch that the event was grouped with when sent.</param>
             ///
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventHubs
             }
 
             /// <summary>
-            ///   The date and time that the <see cref="EventData" /> was received by the partition.
+            ///   The date and time, in UTC, that the <see cref="EventData" /> was received by the partition.
             /// </summary>
             ///
             internal DateTimeOffset EnqueuedTime

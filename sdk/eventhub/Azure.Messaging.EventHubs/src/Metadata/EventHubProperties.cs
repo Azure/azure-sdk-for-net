@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         public string Path { get; }
 
         /// <summary>
-        ///   The date and time at which the Event Hub was created.
+        ///   The date and time, in UTC, at which the Event Hub was created.
         /// </summary>
         ///
         public DateTimeOffset CreatedAt { get; }

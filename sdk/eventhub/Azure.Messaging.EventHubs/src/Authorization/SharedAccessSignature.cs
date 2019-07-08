@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         public string SharedAccessKey { get; private set; }
 
         /// <summary>
-        ///   The date and time that the shared access signature expires.
+        ///   The date and time that the shared access signature expires, in UTC.
         /// </summary>
         ///
         public DateTimeOffset ExpirationTime { get; private set; }
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
-        /// <param name="expirationTime">The date and time that the shared access signature expires.</param>
+        /// <param name="expirationTime">The date and time that the shared access signature expires, in UTC.</param>
         ///
         /// <remarks>
         ///     This constructor is intended to support cloning of the signature and internal testing,
@@ -359,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="audience">The audience scope to which this signature applies.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
-        /// <param name="expirationTime">The date/time that the signature expires.</param>
+        /// <param name="expirationTime">The date/time, in UTC, that the signature expires.</param>
         ///
         /// <returns>The value of the shared access signature.</returns>
         ///
@@ -390,7 +390,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <param name="unixTime">The timestamp to convert.</param>
         ///
-        /// <returns>The date/time which corresponds to the specified timestamp.</returns>
+        /// <returns>The date/time, in UTC, which corresponds to the specified timestamp.</returns>
         ///
         private static DateTimeOffset ConvertFromUnixTime(long unixTime) =>
             Epoch.AddSeconds(unixTime);

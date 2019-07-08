@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventHubs
         ///   requested <paramref name="enqueuedTime" /> will become the current position.
         /// </summary>
         ///
-        /// <param name="enqueuedTime">The date and time from which the next available event should be chosen.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, from which the next available event should be chosen.</param>
         ///
         /// <returns>The position of the specified event.</returns>
         ///
