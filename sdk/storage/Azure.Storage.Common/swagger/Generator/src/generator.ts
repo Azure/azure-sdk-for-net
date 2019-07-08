@@ -172,7 +172,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.write(`using (Azure.Request ${requestName} = ${methodName}_CreateRequest(`);
+        w.write(`using (Azure.Core.Http.HttpRequest ${requestName} = ${methodName}_CreateRequest(`);
         w.scope(() => {
             const separateParams = IndentWriter.createFenceposter();
             for (const arg of operation.request.arguments) {
@@ -216,7 +216,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
     }
     w.line(`/// <returns>The ${regionName} Request.</returns>`);
-    w.write(`internal static Azure.Request ${methodName}_CreateRequest(`);
+    w.write(`internal static Azure.Core.Http.HttpRequest ${methodName}_CreateRequest(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
@@ -276,7 +276,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Request ${requestName} = ${pipelineName}.CreateRequest();`);
+        w.line(`Azure.Core.Http.HttpRequest ${requestName} = ${pipelineName}.CreateRequest();`);
         w.line();
 
         w.line(`// Set the endpoint`);
@@ -427,7 +427,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         // an unimplemented method on the partial class
                         w.line(`throw ${valueName}.CreateException(${responseName});`);
                     } else {
-                        w.line(`throw new Azure.RequestFailedException(${responseName});`);
+                        w.line(`throw new Azure.Core.Http.HttpRequestFailedException(${responseName});`);
                     }
                 });
             }
