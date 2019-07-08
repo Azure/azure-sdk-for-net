@@ -631,7 +631,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task GetPartitionIdsAsyncDelegatesToGetProperties()
         {
-            var date = DateTimeOffset.Parse("2015-10-27T12:00:00Z").DateTime;
+            var date = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionIds = new[] { "first", "second", "third" };
             var properties = new EventHubProperties("dummy", date, partitionIds);
             var mockClient = new Mock<EventHubClient> { CallBase = true };
