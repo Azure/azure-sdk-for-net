@@ -31,10 +31,10 @@ namespace Azure.Storage
             // which errors are retriable, but may extend this in the future.
 
             // We'll use the standard RetryPolicy with a few more retries
-            options.RetryPolicy = new RetryPolicy() { MaxRetries = Constants.MaxReliabilityRetries };
+            options.Retry.MaxRetries = Constants.MaxReliabilityRetries;
 
             // Disable logging until we fully support redaction
-            options.LoggingPolicy = default;
+            options.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>

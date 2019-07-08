@@ -114,6 +114,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task UseITokenProviderWithAad()
         {
+            var appAuthority = "";
             var aadAppId = "";
             var aadAppSecret = "";
 
@@ -126,7 +127,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     return authResult.AccessToken;
                 };
 
-            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback);
+            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
@@ -162,6 +163,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task UseCreateApiWithAad()
         {
+            var appAuthority = "";
             var aadAppId = "";
             var aadAppSecret = "";
 
@@ -176,7 +178,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.CreateWithAzureActiveDirectory(csb.Endpoint, csb.EntityPath, authCallback);
+            var ehClient = EventHubClient.CreateWithAzureActiveDirectory(csb.Endpoint, csb.EntityPath, authCallback, appAuthority);
 
             // Send one event
             TestUtility.Log($"Sending one message.");

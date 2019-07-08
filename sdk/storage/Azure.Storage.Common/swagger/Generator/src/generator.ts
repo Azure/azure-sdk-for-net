@@ -281,7 +281,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
-        w.line(`${requestName}.Method = Azure.Core.Pipeline.HttpPipelineMethod.${httpMethod};`);
+        w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
         w.line(`${requestName}.UriBuilder.Uri = ${uri};`);
         if (operation.request.queries.length > 0) {
