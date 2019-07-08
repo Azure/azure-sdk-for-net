@@ -81,6 +81,12 @@ namespace Azure.Core.Testing
             StringBuilder builder = new StringBuilder();
             builder.AppendLine($"Unable to find a record for the request {requestMethod} {uri}");
 
+            if (bestScoreEntry == null)
+            {
+                builder.AppendLine("No records to match.");
+                return builder.ToString();
+            }
+
             if (requestMethod != bestScoreEntry.RequestMethod)
             {
                 builder.AppendLine($"Method doesn't match, request <{requestMethod}> record <{bestScoreEntry.RequestMethod}>");

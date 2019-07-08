@@ -71,7 +71,6 @@ namespace Azure.Core.Tests
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.ResponseBody);
         }
 
-
         [Test]
         public void RecordMatcherThrowsExceptionsWithDetails()
         {
@@ -83,7 +82,7 @@ namespace Azure.Core.Tests
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
 
-            var entries = new []
+            RecordEntry[] entries = new []
             {
                 new RecordEntry()
                 {
@@ -106,6 +105,26 @@ namespace Azure.Core.Tests
                 "    <Some-Header> values differ, request <Random value>, record <Non-Random value>" + Environment.NewLine +
                 "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
                 "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine,
+                exception.Message);
+        }
+
+        [Test]
+        public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Head;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Headers.Add("Some-Header", "Random value");
+            mockRequest.Headers.Add("Some-Other-Header", "V");
+
+            RecordEntry[] entries = {};
+
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            Assert.AreEqual(
+                "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
+                "No records to match." + Environment.NewLine,
                 exception.Message);
         }
     }
