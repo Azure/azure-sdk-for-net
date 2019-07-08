@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     Console.WriteLine($"\t\tThe first sequence number of an event in the partition is: { partitionProperties.BeginningSequenceNumber }");
                     Console.WriteLine($"\t\tThe last sequence number of an event in the partition is: { partitionProperties.LastEnqueuedSequenceNumber }");
                     Console.WriteLine($"\t\tThe last offset of an event in the partition is: { partitionProperties.LastEnqueuedOffset }");
-                    Console.WriteLine($"\t\tThe last time that an event was enqueued in the partition is: { partitionProperties.LastEnqueuedTimeUtc.ToString("yyyy-MM-dd hh:mm:ss tt") }, in UTC.");
+                    Console.WriteLine($"\t\tThe last time that an event was enqueued in the partition is: { partitionProperties.LastEnqueuedTime.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }.");
                     Console.WriteLine();
                 }
             }

@@ -739,7 +739,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Store last enqueued time.
 
-                        var enqueuedTime = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedTimeUtc;
+                        var enqueuedTime = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedTime;
 
                         await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromEnqueuedTime(enqueuedTime)))
                         {
