@@ -6,7 +6,7 @@ preview releases of other Azure SDK libraries, please visit
 https://aka.ms/azure-sdk-preview1-net.
 
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
-using that library would require code changes to use `Azure.Secutiry.KeyVault.Secrets`.
+using that library would require code changes to use `Azure.Security.KeyVault.Secrets`.
 This package's
 [documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
 and
@@ -15,11 +15,11 @@ demonstrate the new API.
 
 ### Major changes from `Microsoft.Azure.KeyVault`
 - Packages scoped by functionality
-    - `Azure.Secutiry.KeyVault.Secrets` contains a client for secret operations.
-    - `Azure.Secutiry.KeyVault.Keys` contains a client for key operations.
+    - `Azure.Security.KeyVault.Secrets` contains a client for secret operations.
+    - `Azure.Security.KeyVault.Keys` contains a client for key operations.
 - Client instances are scoped to vaults (an instance interacts with one vault
 only).
-- Asynchronous and synchronous API in the `Azure.Secutiry.KeyVault.Secrets` package.
+- Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Secrets` package.
 - Authentication using `Azure.Identity` credentials
   - see this package's
   [documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
