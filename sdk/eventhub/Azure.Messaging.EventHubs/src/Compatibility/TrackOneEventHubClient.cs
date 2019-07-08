@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
             return new EventHubProperties
             (
                 TrackOneClient.EventHubName,
-                runtimeInformation.CreatedAt.ToUniversalTime(),
+                runtimeInformation.CreatedAt,
                 runtimeInformation.PartitionIds
             );
         }

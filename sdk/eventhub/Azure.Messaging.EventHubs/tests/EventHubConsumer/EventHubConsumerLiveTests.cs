@@ -1538,11 +1538,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // The consumer will wait until maximum wait time is reached because there are no messages to receive.
 
-                        var startTime = DateTimeOffset.Now;
+                        var startTime = DateTime.UtcNow;
 
                         await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(maximumWaitTimeInSecs));
 
-                        var elapsedTime = DateTimeOffset.Now.Subtract(startTime).TotalSeconds;
+                        var elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
 
                         Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
                         Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));
@@ -1586,22 +1586,22 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // The consumer will wait until default maximum wait time is reached because there are no messages to receive.
 
-                        var startTime = DateTimeOffset.Now;
+                        var startTime = DateTime.UtcNow;
 
                         await consumer.ReceiveAsync(1);
 
-                        var elapsedTime = DateTimeOffset.Now.Subtract(startTime).TotalSeconds;
+                        var elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
 
                         Assert.That(elapsedTime, Is.GreaterThan(defaultMaximumWaitTimeInSecs - 0.1));
                         Assert.That(elapsedTime, Is.LessThan(defaultMaximumWaitTimeInSecs + 5));
 
                         // The consumer will wait until maximum wait time is reached because there are no messages to receive.
 
-                        startTime = DateTimeOffset.Now;
+                        startTime = DateTime.UtcNow;
 
                         await consumer.ReceiveAsync(1, TimeSpan.FromSeconds(maximumWaitTimeInSecs));
 
-                        elapsedTime = DateTimeOffset.Now.Subtract(startTime).TotalSeconds;
+                        elapsedTime = DateTime.UtcNow.Subtract(startTime).TotalSeconds;
 
                         Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1));
                         Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5));

@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var consumerGroup = "$TestThing";
             var partition = "123";
-            var position = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-25T12:00:00Z"));
+            var position = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-25T12:00:00Z"));
             var priority = 8765;
             var identifier = "ThisIsAnAwesomeConsumer!";
             var mock = new ObservableReceiverMock(new ClientMock(), consumerGroup, partition, TrackOne.EventPosition.FromEnqueuedTime(position.EnqueuedTime.Value.UtcDateTime), priority, new ReceiverOptions { Identifier = identifier });
