@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public static EventPosition FromOffset(int offset) => FromOffset(offset.ToString(), true);
+        public static EventPosition FromOffset(long offset) => FromOffset(offset.ToString(), true);
 
         /// <summary>
         ///   Corresponds to the event in the partition having a specified sequence number associated with it.

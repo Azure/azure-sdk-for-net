@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         {
             var runtimeInformation = await TrackOneClient.GetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
 
-            if (int.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
+            if (long.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
             {
                 return new PartitionProperties
                 (
@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 );
             }
 
-            throw new ArgumentException($"The { nameof(runtimeInformation.LastEnqueuedOffset) } argument is expected to be an integer. Actual value: '{ runtimeInformation.LastEnqueuedOffset }'.");
+            throw new ArgumentException($"The { nameof(runtimeInformation.LastEnqueuedOffset) } argument is expected to be a 64-byte signed integer. Actual value: '{ runtimeInformation.LastEnqueuedOffset }'.");
         }
 
         /// <summary>

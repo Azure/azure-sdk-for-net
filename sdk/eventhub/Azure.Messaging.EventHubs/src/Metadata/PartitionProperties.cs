@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public int LastEnqueuedOffset { get; }
+        public long LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued in the partition.
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Metadata
                                       string partitionId,
                                       long beginningSequenceNumber,
                                       long lastSequenceNumber,
-                                      int lastOffset,
+                                      long lastOffset,
                                       DateTime lastEnqueueUtc,
                                       bool isEmpty)
         {
