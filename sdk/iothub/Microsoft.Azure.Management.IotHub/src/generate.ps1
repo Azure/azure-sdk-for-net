@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "iothub/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "iothub/Microsoft.Azure.Management.IotHub" -AutoRestVersion "latest"

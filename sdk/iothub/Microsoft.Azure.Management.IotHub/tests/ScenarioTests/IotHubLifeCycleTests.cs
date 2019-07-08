@@ -187,7 +187,14 @@ namespace IotHub.Tests.ScenarioTests
                 var iotHubAfterFailover = this.iotHubClient.IotHubResource.Get(
                     IotHubTestUtilities.DefaultResourceGroupName,
                     IotHubTestUtilities.DefaultIotHubName);
-                Assert.DoesNotMatch(iotHubBeforeFailover.Etag, iotHubAfterFailover.Etag);
+                Assert.Equal("primary", iotHubBeforeFailover.Properties.Locations[0].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultLocation.ToLower(), iotHubBeforeFailover.Properties.Locations[0].Location.Replace(" ", "").ToLower());
+                Assert.Equal("secondary", iotHubBeforeFailover.Properties.Locations[1].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultFailoverLocation.ToLower(), iotHubBeforeFailover.Properties.Locations[1].Location.Replace(" ", "").ToLower());
+                Assert.Equal("primary", iotHubAfterFailover.Properties.Locations[0].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultFailoverLocation.ToLower(), iotHubAfterFailover.Properties.Locations[0].Location.Replace(" ", "").ToLower());
+                Assert.Equal("secondary", iotHubAfterFailover.Properties.Locations[1].Role.ToLower());
+                Assert.Equal(IotHubTestUtilities.DefaultLocation.ToLower(), iotHubAfterFailover.Properties.Locations[1].Location.Replace(" ", "").ToLower());
             }
         }
 
