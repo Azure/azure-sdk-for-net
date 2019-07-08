@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var allowedVariance = TimeSpan.FromSeconds(5);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey", timeToLive);
 
-            Assert.That(signature.ExpirationTime, Is.EqualTo(expectedExpiration).Within(allowedVariance));
+            Assert.That(signature.SignatureExpiration, Is.EqualTo(expectedExpiration).Within(allowedVariance));
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var minimumExpiration = DateTimeOffset.Now.Add(TimeSpan.FromMinutes(1));
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey");
 
-            Assert.That(signature.ExpirationTime, Is.GreaterThan(minimumExpiration));
+            Assert.That(signature.SignatureExpiration, Is.GreaterThan(minimumExpiration));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             Assert.That(parsedSignature, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsedSignature.Resource, Is.EqualTo(resource), "The resource should match.");
             Assert.That(parsedSignature.SharedAccessKeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
-            Assert.That(parsedSignature.ExpirationTime, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var parsedSignature = new SharedAccessSignature(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
             parsedSignature.ExtendExpiration(extendBy);
-            Assert.That(parsedSignature.ExpirationTime, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)));
+            Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)));
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             Assert.That(clone.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
             Assert.That(clone.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The key name should match.");
             Assert.That(clone.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The key should match.");
-            Assert.That(clone.ExpirationTime, Is.EqualTo(signature.ExpirationTime), "The expiration should match.");
+            Assert.That(clone.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration), "The expiration should match.");
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// <param name="sharedAccessSignature">The shared access signature on which to base the token.</param>
         ///
         public TrackOneSharedAccessSignatureToken(SharedAccessSignature sharedAccessSignature) :
-            base(sharedAccessSignature?.Value, (sharedAccessSignature?.ExpirationTime.UtcDateTime ?? default), sharedAccessSignature?.Resource, ClientConstants.SasTokenType)
+            base(sharedAccessSignature?.Value, (sharedAccessSignature?.SignatureExpiration.UtcDateTime ?? default), sharedAccessSignature?.Resource, ClientConstants.SasTokenType)
         {
             Guard.ArgumentNotNull(nameof(sharedAccessSignature), sharedAccessSignature);
             SharedAccessSignature = sharedAccessSignature;

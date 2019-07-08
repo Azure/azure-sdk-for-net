@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   The date and time that the shared access signature expires, in UTC.
         /// </summary>
         ///
-        public DateTimeOffset ExpirationTime { get; private set; }
+        public DateTimeOffset SignatureExpiration { get; private set; }
 
         /// <summary>
         ///   The resource to which the shared access signature is intended to serve as
@@ -114,9 +114,9 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
-            ExpirationTime = DateTimeOffset.Now.Add(signatureValidityDuration.Value);
+            SignatureExpiration = DateTimeOffset.Now.Add(signatureValidityDuration.Value);
             Resource = eventHubResource;
-            Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, ExpirationTime);
+            Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, SignatureExpiration);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessSignature), sharedAccessSignature);
             Guard.ArgumentNotTooLong(nameof(sharedAccessKey), sharedAccessKey, MaximumKeyLength);
 
-            (SharedAccessKeyName, Resource, ExpirationTime) = ParseSignature(sharedAccessSignature);
+            (SharedAccessKeyName, Resource, SignatureExpiration) = ParseSignature(sharedAccessSignature);
 
             SharedAccessKey = sharedAccessKey;
             Value = sharedAccessSignature;
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
-        /// <param name="expirationTime">The date and time that the shared access signature expires, in UTC.</param>
+        /// <param name="signatureExpiration">The date and time that the shared access signature expires, in UTC.</param>
         ///
         /// <remarks>
         ///     This constructor is intended to support cloning of the signature and internal testing,
@@ -167,13 +167,13 @@ namespace Azure.Messaging.EventHubs.Authorization
                                        string sharedAccessKeyName,
                                        string sharedAccessKey,
                                        string value,
-                                       DateTimeOffset expirationTime)
+                                       DateTimeOffset signatureExpiration)
         {
             Resource = eventHubResource;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
             Value = value;
-            ExpirationTime = expirationTime;
+            SignatureExpiration = signatureExpiration;
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace Azure.Messaging.EventHubs.Authorization
                 throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
 
-            ExpirationTime = DateTimeOffset.Now.Add(signatureValidityDuration);
-            Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, ExpirationTime);
+            SignatureExpiration = DateTimeOffset.Now.Add(signatureValidityDuration);
+            Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, SignatureExpiration);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>A new copy of <see cref="SharedAccessSignature" />.</returns>
         ///
         internal SharedAccessSignature Clone() =>
-            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, ExpirationTime);
+            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, SignatureExpiration);
 
         /// <summary>
         ///   Parses a shared access signature into its component parts.
