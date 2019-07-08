@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
+using Azure.Core.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
@@ -16,11 +16,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             // specify retry policy options
             var options = new ConfigurationClientOptions();
-            options.RetryPolicy = new FixedRetryPolicy()
-            {
-                MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1)
-            };
+            options.Retry.Mode = RetryMode.Fixed;
+            options.Retry.MaxRetries = 10;
+            options.Retry.Delay = TimeSpan.FromSeconds(1);
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 

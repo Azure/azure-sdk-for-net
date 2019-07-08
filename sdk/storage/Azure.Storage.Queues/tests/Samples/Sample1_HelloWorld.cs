@@ -2,13 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -16,25 +17,28 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Azure.Storage.Samples
 {
-    [TestClass]
+    [TestFixture]
     public partial class QueueSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task QueueSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.
             QueueServiceClient queueServiceClient = new QueueServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new QueueClient
-            QueueClient queueClient = queueServiceClient.GetQueueClient("myqueue");
+            QueueClient queueClient = queueServiceClient.GetQueueClient($"myqueue-{Guid.NewGuid()}");
             try
             {
                 // Create your new Queue in the service
                 await queueClient.CreateAsync();
 
                 // List Queues
-                Response<QueuesSegment> listResponse = await queueServiceClient.ListQueuesSegmentAsync();
+                await foreach (QueueItem queue in queueServiceClient.GetQueuesAsync())
+                {
+                    Console.WriteLine(queue.Name);
+                }
             }
             finally
             {
@@ -43,40 +47,35 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task MessageSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.
             QueueServiceClient queueServiceClient = new QueueServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new QueueClient
-            QueueClient queueClient = queueServiceClient.GetQueueClient("myqueue2");
+            QueueClient queueClient = queueServiceClient.GetQueueClient($"myqueue2-{Guid.NewGuid()}");
             try
             {
                 // Create your new Queue in the service
                 await queueClient.CreateAsync();
 
                 // Instantiate a new MessagesClient
-                MessagesClient messagesClient = queueClient.GetMessagesClient();
-
                 // Enqueue a message to the queue
-                Response<IEnumerable<EnqueuedMessage>> enqueueResponse = await messagesClient.EnqueueAsync("my message");
+                Response<EnqueuedMessage> enqueueResponse = await queueClient.EnqueueMessageAsync("my message");
 
                 // Peek message
-                Response<IEnumerable<PeekedMessage>> peekResponse = await messagesClient.PeekAsync();
-
-                // Instantiate a new MessageIdClient
-                MessageIdClient messageIdClient = messagesClient.GetMessageIdClient(enqueueResponse.Value.First().MessageId);
+                Response<IEnumerable<PeekedMessage>> peekResponse = await queueClient.PeekMessagesAsync();
 
                 // Update message
-                await messageIdClient.UpdateAsync("new message", enqueueResponse.Value.First().PopReceipt);
+                await queueClient.UpdateMessageAsync("new message", enqueueResponse.Value.MessageId, enqueueResponse.Value.PopReceipt);
 
                 // Dequeue message
-                Response<IEnumerable<DequeuedMessage>> dequeueResponse = await messagesClient.DequeueAsync();
+                Response<IEnumerable<DequeuedMessage>> dequeueResponse = await queueClient.DequeueMessagesAsync();
 
                 // Delete Message
-                await messageIdClient.DeleteAsync(dequeueResponse.Value.First().PopReceipt);
+                await queueClient.DeleteMessageAsync(enqueueResponse.Value.MessageId, dequeueResponse.Value.First().PopReceipt);
             }
             finally
             {

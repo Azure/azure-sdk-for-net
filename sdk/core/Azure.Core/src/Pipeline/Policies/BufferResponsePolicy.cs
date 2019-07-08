@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class BufferResponsePolicy: HttpPipelinePolicy
+    internal class BufferResponsePolicy: HttpPipelinePolicy
     {
         protected BufferResponsePolicy()
         {
         }
 
-        public static HttpPipelinePolicy Singleton { get; set; } = new BufferResponsePolicy();
+        public static HttpPipelinePolicy Shared { get; set; } = new BufferResponsePolicy();
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessNextAsync(message, pipeline);
-            await BufferResponse(message, true);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            await BufferResponse(message, true).ConfigureAwait(false);
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-            BufferResponse(message, false).GetAwaiter().GetResult();
+            BufferResponse(message, false).EnsureCompleted();
         }
 
         private static async Task BufferResponse(HttpPipelineMessage message, bool async)
@@ -35,12 +35,13 @@ namespace Azure.Core.Pipeline.Policies
                 var bufferedStream = new MemoryStream();
                 if (async)
                 {
-                    await responseContentStream.CopyToAsync(bufferedStream);
+                    await responseContentStream.CopyToAsync(bufferedStream).ConfigureAwait(false);
                 }
                 else
                 {
                     responseContentStream.CopyTo(bufferedStream);
                 }
+                responseContentStream.Dispose();
                 bufferedStream.Position = 0;
                 message.Response.ContentStream = bufferedStream;
             }

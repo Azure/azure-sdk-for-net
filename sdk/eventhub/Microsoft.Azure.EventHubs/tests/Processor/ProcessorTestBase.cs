@@ -939,24 +939,25 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         /// <summary>
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Manual run only")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task SingleProcessorHostWithAadTokenProvider()
         {
-            var tenantId = "";
+            var appAuthority = "";
             var aadAppId = "";
             var aadAppSecret = "";
 
-            if (string.IsNullOrEmpty(tenantId))
-            {
-                TestUtility.Log($"Skipping test during scheduled runs.");
-                return;
-            }
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
+                async (audience, authority, state) =>
+                {
+                    var authContext = new AuthenticationContext(authority);
+                    var cc = new ClientCredential(aadAppId, aadAppSecret);
+                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
+                    return authResult.AccessToken;
+                };
 
-            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
-            var clientCrendential = new ClientCredential(aadAppId, aadAppSecret);
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, clientCrendential);
+            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, appAuthority);
             var epo = await GetOptionsAsync();
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
 

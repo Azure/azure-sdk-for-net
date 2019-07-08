@@ -5,21 +5,25 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     steps:
+      - script: |
+          echo "##vso[build.addbuildtag]Scheduled"
+        displayName: 'Tag scheduled builds'
+        condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet pack ${{parameters.ProjectFile}} -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false ${{ parameters.VersioningProperties }}"
+      - script: "dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}} /p:PublicSign=false ${{ parameters.VersioningProperties }}"
         displayName: "Build and Package"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-      - task: PublishPipelineArtifact@0
+      - task: PublishPipelineArtifact@1
         condition: succeededOrFailed()
         inputs:
           artifactName: packages
-          targetPath: $(Build.ArtifactStagingDirectory)
+          path: $(Build.ArtifactStagingDirectory)
   - job: "Analyze"
     variables:
       - template: ../variables/globals.yml
@@ -37,17 +41,32 @@ jobs:
           pip install doc-warden
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-      - task: DownloadPipelineArtifact@1
+      - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+        condition: succeededOrFailed()
         inputs:
-          artifactName: packages
-          targetPath: $(System.DefaultWorkingDirectory)
+          artifact: packages
+          path: $(Pipeline.Workspace)/packages
+          patterns: "*.nupkg"
+      - task: PowerShell@2
+        displayName: 'Analyze dependencies'
+        inputs:
+          filePath: 'tools/AnalyzeDeps/AnalyzeDeps.ps1'
+          arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
+          pwsh: true
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"
         # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
         # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - task: PublishPipelineArtifact@1
+        condition: succeededOrFailed()
+        displayName: 'Publish Report Artifacts'
+        inputs:
+          artifactName: reports
+          path: $(Build.ArtifactStagingDirectory)/dependencies.html
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
@@ -86,7 +105,7 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: "dotnet test ${{parameters.ProjectFile}} --filter TestCategory!=Live --logger trx"
+      - script: "dotnet test eng/service.proj --filter TestCategory!=Live --logger trx /p:ServiceDirectory=${{parameters.ServiceDirectory}}"
         displayName: "Build & Test"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

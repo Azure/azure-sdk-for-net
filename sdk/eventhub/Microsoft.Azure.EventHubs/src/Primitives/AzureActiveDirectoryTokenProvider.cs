@@ -5,60 +5,23 @@ namespace Microsoft.Azure.EventHubs
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-
+    
     /// <summary>
     /// Represents the Azure Active Directory token provider for the Event Hubs.
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        readonly AuthenticationContext authContext;
-
-#if ALLOW_CERTIFICATE_IDENTITY
-        readonly ClientCredential clientCredential;
-        readonly ClientAssertionCertificate clientAssertionCertificate;
-#endif
         readonly string clientId;
-        readonly Uri redirectUri;
-        readonly IPlatformParameters platformParameters;
-        readonly UserIdentifier userIdentifier;
+        readonly object authCallbackState;
+        readonly string authority;
+        event AuthenticationCallback AuthCallback;
 
-        enum AuthType
+        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
-            ClientCredential,
-            UserPasswordCredential,
-            ClientAssertionCertificate,
-            InteractiveUserLogin
-        }
-
-        readonly AuthType authType;
-
-#if ALLOW_CERTIFICATE_IDENTITY
-        internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, ClientCredential credential)
-        {
-            this.clientCredential = credential;
-            this.authContext = authContext;
-            this.authType = AuthType.ClientCredential;
-            this.clientId = clientCredential.ClientId;
-        }
-
-        internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, ClientAssertionCertificate clientAssertionCertificate)
-        {
-            this.clientAssertionCertificate = clientAssertionCertificate;
-            this.authContext = authContext;
-            this.authType = AuthType.ClientAssertionCertificate;
-            this.clientId = clientAssertionCertificate.ClientId;
-        }
-#endif
-
-        internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, string clientId, Uri redirectUri, IPlatformParameters platformParameters, UserIdentifier userIdentifier)
-        {
-            this.authContext = authContext;
-            this.clientId = clientId;
-            this.redirectUri = redirectUri;
-            this.platformParameters = platformParameters;
-            this.userIdentifier = userIdentifier;
-            this.authType = AuthType.InteractiveUserLogin;
+            this.clientId = Guid.NewGuid().ToString();
+            this.authority = authority;
+            this.AuthCallback = authenticationCallback;
+            this.authCallbackState = state;
         }
 
         /// <summary>
@@ -69,28 +32,18 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            AuthenticationResult authResult;
+            var token = await this.AuthCallback(ClientConstants.EventHubsAudience, this.authority, this.authCallbackState).ConfigureAwait(false);
 
-            switch (this.authType)
-            {
-#if ALLOW_CERTIFICATE_IDENTITY
-                case AuthType.ClientCredential:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientCredential);
-                    break;
-
-                case AuthType.ClientAssertionCertificate:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientAssertionCertificate);
-                    break;
-#endif
-                case AuthType.InteractiveUserLogin:
-                    authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientId, this.redirectUri, this.platformParameters, this.userIdentifier);
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
-
-            return new JsonSecurityToken(authResult.AccessToken, appliesTo);
+            return new JsonSecurityToken(token, appliesTo);
         }
+
+        /// <summary>
+        /// The authentication delegate to provide access token.
+        /// </summary>
+        /// <param name="audience">The service resource URI for token acquisition.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
+        /// <param name="state">State to be delivered to callback.</param>
+        /// <returns></returns>
+        public delegate Task<string> AuthenticationCallback(string audience, string authority, object state);
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.ApplicationModel.Configuration
     /// Fields to retrieve from a configuration setting.
     /// </summary>
     [Flags]
-    public enum SettingFields : uint
+    public enum SettingFields: uint
     {
         Key = 0x0001,
         Label = 0x0002,

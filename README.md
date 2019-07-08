@@ -1,40 +1,55 @@
-# Microsoft Azure SDK for .NET
-
-This repository contains official .NET client libraries for Microsoft Azure services.
-
-## NuGet packages
-
-See the list of [all NuGet packages](packages.md).
+# Azure SDK for .NET
+This repository contains official .NET libraries for Azure services. You can find NuGet packages for these libraries [here](packages.md). 
 
 ## Getting started
 
-To get started with a library, see the **README<span />.md** file for that component. Each README is located within the subdirectory for the component. For example, the getting started READMEs for App Configuration and Service Bus are in the following subdirectories:
+To get started with a library, see the README.md file located in the library's project folder. You can find these library folders grouped by service in the /sdk directory.
 
-* [/sdk/appconfiguration/Azure.ApplicationModel.Configuration/](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
-* [/sdk/servicebus/Microsoft.Azure.ServiceBus/](/sdk/servicebus/Microsoft.Azure.ServiceBus/README.md)
+For tutorials, samples, quick starts, and other documentation, go to [Azure for .NET Developers](https://docs.microsoft.com/en-us/dotnet/azure/).
 
-The following sections provide direct links to the most commonly used components.
+## Packages available
+Each service might have a number of libraries available from each of the following categories discussed below:
 
-### Core services
+* [Client - July 2019 Preview](#Client-July-2019-Preview)
+* [Client - Stable](#Client-Stable)
+* [Management](#Management)
 
-[Azure.Messaging.EventHub](/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
 
-[Azure.Identity.KeyVault](/sdk/keyvault/Microsoft.Azure.KeyVault/README.md)
+### Client: July 2019 Preview
+New wave of packages that we are currently releasing in **preview**.
+These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
 
-Azure.Storage.Blobs
+These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs. 
 
-Azure.Data.Cosmos
+The libraries released in the July 2019 preview:
+* [Azure.ApplicationModel.Configuration](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
+* [Azure.Messaging.EventHubs](/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
+* [Azure.Identity.KeyVault.Keys](/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
+* [Azure.Identity.KeyVault.Secrets](/sdk/keyvault/Azure.Security.KeyVault.Secrets/Readme.md)
+* [Azure.Storage.Blobs](/sdk/storage/Azure.Storage.Blobs/README.md)
+* [Azure.Storage.Files](/sdk/storage/Azure.Storage.Files/README.md)
+* [Azure.Storage.Queues](/sdk/storage/Azure.Storage.Queues/README.md)
 
-### Shared libraries
+>NOTE: If you need to ensure your code is ready for production, use one of the stable libraries.
 
-Azure SDK clients use shared libraries implementing retries, logging, transport protocols, authentication protocols, etc.
+### Client: Stable
+Last stable versions of packages that are production-ready. These libraries provide similar functionalities to the preview packages, as they allow you to use and consume existing resources and interact with them, for example: upload a storage blob. Stable library directories typically contain 'Microsoft.Azure' in their names, e.g. 'Microsoft.Azure.KeyVault'.
 
-[Azure.Core](/sdk/core/Azure.Core/README.md)
+### Management
+Libraries which enable you to provision specific server resources. They are directly mirroring Azure service's REST endpoints. Management library directories typically contain the word 'Management' in their names, e.g. 'Microsoft.Azure.Management.Storage'.
 
-### Other services
-
-[Azure.ApplicationModel.Configuration](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
+## Need help?
+* For reference documentation visit the [Azure SDK for .NET API Reference](http://aka.ms/net-docs).
+* For tutorials, samples, quick starts, and other documentation, go to [Azure for .NET Developers](https://docs.microsoft.com/en-us/dotnet/azure/).
+* File an issue via [Github Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+* Check [previous questions](https://stackoverflow.com/questions/tagged/azure-net-sdk) or ask new ones on StackOverflow using `azure-net-sdk` tag.
 
 ## Contributing
-
 For details on contributing to this repository, see the [contributing guide](CONTRIBUTING.md).
+
+| Component | Build Status |
+| --------- | ------------ |
+| Client Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/290?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) [![Dependencies](https://img.shields.io/badge/dependencies-analyzed-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/dependencies/dependencies.html) |
+| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/529?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master) |
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2FREADME.png)

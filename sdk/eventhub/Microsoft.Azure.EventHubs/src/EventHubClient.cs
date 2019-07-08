@@ -50,6 +50,7 @@ namespace Microsoft.Azure.EventHubs
             Guard.ArgumentNotNullOrWhiteSpace(nameof(connectionString), connectionString);
 
             var csb = new EventHubsConnectionStringBuilder(connectionString);
+
             return Create(csb);
         }
 
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
         /// <returns></returns>
-        public static EventHubClient Create(
+        public static EventHubClient CreateWithTokenProvider(
             Uri endpointAddress,
             string entityPath,
             ITokenProvider tokenProvider,
@@ -84,112 +85,51 @@ namespace Microsoft.Azure.EventHubs
             return eventHubClient;
         }
 
-#if ALLOW_CERTIFICATE_IDENTITY
-        /// <summary>
-        /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path, AAD authentication context.
-        /// </summary>
+        /// <summary>Creates a new instance of the 
+        /// <see cref="EventHubClient" /> by using Azure Active Directory authentication.</summary> 
         /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="entityPath">Event Hub path</param>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientCredential">The app credential.</param>
+        /// <param name="path">The path to the Event Hub.</param>
+        /// <param name="authCallback">The authentication callback.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
-        /// <returns></returns>
-        public static EventHubClient Create(
+        /// <returns>The newly created Event Hub client object.</returns>
+        public static EventHubClient CreateWithAzureActiveDirectory(
             Uri endpointAddress,
-            string entityPath,
-            AuthenticationContext authContext,
-            ClientCredential clientCredential,
+            string path,
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
+            string authority,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
-            return Create(
-                endpointAddress,
-                entityPath,
-                TokenProvider.CreateAadTokenProvider(authContext, clientCredential),
-                operationTimeout,
-                transportType);
-        }
-#endif
+            TokenProvider tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority);
 
-        /// <summary>
-        /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path, AAD authentication context.
-        /// </summary>
-        /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="entityPath">Event Hub path</param>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientId">ClientId for AAD.</param>
-        /// <param name="redirectUri">The redirectUri on Client App.</param>
-        /// <param name="platformParameters">Platform parameters</param>
-        /// <param name="userIdentifier">User Identifier</param>
-        /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
-        /// <param name="transportType">Transport type on connection.</param>
-        /// <returns></returns>
-        public static EventHubClient Create(
-            Uri endpointAddress,
-            string entityPath,
-            AuthenticationContext authContext,
-            string clientId,
-            Uri redirectUri,
-            IPlatformParameters platformParameters,
-            UserIdentifier userIdentifier = null,
-            TimeSpan? operationTimeout = null,
-            TransportType transportType = TransportType.Amqp)
-        {
-            return Create(
+            return CreateWithTokenProvider(
                 endpointAddress,
-                entityPath,
-                TokenProvider.CreateAadTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier),
+                path,
+                tokenProvider,
                 operationTimeout,
                 transportType);
         }
 
-#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>
-        /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path, AAD authentication context.
-        /// </summary>
-        /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
-        /// <param name="entityPath">Event Hub path</param>
-        /// <param name="authContext">AuthenticationContext for AAD.</param>
-        /// <param name="clientAssertionCertificate">The client assertion certificate credential.</param>
-        /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
-        /// <param name="transportType">Transport type on connection.</param>
-        /// <returns></returns>
-        public static EventHubClient Create(
-            Uri endpointAddress,
-            string entityPath,
-            AuthenticationContext authContext,
-            ClientAssertionCertificate clientAssertionCertificate,
-            TimeSpan? operationTimeout = null,
-            TransportType transportType = TransportType.Amqp)
-        {
-            return Create(
-                endpointAddress,
-                entityPath,
-                TokenProvider.CreateAadTokenProvider(authContext, clientAssertionCertificate),
-                operationTimeout,
-                transportType);
-        }
-#endif
-
-        /// <summary>
-        /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path on Azure Managed Service Identity authentication.
+        /// Creates a new instance of the <see cref="EventHubClient" /> by using Azure Managed Identity authentication.
         /// </summary>
         /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="entityPath">Event Hub path</param>
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
         /// <returns></returns>
-        public static EventHubClient CreateWithManagedServiceIdentity(
+        public static EventHubClient CreateWithManagedIdentity(
             Uri endpointAddress,
             string entityPath,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
-            return Create(
+            return CreateWithTokenProvider(
                 endpointAddress,
                 entityPath,
-                TokenProvider.CreateManagedServiceIdentityTokenProvider(),
+                TokenProvider.CreateManagedIdentityTokenProvider(),
                 operationTimeout,
                 transportType);
         }
@@ -205,8 +145,9 @@ namespace Microsoft.Azure.EventHubs
             Guard.ArgumentNotNullOrWhiteSpace(nameof(csb.EntityPath), csb.EntityPath);
 
             EventHubsEventSource.Log.EventHubClientCreateStart(csb.Endpoint.Host, csb.EntityPath);
-            EventHubClient eventHubClient = new AmqpEventHubClient(csb);
+            EventHubClient eventHubClient = new AmqpEventHubClient(csb, null);
             EventHubsEventSource.Log.EventHubClientCreateStop(eventHubClient.ClientId);
+
             return eventHubClient;
         }
 

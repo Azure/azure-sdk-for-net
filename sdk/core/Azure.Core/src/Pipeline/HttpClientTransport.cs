@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
 
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override Request CreateRequest(IServiceProvider services)
+        public sealed override Request CreateRequest()
             => new PipelineRequest();
 
         public override void Process(HttpPipelineMessage message)
@@ -45,7 +45,7 @@ namespace Azure.Core.Pipeline
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
+                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                     .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
@@ -69,7 +69,7 @@ namespace Azure.Core.Pipeline
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
             }
-            return pipelineRequest.BuildRequestMessage(message.Cancellation);
+            return pipelineRequest.BuildRequestMessage(message.CancellationToken);
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
@@ -156,21 +156,13 @@ namespace Azure.Core.Pipeline
                 ClientRequestId = Guid.NewGuid().ToString();
             }
 
-            public override HttpPipelineMethod Method
+            public override RequestMethod Method
             {
-                get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
+                get => RequestMethod.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
-            public override HttpPipelineRequestContent Content
-            {
-                get => _requestContent?.PipelineContent;
-                set
-                {
-                    EnsureContentInitialized();
-                    _requestContent.PipelineContent = value;
-                }
-            }
+            public override HttpPipelineRequestContent Content { get; set; }
 
             public override string ClientRequestId { get; set; }
 
@@ -207,57 +199,88 @@ namespace Azure.Core.Pipeline
                     // and so the retry logic fails.
                     currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
                     CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
-
                 }
                 else
                 {
                     currentRequest = _requestMessage;
-                    _wasSent = true;
                 }
 
                 currentRequest.RequestUri = UriBuilder.Uri;
 
-                if (_requestContent?.PipelineContent != null)
+
+                if (Content != null)
                 {
-                    currentRequest.Content = new PipelineContentAdapter()
+                    PipelineContentAdapter currentContent;
+                    if (_wasSent)
                     {
-                        CancellationToken = cancellation,
-                        PipelineContent = _requestContent.PipelineContent
-                    };
-                    CopyHeaders(_requestContent.Headers, currentRequest.Content.Headers);
+                        currentContent = new PipelineContentAdapter();
+                        CopyHeaders(_requestContent.Headers, currentContent.Headers);
+                    }
+                    else
+                    {
+                        EnsureContentInitialized();
+                        currentContent = _requestContent;
+                    }
+
+                    currentContent.CancellationToken = cancellation;
+                    currentContent.PipelineContent = Content;
+                    currentRequest.Content = currentContent;
                 }
 
+                _wasSent = true;
                 return currentRequest;
             }
 
             public override void Dispose()
             {
+                Content?.Dispose();
                 _requestMessage.Dispose();
             }
 
             public override string ToString() => _requestMessage.ToString();
 
-            readonly static HttpMethod s_patch = new HttpMethod("PATCH");
-            public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
-            {
-                switch (method)
-                {
-                    case HttpPipelineMethod.Get:
-                        return HttpMethod.Get;
-                    case HttpPipelineMethod.Post:
-                        return HttpMethod.Post;
-                    case HttpPipelineMethod.Put:
-                        return HttpMethod.Put;
-                    case HttpPipelineMethod.Delete:
-                        return HttpMethod.Delete;
-                    case HttpPipelineMethod.Patch:
-                        return s_patch;
-                    case HttpPipelineMethod.Head:
-                        return HttpMethod.Head;
+            private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
 
-                    default:
-                        throw new NotImplementedException();
+            private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
+            {
+                var method = requestMethod.Method;
+                // Fast-path common values
+                if (method.Length == 3)
+                {
+                    if (string.Equals(method, "GET", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Get;
+                    }
+
+                    if (string.Equals(method, "PUT", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Put;
+                    }
                 }
+                else if (method.Length == 4)
+                {
+                    if (string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Post;
+                    }
+                    if (string.Equals(method, "HEAD", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Head;
+                    }
+                }
+                else
+                {
+                    if (string.Equals(method, "PATCH", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return s_patch;
+                    }
+                    if (string.Equals(method, "DELETE", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Delete;
+                    }
+                }
+
+                return new HttpMethod(method);
             }
 
             private void EnsureContentInitialized()
@@ -285,13 +308,6 @@ namespace Azure.Core.Pipeline
                     Debug.Assert(PipelineContent != null);
 
                     return PipelineContent.TryComputeLength(out length);
-                }
-
-
-                protected override void Dispose(bool disposing)
-                {
-                    PipelineContent?.Dispose();
-                    base.Dispose(disposing);
                 }
             }
         }
@@ -380,8 +396,8 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                await EnsureStreamAsync();
-                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken);
+                await EnsureStreamAsync().ConfigureAwait(false);
+                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -443,7 +459,7 @@ namespace Azure.Core.Pipeline
             {
                 async Task EnsureStreamAsyncImpl()
                 {
-                    _contentStream = await _contentTask;
+                    _contentStream = await _contentTask.ConfigureAwait(false);
                 }
 
                 return _contentStream == null ? EnsureStreamAsyncImpl() : Task.CompletedTask;

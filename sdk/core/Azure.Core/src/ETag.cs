@@ -17,12 +17,12 @@ namespace Azure
 
         public bool Equals(ETag other)
         {
-            return string.Equals(_value, other._value);
+            return string.Equals(_value, other._value, StringComparison.Ordinal);
         }
 
         public bool Equals(string other)
         {
-            return string.Equals(_value, other);
+            return string.Equals(_value, other, StringComparison.Ordinal);
         }
 
         public override bool Equals(object obj)

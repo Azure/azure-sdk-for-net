@@ -15,9 +15,9 @@ namespace Azure.Core.Tests
         {
             Assert.IsInstanceOf<SynchronousHttpPipelinePolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
 
-            using (Request request = transport.CreateRequest(null))
+            using (Request request = transport.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
                 var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
                 return pipeline.SendRequestAsync(request, CancellationToken.None);

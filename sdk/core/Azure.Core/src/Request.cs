@@ -12,9 +12,9 @@ namespace Azure
     {
         public virtual HttpPipelineUriBuilder UriBuilder { get; set; } = new HttpPipelineUriBuilder();
 
-        public virtual HttpPipelineMethod Method { get; set; }
+        public virtual RequestMethod Method { get; set; }
 
-        public virtual void SetRequestLine(HttpPipelineMethod method, Uri uri)
+        public virtual void SetRequestLine(RequestMethod method, Uri uri)
         {
             Method = method;
             UriBuilder.Uri = uri;

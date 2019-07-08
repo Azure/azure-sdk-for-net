@@ -25,13 +25,16 @@ namespace Azure.Core.Testing
     {
         private readonly HttpPipelineTransport _innerTransport;
 
+        private readonly Func<RecordEntry, bool> _filter;
+
         private readonly Random _random;
 
         private readonly RecordSession _session;
 
-        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport, Random random)
+        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport, Func<RecordEntry, bool> filter, Random random)
         {
             _innerTransport = innerTransport;
+            _filter = filter;
             _random = random;
             _session = session;
         }
@@ -39,18 +42,27 @@ namespace Azure.Core.Testing
         public override void Process(HttpPipelineMessage message)
         {
             _innerTransport.Process(message);
-            _session.Record(CreateEntry(message.Request, message.Response));
+            Record(message);
         }
 
         public override async Task ProcessAsync(HttpPipelineMessage message)
         {
             await _innerTransport.ProcessAsync(message);
-            _session.Record(CreateEntry(message.Request, message.Response));
+            Record(message);
         }
 
-        public override Request CreateRequest(IServiceProvider services)
+        private void Record(HttpPipelineMessage message)
         {
-            Request request = _innerTransport.CreateRequest(services);
+            RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
+            if (_filter(recordEntry))
+            {
+                _session.Record(recordEntry);
+            }
+        }
+
+        public override Request CreateRequest()
+        {
+            Request request = _innerTransport.CreateRequest();
 
             lock (_random)
             {
@@ -93,13 +105,16 @@ namespace Azure.Core.Testing
 
         private byte[] ReadToEnd(Response response)
         {
-            if (response.ContentStream == null)
+            Stream responseContentStream = response.ContentStream;
+            if (responseContentStream == null)
             {
                 return null;
             }
 
             var memoryStream = new NonSeekableMemoryStream();
-            response.ContentStream.CopyTo(memoryStream);
+            responseContentStream.CopyTo(memoryStream);
+            responseContentStream.Dispose();
+
             memoryStream.Reset();
             response.ContentStream = memoryStream;
             return memoryStream.ToArray();

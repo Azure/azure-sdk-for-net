@@ -17,7 +17,6 @@
     5. Fix some spelling mistakes in the API documentation.
     ]]>
     </PackageReleaseNotes>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   
   <PropertyGroup>

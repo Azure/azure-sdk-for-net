@@ -30,7 +30,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             return InstrumentClient(
                 new ConfigurationClient(
                     Recording.GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
-                    InstrumentClientOptions(new ConfigurationClientOptions())));
+                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
         }
 
         private ConfigurationSetting CreateSetting()
@@ -262,7 +262,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(testSetting);
-                response.Raw.Headers.TryGetValue("x-ms-client-request-id", out string requestId);
+                response.GetRawResponse().Headers.TryGetValue("x-ms-client-request-id", out string requestId);
                 Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }
@@ -822,16 +822,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
     public static class ConfigurationSettingExtensions
     {
-        public static async Task<IEnumerable<T>> ToEnumerableAsync<T>(this IAsyncEnumerable<T> asyncEnumerable)
-        {
-            List<T> list = new List<T>();
-            await foreach (T item in asyncEnumerable)
-            {
-                list.Add(item);
-            }
-            return list;
-        }
-
         public static ConfigurationSetting Clone(this ConfigurationSetting setting)
         {
             Dictionary<string, string> tags = new Dictionary<string, string>();

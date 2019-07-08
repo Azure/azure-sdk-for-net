@@ -5,14 +5,15 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class LoggingPolicy : HttpPipelinePolicy
+    internal class LoggingPolicy : HttpPipelinePolicy
     {
-        private static readonly long s_delayWarningThreshold = 3000; // 3000ms
+        private const long DelayWarningThreshold = 3000; // 3000ms
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
@@ -21,7 +22,7 @@ namespace Azure.Core.Pipeline.Policies
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, pipeline, true);
+            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
         private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -52,22 +53,22 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.Cancellation);
+                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.Cancellation);
+                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.CancellationToken);
                     }
                 }
                 else
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                        await s_eventSource.RequestContentAsync(message.Request, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        s_eventSource.RequestContent(message.Request, message.Cancellation);
+                        s_eventSource.RequestContent(message.Request, message.CancellationToken);
                     }
                 }
             }
@@ -106,18 +107,18 @@ namespace Azure.Core.Pipeline.Policies
                     {
                         if (async)
                         {
-                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding, message.Cancellation);
+                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding);
                         }
                     }
                     else
                     {
                         if (async)
                         {
-                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
@@ -133,16 +134,30 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (textResponse)
                 {
-                    await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding);
+                    }
                 }
                 else
                 {
-                    await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await s_eventSource.ResponseContentAsync(message.Response, message.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        s_eventSource.ResponseContent(message.Response);
+                    }
                 }
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > s_delayWarningThreshold)
+            if (elapsedMilliseconds > DelayWarningThreshold)
             {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
@@ -186,9 +201,17 @@ namespace Azure.Core.Pipeline.Policies
             public override int Read(byte[] buffer, int offset, int count)
             {
                 var result = _originalStream.Read(buffer, offset, count);
-                if (result == 0)
+
+                LogBuffer(buffer, offset, result);
+
+                return result;
+            }
+
+            private void LogBuffer(byte[] buffer, int offset, int count)
+            {
+                if (count == 0)
                 {
-                    return result;
+                    return;
                 }
 
                 if (_textEncoding != null)
@@ -211,6 +234,13 @@ namespace Azure.Core.Pipeline.Policies
                 }
 
                 _blockNumber++;
+            }
+
+            public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+
+                LogBuffer(buffer, offset, result);
 
                 return result;
             }
@@ -222,6 +252,18 @@ namespace Azure.Core.Pipeline.Policies
             {
                 get => _originalStream.Position;
                 set => _originalStream.Position = value;
+            }
+
+            public override void Close()
+            {
+                _originalStream.Close();
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+
+                _originalStream.Dispose();
             }
         }
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,9 +24,9 @@ namespace Azure.ApplicationModel.Configuration
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, async: true);
+            await ProcessAsync(message, async: true).ConfigureAwait(false);
 
-            await ProcessNextAsync(message, pipeline);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
         }
 
         private async Task ProcessAsync(HttpPipelineMessage message, bool async)
@@ -41,11 +42,11 @@ namespace Azure.ApplicationModel.Configuration
                     {
                         if (async)
                         {
-                            await message.Request.Content.WriteToAsync(contentHashStream, message.Cancellation);
+                            await message.Request.Content.WriteToAsync(contentHashStream, message.CancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                            message.Request.Content.WriteTo(contentHashStream, message.CancellationToken);
                         }
                     }
                 }
@@ -59,9 +60,9 @@ namespace Azure.ApplicationModel.Configuration
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
-                string method = HttpPipelineMethodConverter.ToString(message.Request.Method);
+                string method = message.Request.Method.Method;
                 DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-                var utcNowString = utcNow.ToString("r");
+                var utcNowString = utcNow.ToString("r", CultureInfo.InvariantCulture);
                 var stringToSign = $"{method}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names

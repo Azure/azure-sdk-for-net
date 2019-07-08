@@ -3,16 +3,21 @@
 // license information.
 
 using System;
-using Azure.Storage.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Azure.Storage.Sas;
+using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     //TODO consider added SASQueryParametersTest for File and Queue
-    [TestClass]
-    public class SasQueryParametersTests
+    public class SasQueryParametersTests : BlobTestBase
     {
-        [TestMethod]
+        public SasQueryParametersTests(bool async)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        [Test]
         public void SasQueryParameters_RoundTrip()
         {
             var version = "2018-03-28";

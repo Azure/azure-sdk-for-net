@@ -26,80 +26,45 @@ namespace Azure.Storage.Test.Shared
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-
-            // Copy to a MemoryStream first because RetriableStreamImpl
-            // doesn't support Position
-            var intermediate = new MemoryStream();
-            await message.Response.ContentStream.CopyToAsync(intermediate);
-            intermediate.Seek(0, SeekOrigin.Begin);
-
-            // Use a faulty stream for the Response Content
-            message.Response.ContentStream = new FaultyStream(
-                intermediate,
-                this._raiseExceptionAt,
-                1,
-                this._exceptionToRaise);
+            await this.InjectFaultAsync(message, pipeline, isAsync: true).ConfigureAwait(false);
         }
-
+        
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-
-            // Copy to a MemoryStream first because RetriableStreamImpl
-            // doesn't support Position
-            var intermediate = new MemoryStream();
-            message.Response.ContentStream.CopyTo(intermediate);
-            intermediate.Seek(0, SeekOrigin.Begin);
-
-            // Use a faulty stream for the Response Content
-            message.Response.ContentStream = new FaultyStream(
-                intermediate,
-                this._raiseExceptionAt,
-                1,
-                this._exceptionToRaise);
+            this.InjectFaultAsync(message, pipeline, isAsync: false).EnsureCompleted();
         }
-    }
 
-    /*
-    sealed class FaultyUploadHttpClientFactory : IPipelinePolicyFactory
-    {
-        static readonly HttpClient s_client = new HttpClient() { };
-
-        static readonly int retriesBeforeSuccess = 3;
-        static int currentCount = 0;
-
-        readonly Exception exceptionToRaise;
-
-        public FaultyUploadHttpClientFactory(Exception exceptionToRaise) => this.exceptionToRaise = exceptionToRaise;
-
-        IPipelinePolicy IPipelinePolicyFactory.Create(IPipelinePolicy nextPolicy, PipelinePolicyOptions options) => new FaultyUploadHttpClientPolicy(this.exceptionToRaise, options); // next & options are ignored
-
-        sealed class FaultyUploadHttpClientPolicy : IPipelinePolicy
+        private async Task InjectFaultAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
         {
-            readonly PipelinePolicyOptions options;
-            readonly Exception exceptionToRaise;
-
-            public FaultyUploadHttpClientPolicy(Exception exceptionToRaise, PipelinePolicyOptions options)
+            if (message.Response != null)
             {
-                this.exceptionToRaise = exceptionToRaise;
-                this.options = options;
-            }
+                // Copy to a MemoryStream first because RetriableStreamImpl
+                // doesn't support Position
+                var intermediate = new MemoryStream();
+                if (message.Response.ContentStream != null)
+                {
+                    if (isAsync)
+                    {
+                        await message.Response.ContentStream.CopyToAsync(intermediate).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        message.Response.ContentStream.CopyTo(intermediate);
+                    }
+                    
+                    intermediate.Seek(0, SeekOrigin.Begin);
+                }
 
-            async Task<HttpResponseMessage> IPipelinePolicy.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                if ((++currentCount % retriesBeforeSuccess) == 0)
-                {
-                    return await s_client.SendAsync(request, cancellationToken);
-                }
-                else
-                {
-                    this.options.Logger.LogTrace($"Simulating fault");
-                    throw this.exceptionToRaise;
-                }
+                // Use a faulty stream for the Response Content
+                message.Response.ContentStream = new FaultyStream(
+                    intermediate,
+                    this._raiseExceptionAt,
+                    1,
+                    this._exceptionToRaise);
             }
         }
     }
-    */
 
     class FaultyHttpContent : HttpContent
     {

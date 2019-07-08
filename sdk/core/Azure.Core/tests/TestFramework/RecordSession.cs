@@ -66,10 +66,10 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                var index = matcher.FindMatch(request, Entries);
+                var index = matcher.FindMatch(request, Entries, out var failureMessage);
                 if (index == -1)
                 {
-                    throw new InvalidOperationException($"Unable to find recorded request with method {request.Method} and uri {request.UriBuilder.ToString()}");
+                    throw new InvalidOperationException(failureMessage);
                 }
 
                 var entry = Entries[index];

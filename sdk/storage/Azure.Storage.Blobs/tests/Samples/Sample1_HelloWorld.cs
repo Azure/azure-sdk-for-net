@@ -11,7 +11,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -19,25 +19,34 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Azure.Storage.Samples
 {
-    [TestClass]
+    [TestFixture]
     public partial class BlobSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ContainerSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
                 await blobContainerClient.CreateAsync();
 
-                // List Containers
-                Response<ContainersSegment> listResponse = await blobServiceClient.ListContainersSegmentAsync();
+                // List All Containers
+                await foreach (var container in blobServiceClient.GetContainersAsync())
+                {
+                    Assert.IsNotNull(container.Value.Name);
+                }
+
+                // List Containers By Page
+                await foreach (var page in blobServiceClient.GetContainersAsync().ByPage())
+                {
+                    Assert.NotZero(page.Values.Length);
+                }
             }
             finally
             {
@@ -46,15 +55,15 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task BlockBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer2");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer2-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
@@ -86,15 +95,15 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task PageBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer3");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer3-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
@@ -104,14 +113,24 @@ namespace Azure.Storage.Samples
                 PageBlobClient pageBlobClient = blobContainerClient.GetPageBlobClient("pageblob");
 
                 // Create PageBlob in the Service
-                await pageBlobClient.CreateAsync(size: 1024);
+                const int blobSize = 1024;
+                await pageBlobClient.CreateAsync(size: blobSize);
 
                 // Upload content to PageBlob
                 using (FileStream fileStream = File.OpenRead("Samples/SampleSource.txt"))
                 {
-                    await pageBlobClient.UploadPagesAsync(
-                        content: fileStream,
-                        offset: 0);
+                    // Because the file size varies slightly across platforms
+                    // and PageBlob pages need to be multiples of 512, we'll
+                    // pad the file to our blobSize
+                    using (MemoryStream pageStream = new MemoryStream(new byte[blobSize]))
+                    {
+                        await fileStream.CopyToAsync(pageStream);
+                        pageStream.Seek(0, SeekOrigin.Begin);
+
+                        await pageBlobClient.UploadPagesAsync(
+                            content: pageStream,
+                            offset: 0);
+                    }
                 }
 
                 // Download PageBlob
@@ -131,24 +150,24 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task AppendBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
             BlobServiceClient blobServiceClient = new BlobServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate a new BlobContainerClient
-            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient("mycontainer4");
+            BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient($"mycontainer4-{Guid.NewGuid()}");
             try
             {
                 // Create new Container in the Service
                 await blobContainerClient.CreateAsync();
 
-                // Instantiate a new PageBlobClient
+                // Instantiate a new AppendBlobClient
                 AppendBlobClient appendBlobClient = blobContainerClient.GetAppendBlobClient("appendblob");
 
-                // Create PageBlob in the Service
+                // Create AppendBlob in the Service
                 await appendBlobClient.CreateAsync();
 
                 // Append content to AppendBlob
@@ -157,14 +176,14 @@ namespace Azure.Storage.Samples
                     await appendBlobClient.AppendBlockAsync(fileStream);
                 }
 
-                // Download PageBlob
+                // Download AppendBlob
                 using (FileStream fileStream = File.Create("AppendDestination.txt"))
                 {
                     Response<BlobDownloadInfo> downloadResponse = await appendBlobClient.DownloadAsync();
                     await downloadResponse.Value.Content.CopyToAsync(fileStream);
                 }
 
-                // Delete PageBlob in the Service
+                // Delete AppendBlob in the Service
                 await appendBlobClient.DeleteAsync();
             }
             finally

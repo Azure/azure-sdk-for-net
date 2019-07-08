@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Core.Testing
@@ -19,55 +18,58 @@ namespace Azure.Core.Testing
 
         protected TestRecording Recording { get; private set; }
 
-        protected RecordedTestBase(bool isAsync) : base(isAsync)
+        protected RecordedTestMode Mode { get; }
+
+        protected RecordedTestBase(bool isAsync) : this(isAsync, GetModeFromEnvironment())
+        {
+        }
+
+        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);
+            Mode = mode;
         }
 
-        protected virtual RecordedTestMode Mode
+        internal static RecordedTestMode GetModeFromEnvironment()
         {
-            get
+            string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
+
+            RecordedTestMode mode = RecordedTestMode.Playback;
+            if (!string.IsNullOrEmpty(modeString))
             {
-                string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
-
-                RecordedTestMode mode = RecordedTestMode.Playback;
-                if (!string.IsNullOrEmpty(modeString))
-                {
-                    mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
-                }
-
-                return mode;
+                mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
             }
+
+            return mode;
         }
 
-        protected virtual string SessionFilePath
+        private string GetSessionFilePath(string name = null)
         {
-            get
-            {
-                TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
-                var className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
-                return Path.Combine(TestContext.CurrentContext.TestDirectory , "SessionRecords", className, testAdapter.Name + (IsAsync ? "Async": string.Empty) + ".json");
-            }
+            TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
+
+            name ??= testAdapter.Name;
+
+            string className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
+        }
+
+        public TestRecording StartRecording(string name)
+        {
+            return new TestRecording(Mode, GetSessionFilePath(name), Sanitizer, Matcher);
         }
 
         [SetUp]
         public virtual void StartTestRecording()
         {
-            Recording = new TestRecording(Mode, SessionFilePath, Sanitizer, Matcher);
-            Recording.Start();
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
-            Recording.Stop();
-        }
-
-        public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
-        {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
-            return clientOptions;
+            Recording?.Dispose(TestContext.CurrentContext.Result.FailCount == 0);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.Storage.Test
     using System.Linq;
     using System.Xml.Linq;
     using Azure.Storage.Common;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     public class TestConfigurations
     {
@@ -154,7 +154,7 @@ namespace Azure.Storage.Test
                                     !String.IsNullOrWhiteSpace((string)tenantConfigurationElement.Element("ConnectionString"))
                                     ? (string)tenantConfigurationElement.Element("ConnectionString")
                                     : new StorageConnectionString(
-                                        storageCredentials: new SharedKeyCredentials(
+                                        storageCredentials: new StorageSharedKeyCredential(
                                             accountName: (string)tenantConfigurationElement.Element("AccountName"),
                                             accountKey: (string)tenantConfigurationElement.Element("AccountKey")
                                             ),

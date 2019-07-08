@@ -8,26 +8,47 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
     public static class RetriableStream
     {
-        public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
+        public static Stream Create(
+            Func<long, Response> responseFactory,
+            Func<long, Task<Response>> asyncResponseFactory,
+            ResponseClassifier responseClassifier,
+            int maxRetries)
         {
-            return Create(await responseFactory(0).ConfigureAwait(false), responseFactory, responseClassifier, maxRetries);
+            return Create(responseFactory(0), responseFactory, asyncResponseFactory, responseClassifier, maxRetries);
         }
 
-        public static Stream Create(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
+        public static async Task<Stream> CreateAsync(
+            Func<long, Response> responseFactory,
+            Func<long, Task<Response>> asyncResponseFactory,
+            ResponseClassifier responseClassifier,
+            int maxRetries)
         {
-            return new RetriableStreamImpl(initialResponse, responseFactory, responseClassifier, maxRetries);
+            return Create(await asyncResponseFactory(0).ConfigureAwait(false), responseFactory, asyncResponseFactory, responseClassifier, maxRetries);
+        }
+
+        public static Stream Create(
+            Response initialResponse,
+            Func<long, Response> responseFactory,
+            Func<long, Task<Response>> asyncResponseFactory,
+            ResponseClassifier responseClassifier,
+            int maxRetries)
+        {
+            return new RetriableStreamImpl(initialResponse, responseFactory, asyncResponseFactory, responseClassifier, maxRetries);
         }
 
         private class RetriableStreamImpl : ReadOnlyStream
         {
             private readonly ResponseClassifier _responseClassifier;
 
-            private readonly Func<long, Task<Response>> _responseFactory;
+            private readonly Func<long, Response> _responseFactory;
+
+            private readonly Func<long, Task<Response>> _asyncResponseFactory;
 
             private readonly int _maxRetries;
 
@@ -41,12 +62,13 @@ namespace Azure.Core
 
             private List<Exception> _exceptions;
 
-            public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
+            public RetriableStreamImpl(Response initialResponse,  Func<long, Response> responseFactory, Func<long, Task<Response>> asyncResponseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
                 _initialStream = initialResponse.ContentStream;
                 _currentStream = initialResponse.ContentStream;
-                _responseClassifier = responseClassifier;
                 _responseFactory = responseFactory;
+                _responseClassifier = responseClassifier;
+                _asyncResponseFactory = asyncResponseFactory;
                 _maxRetries = maxRetries;
             }
 
@@ -67,12 +89,12 @@ namespace Azure.Core
                     }
                     catch (Exception e)
                     {
-                        await RetryAsync(e);
+                        await RetryAsync(e, true).ConfigureAwait(false);
                     }
                 }
             }
 
-            private async Task RetryAsync(Exception exception)
+            private async Task RetryAsync(Exception exception, bool async)
             {
                 if (!_responseClassifier.IsRetriableException(exception))
                 {
@@ -93,7 +115,7 @@ namespace Azure.Core
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
 
-                _currentStream = (await _responseFactory(_position)).ContentStream;
+                _currentStream = async ? (await _asyncResponseFactory(_position).ConfigureAwait(false)).ContentStream : _responseFactory(_position).ContentStream;
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -109,7 +131,7 @@ namespace Azure.Core
                     }
                     catch (Exception e)
                     {
-                        RetryAsync(e).GetAwaiter().GetResult();
+                        RetryAsync(e, false).EnsureCompleted();
                     }
                 }
             }

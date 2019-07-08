@@ -10,17 +10,26 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    internal class RetryPolicy : HttpPipelinePolicy
     {
+        private readonly RetryMode _mode;
+        private readonly TimeSpan _delay;
+        private readonly TimeSpan _maxDelay;
+        private readonly int _maxRetries;
+
+        private readonly Random _random = new ThreadSafeRandom();
+
+        public RetryPolicy(RetryMode mode, TimeSpan delay, TimeSpan maxDelay, int maxRetries)
+        {
+            _mode = mode;
+            _delay = delay;
+            _maxDelay = maxDelay;
+            _maxRetries = maxRetries;
+        }
+
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
-
-        /// <summary>
-        /// Gets or sets the maximum number of retry attempts before giving up.
-        /// </summary>
-        public int MaxRetries { get; set; } = 10;
-
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -67,13 +76,13 @@ namespace Azure.Core.Pipeline.Policies
 
                 attempt++;
 
-                var shouldRetry = attempt <= MaxRetries;
+                var shouldRetry = attempt <= _maxRetries;
 
                 if (lastException != null)
                 {
                     if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
                     {
-                        GetDelay(message, lastException, attempt, out delay);
+                        GetDelay(attempt, out delay);
                     }
                     else
                     {
@@ -106,11 +115,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await WaitAsync(delay, message.Cancellation);
+                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        Wait(delay, message.Cancellation);
+                        Wait(delay, message.CancellationToken);
                     }
                 }
 
@@ -154,8 +163,38 @@ namespace Azure.Core.Pipeline.Policies
             return TimeSpan.Zero;
         }
 
-        protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+        private void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        {
+            delay = TimeSpan.Zero;
 
-        protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
+            switch (_mode)
+            {
+                case RetryMode.Fixed:
+                    delay = _delay;
+                    break;
+                case RetryMode.Exponential:
+                    delay = CalculateExponentialDelay(attempted);
+                    break;
+            }
+
+            TimeSpan serverDelay = GetServerDelay(message);
+            if (serverDelay > delay)
+            {
+                delay = serverDelay;
+            }
+        }
+
+        private void GetDelay(int attempted, out TimeSpan delay)
+        {
+            delay = CalculateExponentialDelay(attempted);
+        }
+
+        private TimeSpan CalculateExponentialDelay(int attempted)
+        {
+            return TimeSpan.FromMilliseconds(
+                Math.Min(
+                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                    _maxDelay.TotalMilliseconds));
+        }
     }
 }

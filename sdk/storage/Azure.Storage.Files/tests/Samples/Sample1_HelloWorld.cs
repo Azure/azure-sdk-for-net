@@ -5,10 +5,11 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Storage.Files;
 using Azure.Storage.Files.Models;
 using Azure.Storage.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 #pragma warning disable CA2007
 #pragma warning disable IDE0007
@@ -17,25 +18,28 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Azure.Storage.Samples
 {
 
-    [TestClass]
+    [TestFixture]
     public partial class FileSamples
     {
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task ShareSample()
         {
             // Instantiate a new FileServiceClient using a connection string.
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service
                 await shareClient.CreateAsync();
 
                 // List Shares
-                Response<SharesSegment> listResponse = await fileServiceClient.ListSharesSegmentAsync();
+                await foreach (var share in fileServiceClient.GetSharesAsync())
+                {
+                    Console.WriteLine(share.Value.Name);
+                }
             }
             finally
             { 
@@ -44,15 +48,15 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task DirectorySample()
         {
             // Instantiate a new FileServiceClient using a connection string.
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare2");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare2-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service
@@ -65,13 +69,17 @@ namespace Azure.Storage.Samples
                 await directoryClient.CreateAsync();
 
                 // Instantiate new DirectoryClient
-                DirectoryClient subDirectoryClient = directoryClient.GetDirectoryClient("mysubdirectory");
+                DirectoryClient subDirectoryClient = directoryClient.GetSubdirectoryClient("mysubdirectory");
 
                 // Create sub directory
                 await subDirectoryClient.CreateAsync();
 
                 // List Files and Directories
-                Response<FilesAndDirectoriesSegment> listResponse = await directoryClient.ListFilesAndDirectoriesSegmentAsync();
+                await foreach (StorageFileItem item in directoryClient.GetFilesAndDirectoriesAsync())
+                {
+                    var type = item.IsDirectory ? "dir" : "file";
+                    Console.WriteLine($"{type}: {item.Name}");
+                }
 
                 // Delete sub directory in the Service
                 await subDirectoryClient.DeleteAsync();
@@ -86,15 +94,15 @@ namespace Azure.Storage.Samples
             }
         }
 
-        [TestMethod]
-        [TestCategory("Live")]
+        [Test]
+        [Category("Live")]
         public async Task FileSample()
         {
             // Instantiate a new FileServiceClient using a connection string.
             FileServiceClient fileServiceClient = new FileServiceClient(TestConfigurations.DefaultTargetTenant.ConnectionString);
 
             // Instantiate new ShareClient
-            ShareClient shareClient = fileServiceClient.GetShareClient("myshare3");
+            ShareClient shareClient = fileServiceClient.GetShareClient($"myshare3-{Guid.NewGuid()}");
             try
             {
                 // Create Share in the Service
@@ -109,15 +117,15 @@ namespace Azure.Storage.Samples
                 // Instantiate new FileClient
                 FileClient fileClient = directoryClient.GetFileClient("myfile");
 
-                // Create File in the Service
-                await fileClient.CreateAsync(maxSize: 1024);
-
                 // Upload data to File
                 using (FileStream fileStream = File.OpenRead("Samples/SampleSource.txt"))
                 {
+                    // Create File in the Service
+                    await fileClient.CreateAsync(maxSize: fileStream.Length);
+
                     await fileClient.UploadRangeAsync(
                         writeType: FileRangeWriteType.Update,
-                        range: new HttpRange(0, 1024),
+                        range: new HttpRange(0, fileStream.Length),
                         content: fileStream);
                 }
 

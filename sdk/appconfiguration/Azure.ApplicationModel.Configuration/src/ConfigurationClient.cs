@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -51,13 +52,9 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            _pipeline = HttpPipeline.Build(options,
-                    options.ResponseClassifier,
-                    options.RetryPolicy,
-                    ClientRequestIdPolicy.Singleton,
-                    new AuthenticationPolicy(credential, secret),
-                    options.LoggingPolicy,
-                    BufferResponsePolicy.Singleton);
+            _pipeline = HttpPipelineBuilder.Build(options,
+                    bufferResponse: true,
+                    new AuthenticationPolicy(credential, secret));
         }
 
         /// <summary>
@@ -70,7 +67,7 @@ namespace Azure.ApplicationModel.Configuration
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken);
+            return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -101,9 +98,9 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 201:
-                        return await CreateResponseAsync(response, cancellationToken);
+                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -123,7 +120,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 201:
-                        return CreateResponse(response, cancellationToken);
+                        return CreateResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -141,7 +138,7 @@ namespace Azure.ApplicationModel.Configuration
 
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
 
             BuildUriForKvRoute(request.UriBuilder, setting);
 
@@ -163,7 +160,7 @@ namespace Azure.ApplicationModel.Configuration
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label), cancellationToken);
+            return await SetAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -193,11 +190,11 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken);
+                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 409:
-                        throw await response.CreateRequestFailedExceptionAsync("The setting is locked");
+                        throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -216,7 +213,7 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response, cancellationToken);
+                        return CreateResponse(response);
                     case 409:
                         throw response.CreateRequestFailedException("The setting is locked");
                     default:
@@ -235,7 +232,7 @@ namespace Azure.ApplicationModel.Configuration
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.UriBuilder, setting);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -260,7 +257,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken);
+            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
 
@@ -292,9 +289,9 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken);
+                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -313,7 +310,7 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response, cancellationToken);
+                        return CreateResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -330,7 +327,7 @@ namespace Azure.ApplicationModel.Configuration
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.UriBuilder, setting);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -406,7 +403,7 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException(nameof(key));
 
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Delete;
+            request.Method = RequestMethod.Delete;
             BuildUriForKvRoute(request.UriBuilder, key, label);
 
             if (etag != default)
@@ -433,9 +430,9 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellationToken);
+                        return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -456,7 +453,7 @@ namespace Azure.ApplicationModel.Configuration
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response, cancellationToken);
+                        return CreateResponse(response);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -489,13 +486,13 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException($"{nameof(key)}");
 
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForKvRoute(request.UriBuilder, key, label);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
 
             if (acceptDateTime != default)
             {
-                var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
+                var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
@@ -518,10 +515,10 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken);
+                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -541,7 +538,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken);
+                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
                     default:
                         throw response.CreateRequestFailedException();
@@ -552,12 +549,12 @@ namespace Azure.ApplicationModel.Configuration
         private Request CreateBatchRequest(SettingSelector selector, string pageLink)
         {
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
@@ -579,10 +576,10 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken);
+                        SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -602,7 +599,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     case 200:
                     case 206:
-                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken);
+                        SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return new PageResponse<ConfigurationSetting>(settingBatch.Settings, response, settingBatch.NextBatchLink);
                     default:
                         throw response.CreateRequestFailedException();
@@ -613,12 +610,12 @@ namespace Azure.ApplicationModel.Configuration
         private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
         {
             var request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForRevisions(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                var dateTime = selector.AsOf.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture);
                 request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
 
