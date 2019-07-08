@@ -1,7 +1,7 @@
 ﻿<Project ToolsVersion="15.0">
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\*.cs" Link="TestFramework\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(MSBuildThisFileDirectory)\..\src\shared\ContentTypeUtilities.cs" Link="TestFramework\ContentTypeUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\ContentTypeUtilities.cs" Link="TestFramework\ContentTypeUtilities.cs" />
     <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
