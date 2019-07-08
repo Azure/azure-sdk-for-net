@@ -494,7 +494,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedConsumerGroup = EventHubConsumer.DefaultConsumerGroupName;
             var expectedPartition = "56767";
-            var expectedPosition = EventPosition.FromEnqueuedTime(DateTime.Parse("2015-10-27T12:00:00Z"));
+            var expectedPosition = EventPosition.FromEnqueuedTime(DateTimeOffset.Parse("2015-10-27T12:00:00Z"));
             var connectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]";
             var mockClient = new ReadableOptionsMock(connectionString, clientOptions);
 
