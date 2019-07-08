@@ -2,15 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.Search.Common;
+
 namespace Microsoft.Azure.Search.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Common;
-
     public partial class SuggestParameters
     {
-        internal SuggestParameters EnsureSelect()
+        /// <summary>
+        /// Returns this instance if it has a non-null <c cref="SuggestParameters.Select">Select</c> property,
+        /// or a new instance with Select set to "*" otherwise.
+        /// </summary>
+        /// <returns>A <c cref="SuggestParameters">SuggestParameters</c> instance that has a
+        /// non-null <c cref="SuggestParameters.Select">Select</c> property</returns>
+        public SuggestParameters EnsureSelect()
         {
             IList<string> newSelect = EnsureSelect(Select);
 
@@ -40,6 +46,7 @@ namespace Microsoft.Azure.Search.Models
                 Top = Top
             };
 
-        private static IList<string> EnsureSelect(IList<string> select) => (select != null && select.Any()) ? select : new[] { "*" };
+        private static IList<string> EnsureSelect(IList<string> select) =>
+            (select != null && select.Any()) ? select : new[] { "*" };
     }
 }

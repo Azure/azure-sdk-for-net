@@ -300,14 +300,10 @@ namespace Azure.Core.Tests
             return (policy, policy.DelayGate);
         }
 
-        protected class RetryPolicyMock: RetryPolicy
+        internal class RetryPolicyMock: RetryPolicy
         {
-            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+            public RetryPolicyMock(RetryMode mode, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default): base(mode, delay, maxDelay, maxRetries)
             {
-                MaxRetries = maxRetries;
-                Delay = delay;
-                MaxDelay = maxDelay;
-                Mode = mode;
             }
 
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();

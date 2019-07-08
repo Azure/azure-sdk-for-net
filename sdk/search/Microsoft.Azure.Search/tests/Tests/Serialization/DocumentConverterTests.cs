@@ -3,8 +3,9 @@
 // license information.
 
 using System;
+using System.Linq;
 using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Serialization;
+using Microsoft.Azure.Search.Serialization.Internal;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
@@ -22,16 +23,7 @@ namespace Microsoft.Azure.Search.Tests
         private static readonly JsonSerializerSettings Settings =
             new JsonSerializerSettings()
             {
-                Converters =
-                    new JsonConverter[]
-                    {
-                        new DocumentConverter(),
-                        new GeographyPointConverter(),
-                        new DateTimeConverter(),
-                        // DoubleConverter shouldn't make a difference since it only kicks in when deserializing NaN/INF/-INF, and that case
-                        // is currently not covered by DocumentConverter. However, including it for completeness anyway.
-                        new DoubleConverter()
-                    },
+                Converters = CustomJsonConverters.CreateAllConverters().ToList(),
                 DateParseHandling = DateParseHandling.DateTimeOffset,
                 NullValueHandling = NullValueHandling.Include
             };

@@ -20,11 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         ///   to pass.
         /// </remarks>
         ///
-        #if WINDOWS
         [Fact]
-        #else
-        [Fact(Skip ="This test is only relevant on Windows due to non-deterministic behavior of a third-party library. The ApiGenerator output differs by platform.  The generated code is semantically equivilent, but line ordering is inconsistent.  Skipping for this platform.")]
-        #endif
         public void ApproveAzureServiceBus()
         {
             var assembly = typeof(Message).Assembly;

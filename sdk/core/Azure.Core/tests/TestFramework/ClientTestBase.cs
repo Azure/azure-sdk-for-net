@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -32,6 +33,8 @@ namespace Azure.Core.Testing
 
         public virtual TClient InstrumentClient<TClient>(TClient client) where TClient: class
         {
+            Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
+
             if (ClientValidation<TClient>.Validated == false)
             {
                 foreach (var methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))

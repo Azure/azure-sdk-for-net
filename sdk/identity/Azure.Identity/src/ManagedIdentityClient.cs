@@ -276,7 +276,7 @@ namespace Azure.Identity
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -308,7 +308,7 @@ namespace Azure.Identity
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -340,7 +340,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("Metadata", "true");
 
@@ -365,7 +365,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
@@ -390,7 +390,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 

@@ -77,7 +77,9 @@ export interface IServiceInfo {
     description: string|null,
     namespace: string,
     extensionsName: string,
+    modelFactoryName: string,
     public: boolean,
+    sync: boolean,
     consumes: string[],
     produces: string[],
     license: {

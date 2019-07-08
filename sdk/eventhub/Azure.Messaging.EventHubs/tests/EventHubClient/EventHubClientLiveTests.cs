@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Authorization;
@@ -249,7 +250,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         await client.CloseAsync();
                     }
 
-                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<OperationCanceledException>());
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+
+                    Assert.That(async () => await client.GetPartitionIdsAsync(), Throws.TypeOf<ObjectDisposedException>());
                     Assert.That(async () => await client.GetPropertiesAsync(), Throws.TypeOf<ObjectDisposedException>());
                     Assert.That(async () => await client.GetPartitionPropertiesAsync(partition), Throws.TypeOf<ObjectDisposedException>());
                 }
@@ -275,6 +278,35 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var client = new EventHubClient(connectionString))
                 {
                     Assert.That(async () => await client.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubClient" /> is able to
+        ///   connect to the Event Hubs service.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClientCannotRetrieveMetadataWhenProxyIsInvalid()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var clientOptions = new EventHubClientOptions
+                {
+                    Proxy = new WebProxy("http://1.2.3.4:9999"),
+                    TransportType = TransportType.AmqpWebSockets
+                };
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var invalidProxyClient = new EventHubClient(connectionString, clientOptions))
+                {
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    Assert.That(async () => await invalidProxyClient.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPropertiesAsync(), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyClient.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>());
                 }
             }
         }
