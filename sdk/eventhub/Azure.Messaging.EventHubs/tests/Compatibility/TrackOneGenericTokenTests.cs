@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new TrackOneGenericToken(null, "fakeToken", "fakeResource", DateTime.Parse("2015-10-27T12:00:00Z")), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneGenericToken(null, "fakeToken", "fakeResource", DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheJwtToken(string token)
         {
-            Assert.That(() => new TrackOneGenericToken(Mock.Of<TokenCredential>(), token, "fakeResource", DateTime.Parse("2015-10-27T12:00:00Z")), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneGenericToken(Mock.Of<TokenCredential>(), token, "fakeResource", DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheResource(string resource)
         {
-            Assert.That(() => new TrackOneGenericToken(Mock.Of<TokenCredential>(), "fakeToken", resource, DateTime.Parse("2015-10-27T12:00:00Z")), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new TrackOneGenericToken(Mock.Of<TokenCredential>(), "fakeToken", resource, DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTime.Parse("2015-10-27T12:00:00Z");
+            var expiration = DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime();
             var resource = "the-audience";
             var jwtToken = "TOkEn!";
             var credential = Mock.Of<TokenCredential>();

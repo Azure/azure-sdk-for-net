@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                 Credential,
                 accessToken.Token,
                 resource,
-                accessToken.ExpiresOn.DateTime
+                accessToken.ExpiresOn.UtcDateTime
             );
         }
     }
