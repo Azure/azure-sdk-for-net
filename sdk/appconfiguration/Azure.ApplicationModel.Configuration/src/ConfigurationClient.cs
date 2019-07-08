@@ -138,7 +138,7 @@ namespace Azure.ApplicationModel.Configuration
 
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
 
             BuildUriForKvRoute(request.UriBuilder, setting);
 
@@ -232,7 +232,7 @@ namespace Azure.ApplicationModel.Configuration
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.UriBuilder, setting);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -327,7 +327,7 @@ namespace Azure.ApplicationModel.Configuration
             Request request = _pipeline.CreateRequest();
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.Method = HttpPipelineMethod.Put;
+            request.Method = RequestMethod.Put;
             BuildUriForKvRoute(request.UriBuilder, setting);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -403,7 +403,7 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException(nameof(key));
 
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Delete;
+            request.Method = RequestMethod.Delete;
             BuildUriForKvRoute(request.UriBuilder, key, label);
 
             if (etag != default)
@@ -486,7 +486,7 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException($"{nameof(key)}");
 
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForKvRoute(request.UriBuilder, key, label);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
 
@@ -549,7 +549,7 @@ namespace Azure.ApplicationModel.Configuration
         private Request CreateBatchRequest(SettingSelector selector, string pageLink)
         {
             Request request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
@@ -610,7 +610,7 @@ namespace Azure.ApplicationModel.Configuration
         private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
         {
             var request = _pipeline.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
             BuildUriForRevisions(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
