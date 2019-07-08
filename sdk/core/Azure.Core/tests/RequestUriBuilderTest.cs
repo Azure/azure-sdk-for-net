@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpPipelineUriBuilderTest
+    public class RequestUriBuilderTest
     {
         public static Uri[] Uris { get; } = {
             new Uri("https://localhost:20/query?query"),
@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(Uris))]
         public void RoundtripWithUri(Uri uri)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Uri = uri;
 
             Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
         [TestCase("/a", "http://localhost/a")]
         public void AddsLeadingSlashToPath(string path, string expected)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
         [TestCase("?a", "http://localhost/?a")]
         public void AddsLeadingQuestionMarkToQuery(string query, string expected)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -67,7 +67,7 @@ namespace Azure.Core.Tests
         [TestCase("")]
         public void SettingQueryToEmptyRemovesQuestionMark(string query)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -87,7 +87,7 @@ namespace Azure.Core.Tests
         [TestCase("%#?&", "%25#?&")]
         public void PathIsEscaped(string path, string expectedPath)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests
         [Test]
         public void QueryIsNotEscaped()
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendQueryWithEmptyValueWorks()
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
         [TestCase("?initial", "http://localhost/?initial&a=b&c=d")]
         public void AppendQueryWorks(string initialQuery, string expectedResult)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
         [TestCase("", "\u1234", "http://localhost/%E1%88%B4")]
         public void AppendPathWorks(string initialPath, string append, string expectedResult)
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Scheme = "http";
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
@@ -159,7 +159,7 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingQueryResetsUri()
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Uri = new Uri("http://localhost/");
             uriBuilder.AppendQuery("a","b");
 
@@ -169,7 +169,7 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingPathResetsUri()
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Uri = new Uri("http://localhost/");
             uriBuilder.AppendPath("a");
 
@@ -179,7 +179,7 @@ namespace Azure.Core.Tests
         [Test]
         public void AppendingPathAfterQueryAndSettingTheUriWorks()
         {
-            var uriBuilder = new HttpPipelineUriBuilder();
+            var uriBuilder = new RequestUriBuilder();
             uriBuilder.Uri = new Uri("http://localhost/");
             uriBuilder.AppendQuery("query", "value");
             uriBuilder.AppendPath("a");
