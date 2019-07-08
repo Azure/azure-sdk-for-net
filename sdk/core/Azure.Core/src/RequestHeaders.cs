@@ -5,13 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Azure.Core.Pipeline;
 
-namespace Azure
+namespace Azure.Core.Http
 {
     public readonly struct RequestHeaders: IEnumerable<HttpHeader>
     {
-        private readonly Request _request;
+        private readonly HttpRequest _request;
 
-        public RequestHeaders(Request request)
+        public RequestHeaders(HttpRequest request)
         {
             _request = request;
         }

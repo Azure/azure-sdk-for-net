@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -240,21 +241,21 @@ namespace Azure.Core.Tests
 
         private static Response SendTestRequest(HttpPipeline pipeline, long offset)
         {
-            using Request request = CreateRequest(pipeline, offset);
+            using HttpRequest request = CreateRequest(pipeline, offset);
 
             return pipeline.SendRequest(request, CancellationToken.None);
         }
 
         private static Task<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
-            using Request request = CreateRequest(pipeline, offset);
+            using HttpRequest request = CreateRequest(pipeline, offset);
 
             return pipeline.SendRequestAsync(request, CancellationToken.None);
         }
 
-        private static Request CreateRequest(HttpPipeline pipeline, long offset)
+        private static HttpRequest CreateRequest(HttpPipeline pipeline, long offset)
         {
-            Request request = pipeline.CreateRequest();
+            HttpRequest request = pipeline.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;

@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -27,7 +28,7 @@ namespace Azure.Core.Tests
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
 
-            using Request request = transport.CreateRequest();
+            using HttpRequest request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
 
@@ -46,7 +47,7 @@ namespace Azure.Core.Tests
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
 
-            using Request request = transport.CreateRequest();
+            using HttpRequest request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
 

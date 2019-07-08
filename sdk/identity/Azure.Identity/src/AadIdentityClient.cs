@@ -16,6 +16,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Identity
 {
@@ -42,7 +43,7 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
+            using (HttpRequest request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
                 try
                 {
@@ -57,7 +58,7 @@ namespace Azure.Identity
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
+            using (HttpRequest request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
                 try
                 {
@@ -72,7 +73,7 @@ namespace Azure.Identity
 
         public virtual async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
+            using (HttpRequest request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
             {
                 try
                 {
@@ -87,7 +88,7 @@ namespace Azure.Identity
 
         public virtual AccessToken Authenticate(string tenantId, string clientId, X509Certificate2 clientCertificate, string[] scopes, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
+            using (HttpRequest request = CreateClientCertificateAuthRequest(tenantId, clientId, clientCertificate, scopes))
             {
                 try
                 {
@@ -99,7 +100,7 @@ namespace Azure.Identity
                 }
             }
         }
-        private async Task<AccessToken> SendAuthRequestAsync(Request request, CancellationToken cancellationToken)
+        private async Task<AccessToken> SendAuthRequestAsync(HttpRequest request, CancellationToken cancellationToken)
         {
             var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -113,7 +114,7 @@ namespace Azure.Identity
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
         }
 
-        private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
+        private AccessToken SendAuthRequest(HttpRequest request, CancellationToken cancellationToken)
         {
             var response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -127,9 +128,9 @@ namespace Azure.Identity
             throw response.CreateRequestFailedException();
         }
 
-        private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
+        private HttpRequest CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
         {
-            Request request = _pipeline.CreateRequest();
+            HttpRequest request = _pipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 
@@ -150,9 +151,9 @@ namespace Azure.Identity
             return request;
         }
 
-        private Request CreateClientCertificateAuthRequest(string tenantId, string clientId, X509Certificate2 clientCertficate, string[] scopes)
+        private HttpRequest CreateClientCertificateAuthRequest(string tenantId, string clientId, X509Certificate2 clientCertficate, string[] scopes)
         {
-            Request request = _pipeline.CreateRequest();
+            HttpRequest request = _pipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 

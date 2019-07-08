@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Azure.Core.Tests
         {
             Assert.IsInstanceOf<SynchronousHttpPipelinePolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
 
-            using (Request request = transport.CreateRequest())
+            using (HttpRequest request = transport.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");

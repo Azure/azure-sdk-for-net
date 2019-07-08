@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace Azure.Core.Testing
         {
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
+        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, HttpRequest request, CancellationToken cancellationToken = default)
         {
             return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
         }
@@ -26,7 +27,7 @@ namespace Azure.Core.Testing
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest())
+            using (HttpRequest request = transport.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Azure.Core.Http;
 
 namespace Azure.Core.Testing
 {
@@ -25,7 +26,7 @@ namespace Azure.Core.Testing
             "User-Agent"
         };
 
-        public virtual int FindMatch(Request request, IList<RecordEntry> entries, out string failureMessage)
+        public virtual int FindMatch(HttpRequest request, IList<RecordEntry> entries, out string failureMessage)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
@@ -67,7 +68,7 @@ namespace Azure.Core.Testing
             {
                 failureMessage = $"{messagePrefix} (Best match: {entries[0].RequestMethod} {entries[0].RequestUri})";
             }
-            
+
             return -1;
         }
 

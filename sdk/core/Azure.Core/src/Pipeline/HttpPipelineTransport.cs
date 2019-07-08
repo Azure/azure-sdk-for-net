@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
@@ -12,6 +13,6 @@ namespace Azure.Core.Pipeline
 
         public abstract Task ProcessAsync(HttpPipelineMessage message);
 
-        public abstract Request CreateRequest();
+        public abstract HttpRequest CreateRequest();
     }
 }

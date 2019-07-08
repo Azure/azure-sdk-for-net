@@ -5,6 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
@@ -28,11 +29,11 @@ namespace Azure.Core.Pipeline
             _pipeline = all;
         }
 
-        public Request CreateRequest()
+        public HttpRequest CreateRequest()
             => _transport.CreateRequest();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
+        public async Task<Response> SendRequestAsync(HttpRequest request, CancellationToken cancellationToken)
         {
             var message = new HttpPipelineMessage(cancellationToken);
             message.Request = request;
@@ -42,7 +43,7 @@ namespace Azure.Core.Pipeline
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Response SendRequest(Request request, CancellationToken cancellationToken)
+        public Response SendRequest(HttpRequest request, CancellationToken cancellationToken)
         {
             var message = new HttpPipelineMessage(cancellationToken);
             message.Request = request;

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
@@ -60,9 +61,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public override Request CreateRequest()
+        public override HttpRequest CreateRequest()
         {
-            Request request = _innerTransport.CreateRequest();
+            HttpRequest request = _innerTransport.CreateRequest();
 
             lock (_random)
             {
@@ -73,7 +74,7 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        public RecordEntry CreateEntry(Request request, Response response)
+        public RecordEntry CreateEntry(HttpRequest request, Response response)
         {
             var entry = new RecordEntry
             {

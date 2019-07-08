@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 // TODO (pri 2): we should log correction/activity
 // TODO (pri 2): we should log exceptions
@@ -46,7 +47,7 @@ namespace Azure.Core.Diagnostics
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void Request(Request request)
+        public void Request(HttpRequest request)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -55,7 +56,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
+        public async Task RequestContentAsync(HttpRequest request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -64,7 +65,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestContent(Request request, CancellationToken cancellationToken)
+        public void RequestContent(HttpRequest request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -73,7 +74,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
+        public async Task RequestContentTextAsync(HttpRequest request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -82,7 +83,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestContentText(Request request, Encoding encoding, CancellationToken cancellationToken)
+        public void RequestContentText(HttpRequest request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -205,7 +206,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestRetrying(Request request, int retryNumber)
+        public void RequestRetrying(HttpRequest request, int retryNumber)
         {
             RequestRetrying(request.ClientRequestId, retryNumber);
         }

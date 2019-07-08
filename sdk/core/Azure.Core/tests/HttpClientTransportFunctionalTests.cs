@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -19,13 +20,14 @@ namespace Azure.Core.Tests
                 using (TestServer testServer = new TestServer(async context =>
                 {
                     context.Response.Headers["Via"] = "Test-Proxy";
-                    await context.Response.WriteAsync("Hello");
+                    byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
                 }))
                 {
                     Environment.SetEnvironmentVariable(envVar, testServer.Address.ToString());
 
                     var transport = new HttpClientTransport();
-                    Request request = transport.CreateRequest();
+                    HttpRequest request = transport.CreateRequest();
                     request.UriBuilder.Uri = new Uri(url);
                     Response response = await ExecuteRequest(request, transport);
                     Assert.True(response.Headers.TryGetValue("Via", out var via));

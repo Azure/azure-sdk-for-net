@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Http;
 
 namespace Azure.Core.Testing
 {
@@ -62,7 +63,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        public RecordEntry Lookup(Request request, RecordMatcher matcher)
+        public RecordEntry Lookup(HttpRequest request, RecordMatcher matcher)
         {
             lock (Entries)
             {

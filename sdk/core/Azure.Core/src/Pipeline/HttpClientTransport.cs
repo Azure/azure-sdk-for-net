@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
@@ -32,7 +33,7 @@ namespace Azure.Core.Pipeline
 
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override Request CreateRequest()
+        public sealed override HttpRequest CreateRequest()
             => new PipelineRequest();
 
         public override void Process(HttpPipelineMessage message)
@@ -143,7 +144,7 @@ namespace Azure.Core.Pipeline
             return string.Join(",", values);
         }
 
-        sealed class PipelineRequest : Request
+        sealed class PipelineRequest : HttpRequest
         {
             private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;

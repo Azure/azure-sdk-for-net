@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
@@ -17,7 +18,7 @@ namespace Azure.Core.Pipeline
             CancellationToken = cancellationToken;
         }
 
-        public Request Request { get; set; }
+        public HttpRequest Request { get; set; }
 
         public Response Response { get; set; }
 
