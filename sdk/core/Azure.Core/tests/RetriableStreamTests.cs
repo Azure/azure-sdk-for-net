@@ -255,7 +255,7 @@ namespace Azure.Core.Tests
         private static Request CreateRequest(HttpPipeline pipeline, long offset)
         {
             Request request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
+            request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
         }

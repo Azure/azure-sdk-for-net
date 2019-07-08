@@ -80,7 +80,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "properties");
@@ -179,7 +179,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "service");
                 _request.UriBuilder.AppendQuery("comp", "properties");
@@ -301,7 +301,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "list");
                 if (prefix != null) { _request.UriBuilder.AppendQuery("prefix", System.Uri.EscapeDataString(prefix)); }
@@ -424,7 +424,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -547,7 +547,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
@@ -681,7 +681,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Delete;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
@@ -779,7 +779,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "snapshot");
@@ -906,7 +906,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "properties");
@@ -1024,7 +1024,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "metadata");
@@ -1142,7 +1142,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "acl");
@@ -1253,7 +1253,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "acl");
@@ -1379,7 +1379,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "share");
                 _request.UriBuilder.AppendQuery("comp", "stats");
@@ -1494,7 +1494,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "directory");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "directory");
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
@@ -1740,7 +1740,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Delete;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "directory");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -1836,7 +1836,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "directory");
                 _request.UriBuilder.AppendQuery("comp", "metadata");
@@ -1974,7 +1974,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("restype", "directory");
                 _request.UriBuilder.AppendQuery("comp", "list");
@@ -2100,7 +2100,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "listhandles");
                 if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
@@ -2233,7 +2233,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "forceclosehandles");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -2400,7 +2400,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -2548,7 +2548,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -2871,7 +2871,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Head;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
                 _request.UriBuilder.Uri = resourceUri;
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3056,7 +3056,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Delete;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -3181,7 +3181,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "properties");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3318,7 +3318,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "metadata");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3468,7 +3468,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "range");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
@@ -3604,7 +3604,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "rangelist");
                 if (sharesnapshot != null) { _request.UriBuilder.AppendQuery("sharesnapshot", System.Uri.EscapeDataString(sharesnapshot)); }
@@ -3741,7 +3741,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
@@ -3875,7 +3875,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "copy");
                 _request.UriBuilder.AppendQuery("copyid", System.Uri.EscapeDataString(copyId));
@@ -3983,7 +3983,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Get;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "listhandles");
                 if (marker != null) { _request.UriBuilder.AppendQuery("marker", System.Uri.EscapeDataString(marker)); }
@@ -4106,7 +4106,7 @@ namespace Azure.Storage.Files
                 Azure.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
-                _request.Method = Azure.Core.Pipeline.HttpPipelineMethod.Put;
+                _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
                 _request.UriBuilder.Uri = resourceUri;
                 _request.UriBuilder.AppendQuery("comp", "forceclosehandles");
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }

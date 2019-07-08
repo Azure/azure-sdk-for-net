@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
             recordEntry.RequestHeaders.Add("Other-Header", new [] { "multi", "value" });
             recordEntry.RequestBody = bodyBytes;
             recordEntry.RequestUri = "url";
-            recordEntry.RequestMethod = HttpPipelineMethod.Delete;
+            recordEntry.RequestMethod = RequestMethod.Delete;
 
             recordEntry.ResponseHeaders.Add("Content-Type", new [] { contentType });
             recordEntry.ResponseHeaders.Add("Other-Response-Header", new [] { "multi", "value" });
@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
 
             RecordEntry deserializedRecord = deserializedSession.Entries.Single();
 
-            Assert.AreEqual(HttpPipelineMethod.Delete, recordEntry.RequestMethod);
+            Assert.AreEqual(RequestMethod.Delete, recordEntry.RequestMethod);
             Assert.AreEqual("url", recordEntry.RequestUri);
             Assert.AreEqual(202, recordEntry.StatusCode);
 

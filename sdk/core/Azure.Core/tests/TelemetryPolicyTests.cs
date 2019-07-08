@@ -12,29 +12,25 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class TelemetryPolicyTests: PolicyTestBase
+    public class TelemetryPolicyTests : PolicyTestBase
     {
         [Test]
-        public async Task ComponentNameAndVersionReadFromAssembly()
+        public async Task IncludesComponentNameAndVersion()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var testOptions = new TestOptions();
-            var telemetryPolicy = testOptions.TelemetryPolicy;
+            var telemetryPolicy = new TelemetryPolicy("base-test", "1.0.0", null);
 
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-            Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+            Assert.AreEqual(userAgent, $"azsdk-net-base-test/1.0.0 ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         [Test]
         public async Task ApplicationIdIsIncluded()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var testOptions = new TestOptions();
-            var telemetryPolicy = testOptions.TelemetryPolicy;
-            telemetryPolicy.ApplicationId = "application-id";
+            var telemetryPolicy = new TelemetryPolicy("base-test", "1.0.0", "application-id");
 
             await SendGetRequest(transport, telemetryPolicy);
 
@@ -47,18 +43,14 @@ namespace Azure.Core.Tests
         [TestCase("true")]
         [TestCase("TRUE")]
         [TestCase("1")]
-        public async Task CanDisableTelemetryWithEnvironmentVariable(string value)
+        public void CanDisableTelemetryWithEnvironmentVariable(string value)
         {
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
 
-                var transport = new MockTransport(new MockResponse(200));
                 var testOptions = new TestOptions();
-                var telemetryPolicy = testOptions.TelemetryPolicy;
-                await SendGetRequest(transport, telemetryPolicy);
-
-                Assert.False(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+                Assert.False(testOptions.Diagnostics.IsTelemetryEnabled);
             }
             finally
             {
@@ -68,28 +60,22 @@ namespace Azure.Core.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task UsesDefaultApplicationId()
+        public void UsesDefaultApplicationId()
         {
             try
             {
-                TelemetryPolicy.DefaultApplicationId = "Global-application-id";
+                DiagnosticsOptions.DefaultApplicationId = "Global-application-id";
 
-                var transport = new MockTransport(new MockResponse(200));
                 var testOptions = new TestOptions();
-                var telemetryPolicy = testOptions.TelemetryPolicy;
-
-                await SendGetRequest(transport, telemetryPolicy);
-
-                Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-                StringAssert.StartsWith("Global-application-id ", userAgent);
+                Assert.AreEqual("Global-application-id", testOptions.Diagnostics.ApplicationId);
             }
             finally
             {
-                TelemetryPolicy.DefaultApplicationId = null;
+                DiagnosticsOptions.DefaultApplicationId = null;
             }
         }
 
-        private class TestOptions: ClientOptions
+        private class TestOptions : ClientOptions
         {
 
         }

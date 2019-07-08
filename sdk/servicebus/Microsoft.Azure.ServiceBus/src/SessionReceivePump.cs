@@ -156,7 +156,7 @@ namespace Microsoft.Azure.ServiceBus
                         }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
-                            break;
+                            await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
                         }
                     }
                 }

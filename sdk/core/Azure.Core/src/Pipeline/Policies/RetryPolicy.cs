@@ -10,33 +10,26 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class RetryPolicy : HttpPipelinePolicy
+    internal class RetryPolicy : HttpPipelinePolicy
     {
+        private readonly RetryMode _mode;
+        private readonly TimeSpan _delay;
+        private readonly TimeSpan _maxDelay;
+        private readonly int _maxRetries;
+
         private readonly Random _random = new ThreadSafeRandom();
+
+        public RetryPolicy(RetryMode mode, TimeSpan delay, TimeSpan maxDelay, int maxRetries)
+        {
+            _mode = mode;
+            _delay = delay;
+            _maxDelay = maxDelay;
+            _maxRetries = maxRetries;
+        }
 
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
-
-        /// <summary>
-        /// Gets or sets the maximum number of retry attempts before giving up.
-        /// </summary>
-        public int MaxRetries { get; set; } = 3;
-
-        /// <summary>
-        /// Gets or sets the timespan used as delay between the retries or as a base for exponential backoff.
-        /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(0.8);
-
-        /// <summary>
-        /// Gets or sets maximum timespan to pause between requests.
-        /// </summary>
-        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
-
-        /// <summary>
-        /// Gets os sets retry mode
-        /// </summary>
-        public RetryMode Mode { get; set; } = RetryMode.Fixed;
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -83,7 +76,7 @@ namespace Azure.Core.Pipeline.Policies
 
                 attempt++;
 
-                var shouldRetry = attempt <= MaxRetries;
+                var shouldRetry = attempt <= _maxRetries;
 
                 if (lastException != null)
                 {
@@ -174,10 +167,10 @@ namespace Azure.Core.Pipeline.Policies
         {
             delay = TimeSpan.Zero;
 
-            switch (Mode)
+            switch (_mode)
             {
                 case RetryMode.Fixed:
-                    delay = Delay;
+                    delay = _delay;
                     break;
                 case RetryMode.Exponential:
                     delay = CalculateExponentialDelay(attempted);
@@ -200,8 +193,8 @@ namespace Azure.Core.Pipeline.Policies
         {
             return TimeSpan.FromMilliseconds(
                 Math.Min(
-                    (1 << (attempted - 1)) * _random.Next((int)(Delay.TotalMilliseconds * 0.8), (int)(Delay.TotalMilliseconds * 1.2)),
-                    MaxDelay.TotalMilliseconds));
+                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                    _maxDelay.TotalMilliseconds));
         }
     }
 }
