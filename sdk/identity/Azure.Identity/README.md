@@ -2,7 +2,7 @@
  The Azure Identity library provides Azure Active Directory token authentication support across the Azure SDK. It provides a set of TokenCredential implementations which can be used to construct Azure SDK clients which support AAD token authentication.  
  
  This library is in preview and currently supports:
-  - [Service principal authentication](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli)
+  - [Service principal authentication](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
   - [Managed identity authentication](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
 
   [Source code][source] | [Package (nuget)][package] | API reference documentation (Coming Soon) | [Azure Active Directory documentation][aad_doc]
@@ -45,7 +45,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 ## Key concepts
 ### Credentials
 
-A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across Azure SDK accept credentials when they are constructed and use those credentials to authenticate requests to the service. Azure Identity offers a variety of credential classes in the `Azure.Identity` namespace capable of acquiring an AAD token. All of these credential classes are implementations of the `TokenCredential` abstract class in `Azure.Core`, and can be used by any service client which can be constructed with a `TokenCredential`. 
+A credential is a class which contains or can obtain the data needed for a service client to authenticate requests. Service clients across Azure SDK accept credentials when they are constructed and use those credentials to authenticate requests to the service. Azure Identity offers a variety of credential classes in the `Azure.Identity` namespace capable of acquiring an AAD token. All of these credential classes are implementations of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and can be used by any service client which can be constructed with a `TokenCredential`. 
 
 The credential types in Azure Identity differ in the types of AAD identities they can authenticate and how they are configured: 
 
@@ -58,7 +58,8 @@ The credential types in Azure Identity differ in the types of AAD identities the
 |`CertificateCredential`|service principal|constructor parameters
 
 Credentials can be chained together to be tried in turn until one succeeds using the `ChainedTokenCredential`; see [chaining credentials](#chaining-credentials) for details.
-> Note: All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used to create multiple service clients.
+
+__Note__: All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used to create multiple service clients.
 
 ## DefaultAzureCredential
 `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to run in the Azure Cloud. This is because the `DefaultAzureCredential` determines the appropriate credential type based of the environment it is executing in. It supports authenticating both as a service principal or managed identity, and can be configured so that it will work both in a local development environment or when deployed to the cloud. 
@@ -84,6 +85,8 @@ principal authentication with these environment variables:
 ## Examples
 
 ## Authenticating with `DefaultAzureCredential`
+
+This example demonstrates authenticating the `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library using the `DefaultAzureCredential`.
 ```c#
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -94,6 +97,7 @@ var client = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), new 
 When executing this in a development machine you need to first [configure the environment](#environment-variables) setting the variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_CLIENT_SECRET` to the appropriate values for your service principal.
 
 ## Authenticating a service principal with a client secret
+This example demonstrates authenticating the `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library using the `ClientSecretCredential`.
 ```c#
 using Azure.Identity;
 using Azure.Storage.Blobs;
@@ -105,21 +109,22 @@ var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net
 ```
 
 ## Authenticating a service principal with a certificate
+This example demonstrates authenticating the `KeyClient` from the [Azure.Security.KeyVault.Keys][keys_client_library] client library using the `CertificateCredential`.
 ```c#
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
+using Azure.Security.KeyVault.Keys;
 
 // authenticating a service principal with a certificate
 var certificate = new X509Certificate2("./app/certs/certificate.pfx");
 
 var credential = new CertificateCredential(tenantId, clientId, certificate);
 
-var secretClient = new SecretClient(new Uri("https://myvault.azure.vaults.net/"), credential);
+var keyClient = new KeyClient(new Uri("https://myvault.azure.vaults.net/"), credential);
 ```
 
 ## Chaining Credentials
 
-The `ChainedTokenCredential` class provides the ability to link together multiple credential instances to be tried sequential when authenticating. The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to certificate authentication if a managed identity is unavailable in the current environment.
+The `ChainedTokenCredential` class provides the ability to link together multiple credential instances to be tried sequentially when authenticating. The following example demonstrates creating a credential which will attempt to authenticate using managed identity, and fall back to certificate authentication if a managed identity is unavailable in the current environment.  This example authenticates an `EventHubClient` from the [Azure.Messaging.EventHubs][eventhubs_client_library] client library using the `ChainedTokenCredential`.
 ```c#
 using Azure.Identity;
 using Azure.Messaging.EventHubs;
@@ -141,9 +146,9 @@ Errors arising from authentication can be raised on any service client method wh
 For more details on dealing with errors arising from failed requests to Azure Active Directory, or managed identity endpoints please refer to the Azure Active Directory [documentation on authorization error codes][aad_err_doc].
 
 ## Next steps
-Currently the following client libraries support authenticating with `TokenCredential` and the Azure Identity library.  Additional documentation on use of these client libraries along samples with can be found in the links below.
+Currently the following client libraries support authenticating with `TokenCredential` and the Azure Identity library.  You can learn more about their use, and find additional documentation on use of these client libraries along samples with can be found in the links below.
 
-- [Azure.Messaging.EventHubs][eventhub_client_library]
+- [Azure.Messaging.EventHubs][eventhubs_client_library]
 - [Azure.Security.KeyVault.Keys][keys_client_library]
 - [Azure.Security.KeyVault.Secrets][secrets_client_library]
 - [Azure.Storage.Blobs][blobs_client_library]
@@ -170,6 +175,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [blobs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs
 [queues_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues
-[eventhub_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
+[eventhubs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs
+[azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FFREADME.png)
