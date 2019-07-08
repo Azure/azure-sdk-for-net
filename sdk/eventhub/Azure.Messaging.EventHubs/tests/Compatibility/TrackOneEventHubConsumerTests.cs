@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(() => new TrackOneEventHubConsumer(null), Throws.ArgumentNullException);
         }
 
-        /// <summary
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.ConstructedWith.Options.Identifier, Is.EqualTo(identifier), "The consumer identifier should match.");
         }
 
-        /// <summary
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.ReceiveInvokeWith.WaitTime, Is.EqualTo(maximumWaitTime), "The maximum wait time should match.");
         }
 
-        /// <summary
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(results.Any(), Is.False, "The result enumerable should have been empty.");
         }
 
-        /// <summary
+        /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>
         ///
@@ -107,8 +107,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 new TrackOne.EventData(Encoding.UTF8.GetBytes("Oh! Hello, there!"))
             };
 
-            mock.ReceiveResult[0].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(1234, DateTime.Parse("2015-10-27T12:00:00Z"), "6", "key");
-            mock.ReceiveResult[1].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(6666, DateTime.Parse("1974-12-09T20:00:00Z"), "24", null);
+            mock.ReceiveResult[0].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(1234, DateTime.Parse("2015-10-27T12:00:00Z").ToUniversalTime(), "6", "key");
+            mock.ReceiveResult[1].SystemProperties = new TrackOne.EventData.SystemPropertiesCollection(6666, DateTime.Parse("1974-12-09T20:00:00Z").ToUniversalTime(), "24", null);
             mock.ReceiveResult[1].Properties["test"] = "this is a test!";
 
             var results = await consumer.ReceiveAsync(10, default, default);
@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
         }
 
-        /// <summary
+        /// <summary>
         ///   Verifies functionality of the <see cref="TrackOneEventHubConsumer.CloseAsync" />
         ///   method.
         /// </summary>
