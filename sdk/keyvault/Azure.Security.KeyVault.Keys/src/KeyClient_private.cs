@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Keys
 
         private Uri CreateFirstPageUri(string path)
         {
-            var firstPage = new HttpPipelineUriBuilder();
+            var firstPage = new RequestUriBuilder();
             firstPage.Uri = _vaultUri;
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);

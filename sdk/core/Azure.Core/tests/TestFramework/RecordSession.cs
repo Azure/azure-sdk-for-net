@@ -67,14 +67,8 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                var index = matcher.FindMatch(request, Entries, out var failureMessage);
-                if (index == -1)
-                {
-                    throw new InvalidOperationException(failureMessage);
-                }
-
-                var entry = Entries[index];
-                Entries.RemoveAt(index);
+                RecordEntry entry = matcher.FindMatch(request, Entries);
+                Entries.Remove(entry);
                 return entry;
             }
 
