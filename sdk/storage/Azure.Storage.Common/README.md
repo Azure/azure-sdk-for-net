@@ -1,4 +1,4 @@
-# Azure Storage common client library for .NET
+# Azure Storage Common client library for .NET
 
 > Server Version: 2018-11-09
 
@@ -17,7 +17,7 @@ Azure Storage client libraries.
 ### Install the package
 
 Install the Azure Storage client library for .NET you'd like to use with
-[NuGet][nuget] and the common client library will be included:
+[NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
 ```Powershell
 dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.1
@@ -40,7 +40,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 ## Key concepts
 
-The Azure Storage common client library contains shared infrastructure like
+The Azure Storage Common client library contains shared infrastructure like
 [authentication credentials][auth_credentials] and [StorageRequestFailedException][StorageRequestFailedException].
 
 ## Examples
