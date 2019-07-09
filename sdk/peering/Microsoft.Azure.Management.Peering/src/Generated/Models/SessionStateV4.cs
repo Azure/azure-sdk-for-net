@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         public const string Active = "Active";
         public const string OpenSent = "OpenSent";
         public const string OpenConfirm = "OpenConfirm";
+        public const string OpenReceived = "OpenReceived";
         public const string Established = "Established";
         public const string PendingAdd = "PendingAdd";
         public const string PendingUpdate = "PendingUpdate";

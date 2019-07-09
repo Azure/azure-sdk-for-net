@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a7ce8949-714c-4570-987b-06dfaaded041"
+          "3d1c2151-bcea-4fdb-8793-e271fd4ca933"
         ],
         "Accept-Language": [
           "en-US"
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
           "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
         ]
       },
@@ -26,20 +26,17 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-failure-cause": [
-          "gateway"
+        "x-ms-request-id": [
+          "ba869d71-2685-4bbd-a3e2-9998773c6cbe"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "dd9716e5-3805-4d31-b84f-a61d1987a30c"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "dd9716e5-3805-4d31-b84f-a61d1987a30c"
+          "f2712920-4beb-4e07-af33-08048051f66b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190702T220830Z:dd9716e5-3805-4d31-b84f-a61d1987a30c"
+          "NORTHEUROPE:20190708T235918Z:f2712920-4beb-4e07-af33-08048051f66b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,20 +45,20 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 02 Jul 2019 22:08:29 GMT"
+          "Mon, 08 Jul 2019 23:59:17 GMT"
+        ],
+        "Content-Length": [
+          "2751"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "230"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidResourceType\",\r\n    \"message\": \"The resource type 'operations' could not be found in the namespace 'Microsoft.Peering' for api version '2019-06-01-preview'. The supported api-versions are '2019-03-01-preview'.\"\r\n  }\r\n}",
-      "StatusCode": 404
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Peering/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"Peering Resource Provider\",\r\n        \"operation\": \"Registers the Peering Resource Provider\",\r\n        \"description\": \"Registers the subscription for the Peering Resource Provider and enables the creation of peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Write PeerAsn\",\r\n        \"description\": \"Write any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Read PeerAsn\",\r\n        \"description\": \"Read any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerAsns/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerAsns\",\r\n        \"operation\": \"Delete PeerAsn\",\r\n        \"description\": \"Delete any peerAsns\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringLocations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringLocations\",\r\n        \"operation\": \"Read PeeringLocation\",\r\n        \"description\": \"Read any peeringLocations\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/legacyPeerings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"legacyPeerings\",\r\n        \"operation\": \"Read LegacyPeering\",\r\n        \"description\": \"Read any legacyPeerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Write Peering\",\r\n        \"description\": \"Write any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Read Peering\",\r\n        \"description\": \"Read any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Delete Peering\",\r\n        \"description\": \"Delete any peerings\"\r\n      },\r\n      \"isDataAction\": false\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
     }
   ],
   "Names": {},

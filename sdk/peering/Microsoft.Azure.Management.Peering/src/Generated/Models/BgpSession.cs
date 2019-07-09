@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// peer's end.</param>
         /// <param name="sessionStateV4">The state of the IPv4 session.
         /// Possible values include: 'None', 'Idle', 'Connect', 'Active',
-        /// 'OpenSent', 'OpenConfirm', 'Established', 'PendingAdd',
-        /// 'PendingUpdate', 'PendingRemove'</param>
+        /// 'OpenSent', 'OpenConfirm', 'OpenReceived', 'Established',
+        /// 'PendingAdd', 'PendingUpdate', 'PendingRemove'</param>
         /// <param name="sessionStateV6">The state of the IPv6 session.
         /// Possible values include: 'None', 'Idle', 'Connect', 'Active',
-        /// 'OpenSent', 'OpenConfirm', 'Established', 'PendingAdd',
-        /// 'PendingUpdate', 'PendingRemove'</param>
+        /// 'OpenSent', 'OpenConfirm', 'OpenReceived', 'Established',
+        /// 'PendingAdd', 'PendingUpdate', 'PendingRemove'</param>
         /// <param name="maxPrefixesAdvertisedV4">The maximum number of
         /// prefixes advertised over the IPv4 session.</param>
         /// <param name="maxPrefixesAdvertisedV6">The maximum number of
@@ -113,7 +113,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Gets the state of the IPv4 session. Possible values include:
         /// 'None', 'Idle', 'Connect', 'Active', 'OpenSent', 'OpenConfirm',
-        /// 'Established', 'PendingAdd', 'PendingUpdate', 'PendingRemove'
+        /// 'OpenReceived', 'Established', 'PendingAdd', 'PendingUpdate',
+        /// 'PendingRemove'
         /// </summary>
         [JsonProperty(PropertyName = "sessionStateV4")]
         public string SessionStateV4 { get; private set; }
@@ -121,7 +122,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Gets the state of the IPv6 session. Possible values include:
         /// 'None', 'Idle', 'Connect', 'Active', 'OpenSent', 'OpenConfirm',
-        /// 'Established', 'PendingAdd', 'PendingUpdate', 'PendingRemove'
+        /// 'OpenReceived', 'Established', 'PendingAdd', 'PendingUpdate',
+        /// 'PendingRemove'
         /// </summary>
         [JsonProperty(PropertyName = "sessionStateV6")]
         public string SessionStateV6 { get; private set; }
