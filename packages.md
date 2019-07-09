@@ -1,5 +1,5 @@
 
-# Package Index - sdk-for-net
+# Package Index - azure-for-net
 
 | Package Id     | Readme    | Changelog                 | Published Url       |
 |----------------|-----------|---------------------------|---------------------|
