@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    class KeyVaultTest : TestBase
+    class KeyVaultTest
     {
         private string secretName;
         private string secretValue;
@@ -34,28 +34,17 @@ namespace SmokeTest
              
             var testPassed = true;
 
-            Console.Write("Set a secret... ");
-            var result1 = await ExecuteTest(SetNewSecret);
-            if (!result1)
-            {
-                //If this test failes, the other ones are going to fail too.
-                Console.WriteLine("Cannot get a secret and delete it.");
-                return false;
-            }
+            Console.Write("Setting a secret... ");
+            await SetNewSecret();
+            Console.WriteLine("done");
 
-            Console.Write("Get that secret... ");
-            var result2 = await ExecuteTest(GetSecret);
-            if (!result2)
-            {
-                testPassed = false;
-            }
+            Console.Write("Getting that secret... ");
+            await GetSecret();
+            Console.WriteLine("done");
 
             Console.Write("Cleaning up the resource... ");
-            var result3 = await ExecuteTest(CleanUp);
-            if (!result3)
-            {
-                testPassed = false;
-            }
+            await CleanUp();
+            Console.WriteLine("done");
 
             return testPassed;
         }

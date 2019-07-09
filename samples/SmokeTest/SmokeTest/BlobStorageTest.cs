@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    class BlobStorageTest : TestBase
+    class BlobStorageTest
     {
         private BlobServiceClient service;
         private BlockBlobClient blob;
@@ -32,26 +32,19 @@ namespace SmokeTest
             Console.WriteLine("2.- Delete that Blob Block" + '\n');
 
             Console.Write("Uploading blob... ");
-            var result1 = await ExecuteTest(UploadBlob);
-            if (!result1)
-            {
-                //If this test failed, then the othe one is going to fail too.
-                Console.WriteLine("Cannot delete the Blob.");
-                return false;
-            }
+            await UploadBlob();
+            Console.WriteLine("done");
 
             Console.Write("Deleting blob... ");
-            var result2 = await ExecuteTest(DeleteBlob);
-            if (!result2)
-            {
-                return false;
-            }
+            await DeleteBlob();
+            Console.WriteLine("done");
 
             return true;
         }
 
         private async Task UploadBlob()
         {
+            //This will upload an existing file into the container previously created
             const string path = "./Resources/BlobTestSource.txt";
 
             using (FileStream data = File.OpenRead(path))

@@ -30,11 +30,11 @@ namespace SmokeTest
         public string Name { get; set; }
     }
 
-    class CosmosDBTest : TestBase
+    class CosmosDBTest
     {
         private DocumentClient client;
         private const string DataBaseName = "netSolarSystemDB";
-        private const string CollectionName = "netPlanetsCollection";
+        private const string CollectionName = "PlanetsCollection";
         private Planet planetEarth;
         private Planet planetMars;
 
@@ -61,41 +61,24 @@ namespace SmokeTest
             var testPassed = true;
 
             Console.Write("Creating Database '"+DataBaseName+"'... ");
-            var result1 = await ExecuteTest(CreateDatabase);
-            if(!result1)
-            {
-                //If this test failed, the next ones are going to fail too
-                Console.WriteLine("Cannot create a Collection, Documents, Query the collection and neither Delete the DB.");
-                return false;
-            }
+            await CreateDatabase();
+            Console.WriteLine("done");
 
             Console.Write("Creating collection '"+CollectionName+"' ");
-            var result2 = await ExecuteTest(CreateCollection);
-            if (!result2)
-            {
-                testPassed = false;
-            }
+            await CreateCollection();
+            Console.WriteLine("done");
 
             Console.Write("Inserting 'Earth' and 'Mars' JSON Documents... ");
-            var result3 = await ExecuteTest(CreateDocuments);
-            if (!result3)
-            {
-                testPassed = false;
-            }
+            await CreateDocuments();
+            Console.WriteLine("done");
 
             Console.Write("Querying... ");
-            var result4 = await ExecuteTest(ExecuteSimpleQuery);
-            if (!result4)
-            {
-                testPassed = false;
-            }
-            
+            await ExecuteSimpleQuery();
+            Console.WriteLine("done");
+
             Console.Write("Cleaning up the resource... ");
-            var result5 = await ExecuteTest(DeleteDatabase);
-            if (!result5)
-            {
-                testPassed = false;
-            }
+            await DeleteDatabase();
+            Console.WriteLine("done");
 
             return testPassed;
         }

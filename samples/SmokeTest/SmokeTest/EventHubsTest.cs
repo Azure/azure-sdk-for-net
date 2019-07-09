@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SmokeTest
 {
-    class EventHubsTest : TestBase
+    class EventHubsTest
     {
         private EventHubClient client;
         private EventSender sender;
@@ -39,19 +39,11 @@ namespace SmokeTest
             Console.WriteLine("2.- Recieve those events\n");
 
             Console.Write("Creating the Sender and Receivers... ");
-            var result1 = await ExecuteTest(CreateSenderAndReceiver);
-            if(!result1)
-            {
-                //If this test fail, the next one is going to fail too.
-                Console.WriteLine("Cannot send or receive events.");
-                return false;
-            }
+            await CreateSenderAndReceiver();
+            Console.WriteLine("done");
 
-            var result2 = await ExecuteTest(SendAndReceiveEvents);
-            if(!result2)
-            {
-                return false;
-            }
+            await SendAndReceiveEvents();
+            Console.WriteLine("done");
 
             return true;
         }
