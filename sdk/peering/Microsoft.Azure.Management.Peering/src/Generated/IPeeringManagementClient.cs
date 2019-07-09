@@ -90,30 +90,5 @@ namespace Microsoft.Azure.Management.Peering
         /// </summary>
         IPeeringsOperations Peerings { get; }
 
-        /// <summary>
-        /// Gets the IPeeringServiceLocationsOperations.
-        /// </summary>
-        IPeeringServiceLocationsOperations PeeringServiceLocations { get; }
-
-        /// <summary>
-        /// Gets the IPeeringServicePrefixesOperations.
-        /// </summary>
-        IPeeringServicePrefixesOperations PeeringServicePrefixes { get; }
-
-        /// <summary>
-        /// Gets the IPrefixesOperations.
-        /// </summary>
-        IPrefixesOperations Prefixes { get; }
-
-        /// <summary>
-        /// Gets the IPeeringServiceProvidersOperations.
-        /// </summary>
-        IPeeringServiceProvidersOperations PeeringServiceProviders { get; }
-
-        /// <summary>
-        /// Gets the IPeeringServicesOperations.
-        /// </summary>
-        IPeeringServicesOperations PeeringServices { get; }
-
     }
 }
