@@ -23,6 +23,11 @@ namespace Compute.Tests
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.ProximityPlacementGroups, proximityPlacementGroupName);
         }
 
+        public static string GetDedicatedHostGroupRef(string subId, string resourceGrpName, string dedicatedHostGroupName)
+        {
+            return Helpers.GetEntityReferenceId(subId, resourceGrpName, ApiConstants.DedicatedHostGroups, dedicatedHostGroupName);
+        }
+
         public static string GetVMReferenceId(string subId, string resourceGrpName, string vmName)
         {
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VirtualMachines, vmName);
