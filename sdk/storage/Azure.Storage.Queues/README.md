@@ -116,7 +116,8 @@ helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 // Get a connection string to our Azure Storage account
 string connectionString = "<connection_string>";
 
-// Try to create a queue named "sample-queue"
+// Try to create a queue named "sample-queue" and avoid any potential race
+// conditions that might arise by checking if the queue exists before creating
 QueueClient queue = new QueueClient(connectionString, "sample-queue");
 try
 {

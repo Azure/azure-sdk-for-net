@@ -110,7 +110,7 @@ using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
 string connectionString = "<connection_string>";
 
 // Get a reference to a share named "sample-share"
-ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
+ShareClient share = new ShareClient(connectionString, "sample-share");
 
 // Track the remaining directories to walk, starting from the root
 Queue<DirectoryClient> remaining = new Queue<DirectoryClient>();
@@ -142,8 +142,9 @@ helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 // Get a connection string to our Azure Storage account
 string connectionString = "<connection_string>";
 
-// Try to create a share named "sample-share"
-ShareClient share = new ShareClient(connectionString, Randomize("sample-share"));
+// Try to create a share named "sample-share" and avoid any potential race
+// conditions that might arise by checking if the share exists before creating
+ShareClient share = new ShareClient(connectionString, "sample-share");
 try
 {
     share.Create();

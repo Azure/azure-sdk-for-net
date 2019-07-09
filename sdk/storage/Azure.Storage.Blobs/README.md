@@ -80,14 +80,12 @@ using (FileStream file = File.OpenRead("local-file.jpg"))
 ### Downloading a blob
 
 ```c#
-string connectionString = "<connection_string>";
-
-// Get a reference to a blob named "sample-file" in a container named "sample-container"
-BlobClient blob = new BlobClient(connectionString, "sample-container", "sample-file");
+// Get a reference to the public blob at https://aka.ms/bloburl
+BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
 
 // Download the blob
 BlobDownloadInfo download = blob.Download();
-using (FileStream file = File.OpenWrite("downloaded-file.jpg"))
+using (FileStream file = File.OpenWrite("hello.jpg"))
 {
     download.Content.CopyTo(file);
 }
@@ -132,8 +130,9 @@ helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
 ```c#
 string connectionString = "<connection_string>";
 
-// Try to create a container named "sample-container"
-BlobContainerClient container = new BlobContainerClient(connectionString, Randomize("sample-container"));
+// Try to create a container named "sample-container" and avoid any potential race
+// conditions that might arise by checking if the container exists before creating
+BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
 try
 {
     container.Create();
