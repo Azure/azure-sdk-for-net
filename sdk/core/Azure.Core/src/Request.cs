@@ -10,7 +10,7 @@ namespace Azure
 {
     public abstract class Request : IDisposable
     {
-        public virtual HttpPipelineUriBuilder UriBuilder { get; set; } = new HttpPipelineUriBuilder();
+        public virtual RequestUriBuilder UriBuilder { get; set; } = new RequestUriBuilder();
 
         public virtual RequestMethod Method { get; set; }
 

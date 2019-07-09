@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs
         ///   The offset of the the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        public int Offset => SystemProperties.Offset;
+        public long Offset => SystemProperties.Offset;
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -197,18 +197,18 @@ namespace Azure.Messaging.EventHubs
             ///   identifier is unique within a partition of the Event Hubs stream.
             /// </remarks>
             ///
-            internal int Offset
+            internal long Offset
             {
                 get
                 {
                     if (this.TryGetValue(MessagePropertyName.Offset, out var value))
                     {
-                        if (value is int offset)
+                        if (value is long offset)
                         {
                             return offset;
                         }
 
-                        if ((value is string token) && (int.TryParse(token, out var parsedOffset)))
+                        if ((value is string token) && (long.TryParse(token, out var parsedOffset)))
                         {
                             return parsedOffset;
                         }

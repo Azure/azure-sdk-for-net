@@ -37,18 +37,22 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (json.TryGetProperty("value", out JsonElement value))
             {
-                _items = new T[value.GetArrayLength()];
-
-                int i = 0;
-
-                foreach (var elem in value.EnumerateArray())
+                if(value.Type != JsonValueType.Null)
                 {
-                    _items[i] = _itemFactory();
+                    _items = new T[value.GetArrayLength()];
 
-                    _items[i].ReadProperties(elem);
+                    int i = 0;
 
-                    i++;
+                    foreach (var elem in value.EnumerateArray())
+                    {
+                        _items[i] = _itemFactory();
+
+                        _items[i].ReadProperties(elem);
+
+                        i++;
+                    }
                 }
+               
             }
 
             if (json.TryGetProperty("nextLink", out JsonElement nextLink))
