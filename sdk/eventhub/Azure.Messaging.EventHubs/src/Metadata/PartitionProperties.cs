@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The date and time, in UTC, that the last event was enqueued in the partition.
         /// </summary>
         ///
-        public DateTime LastEnqueuedTimeUtc { get; }
+        public DateTimeOffset LastEnqueuedTime { get; }
 
         /// <summary>
         ///   Indicates whether or not the partition is currently empty.
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
-        /// <param name="lastEnqueueUtc">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         ///
         internal PartitionProperties(string path,
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Metadata
                                       long beginningSequenceNumber,
                                       long lastSequenceNumber,
                                       long lastOffset,
-                                      DateTime lastEnqueueUtc,
+                                      DateTimeOffset lastEnqueuedTime,
                                       bool isEmpty)
         {
             EventHubPath = path;
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Metadata
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
             LastEnqueuedOffset = lastOffset;
-            LastEnqueuedTimeUtc = lastEnqueueUtc;
+            LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }
     }

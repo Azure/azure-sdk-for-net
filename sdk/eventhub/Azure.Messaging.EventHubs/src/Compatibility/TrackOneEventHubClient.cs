@@ -280,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     IsInclusive = eventPosition.IsInclusive,
                     Offset = eventPosition.Offset,
                     SequenceNumber = eventPosition.SequenceNumber,
-                    EnqueuedTimeUtc = eventPosition.EnqueuedTimeUtc
+                    EnqueuedTimeUtc = eventPosition.EnqueuedTime?.UtcDateTime
                 };
 
                 var trackOneOptions = new TrackOne.ReceiverOptions { Identifier = consumerOptions.Identifier };
