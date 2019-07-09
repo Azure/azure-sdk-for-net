@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ToStringReflectsTheValue()
         {
             var expected = "This is the value of the SAS";
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", expected, DateTimeOffset.Now.AddHours(4));
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", expected, DateTimeOffset.UtcNow.AddHours(4));
 
             Assert.That(signature.ToString(), Is.EqualTo(expected));
         }
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void CompositeConstructorComputesTheExpirationWhenProvided()
         {
             var timeToLive = TimeSpan.FromMinutes(10);
-            var expectedExpiration = DateTimeOffset.Now.Add(timeToLive);
+            var expectedExpiration = DateTimeOffset.UtcNow.Add(timeToLive);
             var allowedVariance = TimeSpan.FromSeconds(5);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey", timeToLive);
 
@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [Test]
         public void CompositeConstructorComputesTheExpirationWhenTheDefaultIsUsed()
         {
-            var minimumExpiration = DateTimeOffset.Now.Add(TimeSpan.FromMinutes(1));
+            var minimumExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(1));
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey");
 
             Assert.That(signature.SignatureExpiration, Is.GreaterThan(minimumExpiration));
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTimeOffset.Now.Add(validFor);
+            var expiration = DateTimeOffset.UtcNow.Add(validFor);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = constructor(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
@@ -413,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
             var extendBy = TimeSpan.FromHours(1);
-            var expiration = DateTimeOffset.Now.Add(extendBy);
+            var expiration = DateTimeOffset.UtcNow.Add(extendBy);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = new SharedAccessSignature(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
@@ -433,7 +433,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTimeOffset.Now.Add(validFor);
+            var expiration = DateTimeOffset.UtcNow.Add(validFor);
             var signature = new SharedAccessSignature(resource, keyName, key, validFor);
             var parsed = ParseSignature(signature.ToString());
 

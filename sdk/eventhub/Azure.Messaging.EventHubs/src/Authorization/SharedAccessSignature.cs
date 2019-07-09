@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
-            SignatureExpiration = DateTimeOffset.Now.Add(signatureValidityDuration.Value);
+            SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration.Value);
             Resource = eventHubResource;
             Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, SignatureExpiration);
         }
@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                 throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
 
-            SignatureExpiration = DateTimeOffset.Now.Add(signatureValidityDuration);
+            SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration);
             Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, SignatureExpiration);
         }
 

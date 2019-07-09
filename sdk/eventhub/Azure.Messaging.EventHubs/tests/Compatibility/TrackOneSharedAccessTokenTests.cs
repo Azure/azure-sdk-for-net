@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheSignatureValue()
         {
-            var signature = new SharedAccessSignature("audience", "keyName", "key", null, DateTimeOffset.Now);
+            var signature = new SharedAccessSignature("audience", "keyName", "key", null, DateTimeOffset.UtcNow);
             Assert.That(() => new TrackOneSharedAccessSignatureToken(signature), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheSignatureResource()
         {
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", String.Empty, DateTimeOffset.Now);
+            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", String.Empty, DateTimeOffset.UtcNow);
             Assert.That(() => new TrackOneSharedAccessSignatureToken(signature), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesInitializesProperties()
         {
-            var expiration = DateTimeOffset.Now;
+            var expiration = DateTimeOffset.UtcNow;
             var audience = "the-audience";
             var value = "TOkEn!";
             var signature = new SharedAccessSignature(audience, "keyName", "key", value, expiration);
