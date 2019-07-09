@@ -1,5 +1,7 @@
-﻿using Microsoft.Azure.Management.NetApp;
+using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.NetApp.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Xunit;
@@ -10,10 +12,10 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        public const string vnet = "sdk-net-tests-rg-eus2-vnet";
+        public const string vnet = "sdk-net-tests-rg-wus-vnet";
         public const string subsId = "0661b131-4a11-479b-96bf-2f95acca2f73";
-        public const string location = "eastus2";
-        public const string resourceGroup = "sdk-net-tests-rg-eus2";
+        public const string location = "westcentralus";
+        public const string resourceGroup = "sdk-net-tests-rg-wus";
         public const string accountName1 = "sdk-net-tests-acc-1";
         public const string accountName2 = "sdk-net-tests-acc-2";
         public const string poolName1 = "sdk-net-tests-pool-1";
@@ -113,18 +115,20 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, object tags = null, VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
         {
             if (!volumeOnly)
             {
                 CreatePool(netAppMgmtClient, poolName, accountName);
             }
+            var defaultProtocolType = new List<string>() { "NFSv3" };
+            var volumeProtocolTypes = protocolTypes == null ? defaultProtocolType : protocolTypes;
 
             var volume = new Volume
             {
                 Location = location,
                 UsageThreshold = 100 * gibibyte,
-                ServiceLevel = "Premium",
+                ProtocolTypes = volumeProtocolTypes,
                 CreationToken = volumeName,
                 SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
