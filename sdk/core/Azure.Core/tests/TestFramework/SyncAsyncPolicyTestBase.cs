@@ -18,7 +18,7 @@ namespace Azure.Core.Testing
         {
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, HttpRequest request, CancellationToken cancellationToken = default)
+        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
         {
             return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
         }
@@ -27,7 +27,7 @@ namespace Azure.Core.Testing
         {
             await Task.Yield();
 
-            using (HttpRequest request = transport.CreateRequest())
+            using (Request request = transport.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");

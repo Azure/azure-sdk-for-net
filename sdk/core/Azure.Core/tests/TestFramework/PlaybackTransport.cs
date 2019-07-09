@@ -61,7 +61,7 @@ namespace Azure.Core.Testing
             message.Response = GetResponse(_session.Lookup(message.Request, _matcher));
         }
 
-        public override HttpRequest CreateRequest()
+        public override Request CreateRequest()
         {
             lock (_random)
             {

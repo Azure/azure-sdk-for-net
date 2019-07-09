@@ -29,11 +29,11 @@ namespace Azure.Core.Pipeline
             _pipeline = all;
         }
 
-        public HttpRequest CreateRequest()
+        public Request CreateRequest()
             => _transport.CreateRequest();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendRequestAsync(HttpRequest request, CancellationToken cancellationToken)
+        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             var message = new HttpPipelineMessage(cancellationToken);
             message.Request = request;
@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Response SendRequest(HttpRequest request, CancellationToken cancellationToken)
+        public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
             var message = new HttpPipelineMessage(cancellationToken);
             message.Request = request;

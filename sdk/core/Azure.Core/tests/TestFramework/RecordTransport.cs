@@ -61,9 +61,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public override HttpRequest CreateRequest()
+        public override Request CreateRequest()
         {
-            HttpRequest request = _innerTransport.CreateRequest();
+            Request request = _innerTransport.CreateRequest();
 
             lock (_random)
             {
@@ -74,7 +74,7 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        public RecordEntry CreateEntry(HttpRequest request, Response response)
+        public RecordEntry CreateEntry(Request request, Response response)
         {
             var entry = new RecordEntry
             {

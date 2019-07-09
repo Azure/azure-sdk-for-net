@@ -9,9 +9,9 @@ namespace Azure.Core.Http
 {
     public readonly struct RequestHeaders: IEnumerable<HttpHeader>
     {
-        private readonly HttpRequest _request;
+        private readonly Request _request;
 
-        public RequestHeaders(HttpRequest request)
+        public RequestHeaders(Request request)
         {
             _request = request;
         }

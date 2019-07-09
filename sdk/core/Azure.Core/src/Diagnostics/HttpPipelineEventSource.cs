@@ -47,7 +47,7 @@ namespace Azure.Core.Diagnostics
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void Request(HttpRequest request)
+        public void Request(Request request)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -56,7 +56,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentAsync(HttpRequest request, CancellationToken cancellationToken)
+        public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -65,7 +65,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestContent(HttpRequest request, CancellationToken cancellationToken)
+        public void RequestContent(Request request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -74,7 +74,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentTextAsync(HttpRequest request, Encoding encoding, CancellationToken cancellationToken)
+        public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -83,7 +83,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestContentText(HttpRequest request, Encoding encoding, CancellationToken cancellationToken)
+        public void RequestContentText(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -206,7 +206,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestRetrying(HttpRequest request, int retryNumber)
+        public void RequestRetrying(Request request, int retryNumber)
         {
             RequestRetrying(request.ClientRequestId, retryNumber);
         }

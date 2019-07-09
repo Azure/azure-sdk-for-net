@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public class MockRequest : HttpRequest
+    public class MockRequest : Request
     {
         public MockRequest()
         {

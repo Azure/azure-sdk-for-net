@@ -63,7 +63,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        public RecordEntry Lookup(HttpRequest request, RecordMatcher matcher)
+        public RecordEntry Lookup(Request request, RecordMatcher matcher)
         {
             lock (Entries)
             {

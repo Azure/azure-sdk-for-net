@@ -26,7 +26,7 @@ namespace Azure.Core.Testing
             "User-Agent"
         };
 
-        public virtual int FindMatch(HttpRequest request, IList<RecordEntry> entries, out string failureMessage)
+        public virtual int FindMatch(Request request, IList<RecordEntry> entries, out string failureMessage)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 

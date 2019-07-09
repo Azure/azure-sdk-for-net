@@ -7,7 +7,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Http
 {
-    public abstract class HttpRequest : IDisposable
+    public abstract class Request : IDisposable
     {
         public virtual HttpPipelineUriBuilder UriBuilder { get; set; } = new HttpPipelineUriBuilder();
 

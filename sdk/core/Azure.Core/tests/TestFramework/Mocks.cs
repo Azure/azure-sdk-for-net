@@ -36,7 +36,7 @@ namespace Azure.Core.Testing
             _responseFactory = responseFactory;
         }
 
-        public override HttpRequest CreateRequest()
+        public override Request CreateRequest()
             => new MockRequest();
 
         public override void Process(HttpPipelineMessage message)

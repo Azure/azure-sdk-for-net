@@ -514,7 +514,7 @@ namespace Azure.Security.KeyVault.Secrets
             where TContent : Model
             where TResult : Model
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
@@ -528,7 +528,7 @@ namespace Azure.Security.KeyVault.Secrets
             where TContent : Model
             where TResult : Model
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
@@ -541,7 +541,7 @@ namespace Azure.Security.KeyVault.Secrets
         private async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : Model
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -552,7 +552,7 @@ namespace Azure.Security.KeyVault.Secrets
         private Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : Model
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 Response response = SendRequest(request, cancellationToken);
 
@@ -561,7 +561,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
         private async Task<Response> SendRequestAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 return await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
             }
@@ -569,13 +569,13 @@ namespace Azure.Security.KeyVault.Secrets
 
         private Response SendRequest(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
-            using (HttpRequest request = CreateRequest(method, path))
+            using (Request request = CreateRequest(method, path))
             {
                 return SendRequest(request, cancellationToken);
             }
         }
 
-        private async Task<Response> SendRequestAsync(HttpRequest request, CancellationToken cancellationToken)
+        private async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -589,7 +589,7 @@ namespace Azure.Security.KeyVault.Secrets
                     throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
             }
         }
-        private Response SendRequest(HttpRequest request, CancellationToken cancellationToken)
+        private Response SendRequest(Request request, CancellationToken cancellationToken)
         {
             var response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -613,7 +613,7 @@ namespace Azure.Security.KeyVault.Secrets
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (HttpRequest request = CreateRequest(RequestMethod.Get, firstPageUri))
+            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
             {
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -635,7 +635,7 @@ namespace Azure.Security.KeyVault.Secrets
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (HttpRequest request = CreateRequest(RequestMethod.Get, firstPageUri))
+            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
             {
                 Response response = SendRequest(request, cancellationToken);
 
@@ -648,9 +648,9 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        private HttpRequest CreateRequest(RequestMethod method, Uri uri)
+        private Request CreateRequest(RequestMethod method, Uri uri)
         {
-            HttpRequest request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Names.Accept, "application/json");
@@ -660,9 +660,9 @@ namespace Azure.Security.KeyVault.Secrets
             return request;
         }
 
-        private HttpRequest CreateRequest(RequestMethod method, params string[] path)
+        private Request CreateRequest(RequestMethod method, params string[] path)
         {
-            HttpRequest request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Headers.Add(HttpHeader.Names.Accept, "application/json");

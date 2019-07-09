@@ -98,7 +98,7 @@ namespace Azure.Identity
 
         private async Task<AccessToken> SendAuthRequestAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
         {
-            using (HttpRequest request = CreateAuthRequest(msiType, scopes, clientId))
+            using (Request request = CreateAuthRequest(msiType, scopes, clientId))
             {
                 var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -115,7 +115,7 @@ namespace Azure.Identity
 
         private AccessToken SendAuthRequest(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
         {
-            using (HttpRequest request = CreateAuthRequest(msiType, scopes, clientId))
+            using (Request request = CreateAuthRequest(msiType, scopes, clientId))
             {
                 var response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -130,7 +130,7 @@ namespace Azure.Identity
             }
         }
 
-        private HttpRequest CreateAuthRequest(MsiType msiType, string[] scopes, string clientId)
+        private Request CreateAuthRequest(MsiType msiType, string[] scopes, string clientId)
         {
             switch (msiType)
             {
@@ -275,7 +275,7 @@ namespace Azure.Identity
             // send a request without the Metadata header.  This will result in a failed request,
             // but we're just interested in if we get a response before the timeout of 500ms
             // if we don't get a response we assume the imds endpoint is not available
-            using (HttpRequest request = _pipeline.CreateRequest())
+            using (Request request = _pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
 
@@ -307,7 +307,7 @@ namespace Azure.Identity
             // send a request without the Metadata header.  This will result in a failed request,
             // but we're just interested in if we get a response before the timeout of 500ms
             // if we don't get a response we assume the imds endpoint is not available
-            using (HttpRequest request = _pipeline.CreateRequest())
+            using (Request request = _pipeline.CreateRequest())
             {
                 request.Method = RequestMethod.Get;
 
@@ -334,12 +334,12 @@ namespace Azure.Identity
             }
         }
 
-        private HttpRequest CreateImdsAuthRequest(string[] scopes, string clientId)
+        private Request CreateImdsAuthRequest(string[] scopes, string clientId)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
-            HttpRequest request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             request.Method = RequestMethod.Get;
 
@@ -359,12 +359,12 @@ namespace Azure.Identity
             return request;
         }
 
-        private HttpRequest CreateAppServiceAuthRequest(string[] scopes, string clientId)
+        private Request CreateAppServiceAuthRequest(string[] scopes, string clientId)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
-            HttpRequest request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             request.Method = RequestMethod.Get;
 
@@ -384,12 +384,12 @@ namespace Azure.Identity
             return request;
         }
 
-        private HttpRequest CreateCloudShellAuthRequest(string[] scopes, string clientId)
+        private Request CreateCloudShellAuthRequest(string[] scopes, string clientId)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
-            HttpRequest request = _pipeline.CreateRequest();
+            Request request = _pipeline.CreateRequest();
 
             request.Method = RequestMethod.Post;
 

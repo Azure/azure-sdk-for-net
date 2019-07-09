@@ -241,21 +241,21 @@ namespace Azure.Core.Tests
 
         private static Response SendTestRequest(HttpPipeline pipeline, long offset)
         {
-            using HttpRequest request = CreateRequest(pipeline, offset);
+            using Request request = CreateRequest(pipeline, offset);
 
             return pipeline.SendRequest(request, CancellationToken.None);
         }
 
         private static Task<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
-            using HttpRequest request = CreateRequest(pipeline, offset);
+            using Request request = CreateRequest(pipeline, offset);
 
             return pipeline.SendRequestAsync(request, CancellationToken.None);
         }
 
-        private static HttpRequest CreateRequest(HttpPipeline pipeline, long offset)
+        private static Request CreateRequest(HttpPipeline pipeline, long offset)
         {
-            HttpRequest request = pipeline.CreateRequest();
+            Request request = pipeline.CreateRequest();
             request.SetRequestLine(RequestMethod.Get, new Uri("http://example.com"));
             request.Headers.Add("Range", "bytes=" + offset);
             return request;
