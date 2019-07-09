@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "71941bd1-c841-46c5-a088-df26cdfe123d"
+          "afdce862-f850-41ab-aab3-786b9d274206"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ddaae83e-15e1-4ba3-ae52-7b36c1d831bc"
+          "f1f0fe25-b0e3-4b80-ba4f-788b4c0e5e6f"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "599"
+          "598"
         ],
         "x-ms-correlation-request-id": [
-          "8d99f561-e961-465a-8085-e6c19171bf7f"
+          "abf0f698-68c3-493f-a111-78285e1cdf5c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190708T235814Z:8d99f561-e961-465a-8085-e6c19171bf7f"
+          "NORTHEUROPE:20190709T000510Z:abf0f698-68c3-493f-a111-78285e1cdf5c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 23:58:13 GMT"
+          "Tue, 09 Jul 2019 00:05:10 GMT"
         ],
         "Content-Length": [
           "62882"

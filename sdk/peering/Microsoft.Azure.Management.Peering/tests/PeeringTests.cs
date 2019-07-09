@@ -40,7 +40,7 @@ namespace Peering.Tests
 
         public PeeringTests()
         {
-            this.Setup(true);
+            this.Setup();
         }
 
         private void Setup(bool isRecord = false)

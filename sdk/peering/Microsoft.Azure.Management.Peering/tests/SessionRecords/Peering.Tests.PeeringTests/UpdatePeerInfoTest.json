@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 65000,\r\n    \"peerContactInfo\": {\r\n      \"emails\": [\r\n        \"noc65000@contoso.com\"\r\n      ],\r\n      \"phone\": [\r\n        \"9999999\"\r\n      ]\r\n    },\r\n    \"peerName\": \"Contoso65000\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e2ec0141-2a40-4bbd-82e5-2a2a483a1010"
+          "cf9e9ab9-8949-4fc0-a496-e3ec4b88d70f"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.10.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,16 +33,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "baac54f4-8c39-49ad-bfb5-5a9267c92181"
+          "787c995e-3698-478f-a4d3-f1aab6003698"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "99"
+          "97"
         ],
         "x-ms-correlation-request-id": [
-          "df42cffc-40f3-412b-a891-8a63189cfc84"
+          "1756d646-df98-49f8-8693-943198655709"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190708T235805Z:df42cffc-40f3-412b-a891-8a63189cfc84"
+          "NORTHEUROPE:20190709T000459Z:1756d646-df98-49f8-8693-943198655709"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 23:58:05 GMT"
+          "Tue, 09 Jul 2019 00:04:59 GMT"
         ],
         "Content-Length": [
           "442"
@@ -73,7 +73,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "eeccf48b-a51d-424e-93a0-0c9585e036c3"
+          "f6c7fe39-4b6b-4072-bd30-9e7222b4321d"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -93,16 +93,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "c4a7c917-a9a4-414f-9e56-d576019e369b"
+          "fef2ccc3-e005-4f15-813b-0a0f6af28a1b"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "599"
+          "596"
         ],
         "x-ms-correlation-request-id": [
-          "17d4a1fe-a626-4d53-912a-abebe9848634"
+          "744b82cf-26be-4970-915f-495c86c35b5a"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190708T235805Z:17d4a1fe-a626-4d53-912a-abebe9848634"
+          "NORTHEUROPE:20190709T000459Z:744b82cf-26be-4970-915f-495c86c35b5a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 23:58:05 GMT"
+          "Tue, 09 Jul 2019 00:04:59 GMT"
         ],
         "Content-Length": [
           "442"
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4ec1153b-1bc8-44d8-aa23-f5ae724fa57c"
+          "4dc021e0-9cc2-41a7-a4d5-07e44433a5e6"
         ],
         "Accept-Language": [
           "en-US"
@@ -142,7 +142,7 @@
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -153,16 +153,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7a82e2f5-c266-435e-8dca-bcd7e5c4343c"
+          "d0eb1ef7-d64c-4952-a985-e0717353df12"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "599"
+          "598"
         ],
         "x-ms-correlation-request-id": [
-          "b2599353-0ac8-4eb0-88c0-fdc9a2bc3171"
+          "a96e6614-2c52-40b6-a1c4-093d82f9084f"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190708T235807Z:b2599353-0ac8-4eb0-88c0-fdc9a2bc3171"
+          "NORTHEUROPE:20190709T000502Z:a96e6614-2c52-40b6-a1c4-093d82f9084f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -171,7 +171,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 23:58:07 GMT"
+          "Tue, 09 Jul 2019 00:05:01 GMT"
         ],
         "Content-Length": [
           "68"
@@ -193,7 +193,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f3dc16ac-004b-4c34-9e91-9140aefe247a"
+          "c9ce9804-a2d6-4fcc-99b2-855d00b03a9a"
         ],
         "Accept-Language": [
           "en-US"
@@ -202,7 +202,7 @@
           "FxVersion/4.6.27617.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.9.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.10.0"
         ]
       },
       "ResponseHeaders": {
@@ -213,16 +213,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "64ec7eaf-bb22-408f-8ef9-605c089e877a"
+          "a40c1a2f-2f40-43c7-853c-79774c440197"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "49820cf1-6ce2-4795-b89b-755b6fd28df7"
+          "95ca7f72-04a4-4c39-9f10-5eb6a2d4d199"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190708T235807Z:49820cf1-6ce2-4795-b89b-755b6fd28df7"
+          "NORTHEUROPE:20190709T000501Z:95ca7f72-04a4-4c39-9f10-5eb6a2d4d199"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -231,7 +231,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 08 Jul 2019 23:58:07 GMT"
+          "Tue, 09 Jul 2019 00:05:01 GMT"
         ],
         "Expires": [
           "-1"
