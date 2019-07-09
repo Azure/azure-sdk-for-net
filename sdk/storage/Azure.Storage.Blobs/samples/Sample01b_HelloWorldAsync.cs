@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -102,6 +103,20 @@ namespace Azure.Storage.Blobs.Samples
             {
                 // Clean up after the test when we're finished
                 await container.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Download our sample image.
+        /// </summary>
+        [Test]
+        public async Task DownloadImageAsync()
+        {
+            // Download the public blob at https://aka.ms/bloburl
+            BlobDownloadInfo download = await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadAsync();
+            using (FileStream file = File.OpenWrite("hello.jpg"))
+            {
+                await download.Content.CopyToAsync(file);
             }
         }
 

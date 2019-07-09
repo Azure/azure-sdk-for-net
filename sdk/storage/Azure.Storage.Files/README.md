@@ -161,6 +161,7 @@ catch (StorageRequestFailedException ex)
 Get started with our [File samples][samples]:
 
 1. [Hello World](samples/Sample01a_HelloWorld.cs): Upload files, download files, and traverse shares (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, and shared access signatures.
 
 ## Contributing
 

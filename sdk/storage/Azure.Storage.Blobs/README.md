@@ -119,7 +119,7 @@ Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
 ```
 
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and \[our samples](COMING TODAY).
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and [our samples](#next-steps).
 
 ## Troubleshooting
 
@@ -149,6 +149,7 @@ catch (StorageRequestFailedException ex)
 Get started with our [Blob samples][samples]:
 
 1. [Hello World](samples/Sample01a_HelloWorld.cs): Upload, download, and list blobs (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](samples/Sample02_Auth.cs): Authenticate with connection strings, public access, shared keys, shared access signatures, and Azure Active Directory.
 
 ## Contributing
 

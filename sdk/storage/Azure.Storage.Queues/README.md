@@ -104,7 +104,7 @@ Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
 ```
 
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and \[our samples](COMING TODAY).
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and [our samples](#next-steps).
 
 ## Troubleshooting
 
@@ -135,6 +135,7 @@ catch (StorageRequestFailedException ex)
 Get started with our [Queue samples][samples]:
 
 1. [Hello World](samples/Sample01a_HelloWorld.cs): Enqueue, Dequeue, Peek, and Update queue messages (or [asynchronously](samples/Sample01b_HelloWorldAsync.cs))
+2. [Auth](samples/Sample02_Auth.cs): Authenticate with connection strings, shared keys, shared access signatures, and Azure Active Directory.
 
 ## Contributing
 

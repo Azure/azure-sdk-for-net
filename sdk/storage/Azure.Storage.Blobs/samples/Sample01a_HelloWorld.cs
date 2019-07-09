@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -103,6 +104,20 @@ namespace Azure.Storage.Blobs.Samples
             {
                 // Clean up after the test when we're finished
                 container.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Download our sample image.
+        /// </summary>
+        [Test]
+        public void DownloadImage()
+        {
+            // Download the public blob at https://aka.ms/bloburl
+            BlobDownloadInfo download = new BlobClient(new Uri("https://aka.ms/bloburl")).Download();
+            using (FileStream file = File.OpenWrite("hello.jpg"))
+            {
+                download.Content.CopyTo(file);
             }
         }
 
