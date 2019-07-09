@@ -45,7 +45,7 @@ The Azure Storage common client library contains shared infrastructure like
 
 ## Examples
 
-Please see the examples for [Blobs][blobs_examples], [Queues][blobs_examples], and [Files][blobs_examples].
+Please see the examples for [Blobs][blobs_examples], [Queues][queues_examples], and [Files][files_examples].
 
 ## Troubleshooting
 
@@ -54,7 +54,7 @@ with helpful [`ErrorCode`s][error_codes].
 
 ## Next steps
 
-Get started with our [Common samples](samples) and then continue on with our [Blobs][blobs_samples], [Queues][blobs_samples], and [Files][blobs_samples] samples.
+Get started with our [Common samples][samples] and then continue on with our [Blobs][blobs_samples], [Queues][queues_samples], and [Files][files_samples] samples.
 
 ## Contributing
 

@@ -106,20 +106,35 @@ foreach (BlobItem blob in container.GetBlobs())
 }
 ```
 
+### Async APIs
+
+We fully support both synchronous and asynchronous APIs.
+
+```c#
+// Get a reference to the public blob at https://aka.ms/bloburl
+BlobClient blob = new BlobClient(new Uri("https://aka.ms/bloburl"));
+
+// Download the blob
+BlobDownloadInfo download = await blob.DownloadAsync();
+using (FileStream file = File.OpenWrite("hello.jpg"))
+{
+    await download.Content.CopyToAsync(file);
+}
+```
+
 ### Authenticating with Azure.Identity
 
-The [Azure Identity library](identity) provides easy Azure Active Directory support for authentication.
+The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
 ```c#
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 
 // Create a BlobServiceClient that will authenticate through Active Directory
 Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 BlobServiceClient client = new BlobServiceClient(accountUri, new DefaultAzureCredential());
 ```
 
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and [our samples](#next-steps).
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
 
 ## Troubleshooting
 

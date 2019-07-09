@@ -45,6 +45,10 @@ Common uses of Queue storage include:
 ### Enqueue messages
 
 ```c#
+using Azure.Storage;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
+
 // Get a connection string to our Azure Storage account.  You can
 // obtain your connection string from the Azure Portal (click
 // Access Keys under Settings in the Portal Storage account blade)
@@ -91,20 +95,35 @@ foreach (DequeuedMessage message in queue.DequeueMessages(maxMessages: 10).Value
 }
 ```
 
+### Async APIs
+
+We fully support both synchronous and asynchronous APIs.
+
+```c#
+// Get a connection string to our Azure Storage account.
+string connectionString = "<connection_string>";
+
+// Get a reference to a queue named "sample-queue" and then create it
+QueueClient queue = new QueueClient(connectionString, "sample-queue");
+await queue.CreateAsync();
+
+// Add a message to our queue
+await queue.EnqueueMessageAsync("Hello, Azure!");
+```
+
 ### Authenticating with Azure.Identity
 
-The [Azure Identity library](identity) provides easy Azure Active Directory support for authentication.
+The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
 ```c#
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 
 // Create a QueueClient that will authenticate through Active Directory
 Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
 QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
 ```
 
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](storage_ad) and [our samples](#next-steps).
+Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad] and [our samples](#next-steps).
 
 ## Troubleshooting
 

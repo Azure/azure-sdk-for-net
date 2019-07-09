@@ -47,6 +47,10 @@ Azure file shares can be used to:
 ### Create a share and upload a file
 
 ```c#
+using Azure.Storage;
+using Azure.Storage.Files;
+using Azure.Storage.Files.Models;
+
 // Get a connection string to our Azure Storage account.  You can
 // obtain your connection string from the Azure Portal (click
 // Access Keys under Settings in the Portal Storage account blade)
@@ -129,6 +133,24 @@ while (remaining.Count > 0)
             remaining.Enqueue(dir.GetSubdirectoryClient(item.Name));
         }
     }
+}
+```
+
+### Async APIs
+
+We fully support both synchronous and asynchronous APIs.
+
+```c#
+string connectionString = "<connection_string>";
+ShareClient share = new ShareClient(connectionString, "sample-share");
+DirectoryClient directory = share.GetDirectoryClient("sample-dir");
+FileClient file = directory.GetFileClient("sample-file");
+
+// Download the file
+StorageFileDownloadInfo download = await file.DownloadAsync();
+using (FileStream stream = File.OpenWrite("downloaded-file.txt"))
+{
+    await download.Content.CopyToAsync(stream);
 }
 ```
 
