@@ -214,7 +214,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/
 [StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-error-codes
-[samples]: tests/Samples/
+[samples]: samples/
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
