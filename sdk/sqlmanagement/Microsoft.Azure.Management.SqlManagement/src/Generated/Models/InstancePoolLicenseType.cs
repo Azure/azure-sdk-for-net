@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for ElasticPoolEdition.
+    /// Defines values for InstancePoolLicenseType.
     /// </summary>
-    public static class ElasticPoolEdition
+    public static class InstancePoolLicenseType
     {
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string GeneralPurpose = "GeneralPurpose";
-        public const string BusinessCritical = "BusinessCritical";
+        public const string LicenseIncluded = "LicenseIncluded";
+        public const string BasePrice = "BasePrice";
     }
 }
