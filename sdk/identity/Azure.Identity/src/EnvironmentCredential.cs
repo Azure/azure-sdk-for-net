@@ -75,7 +75,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
         public async override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
-            return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken) : default;
+            return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken).ConfigureAwait(false) : default;
         }
     }
 }

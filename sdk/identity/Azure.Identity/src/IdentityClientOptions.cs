@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Identity
 {
@@ -13,7 +12,6 @@ namespace Azure.Identity
     public class IdentityClientOptions : ClientOptions
     {
         private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
-        private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
 
         /// <summary>
         /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com

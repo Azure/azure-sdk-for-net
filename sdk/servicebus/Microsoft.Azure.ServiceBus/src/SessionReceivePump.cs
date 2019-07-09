@@ -54,17 +54,18 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        static void CancelAndDisposeCancellationTokenSource(CancellationTokenSource renewLockCancellationTokenSource)
-        {
-            renewLockCancellationTokenSource?.Cancel();
-            renewLockCancellationTokenSource?.Dispose();
-        }
-
-        static void OnUserCallBackTimeout(object state)
+        static void CancelAutoRenewLock(object state)
         {
             var renewCancellationTokenSource = (CancellationTokenSource)state;
-            renewCancellationTokenSource?.Cancel();
-            renewCancellationTokenSource?.Dispose();
+
+            try
+            {
+                renewCancellationTokenSource.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore this race.
+            }
         }
 
         bool ShouldRenewSessionLock()
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.ServiceBus
                         }
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
-                            break;
+                            await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
                         }
                     }
                 }
@@ -179,8 +180,8 @@ namespace Microsoft.Azure.ServiceBus
                 TaskExtensionHelper.Schedule(() => this.RenewSessionLockTaskAsync(session, renewLockCancellationTokenSource.Token));
             }
 
-            var userCallbackTimer = new Timer(
-                OnUserCallBackTimeout,
+            var autoRenewLockCancellationTimer = new Timer(
+                CancelAutoRenewLock,
                 renewLockCancellationTokenSource,
                 Timeout.Infinite,
                 Timeout.Infinite);
@@ -223,7 +224,7 @@ namespace Microsoft.Azure.ServiceBus
                     try
                     {
                         // Set the timer
-                        userCallbackTimer.Change(this.sessionHandlerOptions.MaxAutoRenewDuration,
+                        autoRenewLockCancellationTimer.Change(this.sessionHandlerOptions.MaxAutoRenewDuration,
                             TimeSpan.FromMilliseconds(-1));
                         var callbackExceptionOccurred = false;
                         try
@@ -248,7 +249,7 @@ namespace Microsoft.Azure.ServiceBus
                         }
                         finally
                         {
-                            userCallbackTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                            autoRenewLockCancellationTimer.Change(Timeout.Infinite, Timeout.Infinite);
                         }
 
                         if (!callbackExceptionOccurred)
@@ -269,8 +270,10 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                userCallbackTimer.Dispose();
-                CancelAndDisposeCancellationTokenSource(renewLockCancellationTokenSource);
+                renewLockCancellationTokenSource.Cancel();
+                renewLockCancellationTokenSource.Dispose();
+                autoRenewLockCancellationTimer.Dispose();
+
                 await this.CloseSessionIfNeededAsync(session).ConfigureAwait(false);
                 this.maxConcurrentSessionsSemaphoreSlim.Release();
             }

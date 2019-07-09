@@ -11,9 +11,9 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class LoggingPolicy : HttpPipelinePolicy
+    internal class LoggingPolicy : HttpPipelinePolicy
     {
-        private static readonly long s_delayWarningThreshold = 3000; // 3000ms
+        private const long DelayWarningThreshold = 3000; // 3000ms
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline.Policies
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, pipeline, true);
+            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
         }
 
         private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.CancellationToken);
+                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await s_eventSource.RequestContentAsync(message.Request, message.CancellationToken);
+                        await s_eventSource.RequestContentAsync(message.Request, message.CancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -111,7 +111,7 @@ namespace Azure.Core.Pipeline.Policies
                         }
                         else
                         {
-                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding, message.CancellationToken);
+                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding);
                         }
                     }
                     else
@@ -140,7 +140,7 @@ namespace Azure.Core.Pipeline.Policies
                     }
                     else
                     {
-                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding, message.CancellationToken);
+                        s_eventSource.ResponseContentText(message.Response, responseTextEncoding);
                     }
                 }
                 else
@@ -151,13 +151,13 @@ namespace Azure.Core.Pipeline.Policies
                     }
                     else
                     {
-                        s_eventSource.ResponseContent(message.Response, message.CancellationToken);
+                        s_eventSource.ResponseContent(message.Response);
                     }
                 }
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > s_delayWarningThreshold)
+            if (elapsedMilliseconds > DelayWarningThreshold)
             {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
@@ -238,7 +238,7 @@ namespace Azure.Core.Pipeline.Policies
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken);
+                var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
                 LogBuffer(buffer, offset, result);
 

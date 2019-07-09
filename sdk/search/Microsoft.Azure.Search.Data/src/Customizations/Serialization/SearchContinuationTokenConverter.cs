@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Search.Serialization
 
     internal class SearchContinuationTokenConverter : JsonConverter
     {
+        // MAINTENANCE NOTE: Remember to change this when the REST API version changes.
+        private const string TargetApiVersion = "2019-05-06";
+
         public override bool CanConvert(Type objectType) => objectType == typeof(SearchContinuationToken);
 
         public override object ReadJson(
@@ -40,11 +43,11 @@ namespace Microsoft.Azure.Search.Serialization
                     "Cannot deserialize continuation token because the api-version is missing.");
             }
 
-            if (apiVersion != Consts.TargetApiVersion)
+            if (apiVersion != TargetApiVersion)
             {
                 string message =
                     "Cannot deserialize a continuation token for a different api-version. Token contains version " +
-                    $"'{apiVersion}'; Expected version '{Consts.TargetApiVersion}'.";
+                    $"'{apiVersion}'; Expected version '{TargetApiVersion}'.";
 
                 throw new JsonSerializationException(message);
             }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -25,7 +27,7 @@ namespace Azure.Core.Testing
             "User-Agent"
         };
 
-        public virtual int FindMatch(Request request, IList<RecordEntry> entries)
+        public virtual RecordEntry FindMatch(Request request, IList<RecordEntry> entries)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
@@ -40,42 +42,120 @@ namespace Azure.Core.Testing
 
             string uri = _sanitizer.SanitizeUri(request.UriBuilder.ToString());
 
-            for (int i = 0; i < entries.Count; i++)
-            {
-                RecordEntry entry = entries[i];
+            int bestScore = int.MaxValue;
+            RecordEntry bestScoreEntry = null;
 
-                if (entry.RequestUri == uri &&
-                    entry.RequestMethod == request.Method &&
-                    CompareHeaderDictionaries(headers, entry.RequestHeaders))
+            foreach (RecordEntry entry in entries)
+            {
+                int score = 0;
+                if (entry.RequestUri != uri)
                 {
-                    return i;
+                    score++;
+                }
+
+                if (entry.RequestMethod != request.Method)
+                {
+                    score++;
+                }
+
+                score += CompareHeaderDictionaries(headers, entry.RequestHeaders);
+
+                if (score == 0)
+                {
+                    return entry;
+                }
+
+                if (score < bestScore)
+                {
+                    bestScoreEntry = entry;
+                    bestScore = score;
                 }
             }
 
-            return -1;
+
+            throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
         }
 
-        private bool CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders)
+        private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
         {
-            if (headers.Count != entryHeaders.Count)
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine($"Unable to find a record for the request {requestMethod} {uri}");
+
+            if (bestScoreEntry == null)
             {
-                return false;
+                builder.AppendLine("No records to match.");
+                return builder.ToString();
             }
 
+            if (requestMethod != bestScoreEntry.RequestMethod)
+            {
+                builder.AppendLine($"Method doesn't match, request <{requestMethod}> record <{bestScoreEntry.RequestMethod}>");
+            }
+
+            if (uri != bestScoreEntry.RequestUri)
+            {
+                builder.AppendLine("Uri doesn't match:");
+                builder.AppendLine($"    request <{uri}>");
+                builder.AppendLine($"    record  <{bestScoreEntry.RequestUri}>");
+            }
+
+            builder.AppendLine("Header differences:");
+
+            var entryHeaders = new SortedDictionary<string, string[]>(bestScoreEntry.RequestHeaders, bestScoreEntry.RequestHeaders.Comparer);
             foreach (KeyValuePair<string, string[]> header in headers)
             {
-                if (ExcludeHeaders.Contains(header.Key))
+                if (entryHeaders.TryGetValue(header.Key, out string[] values))
                 {
-                    continue;
+                    entryHeaders.Remove(header.Key);
+                    if (!ExcludeHeaders.Contains(header.Key) &&
+                        !values.SequenceEqual(header.Value))
+                    {
+                        builder.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
+
+                    }
                 }
-                if (!entryHeaders.TryGetValue(header.Key, out string[] values) ||
-                    !values.SequenceEqual(header.Value))
+                else
                 {
-                    return false;
+                    builder.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
                 }
             }
 
-            return true;
+            foreach (KeyValuePair<string, string[]> header in entryHeaders)
+            {
+                builder.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");
+
+            }
+
+            return builder.ToString();
+        }
+
+        private string JoinHeaderValues(string[] values)
+        {
+            return string.Join(",", values);
+        }
+
+        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders)
+        {
+            int difference = 0;
+            var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
+            foreach (KeyValuePair<string, string[]> header in headers)
+            {
+                if (remaining.TryGetValue(header.Key, out string[] values))
+                {
+                    remaining.Remove(header.Key);
+                    if (!ExcludeHeaders.Contains(header.Key) &&
+                        !values.SequenceEqual(header.Value))
+                    {
+                        difference++;
+                    }
+                }
+                else
+                {
+                    difference++;
+                }
+            }
+            difference += remaining.Count;
+            return difference;
         }
     }
 }

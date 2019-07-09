@@ -89,7 +89,7 @@ namespace Azure.Core
                     }
                     catch (Exception e)
                     {
-                        await RetryAsync(e, true);
+                        await RetryAsync(e, true).ConfigureAwait(false);
                     }
                 }
             }
@@ -115,7 +115,7 @@ namespace Azure.Core
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
 
-                _currentStream = async ? (await _asyncResponseFactory(_position)).ContentStream : _responseFactory(_position).ContentStream;
+                _currentStream = async ? (await _asyncResponseFactory(_position).ConfigureAwait(false)).ContentStream : _responseFactory(_position).ContentStream;
             }
 
             public override int Read(byte[] buffer, int offset, int count)

@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Search
             else
             {
                 return Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
-                    autocompleteParameters.ToRequest(searchText, suggesterName),
+                    (autocompleteParameters ?? new AutocompleteParameters()).ToRequest(searchText, suggesterName),
                     searchRequestOptions,
                     customHeaders,
                     cancellationToken);
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Search
             else
             {
                 return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<T>(
-                    searchParameters.ToRequest(searchText),
+                    (searchParameters ?? new SearchParameters()).ToRequest(searchText),
                     searchRequestOptions,
                     EnsureCustomHeaders(customHeaders),
                     cancellationToken,
@@ -411,6 +411,8 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings deserializerSettings,
             CancellationToken cancellationToken)
         {
+            suggestParameters = suggestParameters ?? new SuggestParameters();
+
             if (Client.UseHttpGetForQueries)
             {
                 return Client.DocumentsProxy.SuggestGetWithHttpMessagesAsync<T>(

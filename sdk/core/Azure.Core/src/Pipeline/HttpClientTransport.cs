@@ -156,9 +156,9 @@ namespace Azure.Core.Pipeline
                 ClientRequestId = Guid.NewGuid().ToString();
             }
 
-            public override HttpPipelineMethod Method
+            public override RequestMethod Method
             {
-                get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
+                get => RequestMethod.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
@@ -228,7 +228,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 _wasSent = true;
-
                 return currentRequest;
             }
 
@@ -240,28 +239,48 @@ namespace Azure.Core.Pipeline
 
             public override string ToString() => _requestMessage.ToString();
 
-            readonly static HttpMethod s_patch = new HttpMethod("PATCH");
+            private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
 
-            public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
+            private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
             {
-                switch (method)
+                var method = requestMethod.Method;
+                // Fast-path common values
+                if (method.Length == 3)
                 {
-                    case HttpPipelineMethod.Get:
+                    if (string.Equals(method, "GET", StringComparison.OrdinalIgnoreCase))
+                    {
                         return HttpMethod.Get;
-                    case HttpPipelineMethod.Post:
-                        return HttpMethod.Post;
-                    case HttpPipelineMethod.Put:
-                        return HttpMethod.Put;
-                    case HttpPipelineMethod.Delete:
-                        return HttpMethod.Delete;
-                    case HttpPipelineMethod.Patch:
-                        return s_patch;
-                    case HttpPipelineMethod.Head:
-                        return HttpMethod.Head;
+                    }
 
-                    default:
-                        throw new NotImplementedException();
+                    if (string.Equals(method, "PUT", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Put;
+                    }
                 }
+                else if (method.Length == 4)
+                {
+                    if (string.Equals(method, "POST", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Post;
+                    }
+                    if (string.Equals(method, "HEAD", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Head;
+                    }
+                }
+                else
+                {
+                    if (string.Equals(method, "PATCH", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return s_patch;
+                    }
+                    if (string.Equals(method, "DELETE", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return HttpMethod.Delete;
+                    }
+                }
+
+                return new HttpMethod(method);
             }
 
             private void EnsureContentInitialized()
@@ -377,8 +396,8 @@ namespace Azure.Core.Pipeline
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                await EnsureStreamAsync();
-                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken);
+                await EnsureStreamAsync().ConfigureAwait(false);
+                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -440,7 +459,7 @@ namespace Azure.Core.Pipeline
             {
                 async Task EnsureStreamAsyncImpl()
                 {
-                    _contentStream = await _contentTask;
+                    _contentStream = await _contentTask.ConfigureAwait(false);
                 }
 
                 return _contentStream == null ? EnsureStreamAsyncImpl() : Task.CompletedTask;

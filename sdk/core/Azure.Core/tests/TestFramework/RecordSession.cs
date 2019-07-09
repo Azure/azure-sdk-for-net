@@ -66,14 +66,8 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                var index = matcher.FindMatch(request, Entries);
-                if (index == -1)
-                {
-                    throw new InvalidOperationException($"Unable to find recorded request with method {request.Method} and uri {request.UriBuilder.ToString()}");
-                }
-
-                var entry = Entries[index];
-                Entries.RemoveAt(index);
+                RecordEntry entry = matcher.FindMatch(request, Entries);
+                Entries.Remove(entry);
                 return entry;
             }
 

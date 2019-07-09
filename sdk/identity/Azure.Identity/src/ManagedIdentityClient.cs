@@ -145,11 +145,11 @@ namespace Azure.Identity
         }
 
         private async ValueTask<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
-        { 
+        {
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
             {
-                // aquire the init lock 
+                // aquire the init lock
                 await s_initLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 try
@@ -212,7 +212,7 @@ namespace Azure.Identity
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
             {
-                // aquire the init lock 
+                // aquire the init lock
                 s_initLock.Wait(cancellationToken);
 
                 try
@@ -270,13 +270,13 @@ namespace Azure.Identity
         }
 
         private bool ImdsAvailable(CancellationToken cancellationToken)
-        {            
+        {
             // send a request without the Metadata header.  This will result in a failed request,
             // but we're just interested in if we get a response before the timeout of 500ms
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -287,7 +287,7 @@ namespace Azure.Identity
                 try
                 {
                     var response = _pipeline.SendRequest(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token);
-                
+
                     return true;
                 }
                 // we only want to handle the case when the imdsTimeout resulted in the request being cancelled.
@@ -308,7 +308,7 @@ namespace Azure.Identity
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -340,7 +340,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("Metadata", "true");
 
@@ -365,7 +365,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
@@ -390,7 +390,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
@@ -412,7 +412,7 @@ namespace Azure.Identity
             return request;
         }
 
-        private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+        private static async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
             {
@@ -420,7 +420,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(Stream content)
+        private static AccessToken Deserialize(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content))
             {
@@ -428,7 +428,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(JsonElement json)
+        private static AccessToken Deserialize(JsonElement json)
         {
             string accessToken = null;
 
@@ -457,7 +457,10 @@ namespace Azure.Identity
             // otherwise expires_on will be a unix timestamp seconds from epoch
             else
             {
-                if(!expiresOnProp.TryGetInt64(out long expiresOnSec))
+                // the seconds from epoch may be returned as a Json number or a Json string which is a number
+                // depending on the environment.  If neither of these are the case we throw an AuthException.
+                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) && 
+                    !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
                 }

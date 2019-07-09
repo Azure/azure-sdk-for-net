@@ -4,6 +4,7 @@
 
 using System;
 using System.Net;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Blobs
 {
@@ -72,7 +73,7 @@ namespace Azure.Storage.Blobs
         /// Gets or sets the Shared Access Signature query parameters, or null
         /// if not present in the <see cref="Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas;
+        public BlobSasQueryParameters Sas;
 
         /// <summary>
         /// Gets or sets the query parameters not relevant to addressing
@@ -163,7 +164,7 @@ namespace Azure.Storage.Blobs
 
             if (paramsMap.ContainsKey(SasVersionKey))
             {
-                this.Sas = new SasQueryParameters(paramsMap);
+                this.Sas = new BlobSasQueryParameters(paramsMap);
             }
 
             this.UnparsedParams = paramsMap.ToString();

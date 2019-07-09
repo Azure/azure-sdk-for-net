@@ -131,7 +131,7 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
@@ -154,7 +154,7 @@ namespace Azure.Identity
         {
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
@@ -175,7 +175,7 @@ namespace Azure.Identity
             return request;
         }
 
-        private string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
+        private static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
         {
             var headerBuff = new ArrayBufferWriter<byte>();
 
@@ -221,7 +221,7 @@ namespace Azure.Identity
             return flattenedJws + "." + Base64Url.Encode(signature);
         }
 
-        private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+        private static async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
             {
@@ -229,7 +229,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(Stream content)
+        private static AccessToken Deserialize(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content))
             {
@@ -237,7 +237,7 @@ namespace Azure.Identity
             }
         }
 
-        private AccessToken Deserialize(JsonElement json)
+        private static AccessToken Deserialize(JsonElement json)
         {
             string accessToken = null;
 

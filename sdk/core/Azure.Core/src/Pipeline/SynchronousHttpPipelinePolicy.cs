@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             OnSendingRequest(message);
-            await ProcessNextAsync(message, pipeline);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             OnReceivedResponse(message);
         }
 

@@ -120,7 +120,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
-    const cancellationName = "cancellation";
+    const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
     const headerName = "_header";
@@ -131,6 +131,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     let responseName = "_response";
     const resultName = "_result";
     const result = operation.response.model;
+    const sync = serviceModel.info.sync;
 
     const returnType = result.type === 'void' ?
         'Azure.Response' : 
@@ -149,15 +150,22 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
         }
     }
+    if (sync) {
+        w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
+    }
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType}</returns>`);
-    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);
+    w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
             w.write(`${types.getDeclarationType(arg.model, arg.required, false, true)} ${naming.parameter(arg.clientName)}`);
             if (!arg.required) { w.write(` = default`); }
+        }
+        if (sync) {
+            if (separateParams()) {  w.line(`,`); }
+            w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
@@ -174,12 +182,26 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`))`);
         });
         w.scope('{', '}', () => {
-            w.line(`Azure.Response ${responseName} = await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false);`);
+            w.write(`Azure.Response ${responseName} = `);
+            const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
+            if (sync) {
+                w.write('async ?');
+                w.scope(() => {
+                    w.line(`// Send the request asynchronously if we're being called via an async path`);
+                    w.line(`${asyncCall} :`);
+                    w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
+                    w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
+                    w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
+                });
+            } else {
+                w.line(`${asyncCall};`);
+            }
             w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
             w.line(`return ${methodName}_CreateResponse(${responseName});`);
         });
     });
     w.line();
+    
     // #endregion Top level method
     
     // #region Create Request
@@ -259,7 +281,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
-        w.line(`${requestName}.Method = Azure.Core.Pipeline.HttpPipelineMethod.${httpMethod};`);
+        w.line(`${requestName}.Method = Azure.Core.Pipeline.RequestMethod.${httpMethod};`);
         const uri = naming.parameter(operation.request.all[1].clientName);
         w.line(`${requestName}.UriBuilder.Uri = ${uri};`);
         if (operation.request.queries.length > 0) {
@@ -780,6 +802,43 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 }
             }
         });
+
+        // If there are readonly properties, we'll create a model factory
+        const props = <IProperty[]>Object.values(type.properties);
+        if (type.public && props.some(p => p.readonly)) {
+            const factoryName = naming.type(model.info.modelFactoryName);
+            const typeName = naming.type(type.name);
+            const modelName = `_model`;
+            w.line();
+            w.line(`/// <summary>`);
+            w.line(`/// ${factoryName} provides utilities for mocking.`);
+            w.line(`/// </summary>`);
+            w.line(`public static partial class ${factoryName}`);
+            w.scope(`{`, `}`, () => {
+                w.line(`/// <summary>`);
+                w.line(`/// Creates a new ${typeName} instance for mocking.`);
+                w.line(`/// </summary>`);
+                w.write(`public static ${typeName} ${typeName}(`);
+                w.scope(() => {
+                    const separator = IndentWriter.createFenceposter();
+                    // Sort `= default` parameters last
+                    props.sort((a: IProperty, b: IProperty) => a.required ? -1 : b.required ? 1 : 0);
+                    for (const property of props) {
+                        if (separator()) { w.line(`,`); }
+                        w.write(`${types.getDeclarationType(property.model, property.required, property.readonly)} ${naming.parameter(property.clientName)}`);
+                        if (!property.required) { w.write(` = default`); }
+                    }
+                    w.write(`)`);
+                });
+                w.scope('{', '}', () => {
+                    w.line(`var ${modelName} = new ${typeName}();`);
+                    for (const property of props) {
+                        w.line(`${modelName}.${naming.property(property.clientName)} = ${naming.parameter(property.clientName)};`);
+                    }
+                    w.line(`return ${modelName};`);
+                });
+            });
+        }
     });
     w.line(`#endregion ${regionName}`);
 }

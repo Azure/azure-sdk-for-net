@@ -43,39 +43,5 @@ namespace Azure.Identity.Tests.Mock
 
             Assert.IsTrue(new MockToken(defaultScopeToken.Token).HasField("scopes", MockScopes.Default.ToString()));
         }
-
-        [Test]
-        public async Task VerifyMSIRequest()
-        {
-            var pingResponse = new MockResponse(400);
-
-            var response = new MockResponse(200);
-
-            var expectedToken = "mock-msi-access-token";
-
-            response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": 3600 }}");
-
-            var mockTransport = new MockTransport(pingResponse, response);
-
-            var options = new IdentityClientOptions() { Transport = mockTransport };
-
-            var credential = new ManagedIdentityCredential(options: options);
-
-            AccessToken actualToken = await credential.GetTokenAsync(MockScopes.Default);
-
-            Assert.AreEqual(expectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.Requests[1];
-
-            string query = request.UriBuilder.Query;
-
-            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
-
-            Assert.AreEqual("true", metadataValue);
-        }
     }
 }

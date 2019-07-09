@@ -71,6 +71,7 @@ namespace Backup.Tests
                 var backup = client.BackupLocations.CreateBackup(ResourceGroupName, backupLocation);
                 var restoreOperations = new RestoreOptions
                 {
+                    RoleName = "-",
                     DecryptionCertBase64 = "decryptionCert",
                     DecryptionCertPassword = "decryptionCertPassword"
                 };

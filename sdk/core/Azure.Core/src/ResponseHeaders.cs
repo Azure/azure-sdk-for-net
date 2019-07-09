@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Azure.Core.Pipeline;
 
 namespace Azure
@@ -20,7 +21,7 @@ namespace Azure
         public DateTimeOffset? Date =>
             TryGetValue(HttpHeader.Names.Date, out var value) ||
             TryGetValue(HttpHeader.Names.XMsDate, out value) ?
-                (DateTimeOffset?)DateTimeOffset.Parse(value) :
+                (DateTimeOffset?)DateTimeOffset.Parse(value, CultureInfo.InvariantCulture) :
                 null;
 
         public string ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;

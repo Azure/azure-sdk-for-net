@@ -22,30 +22,30 @@ namespace Azure.Storage.Common.Test
             var emptyKeyValueAsString = String.Empty;
             var emptyKeyConnectionString = String.Format(CultureInfo.InvariantCulture, "DefaultEndpointsProtocol=https;AccountName={0};AccountKey=", accountName);
 
-            var credentials1 = new SharedKeyCredentials(accountName, emptyKeyValueAsString);
+            var credentials1 = new StorageSharedKeyCredential(accountName, emptyKeyValueAsString);
 
             var conn1 = new StorageConnectionString(credentials1, true);
             Assert.AreEqual(emptyKeyConnectionString, conn1.ToString(true));
             Assert.IsNotNull(conn1.Credentials);
-            Assert.IsInstanceOf(typeof(SharedKeyCredentials), conn1.Credentials);
-            Assert.AreEqual(accountName, ((SharedKeyCredentials)conn1.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((SharedKeyCredentials)conn1.Credentials).ExportBase64EncodedKey());
+            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), conn1.Credentials);
+            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)conn1.Credentials).AccountName);
+            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)conn1.Credentials).ExportBase64EncodedKey());
 
             var account2 = StorageConnectionString.Parse(emptyKeyConnectionString);
             Assert.AreEqual(emptyKeyConnectionString, account2.ToString(true));
             Assert.IsNotNull(account2.Credentials);
-            Assert.IsInstanceOf(typeof(SharedKeyCredentials), account2.Credentials);
-            Assert.AreEqual(accountName, ((SharedKeyCredentials)account2.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((SharedKeyCredentials)account2.Credentials).ExportBase64EncodedKey());
+            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), account2.Credentials);
+            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account2.Credentials).AccountName);
+            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account2.Credentials).ExportBase64EncodedKey());
 
             var isValidAccount3 = StorageConnectionString.TryParse(emptyKeyConnectionString, out var account3);
             Assert.IsTrue(isValidAccount3);
             Assert.IsNotNull(account3);
             Assert.AreEqual(emptyKeyConnectionString, account3.ToString(true));
             Assert.IsNotNull(account3.Credentials);
-            Assert.IsInstanceOf(typeof(SharedKeyCredentials), account3.Credentials);
-            Assert.AreEqual(accountName, ((SharedKeyCredentials)account3.Credentials).AccountName);
-            Assert.AreEqual(emptyKeyValueAsString, ((SharedKeyCredentials)account3.Credentials).ExportBase64EncodedKey());
+            Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), account3.Credentials);
+            Assert.AreEqual(accountName, ((StorageSharedKeyCredential)account3.Credentials).AccountName);
+            Assert.AreEqual(emptyKeyValueAsString, ((StorageSharedKeyCredential)account3.Credentials).ExportBase64EncodedKey());
         }
 
         private void AccountsAreEqual(StorageConnectionString a, StorageConnectionString b)
@@ -123,7 +123,7 @@ namespace Azure.Storage.Common.Test
         [Description("Regular account with HTTP")]
         public void DefaultStorageAccountWithHttp()
         {
-            var cred = new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+            var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = new StorageConnectionString(cred, false);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(String.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
@@ -152,7 +152,7 @@ namespace Azure.Storage.Common.Test
         [Description("Regular account with HTTPS")]
         public void DefaultStorageAccountWithHttps()
         {
-            var cred = new SharedKeyCredentials(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+            var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
             var conn = new StorageConnectionString(cred, true);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(String.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
@@ -709,7 +709,7 @@ namespace Azure.Storage.Common.Test
             var accountKeyString = "abc2564=";
             var accountString = "BlobEndpoint=http://blobs/;AccountName=test;AccountKey=" + accountKeyString;
             var account = StorageConnectionString.Parse(accountString);
-            var accountAndKey = (SharedKeyCredentials)account.Credentials;
+            var accountAndKey = (StorageSharedKeyCredential)account.Credentials;
             var key = accountAndKey.ExportBase64EncodedKey();
             Assert.AreEqual(accountKeyString, key);
 
