@@ -10,7 +10,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.EventHubs.Processor</RootNamespace>
-    <Version>4.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
