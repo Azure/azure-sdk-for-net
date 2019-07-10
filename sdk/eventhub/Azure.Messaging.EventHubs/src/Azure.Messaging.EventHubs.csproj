@@ -34,7 +34,6 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
