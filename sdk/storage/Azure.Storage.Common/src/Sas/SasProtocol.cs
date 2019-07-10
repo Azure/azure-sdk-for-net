@@ -56,8 +56,8 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two <see cref="SasProtocol"/> instances are equal.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
+        /// <param name="o1">The first instance to compare.</param>
+        /// <param name="o2">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public static bool operator ==(SasProtocol o1, SasProtocol o2) =>
             o1.Value == o2.Value;
@@ -65,8 +65,8 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two <see cref="SasProtocol"/> instances are not equal.
         /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
+        /// <param name="o1">The first instance to compare.</param>
+        /// <param name="o2">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
         public static bool operator !=(SasProtocol o1, SasProtocol o2) =>
             o1.Value != o2.Value;

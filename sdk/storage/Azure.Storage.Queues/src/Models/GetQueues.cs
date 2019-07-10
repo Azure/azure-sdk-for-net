@@ -77,7 +77,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Check if two <see cref="GetQueuesOptions"/> instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetQueuesOptions other) =>
             this.IncludeMetadata == other.IncludeMetadata &&

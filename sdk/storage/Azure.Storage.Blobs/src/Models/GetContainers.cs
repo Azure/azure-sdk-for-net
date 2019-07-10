@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two GetContainersOptions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetContainersOptions other) =>
             this.IncludeMetadata == other.IncludeMetadata &&
