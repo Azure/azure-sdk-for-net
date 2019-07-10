@@ -5,7 +5,7 @@ jobs:
     pool:
       vmImage: vs2017-win2016
     steps:
-      - script: |
+      - powershell: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: 'Tag scheduled builds'
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
