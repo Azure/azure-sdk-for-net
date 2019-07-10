@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Documents;
+﻿using Azure.Storage.Blobs.Models;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using System;
@@ -32,22 +33,16 @@ namespace SmokeTest
 
     class CosmosDBTest
     {
-        private DocumentClient client;
+        private static DocumentClient client;
         private const string DataBaseName = "netSolarSystemDB";
         private const string CollectionName = "PlanetsCollection";
-        private Planet planetEarth;
-        private Planet planetMars;
-
-        public CosmosDBTest(string endpoint, string authKey)
-        {
-            client = new DocumentClient(new Uri(endpoint), authKey);
-        }
+        private static List<Planet> planets = new List<Planet>();
 
         /// <summary>
         /// Test the Cosmos DB SDK by creating an example Database called {DataBaseName} and a PlanetsCollection with planets on it.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> RunTests()
+        public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("COSMOS DB");
@@ -58,57 +53,48 @@ namespace SmokeTest
             Console.WriteLine("3.- Create 2 JSON Documents (Items) in the collection");
             Console.WriteLine("4.- Excecute simple query to the collection");
             Console.WriteLine("5.- Clean up the resource (Delete DB)\n");
-            var testPassed = true;
 
-            Console.Write("Creating Database '"+DataBaseName+"'... ");
+            string endpoint = Environment.GetEnvironmentVariable("COSMOS_URI");
+            string authKey = Environment.GetEnvironmentVariable("COSMOS_AUTH_KEY");
+            client = new DocumentClient(new Uri(endpoint), authKey);
+
             await CreateDatabase();
-            Console.WriteLine("done");
-
-            Console.Write("Creating collection '"+CollectionName+"' ");
             await CreateCollection();
-            Console.WriteLine("done");
-
-            Console.Write("Inserting 'Earth' and 'Mars' JSON Documents... ");
             await CreateDocuments();
-            Console.WriteLine("done");
-
-            Console.Write("Querying... ");
             await ExecuteSimpleQuery();
-            Console.WriteLine("done");
-
-            Console.Write("Cleaning up the resource... ");
             await DeleteDatabase();
-            Console.WriteLine("done");
-
-            return testPassed;
         }
 
-        private async Task CreateDatabase()
+        private static async Task CreateDatabase()
         {
+            Console.Write("Creating Database '" + DataBaseName + "'...");
             await client.CreateDatabaseIfNotExistsAsync(new Database { Id = DataBaseName });
+            Console.WriteLine("\tdone");
         }
 
-        private async Task CreateCollection()
+        private static async Task CreateCollection()
         {
+            Console.Write("Creating collection '" + CollectionName + "'...");
             await client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(DataBaseName), new DocumentCollection { Id = CollectionName });
+            Console.WriteLine("\tdone");
         }
 
-        private async Task CreateDocuments()
+        private static async Task CreateDocuments()
         {
-            planetEarth = new Planet
+            planets.Add(new Planet
             {
                 Id = "Earth",
                 HasRings = false,
                 Radius = 3959,
                 Moons = new Moon[]
-                {
+               {
                     new Moon
                     {
                         Name = "Moon"
                     }
-                }
-            };
-            planetMars = new Planet
+               }
+            });
+            planets.Add(new Planet
             {
                 Id = "Mars",
                 HasRings = false,
@@ -124,28 +110,46 @@ namespace SmokeTest
                         Name = "Deimos"
                     }
                 }
-            };
-
-            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetEarth);
-            await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planetMars);
-        }
-
-        private async Task ExecuteSimpleQuery(){
-            IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
-
-            foreach (Planet planet in planetarySqlQuery)
+            });
+            
+            //The items must NOT exists in the collection
+            foreach (Planet planet in planets)
             {
-                //The only 2 planets that were set before were Earth and Mars, if planet does not match any of those, then there is an error.
-                if (planet.ToString() != planetEarth.ToString() && planet.ToString() != planetMars.ToString())
-                {
-                    throw new Exception(String.Format("Error, the values does not match.\n"));
-                }
+                Console.Write("Inserting '"+planet.Id+"' document...");
+                await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), planet);
+                Console.WriteLine("\tdone");
             }
         }
 
-        private async Task DeleteDatabase()
+        private static async Task ExecuteSimpleQuery(){
+            Console.Write("Querying... ");
+            IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
+
+            int i = 0;
+            foreach (Planet planet in planetarySqlQuery)
+            {
+                foreach (Planet planetInArray in planets)
+                {
+                    if (planet.ToString() == planetInArray.ToString())
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            //The query should retrieve all the planets, this is going to verify that all planets were retreived
+            if(i != planets.Count)
+            {
+                throw new Exception(String.Format("Error, the values does not match."));
+            }
+            Console.WriteLine("\tdone");
+        }
+
+        private static async Task DeleteDatabase()
         {
+            Console.Write("Cleaning up the resource...");
             await client.DeleteDatabaseAsync(UriFactory.CreateDatabaseUri(DataBaseName));
+            Console.WriteLine("\tdone");
         }
     }
 }

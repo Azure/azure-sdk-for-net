@@ -3,26 +3,21 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SmokeTest
 {
     class BlobStorageTest
     {
-        private BlobServiceClient service;
-        private BlockBlobClient blob;
-
-        public BlobStorageTest(string connectionString,string containerName, string blobName)
-        {
-            this.service = new BlobServiceClient(connectionString);
-            this.blob = service.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
-        }
+        private static BlobServiceClient serviceClient;
+        private static BlockBlobClient blobClient;
 
         /// <summary>
         /// Test the Storage Blobs SDK
         /// </summary>
         /// <returns>true if passes, false if fails</returns>
-        public async Task<bool> RunTests()
+        public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("STORAGE");
@@ -31,31 +26,38 @@ namespace SmokeTest
             Console.WriteLine("1.- Upload Blob Block");
             Console.WriteLine("2.- Delete that Blob Block" + '\n');
 
-            Console.Write("Uploading blob... ");
+            string connectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
+            string containerName = "mycontainer"; //The container must exists, this sample is not creating it.
+            string blobName = "netSmokeTestBlob";
+            serviceClient = new BlobServiceClient(connectionString);
+            blobClient = serviceClient.GetBlobContainerClient(containerName).GetBlockBlobClient(blobName);
+
             await UploadBlob();
-            Console.WriteLine("done");
-
-            Console.Write("Deleting blob... ");
             await DeleteBlob();
-            Console.WriteLine("done");
-
-            return true;
         }
 
-        private async Task UploadBlob()
+        private static async Task UploadBlob()
         {
-            //This will upload an existing file into the container previously created
-            const string path = "./Resources/BlobTestSource.txt";
+            Console.Write("Uploading blob... ");
 
-            using (FileStream data = File.OpenRead(path))
-            {
-                await blob.UploadAsync(data);
-            }
+            //This is going to create stream to upload, for uploading an existing file use:
+            //  using (FileStream data = File.OpenRead(<File_path>))
+            //  {
+            //      await blobClient.UploadAsync(data);
+            //  }
+            const string content = "This is the content for the sample blob";
+            byte[] byteArray = Encoding.UTF8.GetBytes(content);
+            MemoryStream stream = new MemoryStream(byteArray);
+            await blobClient.UploadAsync(stream);
+
+            Console.WriteLine("\tdone");
         }
 
-        private async Task DeleteBlob()
+        private static async Task DeleteBlob()
         {
-            await blob.DeleteAsync();
+            Console.Write("Deleting blob...");
+            await blobClient.DeleteAsync();
+            Console.WriteLine("\tdone");
         }
     }
 }
