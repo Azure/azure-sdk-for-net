@@ -6,7 +6,7 @@
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(PackageDirectory)' == ''">
+  <ItemGroup>
     <ExcludeMgmtLib Include="..\sdk\$(ServiceDirectory)\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\*\tests\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects)" />

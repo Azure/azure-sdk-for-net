@@ -76,19 +76,19 @@ jobs:
         Linux:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
-          TFM: netcoreapp2.1
+          TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSName: "Windows"
           OSVmImage: "vs2017-win2016"
-          TFM: netcoreapp2.1
+          TestTargetFramework: netcoreapp2.1
         Windows_NetFramework:
           OSName: "Windows"
           OSVmImage: "vs2017-win2016"
-          TFM: net461
+          TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
           OSVmImage: "macOS-10.13"
-          TFM: netcoreapp2.1
+          TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"
     steps:
@@ -112,17 +112,17 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
-      - script: dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TFM) --logger "trx;LogFileName=$(TFM).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false
-        displayName: "Build & Test ($(TFM))"
+      - script: dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false
+        displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
       - task: PublishTestResults@2
         condition: succeededOrFailed()
-        displayName: "Publish Results ($(TFM))"
+        displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: "**/$(TFM)*.trx"
-          testRunTitle: "$(OSName) $(TFM)"
+          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
