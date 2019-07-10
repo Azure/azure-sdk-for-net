@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Identity
 {
@@ -459,7 +460,7 @@ namespace Azure.Identity
             {
                 // the seconds from epoch may be returned as a Json number or a Json string which is a number
                 // depending on the environment.  If neither of these are the case we throw an AuthException.
-                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) && 
+                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
                     !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
