@@ -31,7 +31,6 @@
     <PackageReference Include="System.Net.Http" PrivateAssets="All" />
     <PackageReference Include="System.Reflection.TypeExtensions" PrivateAssets="All" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
