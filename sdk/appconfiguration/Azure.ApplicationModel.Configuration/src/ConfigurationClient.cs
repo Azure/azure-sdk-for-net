@@ -504,6 +504,7 @@ namespace Azure.ApplicationModel.Configuration
         /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
@@ -527,6 +528,7 @@ namespace Azure.ApplicationModel.Configuration
         /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
@@ -566,6 +568,7 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<PageResponse<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
@@ -589,6 +592,7 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private PageResponse<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {

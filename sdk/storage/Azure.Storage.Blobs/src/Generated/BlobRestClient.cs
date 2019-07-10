@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>.</returns>
+            /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -315,7 +315,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetStatisticsAsync Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>.</returns>
+            /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatisticsAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.ListContainersSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.ListContainersSegmentAsync Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>.</returns>
+            /// <returns>The Service.ListContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.ContainersSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment> ListContainersSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -570,7 +570,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetUserDelegationKeyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>.</returns>
+            /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response{Azure.Storage.Blobs.Models.UserDelegationKey}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKeyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -610,7 +610,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -666,7 +666,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetAccountInfoAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
+            /// <returns>The Service.GetAccountInfoAsync Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -728,7 +728,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -808,7 +808,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -861,7 +861,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -931,7 +931,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>.</returns>
+            /// <returns>The Container.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1145,7 +1145,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1231,7 +1231,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetMetadataAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1284,7 +1284,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetAccessPolicyAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>.</returns>
+            /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1422,7 +1422,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetAccessPolicyAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1582,7 +1582,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1669,7 +1669,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.AcquireLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> AcquireLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1728,7 +1728,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1814,7 +1814,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ReleaseLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> ReleaseLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1869,7 +1869,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1955,7 +1955,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.RenewLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> RenewLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2014,7 +2014,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2096,7 +2096,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.BreakLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>.</returns>
+            /// <returns>The Container.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2168,7 +2168,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ChangeLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> ChangeLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2409,7 +2409,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ListBlobsFlatSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>.</returns>
+            /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsFlatSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> ListBlobsFlatSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2547,7 +2547,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ListBlobsHierarchySegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>.</returns>
+            /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsHierarchySegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> ListBlobsHierarchySegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2605,7 +2605,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2713,7 +2713,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.DownloadAsync Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>.</returns>
+            /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3035,7 +3035,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3129,7 +3129,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>.</returns>
+            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3567,7 +3567,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3697,7 +3697,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.SetHttpHeadersAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetHttpHeadersAsync Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>.</returns>
+            /// <returns>The Blob.SetHttpHeadersAsync Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> SetHttpHeadersAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3771,7 +3771,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3871,7 +3871,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetMetadataAsync Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>.</returns>
+            /// <returns>The Blob.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3945,7 +3945,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4041,7 +4041,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.AcquireLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> AcquireLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4102,7 +4102,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4197,7 +4197,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.ReleaseLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
+            /// <returns>The Blob.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ReleaseLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4254,7 +4254,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4349,7 +4349,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.RenewLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> RenewLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4411,7 +4411,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4515,7 +4515,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.ChangeLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> ChangeLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4576,7 +4576,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4667,7 +4667,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.BreakLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>.</returns>
+            /// <returns>The Blob.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4741,7 +4741,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4841,7 +4841,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.CreateSnapshotAsync Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>.</returns>
+            /// <returns>The Blob.CreateSnapshotAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> CreateSnapshotAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4908,7 +4908,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5036,7 +5036,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.StartCopyFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.StartCopyFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The Blob.StartCopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> StartCopyFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5107,7 +5107,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5236,7 +5236,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.CopyFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.CopyFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The Blob.CopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5550,7 +5550,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5705,7 +5705,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The PageBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5777,7 +5777,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5909,7 +5909,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.UploadPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5979,7 +5979,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6095,7 +6095,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.ClearPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6172,7 +6172,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6335,7 +6335,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6416,7 +6416,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6516,7 +6516,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>.</returns>
+            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6596,7 +6596,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6701,7 +6701,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>.</returns>
+            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesDiffAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6779,7 +6779,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6874,7 +6874,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            /// <returns>The PageBlob.ResizeAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6937,7 +6937,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7037,7 +7037,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7098,7 +7098,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7192,7 +7192,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.CopyIncrementalAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyIncrementalAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7273,7 +7273,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7418,7 +7418,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The AppendBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7488,7 +7488,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7609,7 +7609,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.AppendBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.AppendBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>.</returns>
+            /// <returns>The AppendBlob.AppendBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7692,7 +7692,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7836,7 +7836,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.AppendBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>.</returns>
+            /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7940,7 +7940,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8096,7 +8096,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.UploadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.UploadAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The BlockBlob.UploadAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8161,7 +8161,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8261,7 +8261,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            /// <returns>The BlockBlob.StageBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8319,7 +8319,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8442,7 +8442,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8516,7 +8516,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8670,7 +8670,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.CommitBlockListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CommitBlockListAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8733,7 +8733,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8813,7 +8813,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.GetBlockListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.GetBlockListAsync Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>.</returns>
+            /// <returns>The BlockBlob.GetBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> GetBlockListAsync_CreateResponse(
                 Azure.Response response)
             {

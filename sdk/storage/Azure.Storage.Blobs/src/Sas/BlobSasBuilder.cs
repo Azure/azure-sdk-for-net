@@ -390,7 +390,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Check if two BlobSasBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobSasBuilder other) =>
             this.BlobName == other.BlobName &&

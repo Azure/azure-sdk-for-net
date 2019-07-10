@@ -233,8 +233,8 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="GetContainersAsync"/> operation returns a
         /// single segment of containers in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
+        /// from the specified marker.  Use an empty
+        /// marker to start enumeration from the beginning
         /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="ListContainersSegmentAsync"/>
         /// to continue enumerating the containers segment by segment.
@@ -866,6 +866,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="async"/>
         /// <returns>
         /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
         /// the service replication statistics.

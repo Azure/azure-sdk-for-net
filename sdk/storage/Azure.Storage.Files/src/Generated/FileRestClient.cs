@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -195,7 +195,7 @@ namespace Azure.Storage.Files
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetPropertiesAsync Azure.Response<Azure.Storage.Files.Models.FileServiceProperties>.</returns>
+            /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.FileServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.FileServiceProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -320,7 +320,7 @@ namespace Azure.Storage.Files
             /// Create the Service.ListSharesSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.ListSharesSegmentAsync Azure.Response<Azure.Storage.Files.Models.SharesSegment>.</returns>
+            /// <returns>The Service.ListSharesSegmentAsync Azure.Response{Azure.Storage.Files.Models.SharesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.SharesSegment> ListSharesSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -371,7 +371,7 @@ namespace Azure.Storage.Files
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -446,7 +446,7 @@ namespace Azure.Storage.Files
             /// Create the Share.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.CreateAsync Azure.Response<Azure.Storage.Files.Models.ShareInfo>.</returns>
+            /// <returns>The Share.CreateAsync Azure.Response{Azure.Storage.Files.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -498,7 +498,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -563,7 +563,7 @@ namespace Azure.Storage.Files
             /// Create the Share.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetPropertiesAsync Azure.Response<Azure.Storage.Files.Models.ShareProperties>.</returns>
+            /// <returns>The Share.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.ShareProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -730,7 +730,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -801,7 +801,7 @@ namespace Azure.Storage.Files
             /// Create the Share.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.CreateSnapshotAsync Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo>.</returns>
+            /// <returns>The Share.CreateSnapshotAsync Azure.Response{Azure.Storage.Files.Models.ShareSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareSnapshotInfo> CreateSnapshotAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -857,7 +857,7 @@ namespace Azure.Storage.Files
             /// <param name="quota">Specifies the maximum size of the share, in gigabytes.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetQuotaAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -923,7 +923,7 @@ namespace Azure.Storage.Files
             /// Create the Share.SetQuotaAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.SetQuotaAsync Azure.Response<Azure.Storage.Files.Models.ShareInfo>.</returns>
+            /// <returns>The Share.SetQuotaAsync Azure.Response{Azure.Storage.Files.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareInfo> SetQuotaAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -975,7 +975,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1046,7 +1046,7 @@ namespace Azure.Storage.Files
             /// Create the Share.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.SetMetadataAsync Azure.Response<Azure.Storage.Files.Models.ShareInfo>.</returns>
+            /// <returns>The Share.SetMetadataAsync Azure.Response{Azure.Storage.Files.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1158,7 +1158,7 @@ namespace Azure.Storage.Files
             /// Create the Share.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetAccessPolicyAsync Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>>.</returns>
+            /// <returns>The Share.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Files.Models.SignedIdentifier}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Models.SignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.ShareInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.ShareInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.ShareInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1283,7 +1283,7 @@ namespace Azure.Storage.Files
             /// Create the Share.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.SetAccessPolicyAsync Azure.Response<Azure.Storage.Files.Models.ShareInfo>.</returns>
+            /// <returns>The Share.SetAccessPolicyAsync Azure.Response{Azure.Storage.Files.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareInfo> SetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1395,7 +1395,7 @@ namespace Azure.Storage.Files
             /// Create the Share.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Share.GetStatisticsAsync Azure.Response<Azure.Storage.Files.Models.ShareStatistics>.</returns>
+            /// <returns>The Share.GetStatisticsAsync Azure.Response{Azure.Storage.Files.Models.ShareStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.ShareStatistics> GetStatisticsAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1445,7 +1445,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1515,7 +1515,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.CreateAsync Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>.</returns>
+            /// <returns>The Directory.CreateAsync Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1567,7 +1567,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1632,7 +1632,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.GetPropertiesAsync Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties>.</returns>
+            /// <returns>The Directory.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.StorageDirectoryProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageDirectoryProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1787,7 +1787,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1858,7 +1858,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.SetMetadataAsync Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo>.</returns>
+            /// <returns>The Directory.SetMetadataAsync Azure.Response{Azure.Storage.Files.Models.StorageDirectoryInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageDirectoryInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1994,7 +1994,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.ListFilesAndDirectoriesSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment>.</returns>
+            /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Azure.Response{Azure.Storage.Files.Models.FilesAndDirectoriesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.FilesAndDirectoriesSegment> ListFilesAndDirectoriesSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2123,7 +2123,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.ListHandlesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.ListHandlesAsync Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>.</returns>
+            /// <returns>The Directory.ListHandlesAsync Azure.Response{Azure.Storage.Files.Models.StorageHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment> ListHandlesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2168,7 +2168,7 @@ namespace Azure.Storage.Files
             /// <param name="recursive">Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2256,7 +2256,7 @@ namespace Azure.Storage.Files
             /// Create the Directory.ForceCloseHandlesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Directory.ForceCloseHandlesAsync Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>.</returns>
+            /// <returns>The Directory.ForceCloseHandlesAsync Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment> ForceCloseHandlesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2323,7 +2323,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2438,7 +2438,7 @@ namespace Azure.Storage.Files
             /// Create the File.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.CreateAsync Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>.</returns>
+            /// <returns>The File.CreateAsync Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2495,7 +2495,7 @@ namespace Azure.Storage.Files
             /// <param name="rangeGetContentHash">When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2568,7 +2568,7 @@ namespace Azure.Storage.Files
             /// Create the File.DownloadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.DownloadAsync Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties>.</returns>
+            /// <returns>The File.DownloadAsync Azure.Response{Azure.Storage.Files.Models.FlattenedStorageFileProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.FlattenedStorageFileProperties> DownloadAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2822,7 +2822,7 @@ namespace Azure.Storage.Files
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2886,7 +2886,7 @@ namespace Azure.Storage.Files
             /// Create the File.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.GetPropertiesAsync Azure.Response<Azure.Storage.Files.Models.StorageFileProperties>.</returns>
+            /// <returns>The File.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.StorageFileProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3108,7 +3108,7 @@ namespace Azure.Storage.Files
             /// <param name="fileContentDisposition">Sets the file's Content-Disposition header.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3213,7 +3213,7 @@ namespace Azure.Storage.Files
             /// Create the File.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.SetPropertiesAsync Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>.</returns>
+            /// <returns>The File.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileInfo> SetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3269,7 +3269,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3339,7 +3339,7 @@ namespace Azure.Storage.Files
             /// Create the File.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.SetMetadataAsync Azure.Response<Azure.Storage.Files.Models.StorageFileInfo>.</returns>
+            /// <returns>The File.SetMetadataAsync Azure.Response{Azure.Storage.Files.Models.StorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3399,7 +3399,7 @@ namespace Azure.Storage.Files
             /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>> UploadRangeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3490,7 +3490,7 @@ namespace Azure.Storage.Files
             /// Create the File.UploadRangeAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.UploadRangeAsync Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo>.</returns>
+            /// <returns>The File.UploadRangeAsync Azure.Response{Azure.Storage.Files.Models.StorageFileUploadInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileUploadInfo> UploadRangeAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3551,7 +3551,7 @@ namespace Azure.Storage.Files
             /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>> GetRangeListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3621,7 +3621,7 @@ namespace Azure.Storage.Files
             /// Create the File.GetRangeListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.GetRangeListAsync Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo>.</returns>
+            /// <returns>The File.GetRangeListAsync Azure.Response{Azure.Storage.Files.Models.StorageFileRangeInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileRangeInfo> GetRangeListAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3684,7 +3684,7 @@ namespace Azure.Storage.Files
             /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>> StartCopyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3762,7 +3762,7 @@ namespace Azure.Storage.Files
             /// Create the File.StartCopyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.StartCopyAsync Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo>.</returns>
+            /// <returns>The File.StartCopyAsync Azure.Response{Azure.Storage.Files.Models.StorageFileCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageFileCopyInfo> StartCopyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4001,7 +4001,7 @@ namespace Azure.Storage.Files
             /// Create the File.ListHandlesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.ListHandlesAsync Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment>.</returns>
+            /// <returns>The File.ListHandlesAsync Azure.Response{Azure.Storage.Files.Models.StorageHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageHandlesSegment> ListHandlesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4045,7 +4045,7 @@ namespace Azure.Storage.Files
             /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment></returns>
+            /// <returns>Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4124,7 +4124,7 @@ namespace Azure.Storage.Files
             /// Create the File.ForceCloseHandlesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.ForceCloseHandlesAsync Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment>.</returns>
+            /// <returns>The File.ForceCloseHandlesAsync Azure.Response{Azure.Storage.Files.Models.StorageClosedHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Models.StorageClosedHandlesSegment> ForceCloseHandlesAsync_CreateResponse(
                 Azure.Response response)
             {

@@ -64,9 +64,9 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public string Snapshot;
 
-        /// <summary>
-        /// VersionId.  Empty string if not present in URI.
-        /// </summary>
+        ///// <summary>
+        ///// VersionId.  Empty string if not present in URI.
+        ///// </summary>
         //public string VersionId;
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Check if two BlobUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobUriBuilder other)
             => this.Scheme == other.Scheme

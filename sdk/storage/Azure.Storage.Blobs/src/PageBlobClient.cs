@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Initializes a new instance of the <see cref="PageBlobClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="snapshot"/> timestamp.
+        /// snapshot timestamp.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
         /// </summary>
@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Creates a new instance of the <see cref="PageBlobClient"/> class
         /// with an identical <see cref="Uri"/> source but the specified
-        /// <paramref name="snapshot"/> timestamp.
+        /// snapshot timestamp.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
@@ -209,12 +209,12 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobClient(builder.ToUri(), this.Pipeline);
         }
 
-        /// <summary>
-        /// Creates a new PageBlobClient object identical to the source but with the specified version ID.
-        /// Pass "" to remove the version ID returning a URL to the base blob.
-        /// </summary>
-        /// <param name="versionId">version ID</param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Creates a new PageBlobClient object identical to the source but with the specified version ID.
+        ///// Pass "" to remove the version ID returning a URL to the base blob.
+        ///// </summary>
+        ///// <param name="versionId">version ID</param>
+        ///// <returns></returns>
         //public new PageBlobClient WithVersionId(string versionId) => (PageBlobUri)this.WithVersionIdImpl(versionId);
 
         //protected sealed override BlobBaseClient WithVersionIdImpl(string versionId)
@@ -1019,7 +1019,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1074,7 +1074,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1129,7 +1129,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
-        /// <paramref name="snapshot"/>, as long as the snapshot specified by
+        /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="accessConditions">
@@ -1359,6 +1359,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// for this page blob.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1415,6 +1416,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// for this page blob.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1471,6 +1473,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// for this page blob.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-blob-properties" />.
+        /// </summary>
         /// <param name="action">
         /// Specifies how the service should modify the blob's sequence number.
         /// <see cref="SequenceNumberAction.Max"/> sets the sequence number to
@@ -1557,8 +1560,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="StartCopyIncremental"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// copying a snapshot of the 
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
         /// The copied snapshots are complete copies of the original snapshot 
@@ -1577,7 +1580,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1662,8 +1665,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="StartCopyIncrementalAsync"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// copying a snapshot of the 
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
         /// The copied snapshots are complete copies of the original snapshot 
@@ -1682,7 +1685,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1767,8 +1770,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="StartCopyIncremental"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// copying a snapshot of the 
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
         /// The copied snapshots are complete copies of the original snapshot 
@@ -1806,8 +1809,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="StartCopyIncrementalAsync"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// copying a snapshot of the 
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
         /// The copied snapshots are complete copies of the original snapshot 
@@ -1845,8 +1848,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="StartCopyIncrementalAsync"/> operation starts
-        /// copying a <paramref name="snapshot"/> of the 
-        /// <paramref name="sourceUri"/> page blob to this page blob.  The
+        /// copying a snapshot of the 
+        /// sourceUri page blob to this page blob.  The
         /// snapshot is copied such that only the differential changes between
         /// the previously copied snapshot are transferred to the destination.
         /// The copied snapshots are complete copies of the original snapshot 
@@ -1865,7 +1868,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="snapshot">
         /// The name of a snapshot to start copying from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// </param>
         /// <param name="accessConditions">
         /// Optional <see cref="PageBlobAccessConditions"/> to add
@@ -1979,7 +1982,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="Task{"/> operation writes a range
         /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
@@ -1992,7 +1995,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -2004,10 +2007,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
@@ -2054,7 +2057,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadPagesFromUriAsync"/> operation writes a range
         /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
@@ -2067,7 +2070,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -2079,10 +2082,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
@@ -2129,7 +2132,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="UploadPagesFromUriAsync"/> operation writes a range
         /// of pages to a page blob where the contents are read from
-        /// <paramref name="sourceUri"/>.
+        /// sourceUri.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-page-from-url" />.
         /// </summary>
@@ -2142,7 +2145,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceRange">
         /// Optionally only upload the bytes of the blob in the
-        /// <paramref name="sourceUri"/> in the specified range.
+        /// sourceUri in the specified range.
         /// </param>
         /// <param name="range">
         /// Specifies the range to be written as a page. Both the start and
@@ -2154,10 +2157,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="sourceContentHash">
         /// Optional MD5 hash of the page block content from the
-        /// <paramref name="sourceUri"/>.  This hash is used to verify the
+        /// sourceUri.  This hash is used to verify the
         /// integrity of the block during transport of the data from the Uri.
         /// When this hash is specified, the storage service compares the hash
-        /// of the content that has arrived from the <paramref name="sourceUri"/>
+        /// of the content that has arrived from the sourceUri
         /// with this value.  Note that this md5 hash is not stored with the
         /// blob.  If the two hashes do not match, the operation will fail
         /// with a <see cref="StorageRequestFailedException"/>.
