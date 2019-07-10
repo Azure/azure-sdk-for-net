@@ -77,10 +77,17 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     )
                 };
 
-            return
-                ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
-                    ?? Enumerable.Empty<TrackOne.EventData>())
-                .Select(TransformEvent);
+            try
+            {
+                return
+                    ((await TrackOneReceiver.ReceiveAsync(maximumMessageCount, maximumWaitTime).ConfigureAwait(false))
+                        ?? Enumerable.Empty<TrackOne.EventData>())
+                    .Select(TransformEvent);
+            }
+            catch (TrackOne.EventHubsException ex)
+            {
+                throw ex.MapToTrackTwoException();
+            }
         }
 
         /// <summary>

@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs
                             return offset;
                         }
 
-                        if ((value is string token) && (long.TryParse(token, out var parsedOffset)))
+                        if ((value is string token) && (Int64.TryParse(token, out var parsedOffset)))
                         {
                             return parsedOffset;
                         }
