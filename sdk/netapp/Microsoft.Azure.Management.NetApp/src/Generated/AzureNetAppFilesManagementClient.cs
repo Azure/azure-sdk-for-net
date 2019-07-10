@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.NetApp
             MountTargets = new MountTargetsOperations(this);
             Snapshots = new SnapshotsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-01";
+            ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -399,6 +399,19 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='location'>
         /// The location
         /// </param>
+        /// <param name='name'>
+        /// Resource name to verify.
+        /// </param>
+        /// <param name='type'>
+        /// Resource type used for verification. Possible values include:
+        /// 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Resource group name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -420,7 +433,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -434,6 +447,25 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
+            }
+            if (resourceGroup == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
+            }
+            ResourceNameAvailabilityRequest body = new ResourceNameAvailabilityRequest();
+            if (name != null || type != null || resourceGroup != null)
+            {
+                body.Name = name;
+                body.Type = type;
+                body.ResourceGroup = resourceGroup;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -442,6 +474,7 @@ namespace Microsoft.Azure.Management.NetApp
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
             }
@@ -493,6 +526,12 @@ namespace Microsoft.Azure.Management.NetApp
 
             // Serialize Request
             string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Credentials != null)
             {
@@ -589,6 +628,19 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='location'>
         /// The location
         /// </param>
+        /// <param name='name'>
+        /// Resource name to verify.
+        /// </param>
+        /// <param name='type'>
+        /// Resource type used for verification. Possible values include:
+        /// 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Resource group name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -610,7 +662,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceNameAvailability>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ResourceNameAvailability>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -624,6 +676,25 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
+            }
+            if (resourceGroup == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
+            }
+            ResourceNameAvailabilityRequest body = new ResourceNameAvailabilityRequest();
+            if (name != null || type != null || resourceGroup != null)
+            {
+                body.Name = name;
+                body.Type = type;
+                body.ResourceGroup = resourceGroup;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -632,6 +703,7 @@ namespace Microsoft.Azure.Management.NetApp
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckFilePathAvailability", tracingParameters);
             }
@@ -683,6 +755,12 @@ namespace Microsoft.Azure.Management.NetApp
 
             // Serialize Request
             string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Credentials != null)
             {
