@@ -59,14 +59,5 @@ namespace SmokeTest.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This Blob was uploaded via the SDK..
-        /// </summary>
-        internal static string BlobTestSource {
-            get {
-                return ResourceManager.GetString("BlobTestSource", resourceCulture);
-            }
-        }
     }
 }
