@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             Assert.Equal("relativePath", ex.ParamName);
         }
 
-#if Window
+#if Windows
         [Fact]
         public async Task CannotPassAnAbsoluteFilePathWhenSavingTracked()
         {
