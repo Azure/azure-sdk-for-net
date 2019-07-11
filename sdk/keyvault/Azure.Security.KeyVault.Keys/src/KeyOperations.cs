@@ -12,20 +12,43 @@ namespace Azure.Security.KeyVault.Keys
     [Flags]
     public enum KeyOperations : uint
     {
+        /// <summary>
+        /// Key Operation encrypt
+        /// </summary>
         Encrypt = 0x0001,
+        /// <summary>
+        /// Key Operation decrypt
+        /// </summary>
         Decrypt = 0x0002,
+        /// <summary>
+        /// Key Operation sign
+        /// </summary>
         Sign = 0x0004,
+        /// <summary>
+        /// Key Operation verify
+        /// </summary>
         Verify = 0x0008,
+        /// <summary>
+        /// Key Operation wrap
+        /// </summary>
         Wrap = 0x0010,
+        /// <summary>
+        /// Key Operation unwrap
+        /// </summary>
         Unwrap = 0x0020,
+        /// <summary>
+        /// Other type of Key Operation
+        /// </summary>
         Other = 0x0040,
-
+        /// <summary>
+        /// Include all Key Operations
+        /// </summary>
         All = uint.MaxValue
     }
 
-    public static class KeyOperationsExtensions
+    internal static class KeyOperationsExtensions
     {
-        public static KeyOperations ParseFromString(string value)
+        internal static KeyOperations ParseFromString(string value)
         {
             switch (value)
             {
@@ -39,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        public static string AsString(KeyOperations keyType)
+        internal static string AsString(KeyOperations keyType)
         {
             switch (keyType)
             {
