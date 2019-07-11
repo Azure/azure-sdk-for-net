@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets column mappings. Example: "UserId: MyUserId, Group:
+        /// Gets or sets column mappings. Example: "UserId: MyUserId, Group: 
         /// MyGroup, Name: MyName" Type: string (or Expression with resultType
         /// string).
         /// </summary>
