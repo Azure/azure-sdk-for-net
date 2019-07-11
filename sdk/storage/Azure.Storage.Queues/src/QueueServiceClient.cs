@@ -38,6 +38,7 @@ namespace Azure.Storage.Queues
         /// </summary>
         protected virtual HttpPipeline Pipeline => this._pipeline;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueServiceClient"/>
         /// class for mocking.
@@ -178,6 +179,7 @@ namespace Azure.Storage.Queues
             this._uri = serviceUri;
             this._pipeline = pipeline;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="QueueClient"/> object by appending
@@ -194,6 +196,7 @@ namespace Azure.Storage.Queues
         public virtual QueueClient GetQueueClient(string queueName)
             => new QueueClient(this.Uri.AppendToPath(queueName), this.Pipeline);
 
+        #region GetQueues
         /// <summary>
         /// The <see cref="GetQueues"/> operation returns an async
         /// sequence of queues in the storage account.  Enumerating the
@@ -247,10 +250,16 @@ namespace Azure.Storage.Queues
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-queues1"/>
         /// </summary>
         /// <param name="options">
-        /// <see cref="QueuesSegmentOptions"/>
+        /// <see cref="GetQueuesOptions"/>
         /// </param>
         /// <param name="marker">
         /// Marker from the previous request.
+        /// </param>
+        /// <param name="pageSizeHint">
+        /// Optional hint to specify the desired size of the page returned.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -262,7 +271,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment. 
         /// </remarks>
-        internal async Task<Response<QueuesSegment>> GetQueuesAsync(
+        internal async Task<Response<QueuesSegment>> GetQueuesInternal(
             string marker,
             GetQueuesOptions? options,
             int? pageSizeHint,
@@ -301,7 +310,9 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+        #endregion GetQueues
 
+        #region GetProperties
         /// <summary>
         /// Gets the properties of the queue service.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-queue-service-properties"/>.
@@ -314,7 +325,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response<QueueServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -327,11 +338,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceProperties}}"/>
+        /// <see cref="Response{QueueServiceProperties}"/>
         /// </returns>
         public virtual async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -347,9 +358,9 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceProperties}}"/>
+        /// <see cref="Response{QueueServiceProperties}"/>
         /// </returns>
-        private async Task<Response<QueueServiceProperties>> GetPropertiesAsync(
+        private async Task<Response<QueueServiceProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -378,7 +389,9 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetProperties
         /// <summary>
         /// Sets the properties of the queue service.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-queue-service-properties"/>.
@@ -395,7 +408,7 @@ namespace Azure.Storage.Queues
         public virtual Response SetProperties(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            this.SetPropertiesAsync(
+            this.SetPropertiesInternal(
                 properties,
                 false, // async
                 cancellationToken)
@@ -412,12 +425,12 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await this.SetPropertiesAsync(
+            await this.SetPropertiesInternal(
                 properties,
                 true, // async
                 cancellationToken)
@@ -437,9 +450,9 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
-        private async Task<Response> SetPropertiesAsync(
+        private async Task<Response> SetPropertiesInternal(
             QueueServiceProperties properties,
             bool async,
             CancellationToken cancellationToken)
@@ -472,7 +485,9 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+        #endregion SetProperties
 
+        #region GetStatistics
         /// <summary>
         /// Retrieves statistics related to replication for the Blob service. It is
         /// only available on the secondary location endpoint when read-access
@@ -487,7 +502,7 @@ namespace Azure.Storage.Queues
         /// </returns>
         public virtual Response<QueueServiceStatistics> GetStatistics(
             CancellationToken cancellationToken = default) =>
-            this.GetStatisticsAsync(
+            this.GetStatisticsInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -502,11 +517,11 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceStatistics}}"/>
+        /// <see cref="Response{QueueServiceStatistics}"/>
         /// </returns>
         public virtual async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetStatisticsAsync(
+            await this.GetStatisticsInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -524,9 +539,9 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response{QueueServiceStatistics}}"/>
+        /// <see cref="Response{QueueServiceStatistics}"/>
         /// </returns>
-        private async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(
+        private async Task<Response<QueueServiceStatistics>> GetStatisticsInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -555,7 +570,9 @@ namespace Azure.Storage.Queues
                 }
             }
         }
+        #endregion GetStatistics
 
+        #region CreateQueue
         /// <summary>
         /// Creates a queue.
         /// 
@@ -565,7 +582,7 @@ namespace Azure.Storage.Queues
         /// The name of the queue to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional <see cref="Metadata"/>.
+        /// Optional <see cref="IDictionary{String, String}"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -592,7 +609,7 @@ namespace Azure.Storage.Queues
         /// The name of the queue to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional <see cref="Metadata"/>.
+        /// Optional <see cref="IDictionary{String, String}"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
@@ -609,7 +626,9 @@ namespace Azure.Storage.Queues
             var response = await queue.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
             return new Response<QueueClient>(response, queue);
         }
+        #endregion CreateQueue
 
+        #region DeleteQueue
         /// <summary>
         /// Deletes a queue.
         /// 
@@ -641,7 +660,7 @@ namespace Azure.Storage.Queues
         /// <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Task{Response}"/>
+        /// <see cref="Response"/>
         /// </returns>
         public virtual async Task<Response> DeleteQueueAsync(
             string queueName,
@@ -649,5 +668,6 @@ namespace Azure.Storage.Queues
             await this.GetQueueClient(queueName)
                 .DeleteAsync(cancellationToken)
                 .ConfigureAwait(false);
+        #endregion DeleteQueue
     }
 }
