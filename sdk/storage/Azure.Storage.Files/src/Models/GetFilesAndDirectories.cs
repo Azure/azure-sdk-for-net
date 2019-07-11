@@ -99,7 +99,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetFilesAndDirectoriesAsync(
+            var task = this._client.GetFilesAndDirectoriesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,

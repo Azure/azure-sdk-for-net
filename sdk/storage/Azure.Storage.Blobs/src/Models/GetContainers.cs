@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetContainersAsync(
+            var task = this._client.GetContainersInternal(
                 continuationToken,
                 this._options,
                 pageHintSize,

@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetHandlesAsync(
+            var task = this._client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
                 isAsync,
@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetHandlesAsync(
+            var task = this._client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
                 this._recursive,
