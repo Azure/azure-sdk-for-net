@@ -1,4 +1,27 @@
 # See for instructions on this file https://help.github.com/articles/about-codeowners/
 
-# Instructions for subscribing to scheduled build failure notifications:
-# https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/codeowners-notifications.md
+# Instructions for CODEOWNERS file format and automatic build failure notifications:
+# https://github.com/Azure/azure-sdk/blob/master/docs/engineering-system/codeowners.md
+
+###########
+# Eng Sys
+###########
+/eng/   @weshaggard @chidozieononiwu
+
+/eng/pipelines/ @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+
+/eng/pipelines/client.yml   @mitchdenny @danieljurek
+/**/tests.yml   @danieljurek
+/**/ci.yml      @mitchdenny
+
+
+###########
+# SDK
+###########
+
+# Catch all
+# /sdk/ @AlexGhiondea
+
+# Service teams
+# /sdk/eventhub/
+# /sdk/keyvault/
