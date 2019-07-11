@@ -98,6 +98,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public const int BlockBlobMaxBlocks = 50000;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
         /// class for mocking.
@@ -234,6 +235,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, pipeline)
         {
         }
+        #endregion ctors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
@@ -279,6 +281,7 @@ namespace Azure.Storage.Blobs.Specialized
         //    return new BlockBlobClient(builder.ToUri(), this.Pipeline);
         //}
 
+        #region Upload
         /// <summary>
         /// The <see cref="Upload"/> operation creates a new block  blob,
         /// or updates the content of an existing block blob.  Updating an
@@ -329,7 +332,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.UploadAsync(
+            this.UploadInternal(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -375,7 +378,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
@@ -389,7 +392,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.UploadAsync(
+            await this.UploadInternal(
                 content,
                 blobHttpHeaders,
                 metadata,
@@ -400,7 +403,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation creates a new block  blob,
+        /// The <see cref="UploadInternal"/> operation creates a new block blob,
         /// or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         /// 
@@ -438,14 +441,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> UploadAsync(
+        internal async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
@@ -506,7 +509,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Upload
 
+        #region StageBlock
         /// <summary>
         /// The <see cref="StageBlock"/> operation creates a new block as
         /// part of a block blob's "staging area" to be eventually committed
@@ -562,7 +567,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.StageBlockAsync(
+            this.StageBlockInternal(
                 base64BlockId,
                 content,
                 transactionalContentHash,
@@ -613,7 +618,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockInfo}}"/> describing the
+        /// A <see cref="Response{BlockInfo}"/> describing the
         /// state of the updated block.
         /// </returns>
         /// <remarks>
@@ -627,7 +632,7 @@ namespace Azure.Storage.Blobs.Specialized
             LeaseAccessConditions? leaseAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.StageBlockAsync(
+            await this.StageBlockInternal(
                 base64BlockId,
                 content,
                 transactionalContentHash,
@@ -638,8 +643,8 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="StageBlockAsync"/> operation creates a new block as
-        /// part of a block blob's "staging area" to be eventually committed
+        /// The <see cref="StageBlockInternal"/> operation creates a new block
+        /// as part of a block blob's "staging area" to be eventually committed
         /// via the <see cref="CommitBlockListAsync"/> operation.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
@@ -681,14 +686,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockInfo}}"/> describing the
+        /// A <see cref="Response{BlockInfo}"/> describing the
         /// state of the updated block.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlockInfo>> StageBlockAsync(
+        internal async Task<Response<BlockInfo>> StageBlockInternal(
             string base64BlockId, 
             Stream content, 
             byte[] transactionalContentHash, 
@@ -743,7 +748,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion StageBlock
 
+        #region StageBlockFromUri
         /// <summary>
         /// The <see cref="StageBlockFromUri"/> operation creates a new
         /// block to be committed as part of a blob where the contents are 
@@ -810,7 +817,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpAccessConditions? sourceAccessConditions = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.StageBlockFromUriAsync(
+            this.StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 sourceRange,
@@ -872,7 +879,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockInfo}}"/> describing the
+        /// A <see cref="Response{BlockInfo}"/> describing the
         /// state of the updated block.
         /// </returns>
         /// <remarks>
@@ -887,7 +894,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpAccessConditions? sourceAccessConditions = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.StageBlockFromUriAsync(
+            await this.StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 sourceRange,
@@ -899,7 +906,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="StageBlockFromUriAsync"/> operation creates a new
+        /// The <see cref="StageBlockFromUriInternal"/> operation creates a new
         /// block to be committed as part of a blob where the contents are 
         /// read from the <paramref name="sourceUri" />.
         /// 
@@ -952,14 +959,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockInfo}}"/> describing the
+        /// A <see cref="Response{BlockInfo}"/> describing the
         /// state of the updated block.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+        private async Task<Response<BlockInfo>> StageBlockFromUriInternal(
             Uri sourceUri,
             string base64BlockId,
             HttpRange sourceRange,
@@ -1008,7 +1015,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion StageBlockFromUri
 
+        #region CommitBlockList
         /// <summary>
         /// The <see cref="CommitBlockList"/> operation writes a blob by
         /// specifying the list of block IDs that make up the blob.  In order
@@ -1023,7 +1032,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         /// 
-        /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
+        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1061,7 +1070,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.CommitBlockListAsync(
+            this.CommitBlockListInternal(
                 base64BlockIds,
                 blobHttpHeaders,
                 metadata,
@@ -1084,7 +1093,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         /// 
-        /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
+        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1109,7 +1118,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
@@ -1122,7 +1131,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             BlobAccessConditions? blobAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.CommitBlockListAsync(
+            await this.CommitBlockListInternal(
                 base64BlockIds,
                 blobHttpHeaders,
                 metadata,
@@ -1132,7 +1141,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CommitBlockListAsync"/> operation writes a blob by
+        /// The <see cref="CommitBlockListInternal"/> operation writes a blob by
         /// specifying the list of block IDs that make up the blob.  In order
         /// to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlockAsync"/>
@@ -1145,7 +1154,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// may belong to.  Any blocks not specified in the block list and
         /// permanently deleted.
         /// 
-        /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
+        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
         /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
@@ -1173,14 +1182,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+        internal async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders? blobHttpHeaders,
             Metadata metadata,
@@ -1231,7 +1240,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion CommitBlockList
 
+        #region GetBlockList
         /// <summary>
         /// The <see cref="GetBlockList"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
@@ -1274,7 +1285,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetBlockListAsync(
+            this.GetBlockListInternal(
                 listType,
                 snapshot,
                 leaseAccessConditions,
@@ -1312,7 +1323,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockList}}"/> describing requested
+        /// A <see cref="Response{BlockList}"/> describing requested
         /// block list.
         /// </returns>
         /// <remarks>
@@ -1324,7 +1335,7 @@ namespace Azure.Storage.Blobs.Specialized
             string snapshot = default,
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetBlockListAsync(
+            await this.GetBlockListInternal(
                 listType,
                 snapshot,
                 leaseAccessConditions,
@@ -1333,7 +1344,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetBlockListAsync"/> operation operation retrieves
+        /// The <see cref="GetBlockListInternal"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -1365,14 +1376,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlockList}}"/> describing requested
+        /// A <see cref="Response{BlockList}"/> describing requested
         /// block list.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlockList>> GetBlockListAsync(
+        private async Task<Response<BlockList>> GetBlockListInternal(
             BlockListType? listType,
             string snapshot,
             LeaseAccessConditions? leaseAccessConditions,
@@ -1412,6 +1423,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion GetBlockList
     }
 
     /// <summary>
