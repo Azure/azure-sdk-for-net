@@ -13,18 +13,22 @@ namespace Azure.Security.KeyVault.Keys
     {
         /// <summary>
         /// The NIST P-256 elliptic curve, AKA SECG curve SECP256R1
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         P256 = 0x0001,
         /// <summary>
         /// The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         P384 = 0x0002,
         /// <summary>
         /// The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         P521 = 0x0004,
         /// <summary>
         /// The SECG SECP256K1 elliptic curve.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
         P256K = 0x0008,
         /// <summary>
