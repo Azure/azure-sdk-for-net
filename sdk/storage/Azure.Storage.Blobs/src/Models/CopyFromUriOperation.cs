@@ -149,6 +149,7 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {

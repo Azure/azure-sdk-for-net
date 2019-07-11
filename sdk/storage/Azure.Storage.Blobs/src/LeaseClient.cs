@@ -136,7 +136,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 60 seconds. A lease duration cannot be changed using
         /// <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
@@ -312,7 +312,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="Renew"/> operation renews the blob or
         /// container's previously-acquired lease.
         /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
         /// lease may be renewed even if it has expired as long as the blob or 
         /// container has not been leased again since the expiration of that
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -348,7 +348,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="RenewAsync"/> operation renews the blob or
         /// container's previously-acquired lease.
         /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
         /// lease may be renewed even if it has expired as long as the blob or 
         /// container has not been leased again since the expiration of that
@@ -356,7 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -384,7 +384,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="RenewAsync"/> operation renews the blob or
         /// container's previously-acquired lease.
         /// 
-        /// The lease can be renewed if the <paramref name="leaseId"/> 
+        /// The lease can be renewed if the leaseId
         /// matches that associated with the blob or container.  Note that the]
         /// lease may be renewed even if it has expired as long as the blob or 
         /// container has not been leased again since the expiration of that
@@ -392,7 +392,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -517,7 +517,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
         /// </summary>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -691,7 +691,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -729,7 +729,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="StorageRequestFailedException"/> will be thrown if the
         /// proposed lease ID is not in the correct format.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
@@ -839,7 +839,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -895,7 +895,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
@@ -951,7 +951,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// is not provided, a fixed-duration lease breaks after the remaining
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="httpAccessConditions">
         /// Optional <see cref="HttpAccessConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>

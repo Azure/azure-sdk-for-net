@@ -108,10 +108,6 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        /// <param name="includeBlobParameters">
-        /// Optional flag indicating whether to process blob-specific query
-        /// parameters.  The default value is false.
-        /// </param>
         internal BlobSasQueryParameters(UriQueryParamsCollection values)
             : base(values, includeBlobParameters: true)
         {

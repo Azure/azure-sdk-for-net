@@ -99,7 +99,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two BlobHttpHeaders instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         public bool Equals(BlobHttpHeaders other)
             => this.CacheControl == other.CacheControl
             && this.ContentDisposition == other.ContentDisposition

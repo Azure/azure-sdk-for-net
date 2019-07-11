@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure
+namespace Azure.Core.Http
 {
     public abstract class Request : IDisposable
     {
-        public virtual HttpPipelineUriBuilder UriBuilder { get; set; } = new HttpPipelineUriBuilder();
+        public virtual RequestUriBuilder UriBuilder { get; set; } = new RequestUriBuilder();
 
         public virtual RequestMethod Method { get; set; }
 

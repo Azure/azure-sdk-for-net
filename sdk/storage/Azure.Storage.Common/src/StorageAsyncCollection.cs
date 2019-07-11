@@ -38,6 +38,7 @@ namespace Azure.Storage
         /// <param name="continuationToken">
         /// Continuation token indicating where to begin enumerating.
         /// </param>
+        /// <param name="pageHintSize"></param>
         /// <param name="isAsync">
         /// Whether to fetch the next page asynchronously.
         /// </param>
@@ -73,7 +74,7 @@ namespace Azure.Storage
         /// A continuation token indicating where to resume paging or null to
         /// begin paging from the beginning.
         /// </param>
-        /// <param name="pageSizeHint">
+        /// <param name="pageHintSize">
         /// The size of <see cref="Page{T}"/>s that should be requested (from
         /// service operations that support it).
         /// </param>
@@ -136,10 +137,6 @@ namespace Azure.Storage
         /// Enumerate the values in the collection synchronously.  This may
         /// make mutliple service requests.
         /// </summary>
-        /// <param name="cancellationToken">
-        /// The <see cref="CancellationToken"/> used for requests made while
-        /// enumerating.
-        /// </param>
         /// <returns>A sequence of values.</returns>
         protected override IEnumerator<Response<T>> GetEnumerator()
         {

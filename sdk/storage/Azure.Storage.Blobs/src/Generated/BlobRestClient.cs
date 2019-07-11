@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetPropertiesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     blobServiceProperties,
@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.SetPropertiesAsync Request.</returns>
-            internal static Azure.Request SetPropertiesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetPropertiesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlobServiceProperties blobServiceProperties,
@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -92,14 +92,14 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlobServiceProperties.ToXml(blobServiceProperties, "StorageServiceProperties", "");
                 string _text = _body.ToString();
                 _request.Headers.SetValue("Content-Type", "application/xml");
-                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _request;
@@ -150,7 +150,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -174,7 +174,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetPropertiesAsync Request.</returns>
-            internal static Azure.Request GetPropertiesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -187,7 +187,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>.</returns>
+            /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -258,7 +258,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetStatisticsAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -282,7 +282,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetStatisticsAsync Request.</returns>
-            internal static Azure.Request GetStatisticsAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetStatisticsAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -295,7 +295,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -315,7 +315,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetStatisticsAsync Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>.</returns>
+            /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatisticsAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ListContainersSegmentAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ListContainersSegmentAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     prefix,
@@ -406,7 +406,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.ListContainersSegmentAsync Request.</returns>
-            internal static Azure.Request ListContainersSegmentAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ListContainersSegmentAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -423,7 +423,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -436,7 +436,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -446,7 +446,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.ListContainersSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.ListContainersSegmentAsync Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment>.</returns>
+            /// <returns>The Service.ListContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.ContainersSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainersSegment> ListContainersSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -499,7 +499,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetUserDelegationKeyAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetUserDelegationKeyAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     keyInfo,
@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Request.</returns>
-            internal static Azure.Request GetUserDelegationKeyAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetUserDelegationKeyAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.KeyInfo keyInfo,
@@ -543,7 +543,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Post;
@@ -553,14 +553,14 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.KeyInfo.ToXml(keyInfo, "KeyInfo", "");
                 string _text = _body.ToString();
                 _request.Headers.SetValue("Content-Type", "application/xml");
-                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _request;
@@ -570,7 +570,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetUserDelegationKeyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>.</returns>
+            /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response{Azure.Storage.Blobs.Models.UserDelegationKey}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKeyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -605,19 +605,19 @@ namespace Azure.Storage.Blobs
 
             #region Service.GetAccountInfoAsync
             /// <summary>
-            /// Returns the sku name and account kind 
+            /// Returns the sku name and account kind
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.AccountInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>> GetAccountInfoAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetAccountInfoAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetAccountInfoAsync_CreateRequest(
                     pipeline,
                     resourceUri))
                 {
@@ -637,7 +637,7 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <returns>The Service.GetAccountInfoAsync Request.</returns>
-            internal static Azure.Request GetAccountInfoAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetAccountInfoAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri)
             {
@@ -648,7 +648,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -657,7 +657,7 @@ namespace Azure.Storage.Blobs
                 _request.UriBuilder.AppendQuery("comp", "properties");
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
 
                 return _request;
             }
@@ -666,7 +666,7 @@ namespace Azure.Storage.Blobs
             /// Create the Service.GetAccountInfoAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.GetAccountInfoAsync Azure.Response<Azure.Storage.Blobs.Models.AccountInfo>.</returns>
+            /// <returns>The Service.GetAccountInfoAsync Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -728,7 +728,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -739,7 +739,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CreateAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -767,7 +767,7 @@ namespace Azure.Storage.Blobs
             /// <param name="access">Specifies whether data in the container may be accessed publicly and the level of access</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.CreateAsync Request.</returns>
-            internal static Azure.Request CreateAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -782,7 +782,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -791,11 +791,11 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-                if (metadata != null) { 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value));  }
@@ -808,7 +808,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -861,7 +861,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -871,7 +871,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -897,7 +897,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetPropertiesAsync Request.</returns>
-            internal static Azure.Request GetPropertiesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -911,7 +911,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -920,7 +920,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
@@ -931,7 +931,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem>.</returns>
+            /// <returns>The Container.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1042,7 +1042,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = DeleteAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -1072,7 +1072,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.DeleteAsync Request.</returns>
-            internal static Azure.Request DeleteAsync_CreateRequest(
+            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1088,7 +1088,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -1097,7 +1097,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -1145,7 +1145,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1157,7 +1157,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetMetadataAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetMetadataAsync Request.</returns>
-            internal static Azure.Request SetMetadataAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1203,7 +1203,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1213,12 +1213,12 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
-                if (metadata != null) { 
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -1231,7 +1231,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetMetadataAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1284,7 +1284,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>> GetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1294,7 +1294,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetAccessPolicyAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -1320,7 +1320,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.GetAccessPolicyAsync Request.</returns>
-            internal static Azure.Request GetAccessPolicyAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetAccessPolicyAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1334,7 +1334,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -1344,7 +1344,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.GetAccessPolicyAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy>.</returns>
+            /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerAccessPolicy}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1422,7 +1422,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> SetAccessPolicyAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1436,7 +1436,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetAccessPolicyAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     permissions,
@@ -1470,7 +1470,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.SetAccessPolicyAsync Request.</returns>
-            internal static Azure.Request SetAccessPolicyAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetAccessPolicyAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.SignedIdentifier> permissions = default,
@@ -1488,7 +1488,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1498,7 +1498,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (access != null) { _request.Headers.SetValue("x-ms-blob-public-access", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(access.Value));  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -1516,7 +1516,7 @@ namespace Azure.Storage.Blobs
                 }
                 string _text = _body.ToString();
                 _request.Headers.SetValue("Content-Type", "application/xml");
-                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _request;
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.SetAccessPolicyAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> SetAccessPolicyAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1582,7 +1582,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1595,7 +1595,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -1627,7 +1627,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.AcquireLeaseAsync Request.</returns>
-            internal static Azure.Request AcquireLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request AcquireLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -1644,7 +1644,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1654,8 +1654,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "acquire"); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "acquire");
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (duration != null) { _request.Headers.SetValue("x-ms-lease-duration", duration.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
                 if (proposedLeaseId != null) { _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -1669,7 +1669,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.AcquireLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> AcquireLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1728,7 +1728,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1740,7 +1740,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -1770,7 +1770,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ReleaseLeaseAsync Request.</returns>
-            internal static Azure.Request ReleaseLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ReleaseLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -1790,7 +1790,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1800,9 +1800,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "release"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "release");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
@@ -1814,7 +1814,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ReleaseLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo>.</returns>
+            /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.ContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.ContainerInfo> ReleaseLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -1869,7 +1869,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1881,7 +1881,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -1911,7 +1911,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.RenewLeaseAsync Request.</returns>
-            internal static Azure.Request RenewLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request RenewLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -1931,7 +1931,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -1941,9 +1941,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "renew"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "renew");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
@@ -1955,7 +1955,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.RenewLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> RenewLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2014,7 +2014,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2026,7 +2026,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -2056,7 +2056,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.BreakLeaseAsync Request.</returns>
-            internal static Azure.Request BreakLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request BreakLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -2072,7 +2072,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -2082,8 +2082,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "break"); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "break");
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (breakPeriod != null) { _request.Headers.SetValue("x-ms-lease-break-period", breakPeriod.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -2096,7 +2096,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.BreakLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>.</returns>
+            /// <returns>The Container.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2168,7 +2168,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2181,7 +2181,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -2213,7 +2213,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ChangeLeaseAsync Request.</returns>
-            internal static Azure.Request ChangeLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ChangeLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -2238,7 +2238,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -2248,10 +2248,10 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "change"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "change");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
@@ -2263,7 +2263,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ChangeLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Container.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> ChangeLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2336,7 +2336,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ListBlobsFlatSegmentAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ListBlobsFlatSegmentAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     prefix,
@@ -2368,7 +2368,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Request.</returns>
-            internal static Azure.Request ListBlobsFlatSegmentAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ListBlobsFlatSegmentAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2385,7 +2385,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -2399,7 +2399,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -2409,7 +2409,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ListBlobsFlatSegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment>.</returns>
+            /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsFlatSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> ListBlobsFlatSegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2470,7 +2470,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ListBlobsHierarchySegmentAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ListBlobsHierarchySegmentAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     prefix,
@@ -2504,7 +2504,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Request.</returns>
-            internal static Azure.Request ListBlobsHierarchySegmentAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ListBlobsHierarchySegmentAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string prefix = default,
@@ -2522,7 +2522,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -2537,7 +2537,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -2547,7 +2547,7 @@ namespace Azure.Storage.Blobs
             /// Create the Container.ListBlobsHierarchySegmentAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment>.</returns>
+            /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsHierarchySegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> ListBlobsHierarchySegmentAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -2605,7 +2605,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>> DownloadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -2622,7 +2622,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = DownloadAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = DownloadAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     snapshot,
@@ -2662,7 +2662,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DownloadAsync Request.</returns>
-            internal static Azure.Request DownloadAsync_CreateRequest(
+            internal static Azure.Core.Http.Request DownloadAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -2683,7 +2683,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -2692,12 +2692,12 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
-                if (rangeGetContentHash != null) { 
+                if (rangeGetContentHash != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.Headers.SetValue("x-ms-range-get-content-md5", rangeGetContentHash.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()); 
+                _request.Headers.SetValue("x-ms-range-get-content-md5", rangeGetContentHash.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -2713,7 +2713,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.DownloadAsync Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties>.</returns>
+            /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3035,7 +3035,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobProperties></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3050,7 +3050,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetPropertiesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     snapshot,
@@ -3086,7 +3086,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.GetPropertiesAsync Request.</returns>
-            internal static Azure.Request GetPropertiesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetPropertiesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3105,7 +3105,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Head;
@@ -3114,7 +3114,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -3129,7 +3129,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetPropertiesAsync Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>.</returns>
+            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3344,7 +3344,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = DeleteAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     snapshot,
@@ -3382,7 +3382,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.DeleteAsync Request.</returns>
-            internal static Azure.Request DeleteAsync_CreateRequest(
+            internal static Azure.Core.Http.Request DeleteAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -3402,7 +3402,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Delete;
@@ -3411,7 +3411,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (deleteSnapshots != null) { _request.Headers.SetValue("x-ms-delete-snapshots", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(deleteSnapshots.Value));  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -3468,7 +3468,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = UndeleteAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = UndeleteAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -3492,7 +3492,7 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.UndeleteAsync Request.</returns>
-            internal static Azure.Request UndeleteAsync_CreateRequest(
+            internal static Azure.Core.Http.Request UndeleteAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3505,7 +3505,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -3514,7 +3514,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
                 return _request;
@@ -3567,7 +3567,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>> SetHttpHeadersAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3587,7 +3587,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetHttpHeadersAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetHttpHeadersAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -3633,7 +3633,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobContentDisposition">Optional. Sets the blob's Content-Disposition header.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Request.</returns>
-            internal static Azure.Request SetHttpHeadersAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetHttpHeadersAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3657,7 +3657,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -3666,20 +3666,20 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl);  }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType);  }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash));  }
-                if (blobContentEncoding != null) { 
+                if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
                     }
                  }
-                if (blobContentLanguage != null) { 
+                if (blobContentLanguage != null) {
                     foreach (string _item in blobContentLanguage)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -3697,7 +3697,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.SetHttpHeadersAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetHttpHeadersAsync Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation>.</returns>
+            /// <returns>The Blob.SetHttpHeadersAsync Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> SetHttpHeadersAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3771,7 +3771,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>> SetMetadataAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3786,7 +3786,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetMetadataAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -3822,7 +3822,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.SetMetadataAsync Request.</returns>
-            internal static Azure.Request SetMetadataAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetMetadataAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -3841,7 +3841,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -3850,11 +3850,11 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-                if (metadata != null) { 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -3871,7 +3871,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.SetMetadataAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.SetMetadataAsync Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation>.</returns>
+            /// <returns>The Blob.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> SetMetadataAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -3945,7 +3945,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -3960,7 +3960,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = AcquireLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = AcquireLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -3996,7 +3996,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AcquireLeaseAsync Request.</returns>
-            internal static Azure.Request AcquireLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request AcquireLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4015,7 +4015,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4024,8 +4024,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "acquire"); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "acquire");
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (duration != null) { _request.Headers.SetValue("x-ms-lease-duration", duration.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
                 if (proposedLeaseId != null) { _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -4041,7 +4041,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.AcquireLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> AcquireLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4102,7 +4102,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ReleaseLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4116,7 +4116,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ReleaseLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ReleaseLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -4150,7 +4150,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Request.</returns>
-            internal static Azure.Request ReleaseLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ReleaseLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -4172,7 +4172,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4181,9 +4181,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "release"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "release");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString());  }
@@ -4197,7 +4197,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.ReleaseLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>.</returns>
+            /// <returns>The Blob.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ReleaseLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4254,7 +4254,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> RenewLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4268,7 +4268,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = RenewLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = RenewLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -4302,7 +4302,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.RenewLeaseAsync Request.</returns>
-            internal static Azure.Request RenewLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request RenewLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -4324,7 +4324,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4333,9 +4333,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "renew"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "renew");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString());  }
@@ -4349,7 +4349,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.RenewLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> RenewLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4411,7 +4411,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.Lease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.Lease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.Lease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4426,7 +4426,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ChangeLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ChangeLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     leaseId,
@@ -4462,7 +4462,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.ChangeLeaseAsync Request.</returns>
-            internal static Azure.Request ChangeLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ChangeLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string leaseId,
@@ -4489,7 +4489,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4498,10 +4498,10 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "change"); 
-                _request.Headers.SetValue("x-ms-lease-id", leaseId); 
-                _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "change");
+                _request.Headers.SetValue("x-ms-lease-id", leaseId);
+                _request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString());  }
@@ -4515,7 +4515,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.ChangeLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.Lease>.</returns>
+            /// <returns>The Blob.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.Lease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.Lease> ChangeLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4576,7 +4576,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BrokenLease></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>> BreakLeaseAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4590,7 +4590,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = BreakLeaseAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = BreakLeaseAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -4624,7 +4624,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.BreakLeaseAsync Request.</returns>
-            internal static Azure.Request BreakLeaseAsync_CreateRequest(
+            internal static Azure.Core.Http.Request BreakLeaseAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4642,7 +4642,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4651,8 +4651,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-lease-action", "break"); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-lease-action", "break");
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (breakPeriod != null) { _request.Headers.SetValue("x-ms-lease-break-period", breakPeriod.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -4667,7 +4667,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.BreakLeaseAsync Azure.Response<Azure.Storage.Blobs.Models.BrokenLease>.</returns>
+            /// <returns>The Blob.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4741,7 +4741,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>> CreateSnapshotAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4756,7 +4756,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CreateSnapshotAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CreateSnapshotAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     timeout,
@@ -4792,7 +4792,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CreateSnapshotAsync Request.</returns>
-            internal static Azure.Request CreateSnapshotAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CreateSnapshotAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 int? timeout = default,
@@ -4811,7 +4811,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -4820,11 +4820,11 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-                if (metadata != null) { 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -4841,7 +4841,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.CreateSnapshotAsync Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo>.</returns>
+            /// <returns>The Blob.CreateSnapshotAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> CreateSnapshotAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -4908,7 +4908,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> StartCopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4928,7 +4928,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = StartCopyFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = StartCopyFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     copySource,
@@ -4974,7 +4974,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Request.</returns>
-            internal static Azure.Request StartCopyFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request StartCopyFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5002,7 +5002,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5010,12 +5010,12 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString()); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-                if (metadata != null) { 
+                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -5036,7 +5036,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.StartCopyFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.StartCopyFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The Blob.StartCopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> StartCopyFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5107,7 +5107,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5127,7 +5127,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CopyFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CopyFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     copySource,
@@ -5173,7 +5173,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.CopyFromUriAsync Request.</returns>
-            internal static Azure.Request CopyFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CopyFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -5201,7 +5201,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5209,13 +5209,13 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-requires-sync", "true"); 
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString()); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
-                if (metadata != null) { 
+                _request.Headers.SetValue("x-ms-requires-sync", "true");
+                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -5236,7 +5236,7 @@ namespace Azure.Storage.Blobs
             /// Create the Blob.CopyFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.CopyFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The Blob.CopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5309,7 +5309,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = AbortCopyFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = AbortCopyFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     copyId,
@@ -5337,7 +5337,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Request.</returns>
-            internal static Azure.Request AbortCopyFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request AbortCopyFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string copyId,
@@ -5356,7 +5356,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5366,8 +5366,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-action", "abort"); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-copy-action", "abort");
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
@@ -5423,7 +5423,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = SetTierAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = SetTierAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     tier,
@@ -5451,7 +5451,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <returns>The Blob.SetTierAsync Request.</returns>
-            internal static Azure.Request SetTierAsync_CreateRequest(
+            internal static Azure.Core.Http.Request SetTierAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
@@ -5470,7 +5470,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5479,8 +5479,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-access-tier", tier); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-access-tier", tier);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
 
@@ -5550,7 +5550,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5574,7 +5574,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CreateAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     contentLength,
@@ -5628,7 +5628,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CreateAsync Request.</returns>
-            internal static Azure.Request CreateAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -5656,7 +5656,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5664,29 +5664,29 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-blob-type", "PageBlob"); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-blob-type", "PageBlob");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType);  }
-                if (blobContentEncoding != null) { 
+                if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
                     }
                  }
-                if (blobContentLanguage != null) { 
+                if (blobContentLanguage != null) {
                     foreach (string _item in blobContentLanguage)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
                     }
                  }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash));  }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl);  }
-                if (metadata != null) { 
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -5705,7 +5705,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The PageBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5777,7 +5777,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5798,7 +5798,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = UploadPagesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = UploadPagesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     body,
@@ -5846,7 +5846,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesAsync Request.</returns>
-            internal static Azure.Request UploadPagesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request UploadPagesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -5875,7 +5875,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -5884,9 +5884,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-page-write", "update"); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-page-write", "update");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash));  }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -5909,7 +5909,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.UploadPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -5979,7 +5979,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> ClearPagesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5998,7 +5998,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ClearPagesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ClearPagesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     contentLength,
@@ -6042,7 +6042,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ClearPagesAsync Request.</returns>
-            internal static Azure.Request ClearPagesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ClearPagesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -6065,7 +6065,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -6074,9 +6074,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-page-write", "clear"); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-page-write", "clear");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
@@ -6095,7 +6095,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ClearPagesAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.ClearPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6172,7 +6172,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageInfo>> UploadPagesFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6198,7 +6198,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = UploadPagesFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = UploadPagesFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     sourceUri,
@@ -6256,7 +6256,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Request.</returns>
-            internal static Azure.Request UploadPagesFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request UploadPagesFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -6298,7 +6298,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -6307,12 +6307,12 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-page-write", "update"); 
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString()); 
-                _request.Headers.SetValue("x-ms-source-range", sourceRange); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-range", range); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-page-write", "update");
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-source-range", sourceRange);
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-range", range);
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash));  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
@@ -6335,7 +6335,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.PageInfo>.</returns>
+            /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6416,7 +6416,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6432,7 +6432,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetPageRangesAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetPageRangesAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     snapshot,
@@ -6470,7 +6470,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Request.</returns>
-            internal static Azure.Request GetPageRangesAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetPageRangesAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -6490,7 +6490,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -6500,7 +6500,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -6516,7 +6516,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>.</returns>
+            /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6596,7 +6596,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>> GetPageRangesDiffAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6613,7 +6613,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetPageRangesDiffAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetPageRangesDiffAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     snapshot,
@@ -6653,7 +6653,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Request.</returns>
-            internal static Azure.Request GetPageRangesDiffAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetPageRangesDiffAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string snapshot = default,
@@ -6674,7 +6674,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -6685,7 +6685,7 @@ namespace Azure.Storage.Blobs
                 if (prevsnapshot != null) { _request.UriBuilder.AppendQuery("prevsnapshot", System.Uri.EscapeDataString(prevsnapshot)); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range);  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -6701,7 +6701,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo>.</returns>
+            /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfo> GetPageRangesDiffAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6779,7 +6779,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> ResizeAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6794,7 +6794,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = ResizeAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = ResizeAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     blobContentLength,
@@ -6830,7 +6830,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.ResizeAsync Request.</returns>
-            internal static Azure.Request ResizeAsync_CreateRequest(
+            internal static Azure.Core.Http.Request ResizeAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long blobContentLength,
@@ -6849,7 +6849,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -6858,8 +6858,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-blob-content-length", blobContentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -6874,7 +6874,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.ResizeAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            /// <returns>The PageBlob.ResizeAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -6937,7 +6937,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>> UpdateSequenceNumberAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -6953,7 +6953,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = UpdateSequenceNumberAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = UpdateSequenceNumberAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     sequenceNumberAction,
@@ -6991,7 +6991,7 @@ namespace Azure.Storage.Blobs
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Request.</returns>
-            internal static Azure.Request UpdateSequenceNumberAsync_CreateRequest(
+            internal static Azure.Core.Http.Request UpdateSequenceNumberAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.SequenceNumberAction sequenceNumberAction,
@@ -7011,7 +7011,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -7020,8 +7020,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-sequence-number-action", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(sequenceNumberAction)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-sequence-number-action", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(sequenceNumberAction));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
@@ -7037,7 +7037,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo>.</returns>
+            /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7098,7 +7098,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> CopyIncrementalAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7112,7 +7112,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CopyIncrementalAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CopyIncrementalAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     copySource,
@@ -7146,7 +7146,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Request.</returns>
-            internal static Azure.Request CopyIncrementalAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CopyIncrementalAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri copySource,
@@ -7168,7 +7168,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -7177,8 +7177,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString()); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture));  }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString());  }
@@ -7192,7 +7192,7 @@ namespace Azure.Storage.Blobs
             /// Create the PageBlob.CopyIncrementalAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>.</returns>
+            /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyIncrementalAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7273,7 +7273,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CreateAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7295,7 +7295,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CreateAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     contentLength,
@@ -7345,7 +7345,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.CreateAsync Request.</returns>
-            internal static Azure.Request CreateAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CreateAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 long contentLength,
@@ -7371,7 +7371,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -7379,28 +7379,28 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-blob-type", "AppendBlob"); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-blob-type", "AppendBlob");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType);  }
-                if (blobContentEncoding != null) { 
+                if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
                     }
                  }
-                if (blobContentLanguage != null) { 
+                if (blobContentLanguage != null) {
                     foreach (string _item in blobContentLanguage)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
                     }
                  }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash));  }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl);  }
-                if (metadata != null) { 
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -7418,7 +7418,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.CreateAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.CreateAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The AppendBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7488,7 +7488,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7507,7 +7507,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = AppendBlockAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = AppendBlockAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     body,
@@ -7551,7 +7551,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Request.</returns>
-            internal static Azure.Request AppendBlockAsync_CreateRequest(
+            internal static Azure.Core.Http.Request AppendBlockAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -7578,7 +7578,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -7587,8 +7587,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash));  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));  }
@@ -7609,7 +7609,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.AppendBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.AppendBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>.</returns>
+            /// <returns>The AppendBlob.AppendBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7692,7 +7692,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>> AppendBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7716,7 +7716,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = AppendBlockFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = AppendBlockFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     sourceUri,
@@ -7770,7 +7770,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Request.</returns>
-            internal static Azure.Request AppendBlockFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request AppendBlockFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.Uri sourceUri,
@@ -7802,7 +7802,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -7811,9 +7811,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString()); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange);  }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash));  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -7836,7 +7836,7 @@ namespace Azure.Storage.Blobs
             /// Create the AppendBlob.AppendBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo>.</returns>
+            /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -7940,7 +7940,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -7963,7 +7963,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = UploadAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = UploadAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     body,
@@ -8015,7 +8015,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.UploadAsync Request.</returns>
-            internal static Azure.Request UploadAsync_CreateRequest(
+            internal static Azure.Core.Http.Request UploadAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 System.IO.Stream body,
@@ -8046,7 +8046,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -8054,28 +8054,28 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-blob-type", "BlockBlob"); 
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-blob-type", "BlockBlob");
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType);  }
-                if (blobContentEncoding != null) { 
+                if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
                     }
                  }
-                if (blobContentLanguage != null) { 
+                if (blobContentLanguage != null) {
                     foreach (string _item in blobContentLanguage)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
                     }
                  }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash));  }
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl);  }
-                if (metadata != null) { 
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -8096,7 +8096,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.UploadAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.UploadAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The BlockBlob.UploadAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8161,7 +8161,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8175,7 +8175,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = StageBlockAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = StageBlockAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     blockId,
@@ -8209,7 +8209,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Request.</returns>
-            internal static Azure.Request StageBlockAsync_CreateRequest(
+            internal static Azure.Core.Http.Request StageBlockAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8235,7 +8235,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -8245,8 +8245,8 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash));  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
@@ -8261,7 +8261,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            /// <returns>The BlockBlob.StageBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8319,7 +8319,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlockInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockFromUriAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8338,7 +8338,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = StageBlockFromUriAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = StageBlockFromUriAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     blockId,
@@ -8382,7 +8382,7 @@ namespace Azure.Storage.Blobs
             /// <param name="sourceIfNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Request.</returns>
-            internal static Azure.Request StageBlockFromUriAsync_CreateRequest(
+            internal static Azure.Core.Http.Request StageBlockFromUriAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 string blockId,
@@ -8413,7 +8413,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -8423,9 +8423,9 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
-                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString()); 
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                _request.Headers.SetValue("x-ms-copy-source", sourceUri.ToString());
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange);  }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash));  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -8442,7 +8442,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>.</returns>
+            /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8516,7 +8516,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> CommitBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8538,7 +8538,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = CommitBlockListAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = CommitBlockListAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     blocks,
@@ -8587,7 +8587,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Request.</returns>
-            internal static Azure.Request CommitBlockListAsync_CreateRequest(
+            internal static Azure.Core.Http.Request CommitBlockListAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockLookupList blocks,
@@ -8617,7 +8617,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Put;
@@ -8626,26 +8626,26 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (blobCacheControl != null) { _request.Headers.SetValue("x-ms-blob-cache-control", blobCacheControl);  }
                 if (blobContentType != null) { _request.Headers.SetValue("x-ms-blob-content-type", blobContentType);  }
-                if (blobContentEncoding != null) { 
+                if (blobContentEncoding != null) {
                     foreach (string _item in blobContentEncoding)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-encoding", _item);
                     }
                  }
-                if (blobContentLanguage != null) { 
+                if (blobContentLanguage != null) {
                     foreach (string _item in blobContentLanguage)
                     {
-                        _request.Headers.SetValue("x-ms-blob-content-language", _item); 
+                        _request.Headers.SetValue("x-ms-blob-content-language", _item);
                     }
                  }
                 if (blobContentHash != null) { _request.Headers.SetValue("x-ms-blob-content-md5", System.Convert.ToBase64String(blobContentHash));  }
-                if (metadata != null) { 
+                if (metadata != null) {
                     foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
                     {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value); 
+                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
                     }
                  }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
@@ -8660,7 +8660,7 @@ namespace Azure.Storage.Blobs
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlockLookupList.ToXml(blocks, "BlockList", "");
                 string _text = _body.ToString();
                 _request.Headers.SetValue("Content-Type", "application/xml");
-                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
+                _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 _request.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
 
                 return _request;
@@ -8670,7 +8670,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.CommitBlockListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>.</returns>
+            /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CommitBlockListAsync_CreateResponse(
                 Azure.Response response)
             {
@@ -8733,7 +8733,7 @@ namespace Azure.Storage.Blobs
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation></returns>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}</returns>
             public static async System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>> GetBlockListAsync(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -8745,7 +8745,7 @@ namespace Azure.Storage.Blobs
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Request _request = GetBlockListAsync_CreateRequest(
+                using (Azure.Core.Http.Request _request = GetBlockListAsync_CreateRequest(
                     pipeline,
                     resourceUri,
                     listType,
@@ -8775,7 +8775,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Request.</returns>
-            internal static Azure.Request GetBlockListAsync_CreateRequest(
+            internal static Azure.Core.Http.Request GetBlockListAsync_CreateRequest(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.BlockListType listType,
@@ -8791,7 +8791,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Create the request
-                Azure.Request _request = pipeline.CreateRequest();
+                Azure.Core.Http.Request _request = pipeline.CreateRequest();
 
                 // Set the endpoint
                 _request.Method = Azure.Core.Pipeline.RequestMethod.Get;
@@ -8802,7 +8802,7 @@ namespace Azure.Storage.Blobs
                 if (timeout != null) { _request.UriBuilder.AppendQuery("timeout", System.Uri.EscapeDataString(timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture))); }
 
                 // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2018-11-09"); 
+                _request.Headers.SetValue("x-ms-version", "2018-11-09");
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId);  }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId);  }
 
@@ -8813,7 +8813,7 @@ namespace Azure.Storage.Blobs
             /// Create the BlockBlob.GetBlockListAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The BlockBlob.GetBlockListAsync Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation>.</returns>
+            /// <returns>The BlockBlob.GetBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> GetBlockListAsync_CreateResponse(
                 Azure.Response response)
             {

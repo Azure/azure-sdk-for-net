@@ -212,7 +212,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Check if two QueueUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(QueueUriBuilder other)
             => this.Scheme == other.Scheme
@@ -251,8 +251,6 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Check if two QueueUriBuilder instances are not equal.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>

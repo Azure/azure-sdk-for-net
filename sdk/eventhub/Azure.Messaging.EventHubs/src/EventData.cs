@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   A set of data encapsulating an event and the associated metadata for
-    ///  use with Event Hubs operations.
+    ///   use with Event Hubs operations.
     /// </summary>
     ///
     public class EventData
@@ -70,13 +70,13 @@ namespace Azure.Messaging.EventHubs
         ///   The offset of the the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
-        public int Offset => SystemProperties.Offset;
+        public long Offset => SystemProperties.Offset;
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
-        public DateTime EnqueuedTimeUtc => SystemProperties.EnqueuedTimeUtc;
+        public DateTimeOffset EnqueuedTime => SystemProperties.EnqueuedTime;
 
         /// <summary>
         ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.
@@ -139,17 +139,17 @@ namespace Azure.Messaging.EventHubs
             /// </summary>
             ///
             /// <param name="sequenceNumber">The logical sequence number of the event within the partition stream of the Event Hub.</param>
-            /// <param name="enqueuedTimeUtc">The date and time, in UTC, that the event was received by the partition.</param>
+            /// <param name="enqueuedTime">The date and time, in UTC, that the event was received by the partition.</param>
             /// <param name="offset">The offset of the event relative to the Event Hub partition stream.</param>
             /// <param name="partitionKey">The partition hashing key associated with the batch that the event was grouped with when sent.</param>
             ///
             internal SystemEventProperties(long sequenceNumber,
-                                           DateTime enqueuedTimeUtc,
+                                           DateTimeOffset enqueuedTime,
                                            string offset,
                                            string partitionKey)
             {
                 this[MessagePropertyName.SequenceNumber] = sequenceNumber;
-                this[MessagePropertyName.EnqueuedTimeUtc] = enqueuedTimeUtc;
+                this[MessagePropertyName.EnqueuedTime] = enqueuedTime;
                 this[MessagePropertyName.Offset] = offset;
                 this[MessagePropertyName.PartitionKey] = partitionKey;
             }
@@ -175,16 +175,16 @@ namespace Azure.Messaging.EventHubs
             ///   The date and time, in UTC, that the <see cref="EventData" /> was received by the partition.
             /// </summary>
             ///
-            internal DateTime EnqueuedTimeUtc
+            internal DateTimeOffset EnqueuedTime
             {
                 get
                 {
-                    if (this.TryGetValue(MessagePropertyName.EnqueuedTimeUtc, out var value))
+                    if (this.TryGetValue(MessagePropertyName.EnqueuedTime, out var value))
                     {
-                        return (DateTime)value;
+                        return (DateTimeOffset)value;
                     }
 
-                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.EnqueuedTimeUtc));
+                    throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.MissingSystemProperty, MessagePropertyName.EnqueuedTime));
                 }
             }
 
@@ -197,18 +197,18 @@ namespace Azure.Messaging.EventHubs
             ///   identifier is unique within a partition of the Event Hubs stream.
             /// </remarks>
             ///
-            internal int Offset
+            internal long Offset
             {
                 get
                 {
                     if (this.TryGetValue(MessagePropertyName.Offset, out var value))
                     {
-                        if (value is int offset)
+                        if (value is long offset)
                         {
                             return offset;
                         }
 
-                        if ((value is string token) && (int.TryParse(token, out var parsedOffset)))
+                        if ((value is string token) && (long.TryParse(token, out var parsedOffset)))
                         {
                             return parsedOffset;
                         }

@@ -4,9 +4,6 @@
 
 using System;
 
-/// <summary>
-/// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations" />
-/// </summary>
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
@@ -74,7 +71,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two HttpAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(HttpAccessConditions other)
             => this.IfMatch == other.IfMatch
@@ -145,7 +142,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two ContainerAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(ContainerAccessConditions other)
             => this.HttpAccessConditions == other.HttpAccessConditions
@@ -213,7 +210,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two BlobAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(BlobAccessConditions other)
             => this.HttpAccessConditions == other.HttpAccessConditions
@@ -276,7 +273,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two LeaseAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(LeaseAccessConditions other)
             => this.LeaseId == other.LeaseId;
@@ -358,7 +355,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two AppendBlobAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(AppendBlobAccessConditions other)
             => this.HttpAccessConditions == other.HttpAccessConditions
@@ -451,7 +448,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Check if two PageBlobAccessConditions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(PageBlobAccessConditions other)
             => this.HttpAccessConditions == other.HttpAccessConditions

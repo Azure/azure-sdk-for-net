@@ -19,13 +19,19 @@ jobs:
         Linux:
           OSName: 'Linux'
           OSVmImage: 'ubuntu-16.04'
-        Windows:
-          OSName: 'Windows'
-          OSVmImage: 'vs2017-win2016'
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp:
+          OSName: "Windows"
+          OSVmImage: "vs2017-win2016"
+          TestTargetFramework: netcoreapp2.1
+        Windows_NetFramework:
+          OSName: "Windows"
+          OSVmImage: "vs2017-win2016"
+          TestTargetFramework: net461
         MacOs:
-          OSName: 'MacOS'
-          OSVmImage: 'macOS-10.13'
-
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.13"
+          TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: '$(OSVmImage)'
 
@@ -56,19 +62,20 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: "dotnet test eng/service.proj --logger trx /p:ServiceDirectory=${{ parameters.ServiceDirectory }}"
-        displayName: 'Build & Test (all tests)'
+      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false
+        displayName: 'Build & Test (all tests for $(TestTargetFramework))'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
           AZURE_TEST_MODE: "None"
-          ${{ insert }}: ${{  parameters.EnvVars }}
+          ${{ insert }}: ${{ parameters.EnvVars }}
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
+        displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
-          testResultsFiles: '**/*.trx'
-          testRunTitle: '$(OSName) DotNet $(DotNetCoreRuntimeVersion)'
+          testResultsFiles: '**/$(TestTargetFramework)*.trx'
+          testRunTitle: '$(OSName) $(TestTargetFramework)'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
