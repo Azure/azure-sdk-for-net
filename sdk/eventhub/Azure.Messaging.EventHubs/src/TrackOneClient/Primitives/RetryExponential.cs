@@ -12,10 +12,10 @@ namespace TrackOne
     /// </summary>
     internal sealed class RetryExponential : RetryPolicy
     {
-        readonly TimeSpan minimumBackoff;
-        readonly TimeSpan maximumBackoff;
-        readonly int maximumRetryCount;
-        readonly double retryFactor;
+        internal readonly TimeSpan minimumBackoff;
+        internal readonly TimeSpan maximumBackoff;
+        internal readonly int maximumRetryCount;
+        internal readonly double retryFactor;
 
         /// <summary>
         /// Returns a new RetryExponential retry policy object.

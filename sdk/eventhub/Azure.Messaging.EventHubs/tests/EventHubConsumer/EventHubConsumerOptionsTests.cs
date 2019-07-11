@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class EventHubConsumerOptionsTests
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubConsumerOptions
             {
                 OwnerLevel = 99,
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(5), 6),
+                RetryOptions = new RetryOptions { Mode = RetryMode.Fixed },
                 DefaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(65),
                 Identifier = "an_event_consumer"
             };
@@ -35,8 +35,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.DefaultMaximumReceiveWaitTime, Is.EqualTo(options.DefaultMaximumReceiveWaitTime), "The default maximum wait time of the clone should match.");
             Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier of the clone should match.");
 
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)clone.Retry, (ExponentialRetry)options.Retry), "The retry of the clone should be considered equal.");
-            Assert.That(clone.Retry, Is.Not.SameAs(options.Retry), "The retry of the clone should be a copy, not the same instance.");
+            Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+            Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
         }
 
         /// <summary>

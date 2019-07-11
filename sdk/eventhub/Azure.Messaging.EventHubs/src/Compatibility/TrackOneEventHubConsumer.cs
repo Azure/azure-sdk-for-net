@@ -20,6 +20,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
     ///
     internal sealed class TrackOneEventHubConsumer : TransportEventHubConsumer
     {
+        /// <summary>The active retry policy for the producer.</summary>
+        private EventHubRetryPolicy _retryPolicy;
+
         /// <summary>A lazy instantiation of the producer instance to delegate operation to.</summary>
         private Lazy<TrackOne.PartitionReceiver> _trackOneReceiver;
 
@@ -34,6 +37,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// </summary>
         ///
         /// <param name="trackOneReceiverFactory">A delegate that can be used for creation of the <see cref="TrackOne.PartitionReceiver" /> to which operations are delegated to.</param>
+        /// <param name="retryPolicy">The retry policy to use when creating the <see cref="TrackOne.PartitionReceiver" />.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -44,10 +48,30 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   caller.
         /// </remarks>
         ///
-        public TrackOneEventHubConsumer(Func<TrackOne.PartitionReceiver> trackOneReceiverFactory)
+        public TrackOneEventHubConsumer(Func<EventHubRetryPolicy, TrackOne.PartitionReceiver> trackOneReceiverFactory,
+                                        EventHubRetryPolicy retryPolicy)
         {
             Guard.ArgumentNotNull(nameof(trackOneReceiverFactory), trackOneReceiverFactory);
-            _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(trackOneReceiverFactory, LazyThreadSafetyMode.PublicationOnly);
+            Guard.ArgumentNotNull(nameof(retryPolicy), retryPolicy);
+
+            _retryPolicy = retryPolicy;
+            _trackOneReceiver = new Lazy<TrackOne.PartitionReceiver>(() => trackOneReceiverFactory(_retryPolicy), LazyThreadSafetyMode.PublicationOnly);
+        }
+
+        /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        ///
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        ///
+        public override void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy)
+        {
+            _retryPolicy = newRetryPolicy;
+
+            if (_trackOneReceiver.IsValueCreated)
+            {
+                TrackOneReceiver.RetryPolicy = new TrackOneRetryPolicy(newRetryPolicy);
+            }
         }
 
         /// <summary>

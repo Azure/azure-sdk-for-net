@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Compatibility;
+using Moq;
 using NUnit.Framework;
 using TrackOne;
 
@@ -19,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class TrackOneEventHubProducerTests
     {
         /// <summary>
@@ -29,7 +31,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheProducerFactory()
         {
-            Assert.That(() => new TrackOneEventHubProducer(null), Throws.ArgumentNullException);
+            Assert.That(() => new TrackOneEventHubProducer(null, Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorValidatesTheRetryPolicy()
+        {
+            Assert.That(() => new TrackOneEventHubProducer(_ => default(TrackOne.EventDataSender), null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -40,14 +52,18 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ProducerIsConstructedCorrectly()
         {
             var partition = "123";
+            var retryPolicy = Mock.Of<EventHubRetryPolicy>();
             var mock = new ObservableSenderMock(new ClientMock(), partition);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, retryPolicy);
 
             // Invoke an operation to force the producer to be lazily instantiated.  Otherwise,
             // construction does not happen.
 
             await producer.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new SendOptions(), default);
             Assert.That(mock.ConstructedWithPartition, Is.EqualTo(partition));
+
+            var producerRetry = GetRetryPolicy(producer);
+            Assert.That(producerRetry, Is.SameAs(retryPolicy), "The producer retry instance should match.");
         }
 
         /// <summary>
@@ -64,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new SendOptions { PartitionKey = expectedHashKey };
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(new[] { new EventData(new byte[] { 0x43 }) }, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
@@ -90,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new SendOptions();
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(sourceEvents, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
@@ -130,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var options = new SendOptions();
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.SendAsync(sourceEvents, options, CancellationToken.None);
             Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
@@ -156,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDoesNotDelegateIfTheSenderWasNotCreated()
         {
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             await producer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.False);
@@ -171,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncDelegatesToTheSender()
         {
             var mock = new ObservableSenderMock(new ClientMock(), null);
-            var producer = new TrackOneEventHubProducer(() => mock);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
 
             // Invoke an operation to force the producer to be lazily instantiated.  Otherwise,
             // Close does not delegate the call.
@@ -180,6 +196,80 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.CloseAsync(default);
             Assert.That(mock.WasCloseAsyncInvoked, Is.True);
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ProducerUpdatesTheRetryPolicyWhenTheSenderIsNotCreated()
+        {
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            producer.UpdateRetryPolicy(newRetryPolicy);
+
+            var producerRetry = GetRetryPolicy(producer);
+            Assert.That(producerRetry, Is.SameAs(newRetryPolicy), "The producer retry instance should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.UpdateRetryPolicy" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProduerUpdatesTheRetryPolicyWhenTheSenderIsCreated()
+        {
+            var newRetryPolicy = Mock.Of<EventHubRetryPolicy>();
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            // Invoke an operation to force the producer to be lazily instantiated.  Otherwise,
+            // Close does not delegate the call.
+
+            await producer.SendAsync(new[] { new EventData(new byte[] { 0x12, 0x22 }) }, new SendOptions(), default);
+            producer.UpdateRetryPolicy(newRetryPolicy);
+
+            var producerRetry = GetRetryPolicy(producer);
+            Assert.That(producerRetry, Is.SameAs(newRetryPolicy), "The producer retry instance should match.");
+            Assert.That(mock.RetryPolicy, Is.TypeOf<TrackOneRetryPolicy>(), "The track one client retry policy should be a custom compatibility wrapper.");
+
+            var trackOnePolicy = GetSourcePolicy((TrackOneRetryPolicy)mock.RetryPolicy);
+            Assert.That(trackOnePolicy, Is.SameAs(newRetryPolicy), "The new retry policy should have been used as the source for the compatibility wrapper.");
+        }
+
+        /// <summary>
+        ///   Gets the retry policy from a <see cref="TrackOneEventHubProducer" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="producer">The producer to retrieve the retry policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetRetryPolicy(TrackOneEventHubProducer producer) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneEventHubProducer)
+                    .GetField("_retryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(producer);
+
+        /// <summary>
+        ///   Gets the retry policy used as the source of a <see cref="TrackOneRetryPolicy" />
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="policy">The ploicy to retrieve the source policy from.</param>
+        ///
+        /// <returns>The retry policy</returns>
+        ///
+        private static EventHubRetryPolicy GetSourcePolicy(TrackOneRetryPolicy policy) =>
+            (EventHubRetryPolicy)
+                typeof(TrackOneRetryPolicy)
+                    .GetField("_sourcePolicy", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(policy);
 
         /// <summary>
         ///   Allows for observation of operations performed by the producer for testing purposes.
