@@ -38,8 +38,16 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         public DateTimeOffset? AsOf { get; set; }
 
+        /// <summary>
+        /// Creates a SettingSelector with Any wildcards for both Key and Label properties
+        /// </summary>
         public SettingSelector() : this(Any, Any) { }
 
+        /// <summary>
+        /// Creates a SettingSelector
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string>();
@@ -49,6 +57,10 @@ namespace Azure.ApplicationModel.Configuration
             if (label != null) Labels.Add(label);
         }
 
+        /// <summary>
+        /// Check if two SettingSelector instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
         public bool Equals(SettingSelector other)
         {
             if (other == null) return false;
@@ -61,6 +73,10 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         #region nobody wants to see these
+        /// <summary>
+        /// Check if two SettingSelector instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
@@ -72,6 +88,9 @@ namespace Azure.ApplicationModel.Configuration
             else return false;
         }
 
+        /// <summary>
+        /// Get a hash code for the SettingSelector
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
@@ -83,6 +102,9 @@ namespace Azure.ApplicationModel.Configuration
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Creates a string in reference to the SettingSelector.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         // TODO ()
         public override string ToString() => base.ToString();
