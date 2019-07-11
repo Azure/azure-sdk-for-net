@@ -7,13 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.DataBox</PackageId>
 		<Description>Microsoft Azure Management DataBox library</Description>
 		<AssemblyName>Microsoft.Azure.Management.DataBox</AssemblyName>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<PackageTags>AzureDataBox;DataBox;</PackageTags>
     <PackageReleaseNotes>
 
       <![CDATA[
 
-                General availability release of the Azure Databox SDK which allows  
+                General availability release of the Azure Databox SDK [Sha 256 signed] which allows  
 
                 1) Creation, Updation, Deletion of order along with getting order status 
 
