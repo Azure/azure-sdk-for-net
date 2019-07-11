@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Search
                 IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType, contractResolver);
 
                 return dataTypeInfo.Match(
-                    onUnknownDataTypeResult: () => throw FailOnUnknownDataType(),
+                    onUnknownDataType: () => throw FailOnUnknownDataType(),
                     onSimpleDataType: CreateSimpleField,
                     onComplexDataType: CreateComplexField);
             }
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Search
         private interface IDataTypeInfo
         {
             T Match<T>(
-                Func<T> onUnknownDataTypeResult,
+                Func<T> onUnknownDataType,
                 Func<DataType, T> onSimpleDataType,
                 Func<DataType, Type, JsonObjectContract, T> onComplexDataType);
         }
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Search
 
             public static IDataTypeInfo AsCollection(IDataTypeInfo dataTypeInfo) =>
                 dataTypeInfo.Match(
-                    onUnknownDataTypeResult: () => Unknown,
+                    onUnknownDataType: () => Unknown,
                     onSimpleDataType: dataType => Simple(DataType.Collection(dataType)),
                     onComplexDataType: (dataType, underlyingClrType, jsonContract) =>
                         Complex(DataType.Collection(dataType), underlyingClrType, jsonContract));
@@ -331,10 +331,10 @@ namespace Microsoft.Azure.Search
                 }
 
                 public T Match<T>(
-                    Func<T> onUnknownDataTypeResult,
+                    Func<T> onUnknownDataType,
                     Func<DataType, T> onSimpleDataType,
                     Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
-                    => onUnknownDataTypeResult();
+                    => onUnknownDataType();
             }
 
             private sealed class SimpleDataTypeInfo : IDataTypeInfo
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Search
                 }
 
                 public T Match<T>(
-                    Func<T> onUnknownDataTypeResult,
+                    Func<T> onUnknownDataType,
                     Func<DataType, T> onSimpleDataType,
                     Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
                     => onSimpleDataType(_dataType);
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Search
                 }
 
                 public T Match<T>(
-                    Func<T> onUnknownDataTypeResult,
+                    Func<T> onUnknownDataType,
                     Func<DataType, T> onSimpleDataType,
                     Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
                     => onComplexDataType(_dataType, _underlyingClrType, _jsonContract);
