@@ -242,14 +242,14 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlobBaseClient(builder.ToUri(), this.Pipeline);
         }
 
-        /// <summary>
-        /// Creates a clone of this instance that references a version ID rather than the base blob.
-        /// </summary>
-        /// /// <remarks>
-        /// Pass null or empty string to remove the verion ID returning a URL to the base blob.
-        /// </remarks>
-        /// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
-        /// <returns>The new <see cref="BlobClient"/> instance referencing the verionId.</returns>
+        ///// <summary>
+        ///// Creates a clone of this instance that references a version ID rather than the base blob.
+        ///// </summary>
+        ///// /// <remarks>
+        ///// Pass null or empty string to remove the verion ID returning a URL to the base blob.
+        ///// </remarks>
+        ///// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
+        ///// <returns>The new <see cref="BlobClient"/> instance referencing the verionId.</returns>
         //public virtual BlobBaseClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobBaseClient WithVersionIdImpl(string versionId)

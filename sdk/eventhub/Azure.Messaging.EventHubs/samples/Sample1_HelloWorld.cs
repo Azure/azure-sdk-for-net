@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Console.WriteLine("The Event Hub has the following properties:");
                 Console.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Path }");
-                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAtUtc.ToString("yyyy-MM-dd hh:mm:ss tt") }, in UTC.");
+                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                 Console.WriteLine();
 
                 // Partitions of an Event Hub are an important concept.  Using the Event Hub properties, we'll inspect each of its partitions,
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Samples
                     Console.WriteLine($"\t\tThe first sequence number of an event in the partition is: { partitionProperties.BeginningSequenceNumber }");
                     Console.WriteLine($"\t\tThe last sequence number of an event in the partition is: { partitionProperties.LastEnqueuedSequenceNumber }");
                     Console.WriteLine($"\t\tThe last offset of an event in the partition is: { partitionProperties.LastEnqueuedOffset }");
-                    Console.WriteLine($"\t\tThe last time that an event was enqueued in the partition is: { partitionProperties.LastEnqueuedTimeUtc.ToString("yyyy-MM-dd hh:mm:ss tt") }, in UTC.");
+                    Console.WriteLine($"\t\tThe last time that an event was enqueued in the partition is: { partitionProperties.LastEnqueuedTime.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                     Console.WriteLine();
                 }
             }

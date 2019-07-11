@@ -263,14 +263,14 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlockBlobClient(builder.ToUri(), this.Pipeline);
         }
 
-        /// <summary>
-        /// Creates a new BlockBlobURL object identical to the source but with the specified version ID.
-        /// </summary>
-        /// <remarks>
-        /// Pass null or empty string to remove the snapshot returning a URL to the base blob.
-        /// </remarks>
-        /// <param name="versionId">A string of the version identifier.</param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Creates a new BlockBlobURL object identical to the source but with the specified version ID.
+        ///// </summary>
+        ///// <remarks>
+        ///// Pass null or empty string to remove the snapshot returning a URL to the base blob.
+        ///// </remarks>
+        ///// <param name="versionId">A string of the version identifier.</param>
+        ///// <returns></returns>
         //public new BlockBlobClient WithVersionId(string versionId) => (BlockBlobUri)this.WithVersionIdImpl(versionId);
 
         //protected sealed override Blobclient WithVersionIdImpl(string versionId)
@@ -514,7 +514,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.
@@ -579,7 +579,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.
@@ -644,7 +644,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.
@@ -758,11 +758,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// shared access signature. If the source blob is public, no
         /// authentication is required to perform the operation.
         /// </param>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
-        /// the <paramref name="base64BlockID"/> parameter must be the same
+        /// the <paramref name="base64BlockId"/> parameter must be the same
         /// size for each block.  Note that the Base64 string must be
         /// URL-encoded.
         /// </param>
@@ -835,11 +835,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// shared access signature. If the source blob is public, no
         /// authentication is required to perform the operation.
         /// </param>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
-        /// the <paramref name="base64BlockID"/> parameter must be the same
+        /// the <paramref name="base64BlockId"/> parameter must be the same
         /// size for each block.  Note that the Base64 string must be
         /// URL-encoded.
         /// </param>
@@ -912,11 +912,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// shared access signature. If the source blob is public, no
         /// authentication is required to perform the operation.
         /// </param>
-        /// <param name="base64BlockID">
+        /// <param name="base64BlockId">
         /// A valid Base64 string value that identifies the block. Prior to
         /// encoding, the string must be less than or equal to 64 bytes in
         /// size.  For a given blob, the length of the value specified for
-        /// the <paramref name="base64BlockID"/> parameter must be the same
+        /// the <paramref name="base64BlockId"/> parameter must be the same
         /// size for each block.  Note that the Base64 string must be
         /// URL-encoded.
         /// </param>
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
-        /// <param name="base64BlockIDs">
+        /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted
@@ -1086,7 +1086,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
-        /// <param name="base64BlockIDs">
+        /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted
@@ -1147,7 +1147,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// 
         /// For more information, see  <see cref="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>
         /// </summary>
-        /// <param name="base64BlockIDs">
+        /// <param name="base64BlockIds">
         /// Specify the Uncommitted Base64 encoded block IDs to indicate that
         /// the blob service should search only the uncommitted block list for
         /// the named blocks.  If the block is not found in the uncommitted

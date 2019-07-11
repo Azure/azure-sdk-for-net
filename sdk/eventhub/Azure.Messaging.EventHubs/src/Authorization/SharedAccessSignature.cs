@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private static readonly TimeSpan DefaultSignatureValidityDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Represents the Unix epoch time value, January 1, 1970 12:00:00, UTC.</summary>
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTimeOffset Epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>
         ///   The name of the shared access key, either for the Event Hubs namespace
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   The date and time that the shared access signature expires, in UTC.
         /// </summary>
         ///
-        public DateTime ExpirationUtc { get; private set; }
+        public DateTimeOffset SignatureExpiration { get; private set; }
 
         /// <summary>
         ///   The resource to which the shared access signature is intended to serve as
@@ -114,9 +114,9 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
-            ExpirationUtc = DateTime.UtcNow.Add(signatureValidityDuration.Value);
+            SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration.Value);
             Resource = eventHubResource;
-            Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, ExpirationUtc);
+            Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, SignatureExpiration);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             Guard.ArgumentNotNullOrEmpty(nameof(sharedAccessSignature), sharedAccessSignature);
             Guard.ArgumentNotTooLong(nameof(sharedAccessKey), sharedAccessKey, MaximumKeyLength);
 
-            (SharedAccessKeyName, Resource, ExpirationUtc) = ParseSignature(sharedAccessSignature);
+            (SharedAccessKeyName, Resource, SignatureExpiration) = ParseSignature(sharedAccessSignature);
 
             SharedAccessKey = sharedAccessKey;
             Value = sharedAccessSignature;
@@ -149,14 +149,14 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   nitializes a new instance of the <see cref="SharedAccessSignature" /> class.
+        ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
         /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
-        /// <param name="expirationUtc">The date and time that the shared access signature expires, in UTC.</param>
+        /// <param name="signatureExpiration">The date and time that the shared access signature expires, in UTC.</param>
         ///
         /// <remarks>
         ///     This constructor is intended to support cloning of the signature and internal testing,
@@ -167,13 +167,13 @@ namespace Azure.Messaging.EventHubs.Authorization
                                        string sharedAccessKeyName,
                                        string sharedAccessKey,
                                        string value,
-                                       DateTime expirationUtc)
+                                       DateTimeOffset signatureExpiration)
         {
             Resource = eventHubResource;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
             Value = value;
-            ExpirationUtc = expirationUtc;
+            SignatureExpiration = signatureExpiration;
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace Azure.Messaging.EventHubs.Authorization
                 throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
 
-            ExpirationUtc = DateTime.UtcNow.Add(signatureValidityDuration);
-            Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, ExpirationUtc);
+            SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration);
+            Value = BuildSignature(Resource, SharedAccessKeyName, SharedAccessKey, SignatureExpiration);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <returns>A new copy of <see cref="SharedAccessSignature" />.</returns>
         ///
         internal SharedAccessSignature Clone() =>
-            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, ExpirationUtc);
+            new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, Value, SignatureExpiration);
 
         /// <summary>
         ///   Parses a shared access signature into its component parts.
@@ -244,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The set of composite properties parsed from the signature.</returns>
         ///
-        private static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
+        private static (string KeyName, string Resource, DateTimeOffset ExpirationTime) ParseSignature(string sharedAccessSignature)
         {
             int tokenPositionModifier = (sharedAccessSignature[0] == TokenValuePairDelimiter) ? 0 : 1;
             int lastPosition = 0;
@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs.Authorization
             (
                 KeyName: default(string),
                 Resource: default(string),
-                ExpirationUtc: default(DateTime)
+                ExpirationTime: default(DateTimeOffset)
             );
 
             while (currentPosition != -1)
@@ -323,7 +323,7 @@ namespace Azure.Messaging.EventHubs.Authorization
                             throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                         }
 
-                        parsedValues.ExpirationUtc = ConvertFromUnixTime(unixTime);
+                        parsedValues.ExpirationTime = ConvertFromUnixTime(unixTime);
                     }
                 }
                 else if ((slice.Length != 1) || (slice[0] != TokenValuePairDelimiter))
@@ -343,7 +343,7 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             if ((String.IsNullOrEmpty(parsedValues.Resource))
                 || (String.IsNullOrEmpty(parsedValues.KeyName))
-                || (parsedValues.ExpirationUtc == default))
+                || (parsedValues.ExpirationTime == default))
             {
                 throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
             }
@@ -359,19 +359,19 @@ namespace Azure.Messaging.EventHubs.Authorization
         /// <param name="audience">The audience scope to which this signature applies.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signagure.</param>
-        /// <param name="expirationUtc">The date/time, in UTC, that the signature expires.</param>
+        /// <param name="expirationTime">The date/time, in UTC, that the signature expires.</param>
         ///
         /// <returns>The value of the shared access signature.</returns>
         ///
         private static string BuildSignature(string audience,
                                              string sharedAccessKeyName,
                                              string sharedAccessKey,
-                                             DateTime expirationUtc)
+                                             DateTimeOffset expirationTime)
         {
             using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey)))
             {
                 var encodedAudience = WebUtility.UrlEncode(audience);
-                var expiration = Convert.ToString(ConvertToUnixTime(expirationUtc), CultureInfo.InvariantCulture);
+                var expiration = Convert.ToString(ConvertToUnixTime(expirationTime), CultureInfo.InvariantCulture);
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes($"{ encodedAudience }\n{ expiration }")));
 
                 return String.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
@@ -384,7 +384,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         }
 
         /// <summary>
-        ///   Converts a Unix-style timestamp into the corresponding <see cref="DateTime" />
+        ///   Converts a Unix-style timestamp into the corresponding <see cref="DateTimeOffset" />
         ///   value.
         /// </summary>
         ///
@@ -392,19 +392,19 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         /// <returns>The date/time, in UTC, which corresponds to the specified timestamp.</returns>
         ///
-        private static DateTime ConvertFromUnixTime(long unixTime) =>
+        private static DateTimeOffset ConvertFromUnixTime(long unixTime) =>
             Epoch.AddSeconds(unixTime);
 
         /// <summary>
-        ///   Converts a <see cref="DateTime" /> value to the corresponding Unix-style timestamp.
+        ///   Converts a <see cref="DateTimeOffset" /> value to the corresponding Unix-style timestamp.
         /// </summary>
         ///
-        /// <param name="dateTime">The date/time to convert.</param>
+        /// <param name="dateTimeOffset">The date/time to convert.</param>
         ///
         /// <returns>The Unix-style timestamp which corresponds to the specified date/time.</returns>
         ///
-        private static long ConvertToUnixTime(DateTime dateTime) =>
-            Convert.ToInt64((dateTime.ToUniversalTime() - Epoch).TotalSeconds);
+        private static long ConvertToUnixTime(DateTimeOffset dateTimeOffset) =>
+            Convert.ToInt64((dateTimeOffset - Epoch).TotalSeconds);
 
 
     }

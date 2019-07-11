@@ -676,7 +676,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Store last enqueued offset.
 
-                        var offset = int.Parse((await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedOffset);
+                        var offset = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedOffset;
 
                         await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromOffset(offset)))
                         {
@@ -739,7 +739,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Store last enqueued time.
 
-                        var enqueuedTime = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedTimeUtc;
+                        var enqueuedTime = (await client.GetPartitionPropertiesAsync(partition)).LastEnqueuedTime;
 
                         await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.FromEnqueuedTime(enqueuedTime)))
                         {

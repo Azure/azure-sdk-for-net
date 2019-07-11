@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Sas
 {
-    // <summary>
+    /// <summary>
     /// <see cref="AccountSasBuilder"/> is used to generate an account level
     /// Shared Access Signature (SAS) for Azure Storage services.
     /// For more information, see

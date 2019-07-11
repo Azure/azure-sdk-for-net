@@ -3,6 +3,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -144,7 +145,7 @@ namespace Azure.Security.KeyVault.Keys
 
         private Uri CreateFirstPageUri(string path)
         {
-            var firstPage = new HttpPipelineUriBuilder();
+            var firstPage = new RequestUriBuilder();
             firstPage.Uri = _vaultUri;
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
