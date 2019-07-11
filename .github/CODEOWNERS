@@ -6,11 +6,7 @@
 ###########
 # Eng Sys
 ###########
-/eng/   @weshaggard @chidozieononiwu
-
-/eng/pipelines/ @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-
-/eng/pipelines/client.yml   @mitchdenny @danieljurek
+/eng/   @weshaggard @chidozieononiwu @mitchdenny @danieljurek
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
 
