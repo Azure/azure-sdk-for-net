@@ -53,11 +53,12 @@ namespace Azure.Messaging.EventHubs.Samples
 
             var clientOptions = new EventHubClientOptions
             {
-               DefaultTimeout = TimeSpan.FromMinutes(1),
-               Retry = new ExponentialRetry(TimeSpan.FromSeconds(0.25), TimeSpan.FromSeconds(30), 5),
                TransportType = TransportType.AmqpWebSockets,
                Proxy = (IWebProxy)null
             };
+
+            clientOptions.RetryOptions.MaximumRetries = 5;
+            clientOptions.RetryOptions.TryTimeout = TimeSpan.FromMinutes(1);
 
             await using (var client = new EventHubClient(connectionString, eventHubName, clientOptions))
             {

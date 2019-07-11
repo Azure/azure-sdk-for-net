@@ -39,7 +39,6 @@
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.IdentityModel" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">

@@ -14,6 +14,14 @@ namespace Azure.Messaging.EventHubs.Core
     internal abstract class TransportEventHubClient
     {
         /// <summary>
+        ///   Updates the active retry policy for the client.
+        /// </summary>
+        /// 
+        /// <param name="newRetryPolicy">The retry policy to set as active.</param>
+        /// 
+        public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
+
+        /// <summary>
         ///   Retrieves information about an Event Hub, including the number of partitions present
         ///   and their identifiers.
         /// </summary>
@@ -45,10 +53,12 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="producerOptions" />.</param>
         ///
         /// <returns>An Event Hub producer configured in the requested manner.</returns>
         ///
-        public abstract EventHubProducer CreateProducer(EventHubProducerOptions producerOptions);
+        public abstract EventHubProducer CreateProducer(EventHubProducerOptions producerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
         ///   Creates an Event Hub consumer responsible for reading <see cref="EventData" /> from a specific Event Hub partition,
@@ -70,13 +80,15 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="defaultRetryPolicy">The default retry policy to use if no retry options were specified in the <paramref name="consumerOptions" />.</param>
         ///
         /// <returns>An Event Hub consumer configured in the requested manner.</returns>
         ///
         public abstract EventHubConsumer CreateConsumer(string consumerGroup,
                                                         string partitionId,
                                                         EventPosition eventPosition,
-                                                        EventHubConsumerOptions consumerOptions);
+                                                        EventHubConsumerOptions consumerOptions,
+                                                        EventHubRetryPolicy defaultRetryPolicy);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
+    [Parallelizable(ParallelScope.All)]
     public class EventHubClientOptionsTests
     {
         /// <summary>
@@ -24,9 +24,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubClientOptions
             {
-                Retry = new ExponentialRetry(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2), 3),
+                RetryOptions = new RetryOptions { MaximumRetries = 27 },
                 TransportType = TransportType.AmqpWebSockets,
-                DefaultTimeout = TimeSpan.FromDays(1),
                 Proxy = Mock.Of<IWebProxy>()
             };
 
@@ -34,11 +33,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
             Assert.That(clone.TransportType, Is.EqualTo(options.TransportType), "The connection type of the clone should match.");
-            Assert.That(clone.DefaultTimeout, Is.EqualTo(options.DefaultTimeout), "The default timeout of the clone should match.");
             Assert.That(clone.Proxy, Is.EqualTo(options.Proxy), "The proxy of the clone should match.");
 
-            Assert.That(ExponentialRetry.HaveSameConfiguration((ExponentialRetry)clone.Retry, (ExponentialRetry)options.Retry), Is.True, "The retry of the clone should be considered equal.");
-            Assert.That(clone.Retry, Is.Not.SameAs(options.Retry), "The retry of the clone should be a copy, not the same instance.");
+            Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
+            Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
         }
 
         /// <summary>
@@ -47,36 +45,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void RetryIsValidated()
+        public void RetryOptionsIsValidated()
         {
-            Assert.That(() => new EventHubClientOptions { Retry = null }, Throws.ArgumentException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubClientOptions.DefaultTimeout" />
-        ///   property.
-        /// </summary>
-        ///
-        [Test]
-        public void DefaultTimeoutIsValidated()
-        {
-            Assert.That(() => new EventHubClientOptions { DefaultTimeout = TimeSpan.FromMilliseconds(-1) }, Throws.ArgumentException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubClientOptions.DefaultTimeout" />
-        ///   property.
-        /// </summary>
-        ///
-        [Test]
-        public void DefaultTimeoutUsesDefaultValueIfNotSpecified()
-        {
-            var options = new EventHubClientOptions();
-            var defaultTimeoutValue = options.TimeoutOrDefault;
-
-            options.DefaultTimeout = TimeSpan.Zero;
-            Assert.That(options.DefaultTimeout, Is.EqualTo(TimeSpan.Zero), "The value supplied by the caller should be preserved.");
-            Assert.That(options.TimeoutOrDefault, Is.EqualTo(defaultTimeoutValue), "The timeout value should be defaulted internally.");
+            Assert.That(() => new EventHubClientOptions { RetryOptions = null }, Throws.ArgumentException);
         }
     }
 }
