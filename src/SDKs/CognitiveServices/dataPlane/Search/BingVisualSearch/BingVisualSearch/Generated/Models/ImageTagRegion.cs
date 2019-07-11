@@ -10,6 +10,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Defines an image region relevant to the ImageTag.
+    /// </summary>
     public partial class ImageTagRegion
     {
         /// <summary>

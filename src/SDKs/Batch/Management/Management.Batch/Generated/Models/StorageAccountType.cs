@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StorageAccountType
     {
+        /// <summary>
+        /// The data disk should use standard locally redundant storage.
+        /// </summary>
         [EnumMember(Value = "Standard_LRS")]
         StandardLRS,
+        /// <summary>
+        /// The data disk should use premium locally redundant storage.
+        /// </summary>
         [EnumMember(Value = "Premium_LRS")]
         PremiumLRS
     }

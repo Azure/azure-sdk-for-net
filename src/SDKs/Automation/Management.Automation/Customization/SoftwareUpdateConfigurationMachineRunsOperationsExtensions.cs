@@ -142,9 +142,6 @@
         /// <param name='operations'>
         /// The operations group for this extension method.
         /// </param>
-        /// <param name='osType'>
-        /// The computer osType targeted by this machine run
-        /// </param>
         /// <param name='skip'>
         /// number of entries you skip before returning results
         /// </param>
@@ -199,9 +196,6 @@
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
-        /// </param>
-        /// <param name='osType'>
-        /// The computer osType targeted by this machine run
         /// </param>
         /// <param name='skip'>
         /// number of entries you skip before returning results

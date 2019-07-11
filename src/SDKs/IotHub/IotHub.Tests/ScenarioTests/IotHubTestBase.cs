@@ -79,7 +79,7 @@ namespace IotHub.Tests.ScenarioTests
                 }
             });
 
-            Assert.Equal(namespaceResource.ProvisioningState, "Succeeded");
+            Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
 
             var ehResource = ehClient.EventHubs.CreateOrUpdate(resourceGroup.Name, namespaceName, ehName, new EventHubCreateOrUpdateParameters()
             {
@@ -123,7 +123,7 @@ namespace IotHub.Tests.ScenarioTests
                     }
                 });
 
-            Assert.Equal(namespaceResource.ProvisioningState, "Succeeded");
+            Assert.Equal("Succeeded", namespaceResource.ProvisioningState);
 
             var sbResource = sbClient.Queues.CreateOrUpdate(resourceGroup.Name, sbNamespaceName, sbName, new QueueCreateOrUpdateParameters()
             {

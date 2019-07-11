@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Trigger that runs everytime the selected Blob container changes.
+    /// Trigger that runs every time the selected Blob container changes.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BlobTrigger : MultiplePipelineTrigger

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Square Serivce source.
+    /// A copy activity Square Service source.
     /// </summary>
     public partial class SquareSource : CopySource
     {

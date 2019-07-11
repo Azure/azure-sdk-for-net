@@ -70,14 +70,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 var getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.ListByResourceGroupAsync(resourceGroup).Result;
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 //Update namespace tags
                 var updateNamespaceParameter = new SBNamespaceUpdateParameters()
@@ -99,11 +99,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 2);
+                Assert.Equal(2, getNamespaceResponse.Tags.Count);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
 
                 // Delete namespace

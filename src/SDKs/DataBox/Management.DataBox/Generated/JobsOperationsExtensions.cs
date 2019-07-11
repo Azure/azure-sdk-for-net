@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataBox
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -368,12 +370,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='cancellationReason'>
+            /// <param name='reason'>
             /// Reason for cancellation.
             /// </param>
-            public static void Cancel(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationReason cancellationReason)
+            public static void Cancel(this IJobsOperations operations, string resourceGroupName, string jobName, string reason)
             {
-                operations.CancelAsync(resourceGroupName, jobName, cancellationReason).GetAwaiter().GetResult();
+                operations.CancelAsync(resourceGroupName, jobName, reason).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -390,103 +392,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='cancellationReason'>
+            /// <param name='reason'>
             /// Reason for cancellation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationReason cancellationReason, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync(this IJobsOperations operations, string resourceGroupName, string jobName, string reason, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, jobName, cancellationReason, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Provides list of copy logs uri.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            public static GetCopyLogsUriOutput GetCopyLogsUri(this IJobsOperations operations, string resourceGroupName, string jobName)
-            {
-                return operations.GetCopyLogsUriAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Provides list of copy logs uri.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<GetCopyLogsUriOutput> GetCopyLogsUriAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetCopyLogsUriWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get shipping label sas uri.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            public static ShippingLabelDetails DownloadShippingLabelUri(this IJobsOperations operations, string resourceGroupName, string jobName)
-            {
-                return operations.DownloadShippingLabelUriAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get shipping label sas uri.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ShippingLabelDetails> DownloadShippingLabelUriAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DownloadShippingLabelUriWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, jobName, reason, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -503,9 +417,9 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            public static UnencryptedSecrets ListSecrets(this IJobsOperations operations, string resourceGroupName, string jobName)
+            public static IEnumerable<UnencryptedCredentials> ListCredentials(this IJobsOperations operations, string resourceGroupName, string jobName)
             {
-                return operations.ListSecretsAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
+                return operations.ListCredentialsAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -525,59 +439,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UnencryptedSecrets> ListSecretsAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<UnencryptedCredentials>> ListCredentialsAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Reports an issue.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            /// <param name='reportIssueDetails'>
-            /// Details of reported issue.
-            /// </param>
-            public static void ReportIssue(this IJobsOperations operations, string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails)
-            {
-                operations.ReportIssueAsync(resourceGroupName, jobName, reportIssueDetails).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Reports an issue.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The Resource Group Name
-            /// </param>
-            /// <param name='jobName'>
-            /// The name of the job Resource within the specified resource group. job names
-            /// must be between 3 and 24 characters in length and use any alphanumeric and
-            /// underscore only
-            /// </param>
-            /// <param name='reportIssueDetails'>
-            /// Details of reported issue.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task ReportIssueAsync(this IJobsOperations operations, string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.ReportIssueWithHttpMessagesAsync(resourceGroupName, jobName, reportIssueDetails, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -632,6 +499,47 @@ namespace Microsoft.Azure.Management.DataBox
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deletes a job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            public static void BeginDelete(this IJobsOperations operations, string resourceGroupName, string jobName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

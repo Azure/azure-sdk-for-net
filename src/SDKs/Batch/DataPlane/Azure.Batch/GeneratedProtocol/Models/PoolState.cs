@@ -32,16 +32,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operation has not yet completed.
         /// </summary>
         [EnumMember(Value = "deleting")]
-        Deleting,
-        /// <summary>
-        /// The user has requested that the operating system of the pool's
-        /// nodes be upgraded, but the upgrade operation has not yet completed
-        /// (that is, some nodes in the pool have not yet been upgraded). While
-        /// upgrading, the pool may be able to run tasks (with reduced
-        /// capacity) but this is not guaranteed.
-        /// </summary>
-        [EnumMember(Value = "upgrading")]
-        Upgrading
+        Deleting
     }
     internal static class PoolStateEnumExtension
     {
@@ -58,8 +49,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return "active";
                 case PoolState.Deleting:
                     return "deleting";
-                case PoolState.Upgrading:
-                    return "upgrading";
             }
             return null;
         }
@@ -72,8 +61,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return PoolState.Active;
                 case "deleting":
                     return PoolState.Deleting;
-                case "upgrading":
-                    return PoolState.Upgrading;
             }
             return null;
         }

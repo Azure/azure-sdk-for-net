@@ -43,13 +43,17 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Configuration </param>
         /// <param name="pendingReplicationOperationsCount">Number of entities
         /// pending to be replicated.</param>
-        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?))
+        /// <param name="migrationState">State in which Standard to Premium
+        /// Migration is, possible values : Unknown, Reverting, Completing,
+        /// Initiating, Syncing, Active</param>
+        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?), string migrationState = default(string))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             TargetNamespace = targetNamespace;
             PostMigrationName = postMigrationName;
+            MigrationState = migrationState;
             CustomInit();
         }
 
@@ -82,6 +86,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.postMigrationName")]
         public string PostMigrationName { get; set; }
+
+        /// <summary>
+        /// Gets state in which Standard to Premium Migration is, possible
+        /// values : Unknown, Reverting, Completing, Initiating, Syncing,
+        /// Active
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.migrationState")]
+        public string MigrationState { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// The tasks resource is a nested, proxy-only resource representing work
             /// performed by a DMS instance. The PUT method creates a new task or updates
             /// an existing one, although since tasks have no mutable custom properties,
-            /// there is little reason to update an exising one.
+            /// there is little reason to update an existing one.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.DataMigration
             /// The tasks resource is a nested, proxy-only resource representing work
             /// performed by a DMS instance. The PUT method creates a new task or updates
             /// an existing one, although since tasks have no mutable custom properties,
-            /// there is little reason to update an exising one.
+            /// there is little reason to update an existing one.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

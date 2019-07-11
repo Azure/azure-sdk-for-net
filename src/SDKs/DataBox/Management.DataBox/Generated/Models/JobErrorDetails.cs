@@ -50,28 +50,28 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets message for the error.
+        /// Gets message for the error.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; private set; }
 
         /// <summary>
-        /// Gets or sets code for the error.
+        /// Gets code for the error.
         /// </summary>
         [JsonProperty(PropertyName = "errorCode")]
-        public int? ErrorCode { get; set; }
+        public int? ErrorCode { get; private set; }
 
         /// <summary>
-        /// Gets or sets recommended action for the error.
+        /// Gets recommended action for the error.
         /// </summary>
         [JsonProperty(PropertyName = "recommendedAction")]
-        public string RecommendedAction { get; set; }
+        public string RecommendedAction { get; private set; }
 
         /// <summary>
-        /// Gets or sets contains the non localized exception message
+        /// Gets contains the non localized exception message
         /// </summary>
         [JsonProperty(PropertyName = "exceptionMessage")]
-        public string ExceptionMessage { get; set; }
+        public string ExceptionMessage { get; private set; }
 
     }
 }

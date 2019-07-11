@@ -86,9 +86,19 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IFactoriesOperations Factories { get; private set; }
 
         /// <summary>
+        /// Gets the IExposureControlOperations.
+        /// </summary>
+        public virtual IExposureControlOperations ExposureControl { get; private set; }
+
+        /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
         /// </summary>
         public virtual IIntegrationRuntimesOperations IntegrationRuntimes { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        public virtual IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; private set; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimeNodesOperations.
@@ -124,6 +134,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the ITriggersOperations.
         /// </summary>
         public virtual ITriggersOperations Triggers { get; private set; }
+
+        /// <summary>
+        /// Gets the IRerunTriggersOperations.
+        /// </summary>
+        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
 
         /// <summary>
         /// Gets the ITriggerRunsOperations.
@@ -373,7 +388,9 @@ namespace Microsoft.Azure.Management.DataFactory
         {
             Operations = new Operations(this);
             Factories = new FactoriesOperations(this);
+            ExposureControl = new ExposureControlOperations(this);
             IntegrationRuntimes = new IntegrationRuntimesOperations(this);
+            IntegrationRuntimeObjectMetadata = new IntegrationRuntimeObjectMetadataOperations(this);
             IntegrationRuntimeNodes = new IntegrationRuntimeNodesOperations(this);
             LinkedServices = new LinkedServicesOperations(this);
             Datasets = new DatasetsOperations(this);
@@ -381,6 +398,7 @@ namespace Microsoft.Azure.Management.DataFactory
             PipelineRuns = new PipelineRunsOperations(this);
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
+            RerunTriggers = new RerunTriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
@@ -429,14 +447,14 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Activity>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Trigger>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
@@ -445,6 +463,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

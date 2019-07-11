@@ -1,6 +1,8 @@
 
 
-# Microsoft Azure SDK for .NET
+## All PRs should be opened against master branch. This branch is being retired and will be deleted.
+
+### Microsoft Azure SDK for .NET
  ----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.

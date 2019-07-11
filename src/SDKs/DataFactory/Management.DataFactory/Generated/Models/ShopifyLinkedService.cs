@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Shopify Serivce linked service.
+    /// Shopify Service linked service.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Shopify")]
     [Rest.Serialization.JsonTransformation]

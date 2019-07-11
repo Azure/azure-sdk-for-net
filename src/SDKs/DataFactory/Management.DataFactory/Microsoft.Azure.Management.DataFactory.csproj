@@ -6,21 +6,26 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
 		<Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-		<Version>2.2.0</Version>
+		<Version>3.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        - Added folders to Pipeline and Dataset
-        - Added TumblingWindowTrigger dependsOn, offset and size properties
-        - Added new API to get GitHub access token
-        - Added new property on Databricks linked Service to set Spark environment variables
-        - Fixed the casing in JSON for FactoryGitHubConfiguration 
-            ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>	<![CDATA[
+    - Added new APIs: 
+        * get DataPlane access 
+        * get and refresh Integration Runtime object metadata
+        * get feature value
+    - Added new activity and linked service types to support Azure Functions
+		- Added support for HDIngsight cluster with Enterprise Sercurity package
+		- Updated exisitng activities and datasets:
+        * Added 'tableName' property in datasets
+        * Refactored Delete activity payload by adding more properties
+        * Added support for expressions for SSIS activity property 'type'
+        * Added WinAuth support in SSIS activity
+        * Added 'schema' property to datasets
+            ]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

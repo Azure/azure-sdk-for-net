@@ -7,18 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.9.0-preview</Version>
+		<Version>1.9.1-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			<![CDATA[
-        This release includes
-        - Add CosmosDb type in the reservedResourceType enum.
-        - Add name property in the PatchProperties.
-      ]]>
+			Taking dependency on 10.0.3 version of Newtonsoft nuget package.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

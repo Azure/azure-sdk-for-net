@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Image model to be sent as JSON
+    /// Image model to be sent as JSON.
     /// </summary>
     public partial class Image
     {
@@ -31,14 +31,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Image class.
         /// </summary>
-        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
+        /// <param name="id">Id of the image.</param>
+        /// <param name="created">Date the image was created.</param>
+        /// <param name="width">Width of the image.</param>
+        /// <param name="height">Height of the image.</param>
+        /// <param name="resizedImageUri">The URI to the (resized) image used
+        /// for training.</param>
+        /// <param name="thumbnailUri">The URI to the thumbnail of the original
+        /// image.</param>
+        /// <param name="originalImageUri">The URI to the original uploaded
+        /// image.</param>
+        /// <param name="tags">Tags associated with this image.</param>
+        /// <param name="regions">Regions associated with this image.</param>
+        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
         {
             Id = id;
             Created = created;
             Width = width;
             Height = height;
-            ImageUri = imageUri;
+            ResizedImageUri = resizedImageUri;
             ThumbnailUri = thumbnailUri;
+            OriginalImageUri = originalImageUri;
             Tags = tags;
             Regions = regions;
             CustomInit();
@@ -50,41 +63,55 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets id of the image.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
+        /// Gets date the image was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
+        /// Gets width of the image.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public int Width { get; private set; }
 
         /// <summary>
+        /// Gets height of the image.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public int Height { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the (resized) image used for training.
         /// </summary>
-        [JsonProperty(PropertyName = "imageUri")]
-        public string ImageUri { get; private set; }
+        [JsonProperty(PropertyName = "resizedImageUri")]
+        public string ResizedImageUri { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the thumbnail of the original image.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the original uploaded image.
+        /// </summary>
+        [JsonProperty(PropertyName = "originalImageUri")]
+        public string OriginalImageUri { get; private set; }
+
+        /// <summary>
+        /// Gets tags associated with this image.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<ImageTag> Tags { get; private set; }
 
         /// <summary>
+        /// Gets regions associated with this image.
         /// </summary>
         [JsonProperty(PropertyName = "regions")]
         public IList<ImageRegion> Regions { get; private set; }

@@ -124,9 +124,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// The API returns a list of recognized entities in a given document.
         /// </summary>
         /// <remarks>
+        /// The API returns a list of recognized entities in a given document.
         /// To get even more information on each recognized entity we recommend
         /// using the Bing Entity Search API by querying for the recognized
         /// entities names. See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
+        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
+        /// languages.The API returns a list of known entities and general
+        /// named entities ("Person", "Location", "Organization" etc) in a
+        /// given document. Known entities are returned with Wikipedia Id and
+        /// Wikipedia link, and also Bing Id which can be used in Bing Entity
+        /// Search API. General named entities are returned with entity types.
+        /// If a general named entity is also a known entity, then all
+        /// information regarding it (Wikipedia Id, Bing Id, entity type etc)
+        /// will be returned. See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-entity-linking#supported-types-for-named-entity-recognition"&gt;Supported
+        /// Entity Types in Text Analytics API&lt;/a&gt; for the list of
+        /// supported Entity Types. See the &lt;a
         /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
         /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
         /// languages.
@@ -140,7 +154,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<EntitiesBatchResult>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntitiesBatchResultV2dot1>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

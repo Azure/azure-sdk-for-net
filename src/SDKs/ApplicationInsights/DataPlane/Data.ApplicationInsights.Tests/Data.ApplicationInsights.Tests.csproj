@@ -4,7 +4,8 @@
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
     <Description>Data.ApplicationInsights.Tests Class library</Description>
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0-preview</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   
   <ItemGroup>
@@ -14,7 +15,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
-    <ProjectReference Include="..\ApplicationInsights\Microsoft.Azure.ApplicationInsights.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApplicationInsights\Microsoft.Azure.ApplicationInsights.Query.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

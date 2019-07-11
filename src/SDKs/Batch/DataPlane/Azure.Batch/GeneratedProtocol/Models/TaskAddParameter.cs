@@ -216,8 +216,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// If you do not specify constraints, the maxTaskRetryCount is the
-        /// maxTaskRetryCount specified for the job, and the maxWallClockTime
-        /// and retentionTime are infinite.
+        /// maxTaskRetryCount specified for the job, the maxWallClockTime is
+        /// infinite, and the retentionTime is 7 days.
         /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }

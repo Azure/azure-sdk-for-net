@@ -36,12 +36,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The SKU of the resource.
             /// </param>
             /// <param name='kind'>
-            /// The Kind of the resource. Possible values include: 'Bing.Autosuggest.v7',
-            /// 'Bing.CustomSearch', 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck.v7',
-            /// 'ComputerVision', 'ContentModerator', 'CustomSpeech',
-            /// 'CustomVision.Prediction', 'CustomVision.Training', 'Emotion', 'Face',
-            /// 'LUIS', 'QnAMaker', 'SpeakerRecognition', 'SpeechTranslation',
-            /// 'TextAnalytics', 'TextTranslation', 'WebLM'
+            /// The Kind of the resource.
             /// </param>
             /// <param name='type'>
             /// The Type of the resource.
@@ -64,12 +59,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The SKU of the resource.
             /// </param>
             /// <param name='kind'>
-            /// The Kind of the resource. Possible values include: 'Bing.Autosuggest.v7',
-            /// 'Bing.CustomSearch', 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck.v7',
-            /// 'ComputerVision', 'ContentModerator', 'CustomSpeech',
-            /// 'CustomVision.Prediction', 'CustomVision.Training', 'Emotion', 'Face',
-            /// 'LUIS', 'QnAMaker', 'SpeakerRecognition', 'SpeechTranslation',
-            /// 'TextAnalytics', 'TextTranslation', 'WebLM'
+            /// The Kind of the resource.
             /// </param>
             /// <param name='type'>
             /// The Type of the resource.

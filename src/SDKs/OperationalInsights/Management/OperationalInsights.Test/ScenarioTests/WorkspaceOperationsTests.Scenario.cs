@@ -104,11 +104,11 @@ namespace OperationalInsights.Test.ScenarioTests
 
                 // List the management groups connected to the workspace
                 var managementGroupsResponse = client.Workspaces.ListManagementGroups(resourceGroupName, workspaceName);
-                Assert.Equal(0, managementGroupsResponse.Count());
+                Assert.Empty(managementGroupsResponse);
 
                 // List the usage for a workspace
                 var usagesResponse = client.Workspaces.ListUsages(resourceGroupName, workspaceName);
-                Assert.Equal(1, usagesResponse.Count());
+                Assert.Single(usagesResponse);
 
                 var metric = usagesResponse.Single();
                 Assert.Equal("DataAnalyzed", metric.Name.Value);

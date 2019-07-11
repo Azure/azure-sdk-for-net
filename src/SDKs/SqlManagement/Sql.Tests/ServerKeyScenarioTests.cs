@@ -13,7 +13,7 @@ namespace Sql.Tests
 {
     public class ServerKeyScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "Needs to be rerecorded with new version of KeyVault")]
         public void TestCreateUpdateDropServerKey()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))

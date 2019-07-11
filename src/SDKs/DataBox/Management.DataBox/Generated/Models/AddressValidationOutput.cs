@@ -51,17 +51,17 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the address validation status. Possible values
-        /// include: 'Valid', 'Invalid', 'Ambiguous'
+        /// Gets the address validation status. Possible values include:
+        /// 'Valid', 'Invalid', 'Ambiguous'
         /// </summary>
         [JsonProperty(PropertyName = "properties.validationStatus")]
-        public AddressValidationStatus? ValidationStatus { get; set; }
+        public AddressValidationStatus? ValidationStatus { get; private set; }
 
         /// <summary>
-        /// Gets or sets list of alternate addresses.
+        /// Gets list of alternate addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.alternateAddresses")]
-        public IList<ShippingAddress> AlternateAddresses { get; set; }
+        public IList<ShippingAddress> AlternateAddresses { get; private set; }
 
     }
 }

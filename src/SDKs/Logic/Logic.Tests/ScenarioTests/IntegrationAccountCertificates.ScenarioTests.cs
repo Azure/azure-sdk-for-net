@@ -5,302 +5,293 @@
 namespace Test.Azure.Management.Logic
 {
     using System;
-    using System.Globalization;
     using System.Linq;
     using System.Security.Cryptography.X509Certificates;
-
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    /// <summary>
-    /// Scenario tests for the integration accounts certificates.
-    /// </summary>
     [Collection("IntegrationAccountCertificateScenarioTests")]
     public class IntegrationAccountCertificateScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Tests the create and delete operations of the integration account certificate.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccountCertificate()
+        [Fact]
+        public void IntegrationAccountCertificates_Create_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    integrationAccountCertificateName,
-                    CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                        integrationAccountName)
-                    );
+                    certificateName,
+                    certificate);
 
-                Assert.Equal(certificate.Name, integrationAccountCertificateName);
-
-                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountCertificateName);
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and delete operations of the integration account certificate with public key.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateIntegrationAccountCertificateWithPublicKey()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-
-                var cert = new X509Certificate2(@"TestData/IntegrationAccountCertificate.cer");
-
-                var certificateInstance = new IntegrationAccountCertificate
-                {
-                    Location = "brazilsouth",
-                    PublicCertificate = Convert.ToBase64String(cert.RawData)
-                };
-
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName,
-                    certificateInstance
-                    );
-
-                Assert.Equal(certificate.Name, integrationAccountCertificateName);
-
-                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountCertificateName);
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and delete operations of the integration account certificate with private key.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateIntegrationAccountCertificateWithPrivateKey()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                
-                var certInstance = CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                    integrationAccountName);
-                certInstance.PublicCertificate = null;
-
-                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName,
-                    certInstance
-                    );
-
-                Assert.Equal(certificate.Name, integrationAccountCertificateName);
-
-                client.Certificates.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountCertificateName);
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the delete operations of the integration account certificate on account deletion.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void DeleteIntegrationAccountCertificateOnAccountDeletion()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName,
-                    CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                        integrationAccountName));
-
-                Assert.Equal(certificate.Name, integrationAccountCertificateName);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(
-                    () =>
-                        client.Certificates.Get(Constants.DefaultResourceGroup, integrationAccountName,
-                            integrationAccountCertificateName));
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and Update operations of the integration account certificate.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndUpdateIntegrationAccountCertificate()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName,
-                    CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                        integrationAccountName));
-
-                var certificate2 = CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                    integrationAccountName);
-
-                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName, certificate2);
-
-                var updatedCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountCertificateName);
-
-                Assert.Equal(updatedCertificate.Name, integrationAccountCertificateName);
+                this.ValidateCertificate(certificate, createdCertificate);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
         }
 
-        /// <summary>
-        /// Tests the create and get operations of the integration account certificate.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountCertificate()
+        [Fact]
+        public void IntegrationAccountCertificates_CreateWithPublicKey_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var certificate = client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    integrationAccountCertificateName,
-                    CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                        integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                Assert.Equal(certificate.Name, integrationAccountCertificateName);
-
-                var getCertificate = client.Certificates.Get(Constants.DefaultResourceGroup,
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                certificate.Key = null;
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    integrationAccountCertificateName);
+                    certificateName,
+                    certificate);
 
-                Assert.Equal(certificate.Name, getCertificate.Name);
+                this.ValidateCertificate(certificate, createdCertificate);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
         }
 
-        /// <summary>
-        /// Tests the create and list operations of the integration account certificate.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountCertificates()
+        [Fact]
+        public void IntegrationAccountCertificates_CreateWithPrivateKey_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountCertificateName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
-
-                var client = this.GetIntegrationAccountClient(context);
-                client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                client.Certificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    integrationAccountCertificateName,
-                    CreateIntegrationAccountCertificateInstance(integrationAccountCertificateName,
-                        integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                var certificates = client.Certificates.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
-                    integrationAccountName);
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                certificate.PublicCertificate = null;
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    certificate);
 
-                Assert.True(certificates.Any());
+                this.ValidateCertificate(certificate, createdCertificate);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
 
+        [Fact]
+        public void IntegrationAccountCertificates_Get_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    certificate);
+
+                var retrievedCertificate = client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName);
+
+                this.ValidateCertificate(certificate, retrievedCertificate);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountCertificates_List_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var certificateName1 = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate1 = this.CreateIntegrationAccountCertificate(certificateName1);
+                var createdCertificate1 = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName1,
+                    certificate1);
+
+                var certificateName2 = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate2 = this.CreateIntegrationAccountCertificate(certificateName2);
+                var createdCertificate2 = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName2,
+                    certificate2);
+
+                var certificateName3 = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate3 = this.CreateIntegrationAccountCertificate(certificateName3);
+                var createdCertificate3 = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName3,
+                    certificate3);
+
+                var certificates = client.IntegrationAccountCertificates.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, certificates.Count());
+                this.ValidateCertificate(certificate1, certificates.Single(x => x.Name == certificate1.Name));
+                this.ValidateCertificate(certificate2, certificates.Single(x => x.Name == certificate2.Name));
+                this.ValidateCertificate(certificate3, certificates.Single(x => x.Name == certificate3.Name));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountCertificates_Update_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    certificate);
+
+                var newCertificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var updatedCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    newCertificate);
+
+                this.ValidateCertificate(newCertificate, updatedCertificate);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountCertificates_Delete_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    certificate);
+
+                client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName, certificateName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountCertificates_DeleteWhenDeleteIntegrationAccount_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var certificateName = TestUtilities.GenerateName(Constants.IntegrationAccountCertificatePrefix);
+                var certificate = this.CreateIntegrationAccountCertificate(certificateName);
+                var createdCertificate = client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    certificateName,
+                    certificate);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
             }
         }
 
         #region Private
 
-        /// <summary>
-        /// Creates an Integration account certificate.
-        /// </summary>
-        /// <param name="integrationAccountCertificateName">Name of the certificate.</param>
-        /// <param name="integrationAccountName">Integration account name.</param>        
-        /// <returns>Integration account certificate instance</returns>
-        private IntegrationAccountCertificate CreateIntegrationAccountCertificateInstance(
-            string integrationAccountCertificateName, string integrationAccountName)
+        private void ValidateCertificate(IntegrationAccountCertificate expected, IntegrationAccountCertificate actual)
         {
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
 
-            var cert = new X509Certificate2(@"TestData/IntegrationAccountCertificate.cer");
-
-            var certificate = new IntegrationAccountCertificate
+            if (!string.IsNullOrEmpty(expected.PublicCertificate))
             {
-                Location = "brazilsouth",
-                Key = new KeyVaultKeyReference
+                Assert.Equal(expected.PublicCertificate, actual.PublicCertificate);
+            }
+            else
+            {
+                Assert.True(string.IsNullOrEmpty(actual.PublicCertificate));
+            }
+
+            if (expected.Key != null)
+            {
+                Assert.Equal(expected.Key.KeyName, actual.Key.KeyName);
+                Assert.Equal(expected.Key.KeyVault.Id, actual.Key.KeyVault.Id);
+                Assert.Equal(expected.Key.KeyVersion, actual.Key.KeyVersion);
+            }
+            else
+            {
+                Assert.Null(actual.Key);
+            }
+        }
+
+        private IntegrationAccountCertificate CreateIntegrationAccountCertificate(string certificateName)
+        {
+            var cert = new X509Certificate2(@"TestData/IntegrationAccountCertificate.cer");
+            var certificate = new IntegrationAccountCertificate(name: certificateName,
+                location: Constants.DefaultLocation,
+                key: new KeyVaultKeyReference
                 {
                     KeyName = "PRIVATEKEY",
-                    KeyVault = new KeyVaultKeyReferenceKeyVault()
+                    KeyVault = new KeyVaultKeyReferenceKeyVault
                     {
-                        Id =
-                            string.Format(CultureInfo.InvariantCulture,
-                                "/subscriptions/{0}/resourcegroups/{1}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault",
-                                Constants.DefaultSubscription, Constants.DefaultResourceGroup)
+                        Id = $"/subscriptions/{Constants.DefaultSubscription}/resourcegroups/{Constants.DefaultResourceGroup}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault"
                     },
                     KeyVersion = "87d9764197604449b9b8eb7bd8710868"
                 },
-                PublicCertificate = Convert.ToBase64String(cert.RawData)
-            };
+                publicCertificate: Convert.ToBase64String(cert.RawData));
+
             return certificate;
         }
 

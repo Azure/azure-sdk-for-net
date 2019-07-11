@@ -10,8 +10,8 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,25 +20,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "607f61da-8acc-4091-b0a7-f2666a083d05"
+          "19ab3d05-c353-4070-a499-d040b230f5be"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:45:15.557Z\",\r\n    \"end\": \"2018-01-11T18:45:15.557Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 1020.66\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 350.8\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 6.83\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "282"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 18:45:15 GMT"
+          "Mon, 24 Sep 2018 21:33:40 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.8d61115b-f6e2-11e7-81e8-70b3d5800002"
+          "1.1 draft-ai-blue.23308d31-c024-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -54,12 +47,19 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "281"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:33:40.746Z\",\r\n    \"end\": \"2018-09-24T21:33:40.746Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 237.06\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 63.6\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 16.59\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

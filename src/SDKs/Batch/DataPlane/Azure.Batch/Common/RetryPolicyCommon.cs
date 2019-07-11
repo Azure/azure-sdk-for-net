@@ -19,7 +19,10 @@
                 {
                     int statusCode = (int)batchException.RequestInformation.HttpStatusCode;
 
-                    if ((statusCode >= 400 && statusCode < 500)
+                    if ((statusCode >= 400 && statusCode < 500 
+                        && statusCode != 408 // Timeout
+                        && statusCode != 429 // Too many reqeuests
+                        )
                         || statusCode == 501 // Not Implemented
                         || statusCode == 505 // Version Not Supported
                         )
@@ -61,12 +64,12 @@
         {
             if (deltaBackoff < TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException("deltaBackoff");
+                throw new ArgumentOutOfRangeException(nameof(deltaBackoff));
             }
 
             if (maxRetries < 0)
             {
-                throw new ArgumentOutOfRangeException("maxRetries");
+                throw new ArgumentOutOfRangeException(nameof(maxRetries));
             }
         }
     }

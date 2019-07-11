@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,10 +38,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="location">Location for data transfer. For locations
         /// check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
-        public AvailableSkuRequest(string country, string location)
+        /// <param name="skuNames">Sku Names to filter for available
+        /// skus</param>
+        public AvailableSkuRequest(string country, string location, IList<SkuName?> skuNames = default(IList<SkuName?>))
         {
             Country = country;
             Location = location;
+            SkuNames = skuNames;
             CustomInit();
         }
         /// <summary>
@@ -69,6 +74,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets sku Names to filter for available skus
+        /// </summary>
+        [JsonProperty(PropertyName = "skuNames")]
+        public IList<SkuName?> SkuNames { get; set; }
 
         /// <summary>
         /// Type of the transfer.

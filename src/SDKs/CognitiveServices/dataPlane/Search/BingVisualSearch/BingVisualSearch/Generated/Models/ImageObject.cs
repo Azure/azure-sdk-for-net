@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// object.</param>
         /// <param name="contentSize">Size of the media object content. Use
         /// format "value unit" (e.g., "1024 B").</param>
-        /// <param name="encodingFormat">Encoding format (e.g., mp3, mp4, jpeg,
+        /// <param name="encodingFormat">Encoding format (e.g., png, gif, jpeg,
         /// etc).</param>
         /// <param name="hostPageDisplayUrl">Display URL of the page that hosts
         /// the media object.</param>

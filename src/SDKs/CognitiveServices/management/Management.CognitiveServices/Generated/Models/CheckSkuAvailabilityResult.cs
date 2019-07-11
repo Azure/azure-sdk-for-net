@@ -29,18 +29,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the CheckSkuAvailabilityResult class.
         /// </summary>
-        /// <param name="kind">The Kind of the resource. Possible values
-        /// include: 'Bing.Autosuggest.v7', 'Bing.CustomSearch',
-        /// 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck.v7',
-        /// 'ComputerVision', 'ContentModerator', 'CustomSpeech',
-        /// 'CustomVision.Prediction', 'CustomVision.Training', 'Emotion',
-        /// 'Face', 'LUIS', 'QnAMaker', 'SpeakerRecognition',
-        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation',
-        /// 'WebLM'</param>
+        /// <param name="kind">The Kind of the resource.</param>
         /// <param name="type">The Type of the resource.</param>
-        /// <param name="skuName">The SKU of Cognitive Services account.
-        /// Possible values include: 'F0', 'P0', 'P1', 'P2', 'S0', 'S1', 'S2',
-        /// 'S3', 'S4', 'S5', 'S6'</param>
+        /// <param name="skuName">The SKU of Cognitive Services
+        /// account.</param>
         /// <param name="skuAvailable">Indicates the given SKU is available or
         /// not.</param>
         /// <param name="reason">Reason why the SKU is not available.</param>
@@ -62,13 +54,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Kind of the resource. Possible values include:
-        /// 'Bing.Autosuggest.v7', 'Bing.CustomSearch', 'Bing.Search.v7',
-        /// 'Bing.Speech', 'Bing.SpellCheck.v7', 'ComputerVision',
-        /// 'ContentModerator', 'CustomSpeech', 'CustomVision.Prediction',
-        /// 'CustomVision.Training', 'Emotion', 'Face', 'LUIS', 'QnAMaker',
-        /// 'SpeakerRecognition', 'SpeechTranslation', 'TextAnalytics',
-        /// 'TextTranslation', 'WebLM'
+        /// Gets or sets the Kind of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
@@ -80,9 +66,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of Cognitive Services account. Possible values
-        /// include: 'F0', 'P0', 'P1', 'P2', 'S0', 'S1', 'S2', 'S3', 'S4',
-        /// 'S5', 'S6'
+        /// Gets or sets the SKU of Cognitive Services account.
         /// </summary>
         [JsonProperty(PropertyName = "skuName")]
         public string SkuName { get; set; }

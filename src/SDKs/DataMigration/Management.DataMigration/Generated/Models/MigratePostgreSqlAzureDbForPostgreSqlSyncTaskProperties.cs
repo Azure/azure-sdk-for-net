@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
         /// <param name="commands">Array of command properties.</param>
+        /// <param name="clientData">Key value pairs of client data to attach
+        /// meta data information to task</param>
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput input = default(MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput), IList<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput> output = default(IList<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput>))
-            : base(errors, state, commands)
+        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), IDictionary<string, string> clientData = default(IDictionary<string, string>), MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput input = default(MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput), IList<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput> output = default(IList<MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput>))
+            : base(errors, state, commands, clientData)
         {
             Input = input;
             Output = output;

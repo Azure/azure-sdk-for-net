@@ -67,7 +67,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// which only appears in the response.</param>
         /// <param name="lastModifiedBy">lastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfigurationMachineRun(string name = default(string), string id = default(string), string targetComputer = default(string), string targetComputerType = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string osType = default(string), System.Guid? correlationId = default(System.Guid?), System.Guid? sourceComputerId = default(System.Guid?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string configuredDuration = default(string), JobNavigation job = default(JobNavigation), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
+        /// <param name="error">detailes of provisioning error</param>
+        public SoftwareUpdateConfigurationMachineRun(string name = default(string), string id = default(string), string targetComputer = default(string), string targetComputerType = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string osType = default(string), System.Guid? correlationId = default(System.Guid?), System.Guid? sourceComputerId = default(System.Guid?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string configuredDuration = default(string), JobNavigation job = default(JobNavigation), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), ErrorResponse error = default(ErrorResponse))
         {
             Name = name;
             Id = id;
@@ -86,6 +87,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             CreatedBy = createdBy;
             LastModifiedTime = lastModifiedTime;
             LastModifiedBy = lastModifiedBy;
+            Error = error;
             CustomInit();
         }
 
@@ -201,6 +203,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
         public string LastModifiedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets detailes of provisioning error
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.error")]
+        public ErrorResponse Error { get; set; }
 
     }
 }

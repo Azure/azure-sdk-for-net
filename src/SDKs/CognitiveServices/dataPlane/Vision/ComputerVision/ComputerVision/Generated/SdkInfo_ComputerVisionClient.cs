@@ -25,8 +25,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 new Tuple<string, string, string>("ComputerVisionClient", "AnalyzeImageInStream", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "DescribeImage", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "DescribeImageInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjects", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionClient", "DetectObjectsInStream", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnail", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "GenerateThumbnailInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterest", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionClient", "GetAreaOfInterestInStream", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "GetTextOperationResult", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "ListModels", "2.0"),
                 new Tuple<string, string, string>("ComputerVisionClient", "RecognizePrintedText", "2.0"),
@@ -38,5 +42,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\mamirzam\\CV-API\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "a2323a5bf8cd642bee954f7b49ff4fe1976cdeec";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

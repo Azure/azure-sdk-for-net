@@ -1,13 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd autorest https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --csharp-sdks-folder=C:\azuresources\forks\azure-sdk-for-net\tools\..\src\SDKS --version=latest --tag=package-2015-03-preview --reflect-api-versions
-2018-07-24 04:28:03 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\code\AzureSDK\azure-sdk-for-net\src\SDKs
+2018-12-13 07:06:51 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
 Branch:      master
-Commit:      c0cbb2c24667bdba146d863401d9415c724c09bd
-
-2) AutoRest information
+Commit:      65689e3494ca837345ee59944c94b8d3f251169f
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\wawon\AppData\Roaming\npm `-- autorest@2.0.4282  
-Latest installed version:    
+Bootstrapper version:    autorest@2.0.4283

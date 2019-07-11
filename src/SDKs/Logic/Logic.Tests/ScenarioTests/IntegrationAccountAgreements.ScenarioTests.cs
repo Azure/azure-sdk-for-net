@@ -4,313 +4,321 @@
 
 namespace Test.Azure.Management.Logic
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
-    using Newtonsoft.Json;
-    using System.IO;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
 
-    /// <summary>
-    /// Scenario tests for the integration accounts agreement.
-    /// </summary>
-    [Collection("IntegrationAccountPartnerScenarioTests")]
-    public class IntegrationAccountAgreementScenarioTests : ScenarioTestsBase
+    [Collection("IntegrationAccountAgreementsScenarioTests")]
+    public class IntegrationAccountAgreementsScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Tests the create and delete operations of the integration account agreement.
-        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndDeleteIntegrationAccountAgreement()
+        [Fact]
+        public void IntegrationAccountAgreements_CreateAs2_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                var instance = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,AgreementType.AS2);
-                instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
-                instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.MD5;
-
-                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName, instance);
-
-                var getAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
-                integrationAccountName,
-                integrationAccountAgreementName);
-
-                Assert.Equal(getAgreement.Name, integrationAccountAgreementName);
-                Assert.Equal(getAgreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
-                Assert.Equal(getAgreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.MD5);
-
-                client.Agreements.Delete(Constants.DefaultResourceGroup, integrationAccountName,
-                    integrationAccountAgreementName);
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and update operations of the integration account agreement.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndUpdateIntegrationAccountAgreement()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-
-                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,
-                        AgreementType.AS2));
-
-                var updateAgreement = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName,
-                    integrationAccountName);
-
-                var updatedAgreement = client.Agreements.CreateOrUpdate(
-                    Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountAgreementName, updateAgreement);
-
-                Assert.Equal(updatedAgreement.Name, integrationAccountAgreementName);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and get operations of the integration account agreement.
-        /// https://msazure.visualstudio.com/One/_workitems/edit/587947
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetIntegrationAccountAgreement()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var instance = CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName,
-                        AgreementType.AS2);
-
-                instance.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
-                instance.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm = HashingAlgorithm.SHA1;
-
-                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName, instance);
-
-                Assert.Equal(agreement.Name, integrationAccountAgreementName);
-
-                var getAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
-                    integrationAccountName,
-                    integrationAccountAgreementName);
-
-                Assert.Equal(agreement.Name, getAgreement.Name);
-                Assert.Equal(agreement.Content.AS2.ReceiveAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
-                Assert.Equal(agreement.Content.AS2.SendAgreement.ProtocolSettings.MdnSettings.MicHashingAlgorithm, HashingAlgorithm.SHA1);
-
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create operations of the integration account agreement with envelope override settings for X12.
-        /// https://msazure.visualstudio.com/One/_workitems/edit/700874
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateIntegrationAccountAgreementWithEnvelopeOverride()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-
-                var integrationX12AccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-
-                var client = context.GetServiceClient<LogicManagementClient>();
-
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, CreateIntegrationAccountInstance(integrationAccountName));
-
-                var instance = CreateIntegrationAccountAgreementInstanceFromFile(integrationX12AccountAgreementName,
-                        integrationAccountName, AgreementType.X12);
-                instance.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides = new List<X12EnvelopeOverride>();
-                X12EnvelopeOverride overrideSetting = new X12EnvelopeOverride();
-                overrideSetting.HeaderVersion = "1";
-                overrideSetting.MessageId = "100";
-                overrideSetting.ProtocolVersion = "1";
-                overrideSetting.ReceiverApplicationId = "93494";
-                overrideSetting.ResponsibleAgencyCode = "X";
-                overrideSetting.SenderApplicationId = "89459";
-                overrideSetting.TargetNamespace = "test";
-                overrideSetting.FunctionalIdentifierCode = "x";
-                overrideSetting.DateFormat = X12DateFormat.CCYYMMDD;
-                overrideSetting.TimeFormat = X12TimeFormat.HHMM;
-                instance.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides.Add(overrideSetting);
-
-                var x12Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationX12AccountAgreementName, instance );
-
-                var fetchedAgreement = client.Agreements.Get(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationX12AccountAgreementName);
-
-                Assert.Equal(fetchedAgreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides[0].ResponsibleAgencyCode,"X");
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-            }
-        }
-
-        /// <summary>
-        /// Tests the create and list operations of the integration account agreement.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListIntegrationAccountAgreements()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-
-                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-
-                var integrationAccountAgreementName1 =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var integrationAccountAgreementName2 =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var integrationAccountAgreementName3 =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-
-                var client = context.GetServiceClient<LogicManagementClient>();
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                client.Agreements.CreateOrUpdate(
-                    Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName1,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName1, integrationAccountName,
-                        AgreementType.AS2));
-
-                client.Agreements.CreateOrUpdate(
-                    Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName2,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName2, integrationAccountName,
-                        AgreementType.Edifact));
-
-                client.Agreements.CreateOrUpdate(
-                    Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName3,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName3, integrationAccountName));
-
-                var agreements = client.Agreements.ListByIntegrationAccounts(Constants.DefaultResourceGroup,
-                    integrationAccountName);
-
-                Assert.True(agreements.Count() == 3);
-
-                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
-            }
-        }
-
-        /// <summary>
-        /// Tests the delete operations of the integration account agreement with integration account. 
-        /// Agreement must be deleted with the integration account deletion.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void DeleteIntegrationAccountAgreementOnAccountDeletion()
-        {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
-            {
-                string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
-                string integrationAccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var client = context.GetServiceClient<LogicManagementClient>();
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
                     integrationAccountName,
-                    CreateIntegrationAccountInstance(integrationAccountName));
-                var agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAccountAgreementName,
-                    CreateIntegrationAccountAgreementInstance(integrationAccountAgreementName, integrationAccountName));
+                    agreementName,
+                    agreement);
 
-                Assert.Equal(agreement.Name, integrationAccountAgreementName);
+                this.ValidateAgreement(agreement, createdAgreement);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(
-                    () =>
-                        client.Agreements.Get(Constants.DefaultResourceGroup, integrationAccountName,
-                            integrationAccountAgreementName));
             }
         }
 
-        /// <summary>
-        /// Tests the create operations of the integration account agreement using file input.
-        /// </summary>
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateIntegrationAccountAgreementUsingFile()
+        [Fact]
+        public void IntegrationAccountAgreements_CreateEdifact_OK()
         {
-            using (
-                MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
                 var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                var integrationAs2AccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var integrationX12AccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
-                var integrationEdifactAccountAgreementName =
-                    TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.Edifact);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-                var client = context.GetServiceClient<LogicManagementClient>();
+                this.ValidateAgreement(agreement, createdAgreement);
 
-                var createdAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, CreateIntegrationAccountInstance(integrationAccountName));
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
 
-                var as2Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationAs2AccountAgreementName,
-                    CreateIntegrationAccountAgreementInstanceFromFile(integrationAs2AccountAgreementName,
-                        integrationAccountName, AgreementType.AS2));
+        [Fact]
+        public void IntegrationAccountAgreements_CreateX12_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
 
-                var edifactAgreement = client.Agreements.CreateOrUpdate(
-                    Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationEdifactAccountAgreementName,
-                    CreateIntegrationAccountAgreementInstanceFromFile(integrationEdifactAccountAgreementName,
-                        integrationAccountName, AgreementType.Edifact));
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.X12);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
 
-                var x12Agreement = client.Agreements.CreateOrUpdate(Constants.DefaultResourceGroup,
-                    integrationAccountName, integrationX12AccountAgreementName,
-                    CreateIntegrationAccountAgreementInstanceFromFile(integrationX12AccountAgreementName,
-                        integrationAccountName, AgreementType.X12));
+                this.ValidateAgreement(agreement, createdAgreement);
 
-                Assert.Equal(as2Agreement.Name, integrationAs2AccountAgreementName);
-                Assert.Equal(edifactAgreement.Name, integrationEdifactAccountAgreementName);
-                Assert.Equal(x12Agreement.Name, integrationX12AccountAgreementName);
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_CreateWithEnvelopeOverride_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.X12);
+                agreement.Content.X12.ReceiveAgreement.ProtocolSettings.EnvelopeOverrides = new List<X12EnvelopeOverride>
+                {
+                    new X12EnvelopeOverride
+                    {
+                        HeaderVersion = "1",
+                        MessageId = "100",
+                        ProtocolVersion = "1",
+                        ReceiverApplicationId = "93494",
+                        ResponsibleAgencyCode = "X",
+                        SenderApplicationId = "89459",
+                        TargetNamespace = "http://tempuri.org",
+                        FunctionalIdentifierCode = "x",
+                        DateFormat = X12DateFormat.CCYYMMDD,
+                        TimeFormat = X12TimeFormat.HHMM
+                    }
+                };
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                var retrievedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName);
+
+                this.ValidateAgreement(agreement, retrievedAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_Get_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                var retrievedAgreement = client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName);
+
+                this.ValidateAgreement(agreement, retrievedAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_List_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName1 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement1 = this.CreateIntegrationAccountAgreement(agreementName1, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName1,
+                    agreement1);
+
+                var agreementName2 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement2 = this.CreateIntegrationAccountAgreement(agreementName2, AgreementType.Edifact);
+                var createdAgreement2 = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName2,
+                    agreement2);
+
+                var agreementName3 = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement3 = this.CreateIntegrationAccountAgreement(agreementName3, AgreementType.X12);
+                var createdAgreement3 = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName3,
+                    agreement3);
+
+                var agreements = client.IntegrationAccountAgreements.List(Constants.DefaultResourceGroup, integrationAccountName);
+
+                Assert.Equal(3, agreements.Count());
+                this.ValidateAgreement(agreement1, agreements.Single(x => x.AgreementType == agreement1.AgreementType));
+                this.ValidateAgreement(agreement2, agreements.Single(x => x.AgreementType == agreement2.AgreementType));
+                this.ValidateAgreement(agreement3, agreements.Single(x => x.AgreementType == agreement3.AgreementType));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_Update_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                var newAgreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+
+                var updatedAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    newAgreement);
+
+                this.ValidateAgreement(newAgreement, updatedAgreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_Delete_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                client.IntegrationAccountAgreements.Delete(Constants.DefaultResourceGroup, integrationAccountName, agreementName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_DeleteWhenDeleteIntegrationAccount_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
+                Assert.Throws<CloudException>(() => client.IntegrationAccountAgreements.Get(Constants.DefaultResourceGroup, integrationAccountName, agreementName));
+            }
+        }
+
+        [Fact]
+        public void IntegrationAccountAgreements_ListContentCallbackUrl_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
+                var integrationAccount = client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    this.CreateIntegrationAccount(integrationAccountName));
+
+                var agreementName = TestUtilities.GenerateName(Constants.IntegrationAccountAgreementPrefix);
+                var agreement = this.CreateIntegrationAccountAgreement(agreementName, AgreementType.AS2);
+                var createdAgreement = client.IntegrationAccountAgreements.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    agreement);
+
+                var contentCallbackUrl = client.IntegrationAccountAgreements.ListContentCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName,
+                    agreementName,
+                    new GetCallbackUrlParameters
+                    {
+                        KeyType = "Primary"
+                    });
+
+                Assert.Equal("GET", contentCallbackUrl.Method);
+                Assert.Contains(agreementName, contentCallbackUrl.Value);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -318,96 +326,61 @@ namespace Test.Azure.Management.Logic
 
         #region Private
 
-        /// <summary>
-        /// Creates an Integration account agreement
-        /// </summary>
-        /// <param name="integrationAccountAgreementName">Name of the integration account agreement</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>
-        /// <returns>Agreement instance</returns>
-        private IntegrationAccountAgreement CreateIntegrationAccountAgreementInstance(
-            string integrationAccountAgreementName,
-            string integrationAccountName,
-            AgreementType agreementType = AgreementType.X12)
+        private void ValidateAgreement(IntegrationAccountAgreement expected, IntegrationAccountAgreement actual)
         {
-            AgreementContent agreementContent = null;
-            IDictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("IntegrationAccountAgreement", integrationAccountAgreementName);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.AgreementType, actual.AgreementType);
+            Assert.Equal(expected.HostPartner, actual.HostPartner);
+            Assert.Equal(expected.GuestPartner, actual.GuestPartner);
+            Assert.Equal(expected.HostIdentity.Qualifier, actual.HostIdentity.Qualifier);
+            Assert.Equal(expected.HostIdentity.Value, actual.HostIdentity.Value);
+            Assert.Equal(expected.GuestIdentity.Qualifier, actual.GuestIdentity.Qualifier);
+            Assert.Equal(expected.GuestIdentity.Value, actual.GuestIdentity.Value);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
 
-            switch (agreementType)
+            switch (expected.AgreementType)
             {
                 case AgreementType.AS2:
-                    agreementContent = AS2AgreementContent;
+                    Assert.Equal(expected.Content.AS2, expected.Content.AS2);
                     break;
                 case AgreementType.Edifact:
-                    agreementContent = EDIFACTAgreementContent;
+                    Assert.Equal(expected.Content.Edifact, expected.Content.Edifact);
                     break;
                 case AgreementType.X12:
-                    agreementContent = X12AgreementContent;
+                    Assert.Equal(expected.Content.X12, expected.Content.X12);
                     break;
             }
-
-            var agreement = new IntegrationAccountAgreement
-            {
-                Location = Constants.DefaultLocation,
-                Tags = tags,
-                Metadata = integrationAccountAgreementName,
-                AgreementType = agreementType,
-                GuestIdentity = new BusinessIdentity {Qualifier = "AA", Value = "AA"},
-                HostIdentity = new BusinessIdentity {Qualifier = "ZZ", Value = "ZZ"},
-                GuestPartner = "GuestPartner",
-                HostPartner = "HostPartner",
-                Content = agreementContent
-            };
-
-            return agreement;
         }
 
-        /// <summary>
-        /// Creates an Integration account agreement from file source
-        /// </summary>
-        /// <param name="integrationAccountAgreementName">Name of the integration account agreement</param>
-        /// <param name="integrationAccountName">Name of the integration account</param>        
-        /// <returns>Agreement instance</returns>
-        private IntegrationAccountAgreement CreateIntegrationAccountAgreementInstanceFromFile(
-            string integrationAccountAgreementName,
-            string integrationAccountName,
-            AgreementType agreementType = AgreementType.X12)
+        private IntegrationAccountAgreement CreateIntegrationAccountAgreement(string agreementName, AgreementType agreementType)
         {
-            AgreementContent agreementContent = null;
-            IDictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("IntegrationAccountAgreement", integrationAccountAgreementName);
+            var hostPartner = "HostPartner";
+            var guestPartner = "GuestPartner";
+            var hostIdentity = new BusinessIdentity { Qualifier = "ZZ", Value = "ZZ" };
+            var guestIdentity = new BusinessIdentity { Qualifier = "AA", Value = "AA" };
 
+            AgreementContent agreementContent = null;
             switch (agreementType)
             {
                 case AgreementType.AS2:
-                    agreementContent =
-                        JsonConvert.DeserializeObject<AgreementContent>(
-                            File.ReadAllText(@"TestData/IntegrationAccountAS2AgreementContent.json"));
+                    agreementContent = this.AS2AgreementContent;
                     break;
                 case AgreementType.Edifact:
-                    agreementContent =
-                        JsonConvert.DeserializeObject<AgreementContent>(
-                            File.ReadAllText(@"TestData/IntegrationAccountEDIFACTAgreementContent.json"));
+                    agreementContent = this.EDIFACTAgreementContent;
                     break;
                 case AgreementType.X12:
-                    agreementContent =
-                        JsonConvert.DeserializeObject<AgreementContent>(
-                            File.ReadAllText(@"TestData/IntegrationAccountX12AgreementContent.json"));
+                    agreementContent = this.X12AgreementContent;
                     break;
             }
 
-            var agreement = new IntegrationAccountAgreement
-            {
-                Location = Constants.DefaultLocation,
-                Tags = tags,
-                Metadata = integrationAccountAgreementName,
-                AgreementType = agreementType,
-                GuestIdentity = new BusinessIdentity {Qualifier = "AA", Value = "AA"},
-                HostIdentity = new BusinessIdentity {Qualifier = "ZZ", Value = "ZZ"},
-                GuestPartner = "GuestPartner",
-                HostPartner = "HostPartner",
-                Content = agreementContent
-            };
+            var agreement = new IntegrationAccountAgreement(agreementType,
+                hostPartner,
+                guestPartner,
+                hostIdentity,
+                guestIdentity,
+                agreementContent,
+                name: agreementName);
 
             return agreement;
         }
@@ -913,7 +886,7 @@ namespace Test.Azure.Management.Logic
                                 {
                                     DispositionNotificationTo = "http://tempuri.org",
                                     MdnText = "Sample",
-                                    MicHashingAlgorithm = HashingAlgorithm.None,
+                                    MicHashingAlgorithm = HashingAlgorithm.MD5,
                                     NeedMdn = true,
                                     ReceiptDeliveryUrl = "http://tempuri.org",
                                     SendInboundMdnToMessageBox = true,
@@ -936,9 +909,9 @@ namespace Test.Azure.Management.Logic
                                     EnableNrrForOutboundDecodedMessages = true,
                                     EnableNrrForOutboundEncodedMessages = true,
                                     EnableNrrForOutboundMdn = true,
-                                    
+
                                     OverrideGroupSigningCertificate = false
-                                    
+
                                 },
                                 ValidationSettings = new AS2ValidationSettings
                                 {
@@ -992,7 +965,7 @@ namespace Test.Azure.Management.Logic
                                 {
                                     DispositionNotificationTo = "http://tempuri.org",
                                     MdnText = "Sample",
-                                    MicHashingAlgorithm = HashingAlgorithm.None,
+                                    MicHashingAlgorithm = HashingAlgorithm.MD5,
                                     NeedMdn = true,
                                     ReceiptDeliveryUrl = "http://tempuri.org",
                                     SendInboundMdnToMessageBox = true,
@@ -1015,9 +988,9 @@ namespace Test.Azure.Management.Logic
                                     EnableNrrForOutboundDecodedMessages = true,
                                     EnableNrrForOutboundEncodedMessages = true,
                                     EnableNrrForOutboundMdn = true,
-                                    
+
                                     OverrideGroupSigningCertificate = false
-                                    
+
                                 },
                                 ValidationSettings = new AS2ValidationSettings
                                 {

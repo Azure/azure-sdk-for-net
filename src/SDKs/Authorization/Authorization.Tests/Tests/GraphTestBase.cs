@@ -39,10 +39,10 @@ namespace Authorization.Tests
 			if (HttpMockServer.Mode == HttpRecorderMode.Record)
 			{
 				var environment = TestEnvironmentFactory.GetTestEnvironment();
-				result.TenantId = environment.Tenant;
-				result.Domain = environment.UserName
-							.Split(new[] { "@" }, StringSplitOptions.RemoveEmptyEntries)
-							.Last();
+                result.TenantId = environment.Tenant;
+                result.Domain = environment.UserName
+			                .Split(new[] { "@" }, StringSplitOptions.RemoveEmptyEntries)
+			                .Last();
 
 				HttpMockServer.Variables[TenantIdKey] = result.TenantId;
 				HttpMockServer.Variables[DomainKey] = result.Domain;

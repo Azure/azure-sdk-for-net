@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.Media.Models
         [EnumMember(Value = "None")]
         None,
         [EnumMember(Value = "Basic")]
-        Basic
+        Basic,
+        [EnumMember(Value = "Standard")]
+        Standard
     }
     internal static class LiveEventEncodingTypeEnumExtension
     {
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.Media.Models
                     return "None";
                 case LiveEventEncodingType.Basic:
                     return "Basic";
+                case LiveEventEncodingType.Standard:
+                    return "Standard";
             }
             return null;
         }
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.Management.Media.Models
                     return LiveEventEncodingType.None;
                 case "Basic":
                     return LiveEventEncodingType.Basic;
+                case "Standard":
+                    return LiveEventEncodingType.Standard;
             }
             return null;
         }

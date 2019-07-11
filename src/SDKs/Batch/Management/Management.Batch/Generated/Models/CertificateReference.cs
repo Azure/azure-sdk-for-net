@@ -103,17 +103,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets or sets which user accounts on the compute node should have
         /// access to the private data of the certificate.
         /// </summary>
-        /// <remarks>
-        /// Values are:
-        ///
-        /// starttask - The user account under which the start task is run.
-        /// task - The accounts under which job tasks are run.
-        /// remoteuser - The accounts under which users remotely access the
-        /// node.
-        ///
-        /// You can specify more than one visibility in this collection. The
-        /// default is all accounts.
-        /// </remarks>
         [JsonProperty(PropertyName = "visibility")]
         public IList<CertificateVisibility> Visibility { get; set; }
 

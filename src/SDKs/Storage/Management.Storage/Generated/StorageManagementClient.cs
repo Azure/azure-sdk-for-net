@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
+        /// Gets the IBlobServicesOperations.
+        /// </summary>
+        public virtual IBlobServicesOperations BlobServices { get; private set; }
+
+        /// <summary>
         /// Gets the IBlobContainersOperations.
         /// </summary>
         public virtual IBlobContainersOperations BlobContainers { get; private set; }
@@ -304,6 +309,7 @@ namespace Microsoft.Azure.Management.Storage
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usages = new UsagesOperations(this);
+            BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

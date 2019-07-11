@@ -87,6 +87,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<ApplicationSummary>,ApplicationListHeaders>> ListWithHttpMessagesAsync(ApplicationListOptions applicationListOptions = default(ApplicationListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -132,8 +136,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "applications").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "applications";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -343,6 +348,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<ApplicationSummary,ApplicationGetHeaders>> GetWithHttpMessagesAsync(string applicationId, ApplicationGetOptions applicationGetOptions = default(ApplicationGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (applicationId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
@@ -387,8 +396,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "applications/{applicationId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "applications/{applicationId}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(applicationId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

@@ -565,5 +565,156 @@ namespace Storage.Tests
             }
         }
 
+        // Get/Set Blob Service Properties
+        [Fact]
+        public void BlobServiceTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    BlobServiceProperties properties1 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.False(properties1.DeleteRetentionPolicy.Enabled);
+                    Assert.Null(properties1.DeleteRetentionPolicy.Days);
+                    Assert.Null(properties1.DefaultServiceVersion);
+                    Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+                    BlobServiceProperties properties2 = properties1;
+                    properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
+                    properties2.DeleteRetentionPolicy.Enabled = true;
+                    properties2.DeleteRetentionPolicy.Days = 300;
+                    properties2.DefaultServiceVersion = "2017-04-17";
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties2);
+                    BlobServiceProperties properties3 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties3.DeleteRetentionPolicy.Enabled);
+                    Assert.Equal(300, properties3.DeleteRetentionPolicy.Days);
+                    Assert.Equal("2017-04-17", properties3.DefaultServiceVersion);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // Get/Set Cors rules in Blob Service Properties
+        [Fact]
+        public void BlobServiceCorsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    BlobServiceProperties properties1 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    BlobServiceProperties properties2 = new BlobServiceProperties();
+                    properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
+                    properties2.DeleteRetentionPolicy.Enabled = true;
+                    properties2.DeleteRetentionPolicy.Days = 300;
+                    properties2.DefaultServiceVersion = "2017-04-17";
+                    properties2.Cors = new CorsRules();
+                    properties2.Cors.CorsRulesProperty = new List<CorsRule>();
+                    properties2.Cors.CorsRulesProperty.Add(new CorsRule()
+                    {
+                        AllowedHeaders = new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                        AllowedMethods = new string[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                        AllowedOrigins = new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        ExposedHeaders = new string[] { "x-ms-meta-*" },
+                        MaxAgeInSeconds = 100
+                    });
+                    properties2.Cors.CorsRulesProperty.Add(new CorsRule()
+                    {
+                        AllowedHeaders = new string[] { "*" },
+                        AllowedMethods = new string[] { "GET" },
+                        AllowedOrigins = new string[] { "*" },
+                        ExposedHeaders = new string[] { "*" },
+                        MaxAgeInSeconds = 2
+                    });
+                    properties2.Cors.CorsRulesProperty.Add(new CorsRule()
+                    {
+                        AllowedHeaders = new string[] { "x-ms-meta-12345675754564*" },
+                        AllowedMethods = new string[] { "GET", "PUT", "CONNECT" },
+                        AllowedOrigins = new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                        ExposedHeaders = new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x -ms-meta-target*" },
+                        MaxAgeInSeconds = 2000
+                    });
+
+                    BlobServiceProperties properties3 = storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties2);
+                    Assert.True(properties3.DeleteRetentionPolicy.Enabled);
+                    Assert.Equal(300, properties3.DeleteRetentionPolicy.Days);
+                    Assert.Equal("2017-04-17", properties3.DefaultServiceVersion);
+
+                    //Validate CORS Rules
+                    Assert.Equal(properties2.Cors.CorsRulesProperty.Count, properties3.Cors.CorsRulesProperty.Count);
+                    for (int i = 0; i < properties2.Cors.CorsRulesProperty.Count; i++)
+                    {
+                        CorsRule putRule = properties2.Cors.CorsRulesProperty[i];
+                        CorsRule getRule = properties3.Cors.CorsRulesProperty[i];
+
+                        Assert.Equal(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                        Assert.Equal(putRule.AllowedMethods, getRule.AllowedMethods);
+                        Assert.Equal(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                        Assert.Equal(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                        Assert.Equal(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+                    }
+
+                    BlobServiceProperties properties4 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties4.DeleteRetentionPolicy.Enabled);
+                    Assert.Equal(300, properties4.DeleteRetentionPolicy.Days);
+                    Assert.Equal("2017-04-17", properties4.DefaultServiceVersion);
+
+                    //Validate CORS Rules
+                    Assert.Equal(properties2.Cors.CorsRulesProperty.Count, properties4.Cors.CorsRulesProperty.Count);
+                    for (int i = 0; i < properties2.Cors.CorsRulesProperty.Count; i++)
+                    {
+                        CorsRule putRule = properties2.Cors.CorsRulesProperty[i];
+                        CorsRule getRule = properties4.Cors.CorsRulesProperty[i];
+
+                        Assert.Equal(putRule.AllowedHeaders, getRule.AllowedHeaders);
+                        Assert.Equal(putRule.AllowedMethods, getRule.AllowedMethods);
+                        Assert.Equal(putRule.AllowedOrigins, getRule.AllowedOrigins);
+                        Assert.Equal(putRule.ExposedHeaders, getRule.ExposedHeaders);
+                        Assert.Equal(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
+                    }
+
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
     }
 }

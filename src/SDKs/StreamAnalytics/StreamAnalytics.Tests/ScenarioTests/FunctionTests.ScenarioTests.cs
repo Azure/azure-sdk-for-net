@@ -143,13 +143,13 @@ namespace StreamAnalytics.Tests
 
                 // List function and verify that the function shows up in the list
                 var listResult = streamAnalyticsManagementClient.Functions.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateFunction(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with function expanded and verify that the function shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "functions");
-                Assert.Equal(1, getJobResponse.Functions.Count());
+                Assert.Single(getJobResponse.Functions);
                 ValidationHelper.ValidateFunction(putResponse.Body, getJobResponse.Functions.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Functions.Single().Properties.Etag);
 
@@ -158,11 +158,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the function
                 listResult = streamAnalyticsManagementClient.Functions.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with function expanded and verify that there are no functions after deleting the function
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "functions");
-                Assert.Equal(0, getJobResponse.Functions.Count());
+                Assert.Empty(getJobResponse.Functions);
             }
         }
 
@@ -221,7 +221,7 @@ namespace StreamAnalytics.Tests
                 CloudException cloudException = Assert.Throws<CloudException>(
                     () => streamAnalyticsManagementClient.Functions.RetrieveDefaultDefinition(resourceGroupName, jobName, functionName, retrieveDefaultDefinitionParameters));
                 Assert.Equal(HttpStatusCode.InternalServerError, cloudException.Response.StatusCode);
-                Assert.True(cloudException.Response.Content.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf"));
+                Assert.Contains(@"Retrieve default definition is not supported for function type: Microsoft.StreamAnalytics/JavascriptUdf", cloudException.Response.Content);
 
                 // PUT function
                 var putResponse = await streamAnalyticsManagementClient.Functions.CreateOrReplaceWithHttpMessagesAsync(function, resourceGroupName, jobName, functionName);
@@ -269,13 +269,13 @@ namespace StreamAnalytics.Tests
 
                 // List function and verify that the function shows up in the list
                 var listResult = streamAnalyticsManagementClient.Functions.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateFunction(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with function expanded and verify that the function shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "functions");
-                Assert.Equal(1, getJobResponse.Functions.Count());
+                Assert.Single(getJobResponse.Functions);
                 ValidationHelper.ValidateFunction(putResponse.Body, getJobResponse.Functions.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Functions.Single().Properties.Etag);
 
@@ -284,11 +284,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the function
                 listResult = streamAnalyticsManagementClient.Functions.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with function expanded and verify that there are no functions after deleting the function
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "functions");
-                Assert.Equal(0, getJobResponse.Functions.Count());
+                Assert.Empty(getJobResponse.Functions);
             }
         }
     }

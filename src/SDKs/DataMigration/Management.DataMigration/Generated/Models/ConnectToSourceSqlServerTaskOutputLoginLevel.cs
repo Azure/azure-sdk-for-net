@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="defaultDatabase">The default database for the
         /// login.</param>
         /// <param name="isEnabled">The state of the login.</param>
-        /// <param name="migrationEligibility">Information about eligiblity of
+        /// <param name="migrationEligibility">Information about eligibility of
         /// login for migration.</param>
         public ConnectToSourceSqlServerTaskOutputLoginLevel(string id = default(string), string name = default(string), string loginType = default(string), string defaultDatabase = default(string), bool? isEnabled = default(bool?), MigrationEligibilityInfo migrationEligibility = default(MigrationEligibilityInfo))
             : base(id)
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public bool? IsEnabled { get; private set; }
 
         /// <summary>
-        /// Gets information about eligiblity of login for migration.
+        /// Gets information about eligibility of login for migration.
         /// </summary>
         [JsonProperty(PropertyName = "migrationEligibility")]
         public MigrationEligibilityInfo MigrationEligibility { get; private set; }

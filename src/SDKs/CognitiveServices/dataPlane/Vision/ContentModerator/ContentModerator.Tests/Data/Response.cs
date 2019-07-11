@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Rest;
-using Microsoft.CognitiveServices.ContentModerator.Models;
-using Microsoft.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
 
 namespace ContentModeratorTests
 {

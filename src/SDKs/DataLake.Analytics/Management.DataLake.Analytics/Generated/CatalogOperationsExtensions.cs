@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to create the secret (name and password)
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void CreateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
                 operations.CreateSecretAsync(accountName, databaseName, secretName, parameters).GetAwaiter().GetResult();
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task CreateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='secretName'>
             /// The name of the secret to get
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
                 return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters required to modify the secret (name and password)
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
                 operations.UpdateSecretAsync(accountName, databaseName, secretName, parameters).GetAwaiter().GetResult();
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='secretName'>
             /// The name of the secret to delete
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void DeleteSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
                 operations.DeleteSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task DeleteSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false)).Dispose();
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='databaseName'>
             /// The name of the database containing the secret.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static void DeleteAllSecrets(this ICatalogOperations operations, string accountName, string databaseName)
             {
                 operations.DeleteAllSecretsAsync(accountName, databaseName).GetAwaiter().GetResult();
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            [System.Obsolete()]
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task DeleteAllSecretsAsync(this ICatalogOperations operations, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAllSecretsWithHttpMessagesAsync(accountName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();

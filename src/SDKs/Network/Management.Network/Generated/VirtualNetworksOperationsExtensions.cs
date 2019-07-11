@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='ipAddress'>
             /// The private IP address to be verified.
             /// </param>
-            public static IPAddressAvailabilityResult CheckIPAddressAvailability(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress = default(string))
+            public static IPAddressAvailabilityResult CheckIPAddressAvailability(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress)
             {
                 return operations.CheckIPAddressAvailabilityAsync(resourceGroupName, virtualNetworkName, ipAddress).GetAwaiter().GetResult();
             }
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPAddressAvailabilityResult> CheckIPAddressAvailabilityAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPAddressAvailabilityResult> CheckIPAddressAvailabilityAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, string ipAddress, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckIPAddressAvailabilityWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, ipAddress, null, cancellationToken).ConfigureAwait(false))
                 {

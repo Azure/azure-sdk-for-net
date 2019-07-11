@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Azure PostgreSQL dataset.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AzurePostgreSqlTable")]
+    [Rest.Serialization.JsonTransformation]
     public partial class AzurePostgreSqlTableDataset : Dataset
     {
         /// <summary>
@@ -42,14 +45,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
+        /// <param name="schema">Columns that define the physical type schema
+        /// of the dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public AzurePostgreSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
+        /// <param name="tableName">The table name. Type: string (or Expression
+        /// with resultType string).</param>
+        public AzurePostgreSqlTableDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object tableName = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
+            TableName = tableName;
             CustomInit();
         }
 
@@ -59,9 +68,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the table name. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.tableName")]
+        public object TableName { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()

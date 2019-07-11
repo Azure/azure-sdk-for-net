@@ -4,12 +4,9 @@
     <PackageId>ManagedServiceIdentity.Tests</PackageId>
     <Description>ManagedServiceIdentity.Tests Class Library</Description>
     <AssemblyName>ManagedServiceIdentity.Tests</AssemblyName>
-    <VersionPrefix>1.0.0.0-preview</VersionPrefix>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>1.0.0</Version>
   </PropertyGroup>
-
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.ManagedServiceIdentity\Microsoft.Azure.Management.ManagedServiceIdentity.csproj" />

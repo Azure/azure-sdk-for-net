@@ -1,0 +1,12 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Version>3.0.3</Version>
+    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
+    <PackageReleaseNotes>      
+      <![CDATA[
+        Republishing to publish symbols
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+</Project>

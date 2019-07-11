@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="disabledAlerts">Specifies an array of alerts that are
         /// disabled. Allowed values are: Sql_Injection,
-        /// Sql_Injection_Vulnerability, Access_Anomaly</param>
+        /// Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration,
+        /// Unsafe_Action</param>
         /// <param name="emailAddresses">Specifies an array of e-mail addresses
         /// to which the alert is sent.</param>
         /// <param name="emailAccountAdmins">Specifies that the alert is sent
@@ -54,7 +55,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// of the Threat Detection audit storage account.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the Threat Detection audit logs.</param>
-        public ServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?))
+        /// <param name="creationTime">Specifies the UTC creation time of the
+        /// policy.</param>
+        public ServerSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
             : base(id, name, type)
         {
             State = state;
@@ -64,6 +67,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
+            CreationTime = creationTime;
             CustomInit();
         }
 
@@ -83,7 +87,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets specifies an array of alerts that are disabled.
         /// Allowed values are: Sql_Injection, Sql_Injection_Vulnerability,
-        /// Access_Anomaly
+        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledAlerts")]
         public IList<string> DisabledAlerts { get; set; }
@@ -123,6 +127,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionDays")]
         public int? RetentionDays { get; set; }
+
+        /// <summary>
+        /// Gets specifies the UTC creation time of the policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

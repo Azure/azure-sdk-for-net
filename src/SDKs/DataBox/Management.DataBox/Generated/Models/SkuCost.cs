@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="meterId">Meter id of the Sku.</param>
         /// <param name="meterType">The type of the meter.</param>
-        public SkuCost(string meterId, string meterType)
+        public SkuCost(string meterId = default(string), string meterType = default(string))
         {
             MeterId = meterId;
             MeterType = meterType;
@@ -45,33 +44,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets meter id of the Sku.
+        /// Gets meter id of the Sku.
         /// </summary>
         [JsonProperty(PropertyName = "meterId")]
-        public string MeterId { get; set; }
+        public string MeterId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of the meter.
+        /// Gets the type of the meter.
         /// </summary>
         [JsonProperty(PropertyName = "meterType")]
-        public string MeterType { get; set; }
+        public string MeterType { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (MeterId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MeterId");
-            }
-            if (MeterType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MeterType");
-            }
-        }
     }
 }

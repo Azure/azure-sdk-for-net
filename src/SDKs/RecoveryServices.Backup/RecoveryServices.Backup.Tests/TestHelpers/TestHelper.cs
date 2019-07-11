@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         {
             var result = BackupClient.JobDetails.GetWithHttpMessagesAsync(VaultName, ResourceGroup, jobId).Result;
             Assert.NotNull(result);
-            Assert.Equal(result.Response.StatusCode, System.Net.HttpStatusCode.OK);
+            Assert.Equal(System.Net.HttpStatusCode.OK, result.Response.StatusCode);
             return ((AzureIaaSVMJob)result.Body.Properties).Status;
         }
 

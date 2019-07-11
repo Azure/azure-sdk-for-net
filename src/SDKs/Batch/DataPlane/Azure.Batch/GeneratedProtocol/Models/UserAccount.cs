@@ -36,12 +36,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// account.</param>
         /// <param name="linuxUserConfiguration">The Linux-specific user
         /// configuration for the user account.</param>
-        public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
+        /// <param name="windowsUserConfiguration">The Windows-specific user
+        /// configuration for the user account.</param>
+        public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration), WindowsUserConfiguration windowsUserConfiguration = default(WindowsUserConfiguration))
         {
             Name = name;
             Password = password;
             ElevationLevel = elevationLevel;
             LinuxUserConfiguration = linuxUserConfiguration;
+            WindowsUserConfiguration = windowsUserConfiguration;
             CustomInit();
         }
 
@@ -82,6 +85,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "linuxUserConfiguration")]
         public LinuxUserConfiguration LinuxUserConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Windows-specific user configuration for the user
+        /// account.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified if the user is on a Windows
+        /// pool. If not specified and on a Windows pool, the user is created
+        /// with the default options.
+        /// </remarks>
+        [JsonProperty(PropertyName = "windowsUserConfiguration")]
+        public WindowsUserConfiguration WindowsUserConfiguration { get; set; }
 
     }
 }

@@ -4,11 +4,9 @@
     <PackageId>Microsoft.Azure.OperationalInsights.Tests</PackageId>
     <Description>Microsoft.Azure.OperationalInsights.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.OperationalInsights.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

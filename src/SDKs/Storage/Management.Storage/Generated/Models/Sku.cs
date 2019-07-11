@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Gets or sets the sku name. Required for account
-        /// creation; optional for update. Note that in older versions, sku
+        /// <param name="name">Gets or sets the SKU name. Required for account
+        /// creation; optional for update. Note that in older versions, SKU
         /// name was called accountType. Possible values include:
         /// 'Standard_LRS', 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS',
         /// 'Premium_LRS', 'Premium_ZRS'</param>
-        /// <param name="tier">Gets the sku tier. This is based on the SKU
+        /// <param name="tier">Gets the SKU tier. This is based on the SKU
         /// name. Possible values include: 'Standard', 'Premium'</param>
         /// <param name="resourceType">The type of the resource, usually it is
         /// 'storageAccounts'.</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// available. This will be supported and registered Azure Geo Regions
         /// (e.g. West US, East US, Southeast Asia, etc.).</param>
         /// <param name="capabilities">The capability information in the
-        /// specified sku, including file encryption, network acls, change
+        /// specified SKU, including file encryption, network ACLs, change
         /// notification, etc.</param>
         /// <param name="restrictions">The restrictions because of which SKU
         /// cannot be used. This is empty if there are no restrictions.</param>
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sku name. Required for account creation; optional
-        /// for update. Note that in older versions, sku name was called
+        /// Gets or sets the SKU name. Required for account creation; optional
+        /// for update. Note that in older versions, SKU name was called
         /// accountType. Possible values include: 'Standard_LRS',
         /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS',
         /// 'Premium_ZRS'
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public SkuName Name { get; set; }
 
         /// <summary>
-        /// Gets the sku tier. This is based on the SKU name. Possible values
+        /// Gets the SKU tier. This is based on the SKU name. Possible values
         /// include: 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public IList<string> Locations { get; private set; }
 
         /// <summary>
-        /// Gets the capability information in the specified sku, including
-        /// file encryption, network acls, change notification, etc.
+        /// Gets the capability information in the specified SKU, including
+        /// file encryption, network ACLs, change notification, etc.
         /// </summary>
         [JsonProperty(PropertyName = "capabilities")]
         public IList<SKUCapability> Capabilities { get; private set; }

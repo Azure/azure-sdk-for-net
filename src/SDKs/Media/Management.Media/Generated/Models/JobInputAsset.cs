@@ -34,17 +34,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the JobInputAsset class.
         /// </summary>
         /// <param name="assetName">The name of the input Asset.</param>
-        /// <param name="label">A label that is assigned to a JobInput, that is
-        /// used to satisfy a reference used in the Transform. For example, a
-        /// Transform can be authored so as to take an image file with the
-        /// label 'xyz' and apply it as an overlay onto the input video before
-        /// it is encoded. When submitting a Job, exactly one of the JobInputs
-        /// should be the image file, and it should have the label
-        /// 'xyz'.</param>
         /// <param name="files">List of files. Required for
         /// JobInputHttp.</param>
-        public JobInputAsset(string assetName, string label = default(string), IList<string> files = default(IList<string>))
-            : base(label, files)
+        /// <param name="label">A label that is assigned to a JobInputClip,
+        /// that is used to satisfy a reference used in the Transform. For
+        /// example, a Transform can be authored so as to take an image file
+        /// with the label 'xyz' and apply it as an overlay onto the input
+        /// video before it is encoded. When submitting a Job, exactly one of
+        /// the JobInputs should be the image file, and it should have the
+        /// label 'xyz'.</param>
+        public JobInputAsset(string assetName, IList<string> files = default(IList<string>), string label = default(string))
+            : base(files, label)
         {
             AssetName = assetName;
             CustomInit();

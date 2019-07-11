@@ -19,11 +19,22 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Backup.Admin", "BackupLocations", "2016-05-01"),
-                new Tuple<string, string, string>("Backup.Admin", "Backups", "2016-05-01"),
-                new Tuple<string, string, string>("Backup.Admin", "Operations", "2016-05-01"),
+                new Tuple<string, string, string>("Backup.Admin", "BackupLocations", "2018-09-01"),
+                new Tuple<string, string, string>("Backup.Admin", "Backups", "2018-09-01"),
+                new Tuple<string, string, string>("Backup.Admin", "Operations", "2018-09-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/backup/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-09-01 --csharp-sdks-folder=D:\\Github\\daozha\\azure-sdk-for-net\\src\\AzureStack\\Admin\\BackupAdmin\\Backup.Admin";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "e9b8241965b77cbb89ea3a0661d25753e1027eec";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

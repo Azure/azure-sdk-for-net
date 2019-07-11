@@ -58,5 +58,7 @@ namespace Microsoft.Azure.Batch
         internal const string ClientRequestIdHeader = "client-request-id";
 
         internal const string RequestIdHeader = "request-id";
+
+        internal const string RetryAfterHeader = "retry-after";
     }
 }

@@ -141,7 +141,8 @@ namespace Microsoft.Azure.Management.Media
             /// Live Event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             public static LiveEvent Create(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters, bool? autoStart = default(bool?))
             {
@@ -170,7 +171,8 @@ namespace Microsoft.Azure.Management.Media
             /// Live Event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -459,7 +461,8 @@ namespace Microsoft.Azure.Management.Media
             /// Live Event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             public static LiveEvent BeginCreate(this ILiveEventsOperations operations, string resourceGroupName, string accountName, string liveEventName, LiveEvent parameters, bool? autoStart = default(bool?))
             {
@@ -488,7 +491,8 @@ namespace Microsoft.Azure.Management.Media
             /// Live Event properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

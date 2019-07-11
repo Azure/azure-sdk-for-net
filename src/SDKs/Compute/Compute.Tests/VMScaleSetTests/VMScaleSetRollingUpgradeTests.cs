@@ -256,14 +256,16 @@ namespace Compute.Tests
         }
 
         /// <summary>
-        /// Testing Automatic OS Upgrades
+        /// Testing Automatic OS Upgrade Policy
         /// </summary>
         [Fact]
-        [Trait("Name", "TestVMScaleSetAutomaticOSUpgrade")]
-        public void TestVMScaleSetAutomaticOSUpgrade()
+        [Trait("Name", "TestVMScaleSetAutomaticOSUpgradePolicies")]
+        public void TestVMScaleSetAutomaticOSUpgradePolicies()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -291,9 +293,9 @@ namespace Compute.Tests
                         (vmScaleSet) =>
                         {
                             vmScaleSet.Overprovision = false;
-                            vmScaleSet.UpgradePolicy.AutoOSUpgradePolicy =new AutoOSUpgradePolicy()
+                            vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
                             {
-                                DisableAutoRollback = false
+                                DisableAutomaticRollback = false
                             };
                         },
                         createWithManagedDisks: true,
@@ -303,35 +305,36 @@ namespace Compute.Tests
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
                     // Set Automatic OS Upgrade 
-                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgrade = true;
+                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade = true;
                     UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
                     getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
-                    // with upgrade policy as null
-                    inputVMScaleSet.UpgradePolicy.AutoOSUpgradePolicy = null;
-                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgrade = false;
+                    // with automatic OS upgrade policy as null
+                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = null;
                     UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
                     getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                    Assert.NotNull(getResponse.UpgradePolicy.AutoOSUpgradePolicy);
-                    Assert.True(getResponse.UpgradePolicy.AutoOSUpgradePolicy.DisableAutoRollback == false);
+                    Assert.NotNull(getResponse.UpgradePolicy.AutomaticOSUpgradePolicy);
+                    Assert.True(getResponse.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback == false);
+                    Assert.True(getResponse.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade == true);
 
                     // Toggle Disable Auto Rollback
-                    inputVMScaleSet.UpgradePolicy.AutoOSUpgradePolicy = new AutoOSUpgradePolicy()
+                    inputVMScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
                     {
-                        DisableAutoRollback = true
+                        DisableAutomaticRollback = true,
+                        EnableAutomaticOSUpgrade = false
                     };
                     UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
                     getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
-                    
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);

@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         /// <param name="route">Route properties</param>
         /// <param name="message">Routing message</param>
-        public TestRouteInput(RouteProperties route, RoutingMessage message = default(RoutingMessage))
+        /// <param name="twin">Routing Twin Reference</param>
+        public TestRouteInput(RouteProperties route, RoutingMessage message = default(RoutingMessage), RoutingTwin twin = default(RoutingTwin))
         {
             Message = message;
             Route = route;
+            Twin = twin;
             CustomInit();
         }
 
@@ -55,6 +57,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "route")]
         public RouteProperties Route { get; set; }
+
+        /// <summary>
+        /// Gets or sets routing Twin Reference
+        /// </summary>
+        [JsonProperty(PropertyName = "twin")]
+        public RoutingTwin Twin { get; set; }
 
         /// <summary>
         /// Validate the object.

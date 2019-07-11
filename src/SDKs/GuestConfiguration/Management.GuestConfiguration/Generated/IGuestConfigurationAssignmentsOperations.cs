@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// The resource group name.
         /// </param>
         /// <param name='guestConfigurationAssignmentName'>
-        /// The guest configuration assingment name.
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
@@ -83,6 +83,31 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string guestConfigurationAssignmentName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a guest configuration assignment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='guestConfigurationAssignmentName'>
+        /// Name of the guest configuration assignment
+        /// </param>
+        /// <param name='vmName'>
+        /// The name of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string guestConfigurationAssignmentName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all guest configuration assignments for a virtual machine.
         /// </summary>
@@ -140,5 +165,30 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<GuestConfigurationAssignment>> BeginCreateOrUpdateWithHttpMessagesAsync(string guestConfigurationAssignmentName, GuestConfigurationAssignment parameters, string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a guest configuration assignment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='guestConfigurationAssignmentName'>
+        /// Name of the guest configuration assignment
+        /// </param>
+        /// <param name='vmName'>
+        /// The name of the virtual machine.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string guestConfigurationAssignmentName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

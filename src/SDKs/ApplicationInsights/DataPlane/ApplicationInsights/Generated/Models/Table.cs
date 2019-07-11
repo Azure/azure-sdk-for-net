@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <param name="name">The name of the table.</param>
         /// <param name="columns">The list of columns in this table.</param>
         /// <param name="rows">The resulting rows from this query.</param>
-        public Table(string name, IList<Column> columns, IList<IList<string>> rows)
+        public Table(string name, IList<Column> columns, IList<IList<object>> rows)
         {
             Name = name;
             Columns = columns;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the resulting rows from this query.
         /// </summary>
         [JsonProperty(PropertyName = "rows")]
-        public IList<IList<string>> Rows { get; set; }
+        public IList<IList<object>> Rows { get; set; }
 
         /// <summary>
         /// Validate the object.

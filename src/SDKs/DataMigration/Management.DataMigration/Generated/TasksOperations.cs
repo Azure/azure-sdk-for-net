@@ -110,7 +110,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "projectName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -121,7 +124,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("taskType", taskType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -134,9 +136,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (taskType != null)
             {
@@ -269,7 +271,7 @@ namespace Microsoft.Azure.Management.DataMigration
         /// The tasks resource is a nested, proxy-only resource representing work
         /// performed by a DMS instance. The PUT method creates a new task or updates
         /// an existing one, although since tasks have no mutable custom properties,
-        /// there is little reason to update an exising one.
+        /// there is little reason to update an existing one.
         /// </remarks>
         /// <param name='parameters'>
         /// Information about the task
@@ -333,7 +335,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -346,7 +351,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -359,9 +363,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -573,7 +577,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -586,7 +593,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -603,9 +609,9 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -790,7 +796,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -803,7 +812,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -820,9 +828,9 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 _queryParameters.Add(string.Format("deleteRunningTasks={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(deleteRunningTasks, Client.SerializationSettings).Trim('"'))));
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -997,7 +1005,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1010,7 +1021,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -1023,9 +1033,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1216,7 +1226,10 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
-            string apiVersion = "2018-07-15-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1228,7 +1241,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Cancel", tracingParameters);
             }
@@ -1241,9 +1253,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1431,11 +1443,14 @@ namespace Microsoft.Azure.Management.DataMigration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2018-07-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1447,7 +1462,6 @@ namespace Microsoft.Azure.Management.DataMigration
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("projectName", projectName);
                 tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Command", tracingParameters);
@@ -1461,9 +1475,9 @@ namespace Microsoft.Azure.Management.DataMigration
             _url = _url.Replace("{projectName}", System.Uri.EscapeDataString(projectName));
             _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

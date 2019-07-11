@@ -29,6 +29,8 @@ namespace ServiceBus.Tests.TestHelper
         internal const string SubscritpitonPrefix = "sdk-Subscriptions-";
         internal const string RulesPrefix = "sdk-Rules-";
         internal const string DisasterRecoveryPrefix = "sdk-DisasterRecovery";
+        internal const string IPFilterRulesPrefix = "sdk-IPFilterRules-";
+        internal const string VirtualNetworkRulesPrefix = "sdk-VirtualNetworkRules-";
 
         public static ServiceBusManagementClient GetServiceBusManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {

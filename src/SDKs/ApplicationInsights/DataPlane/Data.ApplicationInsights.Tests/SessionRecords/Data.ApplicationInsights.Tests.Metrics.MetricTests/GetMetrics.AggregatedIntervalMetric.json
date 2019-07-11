@@ -6,18 +6,12 @@
       "RequestMethod": "POST",
       "RequestBody": "[\r\n  {\r\n    \"id\": \"AggregatedIntervalMetric\",\r\n    \"parameters\": {\r\n      \"metricId\": \"requests/duration\",\r\n      \"timespan\": \"PT12H\",\r\n      \"aggregation\": [\r\n        \"avg\"\r\n      ],\r\n      \"interval\": \"PT3H\"\r\n    }\r\n  }\r\n]",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "224"
-        ],
         "x-api-key": [
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.1.0-preview"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -26,25 +20,24 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "f9ee6659-c904-44d6-9b60-35a2e59dd7aa"
-        ]
-      },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedIntervalMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2017-11-08T06:29:02.341Z\",\r\n        \"end\": \"2017-11-08T18:29:02.341Z\",\r\n        \"interval\": \"PT3H\",\r\n        \"segments\": [\r\n          {\r\n            \"start\": \"2017-11-08T06:29:02.341Z\",\r\n            \"end\": \"2017-11-08T09:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 441.77\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2017-11-08T09:00:00Z\",\r\n            \"end\": \"2017-11-08T12:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 492.49\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2017-11-08T12:00:00Z\",\r\n            \"end\": \"2017-11-08T15:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 408.29\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2017-11-08T15:00:00Z\",\r\n            \"end\": \"2017-11-08T18:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 357.93\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2017-11-08T18:00:00Z\",\r\n            \"end\": \"2017-11-08T18:29:02.341Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 424.51\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "691"
+          "4577c1cf-db95-4364-aa8b-b73cedc03cf6"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
+        "Content-Length": [
+          "224"
+        ]
+      },
+      "ResponseHeaders": {
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Wed, 08 Nov 2017 18:29:02 GMT"
+          "Mon, 24 Sep 2018 21:36:21 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.ebe944b6-c48f-11e7-b56b-70b3d5800008"
+          "1.1 draft-ai-blue.b61bf8d6-bf2d-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -60,12 +53,19 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "686"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"AggregatedIntervalMetric\",\r\n    \"status\": 200,\r\n    \"body\": {\r\n      \"value\": {\r\n        \"start\": \"2018-09-24T09:36:21.243Z\",\r\n        \"end\": \"2018-09-24T21:36:21.243Z\",\r\n        \"interval\": \"PT3H\",\r\n        \"segments\": [\r\n          {\r\n            \"start\": \"2018-09-24T09:36:21.243Z\",\r\n            \"end\": \"2018-09-24T12:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 76.13\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T12:00:00Z\",\r\n            \"end\": \"2018-09-24T15:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 92.97\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T15:00:00Z\",\r\n            \"end\": \"2018-09-24T18:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 73.28\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T18:00:00Z\",\r\n            \"end\": \"2018-09-24T21:00:00Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 91.49\r\n            }\r\n          },\r\n          {\r\n            \"start\": \"2018-09-24T21:00:00Z\",\r\n            \"end\": \"2018-09-24T21:36:21.243Z\",\r\n            \"requests/duration\": {\r\n              \"avg\": 69.79\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

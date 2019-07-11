@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the carrier.
+        /// Gets name of the carrier.
         /// </summary>
         [JsonProperty(PropertyName = "carrierName")]
-        public string CarrierName { get; set; }
+        public string CarrierName { get; private set; }
 
         /// <summary>
-        /// Gets or sets tracking Id of shipment.
+        /// Gets tracking Id of shipment.
         /// </summary>
         [JsonProperty(PropertyName = "trackingId")]
-        public string TrackingId { get; set; }
+        public string TrackingId { get; private set; }
 
         /// <summary>
-        /// Gets or sets url where shipment can be tracked.
+        /// Gets url where shipment can be tracked.
         /// </summary>
         [JsonProperty(PropertyName = "trackingUrl")]
-        public string TrackingUrl { get; set; }
+        public string TrackingUrl { get; private set; }
 
     }
 }

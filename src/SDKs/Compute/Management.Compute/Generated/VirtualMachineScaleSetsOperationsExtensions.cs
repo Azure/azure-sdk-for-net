@@ -768,7 +768,8 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages (upgrade the operating system) one or more virtual machines in a
-            /// VM scale set.
+            /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+            /// have a ephemeral OS disk the virtual machine is reset to initial state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -779,19 +780,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            /// <param name='instanceIds'>
-            /// The virtual machine scale set instance ids. Omitting the virtual machine
-            /// scale set instance ids will result in the operation being performed on all
-            /// virtual machines in the virtual machine scale set.
+            /// <param name='vmScaleSetReimageInput'>
+            /// Parameters for Reimaging VM ScaleSet.
             /// </param>
-            public static void Reimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void Reimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters))
             {
-                operations.ReimageAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.ReimageAsync(resourceGroupName, vmScaleSetName, vmScaleSetReimageInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Reimages (upgrade the operating system) one or more virtual machines in a
-            /// VM scale set.
+            /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+            /// have a ephemeral OS disk the virtual machine is reset to initial state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -802,17 +802,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            /// <param name='instanceIds'>
-            /// The virtual machine scale set instance ids. Omitting the virtual machine
-            /// scale set instance ids will result in the operation being performed on all
-            /// virtual machines in the virtual machine scale set.
+            /// <param name='vmScaleSetReimageInput'>
+            /// Parameters for Reimaging VM ScaleSet.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmScaleSetReimageInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1427,7 +1425,8 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages (upgrade the operating system) one or more virtual machines in a
-            /// VM scale set.
+            /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+            /// have a ephemeral OS disk the virtual machine is reset to initial state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1438,19 +1437,18 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            /// <param name='instanceIds'>
-            /// The virtual machine scale set instance ids. Omitting the virtual machine
-            /// scale set instance ids will result in the operation being performed on all
-            /// virtual machines in the virtual machine scale set.
+            /// <param name='vmScaleSetReimageInput'>
+            /// Parameters for Reimaging VM ScaleSet.
             /// </param>
-            public static void BeginReimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void BeginReimage(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters))
             {
-                operations.BeginReimageAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.BeginReimageAsync(resourceGroupName, vmScaleSetName, vmScaleSetReimageInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Reimages (upgrade the operating system) one or more virtual machines in a
-            /// VM scale set.
+            /// VM scale set which don't have a ephemeral OS disk, for virtual machines who
+            /// have a ephemeral OS disk the virtual machine is reset to initial state.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1461,17 +1459,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            /// <param name='instanceIds'>
-            /// The virtual machine scale set instance ids. Omitting the virtual machine
-            /// scale set instance ids will result in the operation being performed on all
-            /// virtual machines in the virtual machine scale set.
+            /// <param name='vmScaleSetReimageInput'>
+            /// Parameters for Reimaging VM ScaleSet.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginReimageAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, VirtualMachineScaleSetReimageParameters vmScaleSetReimageInput = default(VirtualMachineScaleSetReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmScaleSetReimageInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

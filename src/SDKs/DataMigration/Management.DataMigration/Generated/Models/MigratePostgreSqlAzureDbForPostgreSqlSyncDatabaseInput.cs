@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,10 +38,19 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetDatabaseName">Name of target database. Note:
         /// Target database will be truncated before starting
         /// migration.</param>
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string))
+        /// <param name="migrationSetting">Migration settings which tune the
+        /// migration behavior</param>
+        /// <param name="sourceSetting">Source settings to tune source endpoint
+        /// migration behavior</param>
+        /// <param name="targetSetting">Target settings to tune target endpoint
+        /// migration behavior</param>
+        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>))
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
+            MigrationSetting = migrationSetting;
+            SourceSetting = sourceSetting;
+            TargetSetting = targetSetting;
             CustomInit();
         }
 
@@ -60,6 +71,26 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetDatabaseName")]
         public string TargetDatabaseName { get; set; }
+
+        /// <summary>
+        /// Gets or sets migration settings which tune the migration behavior
+        /// </summary>
+        [JsonProperty(PropertyName = "migrationSetting")]
+        public IDictionary<string, string> MigrationSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets source settings to tune source endpoint migration
+        /// behavior
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceSetting")]
+        public IDictionary<string, string> SourceSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets target settings to tune target endpoint migration
+        /// behavior
+        /// </summary>
+        [JsonProperty(PropertyName = "targetSetting")]
+        public IDictionary<string, string> TargetSetting { get; set; }
 
     }
 }

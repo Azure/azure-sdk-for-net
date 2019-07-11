@@ -76,7 +76,7 @@ namespace DataBox.Tests
         {
             return new Sku
             {
-                Name = "DataBox"
+                Name = SkuName.DataBox
             };
         }
 
@@ -86,7 +86,7 @@ namespace DataBox.Tests
             {
                 new DestinationAccountDetails
                 {
-                    AccountId = "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/resourceGroups/kvtestWUSrg/providers/microsoft.storage/storageAccounts/kvtestwus",
+                    AccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount",
                 }
             };
         }
@@ -136,12 +136,11 @@ namespace DataBox.Tests
             Assert.Equal(shippingAddress.StreetAddress3, getJob.Details.ShippingAddress.StreetAddress3);
         }
 
-        protected static void ValidateJobWithoutDetails(string jobName, List<DestinationAccountDetails> destinationAccountList,
+        protected static void ValidateJobWithoutDetails(string jobName,
             Sku sku, JobResource job, bool cancellableCheck = true)
         {
             Assert.NotNull(job);
             job.Validate();
-            Assert.NotNull(job.DestinationAccountDetails);
             Assert.NotNull(job.Id);
             Assert.NotNull(job.Type);
             Assert.Equal(cancellableCheck, job.IsCancellable);
@@ -151,9 +150,7 @@ namespace DataBox.Tests
             Assert.Equal(sku.Name, job.Sku.Name);
             Assert.Equal(TestConstants.DefaultResourceLocation, job.Location);
             Assert.Equal(jobName, job.Name);
-            Assert.Equal(TestConstants.DefaultType, job.Type);
-            Assert.Equal(destinationAccountList[0].AccountId, job.DestinationAccountDetails[0].AccountId);
-            Assert.Equal(DeviceType.Pod, job.DeviceType);
+            Assert.Equal(TestConstants.DefaultType, job.Type);            
         }
     }
 }

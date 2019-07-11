@@ -59,19 +59,20 @@ namespace Microsoft.Azure.Management.EventGrid
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -94,6 +95,19 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ITopicTypesOperations.
         /// </summary>
         public virtual ITopicTypesOperations TopicTypes { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the EventGridManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling EventGridManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected EventGridManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the EventGridManagementClient class.
@@ -178,6 +192,33 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         public EventGridManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the EventGridManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling EventGridManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public EventGridManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -301,7 +342,7 @@ namespace Microsoft.Azure.Management.EventGrid
             Topics = new TopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-05-01-preview";
+            ApiVersion = "2019-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -335,8 +376,6 @@ namespace Microsoft.Azure.Management.EventGrid
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

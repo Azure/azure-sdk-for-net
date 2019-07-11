@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The vault id is an Azure Resource Manager Resoure id in the form
+    /// The vault id is an Azure Resource Manager Resource id in the form
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}
     /// </summary>
     public partial class SourceVault

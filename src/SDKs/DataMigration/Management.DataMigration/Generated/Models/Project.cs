@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         /// <param name="location">Resource location.</param>
         /// <param name="sourcePlatform">Source platform for the project.
-        /// Possible values include: 'SQL', 'MySQL', 'PostgreSql',
+        /// Possible values include: 'SQL', 'MySQL', 'PostgreSql', 'MongoDb',
         /// 'Unknown'</param>
         /// <param name="targetPlatform">Target platform for the project.
         /// Possible values include: 'SQLDB', 'SQLMI', 'AzureDbForMySql',
-        /// 'AzureDbForPostgreSql', 'Unknown'</param>
+        /// 'AzureDbForPostgreSql', 'MongoDb', 'Unknown'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets or sets source platform for the project. Possible values
-        /// include: 'SQL', 'MySQL', 'PostgreSql', 'Unknown'
+        /// include: 'SQL', 'MySQL', 'PostgreSql', 'MongoDb', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourcePlatform")]
         public string SourcePlatform { get; set; }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <summary>
         /// Gets or sets target platform for the project. Possible values
         /// include: 'SQLDB', 'SQLMI', 'AzureDbForMySql',
-        /// 'AzureDbForPostgreSql', 'Unknown'
+        /// 'AzureDbForPostgreSql', 'MongoDb', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetPlatform")]
         public string TargetPlatform { get; set; }

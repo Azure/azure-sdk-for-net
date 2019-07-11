@@ -173,6 +173,92 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin
             }
 
             /// <summary>
+            /// Repairs an alert.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Name of the region
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert.
+            /// </param>
+            public static void Repair(this IAlertsOperations operations, string resourceGroupName, string location, string alertName)
+            {
+                operations.RepairAsync(resourceGroupName, location, alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Repairs an alert.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Name of the region
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RepairAsync(this IAlertsOperations operations, string resourceGroupName, string location, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RepairWithHttpMessagesAsync(resourceGroupName, location, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Repairs an alert.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Name of the region
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert.
+            /// </param>
+            public static void BeginRepair(this IAlertsOperations operations, string resourceGroupName, string location, string alertName)
+            {
+                operations.BeginRepairAsync(resourceGroupName, location, alertName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Repairs an alert.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='location'>
+            /// Name of the region
+            /// </param>
+            /// <param name='alertName'>
+            /// Name of the alert.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRepairAsync(this IAlertsOperations operations, string resourceGroupName, string location, string alertName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRepairWithHttpMessagesAsync(resourceGroupName, location, alertName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Returns the list of all alerts in a given region.
             /// </summary>
             /// <param name='operations'>

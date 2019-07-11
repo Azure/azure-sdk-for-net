@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// configuration.</param>
         /// <param name="nonAzureComputerNames">List of names of non-azure
         /// machines targeted by the software update configuration.</param>
-        public UpdateConfiguration(OperatingSystemType operatingSystem, WindowsProperties windows = default(WindowsProperties), LinuxProperties linux = default(LinuxProperties), System.TimeSpan? duration = default(System.TimeSpan?), IList<string> azureVirtualMachines = default(IList<string>), IList<string> nonAzureComputerNames = default(IList<string>))
+        /// <param name="targets">Group targets for the software update
+        /// configuration.</param>
+        public UpdateConfiguration(OperatingSystemType operatingSystem, WindowsProperties windows = default(WindowsProperties), LinuxProperties linux = default(LinuxProperties), System.TimeSpan? duration = default(System.TimeSpan?), IList<string> azureVirtualMachines = default(IList<string>), IList<string> nonAzureComputerNames = default(IList<string>), TargetProperties targets = default(TargetProperties))
         {
             OperatingSystem = operatingSystem;
             Windows = windows;
@@ -52,6 +54,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             Duration = duration;
             AzureVirtualMachines = azureVirtualMachines;
             NonAzureComputerNames = nonAzureComputerNames;
+            Targets = targets;
             CustomInit();
         }
 
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "nonAzureComputerNames")]
         public IList<string> NonAzureComputerNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets group targets for the software update configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "targets")]
+        public TargetProperties Targets { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -142,7 +142,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
 
@@ -156,7 +156,7 @@ namespace Networks.Tests
 
                 // Verify List IpConfigurations in NetworkInterface
                 var listNicIpConfigurations = networkManagementClient.NetworkInterfaceIPConfigurations.List(resourceGroupName, nicName);
-                Assert.Equal(1, listNicIpConfigurations.Count());
+                Assert.Single(listNicIpConfigurations);
                 Assert.Equal(ipConfigName, listNicIpConfigurations.First().Name);
                 Assert.NotNull(listNicIpConfigurations.First().Etag);
 
@@ -167,24 +167,24 @@ namespace Networks.Tests
 
                 // Verify List LoadBalancers in NetworkInterface
                 var listNicLoadBalancers = networkManagementClient.NetworkInterfaceLoadBalancers.List(resourceGroupName, nicName);
-                Assert.Equal(0, listNicLoadBalancers.Count());
+                Assert.Empty(listNicLoadBalancers);
 
                 // Get all Nics
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(1, getListNicResponse.Count());
+                Assert.Single(getListNicResponse);
                 Assert.Equal(getNicResponse.Name, getListNicResponse.First().Name);
                 Assert.Equal(getNicResponse.Etag, getListNicResponse.First().Etag);
                 Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
 
                 // Get all Nics in subscription
                 var listNicSubscription = networkManagementClient.NetworkInterfaces.ListAll();
-                Assert.NotEqual(0, listNicSubscription.Count());
+                Assert.NotEmpty(listNicSubscription);
 
                 // Delete Nic
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
@@ -288,7 +288,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(1, getNicResponse.IpConfigurations.Count);
@@ -297,7 +297,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -433,14 +433,14 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
-                Assert.Equal(true, getNicResponse.IpConfigurations[0].Primary);
+                Assert.True(getNicResponse.IpConfigurations[0].Primary);
                 Assert.Equal(2, getNicResponse.IpConfigurations.Count);
                 Assert.Equal(ipConfigName, getNicResponse.IpConfigurations[0].Name);
                 Assert.Equal(ipconfigName2, getNicResponse.IpConfigurations[1].Name);
-                Assert.Equal(false, getNicResponse.IpConfigurations[1].Primary);
+                Assert.False(getNicResponse.IpConfigurations[1].Primary);
                 Assert.Equal(getPublicIpAddressResponse.Id, getNicResponse.IpConfigurations[0].PublicIPAddress.Id);
                 Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[0].Subnet.Id);
                 Assert.Equal(getSubnetResponse.Id, getNicResponse.IpConfigurations[1].Subnet.Id);
@@ -448,7 +448,7 @@ namespace Networks.Tests
 
                 // Get all Nics
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(1, getListNicResponse.Count());
+                Assert.Single(getListNicResponse);
                 Assert.Equal(getNicResponse.Name, getListNicResponse.First().Name);
                 Assert.Equal(getNicResponse.Etag, getListNicResponse.First().Etag);
                 Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
@@ -456,13 +456,13 @@ namespace Networks.Tests
 
                 // Get all Nics in subscription
                 var listNicSubscription = networkManagementClient.NetworkInterfaces.ListAll();
-                Assert.NotEqual(0, listNicSubscription.Count());
+                Assert.NotEmpty(listNicSubscription);
 
                 // Delete Nic
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
@@ -693,7 +693,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(1, getNicResponse.IpConfigurations.Count);
@@ -710,16 +710,16 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
 
-        [Fact(Skip = "NRP check should be removed to check for multiple ipv4")]
         /// currently this test is failing because of nrp valdiation check:cannot have multiple IPv4 IpConfigurations if it specifies a Ipv6 IpConfigurations. Ipv4 Ipconfig Count: 2
         /// will remove ignore tag once the check in nrp is removed.
+        [Fact(Skip = "NRP check should be removed to check for multiple ipv4")]
         public void NetworkInterfaceApiIPv6MultiCATest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -833,7 +833,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(ipConfigName, getNicResponse.IpConfigurations[0].Name);
@@ -844,14 +844,14 @@ namespace Networks.Tests
                 // Ipv6 specific asserts
                 Assert.Equal(2, getNicResponse.IpConfigurations.Count);
                 Assert.Equal(ipv6IpConfigName, getNicResponse.IpConfigurations[1].Name);
-                Assert.Equal(true, getNicResponse.IpConfigurations[1].Primary);
-                Assert.Equal(false, getNicResponse.IpConfigurations[0].Primary);
+                Assert.True(getNicResponse.IpConfigurations[1].Primary);
+                Assert.False(getNicResponse.IpConfigurations[0].Primary);
                 Assert.Null(getNicResponse.IpConfigurations[1].Subnet);
                 Assert.Equal(IPVersion.IPv6, getNicResponse.IpConfigurations[1].PrivateIPAddressVersion);
 
                 // Get all Nics
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(1, getListNicResponse.Count());
+                Assert.Single(getListNicResponse);
                 Assert.Equal(getNicResponse.Name, getListNicResponse.First().Name);
                 Assert.Equal(getNicResponse.Etag, getListNicResponse.First().Etag);
                 Assert.Equal(getNicResponse.IpConfigurations[0].Etag, getListNicResponse.First().IpConfigurations[0].Etag);
@@ -859,13 +859,13 @@ namespace Networks.Tests
 
                 // Get all Nics in subscription
                 var listNicSubscription = networkManagementClient.NetworkInterfaces.ListAll();
-                Assert.NotEqual(0, listNicSubscription.Count());
+                Assert.NotEmpty(listNicSubscription);
 
                 // Delete Nic
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete PublicIPAddress
                 networkManagementClient.PublicIPAddresses.Delete(resourceGroupName, publicIpName);
@@ -970,7 +970,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(1, getNicResponse.IpConfigurations.Count);
@@ -989,7 +989,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -1086,7 +1086,7 @@ namespace Networks.Tests
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
                 Assert.Equal(getNicResponse.Name, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
                 Assert.Null(getNicResponse.VirtualMachine);
                 Assert.Null(getNicResponse.MacAddress);
                 Assert.Equal(1, getNicResponse.IpConfigurations.Count);
@@ -1103,7 +1103,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete VirtualNetwork
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
@@ -1227,7 +1227,7 @@ namespace Networks.Tests
                 var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
 
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
 
@@ -1239,7 +1239,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
@@ -1366,7 +1366,7 @@ namespace Networks.Tests
                 var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
 
                 var getNsgResponse = networkManagementClient.NetworkSecurityGroups.Get(resourceGroupName, networkSecurityGroupName);
 
@@ -1382,7 +1382,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete NSG
                 networkManagementClient.NetworkSecurityGroups.Delete(resourceGroupName, networkSecurityGroupName);
@@ -1499,7 +1499,7 @@ namespace Networks.Tests
                 var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
 
                 var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
-                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
 
                 // Get effective NSGs
                 var effectiveRouteTable = networkManagementClient.NetworkInterfaces.GetEffectiveRouteTable(resourceGroupName, nicName);
@@ -1509,7 +1509,7 @@ namespace Networks.Tests
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
 
                 var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
-                Assert.Equal(0, getListNicResponse.Count());
+                Assert.Empty(getListNicResponse);
 
                 // Delete routetable
                 networkManagementClient.RouteTables.Delete(resourceGroupName, routeTableName);

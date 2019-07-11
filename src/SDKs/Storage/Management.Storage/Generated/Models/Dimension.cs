@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Dimension of blobs, possiblly be blob type or access tier.
+    /// Dimension of blobs, possibly be blob type or access tier.
     /// </summary>
     public partial class Dimension
     {

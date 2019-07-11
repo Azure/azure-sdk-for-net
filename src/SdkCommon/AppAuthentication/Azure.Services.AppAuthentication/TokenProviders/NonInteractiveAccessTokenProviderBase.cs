@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public string ConnectionString;
         public Principal PrincipalUsed;
 
-        public abstract Task<string> GetTokenAsync(string resource, string authority);
+        public abstract Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority);
 
-        internal async Task<string> GetTokenAsync(string authority, string resource, string scope)
+        internal async Task<AppAuthenticationResult> GetAuthResultAsync(string authority, string resource, string scope)
         {
             if (string.IsNullOrWhiteSpace(resource))
             {
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     AzureServiceTokenProviderException.MissingResource);
             }
 
-            return await GetTokenAsync(resource, authority).ConfigureAwait(false);
+            return await GetAuthResultAsync(resource, authority).ConfigureAwait(false);
         }
     }
 }

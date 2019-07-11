@@ -56,19 +56,20 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -88,14 +89,27 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public virtual IContainerGroupUsageOperations ContainerGroupUsage { get; private set; }
 
         /// <summary>
-        /// Gets the IContainerLogsOperations.
+        /// Gets the IContainerOperations.
         /// </summary>
-        public virtual IContainerLogsOperations ContainerLogs { get; private set; }
+        public virtual IContainerOperations Container { get; private set; }
 
         /// <summary>
-        /// Gets the IStartContainerOperations.
+        /// Gets the IServiceAssociationLinkOperations.
         /// </summary>
-        public virtual IStartContainerOperations StartContainer { get; private set; }
+        public virtual IServiceAssociationLinkOperations ServiceAssociationLink { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the ContainerInstanceManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContainerInstanceManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ContainerInstanceManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ContainerInstanceManagementClient class.
@@ -180,6 +194,33 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// Thrown when a required parameter is null
         /// </exception>
         public ContainerInstanceManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ContainerInstanceManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ContainerInstanceManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ContainerInstanceManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -301,10 +342,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
             ContainerGroups = new ContainerGroupsOperations(this);
             Operations = new Operations(this);
             ContainerGroupUsage = new ContainerGroupUsageOperations(this);
-            ContainerLogs = new ContainerLogsOperations(this);
-            StartContainer = new StartContainerOperations(this);
+            Container = new ContainerOperations(this);
+            ServiceAssociationLink = new ServiceAssociationLinkOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-04-01";
+            ApiVersion = "2018-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

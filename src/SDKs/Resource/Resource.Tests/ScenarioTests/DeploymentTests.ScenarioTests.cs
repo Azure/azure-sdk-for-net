@@ -364,8 +364,8 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
                 Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
-                Assert.True(deploymentGetResult.Properties.Parameters.ToString().Contains("mctest0101"));
-                Assert.True(deploymentListResult.First().Properties.Parameters.ToString().Contains("mctest0101"));
+                Assert.Contains("mctest0101", deploymentGetResult.Properties.Parameters.ToString());
+                Assert.Contains("mctest0101", deploymentListResult.First().Properties.Parameters.ToString());
             }
         }
 

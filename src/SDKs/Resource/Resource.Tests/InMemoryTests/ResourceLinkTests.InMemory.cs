@@ -188,7 +188,7 @@ namespace ResourceGroups.Tests
             var filteredResult = client.ResourceLinks.ListAtSubscription(new ODataQuery<ResourceLinkFilter>(f => f.TargetId == "/subscriptions/abc123/resourcegroups/myGroup/providers/Microsoft.Web/serverFarms/myFarm2"));
 
             // Validate result
-            Assert.Equal(1, filteredResult.Count());
+            Assert.Single(filteredResult);
             Assert.Equal("myLink", filteredResult.First().Name);
             Assert.Equal("/subscriptions/abc123/resourcegroups/myGroup/providers/Microsoft.Web/serverFarms/myFarm/providers/Microsoft.Resources/links/myLink", filteredResult.First().Id);
             Assert.Equal("/subscriptions/abc123/resourcegroups/myGroup/providers/Microsoft.Web/serverFarms/myFarm", filteredResult.First().Properties.SourceId);
@@ -226,7 +226,7 @@ namespace ResourceGroups.Tests
             Assert.Equal(HttpMethod.Get, handler.Method);
 
             // Validate result
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             Assert.Equal("myLink", result.First().Name);
             Assert.Equal("/subscriptions/abc123/resourcegroups/myGroup/providers/Microsoft.Web/serverFarms/myFarm/providers/Microsoft.Resources/links/myLink", result.First().Id);
             Assert.Equal("/subscriptions/abc123/resourcegroups/myGroup/providers/Microsoft.Web/serverFarms/myFarm", result.First().Properties.SourceId);

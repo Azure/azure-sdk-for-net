@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'active', 'deleting', 'upgrading'
+        /// Possible values include: 'active', 'deleting'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public PoolState? State { get; set; }

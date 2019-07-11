@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// encryption scheme and separate content keys for specific
         /// tracks</param>
         /// <param
-        /// name="customKeyAcquisitionUrlTemplate">KeyAcquistionUrlTemplate is
+        /// name="customKeyAcquisitionUrlTemplate">KeyAcquisitionUrlTemplate is
         /// used to point to user specified service to delivery content
         /// keys</param>
         public EnvelopeEncryption(EnabledProtocols enabledProtocols = default(EnabledProtocols), IList<TrackSelection> clearTracks = default(IList<TrackSelection>), StreamingPolicyContentKeys contentKeys = default(StreamingPolicyContentKeys), string customKeyAcquisitionUrlTemplate = default(string))
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public StreamingPolicyContentKeys ContentKeys { get; set; }
 
         /// <summary>
-        /// Gets or sets keyAcquistionUrlTemplate is used to point to user
+        /// Gets or sets keyAcquisitionUrlTemplate is used to point to user
         /// specified service to delivery content keys
         /// </summary>
         [JsonProperty(PropertyName = "customKeyAcquisitionUrlTemplate")]

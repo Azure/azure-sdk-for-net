@@ -23,7 +23,7 @@
         /// 
         /// </summary>
         protected static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -37,12 +37,12 @@
         static BaseTests()
         {
 #if RECORD_MODE
-            TrainingKey = "<training key here>";
+            TrainingKey = "";
             RecorderMode = HttpRecorderMode.Record;
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
 
-            string executingAssemblyPath = typeof(BaseTests).GetTypeInfo().Assembly.Location;
-            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), @"..\..\..\SessionRecords");
+            var executingAssemblyPath = new Uri(typeof(BaseTests).GetTypeInfo().Assembly.CodeBase);
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..\SessionRecords");
 #endif
         }
 
@@ -51,17 +51,18 @@
             this.fixture = fixture;
         }
 
-        protected ITrainingApi GetTrainingClient()
+        protected ICustomVisionTrainingClient GetTrainingClient()
         {
-            ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
+            ICustomVisionTrainingClient client = new CustomVisionTrainingClient(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = TrainingKey,
+                Endpoint = "https://southcentralus.api.cognitive.microsoft.com"
             };
 
             return client;
         }
 
-        public Guid CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
+        public Guid CreateTrainedImageClassificationProject(Guid? domain = null)
         {
 #if RECORD_MODE
             var client = GetTrainingClient();
@@ -69,11 +70,11 @@
 
             // Create a project
             var projDomain = domain.HasValue ? domain : GeneralDomain;
-            var project = await client.CreateProjectAsync(projName, null, projDomain);
+            var project = client.CreateProject(projName, null, projDomain);
 
             // Create two tags
-            var tagOne = await client.CreateTagAsync(project.Id, "Tag1");
-            var tagTwo = await client.CreateTagAsync(project.Id, "Tag2");
+            var tagOne = client.CreateTag(project.Id, "Tag1");
+            var tagTwo = client.CreateTag(project.Id, "Tag2");
 
             // Add five images for tag 1
             var imagePath = Path.Combine("TestImages", "tag1");
@@ -82,7 +83,7 @@
             {
                 imageFileEntries.Add(new ImageFileCreateEntry(fileName, File.ReadAllBytes(fileName)));
             }
-            await client.CreateImagesFromFilesAsync(project.Id, new ImageFileCreateBatch(imageFileEntries, new List<Guid>(new Guid[] { tagOne.Id })));
+            client.CreateImagesFromFiles(project.Id, new ImageFileCreateBatch(imageFileEntries, new List<Guid>(new Guid[] { tagOne.Id })));
 
             // Add five images for tag 2
             imagePath = Path.Combine("TestImages", "tag2");
@@ -91,27 +92,27 @@
             {
                 imageFileEntries.Add(new ImageFileCreateEntry(fileName, File.ReadAllBytes(fileName)));
             }
-            await client.CreateImagesFromFilesAsync(project.Id, new ImageFileCreateBatch(imageFileEntries, new List<Guid>(new Guid[] { tagTwo.Id })));
+            client.CreateImagesFromFiles(project.Id, new ImageFileCreateBatch(imageFileEntries, new List<Guid>(new Guid[] { tagTwo.Id })));
 
             // Train
-            var iteration = await client.TrainProjectAsync(project.Id);
+            var iteration = client.TrainProject(project.Id);
             while (iteration.Status != "Completed")
             {
                 Thread.Sleep(1000);
-                iteration = await client.GetIterationAsync(project.Id, iteration.Id);
+                iteration = client.GetIteration(project.Id, iteration.Id);
             }
             iteration.IsDefault = true;
-            await client.UpdateIterationAsync(project.Id, iteration.Id, iteration);
+            client.UpdateIteration(project.Id, iteration.Id, iteration);
 
             // Make one prediction
             string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-            await client.QuickTestImageUrlAsync(project.Id, new ImageUrl(imageUrl));
+            client.QuickTestImageUrl(project.Id, new ImageUrl(imageUrl));
 
             // Flush and re-init so we don't get all of the test setup in the session.
             HttpMockServer.Flush();
             HttpMockServer.Initialize(HttpMockServer.CallerIdentity, HttpMockServer.TestIdentity, RecorderMode);
 
-            this.fixture.ProjectToGuidMapping.Add(HttpMockServer.TestIdentity, project.Id);
+            this.fixture.ProjectToGuidMapping[HttpMockServer.TestIdentity] = project.Id;
             return project.Id;
 #else
             return this.fixture.ProjectToGuidMapping[HttpMockServer.TestIdentity];
@@ -169,12 +170,12 @@
             var client = GetTrainingClient();
 
             // Find the object detection domain
-            var domains = await client.GetDomainsAsync();
+            var domains = client.GetDomains();
             var objDetectionDomain = domains.FirstOrDefault(d => d.Type == "ObjectDetection");
             Assert.NotNull(objDetectionDomain);
 
             // See if we already created this project and can re-use it.
-            var projects = await client.GetProjectsAsync();
+            var projects = client.GetProjects();
             var existingProject = projects.FirstOrDefault(proj => proj.Name == ObjDetectionProjectName && proj.Settings.DomainId == objDetectionDomain.Id);
             if (existingProject != null)
             {
@@ -183,11 +184,11 @@
             }
 
             // Create a new project
-            var project = await client.CreateProjectAsync(ObjDetectionProjectName, null, objDetectionDomain.Id);
+            var project = client.CreateProject(ObjDetectionProjectName, null, objDetectionDomain.Id);
 
             // Create two tags
-            var forkTag = await client.CreateTagAsync(project.Id, "fork");
-            var scissorsTag = await client.CreateTagAsync(project.Id, "scissors");
+            var forkTag = client.CreateTag(project.Id, "fork");
+            var scissorsTag = client.CreateTag(project.Id, "scissors");
 
             // Add all images for fork
             var imagePath = Path.Combine("TestImages", "fork");
@@ -197,7 +198,7 @@
                 var region = fileToRegionMap[Path.GetFileNameWithoutExtension(fileName)];
                 imageFileEntries.Add(new ImageFileCreateEntry(fileName, File.ReadAllBytes(fileName), null, new List<Region>(new Region[] { new Region(forkTag.Id, region[0], region[1], region[2], region[3]) })));
             }
-            await client.CreateImagesFromFilesAsync(project.Id, new ImageFileCreateBatch(imageFileEntries));
+            client.CreateImagesFromFiles(project.Id, new ImageFileCreateBatch(imageFileEntries));
 
             // Add all images for scissors
             imagePath = Path.Combine("TestImages", "scissors");
@@ -207,17 +208,17 @@
                 var region = fileToRegionMap[Path.GetFileNameWithoutExtension(fileName)];
                 imageFileEntries.Add(new ImageFileCreateEntry(fileName, File.ReadAllBytes(fileName), null, new List<Region>(new Region[] { new Region(scissorsTag.Id, region[0], region[1], region[2], region[3]) })));
             }
-            await client.CreateImagesFromFilesAsync(project.Id, new ImageFileCreateBatch(imageFileEntries));
+            client.CreateImagesFromFiles(project.Id, new ImageFileCreateBatch(imageFileEntries));
 
             // Train
-            var iteration = await client.TrainProjectAsync(project.Id);
+            var iteration = client.TrainProject(project.Id);
             while (iteration.Status != "Completed")
             {
                 Thread.Sleep(1000);
-                iteration = await client.GetIterationAsync(project.Id, iteration.Id);
+                iteration = client.GetIteration(project.Id, iteration.Id);
             }
             iteration.IsDefault = true;
-            await client.UpdateIterationAsync(project.Id, iteration.Id, iteration);
+            client.UpdateIteration(project.Id, iteration.Id, iteration);
 
             // Flush and re-init so we don't get all of the test setup in the session.
             HttpMockServer.Flush();

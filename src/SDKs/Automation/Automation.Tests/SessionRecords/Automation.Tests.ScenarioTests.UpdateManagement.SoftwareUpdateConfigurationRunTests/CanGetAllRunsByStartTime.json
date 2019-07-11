@@ -1,53 +1,37 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns?api-version=2017-05-15-preview&$filter=properties%2FstartTime%20ge%202017-12-04T06:01:00.0000000Z",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDVmZDMxNDItNGI4ZS00YjE2LThkYTktOThiNGJiZmQ3MjJkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25SdW5zP2FwaS12ZXJzaW9uPTIwMTctMDUtMTUtcHJldmlldyYkZmlsdGVyPXByb3BlcnRpZXMlMkZzdGFydFRpbWUlMjBnZSUyMDIwMTctMTItMDRUMDYlM0EwMSUzQTAwLjAwMDAwMDBa",
+      "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns?api-version=2017-05-15-preview&$filter=properties%2FstartTime%20ge%202018-10-23T19%3A02%3A00.0000000Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25SdW5zP2FwaS12ZXJzaW9uPTIwMTctMDUtMTUtcHJldmlldyYkZmlsdGVyPXByb3BlcnRpZXMlMkZzdGFydFRpbWUlMjBnZSUyMDIwMTgtMTAtMjNUMTklM0EwMiUzQTAwLjAwMDAwMDBa",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1a87fe4c-74bc-4f7e-9980-d724477ede2d"
+          "4a7578fb-ac68-4fc7-994a-2352de543aba"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.1.0"
+          "FxVersion/4.6.26919.02",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns/c7f97f66-2aca-42a5-a292-23fbf9e83555\",\r\n      \"name\": \"c7f97f66-2aca-42a5-a292-23fbf9e83555\",\r\n      \"properties\": {\r\n        \"softwareUpdateConfiguration\": {\r\n          \"name\": \"test\"\r\n        },\r\n        \"status\": \"Succeeded\",\r\n        \"configuredDuration\": \"PT2H\",\r\n        \"osType\": \"Windows\",\r\n        \"startTime\": \"2018-01-31T15:04:07.1910863-08:00\",\r\n        \"endTime\": \"2018-01-31T15:04:39.797-08:00\",\r\n        \"computerCount\": 1,\r\n        \"failedCount\": 0,\r\n        \"creationTime\": \"2018-01-31T15:04:07.1910863-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedTime\": \"2018-01-31T15:05:11.657-08:00\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns/688151d2-6097-46a7-ae21-2d873c311c42\",\r\n      \"name\": \"688151d2-6097-46a7-ae21-2d873c311c42\",\r\n      \"properties\": {\r\n        \"softwareUpdateConfiguration\": {\r\n          \"name\": \"test\"\r\n        },\r\n        \"status\": \"Succeeded\",\r\n        \"configuredDuration\": \"PT2H\",\r\n        \"osType\": \"Windows\",\r\n        \"startTime\": \"2018-01-31T14:08:52.6090288-08:00\",\r\n        \"endTime\": \"2018-01-31T14:43:48.56-08:00\",\r\n        \"computerCount\": 1,\r\n        \"failedCount\": 0,\r\n        \"creationTime\": \"2018-01-31T14:08:52.6090288-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedTime\": \"2018-01-31T14:44:00.463-08:00\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/05fd3142-4b8e-4b16-8da9-98b4bbfd722d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns/5f806946-dc53-4261-91a5-4632cfac3df8\",\r\n      \"name\": \"5f806946-dc53-4261-91a5-4632cfac3df8\",\r\n      \"properties\": {\r\n        \"softwareUpdateConfiguration\": {\r\n          \"name\": \"test\"\r\n        },\r\n        \"status\": \"Failed\",\r\n        \"configuredDuration\": \"PT2H\",\r\n        \"osType\": \"Windows\",\r\n        \"startTime\": \"2018-01-31T13:06:33.2246522-08:00\",\r\n        \"endTime\": \"2018-01-31T13:06:34.1933756-08:00\",\r\n        \"computerCount\": 1,\r\n        \"failedCount\": 1,\r\n        \"creationTime\": \"2018-01-31T13:06:33.2246522-08:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedTime\": \"2018-01-31T13:49:42.267-08:00\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:44:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-request-id": [
-          "1a87fe4c-74bc-4f7e-9980-d724477ede2d"
+          "4a7578fb-ac68-4fc7-994a-2352de543aba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -56,20 +40,36 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "fd246534-f19c-4215-b538-c0676098d3bc"
+          "7d5b02f3-a234-4d5d-b4f6-56ebc56f4ed4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180201T014448Z:fd246534-f19c-4215-b538-c0676098d3bc"
+          "WESTUS2:20181023T191225Z:7d5b02f3-a234-4d5d-b4f6-56ebc56f4ed4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 23 Oct 2018 19:12:25 GMT"
+        ],
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurationRuns/bce3e2c2-08fa-4d7f-8b54-9cd84162c909\",\r\n      \"name\": \"bce3e2c2-08fa-4d7f-8b54-9cd84162c909\",\r\n      \"type\": null,\r\n      \"properties\": {\r\n        \"softwareUpdateConfiguration\": {\r\n          \"name\": \"all-01\"\r\n        },\r\n        \"status\": \"Succeeded\",\r\n        \"configuredDuration\": \"PT2H\",\r\n        \"osType\": \"Windows\",\r\n        \"startTime\": \"2018-10-23T12:02:49.2105431-07:00\",\r\n        \"endTime\": \"2018-10-23T12:04:37.917-07:00\",\r\n        \"computerCount\": 2,\r\n        \"failedCount\": 0,\r\n        \"error\": null,\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"status\": \"Completed\",\r\n            \"jobId\": \"12e37bb1-e25c-41f5-a8ed-67db4a1a1cd8\"\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"status\": \"Completed\",\r\n            \"jobId\": \"9f8aebf9-918e-4d4e-8f13-b12d4e0666eb\"\r\n          }\r\n        },\r\n        \"creationTime\": \"2018-10-23T12:02:49.2105431-07:00\",\r\n        \"lastModifiedBy\": null,\r\n        \"lastModifiedTime\": \"2018-10-23T12:06:05.12-07:00\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "05fd3142-4b8e-4b16-8da9-98b4bbfd722d"
+    "SubscriptionId": "422b6c61-95b0-4213-b3be-7282315df71d"
   }
 }

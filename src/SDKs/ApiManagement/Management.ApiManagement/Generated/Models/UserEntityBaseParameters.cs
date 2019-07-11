@@ -68,10 +68,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Note { get; set; }
 
         /// <summary>
-        /// Gets collection of user identities.
+        /// Gets or sets collection of user identities.
         /// </summary>
         [JsonProperty(PropertyName = "identities")]
-        public IList<UserIdentityContract> Identities { get; private set; }
+        public IList<UserIdentityContract> Identities { get; set; }
 
     }
 }

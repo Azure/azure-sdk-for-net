@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.EventGrid</PackageId>
 		<Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services. </Description>
-		<Version>2.0.0</Version>
+		<Version>3.1.0</Version>
 		<AssemblyName>Microsoft.Azure.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
-		<PackageReleaseNotes>Added models for new IoT event types (IoTDeviceConnected, IoTDeviceDisconnected), and new resource event types (ResourceActionSuccess, ResourceActionFailure, ResourceActionCancel) .</PackageReleaseNotes>
+		<PackageReleaseNotes>Added support for the new Azure Media Services event types for tracking state changes of Media Jobs and Media JobOutputs.  The existing MediaJobStateChangeEvent can be used to get all state change events for a Job but there are now separate events for each state like MediaJobScheduledEvent, MediaJobFinishedEvent, etc.  These allow subscribing for just the desired events.  Likewise a MediaJobOutputStateChangeEvent was added to get events for all MediaJobOutput state changes along with individual events for each JobOutput state.  MediaJobOutputProgressEvent was added to get events for Job output progress value, label and correlation data. This change also adds support for events related to Media LiveEvents to get notifications related to the ingestion of live streams (encoder connected, encoder disconnected, discontinuity, chunk dropped, etc).  Note JobState was renamed to MediaJobState to follow the Media prefix that all of the other Media Services Event classes use.  This is a breaking change, albeit a small one.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

@@ -21,7 +21,7 @@ namespace Sql.Tests
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                string managedInstanceName = "sqlcl-crudtests-dotnetsdk1";
+                string managedInstanceName = "sqlcl-crudtestswithdnszone-dotnetsdk1";
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -33,8 +33,8 @@ namespace Sql.Tests
                 sku.Name = "MIGP8G4";
                 sku.Tier = "GeneralPurpose";
 
-                string subnetId = "/subscriptions/741fd0f5-9cb8-442c-91c3-3ef4ca231c2a/resourceGroups/cloudlifter/providers/Microsoft.ClassicNetwork/virtualNetworks/cloud-lifter-stage-sea/subnets/default";
-                string location = "southeastasia";
+                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default";
+                string location = "westcentralus";
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
@@ -49,7 +49,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Create second server
-                string managedInstanceName2 = "sqlcl-crudtests-dotnetsdk2";
+                string managedInstanceName2 = "sqlcl-crudtestswithdnszone-dotnetsdk2";
                 var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
                 {
                     AdministratorLogin = login,
@@ -58,6 +58,7 @@ namespace Sql.Tests
                     SubnetId = subnetId,
                     Tags = tags,
                     Location = location,
+                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1", resourceGroup.Name)
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
@@ -68,6 +69,9 @@ namespace Sql.Tests
                 // Get second server
                 var getMI2 = sqlClient.ManagedInstances.Get(resourceGroup.Name, managedInstanceName2);
                 SqlManagementTestUtilities.ValidateManagedInstance(getMI2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+
+                // Verify that dns zone value is correctly inherited from dns zone partner
+                Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
 
                 var listMI = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listMI.Count());
@@ -81,12 +85,12 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(updateMI1, managedInstanceName, login, newTags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Drop server, update count
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName);
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName);
 
                 var listMI2 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listMI2.Count());
 
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName2);
+                sqlClient.ManagedInstances.DeleteAsync(resourceGroup.Name, managedInstanceName2);
                 var listMI3 = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Empty(listMI3);
             }

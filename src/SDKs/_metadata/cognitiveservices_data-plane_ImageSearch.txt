@@ -1,11 +1,14 @@
-2017-12-05 18:24:03 UTC
-
-1) azure-rest-api-specs repository information
-GitHub user: Azure
-Branch:      current
-Commit:      e804bb7ce44b72cca7c0f9dd72d7179aee76981b
-
-2) AutoRest information
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ImageSearch/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Github\azure-sdk-for-net\src\SDKs
+2018-11-16 20:08:11 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      fa24c3ee2969ff29bca73f4b646045fb2a93ed07
+AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\shakao\AppData\Roaming\npm `-- autorest@2.0.4215  
-Latest installed version:    
+Bootstrapper version:    autorest@2.0.4283

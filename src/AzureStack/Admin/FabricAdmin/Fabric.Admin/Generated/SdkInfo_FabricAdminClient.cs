@@ -19,6 +19,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Fabric.Admin", "Drives", "2018-10-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "EdgeGatewayPools", "2016-05-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "EdgeGateways", "2016-05-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "Fabric", "2016-05-01"),
@@ -34,18 +35,19 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 new Tuple<string, string, string>("Fabric.Admin", "ScaleUnits", "2016-05-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "SlbMuxInstances", "2016-05-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "StoragePools", "2016-05-01"),
+                new Tuple<string, string, string>("Fabric.Admin", "StorageSubSystems", "2018-10-01"),
                 new Tuple<string, string, string>("Fabric.Admin", "StorageSystems", "2016-05-01"),
-                new Tuple<string, string, string>("Fabric.Admin", "Volumes", "2016-05-01"),
+                new Tuple<string, string, string>("Fabric.Admin", "Volumes", "2018-10-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/fabric/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net\\src\\AzureStack\\Admin\\FabricAdmin\\Fabric.Admin";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/fabric/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-10-01 --csharp-sdks-folder=D:\\GitHub\\azure-sdk-for-net\\src\\AzureStack\\Admin\\FabricAdmin\\Fabric.Admin";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "5ceb33d2e5c0692dbdbcc907e025c1dfd994f29c";
+      public static readonly String GithubCommidId = "7ae7189a99839315b540a0e1e3d233baa78850c1";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

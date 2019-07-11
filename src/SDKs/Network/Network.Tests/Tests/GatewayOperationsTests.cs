@@ -173,7 +173,7 @@ namespace Networks.Tests
                 // 5. ListVitualNetworkGateways API
                 var listVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Count());
-                Assert.Equal(1, listVirtualNetworkGatewayResponse.Count());
+                Assert.Single(listVirtualNetworkGatewayResponse);
 
                 // 6A. DeleteVirtualNetworkGateway API
                 networkManagementClient.VirtualNetworkGateways.Delete(resourceGroupName, virtualNetworkGatewayName);
@@ -182,7 +182,7 @@ namespace Networks.Tests
                 listVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.List(resourceGroupName);
 
                 Console.WriteLine("ListVirtualNetworkGateways count ={0} ", listVirtualNetworkGatewayResponse.Count());
-                Assert.Equal(0, listVirtualNetworkGatewayResponse.Count());
+                Assert.Empty(listVirtualNetworkGatewayResponse);
             }
         }
 
@@ -265,7 +265,7 @@ namespace Networks.Tests
                 // 4. ListLocalNetworkGateways API
                 var listLocalNetworkGatewayResponse = networkManagementClient.LocalNetworkGateways.List(resourceGroupName);
                 Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Count());
-                Assert.Equal(1, listLocalNetworkGatewayResponse.Count());
+                Assert.Single(listLocalNetworkGatewayResponse);
 
                 // 5A. DeleteLocalNetworkGateway API
                 networkManagementClient.LocalNetworkGateways.Delete(resourceGroupName, localNetworkGatewayName);
@@ -273,7 +273,7 @@ namespace Networks.Tests
                 // 5B. ListLocalNetworkGateways API after DeleteLocalNetworkGateway API was called
                 listLocalNetworkGatewayResponse = networkManagementClient.LocalNetworkGateways.List(resourceGroupName);
                 Console.WriteLine("ListLocalNetworkGateways count ={0} ", listLocalNetworkGatewayResponse.Count());
-                Assert.Equal(0, listLocalNetworkGatewayResponse.Count());
+                Assert.Empty(listLocalNetworkGatewayResponse);
             }
         }
 
@@ -431,7 +431,7 @@ namespace Networks.Tests
                 // 4. ListVitualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Single(listVirtualNetworkGatewayConectionResponse);
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
                 networkManagementClient.VirtualNetworkGatewayConnections.Delete(resourceGroupName, VirtualNetworkGatewayConnectionName);
@@ -439,7 +439,7 @@ namespace Networks.Tests
                 // 5B. ListVitualNetworkGatewayConnections API after DeleteVirtualNetworkGatewayConnection API called
                 listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(0, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Empty(listVirtualNetworkGatewayConectionResponse);
 
             }
         }
@@ -667,7 +667,7 @@ namespace Networks.Tests
                 // 4. ListVitualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Single(listVirtualNetworkGatewayConectionResponse);
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
                 networkManagementClient.VirtualNetworkGatewayConnections.Delete(resourceGroupName, VirtualNetworkGatewayConnectionName);
@@ -675,7 +675,7 @@ namespace Networks.Tests
                 // 5B. ListVitualNetworkGatewayConnections API after DeleteVirtualNetworkGatewayConnection API called
                 listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(0, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Empty(listVirtualNetworkGatewayConectionResponse);
             }
         }
 
@@ -851,11 +851,11 @@ namespace Networks.Tests
                 // 4A. ListVirtualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Single(listVirtualNetworkGatewayConectionResponse);
 
                 // 4B. VirtualNetworkGateway ListConnections API
                 var virtualNetworkGatewayListConnectionsResponse = networkManagementClient.VirtualNetworkGateways.ListConnections(resourceGroupName, virtualNetworkGatewayName);
-                Assert.Equal(1, virtualNetworkGatewayListConnectionsResponse.Count());
+                Assert.Single(virtualNetworkGatewayListConnectionsResponse);
                 Assert.Equal(VirtualNetworkGatewayConnectionName, virtualNetworkGatewayListConnectionsResponse.First().Name);
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
@@ -864,7 +864,7 @@ namespace Networks.Tests
                 // 5B. ListVitualNetworkGatewayConnections API after DeleteVirtualNetworkGatewayConnection API called
                 listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
-                Assert.Equal(0, listVirtualNetworkGatewayConectionResponse.Count());
+                Assert.Empty(listVirtualNetworkGatewayConectionResponse);
 
             }
         }
@@ -1228,7 +1228,7 @@ namespace Networks.Tests
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
                 getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
                 Assert.True(getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRevokedCertificates.Count() == 1);
-                Assert.Equal(getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRevokedCertificates[0].Name, "sampleClientCert.cer");
+                Assert.Equal("sampleClientCert.cer", getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRevokedCertificates[0].Name);
 
                 // 9. Unrevoke previously revoked Vpn client certificate
                 getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRevokedCertificates.Clear();
@@ -1358,7 +1358,7 @@ namespace Networks.Tests
                 Assert.Equal(VpnType.RouteBased, getVirtualNetworkGatewayResponse.VpnType);
                 Assert.Equal(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Sku.Tier);
                 Assert.Equal(2, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
-                Assert.Equal(true, getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.True(getVirtualNetworkGatewayResponse.ActiveActive);
 
                 // 3. Update ActiveActive VirtualNetworkGateway to ActiveStandby
                 getVirtualNetworkGatewayResponse.ActiveActive = false;
@@ -1367,7 +1367,7 @@ namespace Networks.Tests
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
 
                 getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Assert.Equal(false, getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.False(getVirtualNetworkGatewayResponse.ActiveActive);
                 Assert.Equal(1, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
 
                 // 4. Update ActiveStandby VirtualNetworkGateway to ActiveActive again
@@ -1377,7 +1377,7 @@ namespace Networks.Tests
                 Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
 
                 getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
-                Assert.Equal(true, getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.True(getVirtualNetworkGatewayResponse.ActiveActive);
                 Assert.Equal(2, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
             }
         }

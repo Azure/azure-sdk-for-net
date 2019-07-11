@@ -35,8 +35,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="audioLanguage">The language for the audio payload in
         /// the input using the BCP-47 format of 'language tag-region' (e.g:
         /// 'en-US'). The list of supported languages are, 'en-US', 'en-GB',
-        /// 'es-ES', 'es-MX', 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR',
-        /// 'zh-CN'.</param>
+        /// 'es-ES', 'es-MX', 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR', 'zh-CN',
+        /// 'de-DE', 'ar-EG', 'ru-RU', 'hi-IN'. If not specified, automatic
+        /// language detection would be employed. This feature currently
+        /// supports English, Chinese, French, German, Italian, Japanese,
+        /// Spanish, Russian, and Portuguese. The automatic detection works
+        /// best with audio recordings with clearly discernable speech. If
+        /// automatic detection fails to find the language, transcription would
+        /// fallback to English.</param>
         public AudioAnalyzerPreset(string audioLanguage = default(string))
         {
             AudioLanguage = audioLanguage;
@@ -52,7 +58,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets the language for the audio payload in the input using
         /// the BCP-47 format of 'language tag-region' (e.g: 'en-US'). The list
         /// of supported languages are, 'en-US', 'en-GB', 'es-ES', 'es-MX',
-        /// 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR', 'zh-CN'.
+        /// 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR', 'zh-CN', 'de-DE', 'ar-EG',
+        /// 'ru-RU', 'hi-IN'. If not specified, automatic language detection
+        /// would be employed. This feature currently supports English,
+        /// Chinese, French, German, Italian, Japanese, Spanish, Russian, and
+        /// Portuguese. The automatic detection works best with audio
+        /// recordings with clearly discernable speech. If automatic detection
+        /// fails to find the language, transcription would fallback to
+        /// English.
         /// </summary>
         [JsonProperty(PropertyName = "audioLanguage")]
         public string AudioLanguage { get; set; }

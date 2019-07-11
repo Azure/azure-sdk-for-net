@@ -32,11 +32,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the
         /// MigrateSchemaSqlServerSqlDbDatabaseInput class.
         /// </summary>
+        /// <param name="name">Name of source database</param>
         /// <param name="targetDatabaseName">Name of target database</param>
         /// <param name="schemaSetting">Database schema migration
         /// settings</param>
-        public MigrateSchemaSqlServerSqlDbDatabaseInput(string targetDatabaseName = default(string), SchemaMigrationSetting schemaSetting = default(SchemaMigrationSetting))
+        public MigrateSchemaSqlServerSqlDbDatabaseInput(string name = default(string), string targetDatabaseName = default(string), SchemaMigrationSetting schemaSetting = default(SchemaMigrationSetting))
         {
+            Name = name;
             TargetDatabaseName = targetDatabaseName;
             SchemaSetting = schemaSetting;
             CustomInit();
@@ -46,6 +48,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets name of source database
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets name of target database

@@ -228,8 +228,6 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.ComputeNodeReimageHeaders>> ReimageComputeNode(string poolId, string nodeId, Common.ComputeNodeReimageOption? reimageOption, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationHeaderResponse<Models.PoolUpgradeOSHeaders>> UpgradePoolOS(string poolId, string targetOSVersion, BehaviorManager bhMgr, CancellationToken cancellationToken);
-
         Task<AzureOperationResponse<Models.UploadBatchServiceLogsResult, Models.ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogs(
             string poolId,
             string nodeId,

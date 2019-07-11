@@ -265,9 +265,9 @@ namespace Networks.Tests
             Assert.Equal(getNicResponse.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.Equal(getNicResponse.IpConfigurations[0].Primary, true);
+            Assert.True(getNicResponse.IpConfigurations[0].Primary);
 
-            Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+            Assert.Equal("Succeeded", getNicResponse.ProvisioningState);
 
             return getNicResponse;
         }

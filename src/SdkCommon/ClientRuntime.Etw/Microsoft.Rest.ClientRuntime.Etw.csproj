@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime REST ETW $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452</TargetFrameworks>
+    <TargetFrameworks>net452;net461</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net452\Microsoft.Rest.ClientRuntime.Etw.xml</DocumentationFile>

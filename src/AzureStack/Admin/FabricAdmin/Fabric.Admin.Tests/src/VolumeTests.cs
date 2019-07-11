@@ -21,9 +21,13 @@ namespace Fabric.Tests
             {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
 
-                Assert.Equal(expected.FileSystem, found.FileSystem);
-                Assert.Equal(expected.RemainingSizeGB, found.RemainingSizeGB);
-                Assert.Equal(expected.SizeGB, found.SizeGB);
+                Assert.Equal(expected.TotalCapacityGB, found.TotalCapacityGB);
+                Assert.Equal(expected.RemainingCapacityGB, found.RemainingCapacityGB);
+                Assert.Equal(expected.HealthStatus, found.HealthStatus);
+                Assert.Equal(expected.OperationalStatus, found.OperationalStatus);
+                Assert.Equal(expected.RepairStatus, found.RepairStatus);
+                Assert.Equal(expected.Description, found.Description);
+                Assert.Equal(expected.Action, found.Action);
                 Assert.Equal(expected.VolumeLabel, found.VolumeLabel);
             }
         }
@@ -31,10 +35,13 @@ namespace Fabric.Tests
         private void ValidateVolume(Volume instance) {
             FabricCommon.ValidateResource(instance);
 
-
-            Assert.NotNull(instance.FileSystem);
-            Assert.NotNull(instance.RemainingSizeGB);
-            Assert.NotNull(instance.SizeGB);
+            Assert.NotNull(instance.TotalCapacityGB);
+            Assert.NotNull(instance.RemainingCapacityGB);
+            Assert.NotNull(instance.HealthStatus);
+            Assert.NotNull(instance.OperationalStatus);
+            Assert.NotNull(instance.RepairStatus);
+            Assert.NotNull(instance.Description);
+            Assert.NotNull(instance.Action);
             Assert.NotNull(instance.VolumeLabel);
         }
 
@@ -42,8 +49,8 @@ namespace Fabric.Tests
         [Fact]
         public void TestListVolumes() {
             RunTest((client) => {
-                OverStoragePools(client, (fabricLocationName, storageSystemName, storagePoolName) => {
-                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
+                OverStorageSubSystems(client, (fabricLocationName, scaleUnitName, storageSubSystemName) => {
+                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName);
                     Common.MapOverIPage(volumes, client.Volumes.ListNext, ValidateVolume);
                     Common.WriteIPagesToFile(volumes, client.Volumes.ListNext, "ListVolumes.txt", ResourceName);
                 });
@@ -54,11 +61,11 @@ namespace Fabric.Tests
         public void TestGetVolume() {
             RunTest((client) => {
                 var fabricLocationName = GetLocation(client);
-                var storageSystemName = GetStorageSystem(client, fabricLocationName);
-                var storagePoolName = GetStoragePool(client, fabricLocationName, storageSystemName);
-                var volume = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName).GetFirst();
+                var scaleUnitName = GetScaleUnit(client, fabricLocationName);
+                var storageSubSystemName = GetStorageSubSystem(client, fabricLocationName, scaleUnitName);
+                var volume = client.Volumes.List(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName).GetFirst();
                 var volumeName = ExtractName(volume.Name);
-                var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName, volumeName);
+                var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName, volumeName);
                 AssertVolumesAreSame(volume, retrieved);
             });
         }
@@ -66,14 +73,29 @@ namespace Fabric.Tests
         [Fact]
         public void TestGetAllVolumes() {
             RunTest((client) => {
-                OverStoragePools(client, (fabricLocationName, storageSystemName, storagePoolName) => {
-                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
+                OverStorageSubSystems(client, (fabricLocationName, scaleUnitName, storageSubSystemName) => {
+                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName);
                     Common.MapOverIPage(volumes, client.Volumes.ListNext, (volume) => {
                         var volumeName = ExtractName(volume.Name);
-                        var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName, volumeName);
+                        var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName, volumeName);
                         AssertVolumesAreSame(volume, retrieved);
                     });
                 });
+            });
+        }
+
+        [Fact]
+        public void TestGetInvaildVolume()
+        {
+            RunTest((client) => {
+                var fabricLocationName = GetLocation(client);
+                var scaleUnitName = GetScaleUnit(client, fabricLocationName);
+                var storageSubSystemName = GetStorageSubSystem(client, fabricLocationName, scaleUnitName);
+                var invaildVolumeName = "invaildvolumename";
+                var retrieved = client.Volumes.GetWithHttpMessagesAsync(ResourceGroupName, fabricLocationName, scaleUnitName, storageSubSystemName, invaildVolumeName).GetAwaiter().GetResult();
+                var httpResponseMsg = retrieved.Response;
+                Assert.Equal(System.Net.HttpStatusCode.NotFound, httpResponseMsg.StatusCode);
+                Assert.Null(retrieved.Body);
             });
         }
     }

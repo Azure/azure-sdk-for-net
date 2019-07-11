@@ -54,35 +54,38 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the state of the container instance.
+        /// Gets or sets the state of the container instance.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public string State { get; private set; }
+        public string State { get; set; }
 
         /// <summary>
-        /// Gets the date-time when the container instance state started.
+        /// Gets or sets the date-time when the container instance state
+        /// started.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; private set; }
+        public System.DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets the container instance exit codes correspond to those from the
-        /// `docker run` command.
+        /// Gets or sets the container instance exit codes correspond to those
+        /// from the `docker run` command.
         /// </summary>
         [JsonProperty(PropertyName = "exitCode")]
-        public int? ExitCode { get; private set; }
+        public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets the date-time when the container instance state finished.
+        /// Gets or sets the date-time when the container instance state
+        /// finished.
         /// </summary>
         [JsonProperty(PropertyName = "finishTime")]
-        public System.DateTime? FinishTime { get; private set; }
+        public System.DateTime? FinishTime { get; set; }
 
         /// <summary>
-        /// Gets the human-readable status of the container instance state.
+        /// Gets or sets the human-readable status of the container instance
+        /// state.
         /// </summary>
         [JsonProperty(PropertyName = "detailStatus")]
-        public string DetailStatus { get; private set; }
+        public string DetailStatus { get; set; }
 
     }
 }

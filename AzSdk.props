@@ -1,9 +1,3 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<!--
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  -->
+<Import Project="$(NetSdkBuildTargetsDir)\core\_AzSdk.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_AzSdk.props') "/>
 </Project>

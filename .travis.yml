@@ -1,36 +1,43 @@
-language: csharp
-mono: none
-sudo: required
-dist: trusty
-group: deprecated-2017Q4
-env:
-    global:
-        - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-        - DOTNET_CLI_TELEMETRY_OPTOUT: 1
-# safelist
-#branches:
-#    only:
-#    - travisBuild
-addons:
-  apt:
-    sources:
-    packages:
-install:
-  - cat /etc/*release
-  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
-  - wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
-  - sudo dpkg -i packages-microsoft-prod.deb  
-  - sudo apt-get update
-  - sudo apt-get install dotnet-sdk-2.1.201
-script:
-  - ./testSdkOnLinux.sh
-after_script:
-  - echo "========== Server log: ============"
-  - pwd
-  - ls -al
-  - ls -al TestResults
-  - cat TestResults/*.log
-notifications:  
-  slack:
-    secure: d0PFVLcyqcMxNtmZ8JaEpIBzXbUbZCgKs8QtBB5qEIXDnxflSR3AhczlILNhTBKtMEBlwVzsz65yP09XcmvB6xpAfJbHqSRzk2frKa5viPcAD8Wr/NYamt9/UiTCsnql8MqzjVy0tLdMscXKRmsUey4YF570zl0b7gAbq7XTqxM=
+matrix:
+  include:
+    - language: csharp
+      stage: Mono ClientRuntime build
+      mono: latest
+      sudo: required
+      dist: trusty
+      script:
+        - ./tools/linuxScripts/runClientRuntimeTests.sh
+    - language: csharp
+      stage: NetCore build for SDK repo
+      mono: none
+      sudo: required
+      dist: trusty
+      group: deprecated-2017Q4
+      env:
+          global:
+              - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+              - DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      # safelist
+      #branches:
+      #    only:
+      #    - travisBuild
+      addons:
+        apt:
+          sources:
+          packages:
+      install:
+        - cat /etc/*release
+        - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+        - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
+        - wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
+        - sudo dpkg -i packages-microsoft-prod.deb  
+        - sudo apt-get update
+        - sudo apt-get install dotnet-sdk-2.1.201
+      script:
+        - ./tools/linuxScripts/runNetCoreSdkTests.sh
+      after_script:
+        - echo "========== Server log: ============"
+        - pwd
+        - ls -al
+        - ls -al TestResults
+        - cat TestResults/*.log

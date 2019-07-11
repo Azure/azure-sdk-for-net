@@ -3,6 +3,7 @@
 // license information.
 //
 
+using System;
 using Microsoft.AzureStack.Management.InfrastructureInsights.Admin;
 using Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models;
 using Xunit;
@@ -142,6 +143,50 @@ namespace InfrastructureInsights.Tests
             });
         }
 
+        [Fact]
+        public void TestRepairAlert()
+        {
+            RunTest((client) => {
+                bool done = false;
+                var regions = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regions, client.RegionHealths.ListNext, (regionHealth) => {
+                    if (!done)
+                    {
+                        var regionName = ExtractName(regionHealth.Name);
+                        var alerts = client.Alerts.List(ResourceGroupName, regionName);
+                        Common.MapOverIPage(alerts, client.Alerts.ListNext, (alert) => {
+                            if (!done && alert.HasValidRemediationAction.GetValueOrDefault())
+                            {
+                                var alertName = ExtractName(alert.AlertId);
+                                var exceptionThrown = false;
+                                try
+                                {
+                                    client.Alerts.Repair(ResourceGroupName, regionName, alertName);
+                                }
+                                catch(Exception)
+                                {
+                                    exceptionThrown = true;
+                                }
+                                finally
+                                {
+                                    if (alert.State.Equals("Active"))
+                                    {
+                                        Assert.False(exceptionThrown);
+                                    }
+                                    else
+                                    {
+                                        Assert.True(exceptionThrown);
+                                    }
+                                }
+
+                                done = true;
+                            }
+
+                        });
+                    }
+                });
+            });
+        }
 
 
         [Fact(Skip ="Causes RP to crash.")]

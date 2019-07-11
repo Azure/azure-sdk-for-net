@@ -45,13 +45,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
+        /// <param name="schema">Columns that define the physical type schema
+        /// of the dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, object indexName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
+        public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, object indexName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
+            : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             IndexName = indexName;
             CustomInit();

@@ -155,7 +155,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
 
             foreach (IPage<RedisResource> responseList in list)
             {
-                Assert.Equal(0, responseList.Count());
+                Assert.Empty(responseList);
                 Assert.Null(responseList.NextPageLink);
             }
         }

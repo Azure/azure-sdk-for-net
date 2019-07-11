@@ -25,7 +25,7 @@ Param(
     [string] $ResourceProvider,
     [Parameter(Mandatory = $true, HelpMessage="Directory path where the script should get generated. It should usually be right next to csproj for the sdk project. Eg: <some_path>\src\SDKs\Compute\Management.Compute\")]
     [string] $ScriptPath,
-    [Parameter(Mandatory = $false, HelpMessage="If path for the sdk directory has not been properly set up in the config file, use this param to set it explicitly. It is recommended to set the --csharp-sdks-folder in the config file, this is a worst case backdoor. Eg: $PSScript\Generated")]
+    [Parameter(Mandatory = $false, HelpMessage="If path for the sdk directory has not been properly set up in the config file, use this param to set it explicitly. It is recommended to set the `--csharp-sdks-folder` in the config file, this is a worst case backdoor. Eg. PSScript\Generated")]
     [string] $SdkGenerationDirectory
 )
 

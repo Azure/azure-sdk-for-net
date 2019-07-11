@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Iteration model to be sent over JSON
+    /// Iteration model to be sent over JSON.
     /// </summary>
     public partial class Iteration
     {
@@ -29,23 +29,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Iteration class.
         /// </summary>
-        /// <param name="id">Gets the id of the iteration</param>
-        /// <param name="name">Gets or sets the name of the iteration</param>
+        /// <param name="id">Gets the id of the iteration.</param>
+        /// <param name="name">Gets or sets the name of the iteration.</param>
         /// <param name="isDefault">Gets or sets a value indicating whether the
-        /// iteration is the default iteration for the project</param>
-        /// <param name="status">Gets the current iteration status</param>
+        /// iteration is the default iteration for the project.</param>
+        /// <param name="status">Gets the current iteration status.</param>
         /// <param name="created">Gets the time this iteration was
-        /// completed</param>
+        /// completed.</param>
         /// <param name="lastModified">Gets the time this iteration was last
-        /// modified</param>
+        /// modified.</param>
         /// <param name="trainedAt">Gets the time this iteration was last
-        /// modified</param>
-        /// <param name="projectId">Gets the project id of the
-        /// iteration</param>
+        /// modified.</param>
+        /// <param name="projectId">Gets The project id. of the
+        /// iteration.</param>
         /// <param name="exportable">Whether the iteration can be exported to
-        /// another format for download</param>
+        /// another format for download.</param>
         /// <param name="domainId">Get or sets a guid of the domain the
-        /// iteration has been trained on</param>
+        /// iteration has been trained on.</param>
         /// <param name="classificationType">Gets the classification type of
         /// the project. Possible values include: 'Multiclass',
         /// 'Multilabel'</param>
@@ -71,64 +71,64 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the id of the iteration
+        /// Gets the id of the iteration.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the iteration
+        /// Gets or sets the name of the iteration.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the iteration is the
-        /// default iteration for the project
+        /// default iteration for the project.
         /// </summary>
         [JsonProperty(PropertyName = "isDefault")]
         public bool IsDefault { get; set; }
 
         /// <summary>
-        /// Gets the current iteration status
+        /// Gets the current iteration status.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets the time this iteration was completed
+        /// Gets the time this iteration was completed.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
-        /// Gets the time this iteration was last modified
+        /// Gets the time this iteration was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the time this iteration was last modified
+        /// Gets the time this iteration was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "trainedAt")]
         public System.DateTime? TrainedAt { get; private set; }
 
         /// <summary>
-        /// Gets the project id of the iteration
+        /// Gets The project id. of the iteration.
         /// </summary>
         [JsonProperty(PropertyName = "projectId")]
         public System.Guid ProjectId { get; private set; }
 
         /// <summary>
         /// Gets whether the iteration can be exported to another format for
-        /// download
+        /// download.
         /// </summary>
         [JsonProperty(PropertyName = "exportable")]
         public bool Exportable { get; private set; }
 
         /// <summary>
         /// Gets get or sets a guid of the domain the iteration has been
-        /// trained on
+        /// trained on.
         /// </summary>
         [JsonProperty(PropertyName = "domainId")]
         public System.Guid? DomainId { get; private set; }

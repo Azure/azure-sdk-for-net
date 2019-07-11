@@ -93,7 +93,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(createQueueAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(createQueueAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createQueueAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 // Get created queues AuthorizationRules
@@ -102,14 +102,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getQueueAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
                 {
-                    Assert.True(getQueueAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getQueueAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 // Get all queues AuthorizationRules
                 var getAllNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Queues.ListAuthorizationRules(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
-                Assert.Equal(getAllNamespaceAuthorizationRulesResponse.Count(), 1);
-                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));                
+                Assert.Single(getAllNamespaceAuthorizationRulesResponse);
+                Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);                
 
                 // Update queues authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
@@ -124,7 +124,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(updateQueueAuthorizationRuleResponse.Rights.Count == updateQueuesAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateQueuesAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(updateQueueAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(updateQueueAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the updated queues AuthorizationRule
@@ -135,7 +135,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getQueueAuthorizationRuleResponse.Rights.Count == updateQueuesAuthorizationRuleParameter.Rights.Count);
                 foreach (var right in updateQueuesAuthorizationRuleParameter.Rights)
                 {
-                    Assert.True(getQueueAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(getQueueAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 // Get the connectionString to the queues for a Authorization rule created

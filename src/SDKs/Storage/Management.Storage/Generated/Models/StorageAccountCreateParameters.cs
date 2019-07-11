@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the StorageAccountCreateParameters
         /// class.
         /// </summary>
-        /// <param name="sku">Required. Gets or sets the sku name.</param>
+        /// <param name="sku">Required. Gets or sets the SKU name.</param>
         /// <param name="kind">Required. Indicates the type of storage account.
         /// Possible values include: 'Storage', 'StorageV2', 'BlobStorage',
         /// 'FileStorage', 'BlockBlobStorage'</param>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets required. Gets or sets the sku name.
+        /// Gets or sets required. Gets or sets the SKU name.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

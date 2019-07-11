@@ -1,16 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Globalization;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest.ClientRuntime.Properties;
-using Microsoft.Rest.TransientFaultHandling;
-
 namespace Microsoft.Rest
 {
+    using Microsoft.Rest.ClientRuntime.Properties;
+    using Microsoft.Rest.TransientFaultHandling;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Http retry handler.
     /// </summary>
@@ -21,18 +23,15 @@ namespace Microsoft.Rest
         private readonly TimeSpan DefaultMaxBackoff = new TimeSpan(0, 0, 10);
         private readonly TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
 
+        private bool _retryPolicyRetryingEventSubscribed;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
         /// Sets default retry policy base on Exponential Backoff.
         /// </summary>
-        public RetryDelegatingHandler()
+        public RetryDelegatingHandler() : base()
         {
-            var retryStrategy = new ExponentialBackoffRetryStrategy(
-                DefaultNumberOfAttempts,
-                DefaultMinBackoff,
-                DefaultMaxBackoff,
-                DefaultBackoffDelta);
-            RetryPolicy = new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(retryStrategy);
+            Init();
         }
 
         /// <summary>
@@ -43,12 +42,7 @@ namespace Microsoft.Rest
         public RetryDelegatingHandler(DelegatingHandler innerHandler)
             : base(innerHandler)
         {
-            var retryStrategy = new ExponentialBackoffRetryStrategy(
-                DefaultNumberOfAttempts,
-                DefaultMinBackoff,
-                DefaultMaxBackoff,
-                DefaultBackoffDelta);
-            RetryPolicy = new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(retryStrategy);
+            Init();
         }
 
         /// <summary>
@@ -57,19 +51,50 @@ namespace Microsoft.Rest
         /// <param name="retryPolicy">Retry policy to use.</param>
         /// <param name="innerHandler">Inner http handler.</param>
         public RetryDelegatingHandler(RetryPolicy retryPolicy, DelegatingHandler innerHandler)
-            : base(innerHandler)
+            : this(innerHandler)
         {
             if (retryPolicy == null)
             {
                 throw new ArgumentNullException("retryPolicy");
             }
+
             RetryPolicy = retryPolicy;
+        }        
+
+        private void Init()
+        {
+            _retryPolicyRetryingEventSubscribed = false;
+
+            var retryStrategy = new ExponentialBackoffRetryStrategy(
+                DefaultNumberOfAttempts,
+                DefaultMinBackoff,
+                DefaultMaxBackoff,
+                DefaultBackoffDelta);
+
+            RetryPolicy = new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(retryStrategy);
         }
 
         /// <summary>
         /// Gets or sets retry policy.
         /// </summary>
         public RetryPolicy RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Get delegate count associated with the event
+        /// </summary>
+        public int EventCallbackCount
+        {
+            get
+            {
+                IEnumerable<Delegate> invokeList = this.Retrying?.GetInvocationList();
+                if (invokeList != null)
+                {
+                    return invokeList.Count<Delegate>();
+                }
+
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
@@ -82,18 +107,7 @@ namespace Microsoft.Rest
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-
-            if (RetryPolicy.Retrying == null)
-            {
-              RetryPolicy.Retrying = (sender, args) =>
-              {
-                if (Retrying != null)
-                {
-                  Retrying(sender, args);
-                }
-              };
-            }
-
+            SubscribeRetryPolicyRetryingEvent();
             HttpResponseMessage responseMessage = null;
             try
             {
@@ -125,7 +139,7 @@ namespace Microsoft.Rest
 
                 return responseMessage;
             }
-            catch
+            catch(Exception ex)
             {
                 if (responseMessage != null)
                 {
@@ -133,7 +147,7 @@ namespace Microsoft.Rest
                 }
                 else
                 {
-                    throw;
+                    throw ex;
                 }
             }
             finally
@@ -145,6 +159,25 @@ namespace Microsoft.Rest
                         Retrying -= d;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Function that makes sure we subscribe once to RetryPolicy Retrying event once
+        /// </summary>
+        private void SubscribeRetryPolicyRetryingEvent()
+        {
+            if(_retryPolicyRetryingEventSubscribed == false)
+            {
+                RetryPolicy.Retrying += (sender, args) =>
+                {
+                    if (Retrying != null)
+                    {
+                        Retrying(sender, args);
+                    }
+                };
+
+                _retryPolicyRetryingEventSubscribed = true;
             }
         }
 

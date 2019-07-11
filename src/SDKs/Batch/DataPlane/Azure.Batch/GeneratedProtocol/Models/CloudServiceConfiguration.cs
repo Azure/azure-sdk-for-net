@@ -32,15 +32,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="osFamily">The Azure Guest OS family to be installed on
         /// the virtual machines in the pool.</param>
-        /// <param name="targetOSVersion">The Azure Guest OS version to be
-        /// installed on the virtual machines in the pool.</param>
-        /// <param name="currentOSVersion">The Azure Guest OS Version currently
-        /// installed on the virtual machines in the pool.</param>
-        public CloudServiceConfiguration(string osFamily, string targetOSVersion = default(string), string currentOSVersion = default(string))
+        /// <param name="osVersion">The Azure Guest OS version to be installed
+        /// on the virtual machines in the pool.</param>
+        public CloudServiceConfiguration(string osFamily, string osVersion = default(string))
         {
             OsFamily = osFamily;
-            TargetOSVersion = targetOSVersion;
-            CurrentOSVersion = currentOSVersion;
+            OsVersion = osVersion;
             CustomInit();
         }
 
@@ -73,22 +70,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default value is * which specifies the latest operating system
         /// version for the specified OS family.
         /// </remarks>
-        [JsonProperty(PropertyName = "targetOSVersion")]
-        public string TargetOSVersion { get; set; }
-
-        /// <summary>
-        /// Gets the Azure Guest OS Version currently installed on the virtual
-        /// machines in the pool.
-        /// </summary>
-        /// <remarks>
-        /// This may differ from targetOSVersion if the pool state is
-        /// Upgrading. In this case some virtual machines may be on the
-        /// targetOSVersion and some may be on the currentOSVersion during the
-        /// upgrade process. Once all virtual machines have upgraded,
-        /// currentOSVersion is updated to be the same as targetOSVersion.
-        /// </remarks>
-        [JsonProperty(PropertyName = "currentOSVersion")]
-        public string CurrentOSVersion { get; private set; }
+        [JsonProperty(PropertyName = "osVersion")]
+        public string OsVersion { get; set; }
 
     }
 }

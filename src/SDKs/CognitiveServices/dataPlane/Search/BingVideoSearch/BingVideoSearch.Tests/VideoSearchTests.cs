@@ -18,7 +18,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VideoSearch");
 
-                IVideoSearchAPI client = new VideoSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Videos.SearchAsync(query: Query).Result;
 
@@ -40,7 +40,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VideoDetail");
 
-                IVideoSearchAPI client = new VideoSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Videos.DetailsAsync(query: Query, id: VideoResultId).Result;
 
@@ -68,7 +68,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "VideoTrending");
 
-                IVideoSearchAPI client = new VideoSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IVideoSearchClient client = new VideoSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Videos.TrendingAsync().Result;
 

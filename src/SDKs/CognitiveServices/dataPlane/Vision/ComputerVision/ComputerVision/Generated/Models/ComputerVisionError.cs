@@ -14,6 +14,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Details about the API request error.
+    /// </summary>
     public partial class ComputerVisionError
     {
         /// <summary>
@@ -27,16 +30,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ComputerVisionError class.
         /// </summary>
-        /// <param name="code">The error code. Possible values include:
-        /// 'InvalidImageUrl', 'InvalidImageFormat', 'InvalidImageSize',
-        /// 'NotSupportedVisualFeature', 'NotSupportedImage', 'InvalidDetails',
-        /// 'NotSupportedLanguage', 'BadArgument', 'FailedToProcess',
-        /// 'Timeout', 'InternalServerError', 'Unspecified',
-        /// 'StorageException'</param>
+        /// <param name="code">The error code.</param>
         /// <param name="message">A message explaining the error reported by
         /// the service.</param>
         /// <param name="requestId">A unique request identifier.</param>
-        public ComputerVisionError(ComputerVisionErrorCodes code, string message, string requestId = default(string))
+        public ComputerVisionError(object code, string message, string requestId = default(string))
         {
             Code = code;
             Message = message;
@@ -50,14 +48,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error code. Possible values include:
-        /// 'InvalidImageUrl', 'InvalidImageFormat', 'InvalidImageSize',
-        /// 'NotSupportedVisualFeature', 'NotSupportedImage', 'InvalidDetails',
-        /// 'NotSupportedLanguage', 'BadArgument', 'FailedToProcess',
-        /// 'Timeout', 'InternalServerError', 'Unspecified', 'StorageException'
+        /// Gets or sets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public ComputerVisionErrorCodes Code { get; set; }
+        public object Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message explaining the error reported by the
@@ -80,6 +74,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Code == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+            }
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");

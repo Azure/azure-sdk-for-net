@@ -20,7 +20,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "ImageSearch");
 
-                IImageSearchAPI client = new ImageSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Images.SearchAsync(query: Query).Result;
 
@@ -49,7 +49,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "ImageDetail");
 
-                IImageSearchAPI client = new ImageSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Images.DetailsAsync(query: Query, insightsToken: ImageInsightsToken, modules: Modules).Result;
 
@@ -85,7 +85,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "ImageTrending");
 
-                IImageSearchAPI client = new ImageSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IImageSearchClient client = new ImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Images.TrendingAsync().Result;
 

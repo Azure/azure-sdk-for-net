@@ -29,7 +29,7 @@ namespace Media.Tests.ScenarioTests
                     string transformName = TestUtilities.GenerateName("transform");
                     string transformDescription = "A test transform";
 
-                    // Get tranform, which should not exist
+                    // Get the transform, which should not exist
                     Transform transform = MediaClient.Transforms.Get(ResourceGroup, AccountName, transformName);
                     Assert.Null(transform);
 
@@ -56,7 +56,7 @@ namespace Media.Tests.ScenarioTests
                     TransformOutput[] outputs2 = new TransformOutput[]
                         {
                             new TransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.AdaptiveStreaming)),
-                            new TransformOutput(new VideoAnalyzerPreset("en-US", false))
+                            new TransformOutput(new VideoAnalyzerPreset(insightsToExtract: InsightsType.AllInsights))
                         };
 
                     Transform updatedByPutTransform = MediaClient.Transforms.CreateOrUpdate(ResourceGroup, AccountName, transformName, outputs2, transformDescription);
@@ -76,7 +76,7 @@ namespace Media.Tests.ScenarioTests
                     TransformOutput[] outputs3 = new TransformOutput[]
                         {
                             new TransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.AdaptiveStreaming)),
-                            new TransformOutput(new AudioAnalyzerPreset("en-US")),
+                            new TransformOutput(new AudioAnalyzerPreset()),
                         };
 
                     Transform updatedByPatchTransform = MediaClient.Transforms.Update(ResourceGroup, AccountName, transformName, outputs3);
@@ -99,7 +99,7 @@ namespace Media.Tests.ScenarioTests
                     transforms = MediaClient.Transforms.List(ResourceGroup, AccountName);
                     Assert.Empty(transforms);
 
-                    // Get tranform, which should not exist
+                    // Get the transform, which should not exist
                     transform = MediaClient.Transforms.Get(ResourceGroup, AccountName, transformName);
                     Assert.Null(transform);
                 }
@@ -133,7 +133,7 @@ namespace Media.Tests.ScenarioTests
                     VideoAnalyzerPreset expected = (VideoAnalyzerPreset)expectedOutputs[i].Preset;
                     VideoAnalyzerPreset actual = (VideoAnalyzerPreset)transform.Outputs[i].Preset;
 
-                    Assert.Equal(expected.AudioInsightsOnly, actual.AudioInsightsOnly);
+                    Assert.Equal(expected.InsightsToExtract, actual.InsightsToExtract);
                     Assert.Equal(expected.AudioLanguage, actual.AudioLanguage);
                 }
                 else if (typeof(AudioAnalyzerPreset) == expectedType)

@@ -1594,12 +1594,12 @@ namespace Scheduler.Test.ScenarioTests
 
                 var disabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, new ODataQuery<JobStateFilter>(filter => filter.State == JobState.Disabled) { Top = 5 });
 
-                Assert.Equal(1, disabledJob.Count());
+                Assert.Single(disabledJob);
                 Assert.True(disabledJob.All(job => job.Properties.State == JobState.Disabled));
 
                 var enabledJob = client.Jobs.List(resourceGroupName, jobCollectionName, new ODataQuery<JobStateFilter>(filter => filter.State == JobState.Enabled) { Top = 5 });
 
-                Assert.Equal(1, enabledJob.Count());
+                Assert.Single(enabledJob);
                 Assert.True(enabledJob.All(job => job.Properties.State == JobState.Enabled));
 
                 var listResult = client.Jobs.List(resourceGroupName, jobCollectionName);
@@ -1655,8 +1655,8 @@ namespace Scheduler.Test.ScenarioTests
                 var listResult = client.Jobs.ListJobHistory(resourceGroupName, existingJobCollectionName, existingJobName);
 
                 Assert.True(listResult.Count() >= 0);
-                Assert.True(listResult.ElementAt(0).Id.Contains(id));
-                Assert.True(listResult.ElementAt(0).Name.Contains(jobDefinitionName));
+                Assert.Contains(id, listResult.ElementAt(0).Id);
+                Assert.Contains(jobDefinitionName, listResult.ElementAt(0).Name);
                 Assert.Equal(historyType, listResult.ElementAt(0).Type);
                 Assert.Equal(JobHistoryActionName.MainAction, listResult.ElementAt(0).Properties.ActionName);
                 Assert.NotNull(listResult.ElementAt(0).Properties.EndTime);

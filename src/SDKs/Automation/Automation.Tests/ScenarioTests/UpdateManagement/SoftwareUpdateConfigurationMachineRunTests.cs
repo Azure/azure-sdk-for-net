@@ -12,7 +12,7 @@
         [Fact]
         public void CanGetMachineRunById()
         {
-            var runId = Guid.Parse("b56021cf-1643-4bfb-99d3-6b798db242f5");
+            var runId = Guid.Parse("da6493d0-de31-48d9-bc78-08e3c1d80d0a");
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
@@ -32,14 +32,14 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(27, runs.Value.Count);
+                Assert.Equal(16, runs.Value.Count);
             }
         }
 
         [Fact]
         public void CanGetAllRunsByCorrelationId()
         {
-            Guid correlationId = Guid.Parse("595159c7-64cb-436f-892d-b44b31970f7a");
+            Guid correlationId = Guid.Parse("6ff49ee2-092a-48bf-841a-c3d645611689");
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
@@ -53,14 +53,14 @@
         [Fact]
         public void CanGetAllRunsByStatus()
         {
-            const string status = "Failed";
+            const string status = "Succeeded";
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.ListByStatus(ResourceGroupName, AutomationAccountName, status);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(4, runs.Value.Count);
+                Assert.Equal(16, runs.Value.Count);
             }
         }
     }

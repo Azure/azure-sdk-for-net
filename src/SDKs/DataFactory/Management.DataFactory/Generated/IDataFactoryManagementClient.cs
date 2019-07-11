@@ -81,9 +81,19 @@ namespace Microsoft.Azure.Management.DataFactory
         IFactoriesOperations Factories { get; }
 
         /// <summary>
+        /// Gets the IExposureControlOperations.
+        /// </summary>
+        IExposureControlOperations ExposureControl { get; }
+
+        /// <summary>
         /// Gets the IIntegrationRuntimesOperations.
         /// </summary>
         IIntegrationRuntimesOperations IntegrationRuntimes { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationRuntimeObjectMetadataOperations.
+        /// </summary>
+        IIntegrationRuntimeObjectMetadataOperations IntegrationRuntimeObjectMetadata { get; }
 
         /// <summary>
         /// Gets the IIntegrationRuntimeNodesOperations.
@@ -119,6 +129,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the ITriggersOperations.
         /// </summary>
         ITriggersOperations Triggers { get; }
+
+        /// <summary>
+        /// Gets the IRerunTriggersOperations.
+        /// </summary>
+        IRerunTriggersOperations RerunTriggers { get; }
 
         /// <summary>
         /// Gets the ITriggerRunsOperations.

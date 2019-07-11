@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="usable">Usable capacity in TB.</param>
         /// <param name="maximum">Maximum capacity in TB.</param>
-        public SkuCapacity(string usable, string maximum)
+        public SkuCapacity(string usable = default(string), string maximum = default(string))
         {
             Usable = usable;
             Maximum = maximum;
@@ -45,33 +44,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets usable capacity in TB.
+        /// Gets usable capacity in TB.
         /// </summary>
         [JsonProperty(PropertyName = "usable")]
-        public string Usable { get; set; }
+        public string Usable { get; private set; }
 
         /// <summary>
-        /// Gets or sets maximum capacity in TB.
+        /// Gets maximum capacity in TB.
         /// </summary>
         [JsonProperty(PropertyName = "maximum")]
-        public string Maximum { get; set; }
+        public string Maximum { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Usable == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Usable");
-            }
-            if (Maximum == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Maximum");
-            }
-        }
     }
 }

@@ -21,18 +21,39 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StageStatus
     {
+        /// <summary>
+        /// No status available yet.
+        /// </summary>
         [EnumMember(Value = "None")]
         None,
+        /// <summary>
+        /// Stage is in progress.
+        /// </summary>
         [EnumMember(Value = "InProgress")]
         InProgress,
+        /// <summary>
+        /// Stage has succeeded.
+        /// </summary>
         [EnumMember(Value = "Succeeded")]
         Succeeded,
+        /// <summary>
+        /// Stage has failed.
+        /// </summary>
         [EnumMember(Value = "Failed")]
         Failed,
+        /// <summary>
+        /// Stage has been cancelled.
+        /// </summary>
         [EnumMember(Value = "Cancelled")]
         Cancelled,
+        /// <summary>
+        /// Stage is cancelling.
+        /// </summary>
         [EnumMember(Value = "Cancelling")]
         Cancelling,
+        /// <summary>
+        /// Stage has succeeded with errors.
+        /// </summary>
         [EnumMember(Value = "SucceededWithErrors")]
         SucceededWithErrors
     }

@@ -151,6 +151,12 @@ namespace ApiManagement.Tests
             Assert.Equal(this.serviceName, service.Name);
         }
 
+
+        public string GetOpenIdMetadataEndpointUrl()
+        {
+            return "https://" + TestUtilities.GenerateName("provider") + "." + TestUtilities.GenerateName("endpoint");
+        }
+
         public string GetLocation(string regionIn = "US")
         {
             var provider = this.resourcesClient.Providers.Get("Microsoft.ApiManagement");

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The platform properties against which the build has to happen.
+    /// The platform properties against which the run has to happen.
     /// </summary>
     public partial class PlatformProperties
     {
@@ -30,14 +30,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the PlatformProperties class.
         /// </summary>
-        /// <param name="osType">The operating system type required for the
-        /// build. Possible values include: 'Windows', 'Linux'</param>
-        /// <param name="cpu">The CPU configuration in terms of number of cores
-        /// required for the build.</param>
-        public PlatformProperties(string osType, int? cpu = default(int?))
+        /// <param name="os">The operating system type required for the run.
+        /// Possible values include: 'Windows', 'Linux'</param>
+        /// <param name="architecture">The OS architecture. Possible values
+        /// include: 'amd64', 'x86', 'arm'</param>
+        /// <param name="variant">Variant of the CPU. Possible values include:
+        /// 'v6', 'v7', 'v8'</param>
+        public PlatformProperties(string os, string architecture = default(string), string variant = default(string))
         {
-            OsType = osType;
-            Cpu = cpu;
+            Os = os;
+            Architecture = architecture;
+            Variant = variant;
             CustomInit();
         }
 
@@ -47,18 +50,25 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the operating system type required for the build.
+        /// Gets or sets the operating system type required for the run.
         /// Possible values include: 'Windows', 'Linux'
         /// </summary>
-        [JsonProperty(PropertyName = "osType")]
-        public string OsType { get; set; }
+        [JsonProperty(PropertyName = "os")]
+        public string Os { get; set; }
 
         /// <summary>
-        /// Gets or sets the CPU configuration in terms of number of cores
-        /// required for the build.
+        /// Gets or sets the OS architecture. Possible values include: 'amd64',
+        /// 'x86', 'arm'
         /// </summary>
-        [JsonProperty(PropertyName = "cpu")]
-        public int? Cpu { get; set; }
+        [JsonProperty(PropertyName = "architecture")]
+        public string Architecture { get; set; }
+
+        /// <summary>
+        /// Gets or sets variant of the CPU. Possible values include: 'v6',
+        /// 'v7', 'v8'
+        /// </summary>
+        [JsonProperty(PropertyName = "variant")]
+        public string Variant { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -68,9 +78,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (OsType == null)
+            if (Os == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OsType");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Os");
             }
         }
     }

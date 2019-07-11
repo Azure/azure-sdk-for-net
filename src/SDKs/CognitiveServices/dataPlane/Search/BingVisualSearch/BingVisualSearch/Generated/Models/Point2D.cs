@@ -9,6 +9,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Defines a 2D point with X and Y coordinates.
+    /// </summary>
     public partial class Point2D : StructuredValue
     {
         /// <summary>

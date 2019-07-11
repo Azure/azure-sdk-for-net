@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// specified compute node.
         /// </summary>
         /// <remarks>
-        /// This operation replaces of all the updateable properties of the
+        /// This operation replaces of all the updatable properties of the
         /// account. For example, if the expiryTime element is not specified,
         /// the current value is replaced with the default value, not left
         /// unmodified. You can update a user account on a node only when it is

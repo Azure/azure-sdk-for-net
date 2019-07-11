@@ -35,8 +35,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(diagnostics);
                 Assert.Empty(diagnostics);
 
-                // create new diagnostic
-                string diagnosticId = TestUtilities.GenerateName("diagnoticId");
+                // create new diagnostic, supported Ids are applicationinsights, azuremonitor
+                string diagnosticId = "applicationinsights";
                 string loggerId = TestUtilities.GenerateName("appInsights");
 
                 try
@@ -92,16 +92,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(loggerId, loggerContractList.GetEnumerator().ToIEnumerable().First().Name);
                     Assert.Equal(LoggerType.ApplicationInsights, loggerContractList.GetEnumerator().ToIEnumerable().First().LoggerType);
                     
-                    // delete the diagnostic logger relationship
-                    await testBase.client.DiagnosticLogger.DeleteAsync(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        diagnosticId,
-                        loggerId);
-
-                    var entitystatus = testBase.client.DiagnosticLogger.CheckEntityExists(testBase.rgName, testBase.serviceName, diagnosticId, loggerId);
-                    Assert.False(entitystatus);
-
                     // check the diagnostic entity etag
                     var diagnosticTag = await testBase.client.Diagnostic.GetEntityTagAsync(
                         testBase.rgName,
@@ -140,8 +130,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                 }
                 finally
                 {
-                    testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
                     testBase.client.Diagnostic.Delete(testBase.rgName, testBase.serviceName, diagnosticId, "*");
+                    testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
                 }
             }
         }

@@ -66,8 +66,8 @@ namespace Relay.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
+                Assert.Equal(2, createNamespaceResponse.Tags.Count);
+                Assert.Equal("Microsoft.Relay/Namespaces", createNamespaceResponse.Type);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 
@@ -87,7 +87,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

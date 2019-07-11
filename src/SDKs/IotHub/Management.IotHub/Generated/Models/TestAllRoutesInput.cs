@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// include: 'Invalid', 'DeviceMessages', 'TwinChangeEvents',
         /// 'DeviceLifecycleEvents', 'DeviceJobLifecycleEvents'</param>
         /// <param name="message">Routing message</param>
-        public TestAllRoutesInput(string routingSource = default(string), RoutingMessage message = default(RoutingMessage))
+        /// <param name="twin">Routing Twin Reference</param>
+        public TestAllRoutesInput(string routingSource = default(string), RoutingMessage message = default(RoutingMessage), RoutingTwin twin = default(RoutingTwin))
         {
             RoutingSource = routingSource;
             Message = message;
+            Twin = twin;
             CustomInit();
         }
 
@@ -58,6 +60,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public RoutingMessage Message { get; set; }
+
+        /// <summary>
+        /// Gets or sets routing Twin Reference
+        /// </summary>
+        [JsonProperty(PropertyName = "twin")]
+        public RoutingTwin Twin { get; set; }
 
     }
 }

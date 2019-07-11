@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         Offline,
         /// <summary>
         /// The low-priority node has been preempted. Tasks which were running
-        /// on the node when it was pre-empted will be rescheduled when another
+        /// on the node when it was preempted will be rescheduled when another
         /// node becomes available.
         /// </summary>
         [EnumMember(Value = "preempted")]

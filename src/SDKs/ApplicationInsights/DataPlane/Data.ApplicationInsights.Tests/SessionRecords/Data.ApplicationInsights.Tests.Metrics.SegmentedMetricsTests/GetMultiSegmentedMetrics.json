@@ -10,8 +10,8 @@
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -20,25 +20,18 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "31181874-61c5-45f8-9d0d-7e65de5f3829"
+          "fe1279bc-c74e-4a29-8181-cefe81066a5f"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:45:15.176Z\",\r\n    \"end\": \"2018-01-11T18:45:15.176Z\",\r\n    \"segments\": [\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/GetLogEntries\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 5983.14\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Customers/Delete\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1429.27\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Employees/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1286.05\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Customers/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 1024.09\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Employees\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 734.66\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Home/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 727.26\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/Create\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 675.5\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"HEAD Home/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 605.51\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Tickets\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 563.46\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 410.08\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Thu, 11 Jan 2018 18:45:15 GMT"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
+          "Mon, 24 Sep 2018 21:33:40 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.71239b29-f6e2-11e7-81e8-70b3d5800002"
+          "1.1 draft-ai-blue.3109e61a-bf93-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -54,12 +47,19 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "1410"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-09-24T09:33:40.237Z\",\r\n    \"end\": \"2018-09-24T21:33:40.237Z\",\r\n    \"segments\": [\r\n      {\r\n        \"request/name\": \"GET Customers/Details\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 931.06\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Home/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 559.76\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Employees\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 190.52\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          },\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 142.61\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET Reports/Tickets\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 297.02\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET robots.txt/Index\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 275\r\n            },\r\n            \"request/resultCode\": \"404\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET /FabrikamProd/Scripts/jQuery.tmpl.min.js\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 229.34\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET /FabrikamProd/Scripts/jquery-1.5.1.min.js\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 176.04\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET ServiceTickets/Edit\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 164.16\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"GET /FabrikamProd/Content/themes/base/jquery.ui.all.css\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 139.61\r\n            },\r\n            \"request/resultCode\": \"200\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"request/name\": \"POST ServiceTickets/Create\",\r\n        \"segments\": [\r\n          {\r\n            \"requests/duration\": {\r\n              \"avg\": 124.7\r\n            },\r\n            \"request/resultCode\": \"500\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

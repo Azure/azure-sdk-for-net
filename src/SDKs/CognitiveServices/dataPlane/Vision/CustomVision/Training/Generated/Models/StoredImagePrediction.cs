@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// result of an image classification request
+    /// result of an image classification request.
     /// </summary>
     public partial class StoredImagePrediction
     {
@@ -31,10 +31,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the StoredImagePrediction class.
         /// </summary>
-        public StoredImagePrediction(string imageUri = default(string), string thumbnailUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
+        /// <param name="resizedImageUri">The URI to the (resized) prediction
+        /// image.</param>
+        /// <param name="thumbnailUri">The URI to the thumbnail of the original
+        /// prediction image.</param>
+        /// <param name="originalImageUri">The URI to the original prediction
+        /// image.</param>
+        /// <param name="domain">Domain used for the prediction.</param>
+        public StoredImagePrediction(string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
         {
-            ImageUri = imageUri;
+            ResizedImageUri = resizedImageUri;
             ThumbnailUri = thumbnailUri;
+            OriginalImageUri = originalImageUri;
             Domain = domain;
             Id = id;
             Project = project;
@@ -50,16 +58,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the URI to the (resized) prediction image.
         /// </summary>
-        [JsonProperty(PropertyName = "imageUri")]
-        public string ImageUri { get; private set; }
+        [JsonProperty(PropertyName = "resizedImageUri")]
+        public string ResizedImageUri { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the thumbnail of the original prediction image.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
+        /// Gets the URI to the original prediction image.
+        /// </summary>
+        [JsonProperty(PropertyName = "originalImageUri")]
+        public string OriginalImageUri { get; private set; }
+
+        /// <summary>
+        /// Gets domain used for the prediction.
         /// </summary>
         [JsonProperty(PropertyName = "domain")]
         public System.Guid Domain { get; private set; }

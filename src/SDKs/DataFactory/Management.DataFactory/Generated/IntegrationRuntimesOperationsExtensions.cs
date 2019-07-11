@@ -655,7 +655,7 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// Upgrade self-hosted integration runtime to latest version if availability.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -675,7 +675,7 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Upgrade self-hosted integration runtime to latest version if availably.
+            /// Upgrade self-hosted integration runtime to latest version if availability.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Info for ertificate to be exported for TDE enabled databases.
+    /// Info for certificate to be exported for TDE enabled databases.
     /// </summary>
     public partial class SelectedCertificateInput
     {

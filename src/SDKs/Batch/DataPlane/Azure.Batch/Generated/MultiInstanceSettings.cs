@@ -85,7 +85,10 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// The difference between common resource files and task resource files is that common resource files are downloaded 
-        /// for all subtasks including the primary, whereas task resource files are downloaded only for the primary.
+        /// for all subtasks including the primary, whereas task resource files are downloaded only for the primary. There 
+        /// is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the 
+        /// response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must be reduced 
+        /// in size. This can be achieved using .zip files, Application Packages, or Docker Containers.
         /// </remarks>
         public IList<ResourceFile> CommonResourceFiles
         {

@@ -39,12 +39,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="principalId">The principal ID assigned to the role.
         /// This maps to the ID inside the Active Directory. It can point to a
         /// user, service principal, or security group.</param>
+        /// <param name="principalType">The principal type of the assigned
+        /// principal ID. Possible values include: 'User', 'Group',
+        /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
+        /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
+        /// 'Everyone'</param>
         /// <param name="canDelegate">The delgation flag used for creating a
         /// role assignment</param>
-        public RoleAssignmentCreateParameters(string roleDefinitionId = default(string), string principalId = default(string), bool? canDelegate = default(bool?))
+        public RoleAssignmentCreateParameters(string roleDefinitionId, string principalId, string principalType = default(string), bool? canDelegate = default(bool?))
         {
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
+            PrincipalType = principalType;
             CanDelegate = canDelegate;
             CustomInit();
         }
@@ -69,10 +75,36 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string PrincipalId { get; set; }
 
         /// <summary>
+        /// Gets or sets the principal type of the assigned principal ID.
+        /// Possible values include: 'User', 'Group', 'ServicePrincipal',
+        /// 'Unknown', 'DirectoryRoleTemplate', 'ForeignGroup', 'Application',
+        /// 'MSI', 'DirectoryObjectOrGroup', 'Everyone'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.principalType")]
+        public string PrincipalType { get; set; }
+
+        /// <summary>
         /// Gets or sets the delgation flag used for creating a role assignment
         /// </summary>
         [JsonProperty(PropertyName = "properties.canDelegate")]
         public bool? CanDelegate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RoleDefinitionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RoleDefinitionId");
+            }
+            if (PrincipalId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PrincipalId");
+            }
+        }
     }
 }

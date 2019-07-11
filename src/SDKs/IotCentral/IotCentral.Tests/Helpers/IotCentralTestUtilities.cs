@@ -14,11 +14,13 @@ namespace IotCentral.Tests.Helpers
     public class IotCentralTestUtilities
     {
         public static string DefaultLocation = "WestUS";
-        public static string DefaultIotCentralName = "dotnetsdkapp";
-        public static string DefaultUpdateIotCentralName = "dotnetsdkapppdate";
+        public static string DefaultResourceName = "dotnetsdkapp";
+        public static string DefaultUpdateResourceName = "dotnetsdkappupdate";
+        public static string DefaultSubdomain = "dotnetsdksubdomain";
+        public static string DefaultUpdateSubdomain = "dotnetsdksubdomainupdate";
         public static string DefaultResourceGroupName = "DotNetSdkIotCentralRG";
-        public static string DefaultUpdateResourceGroupName = "UpdateDotNetSdkIotCentralRG";
-
+        public static string DefaultUpdateResourceGroupName = "DotNetSdkIotCentralRGUpdate";
+        
         public static IotCentralClient GetIotCentralClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)

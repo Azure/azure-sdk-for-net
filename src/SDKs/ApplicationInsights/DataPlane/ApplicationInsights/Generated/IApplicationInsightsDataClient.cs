@@ -8,15 +8,11 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Composite Swagger for Application Insights Data Client
@@ -39,12 +35,6 @@ namespace Microsoft.Azure.ApplicationInsights
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// ID of the application. This is Application ID from the API Access
-        /// settings blade in the Azure portal.
-        /// </summary>
-        string AppId { get; set; }
-
-        /// <summary>
         /// Subscription credentials which uniquely identify client
         /// subscription.
         /// </summary>
@@ -52,264 +42,19 @@ namespace Microsoft.Azure.ApplicationInsights
 
 
         /// <summary>
-        /// Retrieve metric data
+        /// Gets the IMetrics.
         /// </summary>
-        /// <remarks>
-        /// Gets data for a single metric.
-        /// </remarks>
-        /// <param name='metricId'>
-        /// ID of the metric. This is either a standard AI metric, or an
-        /// application-specific custom metric. Possible values include:
-        /// 'requests/count', 'requests/duration', 'requests/failed',
-        /// 'users/count', 'users/authenticated', 'pageViews/count',
-        /// 'pageViews/duration', 'client/processingDuration',
-        /// 'client/receiveDuration', 'client/networkDuration',
-        /// 'client/sendDuration', 'client/totalDuration',
-        /// 'dependencies/count', 'dependencies/failed',
-        /// 'dependencies/duration', 'exceptions/count', 'exceptions/browser',
-        /// 'exceptions/server', 'sessions/count',
-        /// 'performanceCounters/requestExecutionTime',
-        /// 'performanceCounters/requestsPerSecond',
-        /// 'performanceCounters/requestsInQueue',
-        /// 'performanceCounters/memoryAvailableBytes',
-        /// 'performanceCounters/exceptionsPerSecond',
-        /// 'performanceCounters/processCpuPercentage',
-        /// 'performanceCounters/processIOBytesPerSecond',
-        /// 'performanceCounters/processPrivateBytes',
-        /// 'performanceCounters/processorCpuPercentage',
-        /// 'availabilityResults/availabilityPercentage',
-        /// 'availabilityResults/duration', 'billing/telemetryCount',
-        /// 'customEvents/count'
-        /// </param>
-        /// <param name='timespan'>
-        /// The timespan over which to retrieve metric values. This is an
-        /// ISO8601 time period value. If timespan is omitted, a default time
-        /// range of `PT12H` ("last 12 hours") is used. The actual timespan
-        /// that is queried may be adjusted by the server based. In all cases,
-        /// the actual time span used for the query is included in the
-        /// response.
-        /// </param>
-        /// <param name='interval'>
-        /// The time interval to use when retrieving metric values. This is an
-        /// ISO8601 duration. If interval is omitted, the metric value is
-        /// aggregated across the entire timespan. If interval is supplied, the
-        /// server may adjust the interval to a more appropriate size based on
-        /// the timespan used for the query. In all cases, the actual interval
-        /// used for the query is included in the response.
-        /// </param>
-        /// <param name='aggregation'>
-        /// The aggregation to use when computing the metric values. To
-        /// retrieve more than one aggregation at a time, separate them with a
-        /// comma. If no aggregation is specified, then the default aggregation
-        /// for the metric is used.
-        /// </param>
-        /// <param name='segment'>
-        /// The name of the dimension to segment the metric values by. This
-        /// dimension must be applicable to the metric you are retrieving. To
-        /// segment by more than one dimension at a time, separate them with a
-        /// comma (,). In this case, the metric data will be segmented in the
-        /// order the dimensions are listed in the parameter.
-        /// </param>
-        /// <param name='top'>
-        /// The number of segments to return.  This value is only valid when
-        /// segment is specified.
-        /// </param>
-        /// <param name='orderby'>
-        /// The aggregation function and direction to sort the segments by.
-        /// This value is only valid when segment is specified.
-        /// </param>
-        /// <param name='filter'>
-        /// An expression used to filter the results.  This value should be a
-        /// valid OData filter expression where the keys of each clause should
-        /// be applicable dimensions for the metric you are retrieving.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<MetricsResult>> GetMetricWithHttpMessagesAsync(string metricId, System.TimeSpan? timespan = default(System.TimeSpan?), System.TimeSpan? interval = default(System.TimeSpan?), IList<string> aggregation = default(IList<string>), IList<string> segment = default(IList<string>), int? top = default(int?), string orderby = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IMetrics Metrics { get; }
 
         /// <summary>
-        /// Retrieve metric data
+        /// Gets the IEvents.
         /// </summary>
-        /// <remarks>
-        /// Gets metric values for multiple metrics
-        /// </remarks>
-        /// <param name='body'>
-        /// The batched metrics query.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<IList<MetricsResultsItem>>> GetMetricsWithHttpMessagesAsync(IList<MetricsPostBodySchema> body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IEvents Events { get; }
 
         /// <summary>
-        /// Retrieve metric metatadata
+        /// Gets the IQueryOperations.
         /// </summary>
-        /// <remarks>
-        /// Gets metadata describing the available metrics
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> GetMetricsMetadataWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Execute OData query
-        /// </summary>
-        /// <remarks>
-        /// Executes an OData query for events
-        /// </remarks>
-        /// <param name='eventType'>
-        /// The type of events to query; either a standard event type
-        /// (`traces`, `customEvents`, `pageViews`, `requests`, `dependencies`,
-        /// `exceptions`, `availabilityResults`) or `$all` to query across all
-        /// event types. Possible values include: '$all', 'traces',
-        /// 'customEvents', 'pageViews', 'browserTimings', 'requests',
-        /// 'dependencies', 'exceptions', 'availabilityResults',
-        /// 'performanceCounters', 'customMetrics'
-        /// </param>
-        /// <param name='timespan'>
-        /// Optional. The timespan over which to retrieve events. This is an
-        /// ISO8601 time period value.  This timespan is applied in addition to
-        /// any that are specified in the Odata expression.
-        /// </param>
-        /// <param name='filter'>
-        /// An expression used to filter the returned events
-        /// </param>
-        /// <param name='search'>
-        /// A free-text search expression to match for whether a particular
-        /// event should be returned
-        /// </param>
-        /// <param name='orderby'>
-        /// A comma-separated list of properties with \"asc\" (the default) or
-        /// \"desc\" to control the order of returned events
-        /// </param>
-        /// <param name='select'>
-        /// Limits the properties to just those requested on each returned
-        /// event
-        /// </param>
-        /// <param name='skip'>
-        /// The number of items to skip over before returning events
-        /// </param>
-        /// <param name='top'>
-        /// The number of events to return
-        /// </param>
-        /// <param name='format'>
-        /// Format for the returned events
-        /// </param>
-        /// <param name='count'>
-        /// Request a count of matching items included with the returned events
-        /// </param>
-        /// <param name='apply'>
-        /// An expression used for aggregation over returned events
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<EventsResults>> GetEventsWithHttpMessagesAsync(EventType eventType, System.TimeSpan? timespan = default(System.TimeSpan?), string filter = default(string), string search = default(string), string orderby = default(string), string select = default(string), int? skip = default(int?), int? top = default(int?), string format = default(string), bool? count = default(bool?), string apply = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get an event
-        /// </summary>
-        /// <remarks>
-        /// Gets the data for a single event
-        /// </remarks>
-        /// <param name='eventType'>
-        /// The type of events to query; either a standard event type
-        /// (`traces`, `customEvents`, `pageViews`, `requests`, `dependencies`,
-        /// `exceptions`, `availabilityResults`) or `$all` to query across all
-        /// event types. Possible values include: '$all', 'traces',
-        /// 'customEvents', 'pageViews', 'browserTimings', 'requests',
-        /// 'dependencies', 'exceptions', 'availabilityResults',
-        /// 'performanceCounters', 'customMetrics'
-        /// </param>
-        /// <param name='eventId'>
-        /// ID of event.
-        /// </param>
-        /// <param name='timespan'>
-        /// Optional. The timespan over which to retrieve events. This is an
-        /// ISO8601 time period value.  This timespan is applied in addition to
-        /// any that are specified in the Odata expression.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get OData metadata
-        /// </summary>
-        /// <remarks>
-        /// Gets OData EDMX metadata describing the event data model
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> GetEventsMetadataODataWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Execute an Analytics query
-        /// </summary>
-        /// <remarks>
-        /// Executes an Analytics query for data.
-        /// [Here](/documentation/2-Using-the-API/Query) is an example for
-        /// using POST with an Analytics query.
-        /// </remarks>
-        /// <param name='query'>
-        /// The query to execute.
-        /// </param>
-        /// <param name='timespan'>
-        /// Optional. The timespan over which to query data. This is an ISO8601
-        /// time period value.  This timespan is applied in addition to any
-        /// that are specified in the query expression.
-        /// </param>
-        /// <param name='timespan1'>
-        /// Optional. The timespan over which to query data. This is an ISO8601
-        /// time period value.  This timespan is applied in addition to any
-        /// that are specified in the query expression.
-        /// </param>
-        /// <param name='applications'>
-        /// A list of applications that are included in the query.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<QueryResults>> QueryWithHttpMessagesAsync(string query, System.TimeSpan? timespan = default(System.TimeSpan?), System.TimeSpan? timespan1 = default(System.TimeSpan?), IList<string> applications = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Get Analytics query metadata
-        /// </summary>
-        /// <remarks>
-        /// Gets Analytics query schema describing the data model
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<QueryResults>> GetQuerySchemaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IQueryOperations Query { get; }
 
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     public abstract class BaseSegmentInfo : BaseMetricInfo
     {

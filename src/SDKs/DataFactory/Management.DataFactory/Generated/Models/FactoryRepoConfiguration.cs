@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the FactoryRepoConfiguration class.
         /// </summary>
         /// <param name="accountName">Account name.</param>
-        /// <param name="repositoryName">Rrepository name.</param>
+        /// <param name="repositoryName">Repository name.</param>
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="lastCommitId">Last commit id.</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string AccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets rrepository name.
+        /// Gets or sets repository name.
         /// </summary>
         [JsonProperty(PropertyName = "repositoryName")]
         public string RepositoryName { get; set; }

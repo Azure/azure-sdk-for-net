@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a Tag
+    /// Represents a Tag.
     /// </summary>
     public partial class Tag
     {
@@ -29,17 +29,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Tag class.
         /// </summary>
-        /// <param name="id">Gets the Tag ID</param>
-        /// <param name="name">Gets or sets the name of the tag</param>
+        /// <param name="id">Gets the Tag ID.</param>
+        /// <param name="name">Gets or sets the name of the tag.</param>
         /// <param name="description">Gets or sets the description of the
-        /// tag</param>
+        /// tag.</param>
+        /// <param name="type">Gets or sets the type of the tag. Possible
+        /// values include: 'Regular', 'Negative'</param>
         /// <param name="imageCount">Gets the number of images with this
-        /// tag</param>
-        public Tag(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), int imageCount = default(int))
+        /// tag.</param>
+        public Tag(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), string type = default(string), int imageCount = default(int))
         {
             Id = id;
             Name = name;
             Description = description;
+            Type = type;
             ImageCount = imageCount;
             CustomInit();
         }
@@ -50,25 +53,32 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the Tag ID
+        /// Gets the Tag ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the tag
+        /// Gets or sets the name of the tag.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the description of the tag
+        /// Gets or sets the description of the tag.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the number of images with this tag
+        /// Gets or sets the type of the tag. Possible values include:
+        /// 'Regular', 'Negative'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Gets the number of images with this tag.
         /// </summary>
         [JsonProperty(PropertyName = "imageCount")]
         public int ImageCount { get; private set; }

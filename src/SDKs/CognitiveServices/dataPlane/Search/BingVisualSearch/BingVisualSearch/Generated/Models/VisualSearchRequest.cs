@@ -43,17 +43,18 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a JSON object that identities the image to get insights of.
+        /// Gets or sets a JSON object that identities the image to get
+        /// insights of.
         /// </summary>
         [JsonProperty(PropertyName = "imageInfo")]
-        public ImageInfo ImageInfo { get; private set; }
+        public ImageInfo ImageInfo { get; set; }
 
         /// <summary>
-        /// Gets a JSON object containing information about the request, such
-        /// as filters, or a description.
+        /// Gets or sets a JSON object containing information about the
+        /// request, such as filters, or a description.
         /// </summary>
         [JsonProperty(PropertyName = "knowledgeRequest")]
-        public KnowledgeRequest KnowledgeRequest { get; private set; }
+        public KnowledgeRequest KnowledgeRequest { get; set; }
 
         /// <summary>
         /// Validate the object.

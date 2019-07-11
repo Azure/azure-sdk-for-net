@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -33,6 +34,101 @@ namespace Compute.Tests
             {
                 TestVMScaleSetExtensionsImpl(context);
             }
+        }
+
+        [Fact]
+        public void TestVMScaleSetExtensionSequencing()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                VirtualMachineScaleSet inputVMScaleSet;
+                try
+                {
+                    EnsureClientsInitialized(context);
+
+                    // This test's session record was recorded using the following parameters
+                    m_location = "EastUS2EUAP";
+                    m_subId = "5393f919-a68a-43d0-9063-4b2bda6bffdf";
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
+                    VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
+
+                    // Set extension sequencing (ext2 is provisioned after ext1)
+                    vmssExtProfile.Extensions[1].ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[0].Name };
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        null,
+                        imageRef,
+                        out inputVMScaleSet,
+                        extensionProfile: vmssExtProfile,
+                        createWithManagedDisks: true);
+
+                    // Perform a Get operation on each extension
+                    VirtualMachineScaleSetExtension getVmssExtResponse = null;
+                    for (int i = 0; i < vmssExtProfile.Extensions.Count; i++)
+                    {
+                        getVmssExtResponse = m_CrpClient.VirtualMachineScaleSetExtensions.Get(rgName, vmssName, vmssExtProfile.Extensions[i].Name);
+                        ValidateVmssExtension(vmssExtProfile.Extensions[i], getVmssExtResponse);
+                    }
+
+                    // Add a new extension to the VMSS (ext3 is provisioned after ext2)
+                    VirtualMachineScaleSetExtension vmssExtension = GetTestVMSSVMExtension(name: "3", publisher: "Microsoft.CPlat.Core", type: "NullLinux", version: "4.0");
+                    vmssExtension.ProvisionAfterExtensions = new List<string> { vmssExtProfile.Extensions[1].Name };
+                    var response = m_CrpClient.VirtualMachineScaleSetExtensions.CreateOrUpdate(rgName, vmssName, vmssExtension.Name, vmssExtension);
+                    ValidateVmssExtension(vmssExtension, response);
+
+                    // Perform a Get operation on the extension
+                    getVmssExtResponse = m_CrpClient.VirtualMachineScaleSetExtensions.Get(rgName, vmssName, vmssExtension.Name);
+                    ValidateVmssExtension(vmssExtension, getVmssExtResponse);
+
+                    // Clear the sequencing in ext3
+                    vmssExtension.ProvisionAfterExtensions.Clear();
+                    var patchVmssExtsResponse = m_CrpClient.VirtualMachineScaleSetExtensions.CreateOrUpdate(rgName, vmssName, vmssExtension.Name, vmssExtension);
+                    ValidateVmssExtension(vmssExtension, patchVmssExtsResponse);
+
+                    // Perform a List operation on vmss extensions
+                    var listVmssExtsResponse = m_CrpClient.VirtualMachineScaleSetExtensions.List(rgName, vmssName);
+                    int installedExtensionsCount = listVmssExtsResponse.Count();
+                    Assert.Equal(3, installedExtensionsCount);
+                    VirtualMachineScaleSetExtension expectedVmssExt = null;
+                    for (int i = 0; i < installedExtensionsCount; i++)
+                    {
+                        if (i < installedExtensionsCount - 1)
+                        {
+                            expectedVmssExt = vmssExtProfile.Extensions[i];
+                        }
+                        else
+                        {
+                            expectedVmssExt = vmssExtension;
+                        }
+
+                        ValidateVmssExtension(expectedVmssExt, listVmssExtsResponse.ElementAt(i));
+                    }
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        private VirtualMachineScaleSetExtensionProfile GetTestVmssExtensionProfile()
+        {
+            return new VirtualMachineScaleSetExtensionProfile
+            {
+                Extensions = new List<VirtualMachineScaleSetExtension>()
+                {
+                    GetTestVMSSVMExtension(name: "1", publisher: "Microsoft.CPlat.Core", type: "NullSeqA", version: "2.0"),
+                    GetTestVMSSVMExtension(name: "2", publisher: "Microsoft.CPlat.Core", type: "NullSeqB", version: "2.0")
+                }
+            };
         }
 
         private void TestVMScaleSetExtensionsImpl(MockContext context)
@@ -106,6 +202,15 @@ namespace Compute.Tests
             Assert.True(vmssExtension.TypeHandlerVersion == vmssExtensionOut.TypeHandlerVersion);
             Assert.True(vmssExtension.Settings.ToString() == vmssExtensionOut.Settings.ToString());
             Assert.True(vmssExtension.ForceUpdateTag == vmssExtensionOut.ForceUpdateTag);
+
+            if (vmssExtension.ProvisionAfterExtensions != null)
+            {
+                Assert.True(vmssExtension.ProvisionAfterExtensions.Count == vmssExtensionOut.ProvisionAfterExtensions.Count);
+                for (int i = 0; i < vmssExtension.ProvisionAfterExtensions.Count; i++)
+                {
+                    Assert.True(vmssExtension.ProvisionAfterExtensions[i] == vmssExtensionOut.ProvisionAfterExtensions[i]);
+                }
+            }
         }
 
         protected void ValidateVmssExtensionInstanceView(VirtualMachineScaleSetVMExtensionsSummary vmssExtSummary)

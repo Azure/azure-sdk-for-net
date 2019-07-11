@@ -19,8 +19,8 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "CustomImageSearch");
                 
-                var client = new CustomImageSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
-                var resp = client.CustomInstance.ImageSearchAsync(query: "tom cruise", customConfig: 0).Result;
+                var client = new CustomImageSearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                var resp = client.CustomInstance.ImageSearchAsync(query: "tom cruise", customConfig: "0").Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Value);

@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Management.Media
         /// Checks whether the Media Service resource name is available.
         /// </remarks>
         /// <param name='locationName'>
+        /// The name of the location
         /// </param>
         /// <param name='name'>
         /// The account name.

@@ -43,12 +43,14 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// provided for a resource. Each tag must have a key no greater than
         /// 128 characters and value no greater than 256 characters.</param>
         /// <param name="sku">The SKU of this account.</param>
-        public MapsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        /// <param name="properties">The map account properties.</param>
+        public MapsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), MapsAccountProperties properties = default(MapsAccountProperties))
             : base(id, name, type)
         {
             Location = location;
             Tags = tags;
             Sku = sku;
+            Properties = properties;
             CustomInit();
         }
 
@@ -78,6 +80,12 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
+
+        /// <summary>
+        /// Gets the map account properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public MapsAccountProperties Properties { get; private set; }
 
         /// <summary>
         /// Validate the object.

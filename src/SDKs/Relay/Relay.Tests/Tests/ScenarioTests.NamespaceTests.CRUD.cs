@@ -62,8 +62,8 @@ namespace Relay.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
+                Assert.Equal(2, createNamespaceResponse.Tags.Count);
+                Assert.Equal("Microsoft.Relay/Namespaces", createNamespaceResponse.Type);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
@@ -80,14 +80,14 @@ namespace Relay.Tests.ScenarioTests
                 var getAllNamespacesResponse = RelayManagementClient.Namespaces.ListByResourceGroup(resourceGroup);
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = RelayManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 // Update namespace tags
                 var updateNamespaceParameter = new RelayUpdateParameters()
@@ -110,11 +110,11 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 4);
+                Assert.Equal(4, getNamespaceResponse.Tags.Count);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(getNamespaceResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
                 
                 try
@@ -124,7 +124,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

@@ -86,7 +86,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(createNotificationHubAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Properties.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Properties.Rights)
                 {
-                    Assert.True(createNotificationHubAuthorizationRuleResponse.Rights.Any(r => r == right));
+                    Assert.Contains(createNotificationHubAuthorizationRuleResponse.Rights, r => r == right);
                 }
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -98,7 +98,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(getNotificationHubAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Properties.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Properties.Rights)
                 {
-                    Assert.True(getNotificationHubAuthorizationRulesResponse.Rights.Any(r => r == right));
+                    Assert.Contains(getNotificationHubAuthorizationRulesResponse.Rights, r => r == right);
                 }
 
                 //Get all notificationHub AuthorizationRules 
@@ -106,7 +106,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                     notificationHubName);
                 Assert.NotNull(getAllNotificationHubAuthorizationRulesResponse);
                 Assert.True(getAllNotificationHubAuthorizationRulesResponse.Count() > 1);
-                Assert.True(getAllNotificationHubAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
+                Assert.Contains(getAllNotificationHubAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);
 
                 //Update notificationHub authorizationRule 
                 var updateNotificationHubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
@@ -125,7 +125,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(updateNotificationHubAuthorizationRuleResponse.Rights.Count == updateNotificationHubAuthorizationRuleParameter.Properties.Rights.Count);
                 foreach (var right in updateNotificationHubAuthorizationRuleParameter.Properties.Rights)
                 {
-                    Assert.True(updateNotificationHubAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(updateNotificationHubAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -138,7 +138,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(getNotificationHubAuthorizationRuleResponse.Rights.Count == updateNotificationHubAuthorizationRuleParameter.Properties.Rights.Count);
                 foreach (var right in updateNotificationHubAuthorizationRuleParameter.Properties.Rights)
                 {
-                    Assert.True(getNotificationHubAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
+                    Assert.Contains(getNotificationHubAuthorizationRuleResponse.Rights, r => r.Equals(right));
                 }
 
                 //Get the connectionString to the namespace for a Authorization rule created at notificationHub level
@@ -146,8 +146,8 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
-                Assert.True(listKeysResponse.PrimaryConnectionString.Contains(listKeysResponse.PrimaryKey));
-                Assert.True(listKeysResponse.SecondaryConnectionString.Contains(listKeysResponse.SecondaryKey));
+                Assert.Contains(listKeysResponse.PrimaryKey, listKeysResponse.PrimaryConnectionString);
+                Assert.Contains(listKeysResponse.SecondaryKey, listKeysResponse.SecondaryConnectionString);
 
                 var policyKey = new PolicykeyResource()
                 {
@@ -159,8 +159,8 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal(regenerateKeys.KeyName, authorizationRuleName);
                 Assert.NotNull(regenerateKeys.PrimaryConnectionString);
                 Assert.NotNull(regenerateKeys.SecondaryConnectionString);
-                Assert.True(regenerateKeys.PrimaryConnectionString.Contains(regenerateKeys.PrimaryKey));
-                Assert.True(regenerateKeys.SecondaryConnectionString.Contains(regenerateKeys.SecondaryKey));
+                Assert.Contains(regenerateKeys.PrimaryKey, regenerateKeys.PrimaryConnectionString);
+                Assert.Contains(regenerateKeys.SecondaryKey, regenerateKeys.SecondaryConnectionString);
                 //Bug : uncomment after the fix
                 //Assert.Equal(regenerateKeys.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
                 Assert.NotEqual(regenerateKeys.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
@@ -173,8 +173,8 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal(listKeysAfterRegenerateResponse.KeyName, authorizationRuleName);
                 Assert.NotNull(listKeysAfterRegenerateResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysAfterRegenerateResponse.SecondaryConnectionString);
-                Assert.True(listKeysAfterRegenerateResponse.PrimaryConnectionString.Contains(listKeysAfterRegenerateResponse.PrimaryKey));
-                Assert.True(listKeysAfterRegenerateResponse.SecondaryConnectionString.Contains(listKeysAfterRegenerateResponse.SecondaryKey));
+                Assert.Contains(listKeysAfterRegenerateResponse.PrimaryKey, listKeysAfterRegenerateResponse.PrimaryConnectionString);
+                Assert.Contains(listKeysAfterRegenerateResponse.SecondaryKey, listKeysAfterRegenerateResponse.SecondaryConnectionString);
                 Assert.Equal(listKeysAfterRegenerateResponse.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
                 Assert.NotEqual(listKeysAfterRegenerateResponse.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
                 Assert.Equal(listKeysAfterRegenerateResponse.SecondaryKey, listKeysResponse.SecondaryKey);
@@ -204,7 +204,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

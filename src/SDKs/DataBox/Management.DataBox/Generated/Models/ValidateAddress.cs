@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,8 +34,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
         /// <param name="deviceType">Device type to be used for the job.
-        /// Possible values include: 'Pod', 'Disk', 'Cabinet'</param>
-        public ValidateAddress(ShippingAddress shippingAddress = default(ShippingAddress), DeviceType? deviceType = default(DeviceType?))
+        /// Possible values include: 'DataBox', 'DataBoxDisk',
+        /// 'DataBoxHeavy'</param>
+        public ValidateAddress(ShippingAddress shippingAddress, SkuName deviceType)
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
@@ -54,19 +56,23 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets or sets device type to be used for the job. Possible values
-        /// include: 'Pod', 'Disk', 'Cabinet'
+        /// include: 'DataBox', 'DataBoxDisk', 'DataBoxHeavy'
         /// </summary>
         [JsonProperty(PropertyName = "deviceType")]
-        public DeviceType? DeviceType { get; set; }
+        public SkuName DeviceType { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (ShippingAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ShippingAddress");
+            }
             if (ShippingAddress != null)
             {
                 ShippingAddress.Validate();

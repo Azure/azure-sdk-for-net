@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job as metadata.</param>
         /// <param name="usesTaskDependencies">Whether tasks in the job can
         /// define dependencies on each other. The default is false.</param>
-        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
+        /// <param name="networkConfiguration">The network configuration for
+        /// the job.</param>
+        public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), bool? usesTaskDependencies = default(bool?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration))
         {
             Id = id;
             DisplayName = displayName;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             OnTaskFailure = onTaskFailure;
             Metadata = metadata;
             UsesTaskDependencies = usesTaskDependencies;
+            NetworkConfiguration = networkConfiguration;
             CustomInit();
         }
 
@@ -236,6 +239,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "usesTaskDependencies")]
         public bool? UsesTaskDependencies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network configuration for the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public JobNetworkConfiguration NetworkConfiguration { get; set; }
 
     }
 }

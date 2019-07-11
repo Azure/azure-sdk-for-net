@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters for the request.
             /// </param>
-            public static Application Create(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationCreateParameters parameters = default(ApplicationCreateParameters))
+            public static Application Create(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, Application parameters = default(Application))
             {
-                return operations.CreateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, applicationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters for the request.
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Application> CreateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationCreateParameters parameters = default(ApplicationCreateParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> CreateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, Application parameters = default(Application), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,12 +85,12 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
-            public static void Delete(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId)
+            public static void Delete(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName)
             {
-                operations.DeleteAsync(resourceGroupName, accountName, applicationId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, applicationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -105,15 +105,15 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, applicationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -128,12 +128,12 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
-            public static Application Get(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId)
+            public static Application Get(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName)
             {
-                return operations.GetAsync(resourceGroupName, accountName, applicationId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, applicationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,15 +148,15 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Application> GetAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> GetAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, applicationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -174,15 +174,15 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters for the request.
             /// </param>
-            public static void Update(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParameters parameters)
+            public static Application Update(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, Application parameters)
             {
-                operations.UpdateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, applicationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,8 +197,8 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='accountName'>
             /// The name of the Batch account.
             /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
+            /// <param name='applicationName'>
+            /// The name of the application. This must be unique within the account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters for the request.
@@ -206,9 +206,12 @@ namespace Microsoft.Azure.Management.Batch
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Application> UpdateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationName, Application parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, applicationName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

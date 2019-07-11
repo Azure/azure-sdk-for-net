@@ -163,6 +163,44 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IssueContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates an existing issue for an API.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='apiId'>
+        /// API identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='issueId'>
+        /// Issue identifier. Must be unique in the current API Management
+        /// service instance.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update parameters.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Issue Entity. ETag should match the current entity
+        /// state from the header response of the GET request or it should be *
+        /// for unconditional update.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes the specified Issue from an API.
         /// </summary>
         /// <param name='resourceGroupName'>

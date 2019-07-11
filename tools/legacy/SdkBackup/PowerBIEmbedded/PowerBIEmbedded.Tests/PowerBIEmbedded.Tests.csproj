@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <Import Project="../../../../../src/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>PowerBIEmbedded.Tests</PackageId>
     <Description>PowerBIEmbedded.Tests Class Library</Description>
@@ -11,10 +11,6 @@
     
     <ProjectReference Include="..\Management.PowerBIEmbedded\Microsoft.Azure.Management.PowerBIEmbedded.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
 
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

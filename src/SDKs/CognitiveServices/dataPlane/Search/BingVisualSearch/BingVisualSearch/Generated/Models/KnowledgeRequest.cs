@@ -40,11 +40,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a key-value object consisting of filters that may be specified
-        /// to limit the results returned by the API.
+        /// Gets or sets a key-value object consisting of filters that may be
+        /// specified to limit the results returned by the API.
         /// </summary>
         [JsonProperty(PropertyName = "filters")]
-        public Filters Filters { get; private set; }
+        public Filters Filters { get; set; }
 
     }
 }

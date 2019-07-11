@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
     using Newtonsoft.Json;
-    using System;
     using System.Linq;
 
     /// <summary>
@@ -58,28 +57,5 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
-
-        /// <summary>
-        /// Gets or sets the name of the column in the table.
-        /// </summary>
-        [Obsolete("This property is only used for compability. It will be removed in the future. Use Name instead")]
-        [JsonProperty(PropertyName = "columnName")]
-        internal string ColumnName
-        {
-            get { return this.Name; }
-            set { this.Name = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the object type of the specified column (such as
-        /// System.String).
-        /// </summary>
-        [Obsolete("This property is only used for compability. It will be removed in the future. Use Type instead")]
-        [JsonProperty(PropertyName = "datatype")]
-        internal string DataType
-        {
-            get { return this.Type; }
-            set { this.Type = value; }
-        }
     }
 }

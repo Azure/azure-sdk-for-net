@@ -544,8 +544,6 @@ namespace BatchClientIntegrationTests
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
                     // test via faking data
-                    const int dataEgressGiB = 5;
-                    const int dataIngressGiB = 4;
                     DateTime endTime = DateTime.UtcNow.AddYears(-1);
                     DateTime startTime = DateTime.UtcNow;
                     const int totalCoreHours = 1;
@@ -560,8 +558,6 @@ namespace BatchClientIntegrationTests
                         Protocol.Models.PoolUsageMetrics newPum = new Protocol.Models.PoolUsageMetrics()
                         {
                             PoolId = id,
-                            DataEgressGiB = dataEgressGiB,
-                            DataIngressGiB = dataIngressGiB,
                             EndTime = endTime,
                             StartTime = startTime,
                             TotalCoreHours = totalCoreHours,
@@ -583,8 +579,6 @@ namespace BatchClientIntegrationTests
                     {
                         string id = "my fancy pool id " + j.ToString();
                         Assert.Equal(id, clList[j].PoolId);
-                        Assert.Equal(dataEgressGiB, clList[j].DataEgressGiB);
-                        Assert.Equal(dataIngressGiB, clList[j].DataIngressGiB);
                         Assert.Equal(endTime, clList[j].EndTime);
                         Assert.Equal(startTime, clList[j].StartTime);
                         Assert.Equal(totalCoreHours, clList[j].TotalCoreHours);
@@ -652,7 +646,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
                 {
-                    string poolId = "TestPoolAutoscaleVerbs" + TestUtilities.GetMyName();
+                    string poolId = TestUtilities.GenerateResourceId();
                     const int targetDedicated = 0;
                     const string autoscaleFormula1 = "$TargetDedicatedNodes=0;$TargetLowPriorityNodes=0;$NodeDeallocationOption=requeue";
                     const string autoscaleFormula2 = "$TargetDedicatedNodes=0;$TargetLowPriorityNodes=0;$NodeDeallocationOption=terminate";
@@ -675,6 +669,8 @@ namespace BatchClientIntegrationTests
                         boundPool.Refresh();
                         Assert.True(boundPool.AutoScaleEnabled);
                         Assert.Equal(autoscaleFormula1, boundPool.AutoScaleFormula);
+                        this.testOutputHelper.WriteLine($"Got the pool");
+
                         Assert.NotNull(boundPool.AutoScaleRun);
                         Assert.NotNull(boundPool.AutoScaleRun.Results);
                         Assert.Contains(autoscaleFormula1, boundPool.AutoScaleRun.Results);
@@ -847,7 +843,6 @@ namespace BatchClientIntegrationTests
                                 imageDetails.ImageReference,
                                 imageDetails.NodeAgentSku.Id)
                             {
-                                OSDisk = new OSDisk(CachingType.None),
                                 LicenseType = "Windows_Server"
                             },
                             targetDedicated);
@@ -855,7 +850,7 @@ namespace BatchClientIntegrationTests
 
                         pool.Refresh();
 
-                        Assert.Equal(CachingType.None, pool.VirtualMachineConfiguration.OSDisk.Caching);
+                        Assert.Equal("Windows_Server", pool.VirtualMachineConfiguration.LicenseType);
                     }
                     finally
                     {
@@ -970,7 +965,7 @@ namespace BatchClientIntegrationTests
             {
                 using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
                 {
-                    string poolId = "TestResizePool-" + TestUtilities.GetMyName() + "-" + TestUtilities.GetTimeStamp();
+                    string poolId = TestUtilities.GenerateResourceId();
 
                     try
                     {
@@ -981,6 +976,8 @@ namespace BatchClientIntegrationTests
 
                         await pool.CommitAsync().ConfigureAwait(false);
                         await pool.RefreshAsync().ConfigureAwait(false);
+
+                        await TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromMinutes(1));
 
                         await pool.ResizeAsync(
                             targetDedicatedComputeNodes: targetDedicated,
@@ -1107,7 +1104,7 @@ namespace BatchClientIntegrationTests
         {
             List<ResourceFile> files = new List<ResourceFile>();
 
-            ResourceFile newRR = new ResourceFile(resourceFileSas, resourceFileValue);
+            ResourceFile newRR = ResourceFile.FromUrl(resourceFileSas, resourceFileValue);
 
             files.Add(newRR);
 
@@ -1126,7 +1123,7 @@ namespace BatchClientIntegrationTests
         {
             foreach (ResourceFile curRF in st.ResourceFiles)
             {
-                Assert.Equal(curRF.BlobSource, resourceFileSas);
+                Assert.Equal(curRF.HttpUrl, resourceFileSas);
                 Assert.Equal(curRF.FilePath, resourceFileValue);
             }
         }

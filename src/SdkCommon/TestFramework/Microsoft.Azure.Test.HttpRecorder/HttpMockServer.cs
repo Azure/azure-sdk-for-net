@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
     {
         // One of the enum values for HttpRecorderMode such as Record or Playback
         private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
+        private const string TEST_MODE_HEADER = "azSdkTestPlayBackMode";
         private static AssetNames names;
         private static Records records;
         private static List<HttpMockServer> servers;
@@ -75,7 +76,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     break;
                 }
             }
-#elif netcoreapp11 || netcoreapp20
+#elif !FullNetFx
+//netcoreapp11 || netcoreapp20
             location = AppContext.BaseDirectory;
 #endif
             RecordsDirectory = Path.Combine(location, RecordsDirectory);
@@ -145,7 +147,9 @@ namespace Microsoft.Azure.Test.HttpRecorder
                             RecorderUtilities.DecodeBase64AsUri(key)));
                     }
 
-                    var result = queue.Dequeue().GetResponse();
+                    HttpResponseMessage result = queue.Dequeue().GetResponse();
+                    result = AddTestModeHeaders(result);
+                    
                     result.RequestMessage = request;
                     return Task.FromResult(result);
                 }
@@ -169,6 +173,16 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     });
                 }
             }
+        }
+
+        private HttpResponseMessage AddTestModeHeaders(HttpResponseMessage response)
+        {
+            if(response != null)
+            {
+                response?.Headers?.Add(TEST_MODE_HEADER, "true");
+            }
+
+            return response;
         }
 
         private static Random randomGenerator = new Random();

@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                     var vaults = _testFixture.ListVaults();
                     Assert.NotNull(vaults);
                     Assert.NotEmpty(vaults);
-                    Assert.True(vaults.Any(v => v.Name == vaultName));
+                    Assert.Contains(vaults, v => v.Name == vaultName);
 
                     var response = _testFixture.ListVaultUsages(vaultName);
 
                     Assert.NotNull(response);
-                    Assert.NotEqual(response.Count(), 0);
+                    Assert.NotEmpty(response);
                     foreach (var usage in response)
                     {
                         Assert.NotNull(usage.Name.Value);
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                     var replicationResponse = _testFixture.ListReplicationUsages(vaultName);
 
                     Assert.NotNull(replicationResponse);
-                    Assert.Equal(replicationResponse.Count(), 0);
+                    Assert.Empty(replicationResponse);
                 }
             }
         }

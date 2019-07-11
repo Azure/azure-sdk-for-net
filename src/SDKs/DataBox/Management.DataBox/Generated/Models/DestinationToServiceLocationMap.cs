@@ -47,16 +47,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location of the destination.
+        /// Gets location of the destination.
         /// </summary>
         [JsonProperty(PropertyName = "destinationLocation")]
-        public string DestinationLocation { get; set; }
+        public string DestinationLocation { get; private set; }
 
         /// <summary>
-        /// Gets or sets location of the service.
+        /// Gets location of the service.
         /// </summary>
         [JsonProperty(PropertyName = "serviceLocation")]
-        public string ServiceLocation { get; set; }
+        public string ServiceLocation { get; private set; }
 
     }
 }

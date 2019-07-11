@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Batch of image tags.
+    /// </summary>
     public partial class ImageTagCreateBatch
     {
         /// <summary>
@@ -28,6 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageTagCreateBatch class.
         /// </summary>
+        /// <param name="tags">Image Tag entries to include in this
+        /// batch.</param>
         public ImageTagCreateBatch(IList<ImageTagCreateEntry> tags = default(IList<ImageTagCreateEntry>))
         {
             Tags = tags;
@@ -40,6 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets image Tag entries to include in this batch.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<ImageTagCreateEntry> Tags { get; set; }

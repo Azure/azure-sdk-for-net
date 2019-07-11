@@ -4,11 +4,9 @@
     <PackageId>RecoveryServices.SiteRecovery.Tests</PackageId>
     <Description>RecoveryServices.SiteRecovery.Tests Class Library</Description>
     <AssemblyName>RecoveryServices.SiteRecovery.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <ProjectReference Include="..\Management.RecoveryServices.SiteRecovery\Microsoft.Azure.Management.RecoveryServices.SiteRecovery.csproj" />
   </ItemGroup>

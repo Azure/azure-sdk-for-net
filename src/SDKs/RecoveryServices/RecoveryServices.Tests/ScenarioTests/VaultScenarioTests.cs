@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                     var vaults = _testFixture.ListVaults();
                     Assert.NotNull(vaults);
                     Assert.NotEmpty(vaults);
-                    Assert.True(vaults.Any(v => v.Name == vaultName));
-                    Assert.True(vaults.Any(v => v.Name == vaultName2));
+                    Assert.Contains(vaults, v => v.Name == vaultName);
+                    Assert.Contains(vaults, v => v.Name == vaultName2);
 
                     _testFixture.DeleteVault(vaultName2);
                     Assert.Throws<CloudException>(() =>

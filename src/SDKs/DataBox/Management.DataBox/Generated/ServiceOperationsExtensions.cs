@@ -73,12 +73,16 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='validateAddress'>
+            /// <param name='shippingAddress'>
             /// Shipping address of the customer.
             /// </param>
-            public static AddressValidationOutput ValidateAddressMethod(this IServiceOperations operations, string location, ValidateAddress validateAddress)
+            /// <param name='deviceType'>
+            /// Device type to be used for the job. Possible values include: 'DataBox',
+            /// 'DataBoxDisk', 'DataBoxHeavy'
+            /// </param>
+            public static AddressValidationOutput ValidateAddressMethod(this IServiceOperations operations, string location, ShippingAddress shippingAddress, SkuName deviceType)
             {
-                return operations.ValidateAddressMethodAsync(location, validateAddress).GetAwaiter().GetResult();
+                return operations.ValidateAddressMethodAsync(location, shippingAddress, deviceType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -91,15 +95,19 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='validateAddress'>
+            /// <param name='shippingAddress'>
             /// Shipping address of the customer.
+            /// </param>
+            /// <param name='deviceType'>
+            /// Device type to be used for the job. Possible values include: 'DataBox',
+            /// 'DataBoxDisk', 'DataBoxHeavy'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AddressValidationOutput> ValidateAddressMethodAsync(this IServiceOperations operations, string location, ValidateAddress validateAddress, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AddressValidationOutput> ValidateAddressMethodAsync(this IServiceOperations operations, string location, ShippingAddress shippingAddress, SkuName deviceType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateAddressMethodWithHttpMessagesAsync(location, validateAddress, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateAddressMethodWithHttpMessagesAsync(location, shippingAddress, deviceType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

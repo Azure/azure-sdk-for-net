@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
-    <Version>0.12.0-preview</Version>
+    <Version>0.13.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Training API;Custom Vision Training SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
@@ -14,13 +14,16 @@
     This is a preview release of the Cognitive Services Custom Vision Training SDK.
 
     Changes in this release:
-    1. Support customizing service endpoints. 
+    1) The API client name was changed from TrainingAPI to CustomVisionTrainingClient, in keeping with other Azure SDKs.
+    2) The way the Azure region is specfied has changed.  Specifically, the AzureRegion property was dropped in favor of an Endpoint property.  If you were previously specifying an AzureRegion value, you should now specify Endpoint='https://{AzureRegion}.api.cognitive.microsoft.com' instead. This change ensures better global coverage.
+    3) Added ONNX 1.2 as an export option
+    4) Added negative tag support.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
     <PackageProjectUrl>http://customvision.ai</PackageProjectUrl>
   </PropertyGroup>
 

@@ -59,11 +59,7 @@ namespace Compute.Tests
                     ValidateContainerService(inputContainerService, containerService);
 
                     var listResult = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
-#if NET46
-                    Assert.True(listResult.Any(a => a.Name == containerService.Name));
-#else
                     Assert.Contains(listResult, a => a.Name == containerService.Name);
-#endif
                     m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                     var listResultAfterDeletion = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(!listResultAfterDeletion.Any());

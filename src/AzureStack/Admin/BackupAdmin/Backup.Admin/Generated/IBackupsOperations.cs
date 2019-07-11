@@ -88,6 +88,9 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <param name='backup'>
         /// Name of the backup.
         /// </param>
+        /// <param name='restoreOptions'>
+        /// Restore options.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -100,7 +103,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restore a backup.
         /// </summary>
@@ -113,6 +116,9 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <param name='backup'>
         /// Name of the backup.
         /// </param>
+        /// <param name='restoreOptions'>
+        /// Restore options.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -125,6 +131,6 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

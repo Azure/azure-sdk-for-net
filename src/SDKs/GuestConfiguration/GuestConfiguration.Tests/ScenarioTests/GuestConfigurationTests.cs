@@ -12,8 +12,8 @@ namespace GuestConfiguration.Tests.ScenarioTests
 
     public class AutomationTest 
     {
-        private const string ResourceGroupName = "GCSDKTests";
-        private const string VMName = "GCSDKTests0";
+        private const string ResourceGroupName = "vivga";
+        private const string VMName = "vivga0";
         private const string AssignmentName = "AuditSecureProtocol";
 
         [Fact]
@@ -94,6 +94,24 @@ namespace GuestConfiguration.Tests.ScenarioTests
 
                     Assert.NotNull(gcAssignmentReportsRetrieved);
                     Assert.True(gcAssignmentReportsRetrieved.Value.Count >= 0);
+                }
+            }  
+        }
+
+        [Fact]
+        public void CanListAllGuestConfigurationAssignments()
+        {
+            using (var context = MockContext.Start(GetType().FullName))
+            {
+                using (var testFixture = new GuestConfigurationTestBase(context))
+                {
+                    // get guest configuration assignment
+                    var gcAssignments = GuestConfigurationAssignmentsOperationsExtensions.List(testFixture.GuestConfigurationClient.GuestConfigurationAssignments,
+                        ResourceGroupName,
+                        VMName);
+
+                    Assert.NotNull(gcAssignments);
+                    Assert.True(gcAssignments.IsAny());
                 }
             }
         }

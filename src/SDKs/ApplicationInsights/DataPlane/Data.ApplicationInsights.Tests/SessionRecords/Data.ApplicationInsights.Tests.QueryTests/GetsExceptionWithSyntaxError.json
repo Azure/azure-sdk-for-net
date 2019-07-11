@@ -1,23 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "/v1/apps/DEMO_APP/query?timespan=PT1H",
-      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvcXVlcnk/dGltZXNwYW49UFQxSA==",
+      "RequestUri": "/v1/apps/DEMO_APP/query",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvcXVlcnk=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"query\": \"union * | foobar\"\r\n}",
+      "RequestBody": "{\r\n  \"query\": \"union * | foobar\",\r\n  \"timespan\": \"PT1H\"\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "35"
-        ],
         "x-api-key": [
           "DEMO_KEY"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+          "FxVersion/4.6.00001.0",
+          "Microsoft.Azure.ApplicationInsights.Query.ApplicationInsightsDataClient/1.0.0.0"
         ],
         "prefer": [
           "response-v1=true"
@@ -26,25 +20,24 @@
           "csharpsdk"
         ],
         "x-ms-client-request-id": [
-          "caf78f93-b483-45d3-b16c-0f4e38841ba0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The request had some invalid properties\",\r\n    \"code\": \"BadArgumentError\",\r\n    \"innererror\": {\r\n      \"code\": \"SyntaxError\",\r\n      \"message\": \"A recognition error occurred in the query.\",\r\n      \"innererror\": {\r\n        \"code\": \"SYN0002\",\r\n        \"message\": \"Query could not be parsed at 'foobar' on line [1,10]\",\r\n        \"line\": 1,\r\n        \"pos\": 10,\r\n        \"token\": \"foobar\"\r\n      }\r\n    }\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "312"
+          "d5ea28ee-43d7-481b-a072-fd74701163cd"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
+        "Content-Length": [
+          "58"
+        ]
+      },
+      "ResponseHeaders": {
         "Connection": [
           "keep-alive"
         ],
         "Date": [
-          "Tue, 23 Jan 2018 21:11:48 GMT"
+          "Mon, 24 Sep 2018 21:35:20 GMT"
         ],
         "Via": [
-          "1.1 draft-ai-green.0950b5b9-0053-11e8-b7b8-70b3d5800008"
+          "1.1 draft-ai-blue.c8d3978f-c01b-11e8-b19c-70b3d5800001"
         ],
         "Server": [
           "nginx"
@@ -59,9 +52,16 @@
           "*"
         ],
         "Access-Control-Expose-Headers": [
-          "Retry-After,Age,WWW-Authenticate"
+          "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location"
+        ],
+        "Content-Length": [
+          "312"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The request had some invalid properties\",\r\n    \"code\": \"BadArgumentError\",\r\n    \"innererror\": {\r\n      \"code\": \"SyntaxError\",\r\n      \"message\": \"A recognition error occurred in the query.\",\r\n      \"innererror\": {\r\n        \"code\": \"SYN0002\",\r\n        \"message\": \"Query could not be parsed at 'foobar' on line [1,10]\",\r\n        \"line\": 1,\r\n        \"pos\": 10,\r\n        \"token\": \"foobar\"\r\n      }\r\n    }\r\n  }\r\n}",
       "StatusCode": 400
     }
   ],

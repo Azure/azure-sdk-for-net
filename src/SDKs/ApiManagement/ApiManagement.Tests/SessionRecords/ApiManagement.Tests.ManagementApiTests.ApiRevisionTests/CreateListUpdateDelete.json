@@ -7,14 +7,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89792741-41c2-4f58-a1f1-d145b7c009bd"
+          "692f0ba1-7216-4688-aedf-19e1162d6588"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,13 +30,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:43:46 GMT"
+          "Wed, 21 Nov 2018 18:44:46 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAETvdM=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -43,17 +45,17 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e27f189a-7819-4916-88e0-024febaa195c",
-          "eb80ffb9-5b04-4d42-9c30-6961415a5bbd"
+          "aa4754fe-98d0-4289-b01e-1742351336b2",
+          "c4abf40e-f3b6-46de-9e45-966decf8da76"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1187"
         ],
         "x-ms-correlation-request-id": [
-          "53212eb5-4577-4d4e-b8f8-895b91eb0ca1"
+          "183ce59e-2a5a-4925-b496-d229cc2e60e2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164347Z:53212eb5-4577-4d4e-b8f8-895b91eb0ca1"
+          "WESTUS2:20181121T184447Z:183ce59e-2a5a-4925-b496-d229cc2e60e2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -68,7 +70,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAETvdM=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -78,14 +80,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "32e47a3b-08a6-4ae4-b325-bf1b2f3487e2"
+          "a0fbfcb1-9814-4146-9671-6c75e4c82dd4"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -93,13 +97,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:43:47 GMT"
+          "Wed, 21 Nov 2018 18:44:46 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAETvdM=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -108,16 +112,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "86e10c67-e8ee-4d61-939e-c615f3c3145a"
+          "e88b0d59-1b02-4ece-a9f1-bdd2dd981811"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11969"
         ],
         "x-ms-correlation-request-id": [
-          "2d3849d0-96ec-4e49-bb08-338839c1e38a"
+          "3d22471f-bd3d-4a0c-b3e1-ebe1a41fd8d8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164348Z:2d3849d0-96ec-4e49-bb08-338839c1e38a"
+          "WESTUS2:20181121T184447Z:3d22471f-bd3d-4a0c-b3e1-ebe1a41fd8d8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -132,24 +136,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAETvdM=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"swaggerApi\",\r\n    \"contentValue\": \"{\\r\\n    \\\"x-comment\\\": \\\"This file was extended from /github.com/swagger-api/swagger-spec/blob/master/examples/v2.0/json/petstore-with-external-docs.json\\\",\\r\\n    \\\"swagger\\\": \\\"2.0\\\",\\r\\n    \\\"info\\\": {\\r\\n        \\\"version\\\": \\\"1.0.0\\\",\\r\\n        \\\"title\\\": \\\"Swagger Petstore Extensive\\\",\\r\\n        \\\"description\\\": \\\"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\\\",\\r\\n        \\\"termsOfService\\\": \\\"http://helloreverb.com/terms/\\\",\\r\\n        \\\"contact\\\": {\\r\\n            \\\"name\\\": \\\"Wordnik API Team\\\",\\r\\n            \\\"email\\\": \\\"foo@example.com\\\",\\r\\n            \\\"url\\\": \\\"http://madskristensen.net\\\"\\r\\n        },\\r\\n        \\\"license\\\": {\\r\\n            \\\"name\\\": \\\"MIT\\\",\\r\\n            \\\"url\\\": \\\"http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT\\\"\\r\\n        }\\r\\n    },\\r\\n    \\\"externalDocs\\\": {\\r\\n        \\\"description\\\": \\\"find more info here\\\",\\r\\n        \\\"url\\\": \\\"https://helloreverb.com/about\\\"\\r\\n    },\\r\\n    \\\"host\\\": \\\"petstore.swagger.wordnik.com\\\",\\r\\n    \\\"basePath\\\": \\\"/api\\\",\\r\\n    \\\"schemes\\\": [\\r\\n        \\\"http\\\"\\r\\n    ],\\r\\n    \\\"consumes\\\": [\\r\\n        \\\"application/json\\\"\\r\\n    ],\\r\\n    \\\"produces\\\": [\\r\\n        \\\"application/json\\\"\\r\\n    ],\\r\\n    \\\"paths\\\": {\\r\\n        \\\"/mySamplePath?willbeignored={willbeignored}\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"description\\\": \\\"Dummy desc\\\",\\r\\n                \\\"operationId\\\": \\\"dummyid1\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyDateHeaderParam\\\",\\r\\n                        \\\"in\\\": \\\"header\\\",\\r\\n                        \\\"description\\\": \\\"dummyDateHeaderParam description\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"format\\\": \\\"date\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyReqQueryParam\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"dummyReqQueryParam description\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyNotReqQueryParam\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"dummyNotReqQueryParam description\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyBodyParam\\\",\\r\\n                        \\\"in\\\": \\\"body\\\",\\r\\n                        \\\"description\\\": \\\"dummyBodyParam description\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/pet\\\",\\r\\n                            \\\"example\\\": {\\r\\n                                \\\"id\\\": 2,\\r\\n                                \\\"name\\\": \\\"myreqpet\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"pet response\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/definitions/pet\\\"\\r\\n                            }\\r\\n                        },\\r\\n                        \\\"headers\\\": {\\r\\n                            \\\"header1\\\": {\\r\\n                                \\\"description\\\": \\\"sampleheader\\\",\\r\\n                                \\\"type\\\": \\\"integer\\\",\\r\\n                                \\\"format\\\": \\\"int64\\\"\\r\\n                            }\\r\\n                        },\\r\\n                        \\\"examples\\\": {\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"id\\\": 3,\\r\\n                                \\\"name\\\": \\\"myresppet\\\" \\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/resourceWithFormData\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"description\\\": \\\"resourceWithFormData desc\\\",\\r\\n                \\\"operationId\\\": \\\"resourceWithFormDataPOST\\\",\\r\\n                \\\"consumes\\\": [ \\\"multipart/form-data\\\" ],\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyFormDataParam\\\",\\r\\n                        \\\"in\\\": \\\"formData\\\",\\r\\n                        \\\"description\\\": \\\"dummyFormDataParam description\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyReqQueryParam\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"dummyReqQueryParam description\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"sample response\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/mySamplePath2?definedQueryParam={definedQueryParam}\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"produces\\\": [\\r\\n                    \\\"contenttype1\\\",\\r\\n                    \\\"application/xml\\\"\\r\\n                ],\\r\\n                \\\"description\\\": \\\"Dummy desc\\\",\\r\\n                \\\"operationId\\\": \\\"dummyid2\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"$ref\\\": \\\"#/parameters/dummyQueryParameterDef\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"$ref\\\": \\\"#/parameters/dummyBodyParameterDef\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"204\\\": {\\r\\n                        \\\"$ref\\\": \\\"#/responses/dummyResponseDef\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/pets2?dummyParam={dummyParam}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"description\\\": \\\"Dummy description\\\",\\r\\n                \\\"operationId\\\": \\\"dummyOperationId\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"dummyParam\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"dummyParam desc\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"collectionFormat\\\": \\\"csv\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"limit\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"maximum number of results to return\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"pet response\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/pets\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"description\\\": \\\"Returns all pets from the system that the user has access to\\\",\\r\\n                \\\"operationId\\\": \\\"findPets\\\",\\r\\n                \\\"externalDocs\\\": {\\r\\n                    \\\"description\\\": \\\"find more info here\\\",\\r\\n                    \\\"url\\\": \\\"https://helloreverb.com/about\\\"\\r\\n                },\\r\\n                \\\"produces\\\": [\\r\\n                    \\\"application/json\\\",\\r\\n                    \\\"application/xml\\\"\\r\\n                ],\\r\\n                \\\"consumes\\\": [\\r\\n                    \\\"text/xml\\\",\\r\\n                    \\\"text/html\\\"\\r\\n                ],\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"tags\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"tags to filter by\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"collectionFormat\\\": \\\"csv\\\"\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"limit\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"maximum number of results to return\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"pet response\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/definitions/pet\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"post\\\": {\\r\\n                \\\"description\\\": \\\"Creates a new pet in the store.  Duplicates are allowed\\\",\\r\\n                \\\"operationId\\\": \\\"addPet\\\",\\r\\n                \\\"produces\\\": [\\r\\n                    \\\"application/json\\\"\\r\\n                ],\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"pet\\\",\\r\\n                        \\\"in\\\": \\\"body\\\",\\r\\n                        \\\"description\\\": \\\"Pet to add to the store\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/newPet\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"pet response\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/pet\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/pets/{id}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"description\\\": \\\"Returns a user based on a single ID, if the user does not have access to the pet\\\",\\r\\n                \\\"operationId\\\": \\\"findPetById\\\",\\r\\n                \\\"produces\\\": [\\r\\n                    \\\"application/json\\\",\\r\\n                    \\\"application/xml\\\",\\r\\n                    \\\"text/xml\\\",\\r\\n                    \\\"text/html\\\"\\r\\n                ],\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"id\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to fetch\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"pet response\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/pet\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"description\\\": \\\"deletes a single pet based on the ID supplied\\\",\\r\\n                \\\"operationId\\\": \\\"deletePet\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"id\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to delete\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"204\\\": {\\r\\n                        \\\"description\\\": \\\"pet deleted\\\"\\r\\n                    },\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"unexpected error\\\",\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/definitions/errorModel\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    },\\r\\n    \\\"definitions\\\": {\\r\\n        \\\"pet\\\": {\\r\\n            \\\"required\\\": [\\r\\n                \\\"id\\\",\\r\\n                \\\"name\\\"\\r\\n            ],\\r\\n            \\\"externalDocs\\\": {\\r\\n                \\\"description\\\": \\\"find more info here\\\",\\r\\n                \\\"url\\\": \\\"https://helloreverb.com/about\\\"\\r\\n            },\\r\\n            \\\"properties\\\": {\\r\\n                \\\"id\\\": {\\r\\n                    \\\"type\\\": \\\"integer\\\",\\r\\n                    \\\"format\\\": \\\"int64\\\"\\r\\n                },\\r\\n                \\\"name\\\": {\\r\\n                    \\\"type\\\": \\\"string\\\"\\r\\n                },\\r\\n                \\\"tag\\\": {\\r\\n                    \\\"type\\\": \\\"string\\\"\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"newPet\\\": {\\r\\n            \\\"allOf\\\": [\\r\\n                {\\r\\n                    \\\"$ref\\\": \\\"#/definitions/pet\\\"\\r\\n                },\\r\\n                {\\r\\n                    \\\"required\\\": [\\r\\n                        \\\"name\\\"\\r\\n                    ],\\r\\n                    \\\"properties\\\": {\\r\\n                        \\\"id\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            ]\\r\\n        },\\r\\n        \\\"errorModel\\\": {\\r\\n            \\\"required\\\": [\\r\\n                \\\"code\\\",\\r\\n                \\\"message\\\"\\r\\n            ],\\r\\n            \\\"properties\\\": {\\r\\n                \\\"code\\\": {\\r\\n                    \\\"type\\\": \\\"integer\\\",\\r\\n                    \\\"format\\\": \\\"int32\\\"\\r\\n                },\\r\\n                \\\"message\\\": {\\r\\n                    \\\"type\\\": \\\"string\\\"\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    },\\r\\n    \\\"parameters\\\": {\\r\\n        \\\"dummyBodyParameterDef\\\": {\\r\\n            \\\"name\\\": \\\"definedBodyParam\\\",\\r\\n            \\\"in\\\": \\\"body\\\",\\r\\n            \\\"description\\\": \\\"definedBodyParam description\\\",\\r\\n            \\\"required\\\": true,\\r\\n            \\\"schema\\\": {\\r\\n                \\\"title\\\": \\\"Example Schema\\\",\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"firstName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"lastName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"age\\\": {\\r\\n                        \\\"description\\\": \\\"Age in years\\\",\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"minimum\\\": 0\\r\\n                    }\\r\\n                },\\r\\n                \\\"required\\\": [ \\\"firstName\\\", \\\"lastName\\\" ]\\r\\n            }\\r\\n        },\\r\\n        \\\"dummyQueryParameterDef\\\": {\\r\\n            \\\"name\\\": \\\"definedQueryParam\\\",\\r\\n            \\\"in\\\": \\\"query\\\",\\r\\n            \\\"description\\\": \\\"definedQueryParam description\\\",\\r\\n            \\\"required\\\": true,\\r\\n            \\\"type\\\": \\\"string\\\",\\r\\n            \\\"format\\\": \\\"whateverformat\\\"\\r\\n        }\\r\\n    },\\r\\n    \\\"responses\\\": {\\r\\n        \\\"dummyResponseDef\\\": {\\r\\n            \\\"description\\\": \\\"dummyResponseDef description\\\",\\r\\n            \\\"schema\\\": {\\r\\n                \\\"$ref\\\":  \\\"#/definitions/pet\\\"\\r\\n            },\\r\\n            \\\"headers\\\": {\\r\\n                \\\"header1\\\": {\\r\\n                    \\\"type\\\": \\\"integer\\\"\\r\\n                },\\r\\n                \\\"header2\\\": {\\r\\n                    \\\"type\\\": \\\"integer\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"examples\\\": {\\r\\n                \\\"contenttype1\\\": \\\"contenttype1 example\\\",\\r\\n                \\\"contenttype2\\\": \\\"contenttype2 example\\\"\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\\r\\n\",\r\n    \"contentFormat\": \"swagger-json\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cbc18a40-27a3-409b-be1f-d19b12ed452d"
+          "83afefe8-5cc9-4a5b-843e-e1e0ad7123d3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -163,13 +169,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:43:56 GMT"
+          "Wed, 21 Nov 2018 18:44:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH48=\""
+          "\"AAAAAAAAN30=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -178,16 +184,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ee9f9e02-7374-45e8-9a24-b5bcd2e39cda"
+          "d96c2a23-d792-4283-8489-84ae68526100"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1186"
         ],
         "x-ms-correlation-request-id": [
-          "4c020ef6-e943-4010-9ae9-9d3650e82177"
+          "c12856d0-3557-450d-b414-789cfcaf505b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164356Z:4c020ef6-e943-4010-9ae9-9d3650e82177"
+          "WESTUS2:20181121T184448Z:c12856d0-3557-450d-b414-789cfcaf505b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -202,24 +208,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid8376\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api\",\r\n    \"path\": \"swaggerApi\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid7050\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api\",\r\n    \"path\": \"swaggerApi\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c07aa798-4a9a-404c-9105-c80fadf646f3"
+          "78917c06-5aa0-4299-be78-49a726033d84"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -227,13 +235,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:02 GMT"
+          "Wed, 21 Nov 2018 18:44:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH48=\""
+          "\"AAAAAAAAN30=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -242,16 +250,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "63bc239e-cf0e-4bf3-8ae2-665696662e5e"
+          "599fd69e-6d7f-4ab1-a725-5bd30c148ae0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11968"
         ],
         "x-ms-correlation-request-id": [
-          "44430f80-f3d0-4047-b5ab-7cb3873ed1e5"
+          "e76ba1eb-eb74-446d-9ce8-0f596f73a0f2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164503Z:44430f80-f3d0-4047-b5ab-7cb3873ed1e5"
+          "WESTUS2:20181121T184448Z:e76ba1eb-eb74-446d-9ce8-0f596f73a0f2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -266,24 +274,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid8376\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api\",\r\n    \"path\": \"swaggerApi\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid7050\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api\",\r\n    \"path\": \"swaggerApi\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "26e2a501-81a4-496b-9735-7cdf5784a201"
+          "ebdb8fb0-15ec-4c3b-8cc3-95e846addb14"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -291,7 +301,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:58 GMT"
+          "Wed, 21 Nov 2018 18:44:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -303,16 +313,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2acee395-d0a2-4b7a-ac55-e0a366291896"
+          "b974b359-ae76-479a-b30f-7a360f29185a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
+          "11956"
         ],
         "x-ms-correlation-request-id": [
-          "1ec49498-8c2a-4e4d-9ca5-a4d32960bc53"
+          "6987cb22-418a-4cb3-b84b-d5fb6967ddf4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164558Z:1ec49498-8c2a-4e4d-9ca5-a4d32960bc53"
+          "WESTUS2:20181121T184452Z:6987cb22-418a-4cb3-b84b-d5fb6967ddf4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -331,20 +341,22 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ff3a5934-1c94-4a0e-8ce7-f697c98ad5e4"
+          "ddda40e4-58ca-44e4-a62c-0d16196bb6e9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -352,7 +364,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:03 GMT"
+          "Wed, 21 Nov 2018 18:44:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -364,22 +376,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "58f2791e-31fc-4efa-92d4-85c494022e33"
+          "0efe8c86-bab2-4b78-8d88-3731b9725b0f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11967"
         ],
         "x-ms-correlation-request-id": [
-          "f0011d3c-ea0d-458b-b027-bc85889dca9e"
+          "e765b883-6fef-4b3d-9764-ec667c728c85"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164504Z:f0011d3c-ea0d-458b-b027-bc85889dca9e"
+          "WESTUS2:20181121T184448Z:e765b883-6fef-4b3d-9764-ec667c728c85"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "16911"
+          "18978"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -388,24 +400,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/addPet\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"addPet\",\r\n      \"properties\": {\r\n        \"displayName\": \"addPet\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/pets\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"Creates a new pet in the store.  Duplicates are allowed\",\r\n        \"request\": {\r\n          \"description\": \"Pet to add to the store\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n              \"typeName\": \"newPet\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/deletePet\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"deletePet\",\r\n      \"properties\": {\r\n        \"displayName\": \"deletePet\",\r\n        \"method\": \"DELETE\",\r\n        \"urlTemplate\": \"/pets/{id}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"id\",\r\n            \"description\": \"Format - int64. ID of pet to delete\",\r\n            \"type\": \"integer\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"deletes a single pet based on the ID supplied\",\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 204,\r\n            \"description\": \"pet deleted\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/dummyid1\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyid1\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyid1\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/mySamplePath?dummyReqQueryParam={dummyReqQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyReqQueryParam\",\r\n            \"description\": \"dummyReqQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy desc\",\r\n        \"request\": {\r\n          \"description\": \"dummyBodyParam description\",\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"dummyNotReqQueryParam\",\r\n              \"description\": \"dummyNotReqQueryParam description\",\r\n              \"type\": \"string\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"dummyDateHeaderParam\",\r\n              \"description\": \"Format - date (as full-date in RFC3339). dummyDateHeaderParam description\",\r\n              \"type\": \"string\",\r\n              \"required\": true,\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"sample\": \"{\\r\\n  \\\"id\\\": 2,\\r\\n  \\\"name\\\": \\\"myreqpet\\\"\\r\\n}\",\r\n              \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n              \"typeName\": \"pet\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"{\\r\\n  \\\"id\\\": 3,\\r\\n  \\\"name\\\": \\\"myresppet\\\"\\r\\n}\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"petArray\"\r\n              }\r\n            ],\r\n            \"headers\": [\r\n              {\r\n                \"name\": \"header1\",\r\n                \"description\": \"sampleheader\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/dummyid2\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyid2\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyid2\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/mySamplePath2?definedQueryParam={definedQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"definedQueryParam\",\r\n            \"description\": \"Format - whateverformat. definedQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy desc\",\r\n        \"request\": {\r\n          \"description\": \"definedBodyParam description\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n              \"typeName\": \"DefinedBodyParam\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 204,\r\n            \"description\": \"dummyResponseDef description\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"contenttype1\",\r\n                \"sample\": \"contenttype1 example\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"contenttype2\",\r\n                \"sample\": \"contenttype2 example\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              }\r\n            ],\r\n            \"headers\": [\r\n              {\r\n                \"name\": \"header1\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              },\r\n              {\r\n                \"name\": \"header2\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/dummyOperationId\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyOperationId\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyOperationId\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets2?dummyParam={dummyParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyParam\",\r\n            \"description\": \"dummyParam desc\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy description\",\r\n        \"request\": {\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"limit\",\r\n              \"description\": \"Format - int32. maximum number of results to return\",\r\n              \"type\": \"integer\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [],\r\n          \"representations\": []\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"Pets2Get200ApplicationJsonResponse\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/findPetById\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"findPetById\",\r\n      \"properties\": {\r\n        \"displayName\": \"findPetById\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets/{id}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"id\",\r\n            \"description\": \"Format - int64. ID of pet to fetch\",\r\n            \"type\": \"integer\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Returns a user based on a single ID, if the user does not have access to the pet\",\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/html\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"pet\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/html\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/findPets\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"findPets\",\r\n      \"properties\": {\r\n        \"displayName\": \"findPets\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"Returns all pets from the system that the user has access to\",\r\n        \"request\": {\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"tags\",\r\n              \"description\": \"tags to filter by\",\r\n              \"type\": \"string\",\r\n              \"values\": []\r\n            },\r\n            {\r\n              \"name\": \"limit\",\r\n              \"description\": \"Format - int32. maximum number of results to return\",\r\n              \"type\": \"integer\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [],\r\n          \"representations\": []\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"petArray\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"petArray\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5b6dc0c5fb4a4009a444dbb7\",\r\n                \"typeName\": \"errorModel\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/operations/resourceWithFormDataPOST\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"resourceWithFormDataPOST\",\r\n      \"properties\": {\r\n        \"displayName\": \"resourceWithFormDataPOST\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/resourceWithFormData?dummyReqQueryParam={dummyReqQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyReqQueryParam\",\r\n            \"description\": \"dummyReqQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"resourceWithFormData desc\",\r\n        \"request\": {\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"multipart/form-data\",\r\n              \"formParameters\": [\r\n                {\r\n                  \"name\": \"dummyFormDataParam\",\r\n                  \"description\": \"dummyFormDataParam description\",\r\n                  \"type\": \"string\",\r\n                  \"required\": true,\r\n                  \"values\": []\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"sample response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/addPet\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"addPet\",\r\n      \"properties\": {\r\n        \"displayName\": \"addPet\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/pets\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"Creates a new pet in the store.  Duplicates are allowed\",\r\n        \"request\": {\r\n          \"description\": \"Pet to add to the store\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n              \"typeName\": \"newPet\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"id\\\": 0,\\r\\n  \\\"name\\\": \\\"string\\\",\\r\\n  \\\"tag\\\": \\\"string\\\"\\r\\n}\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/deletePet\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"deletePet\",\r\n      \"properties\": {\r\n        \"displayName\": \"deletePet\",\r\n        \"method\": \"DELETE\",\r\n        \"urlTemplate\": \"/pets/{id}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"id\",\r\n            \"description\": \"Format - int64. ID of pet to delete\",\r\n            \"type\": \"integer\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"deletes a single pet based on the ID supplied\",\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 204,\r\n            \"description\": \"pet deleted\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/dummyid1\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyid1\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyid1\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/mySamplePath?dummyReqQueryParam={dummyReqQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyReqQueryParam\",\r\n            \"description\": \"dummyReqQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy desc\",\r\n        \"request\": {\r\n          \"description\": \"dummyBodyParam description\",\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"dummyNotReqQueryParam\",\r\n              \"description\": \"dummyNotReqQueryParam description\",\r\n              \"type\": \"string\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"dummyDateHeaderParam\",\r\n              \"description\": \"Format - date (as full-date in RFC3339). dummyDateHeaderParam description\",\r\n              \"type\": \"string\",\r\n              \"required\": true,\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"sample\": \"{\\r\\n  \\\"id\\\": 2,\\r\\n  \\\"name\\\": \\\"myreqpet\\\"\\r\\n}\",\r\n              \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n              \"typeName\": \"pet\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"{\\r\\n  \\\"id\\\": 3,\\r\\n  \\\"name\\\": \\\"myresppet\\\"\\r\\n}\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"petArray\"\r\n              }\r\n            ],\r\n            \"headers\": [\r\n              {\r\n                \"name\": \"header1\",\r\n                \"description\": \"sampleheader\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/dummyid2\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyid2\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyid2\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/mySamplePath2?definedQueryParam={definedQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"definedQueryParam\",\r\n            \"description\": \"Format - whateverformat. definedQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy desc\",\r\n        \"request\": {\r\n          \"description\": \"definedBodyParam description\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"application/json\",\r\n              \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n              \"typeName\": \"DefinedBodyParam\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 204,\r\n            \"description\": \"dummyResponseDef description\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"contenttype1\",\r\n                \"sample\": \"contenttype1 example\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"contenttype2\",\r\n                \"sample\": \"contenttype2 example\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"<pet>\\r\\n  <id>0</id>\\r\\n  <name>string</name>\\r\\n  <tag>string</tag>\\r\\n</pet>\"\r\n              }\r\n            ],\r\n            \"headers\": [\r\n              {\r\n                \"name\": \"header1\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              },\r\n              {\r\n                \"name\": \"header2\",\r\n                \"type\": \"integer\",\r\n                \"values\": []\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/dummyOperationId\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"dummyOperationId\",\r\n      \"properties\": {\r\n        \"displayName\": \"dummyOperationId\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets2?dummyParam={dummyParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyParam\",\r\n            \"description\": \"dummyParam desc\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Dummy description\",\r\n        \"request\": {\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"limit\",\r\n              \"description\": \"Format - int32. maximum number of results to return\",\r\n              \"type\": \"integer\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [],\r\n          \"representations\": []\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"Pets2Get200ApplicationJsonResponse\",\r\n                \"generatedSample\": \"[\\r\\n  \\\"string\\\"\\r\\n]\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/findPetById\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"findPetById\",\r\n      \"properties\": {\r\n        \"displayName\": \"findPetById\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets/{id}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"id\",\r\n            \"description\": \"Format - int64. ID of pet to fetch\",\r\n            \"type\": \"integer\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"Returns a user based on a single ID, if the user does not have access to the pet\",\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"id\\\": 0,\\r\\n  \\\"name\\\": \\\"string\\\",\\r\\n  \\\"tag\\\": \\\"string\\\"\\r\\n}\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"<pet>\\r\\n  <id>0</id>\\r\\n  <name>string</name>\\r\\n  <tag>string</tag>\\r\\n</pet>\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"<pet>\\r\\n  <id>0</id>\\r\\n  <name>string</name>\\r\\n  <tag>string</tag>\\r\\n</pet>\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/html\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"pet\",\r\n                \"generatedSample\": \"<pet>\\r\\n  <id>0</id>\\r\\n  <name>string</name>\\r\\n  <tag>string</tag>\\r\\n</pet>\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"<errorModel>\\r\\n  <code>0</code>\\r\\n  <message>string</message>\\r\\n</errorModel>\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"<errorModel>\\r\\n  <code>0</code>\\r\\n  <message>string</message>\\r\\n</errorModel>\"\r\n              },\r\n              {\r\n                \"contentType\": \"text/html\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"<errorModel>\\r\\n  <code>0</code>\\r\\n  <message>string</message>\\r\\n</errorModel>\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/findPets\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"findPets\",\r\n      \"properties\": {\r\n        \"displayName\": \"findPets\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/pets\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"Returns all pets from the system that the user has access to\",\r\n        \"request\": {\r\n          \"queryParameters\": [\r\n            {\r\n              \"name\": \"tags\",\r\n              \"description\": \"tags to filter by\",\r\n              \"type\": \"string\",\r\n              \"values\": []\r\n            },\r\n            {\r\n              \"name\": \"limit\",\r\n              \"description\": \"Format - int32. maximum number of results to return\",\r\n              \"type\": \"integer\",\r\n              \"values\": []\r\n            }\r\n          ],\r\n          \"headers\": [],\r\n          \"representations\": []\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"pet response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"petArray\",\r\n                \"generatedSample\": \"[\\r\\n  {\\r\\n    \\\"id\\\": 0,\\r\\n    \\\"name\\\": \\\"string\\\",\\r\\n    \\\"tag\\\": \\\"string\\\"\\r\\n  }\\r\\n]\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"petArray\",\r\n                \"generatedSample\": \"<petArray>\\r\\n  <id>0</id>\\r\\n  <name>string</name>\\r\\n  <tag>string</tag>\\r\\n</petArray>\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          },\r\n          {\r\n            \"statusCode\": 500,\r\n            \"description\": \"unexpected error\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"{\\r\\n  \\\"code\\\": 0,\\r\\n  \\\"message\\\": \\\"string\\\"\\r\\n}\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"schemaId\": \"5bf5a7a0fb4a4015801c5875\",\r\n                \"typeName\": \"errorModel\",\r\n                \"generatedSample\": \"<errorModel>\\r\\n  <code>0</code>\\r\\n  <message>string</message>\\r\\n</errorModel>\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/operations/resourceWithFormDataPOST\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"resourceWithFormDataPOST\",\r\n      \"properties\": {\r\n        \"displayName\": \"resourceWithFormDataPOST\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/resourceWithFormData?dummyReqQueryParam={dummyReqQueryParam}\",\r\n        \"templateParameters\": [\r\n          {\r\n            \"name\": \"dummyReqQueryParam\",\r\n            \"description\": \"dummyReqQueryParam description\",\r\n            \"type\": \"string\",\r\n            \"required\": true,\r\n            \"values\": []\r\n          }\r\n        ],\r\n        \"description\": \"resourceWithFormData desc\",\r\n        \"request\": {\r\n          \"queryParameters\": [],\r\n          \"headers\": [],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"multipart/form-data\",\r\n              \"formParameters\": [\r\n                {\r\n                  \"name\": \"dummyFormDataParam\",\r\n                  \"description\": \"dummyFormDataParam description\",\r\n                  \"type\": \"string\",\r\n                  \"required\": true,\r\n                  \"values\": []\r\n                }\r\n              ]\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"sample response\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ebd41f84-d62d-49d1-8aa1-3c68ca58f551"
+          "00fb551a-df6c-4ec3-af08-137b7958f9b9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -413,13 +427,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:04 GMT"
+          "Wed, 21 Nov 2018 18:44:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH48=\""
+          "\"AAAAAAAAN30=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -428,16 +442,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "69f72cbc-ae36-4006-9e60-11d00a9c1060"
+          "718853de-18f6-4694-a4e8-80c54f874ac7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11966"
         ],
         "x-ms-correlation-request-id": [
-          "035fa9ff-718b-4c56-9ac6-b7eb704e5c62"
+          "e0adc4a0-a103-4a64-93e5-7a4111c86d46"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164504Z:035fa9ff-718b-4c56-9ac6-b7eb704e5c62"
+          "WESTUS2:20181121T184448Z:e0adc4a0-a103-4a64-93e5-7a4111c86d46"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -453,20 +467,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "390692e5-c7bf-4d38-86c7-83605eb12d90"
+          "cefd264a-0bb1-45fd-8349-0f0d2c062b35"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -474,13 +490,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:52 GMT"
+          "Wed, 21 Nov 2018 18:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH48=\""
+          "\"AAAAAAAAN30=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -489,16 +505,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "8d216d94-57c8-43a3-bb0d-b2d65c11d78a"
+          "62e6f4ed-60d3-4abc-8352-9bfed7ab275b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
+          "11961"
         ],
         "x-ms-correlation-request-id": [
-          "0415ada7-9ded-426e-8c2b-7de55bc04310"
+          "512a40f2-ccbc-4edd-929b-05d0a3785d41"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164552Z:0415ada7-9ded-426e-8c2b-7de55bc04310"
+          "WESTUS2:20181121T184450Z:512a40f2-ccbc-4edd-929b-05d0a3785d41"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -514,20 +530,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376%3Brev%3D2?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NiUzQnJldiUzRDI/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050%3Brev%3D2?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MCUzQnJldiUzRDI/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"authenticationSettings\": {},\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"apiRevisionDescription\": \"Petstore second revision\",\r\n    \"displayName\": \"Swagger Petstore Extensive2\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api2\",\r\n    \"path\": \"swaggerApi2\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "73f85717-0a09-4dbb-b82c-265da3271f38"
+          "866e5d12-e6d5-4727-bf95-022de6345dc6"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -541,13 +559,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:10 GMT"
+          "Wed, 21 Nov 2018 18:44:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH6w=\""
+          "\"AAAAAAAAN5o=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -556,16 +574,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0a1a3041-fde9-4d1b-b540-b90713102e16"
+          "d6c4f909-df6b-4257-9184-93967a63a16f"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1185"
         ],
         "x-ms-correlation-request-id": [
-          "62d73632-40d8-4084-a7a8-6516b11e7f38"
+          "cbe4a7a8-da31-4015-97db-dc8dc342890d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164510Z:62d73632-40d8-4084-a7a8-6516b11e7f38"
+          "WESTUS2:20181121T184448Z:cbe4a7a8-da31-4015-97db-dc8dc342890d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -580,30 +598,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid8376;rev=2\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive2\",\r\n    \"apiRevision\": \"2\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api2\",\r\n    \"path\": \"swaggerApi2\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"apiRevisionDescription\": \"Petstore second revision\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"apiid7050;rev=2\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore Extensive2\",\r\n    \"apiRevision\": \"2\",\r\n    \"description\": \"A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\",\r\n    \"serviceUrl\": \"http://petstore.swagger.wordnik.com/api2\",\r\n    \"path\": \"swaggerApi2\",\r\n    \"protocols\": [\r\n      \"http\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"apiRevisionDescription\": \"Petstore second revision\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376%3Brev%3D2/operations/firstOpRev2930?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NiUzQnJldiUzRDIvb3BlcmF0aW9ucy9maXJzdE9wUmV2MjkzMD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050%3Brev%3D2/operations/firstOpRev1174?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MCUzQnJldiUzRDIvb3BlcmF0aW9ucy9maXJzdE9wUmV2MTE3ND9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description_azsmnet1929\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet3024\",\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet2050\",\r\n          \"description\": \"description_azsmnet781\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet8795\",\r\n          \"description\": \"description_azsmnet1310\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"required\": false,\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet8062\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet3249\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet7789\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet660\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet2371\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operation_azsmnet5077\",\r\n    \"method\": \"POST\",\r\n    \"urlTemplate\": \"template_azsmnet7357\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description_azsmnet6492\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet7398\",\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet6351\",\r\n          \"description\": \"description_azsmnet5665\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet3267\",\r\n          \"description\": \"description_azsmnet1389\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"required\": false,\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet1181\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet2009\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet9222\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet5197\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet8218\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operation_azsmnet713\",\r\n    \"method\": \"POST\",\r\n    \"urlTemplate\": \"template_azsmnet9624\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2ee24068-ded6-4fff-bde3-ed4581480393"
+          "6e903b26-8388-4d0e-824c-4bbea25d94cb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1527"
+          "1528"
         ]
       },
       "ResponseHeaders": {
@@ -611,13 +631,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:49 GMT"
+          "Wed, 21 Nov 2018 18:44:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH7A=\""
+          "\"AAAAAAAAN54=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -626,16 +646,88 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "65be4ea4-72d9-470b-b034-0444ab2e1216"
+          "29827874-2f7a-4fe6-9292-dc307f4bacf3"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1184"
         ],
         "x-ms-correlation-request-id": [
-          "3985a13f-12a5-471b-ba93-549c2b461d30"
+          "9f8c80cd-7ae1-4671-aa9c-7a5f2302a923"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164550Z:3985a13f-12a5-471b-ba93-549c2b461d30"
+          "WESTUS2:20181121T184449Z:9f8c80cd-7ae1-4671-aa9c-7a5f2302a923"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1903"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations/firstOpRev1174\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"firstOpRev1174\",\r\n  \"properties\": {\r\n    \"displayName\": \"operation_azsmnet713\",\r\n    \"method\": \"POST\",\r\n    \"urlTemplate\": \"/template_azsmnet9624\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"description_azsmnet6492\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet7398\",\r\n      \"queryParameters\": [],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet6351\",\r\n          \"description\": \"description_azsmnet5665\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet3267\",\r\n          \"description\": \"description_azsmnet1389\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet1181\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet2009\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet9222\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet5197\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet8218\"\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050%3Brev%3D2/operations/secondOpName728?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MCUzQnJldiUzRDIvb3BlcmF0aW9ucy9zZWNvbmRPcE5hbWU3Mjg/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description_azsmnet8717\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet8392\",\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet805\",\r\n          \"description\": \"description_azsmnet145\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet6057\",\r\n          \"description\": \"description_azsmnet5084\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"required\": false,\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet3008\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet545\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet8798\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet7865\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet5063\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operation_azsmnet2803\",\r\n    \"method\": \"GET\",\r\n    \"urlTemplate\": \"template_azsmnet1327\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c36de8d9-4872-4f27-b804-33b7c80d8152"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1525"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Nov 2018 18:44:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAAN6E=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "40fef30f-c48c-4e79-9041-f564e1d35b49"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1183"
+        ],
+        "x-ms-correlation-request-id": [
+          "39105ebb-716e-4b34-b259-70a7163a008a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20181121T184449Z:39105ebb-716e-4b34-b259-70a7163a008a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -650,94 +742,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations/firstOpRev2930\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"firstOpRev2930\",\r\n  \"properties\": {\r\n    \"displayName\": \"operation_azsmnet5077\",\r\n    \"method\": \"POST\",\r\n    \"urlTemplate\": \"/template_azsmnet7357\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"description_azsmnet1929\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet3024\",\r\n      \"queryParameters\": [],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet2050\",\r\n          \"description\": \"description_azsmnet781\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet8795\",\r\n          \"description\": \"description_azsmnet1310\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet8062\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet3249\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet7789\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet660\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet2371\"\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations/secondOpName728\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"secondOpName728\",\r\n  \"properties\": {\r\n    \"displayName\": \"operation_azsmnet2803\",\r\n    \"method\": \"GET\",\r\n    \"urlTemplate\": \"/template_azsmnet1327\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"description_azsmnet8717\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet8392\",\r\n      \"queryParameters\": [],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet805\",\r\n          \"description\": \"description_azsmnet145\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet6057\",\r\n          \"description\": \"description_azsmnet5084\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet3008\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet545\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet8798\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet7865\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet5063\"\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376%3Brev%3D2/operations/secondOpName3070?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NiUzQnJldiUzRDIvb3BlcmF0aW9ucy9zZWNvbmRPcE5hbWUzMDcwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"description_azsmnet7766\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet4488\",\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet6687\",\r\n          \"description\": \"description_azsmnet9428\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet1335\",\r\n          \"description\": \"description_azsmnet3375\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"required\": false,\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet2199\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet8155\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet4293\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet9246\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet3508\"\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"displayName\": \"operation_azsmnet7497\",\r\n    \"method\": \"GET\",\r\n    \"urlTemplate\": \"template_azsmnet5707\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "282e9307-d6d3-4f4a-83b6-0337db25e3be"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "1528"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 10 Aug 2018 16:45:49 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"AAAAAAAAH7M=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "58380e7e-cca1-404d-af70-4e4a0ea9da09"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-correlation-request-id": [
-          "dd6591e2-4d90-4619-b61a-fe890940b542"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164550Z:dd6591e2-4d90-4619-b61a-fe890940b542"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "1907"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations/secondOpName3070\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n  \"name\": \"secondOpName3070\",\r\n  \"properties\": {\r\n    \"displayName\": \"operation_azsmnet7497\",\r\n    \"method\": \"GET\",\r\n    \"urlTemplate\": \"/template_azsmnet5707\",\r\n    \"templateParameters\": [],\r\n    \"description\": \"description_azsmnet7766\",\r\n    \"request\": {\r\n      \"description\": \"description_azsmnet4488\",\r\n      \"queryParameters\": [],\r\n      \"headers\": [\r\n        {\r\n          \"name\": \"param_azsmnet6687\",\r\n          \"description\": \"description_azsmnet9428\",\r\n          \"type\": \"int\",\r\n          \"defaultValue\": \"b\",\r\n          \"required\": true,\r\n          \"values\": [\r\n            \"a\",\r\n            \"b\",\r\n            \"c\"\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"param_azsmnet1335\",\r\n          \"description\": \"description_azsmnet3375\",\r\n          \"type\": \"bool\",\r\n          \"defaultValue\": \"e\",\r\n          \"values\": [\r\n            \"d\",\r\n            \"e\",\r\n            \"f\"\r\n          ]\r\n        }\r\n      ],\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"text/plain\",\r\n          \"sample\": \"sample_azsmnet2199\"\r\n        },\r\n        {\r\n          \"contentType\": \"application/xml\",\r\n          \"sample\": \"sample_azsmnet8155\"\r\n        }\r\n      ]\r\n    },\r\n    \"responses\": [\r\n      {\r\n        \"statusCode\": 200,\r\n        \"description\": \"description_azsmnet4293\",\r\n        \"representations\": [\r\n          {\r\n            \"contentType\": \"application/json\",\r\n            \"sample\": \"sample_azsmnet9246\"\r\n          },\r\n          {\r\n            \"contentType\": \"application/xml\",\r\n            \"sample\": \"sample_azsmnet3508\"\r\n          }\r\n        ],\r\n        \"headers\": []\r\n      }\r\n    ],\r\n    \"policies\": null\r\n  }\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376%3Brev%3D2/operations?$top=1&api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NiUzQnJldiUzRDIvb3BlcmF0aW9ucz8kdG9wPTEmYXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050%3Brev%3D2/operations?$top=1&api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MCUzQnJldiUzRDIvb3BlcmF0aW9ucz8kdG9wPTEmYXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0b7bf15b-cf65-49af-8473-b874d29263e0"
+          "99a0751e-68d7-40fa-8cbd-11a3c729f1a1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -745,7 +769,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:50 GMT"
+          "Wed, 21 Nov 2018 18:44:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -757,16 +781,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "30200b64-88b2-4359-aad4-702cfdf86e01"
+          "5b8f466d-d7f2-451d-a8aa-1ee8871ef404"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11965"
         ],
         "x-ms-correlation-request-id": [
-          "0b6bb08a-32cf-40ef-9c78-d9d3957ce84d"
+          "90f88ef4-95a7-41f0-b6d3-4eb43e5e53f1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164551Z:0b6bb08a-32cf-40ef-9c78-d9d3957ce84d"
+          "WESTUS2:20181121T184449Z:90f88ef4-95a7-41f0-b6d3-4eb43e5e53f1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -781,24 +805,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations/firstOpRev2930\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"firstOpRev2930\",\r\n      \"properties\": {\r\n        \"displayName\": \"operation_azsmnet5077\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/template_azsmnet7357\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"description_azsmnet1929\",\r\n        \"request\": {\r\n          \"description\": \"description_azsmnet3024\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"param_azsmnet2050\",\r\n              \"description\": \"description_azsmnet781\",\r\n              \"type\": \"int\",\r\n              \"defaultValue\": \"b\",\r\n              \"required\": true,\r\n              \"values\": [\r\n                \"a\",\r\n                \"b\",\r\n                \"c\"\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"param_azsmnet8795\",\r\n              \"description\": \"description_azsmnet1310\",\r\n              \"type\": \"bool\",\r\n              \"defaultValue\": \"e\",\r\n              \"values\": [\r\n                \"d\",\r\n                \"e\",\r\n                \"f\"\r\n              ]\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"text/plain\",\r\n              \"sample\": \"sample_azsmnet8062\"\r\n            },\r\n            {\r\n              \"contentType\": \"application/xml\",\r\n              \"sample\": \"sample_azsmnet3249\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"description_azsmnet7789\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"sample_azsmnet660\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"sample\": \"sample_azsmnet2371\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations?%24top=1&api-version=2018-01-01&%24skip=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations/secondOpName728\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"secondOpName728\",\r\n      \"properties\": {\r\n        \"displayName\": \"operation_azsmnet2803\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/template_azsmnet1327\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"description_azsmnet8717\",\r\n        \"request\": {\r\n          \"description\": \"description_azsmnet8392\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"param_azsmnet805\",\r\n              \"description\": \"description_azsmnet145\",\r\n              \"type\": \"int\",\r\n              \"defaultValue\": \"b\",\r\n              \"required\": true,\r\n              \"values\": [\r\n                \"a\",\r\n                \"b\",\r\n                \"c\"\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"param_azsmnet6057\",\r\n              \"description\": \"description_azsmnet5084\",\r\n              \"type\": \"bool\",\r\n              \"defaultValue\": \"e\",\r\n              \"values\": [\r\n                \"d\",\r\n                \"e\",\r\n                \"f\"\r\n              ]\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"text/plain\",\r\n              \"sample\": \"sample_azsmnet3008\"\r\n            },\r\n            {\r\n              \"contentType\": \"application/xml\",\r\n              \"sample\": \"sample_azsmnet545\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"description_azsmnet8798\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"sample_azsmnet7865\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"sample\": \"sample_azsmnet5063\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations?%24top=1&api-version=2018-01-01&%24skip=1\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations?%24top=1&api-version=2018-01-01&%24skip=1",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NjtyZXY9Mi9vcGVyYXRpb25zPyUyNHRvcD0xJmFwaS12ZXJzaW9uPTIwMTgtMDEtMDEmJTI0c2tpcD0x",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations?%24top=1&api-version=2018-01-01&%24skip=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MDtyZXY9Mi9vcGVyYXRpb25zPyUyNHRvcD0xJmFwaS12ZXJzaW9uPTIwMTgtMDEtMDEmJTI0c2tpcD0x",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d7c406be-7ba4-4ef8-8155-bc635c2eae31"
+          "7b5ba34d-7094-45cd-b499-964b212f47e8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -806,7 +832,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:50 GMT"
+          "Wed, 21 Nov 2018 18:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -818,22 +844,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "000b5987-5718-41c8-80e3-8d23dbb3990d"
+          "e59e30a2-9228-4747-af7f-6e8de279719a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11964"
         ],
         "x-ms-correlation-request-id": [
-          "8f62183e-126c-4120-b1be-4e71bb14c5d2"
+          "63104e18-98fb-4c15-94df-c4b42499da15"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164551Z:8f62183e-126c-4120-b1be-4e71bb14c5d2"
+          "WESTUS2:20181121T184449Z:63104e18-98fb-4c15-94df-c4b42499da15"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "2227"
+          "2223"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -842,24 +868,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376;rev=2/operations/secondOpName3070\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"secondOpName3070\",\r\n      \"properties\": {\r\n        \"displayName\": \"operation_azsmnet7497\",\r\n        \"method\": \"GET\",\r\n        \"urlTemplate\": \"/template_azsmnet5707\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"description_azsmnet7766\",\r\n        \"request\": {\r\n          \"description\": \"description_azsmnet4488\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"param_azsmnet6687\",\r\n              \"description\": \"description_azsmnet9428\",\r\n              \"type\": \"int\",\r\n              \"defaultValue\": \"b\",\r\n              \"required\": true,\r\n              \"values\": [\r\n                \"a\",\r\n                \"b\",\r\n                \"c\"\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"param_azsmnet1335\",\r\n              \"description\": \"description_azsmnet3375\",\r\n              \"type\": \"bool\",\r\n              \"defaultValue\": \"e\",\r\n              \"values\": [\r\n                \"d\",\r\n                \"e\",\r\n                \"f\"\r\n              ]\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"text/plain\",\r\n              \"sample\": \"sample_azsmnet2199\"\r\n            },\r\n            {\r\n              \"contentType\": \"application/xml\",\r\n              \"sample\": \"sample_azsmnet8155\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"description_azsmnet4293\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"sample_azsmnet9246\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"sample\": \"sample_azsmnet3508\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050;rev=2/operations/firstOpRev1174\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/operations\",\r\n      \"name\": \"firstOpRev1174\",\r\n      \"properties\": {\r\n        \"displayName\": \"operation_azsmnet713\",\r\n        \"method\": \"POST\",\r\n        \"urlTemplate\": \"/template_azsmnet9624\",\r\n        \"templateParameters\": [],\r\n        \"description\": \"description_azsmnet6492\",\r\n        \"request\": {\r\n          \"description\": \"description_azsmnet7398\",\r\n          \"queryParameters\": [],\r\n          \"headers\": [\r\n            {\r\n              \"name\": \"param_azsmnet6351\",\r\n              \"description\": \"description_azsmnet5665\",\r\n              \"type\": \"int\",\r\n              \"defaultValue\": \"b\",\r\n              \"required\": true,\r\n              \"values\": [\r\n                \"a\",\r\n                \"b\",\r\n                \"c\"\r\n              ]\r\n            },\r\n            {\r\n              \"name\": \"param_azsmnet3267\",\r\n              \"description\": \"description_azsmnet1389\",\r\n              \"type\": \"bool\",\r\n              \"defaultValue\": \"e\",\r\n              \"values\": [\r\n                \"d\",\r\n                \"e\",\r\n                \"f\"\r\n              ]\r\n            }\r\n          ],\r\n          \"representations\": [\r\n            {\r\n              \"contentType\": \"text/plain\",\r\n              \"sample\": \"sample_azsmnet1181\"\r\n            },\r\n            {\r\n              \"contentType\": \"application/xml\",\r\n              \"sample\": \"sample_azsmnet2009\"\r\n            }\r\n          ]\r\n        },\r\n        \"responses\": [\r\n          {\r\n            \"statusCode\": 200,\r\n            \"description\": \"description_azsmnet9222\",\r\n            \"representations\": [\r\n              {\r\n                \"contentType\": \"application/json\",\r\n                \"sample\": \"sample_azsmnet5197\"\r\n              },\r\n              {\r\n                \"contentType\": \"application/xml\",\r\n                \"sample\": \"sample_azsmnet8218\"\r\n              }\r\n            ],\r\n            \"headers\": []\r\n          }\r\n        ],\r\n        \"policies\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/revisions?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZXZpc2lvbnM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/revisions?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZXZpc2lvbnM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09530154-fc3d-4f86-beae-98bdaa76e206"
+          "f7762cd1-c0e4-40a5-80c7-036589aed7bd"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -867,7 +895,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:52 GMT"
+          "Wed, 21 Nov 2018 18:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -879,22 +907,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7b28960d-1b65-4130-b91b-7597fa947b99"
+          "9e8daa50-a985-4218-a118-9bfe50f3f108"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
+          "11963"
         ],
         "x-ms-correlation-request-id": [
-          "ab08be1f-a621-49c2-95e7-745d6eb04dc5"
+          "cd6211c6-445e-44dd-8150-47be50d169ed"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164552Z:ab08be1f-a621-49c2-95e7-745d6eb04dc5"
+          "WESTUS2:20181121T184449Z:cd6211c6-445e-44dd-8150-47be50d169ed"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "508"
+          "504"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -903,24 +931,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"apiId\": \"/apis/apiid8376;rev=2\",\r\n      \"apiRevision\": \"2\",\r\n      \"createdDateTime\": \"2018-08-10T16:45:10.757Z\",\r\n      \"updatedDateTime\": \"2018-08-10T16:45:10.787Z\",\r\n      \"description\": \"Petstore second revision\",\r\n      \"privateUrl\": \"/swaggerApi2;rev=2\",\r\n      \"isOnline\": true,\r\n      \"isCurrent\": false\r\n    },\r\n    {\r\n      \"apiId\": \"/apis/apiid8376;rev=1\",\r\n      \"apiRevision\": \"1\",\r\n      \"createdDateTime\": \"2018-08-10T16:43:51.143Z\",\r\n      \"updatedDateTime\": \"2018-08-10T16:43:52.94Z\",\r\n      \"description\": null,\r\n      \"privateUrl\": \"/swaggerApi\",\r\n      \"isOnline\": true,\r\n      \"isCurrent\": true\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"apiId\": \"/apis/apiid7050;rev=2\",\r\n      \"apiRevision\": \"2\",\r\n      \"createdDateTime\": \"2018-11-21T18:44:48.737Z\",\r\n      \"updatedDateTime\": \"2018-11-21T18:44:48.77Z\",\r\n      \"description\": \"Petstore second revision\",\r\n      \"privateUrl\": \"/swaggerApi2;rev=2\",\r\n      \"isOnline\": true,\r\n      \"isCurrent\": false\r\n    },\r\n    {\r\n      \"apiId\": \"/apis/apiid7050;rev=1\",\r\n      \"apiRevision\": \"1\",\r\n      \"createdDateTime\": \"2018-11-21T18:44:48Z\",\r\n      \"updatedDateTime\": \"2018-11-21T18:44:48.047Z\",\r\n      \"description\": null,\r\n      \"privateUrl\": \"/swaggerApi\",\r\n      \"isOnline\": true,\r\n      \"isCurrent\": true\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376%3Brev%3D2?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3NiUzQnJldiUzRDI/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050%3Brev%3D2?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MCUzQnJldiUzRDI/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0ddc3851-2eba-4211-9b23-619599be52b7"
+          "feb7dae6-5096-4be2-ab7f-55e45ad20f23"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -928,13 +958,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:52 GMT"
+          "Wed, 21 Nov 2018 18:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH6w=\""
+          "\"AAAAAAAAN5o=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -943,16 +973,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "16518e13-f1ee-4ecd-92e1-1dc5fd2cce66"
+          "88051135-3b3d-4389-b265-315c2c1ab7b7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
+          "11962"
         ],
         "x-ms-correlation-request-id": [
-          "46e71abc-4b1a-428d-b115-e5de5f2b78b2"
+          "f2334583-371a-4aa4-8611-4f8e2982be69"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164552Z:46e71abc-4b1a-428d-b115-e5de5f2b78b2"
+          "WESTUS2:20181121T184450Z:f2334583-371a-4aa4-8611-4f8e2982be69"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -968,20 +998,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d0010f73-91e0-4bb4-b5b2-5d3b8ae02904"
+          "0a0e228c-f075-494f-bc3f-528fec7e33f8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -989,7 +1021,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:53 GMT"
+          "Wed, 21 Nov 2018 18:44:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1001,16 +1033,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d6f0627b-1b36-4b1c-a68c-19b3c2823142"
+          "887aee1e-e234-40c5-8bed-142b784e6539"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
+          "11960"
         ],
         "x-ms-correlation-request-id": [
-          "5741ef48-683b-4b69-a15e-523bfe2f2624"
+          "1df3b326-2760-4ce6-8205-6ea83d26c5b7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164553Z:5741ef48-683b-4b69-a15e-523bfe2f2624"
+          "WESTUS2:20181121T184450Z:1df3b326-2760-4ce6-8205-6ea83d26c5b7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1029,20 +1061,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "10b89490-bfa0-4599-ba20-8544d90de172"
+          "ff2bd535-dabf-4a1e-a48d-a065fcea71cb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -1050,7 +1084,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:56 GMT"
+          "Wed, 21 Nov 2018 18:44:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1062,22 +1096,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a294ce0d-ad3f-4b67-850a-743dc220f38f"
+          "88e0165d-c877-445a-9d54-0472bbd87c4d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
+          "11957"
         ],
         "x-ms-correlation-request-id": [
-          "1b6f045c-a978-4706-a2f4-56aff02b2dbf"
+          "c66bf00f-da1f-48f6-ac7d-f2244871f22b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164556Z:1b6f045c-a978-4706-a2f4-56aff02b2dbf"
+          "WESTUS2:20181121T184451Z:c66bf00f-da1f-48f6-ac7d-f2244871f22b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "537"
+          "538"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1086,24 +1120,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n      \"name\": \"apireleaseid4914\",\r\n      \"properties\": {\r\n        \"createdDateTime\": \"2018-08-10T16:45:54.127Z\",\r\n        \"updatedDateTime\": \"2018-08-10T16:45:54.127Z\",\r\n        \"notes\": \"update_desc707\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546\",\r\n      \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n      \"name\": \"apireleaseid1546\",\r\n      \"properties\": {\r\n        \"createdDateTime\": \"2018-11-21T18:44:51.083Z\",\r\n        \"updatedDateTime\": \"2018-11-21T18:44:51.083Z\",\r\n        \"notes\": \"update_desc8809\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcy9hcGlyZWxlYXNlaWQ0OTE0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcy9hcGlyZWxlYXNlaWQxNTQ2P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"apiId\": \"/apis/apiid8376;rev=2\",\r\n    \"notes\": \"revision_description8474\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"apiId\": \"/apis/apiid7050;rev=2\",\r\n    \"notes\": \"revision_description2897\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "20021dd0-7efd-45b4-81ab-48e3e2d6cbf7"
+          "e6d26d69-7565-4c34-8f11-85e9ea812c37"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1117,13 +1153,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:54 GMT"
+          "Wed, 21 Nov 2018 18:44:50 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH7g=\""
+          "\"AAAAAAAAN6Y=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1132,16 +1168,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0b38dd28-cf01-45c6-8577-f5cc760e56cf"
+          "242ccd14-5c9c-49e5-950c-9ef0478382ec"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1182"
         ],
         "x-ms-correlation-request-id": [
-          "956f65f2-863d-4dab-a96a-6e4d848412f2"
+          "190cdabd-1d12-414a-8b7e-045ca4c75bc2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164554Z:956f65f2-863d-4dab-a96a-6e4d848412f2"
+          "WESTUS2:20181121T184451Z:190cdabd-1d12-414a-8b7e-045ca4c75bc2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1156,24 +1192,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n  \"name\": \"apireleaseid4914\",\r\n  \"properties\": {\r\n    \"apiId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376\",\r\n    \"createdDateTime\": \"2018-08-10T16:45:54.1252647Z\",\r\n    \"updatedDateTime\": \"2018-08-10T16:45:54.1252647Z\",\r\n    \"notes\": \"revision_description8474\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n  \"name\": \"apireleaseid1546\",\r\n  \"properties\": {\r\n    \"apiId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050\",\r\n    \"createdDateTime\": \"2018-11-21T18:44:51.0824191Z\",\r\n    \"updatedDateTime\": \"2018-11-21T18:44:51.0824191Z\",\r\n    \"notes\": \"revision_description2897\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcy9hcGlyZWxlYXNlaWQ0OTE0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcy9hcGlyZWxlYXNlaWQxNTQ2P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "HEAD",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "66850b8a-feee-438d-982d-a1e09266bee6"
+          "9e13aed6-0069-4356-a083-d9b024dd8ca1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -1181,13 +1219,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:55 GMT"
+          "Wed, 21 Nov 2018 18:44:50 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH7g=\""
+          "\"AAAAAAAAN6Y=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1196,16 +1234,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "8bcd1daf-fc6c-4857-a43b-c1cb09427ddc"
+          "fa953aa1-06bc-4277-82db-8d4f3bd859a3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11990"
+          "11959"
         ],
         "x-ms-correlation-request-id": [
-          "26eb70ec-fa29-4b34-ac42-05988ceac98c"
+          "39af5ae8-de7d-4740-bfb6-f1870eb6e427"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164555Z:26eb70ec-fa29-4b34-ac42-05988ceac98c"
+          "WESTUS2:20181121T184451Z:39af5ae8-de7d-4740-bfb6-f1870eb6e427"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1221,29 +1259,31 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcy9hcGlyZWxlYXNlaWQ0OTE0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcy9hcGlyZWxlYXNlaWQxNTQ2P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"apiId\": \"/apis/apiid8376;rev=2\",\r\n    \"notes\": \"update_desc707\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"apiId\": \"/apis/apiid7050;rev=2\",\r\n    \"notes\": \"update_desc8809\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "51212611-72da-47bc-8258-aceeb3bea44d"
+          "dc16aa6a-b3a6-4531-9485-2ad69896b6f9"
         ],
         "If-Match": [
-          "\"AAAAAAAAH7g=\""
+          "\"AAAAAAAAN6Y=\""
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "98"
+          "99"
         ]
       },
       "ResponseHeaders": {
@@ -1251,7 +1291,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:55 GMT"
+          "Wed, 21 Nov 2018 18:44:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1263,16 +1303,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "69aeb305-f191-443c-a3be-3858683aeb39"
+          "d0bc5689-b03e-4cea-9100-cbeecacf07cc"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1181"
         ],
         "x-ms-correlation-request-id": [
-          "67d77e8a-669a-45e6-8b6a-3b27be5a07f7"
+          "b27c5f45-c9b8-4f9b-8b65-4d78890e2fa1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164555Z:67d77e8a-669a-45e6-8b6a-3b27be5a07f7"
+          "WESTUS2:20181121T184451Z:b27c5f45-c9b8-4f9b-8b65-4d78890e2fa1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1285,20 +1325,22 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Ni9yZWxlYXNlcy9hcGlyZWxlYXNlaWQ0OTE0P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MC9yZWxlYXNlcy9hcGlyZWxlYXNlaWQxNTQ2P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d95c19db-50d9-4204-825b-3df6e7709cba"
+          "700b589f-3829-424d-894f-736770eb2aac"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -1306,13 +1348,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:55 GMT"
+          "Wed, 21 Nov 2018 18:44:50 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAH74=\""
+          "\"AAAAAAAAN6s=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1321,22 +1363,22 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "4947c08c-a067-41e2-94fc-15941c66728b"
+          "a6b88110-1d7d-405d-a80a-f37ee04fe9a1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11989"
+          "11958"
         ],
         "x-ms-correlation-request-id": [
-          "b42c2698-c9cd-4026-baf7-cea316c16cde"
+          "c8918b17-3cb0-478f-8dfb-e43bc8b6647b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164556Z:b42c2698-c9cd-4026-baf7-cea316c16cde"
+          "WESTUS2:20181121T184451Z:c8918b17-3cb0-478f-8dfb-e43bc8b6647b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "631"
+          "632"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1345,17 +1387,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376/releases/apireleaseid4914\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n  \"name\": \"apireleaseid4914\",\r\n  \"properties\": {\r\n    \"apiId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376\",\r\n    \"createdDateTime\": \"2018-08-10T16:45:54.127Z\",\r\n    \"updatedDateTime\": \"2018-08-10T16:45:54.127Z\",\r\n    \"notes\": \"update_desc707\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050/releases/apireleaseid1546\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis/releases\",\r\n  \"name\": \"apireleaseid1546\",\r\n  \"properties\": {\r\n    \"apiId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050\",\r\n    \"createdDateTime\": \"2018-11-21T18:44:51.083Z\",\r\n    \"updatedDateTime\": \"2018-11-21T18:44:51.083Z\",\r\n    \"notes\": \"update_desc8809\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?deleteRevisions=true&api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9kZWxldGVSZXZpc2lvbnM9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?deleteRevisions=true&api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9kZWxldGVSZXZpc2lvbnM9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dcafa0d4-8953-4c68-ac10-df84cfeb138b"
+          "e7e1408a-9d26-443c-9769-c233f5e2dd84"
         ],
         "If-Match": [
           "*"
@@ -1364,8 +1406,10 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -1373,7 +1417,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:58 GMT"
+          "Wed, 21 Nov 2018 18:44:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1385,16 +1429,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1fcfd0c0-f90d-405f-9540-07b27e0fd768"
+          "72619885-9690-4f78-aae2-0008aebf094a"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "7a8453e0-fec4-4f78-b2ef-7a3fefbf6f53"
+          "900f1deb-a4b7-4aa8-8833-1a0e60a76e53"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164558Z:7a8453e0-fec4-4f78-b2ef-7a3fefbf6f53"
+          "WESTUS2:20181121T184452Z:900f1deb-a4b7-4aa8-8833-1a0e60a76e53"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1410,13 +1454,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid8376?deleteRevisions=true&api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkODM3Nj9kZWxldGVSZXZpc2lvbnM9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/apiid7050?deleteRevisions=true&api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FwaWlkNzA1MD9kZWxldGVSZXZpc2lvbnM9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1b731594-76fb-4248-950a-7fa01a205046"
+          "470da896-2af4-4f59-8f59-7122fd7a16be"
         ],
         "If-Match": [
           "*"
@@ -1425,8 +1469,10 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.4.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
       "ResponseHeaders": {
@@ -1434,7 +1480,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 10 Aug 2018 16:45:58 GMT"
+          "Wed, 21 Nov 2018 18:44:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1446,16 +1492,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c5bda4e9-887a-4055-ae04-aae957fc9f81"
+          "cac734a7-5d63-4e63-a3d1-706e658a95be"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "faabbfa2-7ed8-4bac-a1c6-b77de76b176e"
+          "fff57e12-a724-485c-9697-9635f1604b2d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180810T164558Z:faabbfa2-7ed8-4bac-a1c6-b77de76b176e"
+          "WESTUS2:20181121T184452Z:fff57e12-a724-485c-9697-9635f1604b2d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1470,40 +1516,40 @@
   ],
   "Names": {
     "CreateListUpdateDelete": [
-      "apiid8376",
-      "apireleaseid4914",
-      "firstOpRev2930",
-      "secondOpName3070",
-      "revision_description8474",
-      "update_desc707"
+      "apiid7050",
+      "apireleaseid1546",
+      "firstOpRev1174",
+      "secondOpName728",
+      "revision_description2897",
+      "update_desc8809"
     ],
     "CreateOperationContract": [
-      "azsmnet5077",
-      "azsmnet1929",
-      "azsmnet7357",
-      "azsmnet3024",
-      "azsmnet2050",
-      "azsmnet781",
-      "azsmnet8795",
-      "azsmnet1310",
-      "azsmnet8062",
-      "azsmnet3249",
-      "azsmnet7789",
-      "azsmnet660",
-      "azsmnet2371",
-      "azsmnet7497",
-      "azsmnet7766",
-      "azsmnet5707",
-      "azsmnet4488",
-      "azsmnet6687",
-      "azsmnet9428",
-      "azsmnet1335",
-      "azsmnet3375",
-      "azsmnet2199",
-      "azsmnet8155",
-      "azsmnet4293",
-      "azsmnet9246",
-      "azsmnet3508"
+      "azsmnet713",
+      "azsmnet6492",
+      "azsmnet9624",
+      "azsmnet7398",
+      "azsmnet6351",
+      "azsmnet5665",
+      "azsmnet3267",
+      "azsmnet1389",
+      "azsmnet1181",
+      "azsmnet2009",
+      "azsmnet9222",
+      "azsmnet5197",
+      "azsmnet8218",
+      "azsmnet2803",
+      "azsmnet8717",
+      "azsmnet1327",
+      "azsmnet8392",
+      "azsmnet805",
+      "azsmnet145",
+      "azsmnet6057",
+      "azsmnet5084",
+      "azsmnet3008",
+      "azsmnet545",
+      "azsmnet8798",
+      "azsmnet7865",
+      "azsmnet5063"
     ]
   },
   "Variables": {

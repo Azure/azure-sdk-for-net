@@ -179,7 +179,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -384,7 +384,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -463,16 +463,19 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <param name='backup'>
         /// Name of the backup.
         /// </param>
+        /// <param name='restoreOptions'>
+        /// Restore options.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginRestoreWithHttpMessagesAsync(location, resourceGroupName, backup, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginRestoreWithHttpMessagesAsync(location, resourceGroupName, backup, restoreOptions, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -487,6 +490,9 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// </param>
         /// <param name='backup'>
         /// Name of the backup.
+        /// </param>
+        /// <param name='restoreOptions'>
+        /// Restore options.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -506,7 +512,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -528,6 +534,10 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (restoreOptions == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "restoreOptions");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -538,6 +548,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("backup", backup);
+                tracingParameters.Add("restoreOptions", restoreOptions);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginRestore", tracingParameters);
             }
@@ -591,6 +602,12 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
 
             // Serialize Request
             string _requestContent = null;
+            if(restoreOptions != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(restoreOptions, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -611,7 +628,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

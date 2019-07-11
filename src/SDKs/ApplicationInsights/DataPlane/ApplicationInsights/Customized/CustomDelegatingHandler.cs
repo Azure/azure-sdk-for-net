@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     internal class CustomDelegatingHandler : DelegatingHandler
     {

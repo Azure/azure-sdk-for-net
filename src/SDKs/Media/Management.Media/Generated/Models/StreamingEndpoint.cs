@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StreamingEndpoint class.
         /// </summary>
+        /// <param name="scaleUnits">The number of scale units.  Use the Scale
+        /// operation to adjust this value.</param>
         /// <param name="id">Fully qualified resource ID for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
@@ -42,8 +44,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="location">The Azure Region of the resource.</param>
         /// <param name="description">The StreamingEndpoint
         /// description.</param>
-        /// <param name="scaleUnits">The number of scale units.</param>
-        /// <param name="availabilitySetName">AvailabilitySet name</param>
+        /// <param name="availabilitySetName">The name of the AvailabilitySet
+        /// used with this StreamingEndpoint for high availability streaming.
+        /// This value can only be set at creation time.</param>
         /// <param name="accessControl">The access control definition of the
         /// StreamingEndpoint.</param>
         /// <param name="maxCacheAge">Max cache age</param>
@@ -66,7 +69,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// created.</param>
         /// <param name="lastModified">The exact time the StreamingEndpoint was
         /// last modified.</param>
-        public StreamingEndpoint(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), int scaleUnits = default(int), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        public StreamingEndpoint(int scaleUnits, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(id, name, type, tags, location)
         {
             Description = description;
@@ -100,13 +103,16 @@ namespace Microsoft.Azure.Management.Media.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of scale units.
+        /// Gets or sets the number of scale units.  Use the Scale operation to
+        /// adjust this value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleUnits")]
         public int ScaleUnits { get; set; }
 
         /// <summary>
-        /// Gets or sets availabilitySet name
+        /// Gets or sets the name of the AvailabilitySet used with this
+        /// StreamingEndpoint for high availability streaming.  This value can
+        /// only be set at creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySetName")]
         public string AvailabilitySetName { get; set; }
@@ -192,5 +198,14 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime? LastModified { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

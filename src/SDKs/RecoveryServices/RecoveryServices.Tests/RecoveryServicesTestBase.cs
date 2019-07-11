@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
             {
                 resourcesClient.ResourceGroups.Get(resourceGroup);
             }
-            catch (CloudException ex)
+            catch (CloudException)
             {
                 // Doesn't exist
                 resourceGroupExists = false;

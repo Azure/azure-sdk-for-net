@@ -94,6 +94,62 @@ namespace Microsoft.Azure.Search.Models
             Configure(parameters, ParsingModeKey, "json");
 
         /// <summary>
+        /// Tells the indexer to assume that all blobs contain JSON arrays, which it will then parse such that each JSON object in each array will
+        /// map to a single document in the Azure Search index.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs" /> for details.
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <param name="documentRoot">
+        /// An optional JSON Pointer that tells the indexer how to find the JSON array if it's not the top-level JSON property of each blob. If this
+        /// parameter is null or empty, the indexer will assume that the JSON array can be found in the top-level JSON property of each blob.
+        /// Default is null.
+        /// </param>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// </remarks>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseJsonArrays(this IndexingParameters parameters, string documentRoot = null)
+        {
+            Configure(parameters, ParsingModeKey, "jsonArray");
+
+            if (!string.IsNullOrEmpty(documentRoot))
+            {
+                Configure(parameters, "documentRoot", documentRoot);
+            }
+
+            return parameters;
+        }
+
+        /// <summary>
+        /// Tells the indexer to assume that all blobs are delimited text files. Currently only comma-separated value (CSV) text files are supported.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-csv-blobs" /> for details.
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <param name="headers">
+        /// Specifies column headers that the indexer will use to map values to specific fields in the Azure Search index. If you don't specify any
+        /// headers, the indexer assumes that the first non-blank line of each blob contains comma-separated headers.
+        /// </param>
+        /// <remarks>
+        /// This option only applies to indexers that index Azure Blob Storage.
+        /// </remarks>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseDelimitedTextFiles(this IndexingParameters parameters, params string[] headers)
+        {
+            Configure(parameters, ParsingModeKey, "delimitedText");
+
+            if (headers?.Length > 0)
+            {
+                Configure(parameters, "delimitedTextHeaders", headers.ToCommaSeparatedString());
+            }
+            else
+            {
+                Configure(parameters, "firstLineContainsHeaders", true);
+            }
+
+            return parameters;
+        }
+
+        /// <summary>
         /// Tells the indexer to assume that blobs should be parsed as text files in UTF-8 encoding.
         /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text"/>
         /// </summary>

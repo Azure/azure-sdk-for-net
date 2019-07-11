@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     /// <summary>
     /// The query response. This currently only supports the thinned query
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Enumerates over all rows in all tables.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
-        public IEnumerable<IDictionary<string, string>> Results
+        public IEnumerable<IDictionary<string, object>> Results
         {
             get
             {

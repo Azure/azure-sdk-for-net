@@ -46,9 +46,10 @@ namespace Fabric.Tests
         public void TestGetStorageSystem() {
             RunTest((client) => {
                 var fabricLocationName = GetLocation(client);
-                var subSystem = client.StorageSystems.List(ResourceGroupName, fabricLocationName).GetFirst();
-                var retrieved = client.StorageSystems.Get(ResourceGroupName, fabricLocationName, subSystem.Name);
-                AssertStorageSystemsAreSame(subSystem, retrieved);
+                var storageSystem = client.StorageSystems.List(ResourceGroupName, fabricLocationName).GetFirst();
+                var storageSystemName = ExtractName(storageSystem.Name);
+                var retrieved = client.StorageSystems.Get(ResourceGroupName, fabricLocationName, storageSystemName);
+                AssertStorageSystemsAreSame(storageSystem, retrieved);
             });
         }
 

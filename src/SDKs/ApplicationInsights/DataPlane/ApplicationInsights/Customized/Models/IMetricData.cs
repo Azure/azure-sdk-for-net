@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Azure.ApplicationInsights.Models
+﻿namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     public interface IMetricData
     {

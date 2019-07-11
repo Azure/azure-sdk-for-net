@@ -17,10 +17,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// The definition of the user identity under which the task is run.
     /// </summary>
     /// <remarks>
-    /// Specify either the userName or autoUser property, but not both. On
-    /// CloudServiceConfiguration pools, this user is logged in with the
-    /// INTERACTIVE flag. On Windows VirtualMachineConfiguration pools, this
-    /// user is logged in with the BATCH flag.
+    /// Specify either the userName or autoUser property, but not both.
     /// </remarks>
     public partial class UserIdentity
     {

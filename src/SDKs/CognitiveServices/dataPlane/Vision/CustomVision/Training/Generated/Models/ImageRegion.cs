@@ -26,6 +26,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageRegion class.
         /// </summary>
+        /// <param name="tagId">Id of the tag associated with this
+        /// region.</param>
         public ImageRegion(System.Guid regionId = default(System.Guid), string tagName = default(string), System.DateTime created = default(System.DateTime), System.Guid tagId = default(System.Guid), double left = default(double), double top = default(double), double width = default(double), double height = default(double))
         {
             RegionId = regionId;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.DateTime Created { get; private set; }
 
         /// <summary>
+        /// Gets or sets id of the tag associated with this region.
         /// </summary>
         [JsonProperty(PropertyName = "tagId")]
         public System.Guid TagId { get; set; }

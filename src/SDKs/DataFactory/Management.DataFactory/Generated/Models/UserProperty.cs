@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the UserProperty class.
         /// </summary>
-        /// <param name="name">User proprety name.</param>
-        /// <param name="value">User proprety value. Type: string (or
+        /// <param name="name">User property name.</param>
+        /// <param name="value">User property value. Type: string (or
         /// Expression with resultType string).</param>
         public UserProperty(string name, object value)
         {
@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets user proprety name.
+        /// Gets or sets user property name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets user proprety value. Type: string (or Expression with
+        /// Gets or sets user property value. Type: string (or Expression with
         /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "value")]

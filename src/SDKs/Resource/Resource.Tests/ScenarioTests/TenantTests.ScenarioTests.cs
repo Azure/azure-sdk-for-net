@@ -38,7 +38,7 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(tenants);
                 Assert.Equal(HttpStatusCode.OK, tenants.Response.StatusCode);
                 Assert.NotNull(tenants.Body);
-                Assert.NotEqual(0, tenants.Body.Count());
+                Assert.NotEmpty(tenants.Body);
                 Assert.NotNull(tenants.Body.First().Id);
                 Assert.NotNull(tenants.Body.First().TenantId);
             }

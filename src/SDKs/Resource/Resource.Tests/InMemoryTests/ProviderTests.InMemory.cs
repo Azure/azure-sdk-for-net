@@ -139,7 +139,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate result
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             Assert.Equal("Microsoft.Websites", result.First().NamespaceProperty);
             Assert.Equal("Registered", result.First().RegistrationState);
             Assert.Equal(2, result.First().ResourceTypes.Count);

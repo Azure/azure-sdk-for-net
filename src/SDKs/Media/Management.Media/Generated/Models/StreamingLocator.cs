@@ -35,33 +35,32 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the StreamingLocator class.
         /// </summary>
         /// <param name="assetName">Asset Name</param>
-        /// <param name="streamingPolicyName">Streaming policy name used by
-        /// this streaming locator. Either specify the name of streaming policy
-        /// you created or use one of the predefined streaming polices. The
-        /// predefined streaming policies available are:
+        /// <param name="streamingPolicyName">Name of the Streaming Policy used
+        /// by this Streaming Locator. Either specify the name of Streaming
+        /// Policy you created or use one of the predefined Streaming Policies.
+        /// The predefined Streaming Policies available are:
         /// 'Predefined_DownloadOnly', 'Predefined_ClearStreamingOnly',
         /// 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey',
-        /// 'Predefined_SecureStreaming' and
-        /// 'Predefined_SecureStreamingWithFairPlay'</param>
+        /// 'Predefined_MultiDrmCencStreaming' and
+        /// 'Predefined_MultiDrmStreaming'</param>
         /// <param name="id">Fully qualified resource ID for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="created">Creation time of Streaming Locator</param>
-        /// <param name="startTime">StartTime of Streaming Locator</param>
-        /// <param name="endTime">EndTime of Streaming Locator</param>
-        /// <param name="streamingLocatorId">StreamingLocatorId of Streaming
-        /// Locator</param>
-        /// <param name="defaultContentKeyPolicyName">Default ContentKeyPolicy
-        /// used by this Streaming Locator</param>
-        /// <param name="contentKeys">ContentKeys used by this Streaming
-        /// Locator</param>
-        /// <param name="alternativeMediaId">An Alternative Media Identifier
-        /// associated with the StreamingLocator.  This identifier can be used
-        /// to distinguish different StreamingLocators for the same Asset for
-        /// authorization purposes in the CustomLicenseAcquisitionUrlTemplate
-        /// or the CustomKeyAcquisitionUrlTemplate of the StreamingPolicy
-        /// specified in the StreamingPolicyName field.</param>
+        /// <param name="created">The creation time of the Streaming
+        /// Locator.</param>
+        /// <param name="startTime">The start time of the Streaming
+        /// Locator.</param>
+        /// <param name="endTime">The end time of the Streaming
+        /// Locator.</param>
+        /// <param name="streamingLocatorId">The StreamingLocatorId of the
+        /// Streaming Locator.</param>
+        /// <param name="defaultContentKeyPolicyName">Name of the default
+        /// ContentKeyPolicy used by this Streaming Locator.</param>
+        /// <param name="contentKeys">The ContentKeys used by this Streaming
+        /// Locator.</param>
+        /// <param name="alternativeMediaId">Alternative Media ID of this
+        /// Streaming Locator</param>
         public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string))
             : base(id, name, type)
         {
@@ -89,62 +88,57 @@ namespace Microsoft.Azure.Management.Media.Models
         public string AssetName { get; set; }
 
         /// <summary>
-        /// Gets creation time of Streaming Locator
+        /// Gets the creation time of the Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
-        /// Gets or sets startTime of Streaming Locator
+        /// Gets or sets the start time of the Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets endTime of Streaming Locator
+        /// Gets or sets the end time of the Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
-        /// Gets or sets streamingLocatorId of Streaming Locator
+        /// Gets or sets the StreamingLocatorId of the Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamingLocatorId")]
         public System.Guid? StreamingLocatorId { get; set; }
 
         /// <summary>
-        /// Gets or sets streaming policy name used by this streaming locator.
-        /// Either specify the name of streaming policy you created or use one
-        /// of the predefined streaming polices. The predefined streaming
-        /// policies available are: 'Predefined_DownloadOnly',
+        /// Gets or sets name of the Streaming Policy used by this Streaming
+        /// Locator. Either specify the name of Streaming Policy you created or
+        /// use one of the predefined Streaming Policies. The predefined
+        /// Streaming Policies available are: 'Predefined_DownloadOnly',
         /// 'Predefined_ClearStreamingOnly',
         /// 'Predefined_DownloadAndClearStreaming', 'Predefined_ClearKey',
-        /// 'Predefined_SecureStreaming' and
-        /// 'Predefined_SecureStreamingWithFairPlay'
+        /// 'Predefined_MultiDrmCencStreaming' and
+        /// 'Predefined_MultiDrmStreaming'
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamingPolicyName")]
         public string StreamingPolicyName { get; set; }
 
         /// <summary>
-        /// Gets or sets default ContentKeyPolicy used by this Streaming
-        /// Locator
+        /// Gets or sets name of the default ContentKeyPolicy used by this
+        /// Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultContentKeyPolicyName")]
         public string DefaultContentKeyPolicyName { get; set; }
 
         /// <summary>
-        /// Gets or sets contentKeys used by this Streaming Locator
+        /// Gets or sets the ContentKeys used by this Streaming Locator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentKeys")]
         public IList<StreamingLocatorContentKey> ContentKeys { get; set; }
 
         /// <summary>
-        /// Gets or sets an Alternative Media Identifier associated with the
-        /// StreamingLocator.  This identifier can be used to distinguish
-        /// different StreamingLocators for the same Asset for authorization
-        /// purposes in the CustomLicenseAcquisitionUrlTemplate or the
-        /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
-        /// the StreamingPolicyName field.
+        /// Gets or sets alternative Media ID of this Streaming Locator
         /// </summary>
         [JsonProperty(PropertyName = "properties.alternativeMediaId")]
         public string AlternativeMediaId { get; set; }

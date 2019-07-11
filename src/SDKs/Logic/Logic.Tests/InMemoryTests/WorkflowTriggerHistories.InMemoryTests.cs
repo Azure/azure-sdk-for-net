@@ -74,7 +74,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.List(null, "wfName", "triggerName"));
@@ -118,7 +118,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.ListNext(null));
@@ -160,7 +160,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Get(null, "wfName", "triggerName", "historyName"));
@@ -205,7 +205,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit(null, "wfName", "triggerName", "historyName"));
@@ -278,7 +278,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateTriggerHistoryListResponse1(IPage<WorkflowTriggerHistory> page)
         {
-            Assert.Equal(1, page.Count());
+            Assert.Single(page);
             Assert.Equal("http://management.azure.com/keyNextLink", page.NextPageLink);
             this.ValidateTriggerHistory1(page.First());
         }

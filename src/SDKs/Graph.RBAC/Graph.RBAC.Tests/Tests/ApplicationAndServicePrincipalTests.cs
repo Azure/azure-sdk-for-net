@@ -107,7 +107,19 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     Assert.Single(passwordCreds);
                     Assert.Contains(passwordCreds, c => c.KeyId == passwordCredential1.KeyId);
 
-                    // Append a new passwordCredential to exisitng credentials
+                    // Append a new keyCredential to existing credentials
+                    keyId = "0faf955a-f6db-4742-bbb2-9e9a811f04f2";
+                    var keyCredential2 = CreateKeyCredential(keyId);
+                    keyCreds.Add(keyCredential2);
+                    UpdateAppKeyCredential(context, appObjectId, keyCreds);
+
+                    //Get
+                    var fetchedkeyCreds2 = GetAppKeyCredential(context, appObjectId);
+                    Assert.Equal(2, fetchedkeyCreds2.Count);
+                    Assert.Contains(fetchedkeyCreds2, c => c.KeyId == keyCredential2.KeyId);
+                    Assert.Contains(fetchedkeyCreds2, c => c.KeyId == keyCredential.KeyId);
+
+                    // Append a new passwordCredential to existing credentials
                     keyId = "71986590-87c7-45c2-b85e-f5ef022e821f";
                     var passwordCredential2 = CreatePasswordCredential(keyId);
                     passwordCreds.Add(passwordCredential2);
@@ -119,7 +131,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential2.KeyId);
                     Assert.Contains(fetchedpasswordCreds2, c => c.KeyId == passwordCredential1.KeyId);
 
-                    // Add 2 new password credentils -- older should be removed
+                    // Add 2 new password credentials -- older should be removed
                     keyId = "7880f3aa-66ee-4e63-a427-3a89d316b039";
                     var passwordCredential3 = CreatePasswordCredential(keyId);
                     keyId = "18a32ca3-536f-462f-b3b4-eec49e505e96";

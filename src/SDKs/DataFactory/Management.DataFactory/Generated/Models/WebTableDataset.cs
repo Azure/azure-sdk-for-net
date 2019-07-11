@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
+        /// <param name="schema">Columns that define the physical type schema
+        /// of the dataset. Type: array (or Expression with resultType array),
+        /// itemType: DatasetSchemaDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
@@ -54,8 +57,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="path">The relative URL to the web page from the linked
         /// service URL. Type: string (or Expression with resultType
         /// string).</param>
-        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object path = default(object))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations, folder)
+        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object path = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             Index = index;
             Path = path;

@@ -55,7 +55,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// reference.</param>
         /// <param name="defines">Allows user to specify defines for Hive job
         /// request.</param>
-        public HDInsightHiveActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), object scriptPath = default(object), LinkedServiceReference scriptLinkedService = default(LinkedServiceReference), IDictionary<string, object> defines = default(IDictionary<string, object>))
+        /// <param name="variables">User specified arguments under hivevar
+        /// namespace.</param>
+        /// <param name="queryTimeout">Query timeout value (in minutes).
+        /// Effective when the HDInsight cluster is with ESP (Enterprise
+        /// Security Package)</param>
+        public HDInsightHiveActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), object scriptPath = default(object), LinkedServiceReference scriptLinkedService = default(LinkedServiceReference), IDictionary<string, object> defines = default(IDictionary<string, object>), IList<object> variables = default(IList<object>), int? queryTimeout = default(int?))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
@@ -64,6 +69,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
             Defines = defines;
+            Variables = variables;
+            QueryTimeout = queryTimeout;
             CustomInit();
         }
 
@@ -109,6 +116,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.defines")]
         public IDictionary<string, object> Defines { get; set; }
+
+        /// <summary>
+        /// Gets or sets user specified arguments under hivevar namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.variables")]
+        public IList<object> Variables { get; set; }
+
+        /// <summary>
+        /// Gets or sets query timeout value (in minutes).  Effective when the
+        /// HDInsight cluster is with ESP (Enterprise Security Package)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.queryTimeout")]
+        public int? QueryTimeout { get; set; }
 
         /// <summary>
         /// Validate the object.

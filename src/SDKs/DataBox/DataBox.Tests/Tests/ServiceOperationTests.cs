@@ -43,12 +43,8 @@ namespace DataBox.Tests.Tests
         {
             var shippingAddress = GetDefaultShippingAddress();
 
-            var validateAddress = new ValidateAddress
-            {
-                ShippingAddress = shippingAddress,
-                DeviceType = DeviceType.Pod
-            };
-            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation, validateAddress);
+            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation, 
+                shippingAddress, SkuName.DataBox);
 
             Assert.NotNull(addressValidation);
             Assert.NotNull(addressValidation.AlternateAddresses);

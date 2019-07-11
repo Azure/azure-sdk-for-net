@@ -110,7 +110,7 @@ namespace Network.Tests.Tests
                 Assert.Equal(2, listPCByRg1.Count());
                 Assert.Equal("Stopped", queryPCAfterStop.PacketCaptureStatus);
                 Assert.Equal("Manual", queryPCAfterStop.StopReason);
-                Assert.Equal(1, listPCByRg2.Count());
+                Assert.Single(listPCByRg2);
             }
         }
     }

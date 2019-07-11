@@ -16,7 +16,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// List of celebrities recognized in the image.
+    /// Result of domain-specific classifications for the domain of
+    /// celebrities.
     /// </summary>
     public partial class CelebrityResults
     {
@@ -31,6 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the CelebrityResults class.
         /// </summary>
+        /// <param name="celebrities">List of celebrities recognized in the
+        /// image.</param>
         /// <param name="requestId">Id of the REST API request.</param>
         public CelebrityResults(IList<CelebritiesModel> celebrities = default(IList<CelebritiesModel>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
@@ -46,6 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list of celebrities recognized in the image.
         /// </summary>
         [JsonProperty(PropertyName = "celebrities")]
         public IList<CelebritiesModel> Celebrities { get; set; }

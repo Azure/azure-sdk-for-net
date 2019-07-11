@@ -41,7 +41,7 @@ namespace AzureRedisCache.Tests
                 Assert.Contains(fixture.RedisCacheName, response.Id);
                 Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Basic, response.Sku.Name);
                 Assert.Equal(SkuFamily.C, response.Sku.Family);
                 Assert.Equal(0, response.Sku.Capacity);
@@ -71,7 +71,7 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                        Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
                         Assert.Equal(SkuName.Basic, response.Sku.Name);
                         Assert.Equal(SkuFamily.C, response.Sku.Family);
                         Assert.Equal(0, response.Sku.Capacity);
@@ -104,7 +104,7 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.True("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                        Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
                         Assert.Equal(SkuName.Basic, response.Sku.Name);
                         Assert.Equal(SkuFamily.C, response.Sku.Family);
                         Assert.Equal(0, response.Sku.Capacity);

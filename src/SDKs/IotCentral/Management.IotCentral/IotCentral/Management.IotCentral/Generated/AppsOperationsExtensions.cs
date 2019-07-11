@@ -264,12 +264,13 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// The name of the IoT Central application instance to check.
+            /// <param name='operationInputs'>
+            /// Set the name parameter in the OperationInputs structure to the name of the
+            /// IoT Central application to check.
             /// </param>
-            public static AppNameAvailabilityInfo CheckNameAvailability(this IAppsOperations operations, string name)
+            public static AppAvailabilityInfo CheckNameAvailability(this IAppsOperations operations, OperationInputs operationInputs)
             {
-                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(operationInputs).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -278,15 +279,52 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// The name of the IoT Central application instance to check.
+            /// <param name='operationInputs'>
+            /// Set the name parameter in the OperationInputs structure to the name of the
+            /// IoT Central application to check.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppNameAvailabilityInfo> CheckNameAvailabilityAsync(this IAppsOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppAvailabilityInfo> CheckNameAvailabilityAsync(this IAppsOperations operations, OperationInputs operationInputs, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(operationInputs, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check if an IoT Central application subdomain is available.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='operationInputs'>
+            /// Set the name parameter in the OperationInputs structure to the subdomain of
+            /// the IoT Central application to check.
+            /// </param>
+            public static AppAvailabilityInfo CheckSubdomainAvailability(this IAppsOperations operations, OperationInputs operationInputs)
+            {
+                return operations.CheckSubdomainAvailabilityAsync(operationInputs).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check if an IoT Central application subdomain is available.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='operationInputs'>
+            /// Set the name parameter in the OperationInputs structure to the subdomain of
+            /// the IoT Central application to check.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppAvailabilityInfo> CheckSubdomainAvailabilityAsync(this IAppsOperations operations, OperationInputs operationInputs, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckSubdomainAvailabilityWithHttpMessagesAsync(operationInputs, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

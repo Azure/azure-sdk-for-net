@@ -109,15 +109,21 @@ Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` enviro
 	* RawToken
 	* RawGraphToken
 	* HttpRecorderMode={Record | Playback}
-	* AADTokenAudienceUri
+	* AADAuthEndpoint
+	
+	* GraphTokenAudienceUri
 	* BaseUri
-	* GraphUri
+	* AADAuthUri
 	* GalleryUri
-	* IbizaProtalUri
+	* GraphUri
+	* IbizaPortalUri
+	* RdfePortalUri
+	* ResourceManagementUri
+	* ServiceManagementUri
+	* AADTokenAudienceUri
+	* GraphTokenAudienceUri
 	* DataLakeStoreServiceUri
 	* DataLakeAnalyticsJobAndCatalogServiceUri
-	* AADAuthEndpoint
-	* GraphTokenAudienceUri
 
 ## 8. Supported Environment in Test framework (Azure environments)
 
@@ -140,44 +146,44 @@ Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` enviro
 ##### Environment = Dogfood
 
 	AADAuthUri = "https://login.windows-ppe.net";
-    GalleryUri = "https://df.gallery.azure-test.net/";
-    GraphUri = "https://graph.ppe.windows.net/";
-    IbizaPortalUri = "http://df.onecloud.azure-test.net";
-    RdfePortalUri = "https://windows.azure-test.net";
-    ResourceManagementUri = "https://api-dogfood.resources.windows-int.net/";
-    ServiceManagementUri = "https://management-preview.core.windows-int.net";
-    AADTokenAudienceUri = "https://management.core.windows.net";
-    GraphTokenAudienceUri = "https://graph.ppe.windows.net/";
-    DataLakeStoreServiceUri = "https://caboaccountdogfood.net";
-    DataLakeAnalyticsJobAndCatalogServiceUri = "https://konaaccountdogfood.net";
+	GalleryUri = "https://df.gallery.azure-test.net/";
+	GraphUri = "https://graph.ppe.windows.net/";
+	IbizaPortalUri = "http://df.onecloud.azure-test.net";
+	RdfePortalUri = "https://windows.azure-test.net";
+	ResourceManagementUri = "https://api-dogfood.resources.windows-int.net/";
+	ServiceManagementUri = "https://management-preview.core.windows-int.net";
+	AADTokenAudienceUri = "https://management.core.windows.net";
+	GraphTokenAudienceUri = "https://graph.ppe.windows.net/";
+	DataLakeStoreServiceUri = "https://caboaccountdogfood.net";
+	DataLakeAnalyticsJobAndCatalogServiceUri = "https://konaaccountdogfood.net";
 
 ##### Environment = Next
 
 	AADAuthUri = "https://login.windows-ppe.net"
-    GalleryUri = "https://next.gallery.azure-test.net/"
-    GraphUri = "https://graph.ppe.windows.net/"
-    IbizaPortalUri = "http://next.onecloud.azure-test.net"
-    RdfePortalUri = "https://auxnext.windows.azure-test.net"
-    ResourceManagementUri = "https://api-next.resources.windows-int.net/"
-    ServiceManagementUri = "https://managementnext.rdfetest.dnsdemo4.com"
-    AADTokenAudienceUri = "https://management.core.windows.net"
-    GraphTokenAudienceUri = "https://graph.ppe.windows.net/"
-    DataLakeStoreServiceUri = "https://caboaccountdogfood.net"
-    DataLakeAnalyticsJobAndCatalogServiceUri = "https://konaaccountdogfood.net"
+	GalleryUri = "https://next.gallery.azure-test.net/"
+	GraphUri = "https://graph.ppe.windows.net/"
+	IbizaPortalUri = "http://next.onecloud.azure-test.net"
+	RdfePortalUri = "https://auxnext.windows.azure-test.net"
+	ResourceManagementUri = "https://api-next.resources.windows-int.net/"
+	ServiceManagementUri = "https://managementnext.rdfetest.dnsdemo4.com"
+	AADTokenAudienceUri = "https://management.core.windows.net"
+	GraphTokenAudienceUri = "https://graph.ppe.windows.net/"
+	DataLakeStoreServiceUri = "https://caboaccountdogfood.net"
+	DataLakeAnalyticsJobAndCatalogServiceUri = "https://konaaccountdogfood.net"
 
 ##### Environment = Current
 
 	AADAuthUri = "https://login.windows-ppe.net"
-    GalleryUri = "https://df.gallery.azure-test.net/"
-    GraphUri = "https://graph.ppe.windows.net/"
-    IbizaPortalUri = "http://df.onecloud.azure-test.net"
-    RdfePortalUri = "https://windows.azure-test.net"
-    ResourceManagementUri = "https://api-dogfood.resources.windows-int.net/"
-    ServiceManagementUri = "https://management-preview.core.windows-int.net"
-    AADTokenAudienceUri = "https://management.core.windows.net"
-    GraphTokenAudienceUri = "https://graph.ppe.windows.net/"
-    DataLakeStoreServiceUri = "https://caboaccountdogfood.net"
-    DataLakeAnalyticsJoAbndCatalogServiceUri = "https://konaaccountdogfood.net"
+	GalleryUri = "https://df.gallery.azure-test.net/"
+	GraphUri = "https://graph.ppe.windows.net/"
+	IbizaPortalUri = "http://df.onecloud.azure-test.net"
+	RdfePortalUri = "https://windows.azure-test.net"
+	ResourceManagementUri = "https://api-dogfood.resources.windows-int.net/"
+	ServiceManagementUri = "https://management-preview.core.windows-int.net"
+	AADTokenAudienceUri = "https://management.core.windows.net"
+	GraphTokenAudienceUri = "https://graph.ppe.windows.net/"
+	DataLakeStoreServiceUri = "https://caboaccountdogfood.net"
+	DataLakeAnalyticsJoAbndCatalogServiceUri = "https://konaaccountdogfood.net"
 
 ##### Environment = Custom
 When specified, test framework expect all Uri's to be provided by the user as part of the connection string.

@@ -202,6 +202,58 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// </exception>
         Task<AzureOperationResponse<ContainerGroup>> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Restarts all containers in a container group.
+        /// </summary>
+        /// <remarks>
+        /// Restarts all containers in a container group in place. If container
+        /// image has updates, new image will be downloaded.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Stops all containers in a container group.
+        /// </summary>
+        /// <remarks>
+        /// Stops all containers in a container group. Compute resources will
+        /// be deallocated and billing will stop.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update container groups.
         /// </summary>
         /// <remarks>
@@ -232,6 +284,32 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ContainerGroup>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, ContainerGroup containerGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Restarts all containers in a container group.
+        /// </summary>
+        /// <remarks>
+        /// Restarts all containers in a container group in place. If container
+        /// image has updates, new image will be downloaded.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of container groups in the specified subscription.
         /// </summary>

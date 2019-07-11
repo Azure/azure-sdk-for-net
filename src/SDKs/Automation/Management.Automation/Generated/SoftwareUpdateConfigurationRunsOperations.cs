@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Automation
         /// 'properties/softwareUpdateConfiguration/name'
         /// </param>
         /// <param name='skip'>
-        /// number of entries you skip before returning results
+        /// Number of entries you skip before returning results
         /// </param>
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection

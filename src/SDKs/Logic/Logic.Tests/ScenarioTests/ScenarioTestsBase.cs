@@ -18,10 +18,10 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Name of the test class
         /// </summary>
-        protected string testClassName { get { return this.GetType().FullName; } }
+        protected string TestClassName => this.GetType().FullName;
 
         /// <summary>
-        /// Default serviceplan Resource id 
+        /// Default Service Plan resource id 
         /// </summary>
         protected string ServicePlanResourceId
         {
@@ -37,195 +37,81 @@ namespace Test.Azure.Management.Logic
             }
         }
 
-        /// <summary>
-        /// Default SKU reference.
-        /// </summary>
-        protected Sku Sku => new Sku
+        protected void CleanResourceGroup(LogicManagementClient client, string resourceGroup = Constants.DefaultResourceGroup)
         {
-            Name = SkuName.Standard,
-            Plan = new ResourceReference(id: ServicePlanResourceId)
-        };
+            var integrationAccounts = client.IntegrationAccounts.ListByResourceGroup(resourceGroup);
+            foreach(var integrationAccount in integrationAccounts)
+            {
+                client.IntegrationAccounts.Delete(resourceGroup, integrationAccount.Name);
+            }
 
-        protected LogicManagementClient GetIntegrationAccountClient(MockContext context)
+            var workflows = client.Workflows.ListByResourceGroup(resourceGroup);
+            foreach(var workflow in workflows)
+            {
+                client.Workflows.Delete(resourceGroup, workflow.Name);
+            }
+        }
+
+        protected LogicManagementClient GetClient(MockContext context)
         {
-            var client = context.GetServiceClient<LogicManagementClient>();
-            return client;
+            return context.GetServiceClient<LogicManagementClient>();
         }
 
         /// <summary>
         /// Creates an Integartion account.
         /// </summary>
-        /// <param name="integrationAccountName">Integration AccountName</param>
-        /// <returns>IntegrationAccount instance</returns>
-        protected IntegrationAccount CreateIntegrationAccountInstance(string integrationAccountName)
+        /// <param name="integrationAccountName">Integration Account name</param>
+        /// <returns>Integration Account instance</returns>
+        protected IntegrationAccount CreateIntegrationAccount(string integrationAccountName)
         {
-            var createdAccount = new IntegrationAccount
-            {                
-                Sku = new IntegrationAccountSku()
-                {
-                    Name = IntegrationAccountSkuName.Standard
-                },                
-                Properties = new JObject(),
-                Location = Constants.DefaultLocation
-            };
-            return createdAccount;
+            var integrationAccount = new IntegrationAccount(name: integrationAccountName,
+                location: Constants.DefaultLocation,
+                properties: new JObject(),
+                sku: new IntegrationAccountSku(IntegrationAccountSkuName.Standard));
+
+            return integrationAccount;
         }
 
-        protected string resourceGroupName = "flowrg";
-
-        protected string location = "westus";
-
-        protected LogicManagementClient GetWorkflowClient(MockContext context)
+        /// <summary>
+        /// Creates a workflow.
+        /// </summary>
+        /// <param name="workflowName">Workflow name</param>
+        /// <returns>a workflow</returns>
+        protected Workflow CreateWorkflow(string workflowName)
         {
-            var client = context.GetServiceClient<LogicManagementClient>();
-            return client;
+            var workflow = new Workflow(name: workflowName,
+                location: Constants.DefaultLocation,
+                definition: this.WorkflowDefinition);
+
+            return workflow;
         }
 
-        #region Data
 
-        protected string definition = @"{
-    '$schema':'http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#',
-    'contentVersion':'1.0.0.0',
-    'parameters':{
-        'runworkflowmanually':{
-            'defaultValue':true,
-            'type':'Bool'
-        },
-        'subscription':{
-            'defaultValue':'1a66ce04-b633-4a0b-b2bc-a912ec8986a6',
-            'type':'String'
-        },
-        'resourceGroup':{
-            'defaultValue':'logicapps-e2e',
-            'type':'String'
-        },
-        'authentication':{
-            'defaultValue':{
-                'type':'ActiveDirectoryOAuth',
-                'audience':'https://management.azure.com/',
-                'tenant':'00000000-0000-0000-0000-000000000000',
-                'clientId':'00000000-0000-0000-0000-000000000000',
-                'secret':'Dummy'
-            },
-            'type':'Object'
-        }
-    },
-    'triggers':{
-    },
-    'actions':{
-        'listWorkflows':{
-            'type':'Http',
-            'inputs':{
-                'method':'GET',
-                'uri':'someUri',
-                'authentication':'@parameters(\'authentication\')'
-            },
-            'conditions':[
-
-            ]
-        }
-    },
-    'outputs':{
-    }
-}";
-
-        protected string simpleDefinition = @"{
-    '$schema':'http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#',
-    'contentVersion':'1.0.0.0',
-    'parameters':{
-    },
-    'triggers':{
-    },
-    'actions':{
-        'httpAction':{
-            'type':'Http',
-            'inputs':{
-                'method':'GET',
-                'uri':'invalidUri'
-            },
-            'conditions':[
-            ]
-        }
-    },
-    'outputs':{
-    }
-}";
-
-        protected string regenerateAccessKeyDefinition = @"{
-    '$schema': 'http://json-schema.org/draft-04/schema/2016-06-01/workflowdefinition.json#',
-    'triggers': {
-        'manual': {
-            'type':'request',
-            'kind':'http'
-        },
-    },
-    'actions': {
-        'response': {
-            'type': 'response',
-            'inputs': {
-                'statusCode': '200',
-                'body': {
-                    'value': 'test',
-                },
-                'headers': {
+        private JToken WorkflowDefinition => JToken.Parse(@"
+        {
+            '$schema': 'https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#',
+            'contentVersion': '1.0.0.0',
+            'parameters': {},
+            'triggers': {
+                'manual': {
+                    'type': 'Request',
+                    'kind': 'Http',
+                    'inputs': {
+                    'schema': {}
+                    }
                 }
-            }
-        }
-    }
-}";
-
-        protected string listSwaggerDefinition = @"{
-    '$schema': 'http://json-schema.org/draft-04/schema/2016-06-01',
-    'triggers': {
-        'request': {
-            'type': 'Request',
-            'kind': 'Http',
-            'inputs': {
-                'relativePath': 'abc/{xyz}',
-                'method': 'get'
-            }
-        }
-    },
-    'actions': {
-        'response': {
-            'type': 'response',
-            'inputs': {
-                'statusCode': '200',
-                'body': {},
-                'headers': {}
-            }
-        }
-    },
-    'outputs': {}
-}";
-
-        protected string simpleTriggerDefinition = @"{
-    '$schema':'http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#',
-    'contentVersion':'1.0.0.0',
-    'parameters':{
-    },
-    'triggers':{
-        'httpTrigger':{
-            'type':'Http',
-            'inputs':{
-                'method':'GET',
-                'uri':'invalidUri'
             },
-            'recurrence':{
-                'frequency':'Minute',
-                'interval':60
-            }
-        }
-    },
-    'actions':{
-    },
-    'outputs':{
-        'output1':{
-            'type':'string',
-            'value':'@trigger().outputs',
-        }
-    }
-}";
-        #endregion
+            'actions': {
+                'Response': {
+                    'runAfter': {},
+                    'type': 'Response',
+                    'kind': 'Http',
+                    'inputs': {
+                    'statusCode': 200
+                    }
+                }
+            },
+            'outputs': {}
+        }");
     }
 }

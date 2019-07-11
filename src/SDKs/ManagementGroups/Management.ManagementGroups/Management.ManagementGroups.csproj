@@ -5,15 +5,15 @@
   
   <PropertyGroup>
 		<Description>Microsoft Azure Management Groups Library</Description>
-		<Version>1.1.0-preview</Version>
+		<Version>1.1.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ManagementGroups</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ManagementGroups</PackageId>
 		<PackageTags>Microsoft Azure Management Groups;Management Groups;Groups;</PackageTags>
-		<PackageReleaseNotes>This is a general availibility release of the Azure Management Groups SDK</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

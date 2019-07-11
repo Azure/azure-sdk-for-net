@@ -33,11 +33,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
+        /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
-        /// </param>
-        /// <param name='storagePool'>
-        /// Storage pool name.
         /// </param>
         /// <param name='volume'>
         /// Name of the storage volume.
@@ -57,7 +57,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, string storagePool, string volume, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string volume, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of all storage volumes at a location.
         /// </summary>
@@ -67,11 +67,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
+        /// <param name='scaleUnit'>
+        /// Name of the scale units.
+        /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
-        /// </param>
-        /// <param name='storagePool'>
-        /// Storage pool name.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -91,7 +91,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, string storagePool, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns a list of all storage volumes at a location.
         /// </summary>

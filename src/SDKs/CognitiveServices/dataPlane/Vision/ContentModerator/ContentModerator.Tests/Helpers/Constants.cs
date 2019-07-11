@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.Rest.Serialization;
 using System.ComponentModel;
-using Microsoft.CognitiveServices.ContentModerator.Models;
-using Microsoft.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
 //using System.Net.Mime;
 //using System.Configuration;
 using ContentModeratorTests.Helpers;
@@ -675,7 +675,7 @@ namespace ContentModeratorTests
 			ReviewResponses rr = new ReviewResponses();
 			TestBase.wait(2);
 			//Create Job
-			Microsoft.CognitiveServices.ContentModerator.Models.Content content = new Microsoft.CognitiveServices.ContentModerator.Models.Content();
+			Microsoft.Azure.CognitiveServices.ContentModerator.Models.Content content = new Microsoft.Azure.CognitiveServices.ContentModerator.Models.Content();
 			// For Create Review
 			IList<CreateReviewBodyItem> crList = new List<CreateReviewBodyItem>();
 			List<CreateReviewBodyItemMetadataItem> lst = new List<CreateReviewBodyItemMetadataItem>();

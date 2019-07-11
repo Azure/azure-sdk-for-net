@@ -15,16 +15,6 @@ namespace Test.Azure.Management.Logic
     abstract public class InMemoryTestsBase
     {
         /// <summary>
-        /// Test resourcegroup name for integration account
-        /// </summary>
-        protected static string ResourceGroupName = Constants.DefaultResourceGroup;
-
-        /// <summary>
-        /// Empty content string
-        /// </summary>
-        protected StringContent Empty = new StringContent(string.Empty);
-
-        /// <summary>
         /// Creates a mock LogicManagementClient
         /// </summary>
         /// <param name="handler">delegating handler for http requests</param>
@@ -64,10 +54,7 @@ namespace Test.Azure.Management.Logic
 
             pattern += @"/[0-9a-z\-]*$";
 
-            return Regex.IsMatch(
-                    input: id,
-                    pattern: pattern,
-                    options: RegexOptions.IgnoreCase);
+            return Regex.IsMatch(input: id, pattern: pattern, options: RegexOptions.IgnoreCase);
         }
     }
 }

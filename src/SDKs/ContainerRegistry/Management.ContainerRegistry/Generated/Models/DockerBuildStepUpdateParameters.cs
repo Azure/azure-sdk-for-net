@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// The properties for updating a docker build step.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Docker")]
-    public partial class DockerBuildStepUpdateParameters : BuildStepPropertiesUpdateParameters
+    public partial class DockerBuildStepUpdateParameters : TaskStepUpdateParameters
     {
         /// <summary>
         /// Initializes a new instance of the DockerBuildStepUpdateParameters
@@ -34,7 +34,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// Initializes a new instance of the DockerBuildStepUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="branch">The repository branch name.</param>
+        /// <param name="contextPath">The URL(absolute or relative) of the
+        /// source context for the task step.</param>
         /// <param name="imageNames">The fully qualified image names including
         /// the repository and tag.</param>
         /// <param name="isPushEnabled">The value of this property indicates
@@ -43,24 +44,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="noCache">The value of this property indicates whether
         /// the image cache is enabled or not.</param>
         /// <param name="dockerFilePath">The Docker file path relative to the
-        /// source control root.</param>
-        /// <param name="contextPath">The relative context path for a docker
-        /// build in the source.</param>
-        /// <param name="buildArguments">The custom arguments for building this
-        /// build step.</param>
-        /// <param name="baseImageTrigger">The type of the auto trigger for
-        /// base image dependency updates. Possible values include: 'All',
-        /// 'Runtime', 'None'</param>
-        public DockerBuildStepUpdateParameters(string branch = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), string contextPath = default(string), IList<BuildArgument> buildArguments = default(IList<BuildArgument>), string baseImageTrigger = default(string))
+        /// source context.</param>
+        /// <param name="arguments">The collection of override arguments to be
+        /// used when executing this build step.</param>
+        public DockerBuildStepUpdateParameters(string contextPath = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), IList<Argument> arguments = default(IList<Argument>))
+            : base(contextPath)
         {
-            Branch = branch;
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
             NoCache = noCache;
             DockerFilePath = dockerFilePath;
-            ContextPath = contextPath;
-            BuildArguments = buildArguments;
-            BaseImageTrigger = baseImageTrigger;
+            Arguments = arguments;
             CustomInit();
         }
 
@@ -68,12 +62,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the repository branch name.
-        /// </summary>
-        [JsonProperty(PropertyName = "branch")]
-        public string Branch { get; set; }
 
         /// <summary>
         /// Gets or sets the fully qualified image names including the
@@ -97,31 +85,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public bool? NoCache { get; set; }
 
         /// <summary>
-        /// Gets or sets the Docker file path relative to the source control
-        /// root.
+        /// Gets or sets the Docker file path relative to the source context.
         /// </summary>
         [JsonProperty(PropertyName = "dockerFilePath")]
         public string DockerFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the relative context path for a docker build in the
-        /// source.
+        /// Gets or sets the collection of override arguments to be used when
+        /// executing this build step.
         /// </summary>
-        [JsonProperty(PropertyName = "contextPath")]
-        public string ContextPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the custom arguments for building this build step.
-        /// </summary>
-        [JsonProperty(PropertyName = "buildArguments")]
-        public IList<BuildArgument> BuildArguments { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the auto trigger for base image dependency
-        /// updates. Possible values include: 'All', 'Runtime', 'None'
-        /// </summary>
-        [JsonProperty(PropertyName = "baseImageTrigger")]
-        public string BaseImageTrigger { get; set; }
+        [JsonProperty(PropertyName = "arguments")]
+        public IList<Argument> Arguments { get; set; }
 
     }
 }

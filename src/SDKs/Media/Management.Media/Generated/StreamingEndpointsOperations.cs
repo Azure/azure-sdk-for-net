@@ -481,7 +481,8 @@ namespace Microsoft.Azure.Management.Media
         /// StreamingEndpoint properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
-        /// The flag indicates if auto start the Live Event.
+        /// The flag indicates if the resource should be automatically started on
+        /// creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -627,7 +628,7 @@ namespace Microsoft.Azure.Management.Media
         /// The name of the StreamingEndpoint.
         /// </param>
         /// <param name='scaleUnit'>
-        /// ScaleUnit The scale unit number of the StreamingEndpoint.
+        /// The scale unit number of the StreamingEndpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -661,7 +662,8 @@ namespace Microsoft.Azure.Management.Media
         /// StreamingEndpoint properties needed for creation.
         /// </param>
         /// <param name='autoStart'>
-        /// The flag indicates if auto start the Live Event.
+        /// The flag indicates if the resource should be automatically started on
+        /// creation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -724,6 +726,10 @@ namespace Microsoft.Azure.Management.Media
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1757,7 +1763,7 @@ namespace Microsoft.Azure.Management.Media
         /// The name of the StreamingEndpoint.
         /// </param>
         /// <param name='scaleUnit'>
-        /// ScaleUnit The scale unit number of the StreamingEndpoint.
+        /// The scale unit number of the StreamingEndpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

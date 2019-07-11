@@ -7,39 +7,62 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
     using Xunit;
 
     [Collection("WorkflowVersionsScenarioTests")]
     public class WorkflowVersionsScenarioTests : ScenarioTestsBase
     {
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void CreateAndGetWorkflowVersion()
+        [Fact]
+        public void WorkflowVersions_Get_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // Get the workflow version and verify the content
-                var version = client.WorkflowVersions.Get(this.resourceGroupName, workflowName, workflow.Version);
-                Assert.Equal(WorkflowState.Enabled, workflow.State);
-                Assert.Equal(this.Sku.Name, workflow.Sku.Name);
-                Assert.NotEmpty(workflow.Definition.ToString());
+                var workflowVersion = client.WorkflowVersions.Get(Constants.DefaultResourceGroup, workflowName, createdWorkflow.Version);
 
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                this.ValidateWorkflowVersion(workflow, workflowVersion);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
+        }
+
+        [Fact]
+        public void WorkflowVersions_List_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var workflowVersions = client.WorkflowVersions.List(Constants.DefaultResourceGroup, workflowName);
+
+                foreach (var workflowVersion in workflowVersions)
+                {
+                    this.ValidateWorkflowVersion(workflow, workflowVersion);
+                }
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        private void ValidateWorkflowVersion(Workflow expected, WorkflowVersion actual)
+        {
+            Assert.Equal(expected.Definition, actual.Definition);
+            Assert.Equal(expected.Tags, actual.Tags);
+            Assert.NotNull(actual.ChangedTime);
+            Assert.NotNull(actual.CreatedTime);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public void Dispose()
         {
             // Clear the cache after running each test.
-            AccessTokenCache.Clear();
+            AppAuthResultCache.Clear();
 
             // Delete environment variable
             Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task GetTokenCacheTest()
+        public async Task GetAppAuthResultCacheTest()
         {
             // Create two instances of AzureServiceTokenProvider based on AzureCliAccessTokenProvider. 
             MockProcessManager mockProcessManager = new MockProcessManager(MockProcessManager.MockProcessManagerRequestType.Success);
@@ -89,9 +89,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Update the cache entry, to simulate token expiration. This updated token will expire in just less than 5 minutes. 
             // In a real scenario, the token will expire after some time. 
-            // AccessTokenCache should not return this, since it is about to expire. 
-            AccessTokenCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
-                new Tuple<AccessToken, Principal>(AccessToken.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2)), null));
+            // AppAuthResultCache should not return this, since it is about to expire. 
+            var tokenResponse = TokenResponse.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2));
+            var authResult = AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.DateTimeString);
+            AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
+                new Tuple<AppAuthenticationResult, Principal>(authResult, null));
             
             // Get the token again. 
             for (int i = 0; i < 5; i++)
@@ -193,7 +195,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var provider = new AzureServiceTokenProvider();
 
             Assert.NotNull(provider);
-            Assert.IsType(typeof(AzureServiceTokenProvider), provider);
+            Assert.IsType<AzureServiceTokenProvider>(provider);
         }
 
         [Fact]
@@ -231,7 +233,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 

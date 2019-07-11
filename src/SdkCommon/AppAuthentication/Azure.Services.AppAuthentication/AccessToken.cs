@@ -64,6 +64,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
         }
 
+        internal static DateTimeOffset UnixTimeEpoch => new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         private static byte[] DecodeBytes(string arg)
         {
             string s = arg;
@@ -104,7 +106,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public bool IsAboutToExpire()
         {
             // Current time represented in seconds since 1/1/1970
-            double currentTime = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+            double currentTime = (DateTime.UtcNow - UnixTimeEpoch).TotalSeconds;
             
             // If the expiration time is greater than current time by more than 5 minutes, it is not about to expire
             if (ExpiryTime > currentTime + 5 * 60)

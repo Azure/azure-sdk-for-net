@@ -78,7 +78,6 @@
     public partial class PoolResizeOptions : ITimeoutOptions { }
     public partial class PoolStopResizeOptions : ITimeoutOptions { }
     public partial class PoolUpdatePropertiesOptions : ITimeoutOptions { }
-    public partial class PoolUpgradeOSOptions : ITimeoutOptions { }
     public partial class TaskAddOptions : ITimeoutOptions { }
     public partial class TaskAddCollectionOptions : ITimeoutOptions { }
     public partial class TaskDeleteOptions : ITimeoutOptions { }

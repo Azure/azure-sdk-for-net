@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the managed database.
+            /// Deletes a managed database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the managed database.
+            /// Deletes a managed database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the managed database.
+            /// Deletes a managed database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Deletes the managed database.
+            /// Deletes a managed database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

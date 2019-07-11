@@ -111,13 +111,13 @@ namespace StreamAnalytics.Tests
 
                 // List input and verify that the input shows up in the list
                 var listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateInput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with input expanded and verify that the input shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(1, getJobResponse.Inputs.Count());
+                Assert.Single(getJobResponse.Inputs);
                 ValidationHelper.ValidateInput(putResponse.Body, getJobResponse.Inputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Inputs.Single().Properties.Etag);
 
@@ -126,11 +126,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the input
                 listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with input expanded and verify that there are no inputs after deleting the input
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(0, getJobResponse.Inputs.Count());
+                Assert.Empty(getJobResponse.Inputs);
             }
         }
 
@@ -221,13 +221,13 @@ namespace StreamAnalytics.Tests
 
                 // List input and verify that the input shows up in the list
                 var listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateInput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with input expanded and verify that the input shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(1, getJobResponse.Inputs.Count());
+                Assert.Single(getJobResponse.Inputs);
                 ValidationHelper.ValidateInput(putResponse.Body, getJobResponse.Inputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Inputs.Single().Properties.Etag);
 
@@ -236,11 +236,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the input
                 listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with input expanded and verify that there are no inputs after deleting the input
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(0, getJobResponse.Inputs.Count());
+                Assert.Empty(getJobResponse.Inputs);
             }
         }
 
@@ -332,13 +332,13 @@ namespace StreamAnalytics.Tests
 
                 // List input and verify that the input shows up in the list
                 var listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateInput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with input expanded and verify that the input shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(1, getJobResponse.Inputs.Count());
+                Assert.Single(getJobResponse.Inputs);
                 ValidationHelper.ValidateInput(putResponse.Body, getJobResponse.Inputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Inputs.Single().Properties.Etag);
 
@@ -347,11 +347,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the input
                 listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with input expanded and verify that there are no inputs after deleting the input
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(0, getJobResponse.Inputs.Count());
+                Assert.Empty(getJobResponse.Inputs);
             }
         }
 
@@ -451,13 +451,13 @@ namespace StreamAnalytics.Tests
 
                 // List input and verify that the input shows up in the list
                 var listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(1, listResult.Count());
+                Assert.Single(listResult);
                 ValidationHelper.ValidateInput(putResponse.Body, listResult.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, listResult.Single().Properties.Etag);
 
                 // Get job with input expanded and verify that the input shows up
                 var getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(1, getJobResponse.Inputs.Count());
+                Assert.Single(getJobResponse.Inputs);
                 ValidationHelper.ValidateInput(putResponse.Body, getJobResponse.Inputs.Single(), true);
                 Assert.Equal(getResponse.Headers.ETag, getJobResponse.Inputs.Single().Properties.Etag);
 
@@ -466,11 +466,11 @@ namespace StreamAnalytics.Tests
 
                 // Verify that list operation returns an empty list after deleting the input
                 listResult = streamAnalyticsManagementClient.Inputs.ListByStreamingJob(resourceGroupName, jobName);
-                Assert.Equal(0, listResult.Count());
+                Assert.Empty(listResult);
 
                 // Get job with input expanded and verify that there are no inputs after deleting the input
                 getJobResponse = streamAnalyticsManagementClient.StreamingJobs.Get(resourceGroupName, jobName, "inputs");
-                Assert.Equal(0, getJobResponse.Inputs.Count());
+                Assert.Empty(getJobResponse.Inputs);
             }
         }
     }

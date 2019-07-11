@@ -65,6 +65,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state.</param>
         /// <param name="onTaskFailure">The action the Batch service should
         /// take when any task in the job fails.</param>
+        /// <param name="networkConfiguration">The network configuration for
+        /// the job.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the job as metadata.</param>
         /// <param name="executionInfo">The execution information for the
@@ -73,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// lifetime of the job. The statistics may not be immediately
         /// available. The Batch service performs periodic roll-up of
         /// statistics. The typical delay is about 30 minutes.</param>
-        public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
+        public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
             Id = id;
             DisplayName = displayName;
@@ -95,6 +97,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             PoolInfo = poolInfo;
             OnAllTasksComplete = onAllTasksComplete;
             OnTaskFailure = onTaskFailure;
+            NetworkConfiguration = networkConfiguration;
             Metadata = metadata;
             ExecutionInfo = executionInfo;
             Stats = stats;
@@ -288,6 +291,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network configuration for the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public JobNetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job as

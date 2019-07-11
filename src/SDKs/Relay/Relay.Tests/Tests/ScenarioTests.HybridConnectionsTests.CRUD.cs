@@ -60,8 +60,8 @@ namespace Relay.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
+                Assert.Equal(2, createNamespaceResponse.Tags.Count);
+                Assert.Equal("Microsoft.Relay/Namespaces", createNamespaceResponse.Type);
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
@@ -78,14 +78,14 @@ namespace Relay.Tests.ScenarioTests
                 var getAllNamespacesResponse = RelayManagementClient.Namespaces.ListByResourceGroup(resourceGroup);
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
                 getAllNamespacesResponse = RelayManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 // Create HybridConnections Relay  - 
                 var hybridConnectionsName = TestUtilities.GenerateName(RelayManagementHelper.HybridPrefix);
@@ -126,7 +126,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
 
                 try
@@ -136,7 +136,7 @@ namespace Relay.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

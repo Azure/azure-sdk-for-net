@@ -17,7 +17,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "AutoSuggest");
 
-                var client = new AutoSuggestSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                var client = new AutoSuggestClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
                 var resp = client.AutoSuggestMethod(query: "tom cruise", market: "en-us");
 
                 Assert.NotNull(resp);

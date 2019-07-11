@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -12,15 +13,11 @@ namespace Compute.Tests
     public class VMDiagnosticsTests : VMTestBase
     {
         /// <summary>
-        /// Covers following Operations:
-        /// Create RG
-        /// Create Storage Account
-        /// Create Network Resources
-        /// Create VM with DiagnosticsProfile
-        /// GET VM Model View
-        /// GET VM InstanceView
-        /// Delete VM
-        /// Delete RG
+        /// 1) Create a VM with the storage account for disks different from the storage account for boot diagnostics
+        /// 2) Validate InstanceView
+        /// 3) Deallocate the VM and delete the storage account for boot diagnostics. Start the VM
+        /// 4) Validate that the error information for the missing boot diagnostics storage account is available
+        ///    in BootDiagnosticsInstanceView
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMBootDiagnostics")]
@@ -30,31 +27,39 @@ namespace Compute.Tests
             {
                 EnsureClientsInitialized(context);
 
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-                // Create resource group
-                var rgName = TestUtilities.GenerateName(TestPrefix);
-                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
-                string asName = TestUtilities.GenerateName("as");
+                ImageReference imageReference = GetPlatformVMImage(useWindowsImage: true);
+                string resourceGroupName = TestUtilities.GenerateName(TestPrefix);
+                string storageAccountForDisksName = TestUtilities.GenerateName(TestPrefix);
+                string storageAccountForBootDiagnosticsName = TestUtilities.GenerateName(TestPrefix);
+                string availabilitySetName = TestUtilities.GenerateName(TestPrefix);
+
                 try
                 {
-                    // Create Storage Account, so that both the VMs can share it
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    StorageAccount storageAccountForDisks = CreateStorageAccount(resourceGroupName, storageAccountForDisksName);
+                    StorageAccount storageAccountForBootDiagnostics = CreateStorageAccount(resourceGroupName, storageAccountForBootDiagnosticsName);
 
                     VirtualMachine inputVM;
-                    CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM,
+                    CreateVM(resourceGroupName, availabilitySetName, storageAccountForDisks, imageReference, out inputVM,
                         (vm) =>
                         {
-                            vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountOutput.Name);
+                            vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountForBootDiagnosticsName);
                         });
 
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
+                    VirtualMachine getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(resourceGroupName, inputVM.Name, InstanceViewTypes.InstanceView);
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
+                    ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: false);
 
-                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                    // Make boot diagnostics encounter an error due to a missing boot diagnostics storage account
+                    m_CrpClient.VirtualMachines.Deallocate(resourceGroupName, inputVM.Name);
+                    m_SrpClient.StorageAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, storageAccountForBootDiagnosticsName).GetAwaiter().GetResult();
+                    m_CrpClient.VirtualMachines.Start(resourceGroupName, inputVM.Name);
+
+                    getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(resourceGroupName, inputVM.Name, InstanceViewTypes.InstanceView);
+                    ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: true);
                 }
                 finally
                 {
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    m_ResourcesClient.ResourceGroups.Delete(resourceGroupName);
                 }
             }
         }

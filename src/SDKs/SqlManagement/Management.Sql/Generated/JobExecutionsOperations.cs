@@ -1032,7 +1032,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updatess a job execution.
+        /// Creates or updates a job execution.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -1277,7 +1277,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Creates or updatess a job execution.
+        /// Creates or updates a job execution.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain

@@ -21,7 +21,7 @@
     <PackageTags>Microsoft Azure Location Based Services management;Location Services;Location Services management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
 
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />

@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Storage
         IUsagesOperations Usages { get; }
 
         /// <summary>
+        /// Gets the IBlobServicesOperations.
+        /// </summary>
+        IBlobServicesOperations BlobServices { get; }
+
+        /// <summary>
         /// Gets the IBlobContainersOperations.
         /// </summary>
         IBlobContainersOperations BlobContainers { get; }

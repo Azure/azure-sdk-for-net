@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// Initializes a new instance of the ContainerExecRequestTerminalSize
         /// class.
         /// </summary>
-        /// <param name="row">The row size of the terminal</param>
-        /// <param name="column">The column size of the terminal</param>
-        public ContainerExecRequestTerminalSize(int? row = default(int?), int? column = default(int?))
+        /// <param name="rows">The row size of the terminal</param>
+        /// <param name="cols">The column size of the terminal</param>
+        public ContainerExecRequestTerminalSize(int? rows = default(int?), int? cols = default(int?))
         {
-            Row = row;
-            Column = column;
+            Rows = rows;
+            Cols = cols;
             CustomInit();
         }
 
@@ -48,14 +48,14 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <summary>
         /// Gets or sets the row size of the terminal
         /// </summary>
-        [JsonProperty(PropertyName = "row")]
-        public int? Row { get; set; }
+        [JsonProperty(PropertyName = "rows")]
+        public int? Rows { get; set; }
 
         /// <summary>
         /// Gets or sets the column size of the terminal
         /// </summary>
-        [JsonProperty(PropertyName = "column")]
-        public int? Column { get; set; }
+        [JsonProperty(PropertyName = "cols")]
+        public int? Cols { get; set; }
 
     }
 }

@@ -144,7 +144,7 @@ namespace Network.Tests.Tests
                     resourceGroupName,
                     routeTableName);
 
-                Assert.Equal(1, listRouteResponse.Count());
+                Assert.Single(listRouteResponse);
                 Assert.Equal(getRouteResponse2.Name, listRouteResponse.First().Name);
                 Assert.Equal(getRouteResponse2.AddressPrefix, listRouteResponse.First().AddressPrefix);
                 Assert.Equal(getRouteResponse2.NextHopIpAddress, listRouteResponse.First().NextHopIpAddress);
@@ -160,7 +160,7 @@ namespace Network.Tests.Tests
                     resourceGroupName,
                     routeTableName);
 
-                Assert.Equal(0, listRouteResponse.Count());
+                Assert.Empty(listRouteResponse);
 
                 // Delete RouteTable
                 networkManagementClient.RouteTables.Delete(
@@ -170,7 +170,7 @@ namespace Network.Tests.Tests
                 // Verify delete
                 var listRouteTableResponse = networkManagementClient.RouteTables.List(resourceGroupName);
 
-                Assert.Equal(0, listRouteTableResponse.Count());
+                Assert.Empty(listRouteTableResponse);
             }
         }
 
@@ -289,7 +289,7 @@ namespace Network.Tests.Tests
                 // Verify delete
                 var listRouteTableResponse = networkManagementClient.RouteTables.List(resourceGroupName);
 
-                Assert.Equal(0, listRouteTableResponse.Count());
+                Assert.Empty(listRouteTableResponse);
             }
         }
     }

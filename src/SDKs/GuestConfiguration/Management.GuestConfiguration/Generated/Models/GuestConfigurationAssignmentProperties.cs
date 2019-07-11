@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="assignmentHash">Combined hash of the configuration
         /// package and parameters.</param>
         /// <param name="provisioningState">The provisioning state, which only
-        /// appears in the response. Possible values include:
-        /// 'Succeeded'</param>
-        public GuestConfigurationAssignmentProperties(GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), string lastComplianceStatusChecked = default(string), string latestReportId = default(string), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string))
+        /// appears in the response. Possible values include: 'Succeeded',
+        /// 'Failed', 'Canceled', 'Created'</param>
+        public GuestConfigurationAssignmentProperties(GuestConfigurationNavigation guestConfiguration = default(GuestConfigurationNavigation), string complianceStatus = default(string), System.DateTime? lastComplianceStatusChecked = default(System.DateTime?), string latestReportId = default(string), string context = default(string), string assignmentHash = default(string), string provisioningState = default(string))
         {
             GuestConfiguration = guestConfiguration;
             ComplianceStatus = complianceStatus;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// Gets date and time when last compliance status was checked.
         /// </summary>
         [JsonProperty(PropertyName = "lastComplianceStatusChecked")]
-        public string LastComplianceStatusChecked { get; private set; }
+        public System.DateTime? LastComplianceStatusChecked { get; private set; }
 
         /// <summary>
         /// Gets id of the latest report for the guest configuration
@@ -107,7 +107,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
-        /// Possible values include: 'Succeeded'
+        /// Possible values include: 'Succeeded', 'Failed', 'Canceled',
+        /// 'Created'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters to list service SAS credentials of a speicific resource.
+    /// The parameters to list service SAS credentials of a specific resource.
     /// </summary>
     public partial class ServiceSasParameters
     {

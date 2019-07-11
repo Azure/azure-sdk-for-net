@@ -133,7 +133,7 @@
           },
           "Value": {
             "Type": "Models.OnAllTasksComplete?",
-            "Name": "OnAllTasksComplete",
+            "Name": "OnAllTasksComplete"
           }
         },
         {
@@ -147,8 +147,19 @@
           },
           "Value": {
             "Type": "Models.OnTaskFailure?",
-            "Name": "OnTaskFailure",
+            "Name": "OnTaskFailure"
           }
         },
+        {
+          "Key": {
+            "Type": "JobNetworkConfiguration",
+            "Name": "NetworkConfiguration",
+            "SummaryComment": "The network configuration for the job.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        }
       ]
     }

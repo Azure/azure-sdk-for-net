@@ -24,12 +24,5 @@ namespace Microsoft.Azure.Batch.Common
         /// operation has not yet completed.
         /// </summary>
         Deleting,
-        
-        /// <summary>
-        /// The user has requested that the operating system of the pool's
-        /// nodes be upgraded, but the upgrade operation has not yet completed
-        /// (that is, some nodes in the pool have not yet been upgraded).
-        /// </summary>
-        Upgrading,
     }
 }

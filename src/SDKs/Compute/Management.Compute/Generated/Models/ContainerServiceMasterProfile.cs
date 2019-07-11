@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="count">Number of masters (VMs) in the container
         /// service cluster. Allowed values are 1, 3, and 5. The default value
         /// is 1.</param>
-        /// <param name="fqdn">FDQN for the master.</param>
+        /// <param name="fqdn">FQDN for the master.</param>
         public ContainerServiceMasterProfile(string dnsPrefix, int? count = default(int?), string fqdn = default(string))
         {
             Count = count;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DnsPrefix { get; set; }
 
         /// <summary>
-        /// Gets FDQN for the master.
+        /// Gets FQDN for the master.
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }

@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// pool resource of URL path map.</param>
         /// <param name="defaultBackendHttpSettings">Default backend http
         /// settings resource of URL path map.</param>
+        /// <param name="defaultRewriteRuleSet">Default Rewrite rule set
+        /// resource of URL path map.</param>
         /// <param name="defaultRedirectConfiguration">Default redirect
         /// configuration resource of URL path map.</param>
         /// <param name="pathRules">Path rule of URL path map resource.</param>
@@ -53,11 +55,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), SubResource defaultRedirectConfiguration = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), SubResource defaultRewriteRuleSet = default(SubResource), SubResource defaultRedirectConfiguration = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
+            DefaultRewriteRuleSet = defaultRewriteRuleSet;
             DefaultRedirectConfiguration = defaultRedirectConfiguration;
             PathRules = pathRules;
             ProvisioningState = provisioningState;
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultBackendHttpSettings")]
         public SubResource DefaultBackendHttpSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets default Rewrite rule set resource of URL path map.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultRewriteRuleSet")]
+        public SubResource DefaultRewriteRuleSet { get; set; }
 
         /// <summary>
         /// Gets or sets default redirect configuration resource of URL path

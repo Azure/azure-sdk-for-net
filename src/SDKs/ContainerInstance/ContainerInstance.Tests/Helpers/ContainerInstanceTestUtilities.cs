@@ -46,12 +46,26 @@ namespace ContainerInstance.Tests
                     image: "alpine",
                     ports: new List<ContainerPort>() { new ContainerPort(80) },
                     command: new List<string>() { "/bin/sh", "-c", "while true; do sleep 10; done" },
+                    environmentVariables: new List<EnvironmentVariable>
+                    {
+                        new EnvironmentVariable(name: "secretEnv", secureValue: "secretValue1")
+                    },
+                    livenessProbe: new ContainerProbe(
+                        exec: new ContainerExec(command: new List<string>{ "cat", "/tmp/healthy" }),
+                        periodSeconds: 20),
                     resources: new ResourceRequirements(requests: new ResourceRequests(memoryInGB: 1.5, cpu: 1.0)))
             };
 
             var ipAddress = new IpAddress(
                 ports: new List<Port>() { new Port(80, "TCP") },
-                dnsNameLabel: containerGroupName);
+                dnsNameLabel: containerGroupName,
+                type: ContainerGroupIpAddressType.Public);
+
+            var logAnalytics = new LogAnalytics(
+                workspaceId: "workspaceid",
+                workspaceKey: "workspacekey");
+
+            var msiIdentity = new ContainerGroupIdentity(type: ResourceIdentityType.SystemAssigned);
 
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
@@ -59,7 +73,9 @@ namespace ContainerInstance.Tests
                 osType: OperatingSystemTypes.Linux,
                 ipAddress: ipAddress,
                 restartPolicy: "Never",
-                containers: containers);
+                containers: containers,
+                identity: msiIdentity,
+                diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics));
 
             return containerGroup;
         }
@@ -71,6 +87,8 @@ namespace ContainerInstance.Tests
             Assert.Equal(expected.Location, actual.Location);
             Assert.Equal(expected.OsType, actual.OsType);
             Assert.Equal(expected.RestartPolicy, actual.RestartPolicy);
+            Assert.Equal(expected.Identity.Type, actual.Identity.Type);
+            Assert.Equal(expected.Diagnostics.LogAnalytics.WorkspaceId, actual.Diagnostics.LogAnalytics.WorkspaceId);
             Assert.NotNull(actual.Containers);
             Assert.Equal(1, actual.Containers.Count);
             Assert.NotNull(actual.IpAddress);
@@ -78,6 +96,8 @@ namespace ContainerInstance.Tests
             Assert.Equal(expected.IpAddress.DnsNameLabel, actual.IpAddress.DnsNameLabel);
             Assert.Equal(expected.Containers[0].Name, actual.Containers[0].Name);
             Assert.Equal(expected.Containers[0].Image, actual.Containers[0].Image);
+            Assert.Equal(expected.Containers[0].LivenessProbe.PeriodSeconds, actual.Containers[0].LivenessProbe.PeriodSeconds);
+            Assert.Equal(expected.Containers[0].EnvironmentVariables[0].Name, actual.Containers[0].EnvironmentVariables[0].Name);
             Assert.Equal(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);
             Assert.Equal(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
         }

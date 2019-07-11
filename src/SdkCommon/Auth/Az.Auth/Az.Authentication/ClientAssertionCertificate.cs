@@ -39,6 +39,11 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             using (var key = certificate.GetRSAPrivateKey())
             {
+                if(key == null)
+                {
+                    throw new CryptographicException("No valid private RSA key found for X509Certificate2.");
+                }
+
                 return key.SignData(Encoding.UTF8.GetBytes(message), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             }
         }

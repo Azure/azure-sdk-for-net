@@ -34,25 +34,6 @@ namespace Compute.Tests
 
             var response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 0);
 
-#if NET46
-            Assert.True((bool) response.WalkPerformed);
-            Assert.Equal(1, response.NextPlatformUpdateDomain);
-            response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 1);
-            Assert.True((bool) response.WalkPerformed);
-            Assert.Equal(2, response.NextPlatformUpdateDomain);
-            response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 2);
-            Assert.True((bool) response.WalkPerformed);
-            Assert.Equal(3, response.NextPlatformUpdateDomain);
-            response= m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 3);
-            Assert.True ((bool) response.WalkPerformed);
-            Assert.Equal(4, response.NextPlatformUpdateDomain);
-            response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 4);
-            Assert.True((bool) response.WalkPerformed);
-            Assert.Equal(5, response.NextPlatformUpdateDomain);
-            response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 5);
-            Assert.True((bool) response.WalkPerformed);
-            Assert.Null(response.NextPlatformUpdateDomain);
-#else
             Assert.True(response.WalkPerformed);
             Assert.Equal(1, response.NextPlatformUpdateDomain);
             response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 1);
@@ -70,7 +51,6 @@ namespace Compute.Tests
             response = m_CrpClient.VirtualMachineScaleSets.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(rgName, vmssName, 5);
             Assert.True(response.WalkPerformed);
             Assert.Null(response.NextPlatformUpdateDomain);
-#endif
         }
     }
 }

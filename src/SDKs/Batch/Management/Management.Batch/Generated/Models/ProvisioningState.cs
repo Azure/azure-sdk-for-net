@@ -21,16 +21,34 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ProvisioningState
     {
+        /// <summary>
+        /// The account is in an invalid state.
+        /// </summary>
         [EnumMember(Value = "Invalid")]
         Invalid,
+        /// <summary>
+        /// The account is being created.
+        /// </summary>
         [EnumMember(Value = "Creating")]
         Creating,
+        /// <summary>
+        /// The account is being deleted.
+        /// </summary>
         [EnumMember(Value = "Deleting")]
         Deleting,
+        /// <summary>
+        /// The account has been created and is ready for use.
+        /// </summary>
         [EnumMember(Value = "Succeeded")]
         Succeeded,
+        /// <summary>
+        /// The last operation for the account is failed.
+        /// </summary>
         [EnumMember(Value = "Failed")]
         Failed,
+        /// <summary>
+        /// The last operation for the account is cancelled.
+        /// </summary>
         [EnumMember(Value = "Cancelled")]
         Cancelled
     }

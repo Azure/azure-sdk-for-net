@@ -8,16 +8,12 @@
 		<Description>Provides management capabilities for Microsoft Azure IotHub.</Description>
 		<AssemblyTitle>Microsoft Azure IotHub Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.IotHub</AssemblyName>
-		<Version>2.1.0</Version>
+		<Version>2.8.0-preview</Version>
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[
-        Added missing Api of routing for IotHub.
-      ]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Device streaming API version update for IotHub.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 	
   <!-- Please do not move/edit code below this line -->	

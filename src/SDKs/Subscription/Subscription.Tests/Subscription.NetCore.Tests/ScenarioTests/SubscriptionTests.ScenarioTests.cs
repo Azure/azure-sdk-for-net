@@ -33,7 +33,7 @@ namespace ResourceGroups.Tests
                 var subscriptions = client.Subscriptions.List();
 
                 Assert.NotNull(subscriptions);
-                Assert.NotEqual(0, subscriptions.Count());
+                Assert.NotEmpty(subscriptions);
                 Assert.NotNull(subscriptions.First().Id);
                 Assert.NotNull(subscriptions.First().SubscriptionId);
                 Assert.NotNull(subscriptions.First().DisplayName);

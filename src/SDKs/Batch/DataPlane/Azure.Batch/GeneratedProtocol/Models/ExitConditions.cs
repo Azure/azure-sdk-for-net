@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// listed in the exitCodes or exitCodeRanges collection, with a
         /// pre-processing error if the preProcessingError property is not
         /// present, or with a file upload error if the fileUploadError
-        /// property is not present. If you want non-default behaviour on exit
+        /// property is not present. If you want non-default behavior on exit
         /// code 0, you must list it explicitly using the exitCodes or
         /// exitCodeRanges collection.
         /// </remarks>

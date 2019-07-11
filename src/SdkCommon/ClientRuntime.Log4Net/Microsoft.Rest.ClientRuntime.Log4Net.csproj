@@ -9,7 +9,7 @@
     <PackageTags>Rest ClientRuntime Azure Test Log4Net $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452</TargetFrameworks>
+    <TargetFrameworks>net452;net461</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>

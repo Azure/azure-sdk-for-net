@@ -42,5 +42,10 @@
         /// Gets or sets the service request ID for this request.
         /// </summary>
         public string ServiceRequestId { get; protected internal set; }
+
+        /// <summary>
+        /// Gets or sets the retry-after returned by the server (or null if none was returned)
+        /// </summary>
+        public TimeSpan? RetryAfter { get; protected internal set; }
     }
 }

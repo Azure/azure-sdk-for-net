@@ -52,6 +52,68 @@ namespace Compute.Tests
         }
 
         [Fact]
+        public void TestVMImageAutomaticOSUpgradeProperties()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Validate if images supporting automatic OS upgrades return
+                // AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported = true in GET VMImageVesion call
+                string imagePublisher = "MicrosoftWindowsServer";
+                string imageOffer = "WindowsServer";
+                string imageSku = "2016-Datacenter";
+                string[] availableWindowsServerImageVersions =_pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku).Select(t => t.Name).ToArray();
+
+                string firstVersion = availableWindowsServerImageVersions.First();
+                string lastVersion = null;
+                if (availableWindowsServerImageVersions.Length >= 2)
+                {
+                    lastVersion = availableWindowsServerImageVersions.Last();
+                }
+
+                var vmimage = _pirClient.VirtualMachineImages.Get(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, firstVersion);
+                Assert.True(vmimage.AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported);
+
+                if (!string.IsNullOrEmpty(lastVersion))
+                {
+                    vmimage = _pirClient.VirtualMachineImages.Get(
+                        ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, lastVersion);
+                    Assert.True(vmimage.AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported);
+                }
+
+                // Validate if image not whitelisted to support automatic OS upgrades, return
+                // AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported = false in GET VMImageVesion call
+                imagePublisher = "Canonical";
+                imageOffer = "UbuntuServer";
+                imageSku = "18.10-DAILY";
+                string[] availableUbuntuImageVersions = _pirClient.VirtualMachineImages.List(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku).Select(t => t.Name).ToArray();
+
+                firstVersion = availableUbuntuImageVersions.First();
+                lastVersion = null;
+                if (availableUbuntuImageVersions.Length >= 2)
+                {
+                    lastVersion = availableUbuntuImageVersions.Last();
+                }
+
+                vmimage = _pirClient.VirtualMachineImages.Get(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, firstVersion);
+                Assert.False(vmimage.AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported);
+
+                if (!string.IsNullOrEmpty(lastVersion))
+                {
+                    vmimage = _pirClient.VirtualMachineImages.Get(
+                        ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, lastVersion);
+                    Assert.False(vmimage.AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported);
+                }
+            }
+        }
+
+        [Fact]
         public void TestVMImageListNoFilter()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

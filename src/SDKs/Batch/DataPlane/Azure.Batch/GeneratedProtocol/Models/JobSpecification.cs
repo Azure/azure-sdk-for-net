@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// non-zero exit code after exhausting its retry count, or if there
         /// was an error starting the task, for example due to a resource file
         /// download error.</param>
+        /// <param name="networkConfiguration">The network configuration for
+        /// the job.</param>
         /// <param name="constraints">The execution constraints for jobs
         /// created under this schedule.</param>
         /// <param name="jobManagerTask">The details of a Job Manager task to
@@ -64,13 +66,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job Manager, Job Preparation and Job Release tasks).</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// each job created under this schedule as metadata.</param>
-        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
             DisplayName = displayName;
             UsesTaskDependencies = usesTaskDependencies;
             OnAllTasksComplete = onAllTasksComplete;
             OnTaskFailure = onTaskFailure;
+            NetworkConfiguration = networkConfiguration;
             Constraints = constraints;
             JobManagerTask = jobManagerTask;
             JobPreparationTask = jobPreparationTask;
@@ -147,6 +150,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]
         public OnTaskFailure? OnTaskFailure { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network configuration for the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public JobNetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints for jobs created under this

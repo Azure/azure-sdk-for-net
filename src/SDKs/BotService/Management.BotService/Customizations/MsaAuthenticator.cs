@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 namespace Microsoft.Azure.Management.BotService
 {
     /// <summary>
-    /// Obtains user level tokesn with the bot service first party app audience in order
+    /// Obtains user level tokens with the bot service first party app audience in order
     /// to provision Msa Apps, which are crucial for bots to work
     /// </summary>
     internal class MsaAuthenticator

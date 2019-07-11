@@ -168,6 +168,50 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// this header and the X-MSEdge-ClientIP header, but at a minimum, you
         /// should include this header.
         /// </param>
+        /// <param name='market'>
+        /// The market where the results come from. Typically, mkt is the
+        /// country where the user is making the request from. However, it
+        /// could be a different country if the user is not located in a
+        /// country where Bing delivers results. The market must be in the form
+        /// &lt;language code&gt;-&lt;country code&gt;. For example, en-US. The
+        /// string is case insensitive. For a list of possible market values,
+        /// see [Market
+        /// Codes](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/supported-countries-markets).
+        /// NOTE: If known, you are encouraged to always specify the market.
+        /// Specifying the market helps Bing route the request and return an
+        /// appropriate and optimal response. If you specify a market that is
+        /// not listed in [Market
+        /// Codes](https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/supported-countries-markets),
+        /// Bing uses a best fit market code based on an internal mapping that
+        /// is subject to change.
+        /// </param>
+        /// <param name='safeSearch'>
+        /// Filter the image results in actions with type 'VisualSearch' for
+        /// adult content. The following are the possible filter values. Off:
+        /// May return images with adult content. Moderate: Do not return
+        /// images with adult content. Strict: Do not return images with adult
+        /// content. The default is Moderate. If the request comes from a
+        /// market that Bing's adult policy requires that safeSearch is set to
+        /// Strict, Bing ignores the safeSearch value and uses Strict. If you
+        /// use the site: filter in the knowledge request, there is the chance
+        /// that the response may contain adult content regardless of what the
+        /// safeSearch query parameter is set to. Use site: only if you are
+        /// aware of the content on the site and your scenario supports the
+        /// possibility of adult content. Possible values include: 'Off',
+        /// 'Moderate', 'Strict'
+        /// </param>
+        /// <param name='setLang'>
+        /// The language to use for user interface strings. Specify the
+        /// language using the ISO 639-1 2-letter language code. For example,
+        /// the language code for English is EN. The default is EN (English).
+        /// Although optional, you should always specify the language.
+        /// Typically, you set setLang to the same language specified by mkt
+        /// unless the user wants the user interface strings displayed in a
+        /// different language. A user interface string is a string that's used
+        /// as a label in a user interface. There are few user interface
+        /// strings in the JSON response objects. Also, any links to Bing.com
+        /// properties in the response objects apply the specified language.
+        /// </param>
         /// <param name='knowledgeRequest'>
         /// The form data is a JSON object that identifies the image using an
         /// insights token or URL to the image. The object may also include an
@@ -180,13 +224,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// </param>
         /// <param name='image'>
         /// The form data is an image binary. The Content-Disposition header's
-        /// filename parameter must be set to "image". You must specify an
-        /// image binary if you do not use knowledgeRequest form data to
-        /// specify the image; you may not use both forms to specify an image.
-        /// You may specify knowledgeRequest form data and image form data in
-        /// the same request only if knowledgeRequest form data specifies the
-        /// cropArea field only  (it must not include an insights token or
-        /// URL).
+        /// name parameter must be set to "image". You must specify an image
+        /// binary if you do not use knowledgeRequest form data to specify the
+        /// image; you may not use both forms to specify an image. You may
+        /// specify knowledgeRequest form data and image form data in the same
+        /// request only if knowledgeRequest form data specifies the cropArea
+        /// field only  (it must not include an insights token or URL).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -203,6 +246,6 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string knowledgeRequest = default(string), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string market = default(string), string safeSearch = default(string), string setLang = default(string), string knowledgeRequest = default(string), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

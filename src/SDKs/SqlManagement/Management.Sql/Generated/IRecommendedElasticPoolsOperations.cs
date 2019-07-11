@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IRecommendedElasticPoolsOperations
     {
         /// <summary>
-        /// Gets a recommented elastic pool.
+        /// Gets a recommended elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<RecommendedElasticPool>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns recommented elastic pool metrics.
+        /// Returns recommended elastic pool metrics.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can

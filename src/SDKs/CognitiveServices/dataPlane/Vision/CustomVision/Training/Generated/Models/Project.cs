@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a project
+    /// Represents a project.
     /// </summary>
     public partial class Project
     {
@@ -29,17 +29,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Project class.
         /// </summary>
-        /// <param name="id">Gets the project id</param>
-        /// <param name="name">Gets or sets the name of the project</param>
+        /// <param name="id">Gets The project id.</param>
+        /// <param name="name">Gets or sets the name of the project.</param>
         /// <param name="description">Gets or sets the description of the
-        /// project</param>
-        /// <param name="settings">Gets or sets the project settings</param>
+        /// project.</param>
+        /// <param name="settings">Gets or sets the project settings.</param>
         /// <param name="created">Gets the date this project was
-        /// created</param>
+        /// created.</param>
         /// <param name="lastModified">Gets the date this project was last
-        /// modifed</param>
+        /// modifed.</param>
         /// <param name="thumbnailUri">Gets the thumbnail url representing the
-        /// project</param>
+        /// project.</param>
         public Project(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), ProjectSettings settings = default(ProjectSettings), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string))
         {
             Id = id;
@@ -58,43 +58,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the project id
+        /// Gets The project id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the project
+        /// Gets or sets the name of the project.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the description of the project
+        /// Gets or sets the description of the project.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the project settings
+        /// Gets or sets the project settings.
         /// </summary>
         [JsonProperty(PropertyName = "settings")]
         public ProjectSettings Settings { get; set; }
 
         /// <summary>
-        /// Gets the date this project was created
+        /// Gets the date this project was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
-        /// Gets the date this project was last modifed
+        /// Gets the date this project was last modifed.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the thumbnail url representing the project
+        /// Gets the thumbnail url representing the project.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }

@@ -85,7 +85,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var getAllNotificationHubsResponse = NotificationHubsManagementClient.NotificationHubs.List(resourceGroup, namespaceName);
                 Assert.NotNull(getAllNotificationHubsResponse);
                 Assert.True(getAllNotificationHubsResponse.Count() >= 1);
-                Assert.True(getAllNotificationHubsResponse.Any(nh => string.Compare(nh.Name, notificationHubName, true) == 0));
+                Assert.Contains(getAllNotificationHubsResponse, nh => string.Compare(nh.Name, notificationHubName, true) == 0);
                 Assert.True(getAllNotificationHubsResponse.All(nh => nh.Id.Contains(resourceGroup)));
 
                 var getNotificationHubPnsCredentialsResponse = NotificationHubsManagementClient.NotificationHubs.GetPnsCredentials(resourceGroup, namespaceName, notificationHubName);
@@ -141,11 +141,11 @@ namespace NotificationHubs.Tests.ScenarioTests
                 //Get the updated notificationHub
                 getNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.Get(resourceGroup, namespaceName, notificationHubName);
                 Assert.NotNull(getNotificationHubResponse);
-                Assert.Equal(getNotificationHubResponse.Tags.Count, 3);
+                Assert.Equal(3, getNotificationHubResponse.Tags.Count);
                 foreach (var tag in updateNotificationHubParameter.Tags)
                 {
-                    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                    Assert.Contains(getNotificationHubResponse.Tags, t => t.Key.Equals(tag.Key));
+                    Assert.Contains(getNotificationHubResponse.Tags, t => t.Value.Equals(tag.Value));
                 }
 
                 //Get the updated notificationHub PNSCredentials
@@ -183,7 +183,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(ex.Message.Contains("NotFound"));
+                    Assert.Contains("NotFound", ex.Message);
                 }
             }
         }

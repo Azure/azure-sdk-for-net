@@ -1,5 +1,16 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.0.6-preview
+
+- Added support of OpenId authentication in ApiContract
+- Fixed bug in UserContract which prevented setting the UserIdentities
+- Added API for updating an API Issue
+
+### Changes in 4.0.5-preview
+
+- Added ApiRevisionDescription and ApiVersionDescription to ApiContract
+- Fixed bug in ApiManagementService contract. The CertificateInformation has a setter for Update scenarios.
+
 ### Changes in 4.0.4-preview
 
 - Added ApiRevisionDescription and ApiVersionDescription to ApiContract

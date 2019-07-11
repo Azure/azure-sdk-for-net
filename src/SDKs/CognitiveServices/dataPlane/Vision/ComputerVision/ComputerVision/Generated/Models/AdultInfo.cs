@@ -33,9 +33,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="isAdultContent">A value indicating if the image
         /// contains adult-oriented content.</param>
         /// <param name="isRacyContent">A value indicating if the image is
-        /// race.</param>
+        /// racy.</param>
         /// <param name="adultScore">Score from 0 to 1 that indicates how much
-        /// of adult content is within the image.</param>
+        /// the content is considered adult-oriented within the image.</param>
         /// <param name="racyScore">Score from 0 to 1 that indicates how
         /// suggestive is the image.</param>
         public AdultInfo(bool isAdultContent = default(bool), bool isRacyContent = default(bool), double adultScore = default(double), double racyScore = default(double))
@@ -60,14 +60,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public bool IsAdultContent { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating if the image is race.
+        /// Gets or sets a value indicating if the image is racy.
         /// </summary>
         [JsonProperty(PropertyName = "isRacyContent")]
         public bool IsRacyContent { get; set; }
 
         /// <summary>
-        /// Gets or sets score from 0 to 1 that indicates how much of adult
-        /// content is within the image.
+        /// Gets or sets score from 0 to 1 that indicates how much the content
+        /// is considered adult-oriented within the image.
         /// </summary>
         [JsonProperty(PropertyName = "adultScore")]
         public double AdultScore { get; set; }

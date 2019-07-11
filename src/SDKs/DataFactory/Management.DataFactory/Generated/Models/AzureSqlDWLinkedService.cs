@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
+        /// <param name="password">The Azure key vault secret reference of
+        /// password in connection string.</param>
         /// <param name="servicePrincipalId">The ID of the service principal
         /// used to authenticate against Azure SQL Data Warehouse. Type: string
         /// (or Expression with resultType string).</param>
@@ -57,10 +59,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDWLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
+        public AzureSqlDWLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
+            Password = password;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
@@ -80,6 +83,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
         public object ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure key vault secret reference of password in
+        /// connection string.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.password")]
+        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the service principal used to authenticate
@@ -124,6 +134,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+            if (Password != null)
+            {
+                Password.Validate();
             }
         }
     }

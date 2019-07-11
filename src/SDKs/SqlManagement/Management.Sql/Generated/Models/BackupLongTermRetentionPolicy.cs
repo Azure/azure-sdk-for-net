@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="weeklyRetention">The weekly retention policy for an
         /// LTR backup in an ISO 8601 format.</param>
-        /// <param name="monthlyRetention">The montly retention policy for an
+        /// <param name="monthlyRetention">The monthly retention policy for an
         /// LTR backup in an ISO 8601 format.</param>
         /// <param name="yearlyRetention">The yearly retention policy for an
         /// LTR backup in an ISO 8601 format.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string WeeklyRetention { get; set; }
 
         /// <summary>
-        /// Gets or sets the montly retention policy for an LTR backup in an
+        /// Gets or sets the monthly retention policy for an LTR backup in an
         /// ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.monthlyRetention")]

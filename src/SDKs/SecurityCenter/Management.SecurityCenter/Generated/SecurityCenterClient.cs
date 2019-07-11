@@ -59,19 +59,20 @@ namespace Microsoft.Azure.Management.Security
         public string AscLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -99,6 +100,21 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ICompliancesOperations.
         /// </summary>
         public virtual ICompliancesOperations Compliances { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
+
+        /// <summary>
+        /// Gets the ISettingsOperations.
+        /// </summary>
+        public virtual ISettingsOperations Settings { get; private set; }
+
+        /// <summary>
+        /// Gets the IInformationProtectionPoliciesOperations.
+        /// </summary>
+        public virtual IInformationProtectionPoliciesOperations InformationProtectionPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -134,6 +150,29 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IExternalSecuritySolutionsOperations.
         /// </summary>
         public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        public virtual ITopologyOperations Topology { get; private set; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SecurityCenterClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SecurityCenterClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected SecurityCenterClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -218,6 +257,33 @@ namespace Microsoft.Azure.Management.Security
         /// Thrown when a required parameter is null
         /// </exception>
         public SecurityCenterClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SecurityCenterClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SecurityCenterClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SecurityCenterClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -341,6 +407,9 @@ namespace Microsoft.Azure.Management.Security
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
+            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
+            Settings = new SettingsOperations(this);
+            InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             Operations = new Operations(this);
             Locations = new LocationsOperations(this);
             Tasks = new TasksOperations(this);
@@ -348,6 +417,8 @@ namespace Microsoft.Azure.Management.Security
             DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
             JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
             ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
+            Topology = new TopologyOperations(this);
+            AllowedConnections = new AllowedConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -378,6 +449,8 @@ namespace Microsoft.Azure.Management.Security
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Setting>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Setting>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
             CustomInitialize();

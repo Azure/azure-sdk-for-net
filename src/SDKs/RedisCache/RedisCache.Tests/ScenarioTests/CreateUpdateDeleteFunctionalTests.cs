@@ -50,7 +50,7 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(fixture.RedisCacheName, responseCreate.Name);
                 Assert.Equal("Microsoft.Cache/Redis", responseCreate.Type);
 
-                Assert.True("succeeded".Equals(responseCreate.ProvisioningState, StringComparison.OrdinalIgnoreCase));
+                Assert.Equal("succeeded", responseCreate.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Basic, responseCreate.Sku.Name);
                 Assert.Equal(SkuFamily.C, responseCreate.Sku.Family);
                 Assert.Equal(0, responseCreate.Sku.Capacity);

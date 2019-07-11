@@ -42,11 +42,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// configuration triggered this run</param>
         /// <param name="status">Status of the software update configuration
         /// run.</param>
-        /// <param name="configuredDuration">configured duration for the
+        /// <param name="configuredDuration">Configured duration for the
         /// software update configuration run.</param>
         /// <param name="osType">Operating system target of the software update
         /// configuration triggered this run</param>
-        /// <param name="startTime">Etart time of the software update
+        /// <param name="startTime">Start time of the software update
         /// configuration run.</param>
         /// <param name="endTime">End time of the software update configuration
         /// run.</param>
@@ -56,13 +56,15 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// status.</param>
         /// <param name="creationTime">Creation time of theresource, which only
         /// appears in the response.</param>
-        /// <param name="createdBy">createdBy property, which only appears in
+        /// <param name="createdBy">CreatedBy property, which only appears in
         /// the response.</param>
         /// <param name="lastModifiedTime">Last time resource was modified,
         /// which only appears in the response.</param>
-        /// <param name="lastModifiedBy">lastModifiedBy property, which only
+        /// <param name="lastModifiedBy">LastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
+        /// <param name="tasks">Software update configuration tasks triggered
+        /// in this run</param>
+        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), SoftareUpdateConfigurationRunTasks tasks = default(SoftareUpdateConfigurationRunTasks))
         {
             Name = name;
             Id = id;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             CreatedBy = createdBy;
             LastModifiedTime = lastModifiedTime;
             LastModifiedBy = lastModifiedBy;
+            Tasks = tasks;
             CustomInit();
         }
 
@@ -124,7 +127,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string OsType { get; private set; }
 
         /// <summary>
-        /// Gets etart time of the software update configuration run.
+        /// Gets start time of the software update configuration run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
         public System.DateTimeOffset StartTime { get; private set; }
@@ -172,6 +175,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
         public string LastModifiedBy { get; private set; }
+
+        /// <summary>
+        /// Gets or sets software update configuration tasks triggered in this
+        /// run
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tasks")]
+        public SoftareUpdateConfigurationRunTasks Tasks { get; set; }
 
     }
 }

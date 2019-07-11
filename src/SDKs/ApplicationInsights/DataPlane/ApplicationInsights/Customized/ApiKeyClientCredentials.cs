@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.ApplicationInsights
+namespace Microsoft.Azure.ApplicationInsights.Query
 {
     public class ApiKeyClientCredentials : ServiceClientCredentials
     {

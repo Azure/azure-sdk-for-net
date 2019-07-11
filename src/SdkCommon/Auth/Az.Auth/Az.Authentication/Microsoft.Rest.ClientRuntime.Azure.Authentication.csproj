@@ -5,16 +5,17 @@
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
-    <Version>2.3.4</Version>    
+    <Version>2.3.7</Version>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>
-		<![CDATA[
-			1) Bring back DeviceAuth to .NET Core and .NET 461 that was mistakenly left out.
-		]]>
-	</PackageReleaseNotes>
+      <![CDATA[
+        1) Fixed null ref exception when RSA private key is not found in the provided X509Certificate2
+        2) Adding support to target .NET Standard 2.0 framework
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netstandard1.4;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
@@ -38,11 +39,18 @@
     
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 </Project>

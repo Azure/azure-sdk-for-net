@@ -193,9 +193,27 @@ namespace Automation.Tests.TestSupport
             return module;
         }
 
+        public Module CreateAutomationPython2Package(string moduleName, string contentLink)
+        {
+            var module = AutomationClient.Python2Package.CreateOrUpdate(ResourceGroup, AutomationAccount, moduleName,
+                new PythonPackageCreateParameters
+                {
+                    ContentLink = new ContentLink(contentLink),
+                    Tags = new Dictionary<string, string>()
+                });
+            return module;
+        }
+
+
         public Module GetAutomationModule(string moduleName)
         {
             var module = AutomationClient.Module.Get(ResourceGroup, AutomationAccount, moduleName);
+            return module;
+        }
+
+        public Module GetAutomationPython2Package(string moduleName)
+        {
+            var module = AutomationClient.Python2Package.Get(ResourceGroup, AutomationAccount, moduleName);
             return module;
         }
 
@@ -204,6 +222,21 @@ namespace Automation.Tests.TestSupport
             try
             {
                 AutomationClient.Module.Delete(ResourceGroup, AutomationAccount, moduleName);
+            }
+            catch (ErrorResponseException)
+            {
+                if (!ignoreErrors)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void DeletePython2Package(string moduleName, bool ignoreErrors = false)
+        {
+            try
+            {
+                AutomationClient.Python2Package.Delete(ResourceGroup, AutomationAccount, moduleName);
             }
             catch (ErrorResponseException)
             {
@@ -253,7 +286,7 @@ namespace Automation.Tests.TestSupport
 
         public void PublishRunbook(string runbookName)
         {
-            AutomationClient.RunbookDraft.BeginPublish(ResourceGroup, AutomationAccount, runbookName);
+            AutomationClient.Runbook.BeginPublish(ResourceGroup, AutomationAccount, runbookName);
         }
 
         public Job StartRunbook(string runbookName, IDictionary<string, string> parameters = null)

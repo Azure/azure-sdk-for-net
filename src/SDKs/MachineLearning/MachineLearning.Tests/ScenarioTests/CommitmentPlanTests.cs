@@ -149,19 +149,19 @@ namespace MachineLearning.Tests.ScenarioTests
                     Assert.Equal(2, plansInGroup1.Count());
 
                     string expectedResourceId1 = string.Format(CultureInfo.InvariantCulture, CommitmentPlanTests.ResourceIdFormat, amlPlansClient.SubscriptionId, resourceGroup1Name, plan1Name);
-                    Assert.True(plansInGroup1.Any(plan => string.Equals(plan.Id, expectedResourceId1, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(plansInGroup1, plan => string.Equals(plan.Id, expectedResourceId1, StringComparison.OrdinalIgnoreCase));
 
                     string expectedResourceId2 = string.Format(CultureInfo.InvariantCulture, CommitmentPlanTests.ResourceIdFormat, amlPlansClient.SubscriptionId, resourceGroup1Name, plan2Name);
-                    Assert.True(plansInGroup1.Any(plan => string.Equals(plan.Id, expectedResourceId2, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(plansInGroup1, plan => string.Equals(plan.Id, expectedResourceId2, StringComparison.OrdinalIgnoreCase));
 
                     // Get plans from second resource group and validate
                     var plansInGroup2 = amlPlansClient.CommitmentPlans.ListInResourceGroup(resourceGroup2Name);
 
                     Assert.NotNull(plansInGroup2);
-                    Assert.Equal(1, plansInGroup2.Count());
+                    Assert.Single(plansInGroup2);
 
                     string expectedResourceId3 = string.Format(CultureInfo.InvariantCulture, CommitmentPlanTests.ResourceIdFormat, amlPlansClient.SubscriptionId, resourceGroup2Name, plan3Name);
-                    Assert.True(plansInGroup2.Any(plan => string.Equals(plan.Id, expectedResourceId3, StringComparison.OrdinalIgnoreCase)));
+                    Assert.Contains(plansInGroup2, plan => string.Equals(plan.Id, expectedResourceId3, StringComparison.OrdinalIgnoreCase));
                 }
                 finally
                 {

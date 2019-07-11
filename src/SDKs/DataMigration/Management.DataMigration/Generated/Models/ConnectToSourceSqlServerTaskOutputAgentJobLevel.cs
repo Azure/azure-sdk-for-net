@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="lastExecutedOn">UTC Date and time when the Agent Job
         /// was last executed.</param>
         /// <param name="validationErrors">Validation errors</param>
-        /// <param name="migrationEligibility">Information about eligiblity of
+        /// <param name="migrationEligibility">Information about eligibility of
         /// agent job for migration.</param>
         public ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id = default(string), string name = default(string), string jobCategory = default(string), bool? isEnabled = default(bool?), string jobOwner = default(string), System.DateTimeOffset? lastExecutedOn = default(System.DateTimeOffset?), IList<ReportableException> validationErrors = default(IList<ReportableException>), MigrationEligibilityInfo migrationEligibility = default(MigrationEligibilityInfo))
             : base(id)
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public IList<ReportableException> ValidationErrors { get; private set; }
 
         /// <summary>
-        /// Gets information about eligiblity of agent job for migration.
+        /// Gets information about eligibility of agent job for migration.
         /// </summary>
         [JsonProperty(PropertyName = "migrationEligibility")]
         public MigrationEligibilityInfo MigrationEligibility { get; private set; }

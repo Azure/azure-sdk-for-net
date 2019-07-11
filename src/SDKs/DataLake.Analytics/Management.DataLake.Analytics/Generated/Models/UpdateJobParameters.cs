@@ -34,16 +34,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the UpdateJobParameters class.
         /// </summary>
         /// <param name="degreeOfParallelism">The degree of parallelism used
-        /// for this job. This must be greater than 0, if set to less than 0 it
-        /// will default to 1.</param>
+        /// for this job.</param>
+        /// <param name="degreeOfParallelismPercent">the degree of parallelism
+        /// in percentage used for this job.</param>
         /// <param name="priority">The priority value for the current job.
         /// Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
         /// <param name="tags">The key-value pairs used to add additional
         /// metadata to the job information.</param>
-        public UpdateJobParameters(int? degreeOfParallelism = default(int?), int? priority = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public UpdateJobParameters(int? degreeOfParallelism = default(int?), double? degreeOfParallelismPercent = default(double?), int? priority = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             DegreeOfParallelism = degreeOfParallelism;
+            DegreeOfParallelismPercent = degreeOfParallelismPercent;
             Priority = priority;
             Tags = tags;
             CustomInit();
@@ -55,11 +57,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the degree of parallelism used for this job. This must
-        /// be greater than 0, if set to less than 0 it will default to 1.
+        /// Gets or sets the degree of parallelism used for this job.
         /// </summary>
         [JsonProperty(PropertyName = "degreeOfParallelism")]
         public int? DegreeOfParallelism { get; set; }
+
+        /// <summary>
+        /// Gets or sets the degree of parallelism in percentage used for this
+        /// job.
+        /// </summary>
+        [JsonProperty(PropertyName = "degreeOfParallelismPercent")]
+        public double? DegreeOfParallelismPercent { get; set; }
 
         /// <summary>
         /// Gets or sets the priority value for the current job. Lower numbers

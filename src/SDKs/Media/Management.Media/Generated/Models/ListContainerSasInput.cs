@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters to the list SAS requet.
+    /// The parameters to the list SAS request.
     /// </summary>
     public partial class ListContainerSasInput
     {

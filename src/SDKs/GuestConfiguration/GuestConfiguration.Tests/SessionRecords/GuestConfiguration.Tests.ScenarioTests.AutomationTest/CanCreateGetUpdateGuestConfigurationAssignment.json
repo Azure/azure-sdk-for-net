@@ -1,20 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-06-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL0dDU0RLVGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HQ1NES1Rlc3RzMC9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL3ZpdmdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvdml2Z2EwL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzL0F1ZGl0U2VjdXJlUHJvdG9jb2w/YXBpLXZlcnNpb249MjAxOC0xMS0yMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"guestConfiguration\": {\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\"\r\n    },\r\n    \"context\": \"Azure policy A\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "85ccdc50-28cf-4364-b6dc-bac0daef5ef3"
+          "180a357f-4f36-4aa4-ad22-39754ca47891"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/3.0.3.0"
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.6.3.9600.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 10 Sep 2018 20:58:09 GMT"
+          "Fri, 18 Jan 2019 21:32:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -46,19 +48,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3cb6156e-46aa-484c-a9a8-100841df1e8a"
+          "c79cd605-e683-471f-b823-1ecab51473fa"
         ],
         "x-ms-correlation-request-id": [
-          "3cb6156e-46aa-484c-a9a8-100841df1e8a"
+          "c79cd605-e683-471f-b823-1ecab51473fa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180910T205809Z:3cb6156e-46aa-484c-a9a8-100841df1e8a"
+          "WESTUS2:20190118T213254Z:c79cd605-e683-471f-b823-1ecab51473fa"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "417"
+          "436"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -67,24 +69,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": null,\r\n  \"id\": null,\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": null,\r\n    \"latestReportId\": null,\r\n    \"lastComplianceStatusChecked\": null,\r\n    \"context\": \"Azure policy A\",\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"configurationParameter\": null,\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 201
+      "ResponseBody": "{\r\n  \"location\": null,\r\n  \"id\": null,\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": null,\r\n    \"latestReportId\": null,\r\n    \"lastComplianceStatusChecked\": null,\r\n    \"context\": \"Azure policy A\",\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"configurationParameter\": null,\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-06-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL0dDU0RLVGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HQ1NES1Rlc3RzMC9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL3ZpdmdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvdml2Z2EwL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzL0F1ZGl0U2VjdXJlUHJvdG9jb2w/YXBpLXZlcnNpb249MjAxOC0xMS0yMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"guestConfiguration\": {\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\"\r\n    },\r\n    \"context\": \"Azure Policy B\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e46a68c9-2e56-471b-a291-f9fd318dbf42"
+          "656e1de4-cd4d-49da-b241-3f9ce30035b0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/3.0.3.0"
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.6.3.9600.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -98,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 10 Sep 2018 20:58:20 GMT"
+          "Fri, 18 Jan 2019 21:32:55 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -116,19 +120,19 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "c9c96780-1811-4f2f-a45a-355c03779644"
+          "a9804b1a-b679-43b1-ad71-a83bb24e94f6"
         ],
         "x-ms-correlation-request-id": [
-          "c9c96780-1811-4f2f-a45a-355c03779644"
+          "a9804b1a-b679-43b1-ad71-a83bb24e94f6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180910T205821Z:c9c96780-1811-4f2f-a45a-355c03779644"
+          "WESTUS2:20190118T213255Z:a9804b1a-b679-43b1-ad71-a83bb24e94f6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "417"
+          "436"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -137,24 +141,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": null,\r\n  \"id\": null,\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": null,\r\n    \"latestReportId\": null,\r\n    \"lastComplianceStatusChecked\": null,\r\n    \"context\": \"Azure Policy B\",\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"configurationParameter\": null,\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 201
+      "ResponseBody": "{\r\n  \"location\": null,\r\n  \"id\": null,\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": null,\r\n    \"latestReportId\": null,\r\n    \"lastComplianceStatusChecked\": null,\r\n    \"context\": \"Azure Policy B\",\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"configurationParameter\": null,\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-06-30-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL0dDU0RLVGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9HQ1NES1Rlc3RzMC9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cy9BdWRpdFNlY3VyZVByb3RvY29sP2FwaS12ZXJzaW9uPTIwMTgtMDYtMzAtcHJldmlldw==",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2018-11-20",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL3ZpdmdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvdml2Z2EwL3Byb3ZpZGVycy9NaWNyb3NvZnQuR3Vlc3RDb25maWd1cmF0aW9uL2d1ZXN0Q29uZmlndXJhdGlvbkFzc2lnbm1lbnRzL0F1ZGl0U2VjdXJlUHJvdG9jb2w/YXBpLXZlcnNpb249MjAxOC0xMS0yMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "56258ca7-8fd5-45de-9bbf-7e923df4c633"
+          "dd2baafe-6ae0-4c92-8027-34e36bb0cfbe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.26328.01",
-          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/3.0.3.0"
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.6.3.9600.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -162,7 +168,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 10 Sep 2018 20:58:09 GMT"
+          "Fri, 18 Jan 2019 21:32:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -177,22 +183,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11983"
         ],
         "x-ms-request-id": [
-          "e0b19393-d728-46b8-a970-92aca73b9f94"
+          "54df064f-abd5-498d-8208-3d255243d66c"
         ],
         "x-ms-correlation-request-id": [
-          "e0b19393-d728-46b8-a970-92aca73b9f94"
+          "54df064f-abd5-498d-8208-3d255243d66c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180910T205809Z:e0b19393-d728-46b8-a970-92aca73b9f94"
+          "WESTUS2:20190118T213255Z:54df064f-abd5-498d-8208-3d255243d66c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "871"
+          "919"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -201,7 +207,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"Pending\",\r\n    \"assignmentHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/GCSDKTests/providers/Microsoft.Compute/virtualMachines/GCSDKTests0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/\",\r\n    \"lastComplianceStatusChecked\": \"0001-01-01T00:00:00\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n  \"name\": \"AuditSecureProtocol\",\r\n  \"properties\": {\r\n    \"complianceStatus\": \"NonCompliant\",\r\n    \"assignmentHash\": \"\",\r\n    \"latestReportId\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/vivga/providers/Microsoft.Compute/virtualMachines/vivga0/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/f1fb39c6-71ef-4bdb-95df-6f51951db453\",\r\n    \"lastComplianceStatusChecked\": \"2019-01-18T21:04:58Z\",\r\n    \"context\": null,\r\n    \"guestConfiguration\": {\r\n      \"kind\": null,\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"version\": \"1.0.0.3\",\r\n      \"contentUri\": null,\r\n      \"contentHash\": null,\r\n      \"contentType\": null,\r\n      \"configurationParameter\": [],\r\n      \"configurationSetting\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

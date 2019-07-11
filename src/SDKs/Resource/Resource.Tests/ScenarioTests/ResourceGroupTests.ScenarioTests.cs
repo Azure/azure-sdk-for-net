@@ -57,7 +57,7 @@ namespace ResourceGroups.Tests
 
                 Assert.Throws<CloudException>(() => client.Resources.ListByResourceGroup(resourceGroupName));
 
-                Assert.False(listGroupsResult.Any(rg => rg.Name == resourceGroupName));
+                Assert.DoesNotContain(listGroupsResult, rg => rg.Name == resourceGroupName);
             }
         }
 
@@ -83,7 +83,7 @@ namespace ResourceGroups.Tests
                    string.Format("Expected location '{0}' did not match actual location '{1}'", DefaultLocation, listedGroup.Location));
                 var gottenGroup = client.ResourceGroups.Get(groupName);
                 Assert.NotNull(gottenGroup);
-                Assert.Equal<string>(groupName, gottenGroup.Name);
+                Assert.Equal(groupName, gottenGroup.Name);
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(DefaultLocation, gottenGroup.Location),
                     string.Format("Expected location '{0}' did not match actual location '{1}'", DefaultLocation, gottenGroup.Location));
             }
@@ -128,7 +128,7 @@ namespace ResourceGroups.Tests
                 var listResult = client.ResourceGroups.List(null);
 
                 Assert.Equal(HttpStatusCode.OK, deleteResult.Response.StatusCode);
-                Assert.False(listResult.Any(rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting"));
+                Assert.DoesNotContain(listResult, rg => rg.Name == resourceGroupName && rg.Properties.ProvisioningState != "Deleting");
             }
         }
     }

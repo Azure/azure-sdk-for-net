@@ -13,7 +13,7 @@
     <PackageReleaseNotes>This is a general availability release of the Azure Iot Device Provisioning Service SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-	<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
   
   <!-- Please do not move/edit code below this line -->

@@ -291,6 +291,11 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
+        /// <remarks>
+        /// There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail 
+        /// and the response error code will be RequestEntityTooLarge. If this occurs, the collection of resource files must 
+        /// be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.
+        /// </remarks>
         public IList<ResourceFile> ResourceFiles
         {
             get { return this.propertyContainer.ResourceFilesProperty.Value; }

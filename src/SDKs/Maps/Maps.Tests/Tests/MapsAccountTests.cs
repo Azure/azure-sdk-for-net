@@ -83,8 +83,9 @@ namespace MapsServices.Tests
                                          { "key3", "value3" },
                                          { "key4", "value4" }
                                      };
+                newParameters.Sku.Name = MapsManagementTestUtilities.S1SkuName;
                 var updatedAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, newParameters);
-                MapsManagementTestUtilities.VerifyAccountProperties(updatedAccount, false);
+                MapsManagementTestUtilities.VerifyAccountProperties(updatedAccount, false, skuName: MapsManagementTestUtilities.S1SkuName);
                 Assert.NotNull(updatedAccount.Tags);
                 Assert.Equal(2, updatedAccount.Tags.Count);
                 Assert.Equal("value3", updatedAccount.Tags["key3"]);

@@ -49,12 +49,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IssueContract(string title, string description, string userId, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdDate = default(System.DateTime?), string state = default(string), string apiId = default(string))
             : base(id, name, type)
         {
-            Title = title;
-            Description = description;
             CreatedDate = createdDate;
             State = state;
-            UserId = userId;
             ApiId = apiId;
+            Title = title;
+            Description = description;
+            UserId = userId;
             CustomInit();
         }
 
@@ -62,18 +62,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the issue title.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.title")]
-        public string Title { get; set; }
-
-        /// <summary>
-        /// Gets or sets text describing the issue.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets date and time when the issue was created.
@@ -89,17 +77,29 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string State { get; set; }
 
         /// <summary>
-        /// Gets or sets a resource identifier for the user created the issue.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.userId")]
-        public string UserId { get; set; }
-
-        /// <summary>
         /// Gets or sets a resource identifier for the API the issue was
         /// created for.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiId")]
         public string ApiId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the issue title.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.title")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets text describing the issue.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets a resource identifier for the user created the issue.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userId")]
+        public string UserId { get; set; }
 
         /// <summary>
         /// Validate the object.

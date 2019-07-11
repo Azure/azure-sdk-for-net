@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </param>
         /// <param name='referencePipelineRunId'>
         /// The pipeline run identifier. If run ID is specified the parameters
-        /// of the the specified run will be used to create a new run.
+        /// of the specified run will be used to create a new run.
         /// </param>
         /// <param name='parameters'>
         /// Parameters of the pipeline run. These parameters will be used only

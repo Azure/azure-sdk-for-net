@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Image performance model
+    /// Image performance model.
     /// </summary>
     public partial class ImagePerformance
     {

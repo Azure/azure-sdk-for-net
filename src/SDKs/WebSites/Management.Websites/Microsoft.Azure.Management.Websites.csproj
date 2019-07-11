@@ -7,14 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Websites</PackageId>
 		<Description>Provides website management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 		<PackageTags>Microsoft Azure website management;website management;</PackageTags>
-		<PackageReleaseNotes>
-			<![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2018-02-01 for Certificates, Recommendations, ResourceHealthMetadata, DeletedWebApps, AppServiceEnvironments, AppServicePlans, Backup & Snapshots.]]>
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

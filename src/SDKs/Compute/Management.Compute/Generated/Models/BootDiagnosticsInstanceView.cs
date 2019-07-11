@@ -35,10 +35,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// URI.</param>
         /// <param name="serialConsoleLogBlobUri">The Linux serial console log
         /// blob Uri.</param>
-        public BootDiagnosticsInstanceView(string consoleScreenshotBlobUri = default(string), string serialConsoleLogBlobUri = default(string))
+        /// <param name="status">The boot diagnostics status information for
+        /// the VM. &lt;br&gt;&lt;br&gt; NOTE: It will be set only if there are
+        /// errors encountered in enabling boot diagnostics.</param>
+        public BootDiagnosticsInstanceView(string consoleScreenshotBlobUri = default(string), string serialConsoleLogBlobUri = default(string), InstanceViewStatus status = default(InstanceViewStatus))
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
+            Status = status;
             CustomInit();
         }
 
@@ -48,16 +52,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the console screenshot blob URI.
+        /// Gets the console screenshot blob URI.
         /// </summary>
         [JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
-        public string ConsoleScreenshotBlobUri { get; set; }
+        public string ConsoleScreenshotBlobUri { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Linux serial console log blob Uri.
+        /// Gets the Linux serial console log blob Uri.
         /// </summary>
         [JsonProperty(PropertyName = "serialConsoleLogBlobUri")]
-        public string SerialConsoleLogBlobUri { get; set; }
+        public string SerialConsoleLogBlobUri { get; private set; }
+
+        /// <summary>
+        /// Gets the boot diagnostics status information for the VM.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; NOTE: It will be set only if
+        /// there are errors encountered in enabling boot diagnostics.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public InstanceViewStatus Status { get; private set; }
 
     }
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the FactoryVSTSConfiguration class.
         /// </summary>
         /// <param name="accountName">Account name.</param>
-        /// <param name="repositoryName">Rrepository name.</param>
+        /// <param name="repositoryName">Repository name.</param>
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="projectName">VSTS project name.</param>

@@ -35,14 +35,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// class.
         /// </summary>
         /// <param name="skus">The SKU of the resource.</param>
-        /// <param name="kind">The Kind of the resource. Possible values
-        /// include: 'Bing.Autosuggest.v7', 'Bing.CustomSearch',
-        /// 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck.v7',
-        /// 'ComputerVision', 'ContentModerator', 'CustomSpeech',
-        /// 'CustomVision.Prediction', 'CustomVision.Training', 'Emotion',
-        /// 'Face', 'LUIS', 'QnAMaker', 'SpeakerRecognition',
-        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation',
-        /// 'WebLM'</param>
+        /// <param name="kind">The Kind of the resource.</param>
         /// <param name="type">The Type of the resource.</param>
         public CheckSkuAvailabilityParameter(IList<string> skus, string kind, string type)
         {
@@ -64,13 +57,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public IList<string> Skus { get; set; }
 
         /// <summary>
-        /// Gets or sets the Kind of the resource. Possible values include:
-        /// 'Bing.Autosuggest.v7', 'Bing.CustomSearch', 'Bing.Search.v7',
-        /// 'Bing.Speech', 'Bing.SpellCheck.v7', 'ComputerVision',
-        /// 'ContentModerator', 'CustomSpeech', 'CustomVision.Prediction',
-        /// 'CustomVision.Training', 'Emotion', 'Face', 'LUIS', 'QnAMaker',
-        /// 'SpeakerRecognition', 'SpeechTranslation', 'TextAnalytics',
-        /// 'TextTranslation', 'WebLM'
+        /// Gets or sets the Kind of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

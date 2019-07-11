@@ -29,14 +29,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the FaceRectangle class.
         /// </summary>
-        /// <param name="left">X-coordinate of the top left point of the
-        /// face.</param>
-        /// <param name="top">Y-coordinate of the top left point of the
-        /// face.</param>
+        /// <param name="left">X-coordinate of the top left point of the face,
+        /// in pixels.</param>
+        /// <param name="top">Y-coordinate of the top left point of the face,
+        /// in pixels.</param>
         /// <param name="width">Width measured from the top-left point of the
-        /// face.</param>
+        /// face, in pixels.</param>
         /// <param name="height">Height measured from the top-left point of the
-        /// face.</param>
+        /// face, in pixels.</param>
         public FaceRectangle(int left = default(int), int top = default(int), int width = default(int), int height = default(int))
         {
             Left = left;
@@ -52,25 +52,29 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets x-coordinate of the top left point of the face.
+        /// Gets or sets x-coordinate of the top left point of the face, in
+        /// pixels.
         /// </summary>
         [JsonProperty(PropertyName = "left")]
         public int Left { get; set; }
 
         /// <summary>
-        /// Gets or sets y-coordinate of the top left point of the face.
+        /// Gets or sets y-coordinate of the top left point of the face, in
+        /// pixels.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public int Top { get; set; }
 
         /// <summary>
-        /// Gets or sets width measured from the top-left point of the face.
+        /// Gets or sets width measured from the top-left point of the face, in
+        /// pixels.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public int Width { get; set; }
 
         /// <summary>
-        /// Gets or sets height measured from the top-left point of the face.
+        /// Gets or sets height measured from the top-left point of the face,
+        /// in pixels.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public int Height { get; set; }

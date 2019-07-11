@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Jira Serivce source.
+    /// A copy activity Jira Service source.
     /// </summary>
     public partial class JiraSource : CopySource
     {

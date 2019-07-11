@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             ClientSecretAccessTokenProvider clientSecretAccessTokenProvider = new ClientSecretAccessTokenProvider(Constants.TestAppId, Constants.ClientSecret, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token
-            var token = await clientSecretAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+            var authResult = await clientSecretAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             // Check if the principal used and type were as expected. 
-            Validator.ValidateToken(token, clientSecretAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, clientSecretAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, expiresOn: authResult.ExpiresOn);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncClientCredentialFail);
             ClientSecretAccessTokenProvider clientSecretAccessTokenProvider = new ClientSecretAccessTokenProvider(Constants.TestAppId, Constants.ClientSecret, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => clientSecretAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => clientSecretAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             MockAuthenticationContext mockAuthenticationContext = new MockAuthenticationContext(MockAuthenticationContext.MockAuthenticationContextTestType.AcquireTokenAsyncException);
             ClientSecretAccessTokenProvider clientSecretAccessTokenProvider = new ClientSecretAccessTokenProvider(Constants.TestAppId, Constants.ClientSecret, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => clientSecretAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => clientSecretAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);
@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public async Task ClientSecretRedactionTest()
         {
             AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString);
-            
-                var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId)));
+
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => azureServiceTokenProvider.GetAccessTokenAsync(Constants.KeyVaultResourceId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);

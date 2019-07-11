@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the
         /// ContentKeyPolicyFairPlayConfiguration class.
         /// </summary>
-        /// <param name="ask">The key that must be used as FairPlay
-        /// ASk.</param>
+        /// <param name="ask">The key that must be used as FairPlay Application
+        /// Secret key.</param>
         /// <param name="fairPlayPfxPassword">The password encrypting FairPlay
         /// certificate in PKCS 12 (pfx) format.</param>
         /// <param name="fairPlayPfx">The Base64 representation of FairPlay
@@ -61,7 +61,8 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the key that must be used as FairPlay ASk.
+        /// Gets or sets the key that must be used as FairPlay Application
+        /// Secret key.
         /// </summary>
         [JsonProperty(PropertyName = "ask")]
         public byte[] Ask { get; set; }

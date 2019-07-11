@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// The start container exec request.
+    /// The container exec request.
     /// </summary>
     public partial class ContainerExecRequest
     {

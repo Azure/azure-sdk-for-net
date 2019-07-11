@@ -72,8 +72,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and all its contents.
         /// </summary>
         /// <remarks>
-        /// The default is infinite, i.e. the task directory will be retained
-        /// until the compute node is removed or reimaged.
+        /// The default is 7 days, i.e. the task directory will be retained for
+        /// 7 days unless the compute node is removed or the job is deleted.
         /// </remarks>
         [JsonProperty(PropertyName = "retentionTime")]
         public System.TimeSpan? RetentionTime { get; set; }
@@ -90,9 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the task up to 4 times (one initial try and 3 retries). If the
         /// maximum retry count is 0, the Batch service does not retry the task
         /// after the first attempt. If the maximum retry count is -1, the
-        /// Batch service retries the task without limit. Resource files and
-        /// application packages are only downloaded again if the task is
-        /// retried on a new compute node.
+        /// Batch service retries the task without limit.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }

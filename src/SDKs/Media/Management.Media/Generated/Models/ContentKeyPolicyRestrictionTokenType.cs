@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         public override string ToString()
         {
-            return UnderlyingValue.ToString();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
         /// <summary>

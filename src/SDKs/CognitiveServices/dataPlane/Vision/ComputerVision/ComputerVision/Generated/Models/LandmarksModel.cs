@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// A landmark recognized in the image
+    /// A landmark recognized in the image.
     /// </summary>
     public partial class LandmarksModel
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="name">Name of the landmark.</param>
         /// <param name="confidence">Confidence level for the landmark
-        /// recognition.</param>
+        /// recognition as a value ranging from 0 to 1.</param>
         public LandmarksModel(string name = default(string), double confidence = default(double))
         {
             Name = name;
@@ -51,7 +51,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets confidence level for the landmark recognition.
+        /// Gets or sets confidence level for the landmark recognition as a
+        /// value ranging from 0 to 1.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
         public double Confidence { get; set; }

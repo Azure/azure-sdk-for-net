@@ -152,13 +152,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// Succeeded - The pool is available to run tasks subject to the
-        /// availability of compute nodes.
-        /// Deleting - The user has requested that the pool be deleted, but the
-        /// delete operation has not yet completed. Possible values include:
-        /// 'Succeeded', 'Deleting'
+        /// Possible values include: 'Succeeded', 'Deleting'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public PoolProvisioningState? ProvisioningState { get; private set; }
@@ -173,18 +167,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets whether the pool is resizing.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// Steady - The pool is not resizing. There are no changes to the
-        /// number of nodes in the pool in progress. A pool enters this state
-        /// when it is created and when no operations are being performed on
-        /// the pool to change the number of dedicated nodes.
-        /// Resizing - The pool is resizing; that is, compute nodes are being
-        /// added to or removed from the pool.
-        /// Stopping - The pool was resizing, but the user has requested that
-        /// the resize be stopped, but the stop request has not yet been
-        /// completed. Possible values include: 'Steady', 'Resizing',
-        /// 'Stopping'
+        /// Possible values include: 'Steady', 'Resizing', 'Stopping'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.allocationState")]
         public AllocationState? AllocationState { get; private set; }
@@ -421,6 +404,10 @@ namespace Microsoft.Azure.Management.Batch.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (StartTask != null)
+            {
+                StartTask.Validate();
             }
             if (Certificates != null)
             {

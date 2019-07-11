@@ -124,9 +124,12 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             /// <param name='backup'>
             /// Name of the backup.
             /// </param>
-            public static void Restore(this IBackupsOperations operations, string location, string resourceGroupName, string backup)
+            /// <param name='restoreOptions'>
+            /// Restore options.
+            /// </param>
+            public static void Restore(this IBackupsOperations operations, string location, string resourceGroupName, string backup, RestoreOptions restoreOptions)
             {
-                operations.RestoreAsync(location, resourceGroupName, backup).GetAwaiter().GetResult();
+                operations.RestoreAsync(location, resourceGroupName, backup, restoreOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,13 +146,16 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             /// </param>
             /// <param name='backup'>
             /// Name of the backup.
+            /// </param>
+            /// <param name='restoreOptions'>
+            /// Restore options.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestoreAsync(this IBackupsOperations operations, string location, string resourceGroupName, string backup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestoreAsync(this IBackupsOperations operations, string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RestoreWithHttpMessagesAsync(location, resourceGroupName, backup, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestoreWithHttpMessagesAsync(location, resourceGroupName, backup, restoreOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -167,9 +173,12 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             /// <param name='backup'>
             /// Name of the backup.
             /// </param>
-            public static void BeginRestore(this IBackupsOperations operations, string location, string resourceGroupName, string backup)
+            /// <param name='restoreOptions'>
+            /// Restore options.
+            /// </param>
+            public static void BeginRestore(this IBackupsOperations operations, string location, string resourceGroupName, string backup, RestoreOptions restoreOptions)
             {
-                operations.BeginRestoreAsync(location, resourceGroupName, backup).GetAwaiter().GetResult();
+                operations.BeginRestoreAsync(location, resourceGroupName, backup, restoreOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,13 +195,16 @@ namespace Microsoft.AzureStack.Management.Backup.Admin
             /// </param>
             /// <param name='backup'>
             /// Name of the backup.
+            /// </param>
+            /// <param name='restoreOptions'>
+            /// Restore options.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRestoreAsync(this IBackupsOperations operations, string location, string resourceGroupName, string backup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestoreAsync(this IBackupsOperations operations, string location, string resourceGroupName, string backup, RestoreOptions restoreOptions, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRestoreWithHttpMessagesAsync(location, resourceGroupName, backup, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestoreWithHttpMessagesAsync(location, resourceGroupName, backup, restoreOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

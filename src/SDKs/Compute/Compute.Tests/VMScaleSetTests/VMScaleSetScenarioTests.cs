@@ -81,6 +81,29 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
+        
+        /// <summary>
+        /// To record this test case, you need to run it in region which support local diff disks.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_DiffDisks")]
+        public void TestVMScaleSetScenarioOperations_DiffDisks()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+                    TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
+                    hasDiffDisks: true);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
 
         /// <summary>
         /// To record this test case, you need to run it again zone supported regions like eastus2euap.
@@ -109,8 +132,8 @@ namespace Compute.Tests
             }
         }
 
-        private void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true, 
-            IList<string> zones = null, int? osDiskSizeInGB = null)
+        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null)
         {
             EnsureClientsInitialized(context);
 
@@ -142,8 +165,15 @@ namespace Compute.Tests
                     imageRef,
                     out inputVMScaleSet,
                     useVmssExtension ? extensionProfile : null,
-                    (vmScaleSet) => { vmScaleSet.Overprovision = true; },
+                    (vmScaleSet) => {
+                        vmScaleSet.Overprovision = true;
+                        if (!String.IsNullOrEmpty(vmSize))
+                        {
+                            vmScaleSet.Sku.Name = vmSize;
+                        }
+                    },
                     createWithManagedDisks: hasManagedDisks,
+                    hasDiffDisks : hasDiffDisks,
                     zones: zones,
                     osDiskSizeInGB: osDiskSizeInGB);
 

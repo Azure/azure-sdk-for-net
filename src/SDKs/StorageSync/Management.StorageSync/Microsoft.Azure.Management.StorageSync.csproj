@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
+        <Description>Provides management capabilities for Azure Storage Sync.</Description>
+        <Version>2.8.0-preview</Version>
+        <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
+        <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
+        <PackageReleaseNotes>
+        <![CDATA[
+            This version uses 2.8.0-preview StorageSync API specification which introduced the next version for Azure File Storage Sync.
+                1. Support for Offline data transfer for Server Endpoints.
+                2. Reset of Sync server client certificate.
+      ]]>
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    </PropertyGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

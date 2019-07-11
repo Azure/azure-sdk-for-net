@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum NameAvailabilityReason
     {
+        /// <summary>
+        /// The requested name is invalid.
+        /// </summary>
         [EnumMember(Value = "Invalid")]
         Invalid,
+        /// <summary>
+        /// The requested name is already in use.
+        /// </summary>
         [EnumMember(Value = "AlreadyExists")]
         AlreadyExists
     }

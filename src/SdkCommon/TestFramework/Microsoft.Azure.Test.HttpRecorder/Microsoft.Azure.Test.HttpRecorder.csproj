@@ -2,19 +2,19 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>
-    <Version>1.11.0</Version>
+    <Version>1.13.2</Version>
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
     <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
-      1) Optimizing recorded files for LRO scenarios
+        1) Adding support to target .NET 461 and .NET Standard 2.0 framework
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netstandard2.0;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -28,11 +28,15 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
 </Project>

@@ -111,6 +111,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(genrateTokenResponse);
                     Assert.NotNull(genrateTokenResponse.Value);
 
+                    // get the useridentity 
+                    var currentUserIdentity = await testBase.client.User.GetIdentityAsync(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    Assert.NotNull(currentUserIdentity);
+                    Assert.NotNull(currentUserIdentity.Id);
+
                     // remove the user
                     testBase.client.User.Delete(
                         testBase.rgName,

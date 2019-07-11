@@ -41,6 +41,11 @@ namespace Microsoft.Azure.Management.DataMigration
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Version of the API
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Identifier of the subscription
         /// </summary>
         string SubscriptionId { get; set; }
@@ -93,6 +98,11 @@ namespace Microsoft.Azure.Management.DataMigration
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IFilesOperations.
+        /// </summary>
+        IFilesOperations Files { get; }
 
     }
 }

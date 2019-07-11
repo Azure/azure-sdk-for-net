@@ -18,7 +18,7 @@ namespace SearchSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "EntitySearch");
 
-                IEntitySearchAPI client = new EntitySearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                IEntitySearchClient client = new EntitySearchClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.Entities.Search(query: "tom cruise");
 

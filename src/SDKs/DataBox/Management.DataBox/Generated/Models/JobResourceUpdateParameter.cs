@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the JobResourceUpdateParameter class.
         /// </summary>
         /// <param name="details">Details of a job to be updated.</param>
+        /// <param name="destinationAccountDetails">Destination account
+        /// details.</param>
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        public JobResourceUpdateParameter(UpdateJobDetails details, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public JobResourceUpdateParameter(UpdateJobDetails details = default(UpdateJobDetails), IList<DestinationAccountDetails> destinationAccountDetails = default(IList<DestinationAccountDetails>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Details = details;
+            DestinationAccountDetails = destinationAccountDetails;
             Tags = tags;
             CustomInit();
         }
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.details")]
         public UpdateJobDetails Details { get; set; }
+
+        /// <summary>
+        /// Gets or sets destination account details.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.destinationAccountDetails")]
+        public IList<DestinationAccountDetails> DestinationAccountDetails { get; set; }
 
         /// <summary>
         /// Gets or sets the list of key value pairs that describe the
@@ -72,13 +81,19 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Details == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Details");
-            }
             if (Details != null)
             {
                 Details.Validate();
+            }
+            if (DestinationAccountDetails != null)
+            {
+                foreach (var element in DestinationAccountDetails)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

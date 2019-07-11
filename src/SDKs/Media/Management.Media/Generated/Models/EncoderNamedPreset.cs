@@ -28,13 +28,34 @@ namespace Microsoft.Azure.Management.Media.Models
         }
 
         /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 2200 kbps and a picture height of 480 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H264SingleBitrateSD = "H264SingleBitrateSD";
+
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 4500 kbps and a picture height of 720 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H264SingleBitrate720p = "H264SingleBitrate720p";
+
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.264 codec at
+        /// 6750 kbps and a picture height of 1080 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 64 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H264SingleBitrate1080p = "H264SingleBitrate1080p";
+
+        /// <summary>
         /// Produces a set of GOP aligned MP4 files with H.264 video and stereo
         /// AAC audio. Auto-generates a bitrate ladder based on the input
         /// resolution and bitrate. The auto-generated preset will never exceed
         /// the input resolution and bitrate. For example, if the input is 720p
         /// at 3 Mbps, output will remain 720p at best, and will start at rates
-        /// lower than 3 Mbps. The output will will have video and audio in
-        /// separate MP4 files, which is optimal for adaptive streaming.
+        /// lower than 3 Mbps. The output will have video and audio in separate
+        /// MP4 files, which is optimal for adaptive streaming.
         /// </summary>
         public static readonly EncoderNamedPreset AdaptiveStreaming = "AdaptiveStreaming";
 
@@ -76,7 +97,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         public override string ToString()
         {
-            return UnderlyingValue.ToString();
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
         }
 
         /// <summary>

@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine.</param>
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
+        /// <param name="additionalCapabilities">Specifies additional
+        /// capabilities enabled or disabled on the virtual machine.</param>
         /// <param name="osProfile">Specifies the operating system settings for
         /// the virtual machine.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
@@ -61,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// of virtual
         /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-        /// maintainance, see [Planned maintenance for virtual machines in
+        /// maintenance, see [Planned maintenance for virtual machines in
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
         /// availability set at creation time. An existing VM cannot be added
@@ -87,12 +89,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
             : base(tags)
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
+            AdditionalCapabilities = additionalCapabilities;
             OsProfile = osProfile;
             NetworkProfile = networkProfile;
             DiagnosticsProfile = diagnosticsProfile;
@@ -138,6 +141,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies additional capabilities enabled or disabled
+        /// on the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public AdditionalCapabilities AdditionalCapabilities { get; set; }
+
+        /// <summary>
         /// Gets or sets specifies the operating system settings for the
         /// virtual machine.
         /// </summary>
@@ -167,7 +177,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// availability sets, see [Manage the availability of virtual
         /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information on Azure
-        /// planned maintainance, see [Planned maintenance for virtual machines
+        /// planned maintenance, see [Planned maintenance for virtual machines
         /// in
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be

@@ -419,7 +419,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Updates the properties of the specified pool.
         /// </summary>
         /// <remarks>
-        /// This fully replaces all the updateable properties of the pool. For
+        /// This fully replaces all the updatable properties of the pool. For
         /// example, if the pool has a start task associated with it and if
         /// start task is not specified with this request, then the Batch
         /// service will remove the existing start task.
@@ -446,53 +446,6 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationHeaderResponse<PoolUpdatePropertiesHeaders>> UpdatePropertiesWithHttpMessagesAsync(string poolId, PoolUpdatePropertiesParameter poolUpdatePropertiesParameter, PoolUpdatePropertiesOptions poolUpdatePropertiesOptions = default(PoolUpdatePropertiesOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Upgrades the operating system of the specified pool.
-        /// </summary>
-        /// <remarks>
-        /// During an upgrade, the Batch service upgrades each compute node in
-        /// the pool. When a compute node is chosen for upgrade, any tasks
-        /// running on that node are removed from the node and returned to the
-        /// queue to be rerun later (or on a different compute node). The node
-        /// will be unavailable until the upgrade is complete. This operation
-        /// results in temporarily reduced pool capacity as nodes are taken out
-        /// of service to be upgraded. Although the Batch service tries to
-        /// avoid upgrading all compute nodes at the same time, it does not
-        /// guarantee to do this (particularly on small pools); therefore, the
-        /// pool may be temporarily unavailable to run tasks. When this
-        /// operation runs, the pool state changes to upgrading. When all
-        /// compute nodes have finished upgrading, the pool state returns to
-        /// active. While the upgrade is in progress, the pool's
-        /// currentOSVersion reflects the OS version that nodes are upgrading
-        /// from, and targetOSVersion reflects the OS version that nodes are
-        /// upgrading to. Once the upgrade is complete, currentOSVersion is
-        /// updated to reflect the OS version now running on all nodes. This
-        /// operation can only be invoked on pools created with the
-        /// cloudServiceConfiguration property.
-        /// </remarks>
-        /// <param name='poolId'>
-        /// The ID of the pool to upgrade.
-        /// </param>
-        /// <param name='targetOSVersion'>
-        /// The Azure Guest OS version to be installed on the virtual machines
-        /// in the pool.
-        /// </param>
-        /// <param name='poolUpgradeOSOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="BatchErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<PoolUpgradeOSHeaders>> UpgradeOSWithHttpMessagesAsync(string poolId, string targetOSVersion, PoolUpgradeOSOptions poolUpgradeOSOptions = default(PoolUpgradeOSOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes compute nodes from the specified pool.
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Rest;
 
-namespace Microsoft.Azure.ApplicationInsights.Models
+namespace Microsoft.Azure.ApplicationInsights.Query.Models
 {
     public partial class ErrorResponseException : RestException
     {

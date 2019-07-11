@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">Gets or sets the sku name. Required for account
-        /// creation, optional for update. Possible values include: 'F0', 'P0',
-        /// 'P1', 'P2', 'S0', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6'</param>
+        /// creation, optional for update.</param>
         /// <param name="tier">Gets the sku tier. This is based on the SKU
         /// name. Possible values include: 'Free', 'Standard',
         /// 'Premium'</param>
@@ -50,8 +49,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets the sku name. Required for account creation, optional
-        /// for update. Possible values include: 'F0', 'P0', 'P1', 'P2', 'S0',
-        /// 'S1', 'S2', 'S3', 'S4', 'S5', 'S6'
+        /// for update.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

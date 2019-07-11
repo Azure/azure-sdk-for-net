@@ -4,11 +4,9 @@
     <PackageId>ServerManagement.Tests</PackageId>
     <Description>ServerManagement.Tests Class Library</Description>
     <AssemblyName>ServerManagement.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />

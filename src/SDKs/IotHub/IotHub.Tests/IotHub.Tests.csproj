@@ -4,12 +4,9 @@
     <PackageId>IotHub.Tests</PackageId>
     <Description>IotHub.Tests Class Library</Description>
     <AssemblyName>IotHub.Tests</AssemblyName>
-    <VersionPrefix>1.0.1-preview</VersionPrefix>    
+    <Version>1.0.0</Version>  
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.2.0" />

@@ -6,72 +6,71 @@
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "289"
-        ],
         "x-ms-client-request-id": [
-          "e6597b6a-8615-44e8-bddf-848a3c93fd62"
+          "0ce28cc1-da14-4c9c-8463-2ac9284167f1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
-      "ResponseHeaders": {
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "289"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:50 GMT"
+          "Wed, 21 Nov 2018 18:42:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a1c643c5-635b-4080-8e58-bf7eeecba379",
-          "8960ff17-0b7e-4bbf-9590-ad150deb387f"
+          "db7e5a72-31af-43c7-a824-5ebd164806a4",
+          "31d4094d-d5fd-442c-9e41-8acb741bb5d1"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "5b5550cf-0fcf-4111-8bbf-6e0d9aa7f342"
+          "8ff9c52f-fe43-43df-903c-bcd202eaec1a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195551Z:5b5550cf-0fcf-4111-8bbf-6e0d9aa7f342"
+          "WESTUS2:20181121T184236Z:8ff9c52f-fe43-43df-903c-bcd202eaec1a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1755"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -81,64 +80,63 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f0310d5d-6572-4fe7-bd37-216e06a403be"
+          "366eb64c-3236-4730-bf2e-c6be53189908"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:50 GMT"
+          "Wed, 21 Nov 2018 18:42:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAE5C/M=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "972f0386-86e5-4476-ace2-b3f242041fff"
+          "46c820eb-077f-4a34-9231-299d9fa0fd14"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "11978"
         ],
         "x-ms-correlation-request-id": [
-          "dfbb246a-7629-4844-9609-20e658b6022b"
+          "b4b9008d-1986-43b3-94c9-2c738897668a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195551Z:dfbb246a-7629-4844-9609-20e658b6022b"
+          "WESTUS2:20181121T184236Z:b4b9008d-1986-43b3-94c9-2c738897668a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1755"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAE5C/M=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -148,61 +146,60 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "de531df6-239d-43f6-b7b4-cfc7ab6845c3"
+          "5c9f2d18-5d51-425c-8d3c-be79ae03c610"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"ApplicationApprovedNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your application $AppName is published in the application gallery\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Application gallery submission approved\",\r\n        \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"AppId\",\r\n            \"title\": \"Application id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"AppName\",\r\n            \"title\": \"Application name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/AccountClosedDeveloper\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"AccountClosedDeveloper\",\r\n      \"properties\": {\r\n        \"subject\": \"Thank you for using the $OrganizationName API!\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          On behalf of $OrganizationName and our customers we thank you for giving us a try. Your $OrganizationName API account is now closed.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Your $OrganizationName Team</p>\\r\\n    <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    <p />\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer farewell letter\",\r\n        \"description\": \"Developers receive this farewell email after they close their account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/QuotaLimitApproachingDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"QuotaLimitApproachingDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"You are approaching an API quota limit\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <style>\\r\\n          body {font-size:12pt; font-family:\\\"Segoe UI\\\",\\\"Segoe WP\\\",\\\"Tahoma\\\",\\\"Arial\\\",\\\"sans-serif\\\";}\\r\\n          .alert { color: red; }\\r\\n          .child1 { padding-left: 20px; }\\r\\n          .child2 { padding-left: 40px; }\\r\\n          .number { text-align: right; }\\r\\n          .text { text-align: left; }\\r\\n          th, td { padding: 4px 10px; min-width: 100px; }\\r\\n          th { background-color: #DDDDDD;}\\r\\n        </style>\\r\\n  </head>\\r\\n  <body>\\r\\n    <p>Greetings $DevFirstName $DevLastName!</p>\\r\\n    <p>\\r\\n          You are approaching the quota limit on you subscription to the <strong>$ProdName</strong> product (primary key $SubPrimaryKey).\\r\\n          #if ($QuotaResetDate != \\\"\\\")\\r\\n          This quota will be renewed on $QuotaResetDate.\\r\\n          #else\\r\\n          This quota will not be renewed.\\r\\n          #end\\r\\n        </p>\\r\\n    <p>Below are details on quota usage for the subscription:</p>\\r\\n    <p>\\r\\n      <table>\\r\\n        <thead>\\r\\n          <th class=\\\"text\\\">Quota Scope</th>\\r\\n          <th class=\\\"number\\\">Calls</th>\\r\\n          <th class=\\\"number\\\">Call Quota</th>\\r\\n          <th class=\\\"number\\\">Bandwidth</th>\\r\\n          <th class=\\\"number\\\">Bandwidth Quota</th>\\r\\n        </thead>\\r\\n        <tbody>\\r\\n          <tr>\\r\\n            <td class=\\\"text\\\">Subscription</td>\\r\\n            <td class=\\\"number\\\">\\r\\n                  #if ($CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$Calls</span>\\r\\n                  #else\\r\\n                  $Calls\\r\\n                  #end\\r\\n                </td>\\r\\n            <td class=\\\"number\\\">$CallQuota</td>\\r\\n            <td class=\\\"number\\\">\\r\\n                  #if ($BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$Bandwidth</span>\\r\\n                  #else\\r\\n                  $Bandwidth\\r\\n                  #end\\r\\n                </td>\\r\\n            <td class=\\\"number\\\">$BandwidthQuota</td>\\r\\n          </tr>\\r\\n              #foreach ($api in $Apis)\\r\\n              <tr><td class=\\\"child1 text\\\">API: $api.Name</td><td class=\\\"number\\\">\\r\\n                  #if ($api.CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$api.Calls</span>\\r\\n                  #else\\r\\n                  $api.Calls\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$api.CallQuota</td><td class=\\\"number\\\">\\r\\n                  #if ($api.BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$api.Bandwidth</span>\\r\\n                  #else\\r\\n                  $api.Bandwidth\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$api.BandwidthQuota</td></tr>\\r\\n              #foreach ($operation in $api.Operations)\\r\\n              <tr><td class=\\\"child2 text\\\">Operation: $operation.Name</td><td class=\\\"number\\\">\\r\\n                  #if ($operation.CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$operation.Calls</span>\\r\\n                  #else\\r\\n                  $operation.Calls\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$operation.CallQuota</td><td class=\\\"number\\\">\\r\\n                  #if ($operation.BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$operation.Bandwidth</span>\\r\\n                  #else\\r\\n                  $operation.Bandwidth\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$operation.BandwidthQuota</td></tr>\\r\\n              #end\\r\\n              #end\\r\\n            </tbody>\\r\\n      </table>\\r\\n    </p>\\r\\n    <p>Thank you,</p>\\r\\n    <p>$OrganizationName API Team</p>\\r\\n    <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    <p />\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer quota limit approaching notification\",\r\n        \"description\": \"Developers receive this email to alert them when they are approaching a quota limit.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubPrimaryKey\",\r\n            \"title\": \"Primary Subscription key\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"QuotaResetDate\",\r\n            \"title\": \"Quota reset date\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Welcome to the $OrganizationName API!\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <h1 style=\\\"color:#000505;font-size:18pt;font-family:'Segoe UI'\\\">\\r\\n          Welcome to <span style=\\\"color:#003363\\\">$OrganizationName API!</span></h1>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Your $OrganizationName API program registration is completed and we are thrilled to have you as a customer. Here are a few important bits of information for your reference:</p>\\r\\n    <table width=\\\"100%\\\" style=\\\"margin:20px 0\\\">\\r\\n      <tr>\\r\\n            #if ($IdentityProvider == \\\"Basic\\\")\\r\\n            <td width=\\\"50%\\\" style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              Please use the following <strong>username</strong> when signing into any of the ${OrganizationName}-hosted developer portals:\\r\\n            </td><td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\"><strong>$DevUsername</strong></td>\\r\\n            #else\\r\\n            <td width=\\\"50%\\\" style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              Please use the following <strong>$IdentityProvider account</strong> when signing into any of the ${OrganizationName}-hosted developer portals:\\r\\n            </td><td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\"><strong>$DevUsername</strong></td>            \\r\\n            #end\\r\\n          </tr>\\r\\n      <tr>\\r\\n        <td style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              We will direct all communications to the following <strong>email address</strong>:\\r\\n            </td>\\r\\n        <td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n          <a href=\\\"mailto:$DevEmail\\\" style=\\\"text-decoration:none\\\">\\r\\n            <strong>$DevEmail</strong>\\r\\n          </a>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best of luck in your API pursuits!</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <a href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    </p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer welcome letter\",\r\n        \"description\": \"Developers receive this “welcome” email after they confirm their new account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevUsername\",\r\n            \"title\": \"Developer user name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevEmail\",\r\n            \"title\": \"Developer email\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IdentityProvider\",\r\n            \"title\": \"Identity Provider selected by Organization\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/EmailChangeIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"EmailChangeIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Please confirm the new email associated with your $OrganizationName API account\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You are receiving this email because you made a change to the email address on your $OrganizationName API account.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please click on the following link to confirm the change:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"confirmUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Email change confirmation\",\r\n        \"description\": \"Developers receive this email to confirm a new e-mail address after they change their existing one associated with their account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer confirmation URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/InviteUserNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"InviteUserNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"You are invited to join the $OrganizationName developer network\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Your account has been created. Please follow the link below to visit the $OrganizationName developer portal and claim it:\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <a href=\\\"$ConfirmUrl\\\">$ConfirmUrl</a>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Invite user\",\r\n        \"description\": \"An e-mail invitation to create an account, sent on request by API publishers.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Confirmation link\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewCommentNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewCommentNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"$IssueName issue has a new comment\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">This is a brief note to let you know that $CommenterFirstName $CommenterLastName made the following comment on the issue $IssueName you created:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$CommentText</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          To view the issue on the developer portal click <a href=\\\"http://$DevPortalUrl/issues/$IssueId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New comment added to an issue\",\r\n        \"description\": \"Developers receive this email when someone comments on the issue they created on the Issues page of the developer portal.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommenterFirstName\",\r\n            \"title\": \"Commenter first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommenterLastName\",\r\n            \"title\": \"Commenter last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueId\",\r\n            \"title\": \"Issue id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueName\",\r\n            \"title\": \"Issue name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommentText\",\r\n            \"title\": \"Comment text\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ConfirmSignUpIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"ConfirmSignUpIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Please confirm your new $OrganizationName API account\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you for joining the $OrganizationName API program! We host a growing number of cool APIs and strive to provide an awesome experience for API developers.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">First order of business is to activate your account and get you going. To that end, please click on the following link:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"confirmUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New developer account confirmation\",\r\n        \"description\": \"Developers receive this email to confirm their e-mail address after they sign up for a new account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer activation URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewIssueNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewIssueNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your request $IssueName was received\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you for contacting us. Our API team will review your issue and get back to you soon.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Click this <a href=\\\"http://$DevPortalUrl/issues/$IssueId\\\">link</a> to view or edit your request.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New issue received\",\r\n        \"description\": \"This email is sent to developers after they create a new topic on the Issues page of the developer portal.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueId\",\r\n            \"title\": \"Issue id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueName\",\r\n            \"title\": \"Issue name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PurchaseDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PurchaseDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription to the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Greetings $DevFirstName $DevLastName!</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Thank you for subscribing to the <strong>$ProdName</strong> and welcome to the $OrganizationName developer community. We are delighted to have you as part of the team and are looking forward to the amazing applications you will build using our API!\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Below are a few subscription details for your reference:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <ul>\\r\\n            #if ($SubStartDate != \\\"\\\")\\r\\n            <li style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Start date: $SubStartDate</li>\\r\\n            #end\\r\\n            \\r\\n            #if ($SubTerm != \\\"\\\")\\r\\n            <li style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Subscription term: $SubTerm</li>\\r\\n            #end\\r\\n          </ul>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            Visit the developer <a href=\\\"http://$DevPortalUrl/developer\\\">profile area</a> to manage your subscription and subscription keys\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">A couple of pointers to help get you started:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/docs/services\\\">Learn about the API</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The API documentation provides all information necessary to make a request and to process a response. Code samples are provided per API operation in a variety of languages. Moreover, an interactive console allows making API calls directly from the developer portal without writing any code.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/applications\\\">Feature your app in the app gallery</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You can publish your application on our gallery for increased visibility to potential new users.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/issues\\\">Stay in touch</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          If you have an issue, a question, a suggestion, a request, or if you just want to tell us something, go to the <a href=\\\"http://$DevPortalUrl/issues\\\">Issues</a> page on the developer portal and create a new topic.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Happy hacking,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n    <a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New subscription activated\",\r\n        \"description\": \"Developers receive this acknowledgement email after subscribing to a product.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubStartDate\",\r\n            \"title\": \"Subscription start date\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubTerm\",\r\n            \"title\": \"Subscription term\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PasswordResetIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PasswordResetIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Your password change request\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You are receiving this email because you requested to change the password on your $OrganizationName API account.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please click on the link below and follow instructions to create your new password:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"resetUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Password change confirmation\",\r\n        \"description\": \"Developers receive this email when they request a password change of their account. The purpose of the email is to verify that the account owner made the request and to provide a one-time perishable URL for changing the password.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer new password instruction URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PasswordResetByAdminNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PasswordResetByAdminNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your password was reset\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The password of your $OrganizationName API account has been reset, per your request.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n                Your new password is: <strong>$DevPassword</strong></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please make sure to change it next time you sign in.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Password reset by publisher notification (Password reset by admin)\",\r\n        \"description\": \"Developers receive this email when the publisher resets their password.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPassword\",\r\n            \"title\": \"New Developer password\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/RejectDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"RejectDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription request for the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We would like to inform you that we reviewed your subscription request for the <strong>$ProdName</strong>.\\r\\n        </p>\\r\\n        #if ($SubDeclineReason == \\\"\\\")\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Regretfully, we were unable to approve it, as subscriptions are temporarily suspended at this time.</p>\\r\\n        #else\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Regretfully, we were unable to approve it at this time for the following reason:\\r\\n          <div style=\\\"margin-left: 1.5em;\\\"> $SubDeclineReason </div></p>\\r\\n        #end\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"> We truly appreciate your interest. </p><p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">All the best,</p><p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p><a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a></body>\\r\\n</html>\",\r\n        \"title\": \"Subscription request declined\",\r\n        \"description\": \"This email is sent to developers when their subscription requests for products requiring publisher approval is declined.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubDeclineReason\",\r\n            \"title\": \"Reason for declining subscription\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/RequestDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"RequestDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription request for the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Thank you for your interest in our <strong>$ProdName</strong> API product!\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We were delighted to receive your subscription request. We will promptly review it and get back to you at <strong>$DevEmail</strong>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n    <a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Subscription request received\",\r\n        \"description\": \"This email is sent to developers to acknowledge receipt of their subscription requests for products requiring publisher approval.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevEmail\",\r\n            \"title\": \"Developer email\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:51 GMT"
+          "Wed, 21 Nov 2018 18:42:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2c1c1942-9310-4275-9fc4-36c81d6224e1"
+          "47c06775-24d4-4eae-9e6b-d362d431fddb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "11977"
         ],
         "x-ms-correlation-request-id": [
-          "9c128965-aea0-46e4-b7a6-182b0aa992eb"
+          "b0c71d20-5696-4ec3-b915-2ee712956d83"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195552Z:9c128965-aea0-46e4-b7a6-182b0aa992eb"
+          "WESTUS2:20181121T184236Z:b0c71d20-5696-4ec3-b915-2ee712956d83"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "42132"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"ApplicationApprovedNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your application $AppName is published in the application gallery\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Application gallery submission approved\",\r\n        \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"AppId\",\r\n            \"title\": \"Application id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"AppName\",\r\n            \"title\": \"Application name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/AccountClosedDeveloper\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"AccountClosedDeveloper\",\r\n      \"properties\": {\r\n        \"subject\": \"Thank you for using the $OrganizationName API!\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          On behalf of $OrganizationName and our customers we thank you for giving us a try. Your $OrganizationName API account is now closed.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Your $OrganizationName Team</p>\\r\\n    <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    <p />\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer farewell letter\",\r\n        \"description\": \"Developers receive this farewell email after they close their account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/QuotaLimitApproachingDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"QuotaLimitApproachingDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"You are approaching an API quota limit\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <style>\\r\\n          body {font-size:12pt; font-family:\\\"Segoe UI\\\",\\\"Segoe WP\\\",\\\"Tahoma\\\",\\\"Arial\\\",\\\"sans-serif\\\";}\\r\\n          .alert { color: red; }\\r\\n          .child1 { padding-left: 20px; }\\r\\n          .child2 { padding-left: 40px; }\\r\\n          .number { text-align: right; }\\r\\n          .text { text-align: left; }\\r\\n          th, td { padding: 4px 10px; min-width: 100px; }\\r\\n          th { background-color: #DDDDDD;}\\r\\n        </style>\\r\\n  </head>\\r\\n  <body>\\r\\n    <p>Greetings $DevFirstName $DevLastName!</p>\\r\\n    <p>\\r\\n          You are approaching the quota limit on you subscription to the <strong>$ProdName</strong> product (primary key $SubPrimaryKey).\\r\\n          #if ($QuotaResetDate != \\\"\\\")\\r\\n          This quota will be renewed on $QuotaResetDate.\\r\\n          #else\\r\\n          This quota will not be renewed.\\r\\n          #end\\r\\n        </p>\\r\\n    <p>Below are details on quota usage for the subscription:</p>\\r\\n    <p>\\r\\n      <table>\\r\\n        <thead>\\r\\n          <th class=\\\"text\\\">Quota Scope</th>\\r\\n          <th class=\\\"number\\\">Calls</th>\\r\\n          <th class=\\\"number\\\">Call Quota</th>\\r\\n          <th class=\\\"number\\\">Bandwidth</th>\\r\\n          <th class=\\\"number\\\">Bandwidth Quota</th>\\r\\n        </thead>\\r\\n        <tbody>\\r\\n          <tr>\\r\\n            <td class=\\\"text\\\">Subscription</td>\\r\\n            <td class=\\\"number\\\">\\r\\n                  #if ($CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$Calls</span>\\r\\n                  #else\\r\\n                  $Calls\\r\\n                  #end\\r\\n                </td>\\r\\n            <td class=\\\"number\\\">$CallQuota</td>\\r\\n            <td class=\\\"number\\\">\\r\\n                  #if ($BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$Bandwidth</span>\\r\\n                  #else\\r\\n                  $Bandwidth\\r\\n                  #end\\r\\n                </td>\\r\\n            <td class=\\\"number\\\">$BandwidthQuota</td>\\r\\n          </tr>\\r\\n              #foreach ($api in $Apis)\\r\\n              <tr><td class=\\\"child1 text\\\">API: $api.Name</td><td class=\\\"number\\\">\\r\\n                  #if ($api.CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$api.Calls</span>\\r\\n                  #else\\r\\n                  $api.Calls\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$api.CallQuota</td><td class=\\\"number\\\">\\r\\n                  #if ($api.BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$api.Bandwidth</span>\\r\\n                  #else\\r\\n                  $api.Bandwidth\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$api.BandwidthQuota</td></tr>\\r\\n              #foreach ($operation in $api.Operations)\\r\\n              <tr><td class=\\\"child2 text\\\">Operation: $operation.Name</td><td class=\\\"number\\\">\\r\\n                  #if ($operation.CallsAlert == true)\\r\\n                  <span class=\\\"alert\\\">$operation.Calls</span>\\r\\n                  #else\\r\\n                  $operation.Calls\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$operation.CallQuota</td><td class=\\\"number\\\">\\r\\n                  #if ($operation.BandwidthAlert == true)\\r\\n                  <span class=\\\"alert\\\">$operation.Bandwidth</span>\\r\\n                  #else\\r\\n                  $operation.Bandwidth\\r\\n                  #end\\r\\n                </td><td class=\\\"number\\\">$operation.BandwidthQuota</td></tr>\\r\\n              #end\\r\\n              #end\\r\\n            </tbody>\\r\\n      </table>\\r\\n    </p>\\r\\n    <p>Thank you,</p>\\r\\n    <p>$OrganizationName API Team</p>\\r\\n    <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    <p />\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer quota limit approaching notification\",\r\n        \"description\": \"Developers receive this email to alert them when they are approaching a quota limit.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubPrimaryKey\",\r\n            \"title\": \"Primary Subscription key\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"QuotaResetDate\",\r\n            \"title\": \"Quota reset date\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Welcome to the $OrganizationName API!\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <h1 style=\\\"color:#000505;font-size:18pt;font-family:'Segoe UI'\\\">\\r\\n          Welcome to <span style=\\\"color:#003363\\\">$OrganizationName API!</span></h1>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Your $OrganizationName API program registration is completed and we are thrilled to have you as a customer. Here are a few important bits of information for your reference:</p>\\r\\n    <table width=\\\"100%\\\" style=\\\"margin:20px 0\\\">\\r\\n      <tr>\\r\\n            #if ($IdentityProvider == \\\"Basic\\\")\\r\\n            <td width=\\\"50%\\\" style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              Please use the following <strong>username</strong> when signing into any of the ${OrganizationName}-hosted developer portals:\\r\\n            </td><td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\"><strong>$DevUsername</strong></td>\\r\\n            #else\\r\\n            <td width=\\\"50%\\\" style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              Please use the following <strong>$IdentityProvider account</strong> when signing into any of the ${OrganizationName}-hosted developer portals:\\r\\n            </td><td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\"><strong>$DevUsername</strong></td>            \\r\\n            #end\\r\\n          </tr>\\r\\n      <tr>\\r\\n        <td style=\\\"height:40px;vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n              We will direct all communications to the following <strong>email address</strong>:\\r\\n            </td>\\r\\n        <td style=\\\"vertical-align:top;font-family:'Segoe UI';font-size:12pt\\\">\\r\\n          <a href=\\\"mailto:$DevEmail\\\" style=\\\"text-decoration:none\\\">\\r\\n            <strong>$DevEmail</strong>\\r\\n          </a>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best of luck in your API pursuits!</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <a href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n    </p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Developer welcome letter\",\r\n        \"description\": \"Developers receive this “welcome” email after they confirm their new account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevUsername\",\r\n            \"title\": \"Developer user name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevEmail\",\r\n            \"title\": \"Developer email\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IdentityProvider\",\r\n            \"title\": \"Identity Provider selected by Organization\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/EmailChangeIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"EmailChangeIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Please confirm the new email associated with your $OrganizationName API account\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You are receiving this email because you made a change to the email address on your $OrganizationName API account.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please click on the following link to confirm the change:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"confirmUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Email change confirmation\",\r\n        \"description\": \"Developers receive this email to confirm a new e-mail address after they change their existing one associated with their account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer confirmation URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/InviteUserNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"InviteUserNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"You are invited to join the $OrganizationName developer network\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Your account has been created. Please follow the link below to visit the $OrganizationName developer portal and claim it:\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <a href=\\\"$ConfirmUrl\\\">$ConfirmUrl</a>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Invite user\",\r\n        \"description\": \"An e-mail invitation to create an account, sent on request by API publishers.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Confirmation link\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewCommentNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewCommentNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"$IssueName issue has a new comment\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">This is a brief note to let you know that $CommenterFirstName $CommenterLastName made the following comment on the issue $IssueName you created:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$CommentText</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          To view the issue on the developer portal click <a href=\\\"http://$DevPortalUrl/issues/$IssueId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New comment added to an issue\",\r\n        \"description\": \"Developers receive this email when someone comments on the issue they created on the Issues page of the developer portal.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommenterFirstName\",\r\n            \"title\": \"Commenter first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommenterLastName\",\r\n            \"title\": \"Commenter last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueId\",\r\n            \"title\": \"Issue id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueName\",\r\n            \"title\": \"Issue name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"CommentText\",\r\n            \"title\": \"Comment text\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ConfirmSignUpIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"ConfirmSignUpIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Please confirm your new $OrganizationName API account\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you for joining the $OrganizationName API program! We host a growing number of cool APIs and strive to provide an awesome experience for API developers.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">First order of business is to activate your account and get you going. To that end, please click on the following link:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"confirmUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New developer account confirmation\",\r\n        \"description\": \"Developers receive this email to confirm their e-mail address after they sign up for a new account.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer activation URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/NewIssueNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"NewIssueNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your request $IssueName was received\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you for contacting us. Our API team will review your issue and get back to you soon.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Click this <a href=\\\"http://$DevPortalUrl/issues/$IssueId\\\">link</a> to view or edit your request.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New issue received\",\r\n        \"description\": \"This email is sent to developers after they create a new topic on the Issues page of the developer portal.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueId\",\r\n            \"title\": \"Issue id\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"IssueName\",\r\n            \"title\": \"Issue name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PurchaseDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PurchaseDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription to the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Greetings $DevFirstName $DevLastName!</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Thank you for subscribing to the <a href=\\\"http://$DevPortalUrl/products/$ProdId\\\"><strong>$ProdName</strong></a> and welcome to the $OrganizationName developer community. We are delighted to have you as part of the team and are looking forward to the amazing applications you will build using our API!\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Below are a few subscription details for your reference:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <ul>\\r\\n            #if ($SubStartDate != \\\"\\\")\\r\\n            <li style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Start date: $SubStartDate</li>\\r\\n            #end\\r\\n            \\r\\n            #if ($SubTerm != \\\"\\\")\\r\\n            <li style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Subscription term: $SubTerm</li>\\r\\n            #end\\r\\n          </ul>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            Visit the developer <a href=\\\"http://$DevPortalUrl/developer\\\">profile area</a> to manage your subscription and subscription keys\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">A couple of pointers to help get you started:</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/docs/services?product=$ProdId\\\">Learn about the API</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The API documentation provides all information necessary to make a request and to process a response. Code samples are provided per API operation in a variety of languages. Moreover, an interactive console allows making API calls directly from the developer portal without writing any code.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/applications\\\">Feature your app in the app gallery</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You can publish your application on our gallery for increased visibility to potential new users.</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n      <strong>\\r\\n        <a href=\\\"http://$DevPortalUrl/issues\\\">Stay in touch</a>\\r\\n      </strong>\\r\\n    </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          If you have an issue, a question, a suggestion, a request, or if you just want to tell us something, go to the <a href=\\\"http://$DevPortalUrl/issues\\\">Issues</a> page on the developer portal and create a new topic.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Happy hacking,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n    <a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"New subscription activated\",\r\n        \"description\": \"Developers receive this acknowledgement email after subscribing to a product.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdId\",\r\n            \"title\": \"Product ID\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubStartDate\",\r\n            \"title\": \"Subscription start date\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubTerm\",\r\n            \"title\": \"Subscription term\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PasswordResetIdentityDefault\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PasswordResetIdentityDefault\",\r\n      \"properties\": {\r\n        \"subject\": \"Your password change request\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head>\\r\\n    <meta charset=\\\"UTF-8\\\" />\\r\\n    <title>Letter</title>\\r\\n  </head>\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">You are receiving this email because you requested to change the password on your $OrganizationName API account.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please click on the link below and follow instructions to create your new password:</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a id=\\\"resetUrl\\\" href=\\\"$ConfirmUrl\\\" style=\\\"text-decoration:none\\\">\\r\\n              <strong>$ConfirmUrl</strong>\\r\\n            </a>\\r\\n          </p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">If clicking the link does not work, please copy-and-paste or re-type it into your browser's address bar and hit \\\"Enter\\\".</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Password change confirmation\",\r\n        \"description\": \"Developers receive this email when they request a password change of their account. The purpose of the email is to verify that the account owner made the request and to provide a one-time perishable URL for changing the password.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ConfirmUrl\",\r\n            \"title\": \"Developer new password instruction URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/PasswordResetByAdminNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"PasswordResetByAdminNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your password was reset\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <table width=\\\"100%\\\">\\r\\n      <tr>\\r\\n        <td>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The password of your $OrganizationName API account has been reset, per your request.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n                Your new password is: <strong>$DevPassword</strong></p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Please make sure to change it next time you sign in.</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">$OrganizationName API Team</p>\\r\\n          <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n            <a href=\\\"$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n          </p>\\r\\n        </td>\\r\\n      </tr>\\r\\n    </table>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Password reset by publisher notification (Password reset by admin)\",\r\n        \"description\": \"Developers receive this email when the publisher resets their password.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPassword\",\r\n            \"title\": \"New Developer password\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/RejectDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"RejectDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription request for the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We would like to inform you that we reviewed your subscription request for the <strong>$ProdName</strong>.\\r\\n        </p>\\r\\n        #if ($SubDeclineReason == \\\"\\\")\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Regretfully, we were unable to approve it, as subscriptions are temporarily suspended at this time.</p>\\r\\n        #else\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Regretfully, we were unable to approve it at this time for the following reason:\\r\\n          <div style=\\\"margin-left: 1.5em;\\\"> $SubDeclineReason </div></p>\\r\\n        #end\\r\\n        <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\"> We truly appreciate your interest. </p><p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">All the best,</p><p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p><a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a></body>\\r\\n</html>\",\r\n        \"title\": \"Subscription request declined\",\r\n        \"description\": \"This email is sent to developers when their subscription requests for products requiring publisher approval is declined.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"SubDeclineReason\",\r\n            \"title\": \"Reason for declining subscription\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/RequestDeveloperNotificationMessage\",\r\n      \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n      \"name\": \"RequestDeveloperNotificationMessage\",\r\n      \"properties\": {\r\n        \"subject\": \"Your subscription request for the $ProdName\",\r\n        \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          Thank you for your interest in our <strong>$ProdName</strong> API product!\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We were delighted to receive your subscription request. We will promptly review it and get back to you at <strong>$DevEmail</strong>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Thank you,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n    <a style=\\\"font-size:12pt;font-family:'Segoe UI'\\\" href=\\\"http://$DevPortalUrl\\\">$DevPortalUrl</a>\\r\\n  </body>\\r\\n</html>\",\r\n        \"title\": \"Subscription request received\",\r\n        \"description\": \"This email is sent to developers to acknowledge receipt of their subscription requests for products requiring publisher approval.\",\r\n        \"isDefault\": true,\r\n        \"parameters\": [\r\n          {\r\n            \"name\": \"DevFirstName\",\r\n            \"title\": \"Developer first name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevLastName\",\r\n            \"title\": \"Developer last name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevEmail\",\r\n            \"title\": \"Developer email\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"ProdName\",\r\n            \"title\": \"Product name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"OrganizationName\",\r\n            \"title\": \"Organization name\",\r\n            \"description\": null\r\n          },\r\n          {\r\n            \"name\": \"DevPortalUrl\",\r\n            \"title\": \"Developer portal URL\",\r\n            \"description\": null\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -211,45 +208,37 @@
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"subject\": \"New Subject\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "58"
-        ],
         "x-ms-client-request-id": [
-          "f6e33f32-6c8c-40d2-af4d-d66d20e8d477"
+          "a9c69657-fd19-4c44-8ce3-c3ba8c552614"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"New Subject\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": false,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "2078"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "58"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:52 GMT"
+          "Wed, 21 Nov 2018 18:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAOQI=\""
+          "\"AAAAAAAANtk=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -258,21 +247,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e715c17d-7dcf-4271-ae5f-7d4cb2124852"
+          "1c22bd9c-6c31-4d53-9298-989607488202"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1191"
         ],
         "x-ms-correlation-request-id": [
-          "77de09ba-6a81-4380-b280-cce076838171"
+          "c69b8873-75c0-4f00-8dca-4ee7fa4c13b4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195552Z:77de09ba-6a81-4380-b280-cce076838171"
+          "WESTUS2:20181121T184238Z:c69b8873-75c0-4f00-8dca-4ee7fa4c13b4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "2078"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"New Subject\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": false,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -282,64 +281,63 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "62bd9090-ae19-47f2-9d0d-348c742377cc"
+          "d6e14759-ecb7-4c60-8473-1caafafdb9a3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"New Subject\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": false,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:52 GMT"
+          "Wed, 21 Nov 2018 18:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAAAAOQI=\""
+          "\"AAAAAAAANtk=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "be225913-f013-4ce7-8c83-5d36e399c050"
+          "166cd307-e17e-4c2d-acc0-d10c5194b20e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "11976"
         ],
         "x-ms-correlation-request-id": [
-          "b0f85aca-61f0-4c5b-8fa7-d8eab1ff7089"
+          "f8e9cb7f-f85a-4fcd-b994-37e9e01a0677"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195553Z:b0f85aca-61f0-4c5b-8fa7-d8eab1ff7089"
+          "WESTUS2:20181121T184238Z:f8e9cb7f-f85a-4fcd-b994-37e9e01a0677"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "2078"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"New Subject\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": false,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -349,35 +347,27 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b0167f06-809c-4839-8099-6e8150a1fdad"
+          "b04d4192-2a04-4812-a002-13fb88fd9c6e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"Your application $AppName is published in the application gallery\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": true,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:53 GMT"
+          "Wed, 21 Nov 2018 18:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
         ],
         "ETag": [
           "\"AAAAAAAAAAA=\""
@@ -385,28 +375,35 @@
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "24957b02-e7c3-488d-88e7-d5b82fee43ba"
+          "ff1ad8ba-e55d-4f40-9f84-b83d3d636d2e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "11975"
         ],
         "x-ms-correlation-request-id": [
-          "8b62f82d-4dc0-40a4-a90a-a22c5e1c9ad3"
+          "7fbcf0ea-d33c-4ff9-b4a6-d7a55079de31"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195553Z:8b62f82d-4dc0-40a4-a90a-a22c5e1c9ad3"
+          "WESTUS2:20181121T184238Z:7fbcf0ea-d33c-4ff9-b4a6-d7a55079de31"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "2131"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/templates/ApplicationApprovedNotificationMessage\",\r\n  \"type\": \"Microsoft.ApiManagement/service/templates\",\r\n  \"name\": \"ApplicationApprovedNotificationMessage\",\r\n  \"properties\": {\r\n    \"subject\": \"Your application $AppName is published in the application gallery\",\r\n    \"body\": \"<!DOCTYPE html >\\r\\n<html>\\r\\n  <head />\\r\\n  <body>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Dear $DevFirstName $DevLastName,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">\\r\\n          We are happy to let you know that your request to publish the $AppName application in the application gallery has been approved. Your application has been published and can be viewed <a href=\\\"http://$DevPortalUrl/Applications/Details/$AppId\\\">here</a>.\\r\\n        </p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">Best,</p>\\r\\n    <p style=\\\"font-size:12pt;font-family:'Segoe UI'\\\">The $OrganizationName API Team</p>\\r\\n  </body>\\r\\n</html>\",\r\n    \"title\": \"Application gallery submission approved\",\r\n    \"description\": \"Developers who submitted their application for publication in the application gallery on the developer portal receive this email after their submission is approved.\",\r\n    \"isDefault\": true,\r\n    \"parameters\": [\r\n      {\r\n        \"name\": \"AppId\",\r\n        \"title\": \"Application id\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"AppName\",\r\n        \"title\": \"Application name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevFirstName\",\r\n        \"title\": \"Developer first name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevLastName\",\r\n        \"title\": \"Developer last name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"OrganizationName\",\r\n        \"title\": \"Organization name\",\r\n        \"description\": null\r\n      },\r\n      {\r\n        \"name\": \"DevPortalUrl\",\r\n        \"title\": \"Developer portal URL\",\r\n        \"description\": null\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -416,32 +413,27 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f284a3c2-5db6-46b6-b8cc-71744416d6d7"
+          "7776400e-8b41-4bbd-8f03-b210f876d094"
         ],
         "If-Match": [
-          "\"AAAAAAAAOQI=\""
+          "\"AAAAAAAANtk=\""
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:52 GMT"
+          "Wed, 21 Nov 2018 18:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -453,21 +445,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "85967881-c3d0-4da2-91bf-60af5bb0e32b"
+          "5c99d632-f939-48da-8f36-90b6a4c3a592"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14990"
         ],
         "x-ms-correlation-request-id": [
-          "5c1ad501-95f4-48eb-a05c-6bfcd059cdba"
+          "2356d8a9-e4f4-4f62-a4e9-aa81ac701949"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195553Z:5c1ad501-95f4-48eb-a05c-6bfcd059cdba"
+          "WESTUS2:20181121T184238Z:2356d8a9-e4f4-4f62-a4e9-aa81ac701949"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     },
     {
@@ -477,7 +476,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d515f5a1-a768-4b8e-8691-32820db3a0fb"
+          "2ca16fab-a9d6-4cce-b869-0f9b91f61d2d"
         ],
         "If-Match": [
           "*"
@@ -486,20 +485,18 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.5.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:55:53 GMT"
+          "Wed, 21 Nov 2018 18:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -511,21 +508,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "40ca4aec-b262-457c-a590-a29b54736511"
+          "6bb3d89c-2237-41ad-929a-36f7d751d5c7"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14989"
         ],
         "x-ms-correlation-request-id": [
-          "4216e236-2705-4728-ad94-f5b057c1fc74"
+          "991e96af-9339-4f41-8591-9527f858cea0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T195553Z:4216e236-2705-4728-ad94-f5b057c1fc74"
+          "WESTUS2:20181121T184238Z:991e96af-9339-4f41-8591-9527f858cea0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 204
     }
   ],

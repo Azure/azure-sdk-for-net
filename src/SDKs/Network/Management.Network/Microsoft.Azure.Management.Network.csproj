@@ -7,24 +7,19 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.5.0-preview</Version>
+		<Version>19.8.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-      - Added AddressPrefixes on Subnet properties
-      - Included required properties for outbound rule 
-      - Azure Firewall FQDN Tag added as a top level resource
-      - Swagger Coverage/Completeness- for operation CheckNameAvailability
-      - Azure Firewall NAT Rule Collection 
-      - Added support for interface endpoints
-      - Added linkedResourceType and hostedWorkloads to nic 
-      - Added App Gateway Trusted root certificate changes 
-      - Added ExpressRoute gateway resource
-      - Added support for delegations on a subnet      
+        - Added new list operations for ApplicationGateway's child resources
+        - Added operation for updating ApplicationSecurityGroup's tags
+        - Added list operation for ExpressRouteCircuitConnection
+        - Added new resource DdosCustomPolicy
+        - Added support for DdosSettings in PublicIpAddress
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

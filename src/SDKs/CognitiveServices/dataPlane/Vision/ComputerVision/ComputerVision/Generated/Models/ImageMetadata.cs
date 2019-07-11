@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Image metadata
+    /// Image metadata.
     /// </summary>
     public partial class ImageMetadata
     {
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ImageMetadata class.
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
-        /// <param name="format">Image format</param>
+        /// <param name="width">Image width, in pixels.</param>
+        /// <param name="height">Image height, in pixels.</param>
+        /// <param name="format">Image format.</param>
         public ImageMetadata(int width = default(int), int height = default(int), string format = default(string))
         {
             Width = width;
@@ -46,19 +46,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets image width
+        /// Gets or sets image width, in pixels.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public int Width { get; set; }
 
         /// <summary>
-        /// Gets or sets image height
+        /// Gets or sets image height, in pixels.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public int Height { get; set; }
 
         /// <summary>
-        /// Gets or sets image format
+        /// Gets or sets image format.
         /// </summary>
         [JsonProperty(PropertyName = "format")]
         public string Format { get; set; }

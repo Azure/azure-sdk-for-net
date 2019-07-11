@@ -26,12 +26,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Export class.
         /// </summary>
-        /// <param name="platform">Possible values include: 'CoreML',
-        /// 'TensorFlow', 'DockerFile', 'ONNX'</param>
-        /// <param name="status">Possible values include: 'Exporting',
-        /// 'Failed', 'Done'</param>
-        /// <param name="flavor">Possible values include: 'Linux',
-        /// 'Windows'</param>
+        /// <param name="platform">Platform of the export. Possible values
+        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'</param>
+        /// <param name="status">Status of the export. Possible values include:
+        /// 'Exporting', 'Failed', 'Done'</param>
+        /// <param name="downloadUri">URI used to download the model.</param>
+        /// <param name="flavor">Flavor of the export. Possible values include:
+        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12'</param>
+        /// <param name="newerVersionAvailable">Indicates an updated version of
+        /// the export package is available and should be re-exported for the
+        /// latest changes.</param>
         public Export(string platform = default(string), string status = default(string), string downloadUri = default(string), string flavor = default(string), bool newerVersionAvailable = default(bool))
         {
             Platform = platform;
@@ -48,30 +52,35 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets possible values include: 'CoreML', 'TensorFlow', 'DockerFile',
-        /// 'ONNX'
+        /// Gets platform of the export. Possible values include: 'CoreML',
+        /// 'TensorFlow', 'DockerFile', 'ONNX'
         /// </summary>
         [JsonProperty(PropertyName = "platform")]
         public string Platform { get; private set; }
 
         /// <summary>
-        /// Gets possible values include: 'Exporting', 'Failed', 'Done'
+        /// Gets status of the export. Possible values include: 'Exporting',
+        /// 'Failed', 'Done'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
+        /// Gets URI used to download the model.
         /// </summary>
         [JsonProperty(PropertyName = "downloadUri")]
         public string DownloadUri { get; private set; }
 
         /// <summary>
-        /// Gets possible values include: 'Linux', 'Windows'
+        /// Gets flavor of the export. Possible values include: 'Linux',
+        /// 'Windows', 'ONNX10', 'ONNX12'
         /// </summary>
         [JsonProperty(PropertyName = "flavor")]
         public string Flavor { get; private set; }
 
         /// <summary>
+        /// Gets indicates an updated version of the export package is
+        /// available and should be re-exported for the latest changes.
         /// </summary>
         [JsonProperty(PropertyName = "newerVersionAvailable")]
         public bool NewerVersionAvailable { get; private set; }

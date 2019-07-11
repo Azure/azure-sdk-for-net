@@ -65,12 +65,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
+        /// <param name="diffDiskSettings">Specifies the ephemeral Disk
+        /// Settings for the operating system disk used by the virtual
+        /// machine.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the size of the
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public OSDisk(string createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
+        public OSDisk(string createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -79,6 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Image = image;
             Caching = caching;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            DiffDiskSettings = diffDiskSettings;
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
@@ -149,6 +153,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
         public bool? WriteAcceleratorEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the ephemeral Disk Settings for the
+        /// operating system disk used by the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "diffDiskSettings")]
+        public DiffDiskSettings DiffDiskSettings { get; set; }
 
         /// <summary>
         /// Gets or sets specifies how the virtual machine should be

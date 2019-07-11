@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// jobs from source server.</param>
         /// <param name="collectTdeCertificateInfo">Flag for whether to collect
         /// TDE Certificate names from source server.</param>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, string checkPermissionsGroup = default(string), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? collectTdeCertificateInfo = default(bool?))
+        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup = default(ServerLevelPermissionsGroup?), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?), bool? collectTdeCertificateInfo = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'MigrationFromMySQLToAzureDBForMySQL'
         /// </summary>
         [JsonProperty(PropertyName = "checkPermissionsGroup")]
-        public string CheckPermissionsGroup { get; set; }
+        public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
 
         /// <summary>
         /// Gets or sets flag for whether to collect logins from source server.

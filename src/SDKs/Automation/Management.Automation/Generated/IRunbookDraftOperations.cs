@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The runbook name.
         /// </param>
         /// <param name='runbookContent'>
-        /// The runbook draft content.
+        /// The runbook draft content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,32 +115,6 @@ namespace Microsoft.Azure.Management.Automation
         /// </exception>
         Task<AzureOperationResponse<RunbookDraft>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Publish runbook draft.
-        /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of an Azure Resource group.
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// The name of the automation account.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The parameters supplied to the publish runbook operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<RunbookDraftPublishHeaders>> PublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Undo draft edit to last known published state identified by runbook
         /// name.
         /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
@@ -184,7 +158,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The runbook name.
         /// </param>
         /// <param name='runbookContent'>
-        /// The runbook draft content.
+        /// The runbook draft content.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -202,31 +176,5 @@ namespace Microsoft.Azure.Management.Automation
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Stream,RunbookDraftReplaceContentHeaders>> BeginReplaceContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Publish runbook draft.
-        /// <see href="http://aka.ms/azureautomationsdk/runbookdraftoperations" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of an Azure Resource group.
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// The name of the automation account.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The parameters supplied to the publish runbook operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationHeaderResponse<RunbookDraftPublishHeaders>> BeginPublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

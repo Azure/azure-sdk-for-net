@@ -51,8 +51,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Stopping', 'Deleting'</param>
         /// <param name="crossSiteAccessPolicies">The Live Event access
         /// policies.</param>
-        /// <param name="vanityUrl">The Live Event vanity URL flag.</param>
-        /// <param name="streamOptions">The stream options.</param>
+        /// <param name="vanityUrl">Specifies whether to use a vanity url with
+        /// the Live Event.  This value is specified at creation time and
+        /// cannot be updated.</param>
+        /// <param name="streamOptions">The options to use for the LiveEvent.
+        /// This value is specified at creation time and cannot be
+        /// updated.</param>
         /// <param name="created">The exact time the Live Event was
         /// created.</param>
         /// <param name="lastModified">The exact time the Live Event was last
@@ -123,13 +127,16 @@ namespace Microsoft.Azure.Management.Media.Models
         public CrossSiteAccessPolicies CrossSiteAccessPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets the Live Event vanity URL flag.
+        /// Gets or sets specifies whether to use a vanity url with the Live
+        /// Event.  This value is specified at creation time and cannot be
+        /// updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vanityUrl")]
         public bool? VanityUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the stream options.
+        /// Gets or sets the options to use for the LiveEvent.  This value is
+        /// specified at creation time and cannot be updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.streamOptions")]
         public IList<StreamOptionsFlag?> StreamOptions { get; set; }

@@ -89,10 +89,10 @@ namespace Network.Tests.Tests
                 var connectivityCheck = networkManagementClient.NetworkWatchers.CheckConnectivity(resourceGroupName, networkWatcherName, connectivityParameters);
 
                 //Validation
-                Assert.Equal(connectivityCheck.ConnectionStatus, "Reachable");
-                Assert.Equal(connectivityCheck.ProbesFailed, 0);
-                Assert.Equal(connectivityCheck.Hops.FirstOrDefault().Type, "Source");
-                Assert.Equal(connectivityCheck.Hops.LastOrDefault().Type, "Internet");
+                Assert.Equal("Reachable", connectivityCheck.ConnectionStatus);
+                Assert.Equal(0, connectivityCheck.ProbesFailed);
+                Assert.Equal("Source", connectivityCheck.Hops.FirstOrDefault().Type);
+                Assert.Equal("Internet", connectivityCheck.Hops.LastOrDefault().Type);
             }
         }
     }

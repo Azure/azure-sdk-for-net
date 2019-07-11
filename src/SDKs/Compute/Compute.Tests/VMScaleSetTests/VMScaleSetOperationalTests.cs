@@ -252,7 +252,11 @@ namespace Compute.Tests
 
                     m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "0" };
-                    m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    VirtualMachineScaleSetReimageParameters virtualMachineScaleSetReimageParameters = new VirtualMachineScaleSetReimageParameters
+                    {
+                        InstanceIds = virtualMachineScaleSetInstanceIDs
+                    };
+                    m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name, virtualMachineScaleSetReimageParameters);
                     m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
@@ -260,7 +264,6 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-
                     passed = true;
                 }
                 finally

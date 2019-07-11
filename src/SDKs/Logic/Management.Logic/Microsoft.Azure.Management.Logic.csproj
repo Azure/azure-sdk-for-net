@@ -5,13 +5,17 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure LogicApps Management Library</Description>
-		<Version>3.1.0</Version>
+		<Version>4.1.0</Version>
 		<PackageId>Microsoft.Azure.Management.Logic</PackageId>
 		<PackageTags>Microsoft Azure LogicApps management;LogicApps;LogicApps management;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+		<![CDATA[
+	  - Bug fix for updating Logic Apps that have an attached Integration Account
+	  - Added WorkflowRunActionRequestHistories, WorkflowRunActionRepetitionsRequestHistories
+		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

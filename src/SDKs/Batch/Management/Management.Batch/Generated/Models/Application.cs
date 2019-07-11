@@ -10,15 +10,16 @@
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Contains information about an application in a Batch account.
     /// </summary>
-    public partial class Application
+    [Rest.Serialization.JsonTransformation]
+    public partial class Application : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Application class.
@@ -31,22 +32,24 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the Application class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the application
-        /// within the account.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="etag">The ETag of the resource, used for concurrency
+        /// statements.</param>
         /// <param name="displayName">The display name for the
-        /// application.</param>
-        /// <param name="packages">The list of packages under this
         /// application.</param>
         /// <param name="allowUpdates">A value indicating whether packages
         /// within the application may be overwritten using the same version
         /// string.</param>
         /// <param name="defaultVersion">The package to use if a client
-        /// requests the application but does not specify a version.</param>
-        public Application(string id = default(string), string displayName = default(string), IList<ApplicationPackage> packages = default(IList<ApplicationPackage>), bool? allowUpdates = default(bool?), string defaultVersion = default(string))
+        /// requests the application but does not specify a version. This
+        /// property can only be set to the name of an existing
+        /// package.</param>
+        public Application(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), bool? allowUpdates = default(bool?), string defaultVersion = default(string))
+            : base(id, name, type, etag)
         {
-            Id = id;
             DisplayName = displayName;
-            Packages = packages;
             AllowUpdates = allowUpdates;
             DefaultVersion = defaultVersion;
             CustomInit();
@@ -58,36 +61,24 @@ namespace Microsoft.Azure.Management.Batch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the application
-        /// within the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
         /// Gets or sets the display name for the application.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of packages under this application.
-        /// </summary>
-        [JsonProperty(PropertyName = "packages")]
-        public IList<ApplicationPackage> Packages { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether packages within the
         /// application may be overwritten using the same version string.
         /// </summary>
-        [JsonProperty(PropertyName = "allowUpdates")]
+        [JsonProperty(PropertyName = "properties.allowUpdates")]
         public bool? AllowUpdates { get; set; }
 
         /// <summary>
         /// Gets or sets the package to use if a client requests the
-        /// application but does not specify a version.
+        /// application but does not specify a version. This property can only
+        /// be set to the name of an existing package.
         /// </summary>
-        [JsonProperty(PropertyName = "defaultVersion")]
+        [JsonProperty(PropertyName = "properties.defaultVersion")]
         public string DefaultVersion { get; set; }
 
     }

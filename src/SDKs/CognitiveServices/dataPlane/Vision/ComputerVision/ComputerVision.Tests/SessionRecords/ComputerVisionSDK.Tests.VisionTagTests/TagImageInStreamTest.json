@@ -10,7 +10,9 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.26919.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
         ],
         "Content-Type": [
@@ -21,29 +23,29 @@
         ]
       },
       "ResponseHeaders": {
-        "Connection": [
-          "close"
-        ],
-        "Date": [
-          "Mon, 30 Jul 2018 21:58:46 GMT"
-        ],
         "apim-request-id": [
-          "0146e231-19f9-4825-9ed2-276db2ab7bf2"
+          "d8137a7a-8f0e-4632-a095-eeb1163a9cd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Tue, 11 Dec 2018 21:03:42 GMT"
+        ],
+        "Connection": [
+          "close"
+        ],
         "Content-Length": [
-          "570"
+          "875"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"草\",\r\n      \"confidence\": 0.9999992847442627\r\n    },\r\n    {\r\n      \"name\": \"户外\",\r\n      \"confidence\": 0.99983179569244385\r\n    },\r\n    {\r\n      \"name\": \"天空\",\r\n      \"confidence\": 0.994972825050354\r\n    },\r\n    {\r\n      \"name\": \"屋子\",\r\n      \"confidence\": 0.98920279741287231\r\n    },\r\n    {\r\n      \"name\": \"建筑\",\r\n      \"confidence\": 0.96683281660079956\r\n    },\r\n    {\r\n      \"name\": \"绿色\",\r\n      \"confidence\": 0.84886491298675537\r\n    },\r\n    {\r\n      \"name\": \"草坪\",\r\n      \"confidence\": 0.8137822151184082\r\n    },\r\n    {\r\n      \"name\": \"住宅\",\r\n      \"confidence\": 0.41664695739746094\r\n    },\r\n    {\r\n      \"name\": \"绿色的\",\r\n      \"confidence\": 0.40174955129623413\r\n    }\r\n  ],\r\n  \"requestId\": \"0146e231-19f9-4825-9ed2-276db2ab7bf2\",\r\n  \"metadata\": {\r\n    \"height\": 462,\r\n    \"width\": 600,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"tags\": [\r\n    {\r\n      \"name\": \"草\",\r\n      \"confidence\": 0.9999992847442627\r\n    },\r\n    {\r\n      \"name\": \"户外\",\r\n      \"confidence\": 0.99983179569244385\r\n    },\r\n    {\r\n      \"name\": \"天空\",\r\n      \"confidence\": 0.994972825050354\r\n    },\r\n    {\r\n      \"name\": \"屋子\",\r\n      \"confidence\": 0.98920279741287231\r\n    },\r\n    {\r\n      \"name\": \"建筑\",\r\n      \"confidence\": 0.96683281660079956\r\n    },\r\n    {\r\n      \"name\": \"绿色\",\r\n      \"confidence\": 0.8488648533821106\r\n    },\r\n    {\r\n      \"name\": \"草坪\",\r\n      \"confidence\": 0.81378239393234253\r\n    },\r\n    {\r\n      \"name\": \"住宅\",\r\n      \"confidence\": 0.41664710640907288\r\n    },\r\n    {\r\n      \"name\": \"绿色的\",\r\n      \"confidence\": 0.40174952149391174\r\n    },\r\n    {\r\n      \"name\": \"家\",\r\n      \"confidence\": 0.40174952149391174\r\n    },\r\n    {\r\n      \"name\": \"房子\",\r\n      \"confidence\": 0.19771399285440605\r\n    },\r\n    {\r\n      \"name\": \"屋顶\",\r\n      \"confidence\": 0.09314237827052288\r\n    },\r\n    {\r\n      \"name\": \"平房\",\r\n      \"confidence\": 0.06582667915726638\r\n    },\r\n    {\r\n      \"name\": \"车库\",\r\n      \"confidence\": 0.052050006850000261\r\n    },\r\n    {\r\n      \"name\": \"历史\",\r\n      \"confidence\": 0.051248907183517989\r\n    }\r\n  ],\r\n  \"requestId\": \"d8137a7a-8f0e-4632-a095-eeb1163a9cd5\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

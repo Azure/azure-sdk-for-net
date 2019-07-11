@@ -48,7 +48,8 @@ namespace Fabric.Tests
                 var fabricLocationName = GetLocation(client);
                 var storageSystemName = GetStorageSystem(client, fabricLocationName);
                 var storagePool = client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName).GetFirst();
-                var retrieved = client.StoragePools.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePool.Name);
+                var storagePoolName = ExtractName(storagePool.Name);
+                var retrieved = client.StoragePools.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
                 AssertStoragePoolsAreSame(storagePool, retrieved);
             });
         }

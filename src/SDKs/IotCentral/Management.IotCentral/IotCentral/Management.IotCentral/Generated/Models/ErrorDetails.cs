@@ -10,12 +10,17 @@
 
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Error details.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ErrorDetails
     {
         /// <summary>
@@ -32,11 +37,14 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
         /// <param name="target">The target of the particular error.</param>
-        public ErrorDetails(string code = default(string), string message = default(string), string target = default(string))
+        /// <param name="details">A list of additional details about the
+        /// error.</param>
+        public ErrorDetails(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponseBody> details = default(IList<ErrorResponseBody>))
         {
             Code = code;
             Message = message;
             Target = target;
+            Details = details;
             CustomInit();
         }
 
@@ -48,20 +56,26 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <summary>
         /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "error.code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "error.message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the target of the particular error.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [JsonProperty(PropertyName = "error.target")]
         public string Target { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of additional details about the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "error.details")]
+        public IList<ErrorResponseBody> Details { get; set; }
 
     }
 }

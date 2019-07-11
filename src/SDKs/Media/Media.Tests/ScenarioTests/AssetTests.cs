@@ -87,7 +87,7 @@ namespace Media.Tests.ScenarioTests
                     assets = MediaClient.Assets.List(ResourceGroup, AccountName);
                     Assert.Empty(assets);
 
-                    // Get tranform, which should not exist
+                    // Get the asset, which should not exist
                     asset = MediaClient.Assets.Get(ResourceGroup, AccountName, assetName);
                     Assert.Null(asset);                    
                 }

@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="startTime">The start time of the job.</param>
         /// <param name="endTime">The end time of the job.</param>
         /// <param name="syncType">The sync type. Possible values include:
-        /// 'PartialSync', 'FullSync'</param>
+        /// 'IncrementalSync', 'FullSync'</param>
         public SourceControlSyncJob(string name = default(string), string type = default(string), string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string syncType = default(string))
         {
             Name = name;
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the sync type. Possible values include: 'PartialSync',
-        /// 'FullSync'
+        /// Gets or sets the sync type. Possible values include:
+        /// 'IncrementalSync', 'FullSync'
         /// </summary>
         [JsonProperty(PropertyName = "properties.syncType")]
         public string SyncType { get; set; }

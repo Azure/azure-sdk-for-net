@@ -45,17 +45,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="connectionString">The connection string. It is
         /// mutually exclusive with sasUri property. Type: string, SecureString
         /// or AzureKeyVaultSecretReference.</param>
+        /// <param name="accountKey">The Azure key vault secret reference of
+        /// accountKey in connection string.</param>
         /// <param name="sasUri">SAS URI of the Azure Storage resource. It is
-        /// mutually exclusive with connectionString property.</param>
+        /// mutually exclusive with connectionString property. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="sasToken">The Azure key vault secret reference of
+        /// sasToken in sas uri.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), SecretBase sasUri = default(SecretBase), string encryptedCredential = default(string))
+        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), AzureKeyVaultSecretReference accountKey = default(AzureKeyVaultSecretReference), object sasUri = default(object), AzureKeyVaultSecretReference sasToken = default(AzureKeyVaultSecretReference), string encryptedCredential = default(string))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
+            AccountKey = accountKey;
             SasUri = sasUri;
+            SasToken = sasToken;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -74,11 +81,26 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object ConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the Azure key vault secret reference of accountKey in
+        /// connection string.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.accountKey")]
+        public AzureKeyVaultSecretReference AccountKey { get; set; }
+
+        /// <summary>
         /// Gets or sets SAS URI of the Azure Storage resource. It is mutually
-        /// exclusive with connectionString property.
+        /// exclusive with connectionString property. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sasUri")]
-        public SecretBase SasUri { get; set; }
+        public object SasUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure key vault secret reference of sasToken in
+        /// sas uri.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sasToken")]
+        public AzureKeyVaultSecretReference SasToken { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -97,6 +119,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (AccountKey != null)
+            {
+                AccountKey.Validate();
+            }
+            if (SasToken != null)
+            {
+                SasToken.Validate();
+            }
         }
     }
 }

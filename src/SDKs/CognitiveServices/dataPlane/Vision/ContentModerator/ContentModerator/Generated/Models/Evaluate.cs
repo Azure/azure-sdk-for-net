@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.CognitiveServices.ContentModerator.Models
+namespace Microsoft.Azure.CognitiveServices.ContentModerator.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -34,7 +34,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// score.</param>
         /// <param name="isImageAdultClassified">Indicates if an image is
         /// classified as adult.</param>
-        /// <param name="racyClassificationScore">The racy classication
+        /// <param name="racyClassificationScore">The racy classification
         /// score.</param>
         /// <param name="isImageRacyClassified">Indicates if the image is
         /// classified as racy.</param>
@@ -90,7 +90,7 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         public bool? IsImageAdultClassified { get; set; }
 
         /// <summary>
-        /// Gets or sets the racy classication score.
+        /// Gets or sets the racy classification score.
         /// </summary>
         [JsonProperty(PropertyName = "RacyClassificationScore")]
         public double? RacyClassificationScore { get; set; }

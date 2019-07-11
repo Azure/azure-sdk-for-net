@@ -17,7 +17,10 @@
     {
         public static BatchServiceClient Create(Func<HttpMethod, Uri, Tuple<HttpStatusCode, string>> handler)
         {
-            return new BatchServiceClient(new FakeCredential(), new FakeHttpHandler { HandlerFunc = handler });
+            return new BatchServiceClient(new FakeCredential(), new FakeHttpHandler { HandlerFunc = handler })
+            {
+                BatchUrl = @"https://foo.microsoft.test"
+            };
         }
 
         public static BatchServiceClient Create(HttpStatusCode responseCode, Func<HttpMethod, Uri, string> bodyCreator)

@@ -1,24 +1,56 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4588a32d-99a6-4e29-8568-cc8c8e216cd6"
+          "bcb37905-b5de-42b5-89fd-66f7222841ee"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local\",\r\n      \"name\": \"local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 31 Oct 2018 09:38:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvYnPlVzpK9z8uCZRcmQOB8SjAGoIUpIq0Va8r45JhtbXY/dG81Md3gus0dxIxAS+kPGqGjnmCeUORXYWUMqFUa1df68zoxlshXXfyLmnxuZBlV1Nkv2gxsQSW1qan3QQdt7jOc1Y77Ja+GuPTnIP1"
+        ],
+        "x-ms-correlation-request-id": [
+          "ff6ea801-a75d-448b-a2b3-a2eb5b1376eb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13836"
+        ],
+        "x-ms-request-id": [
+          "ff6ea801-a75d-448b-a2b3-a2eb5b1376eb"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20181031T093809Z:ff6ea801-a75d-448b-a2b3-a2eb5b1376eb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "Content-Length": [
           "263"
         ],
@@ -27,12 +59,34 @@
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local\",\r\n      \"name\": \"local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZWRnZUdhdGV3YXlQb29scz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "da395c9c-71b2-4607-819e-ba07ba547f86"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Feb 2018 21:47:45 GMT"
+          "Wed, 31 Oct 2018 09:38:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,62 +95,62 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvwbXlPWE1ZPHUcUex4w14epmSYC7KlYWNYbM0Vzxucfeneqsl/Xh39dPVnHfE7Fav6DXcXBDzygF++wCT8FTHc66IVPPFDBHxeJtUFS5fHjyb481bn+MCcFTpPJO8nFyNFGtZ/V17u1JIPhDaesHe"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvFpwwBvw5yVtrcf/IF+mST2snJr0z0u6ILtu1x21IvwkQkOVxzifiHkz78I54yfVTemf8gFiho2m8g621rBevEnNOOHf/AcX2dIOKTrvFSil9h/I3XtPx+09fNoUYyxeNSvGQiyPgrTeCc18W1n4E"
         ],
         "x-ms-correlation-request-id": [
-          "cac2fef0-9859-418c-87dd-98a0f6071b47"
+          "093e198d-f8f7-4280-b06c-c1b864c9fe2b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14017"
+          "13835"
         ],
         "x-ms-request-id": [
-          "cac2fef0-9859-418c-87dd-98a0f6071b47"
+          "093e198d-f8f7-4280-b06c-c1b864c9fe2b"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20180210T214745Z:cac2fef0-9859-418c-87dd-98a0f6071b47"
+          "LOCAL:20181031T093809Z:093e198d-f8f7-4280-b06c-c1b864c9fe2b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZWRnZUdhdGV3YXlQb29scz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a53559de-07dc-405a-84d6-004fc59bc8da"
         ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default\",\r\n      \"name\": \"default\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"gatewayType\": \"S2sIPsec\",\r\n        \"numberOfGateways\": 1,\r\n        \"redundantGatewayCount\": 0,\r\n        \"gatewayCapacityKiloBitsPerSecond\": 100000000,\r\n        \"publicIpAddress\": \"00000000-5555-0000-0001-000000000000\",\r\n        \"edgeGateways\": [\r\n          \"AzS-Gwy01\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
         "Content-Length": [
-          "509"
+          "514"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default\",\r\n      \"name\": \"local/default\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"gatewayType\": \"S2sIPsec\",\r\n        \"numberOfGateways\": 1,\r\n        \"redundantGatewayCount\": 0,\r\n        \"gatewayCapacityKiloBitsPerSecond\": 14000000,\r\n        \"publicIpAddress\": \"00000000-5555-0000-0001-000000000000\",\r\n        \"edgeGateways\": [\r\n          \"AzS-Gwy01\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNWExOWYyMzMtNzlhZS00YjdlLTg1NWQtMDRiZmNhYzhiZjA0L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZWRnZUdhdGV3YXlQb29scy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3618964c-9648-412a-a8e0-ed89ef093d60"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.4.0.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Sat, 10 Feb 2018 21:47:45 GMT"
+          "Wed, 31 Oct 2018 09:38:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,96 +159,42 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv3Jv1vzLdfWbFG6PFffc8Pyv+FmsVY//16NuDOrs6syKfxR06IkhuPcj0H2EaLEW6AaZff1HNyEeyJavmn8la5EyexmxMPmGTaHEsA5OisF/8ZnZf2ddrGmsZAE/1O9+59Zm2GFv6pUgpV/7mek6P"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJtO/KRErKAYu1CvgPXLI1Pm11FujAeM+il1Gwb4TO0oFtKjMxoTvsvJPquMouhZvjhG9quOICxP/jilkKGEVq6ezkT5dwUG2txSbGs3RsXM0wf65yCzcOTPmdg5cjEsUlNgytV/5dXBbX79vcLuB"
         ],
         "x-ms-correlation-request-id": [
-          "8820b530-1408-4495-9697-def9e8091845"
+          "f2f3bf24-2dd7-402f-bffa-33a07127287f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14016"
+          "13834"
         ],
         "x-ms-request-id": [
-          "8820b530-1408-4495-9697-def9e8091845"
+          "f2f3bf24-2dd7-402f-bffa-33a07127287f"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20180210T214746Z:8820b530-1408-4495-9697-def9e8091845"
+          "LOCAL:20181031T093809Z:f2f3bf24-2dd7-402f-bffa-33a07127287f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZWRnZUdhdGV3YXlQb29scy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "67a9a55c-819f-41e1-b27e-914afc54b513"
         ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"gatewayType\": \"S2sIPsec\",\r\n    \"numberOfGateways\": 1,\r\n    \"redundantGatewayCount\": 0,\r\n    \"gatewayCapacityKiloBitsPerSecond\": 100000000,\r\n    \"publicIpAddress\": \"00000000-5555-0000-0001-000000000000\",\r\n    \"edgeGateways\": [\r\n      \"AzS-Gwy01\"\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
         "Content-Length": [
-          "497"
+          "502"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sat, 10 Feb 2018 21:47:45 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvHP0fa1m5plubTr7m+p01LvYInr6XDMo5YE00iwIY/xEeCVKx/23ZJnTEa61wMKbnAk/nGA2AIfj6IjbmyutdxuTSBnZuiDP/p9RcU2dOrK3XJwGH0KWRl6JAx1bN60Aji7mUyTbKcrJtwknd01D2"
-        ],
-        "x-ms-correlation-request-id": [
-          "f3cf44e8-280c-4f95-aa4e-23e1dd90536d"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14015"
-        ],
-        "x-ms-request-id": [
-          "f3cf44e8-280c-4f95-aa4e-23e1dd90536d"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20180210T214746Z:f3cf44e8-280c-4f95-aa4e-23e1dd90536d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/5a19f233-79ae-4b7e-855d-04bfcac8bf04/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/edgeGatewayPools/default\",\r\n  \"name\": \"local/default\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/edgeGatewayPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"gatewayType\": \"S2sIPsec\",\r\n    \"numberOfGateways\": 1,\r\n    \"redundantGatewayCount\": 0,\r\n    \"gatewayCapacityKiloBitsPerSecond\": 14000000,\r\n    \"publicIpAddress\": \"00000000-5555-0000-0001-000000000000\",\r\n    \"edgeGateways\": [\r\n      \"AzS-Gwy01\"\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8158498d-27b1-4ccf-9aa1-de0f925731e6"
+    "SubscriptionId": "5a19f233-79ae-4b7e-855d-04bfcac8bf04"
   }
 }

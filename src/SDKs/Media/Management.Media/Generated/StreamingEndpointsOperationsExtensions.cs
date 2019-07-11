@@ -141,7 +141,8 @@ namespace Microsoft.Azure.Management.Media
             /// StreamingEndpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             public static StreamingEndpoint Create(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpoint parameters, bool? autoStart = default(bool?))
             {
@@ -170,7 +171,8 @@ namespace Microsoft.Azure.Management.Media
             /// StreamingEndpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -407,7 +409,7 @@ namespace Microsoft.Azure.Management.Media
             /// The name of the StreamingEndpoint.
             /// </param>
             /// <param name='scaleUnit'>
-            /// ScaleUnit The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the StreamingEndpoint.
             /// </param>
             public static void Scale(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, int? scaleUnit = default(int?))
             {
@@ -433,7 +435,7 @@ namespace Microsoft.Azure.Management.Media
             /// The name of the StreamingEndpoint.
             /// </param>
             /// <param name='scaleUnit'>
-            /// ScaleUnit The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the StreamingEndpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -465,7 +467,8 @@ namespace Microsoft.Azure.Management.Media
             /// StreamingEndpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             public static StreamingEndpoint BeginCreate(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, StreamingEndpoint parameters, bool? autoStart = default(bool?))
             {
@@ -494,7 +497,8 @@ namespace Microsoft.Azure.Management.Media
             /// StreamingEndpoint properties needed for creation.
             /// </param>
             /// <param name='autoStart'>
-            /// The flag indicates if auto start the Live Event.
+            /// The flag indicates if the resource should be automatically started on
+            /// creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -731,7 +735,7 @@ namespace Microsoft.Azure.Management.Media
             /// The name of the StreamingEndpoint.
             /// </param>
             /// <param name='scaleUnit'>
-            /// ScaleUnit The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the StreamingEndpoint.
             /// </param>
             public static void BeginScale(this IStreamingEndpointsOperations operations, string resourceGroupName, string accountName, string streamingEndpointName, int? scaleUnit = default(int?))
             {
@@ -757,7 +761,7 @@ namespace Microsoft.Azure.Management.Media
             /// The name of the StreamingEndpoint.
             /// </param>
             /// <param name='scaleUnit'>
-            /// ScaleUnit The scale unit number of the StreamingEndpoint.
+            /// The scale unit number of the StreamingEndpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

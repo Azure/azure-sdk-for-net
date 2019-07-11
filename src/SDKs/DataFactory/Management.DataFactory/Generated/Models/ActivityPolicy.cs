@@ -43,15 +43,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 0.</param>
         /// <param name="retryIntervalInSeconds">Interval between each retry
         /// attempt (in seconds). The default is 30 sec.</param>
+        /// <param name="secureInput">When set to true, Input from activity is
+        /// considered as secure and will not be logged to monitoring.</param>
         /// <param name="secureOutput">When set to true, Output from activity
         /// is considered as secure and will not be logged to
         /// monitoring.</param>
-        public ActivityPolicy(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object timeout = default(object), object retry = default(object), int? retryIntervalInSeconds = default(int?), bool? secureOutput = default(bool?))
+        public ActivityPolicy(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object timeout = default(object), object retry = default(object), int? retryIntervalInSeconds = default(int?), bool? secureInput = default(bool?), bool? secureOutput = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             Timeout = timeout;
             Retry = retry;
             RetryIntervalInSeconds = retryIntervalInSeconds;
+            SecureInput = secureInput;
             SecureOutput = secureOutput;
             CustomInit();
         }
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "retryIntervalInSeconds")]
         public int? RetryIntervalInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets when set to true, Input from activity is considered as
+        /// secure and will not be logged to monitoring.
+        /// </summary>
+        [JsonProperty(PropertyName = "secureInput")]
+        public bool? SecureInput { get; set; }
 
         /// <summary>
         /// Gets or sets when set to true, Output from activity is considered

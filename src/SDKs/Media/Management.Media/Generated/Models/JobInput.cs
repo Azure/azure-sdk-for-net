@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -26,37 +25,11 @@ namespace Microsoft.Azure.Management.Media.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the JobInput class.
-        /// </summary>
-        /// <param name="label">A label that is assigned to a JobInput, that is
-        /// used to satisfy a reference used in the Transform. For example, a
-        /// Transform can be authored so as to take an image file with the
-        /// label 'xyz' and apply it as an overlay onto the input video before
-        /// it is encoded. When submitting a Job, exactly one of the JobInputs
-        /// should be the image file, and it should have the label
-        /// 'xyz'.</param>
-        public JobInput(string label = default(string))
-        {
-            Label = label;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets a label that is assigned to a JobInput, that is used
-        /// to satisfy a reference used in the Transform. For example, a
-        /// Transform can be authored so as to take an image file with the
-        /// label 'xyz' and apply it as an overlay onto the input video before
-        /// it is encoded. When submitting a Job, exactly one of the JobInputs
-        /// should be the image file, and it should have the label 'xyz'.
-        /// </summary>
-        [JsonProperty(PropertyName = "label")]
-        public string Label { get; set; }
 
     }
 }

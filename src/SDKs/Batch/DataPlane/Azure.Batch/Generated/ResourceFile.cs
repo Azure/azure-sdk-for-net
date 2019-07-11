@@ -26,24 +26,37 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceFile"/> class.
         /// </summary>
-        /// <param name='blobSource'>The URL of the file within Azure Blob Storage.</param>
-        /// <param name='filePath'>The location to which to download the file, relative to the task's working directory.</param>
+        /// <param name='httpUrl'>The URL of the file to download.</param>
         /// <param name='fileMode'>The file permission mode attribute in octal format.</param>
-        public ResourceFile(
-            string blobSource,
-            string filePath,
-            string fileMode = default(string))
+        /// <param name='filePath'>The location on the compute node to which to download the file(s), relative to the task's working directory.</param>
+        /// <param name='storageContainerUrl'>The URL of the blob container within Azure Blob Storage.</param>
+        /// <param name='autoStorageContainerName'>The storage container name in the auto storage account.</param>
+        /// <param name='blobPrefix'>The blob prefix to use when downloading blobs from an Azure Storage container. Only the blobs whose names begin 
+        /// with the specified prefix will be downloaded.</param>
+        internal ResourceFile(
+            string httpUrl = default(string),
+            string fileMode = default(string),
+            string filePath = default(string),
+            string storageContainerUrl = default(string),
+            string autoStorageContainerName = default(string),
+            string blobPrefix = default(string))
         {
-            this.BlobSource = blobSource;
-            this.FilePath = filePath;
+            this.HttpUrl = httpUrl;
             this.FileMode = fileMode;
+            this.FilePath = filePath;
+            this.StorageContainerUrl = storageContainerUrl;
+            this.AutoStorageContainerName = autoStorageContainerName;
+            this.BlobPrefix = blobPrefix;
         }
 
         internal ResourceFile(Models.ResourceFile protocolObject)
         {
-            this.BlobSource = protocolObject.BlobSource;
+            this.AutoStorageContainerName = protocolObject.AutoStorageContainerName;
+            this.BlobPrefix = protocolObject.BlobPrefix;
             this.FileMode = protocolObject.FileMode;
             this.FilePath = protocolObject.FilePath;
+            this.HttpUrl = protocolObject.HttpUrl;
+            this.StorageContainerUrl = protocolObject.StorageContainerUrl;
         }
 
         #endregion Constructors
@@ -51,12 +64,20 @@ namespace Microsoft.Azure.Batch
         #region ResourceFile
 
         /// <summary>
-        /// Gets the URL of the file within Azure Blob Storage.
+        /// Gets the storage container name in the auto storage account.
+        /// </summary>
+        public string AutoStorageContainerName { get; }
+
+        /// <summary>
+        /// Gets the blob prefix to use when downloading blobs from an Azure Storage container. Only the blobs whose names 
+        /// begin with the specified prefix will be downloaded.
         /// </summary>
         /// <remarks>
-        /// This URL should include a shared access signature if the blob is not publicly readable.
+        /// This property is valid only when <see cref="AutoStorageContainerName" /> or <see cref="StorageContainerUrl" /> 
+        /// is used. This prefix can be a partial filename or a subdirectory. If a prefix is not specified, all the files 
+        /// in the container will be downloaded.
         /// </remarks>
-        public string BlobSource { get; }
+        public string BlobPrefix { get; }
 
         /// <summary>
         /// Gets the file permission mode attribute in octal format.
@@ -69,9 +90,39 @@ namespace Microsoft.Azure.Batch
         public string FileMode { get; }
 
         /// <summary>
-        /// Gets the location to which to download the file, relative to the task's working directory.
+        /// Gets the location on the compute node to which to download the file(s), relative to the task's working directory.
         /// </summary>
+        /// <remarks>
+        /// If the <see cref="HttpUrl" /> property is specified, this is required and describes the path which the file will 
+        /// be downloaded to, including the filename. Otherwise, if the <see cref="AutoStorageContainerName" /> or <see cref="StorageContainerUrl" 
+        /// /> property is specified, this is optional and is the directory to download the files to. In the case where this 
+        /// is used as a directory, any directory structure already associated with the input data will be retained in full 
+        /// and appended to the specified <see cref="FilePath" /> directory. The specified relative path cannot break out 
+        /// of the task's working directory (for example by using '..').
+        /// </remarks>
         public string FilePath { get; }
+
+        /// <summary>
+        /// Gets the URL of the file to download.
+        /// </summary>
+        /// <remarks>
+        /// If the URL is Azure Blob Storage, it must be readable using anonymous access; that is, the Batch service does 
+        /// not present any credentials when downloading the blob. There are two ways to get such a URL for a blob in Azure 
+        /// storage: include a Shared Access Signature (SAS) granting read permissions on the blob, or set the ACL for the 
+        /// blob or its container to allow public access.
+        /// </remarks>
+        public string HttpUrl { get; }
+
+        /// <summary>
+        /// Gets the URL of the blob container within Azure Blob Storage.
+        /// </summary>
+        /// <remarks>
+        /// This URL must be readable and listable using anonymous access; that is, the Batch service does not present any 
+        /// credentials when downloading blobs from the container. There are two ways to get such a URL for a container in 
+        /// Azure storage: include a Shared Access Signature (SAS) granting read permissions on the container, or set the 
+        /// ACL for the container to allow public access.
+        /// </remarks>
+        public string StorageContainerUrl { get; }
 
         #endregion // ResourceFile
 
@@ -104,9 +155,12 @@ namespace Microsoft.Azure.Batch
         {
             Models.ResourceFile result = new Models.ResourceFile()
             {
-                BlobSource = this.BlobSource,
+                AutoStorageContainerName = this.AutoStorageContainerName,
+                BlobPrefix = this.BlobPrefix,
                 FileMode = this.FileMode,
                 FilePath = this.FilePath,
+                HttpUrl = this.HttpUrl,
+                StorageContainerUrl = this.StorageContainerUrl,
             };
 
             return result;

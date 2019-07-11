@@ -33,6 +33,11 @@ namespace Microsoft.Rest.Azure
         private int _clientLongRunningOperationRetryTimeout;
         private bool _isRunningUnderPlaybackMode;
 
+        private const string TEST_MODE_HEADER = "azSdkTestPlayBackMode";
+        private string _status;
+        private CloudException _cloudException;
+        private HttpResponseMessage _response;
+
 
         /// <summary>
         /// Initializes an instance of PollingState.
@@ -166,24 +171,6 @@ namespace Microsoft.Rest.Azure
             return localStatus;
         }
 
-
-        string GetPS(JObject body)
-        {
-            string provisioningState = string.Empty;
-            provisioningState = ((string)body?["properties"]?["provisioningState"])?.Trim();
-
-            if (string.IsNullOrEmpty(provisioningState))
-            {
-                provisioningState = AzureAsyncOperation.SuccessStatus.ToString();
-            }
-
-            return provisioningState;
-        }
-
-        private string _status;
-
-        private CloudException _cloudException;
-
         /// <summary>
         /// Gets or sets polling status.
         /// </summary>
@@ -212,8 +199,6 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public string LocationHeaderLink { get; set; }
 
-        private HttpResponseMessage _response;
-
         /// <summary>
         /// Gets or sets last operation response. 
         /// </summary>
@@ -240,7 +225,14 @@ namespace Microsoft.Rest.Azure
                     if (_response.Headers.Contains("Retry-After"))
                     {
                         string retryValue = _response.Headers.GetValues("Retry-After").FirstOrDefault();
-                        RetryAfterInSeconds = int.Parse(retryValue, CultureInfo.InvariantCulture);
+                        if(int.TryParse(retryValue, out int retryAfterValue))
+                        {
+                            RetryAfterInSeconds = retryAfterValue;
+                        }
+                        else
+                        {
+                            RetryAfterInSeconds = DEFAULT_MIN_DELAY_SECONDS;
+                        }
                     }
                 }
             }
@@ -320,6 +312,7 @@ namespace Microsoft.Rest.Azure
             set
             {
                 _retryAfterInSeconds = ValidateRetryAfterValue(value);
+                //_retryAfterInSeconds = value;
             }
         }
 
@@ -334,7 +327,11 @@ namespace Microsoft.Rest.Azure
                 {
                     if (Response.Headers.Contains("azSdkTestPlayBackMode"))
                     {
-                        _isRunningUnderPlaybackMode = bool.Parse(Response.Headers.GetValues("azSdkTestPlayBackMode").FirstOrDefault());
+                        //_isRunningUnderPlaybackMode = bool.Parse(Response.Headers.GetValues("azSdkTestPlayBackMode").FirstOrDefault());
+                        if(bool.TryParse(Response?.Headers?.GetValues(TEST_MODE_HEADER).FirstOrDefault(), out bool isTestMode))
+                        {
+                            _isRunningUnderPlaybackMode = isTestMode;
+                        }
                     }
                 }
 
@@ -346,35 +343,52 @@ namespace Microsoft.Rest.Azure
         {
             if (currentValue.HasValue)
             {
-                if (currentValue <= TEST_MIN_DELAY_SECONDS)
-                    currentValue = TEST_MIN_DELAY_SECONDS;
-                else if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
-                    currentValue = DEFAULT_MIN_DELAY_SECONDS;
-                else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
-                    currentValue = DEFAULT_MAX_DELAY_SECONDS;
-
                 if (IsRunningUnderPlaybackMode)
                 {
                     currentValue = TEST_MIN_DELAY_SECONDS;
                 }
-                else
-                {
-                    if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)    // we assume playback mode (test mode)
-                    {
-                        if (currentValue != LROTimeoutSetByClient)  //Case where Retry-After is set to non zero, we set it to 0 in playback mode
-                        {
-                            currentValue = TEST_MIN_DELAY_SECONDS;
-                        }
-                    }
-                }
             }
             else
-            {
+            { 
                 currentValue = AzureAsyncOperation.DefaultDelay;
             }
 
             return currentValue.Value;
         }
+
+        //private int ValidateRetryAfterValue(int? currentValue)
+        //{
+        //    if (currentValue.HasValue)
+        //    {
+        //        if (currentValue <= TEST_MIN_DELAY_SECONDS)
+        //            currentValue = TEST_MIN_DELAY_SECONDS;
+        //        else if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
+        //            currentValue = DEFAULT_MIN_DELAY_SECONDS;
+        //        else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
+        //            currentValue = DEFAULT_MAX_DELAY_SECONDS;
+
+        //        if (IsRunningUnderPlaybackMode)
+        //        {
+        //            currentValue = TEST_MIN_DELAY_SECONDS;
+        //        }
+        //        else
+        //        {
+        //            if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)    // we assume playback mode (test mode)
+        //            {
+        //                if (currentValue != LROTimeoutSetByClient)  //Case where Retry-After is set to non zero, we set it to 0 in playback mode
+        //                {
+        //                    currentValue = TEST_MIN_DELAY_SECONDS;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        currentValue = AzureAsyncOperation.DefaultDelay;
+        //    }
+
+        //    return currentValue.Value;
+        //}
 
         /// <summary>
         /// Gets CloudException from current instance.  

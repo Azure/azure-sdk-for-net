@@ -42,12 +42,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine. For more information about using tags, see [Using
         /// tags to organize your Azure
         /// resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md).</param>
-        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
+        public VirtualMachineImage(string name, string location, string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>), AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default(AutomaticOSUpgradeProperties))
             : base(name, location, id, tags)
         {
             Plan = plan;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
+            AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             CustomInit();
         }
 
@@ -72,6 +73,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<DataDiskImage> DataDiskImages { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.automaticOSUpgradeProperties")]
+        public AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -87,6 +93,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (OsDiskImage != null)
             {
                 OsDiskImage.Validate();
+            }
+            if (AutomaticOSUpgradeProperties != null)
+            {
+                AutomaticOSUpgradeProperties.Validate();
             }
         }
     }

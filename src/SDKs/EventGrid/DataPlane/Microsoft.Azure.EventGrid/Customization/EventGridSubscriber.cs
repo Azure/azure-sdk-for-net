@@ -229,10 +229,10 @@ namespace Microsoft.Azure.EventGrid
 
             // Note: If any of the events have polymorphic data, add converters for them here.
             // This enables the polymorphic deserialization for the event data.
-            // For example, MediaJobCompletedEventData's JobOutput type is polymorphic 
+            // For example, MediaJobCompletedEventData's MediaJobOutput type is polymorphic 
             // based on the @odata.type property in the data.
 
-            // Example usage: jsonSerializer.Converters.Add(new PolymorphicDeserializeJsonConverter<JobOutput>("@odata.type"));
+            jsonSerializer.Converters.Add(new PolymorphicDeserializeJsonConverter<MediaJobOutput>("@odata.type"));
 
             return jsonSerializer;
         }

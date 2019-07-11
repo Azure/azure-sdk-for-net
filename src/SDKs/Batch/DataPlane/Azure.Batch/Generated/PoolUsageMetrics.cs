@@ -26,8 +26,6 @@ namespace Microsoft.Azure.Batch
 
         internal PoolUsageMetrics(Models.PoolUsageMetrics protocolObject)
         {
-            this.DataEgressGiB = protocolObject.DataEgressGiB;
-            this.DataIngressGiB = protocolObject.DataIngressGiB;
             this.EndTime = protocolObject.EndTime;
             this.PoolId = protocolObject.PoolId;
             this.StartTime = protocolObject.StartTime;
@@ -38,16 +36,6 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region PoolUsageMetrics
-
-        /// <summary>
-        /// Gets the cross data center network egress from the pool during this interval, in gibibytes.
-        /// </summary>
-        public double DataEgressGiB { get; }
-
-        /// <summary>
-        /// Gets the cross data center network ingress to the pool during this interval, in gibibytes.
-        /// </summary>
-        public double DataIngressGiB { get; }
 
         /// <summary>
         /// Gets the end time of the aggregation interval for this entry.
@@ -73,13 +61,8 @@ namespace Microsoft.Azure.Batch
         /// Gets the size of the virtual machines in the pool.  All virtual machines in a pool are the same size.
         /// </summary>
         /// <remarks>
-        /// <para>For information about available sizes of virtual machines for Cloud Services pools (pools created with 
-        /// a <see cref="CloudServiceConfiguration"/>), see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/. 
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall.</para><para>For information about available VM 
-        /// sizes for pools using images from the Virtual Machines Marketplace (pools created with a <see cref="VirtualMachineConfiguration"/>) 
-        /// see https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ or https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/. 
-        /// Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (for example STANDARD_GS, 
-        /// STANDARD_DS, and STANDARD_DSV2 series).</para>
+        /// <para>For information about available sizes of virtual machines in pools, see Choose a VM size for compute nodes 
+        /// in an Azure Batch pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).</para>
         /// </remarks>
         public string VirtualMachineSize { get; }
 

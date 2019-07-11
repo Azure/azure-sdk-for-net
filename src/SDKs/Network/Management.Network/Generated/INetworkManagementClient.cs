@@ -101,6 +101,11 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IDdosCustomPoliciesOperations.
+        /// </summary>
+        IDdosCustomPoliciesOperations DdosCustomPolicies { get; }
+
+        /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         IDdosProtectionPlansOperations DdosProtectionPlans { get; }
@@ -156,6 +161,21 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteConnectionsOperations ExpressRouteConnections { get; }
 
         /// <summary>
+        /// Gets the IExpressRoutePortsLocationsOperations.
+        /// </summary>
+        IExpressRoutePortsLocationsOperations ExpressRoutePortsLocations { get; }
+
+        /// <summary>
+        /// Gets the IExpressRoutePortsOperations.
+        /// </summary>
+        IExpressRoutePortsOperations ExpressRoutePorts { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteLinksOperations.
+        /// </summary>
+        IExpressRouteLinksOperations ExpressRouteLinks { get; }
+
+        /// <summary>
         /// Gets the IInterfaceEndpointsOperations.
         /// </summary>
         IInterfaceEndpointsOperations InterfaceEndpoints { get; }
@@ -184,6 +204,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILoadBalancerLoadBalancingRulesOperations.
         /// </summary>
         ILoadBalancerLoadBalancingRulesOperations LoadBalancerLoadBalancingRules { get; }
+
+        /// <summary>
+        /// Gets the ILoadBalancerOutboundRulesOperations.
+        /// </summary>
+        ILoadBalancerOutboundRulesOperations LoadBalancerOutboundRules { get; }
 
         /// <summary>
         /// Gets the ILoadBalancerNetworkInterfacesOperations.
@@ -321,11 +346,6 @@ namespace Microsoft.Azure.Management.Network
         IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkTapsOperations.
-        /// </summary>
-        IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkGatewaysOperations.
         /// </summary>
         IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; }
@@ -339,6 +359,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the ILocalNetworkGatewaysOperations.
         /// </summary>
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkTapsOperations.
+        /// </summary>
+        IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
 
         /// <summary>
         /// Gets the IVirtualWansOperations.

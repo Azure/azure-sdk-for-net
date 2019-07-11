@@ -11,6 +11,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Defines an related search action.
+    /// </summary>
     public partial class ImageRelatedSearchesAction : ImageAction
     {
         /// <summary>

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -50,12 +52,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">Provisioning state of the HTTP
         /// listener resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
+        /// <param name="customErrorConfigurations">Custom error configurations
+        /// of the HTTP listener.</param>
         /// <param name="name">Name of the HTTP listener that is unique within
         /// an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayHttpListener(string id = default(string), SubResource frontendIPConfiguration = default(SubResource), SubResource frontendPort = default(SubResource), string protocol = default(string), string hostName = default(string), SubResource sslCertificate = default(SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), IList<ApplicationGatewayCustomError> customErrorConfigurations = default(IList<ApplicationGatewayCustomError>), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -65,6 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
             SslCertificate = sslCertificate;
             RequireServerNameIndication = requireServerNameIndication;
             ProvisioningState = provisioningState;
+            CustomErrorConfigurations = customErrorConfigurations;
             Name = name;
             Etag = etag;
             Type = type;
@@ -121,6 +126,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom error configurations of the HTTP listener.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customErrorConfigurations")]
+        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets name of the HTTP listener that is unique within an

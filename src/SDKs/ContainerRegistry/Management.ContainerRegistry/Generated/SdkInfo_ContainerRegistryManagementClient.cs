@@ -19,13 +19,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ContainerRegistry", "BuildSteps", "2018-02-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "BuildTasks", "2018-02-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Builds", "2018-02-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Operations", "2017-10-01"),
                 new Tuple<string, string, string>("ContainerRegistry", "Registries", "2017-10-01"),
-                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2018-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2018-09-01"),
                 new Tuple<string, string, string>("ContainerRegistry", "Replications", "2017-10-01"),
+                new Tuple<string, string, string>("ContainerRegistry", "Runs", "2018-09-01"),
+                new Tuple<string, string, string>("ContainerRegistry", "Tasks", "2018-09-01"),
                 new Tuple<string, string, string>("ContainerRegistry", "Webhooks", "2017-10-01"),
               }.AsEnumerable();
           }

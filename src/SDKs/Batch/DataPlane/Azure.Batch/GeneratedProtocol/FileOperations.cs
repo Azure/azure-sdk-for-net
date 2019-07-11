@@ -93,6 +93,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<FileDeleteFromTaskHeaders>> DeleteFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (jobId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
@@ -148,8 +152,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFromTask", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobId}/tasks/{taskId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -343,6 +348,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<Stream,FileGetFromTaskHeaders>> GetFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (jobId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
@@ -415,8 +424,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetFromTask", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobId}/tasks/{taskId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -632,6 +642,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<FileGetPropertiesFromTaskHeaders>> GetPropertiesFromTaskWithHttpMessagesAsync(string jobId, string taskId, string filePath, FileGetPropertiesFromTaskOptions fileGetPropertiesFromTaskOptions = default(FileGetPropertiesFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (jobId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
@@ -698,8 +712,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetPropertiesFromTask", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobId}/tasks/{taskId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -908,6 +923,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<FileDeleteFromComputeNodeHeaders>> DeleteFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -963,8 +982,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFromComputeNode", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -1158,6 +1178,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<Stream,FileGetFromComputeNodeHeaders>> GetFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1230,8 +1254,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetFromComputeNode", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -1447,6 +1472,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationHeaderResponse<FileGetPropertiesFromComputeNodeHeaders>> GetPropertiesFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, string filePath, FileGetPropertiesFromComputeNodeOptions fileGetPropertiesFromComputeNodeOptions = default(FileGetPropertiesFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -1513,8 +1542,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "GetPropertiesFromComputeNode", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files/{filePath}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/files/{filePath}";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
@@ -1721,6 +1751,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<NodeFile>,FileListFromTaskHeaders>> ListFromTaskWithHttpMessagesAsync(string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (jobId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
@@ -1783,8 +1817,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "ListFromTask", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/files").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "jobs/{jobId}/tasks/{taskId}/files";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{jobId}", System.Uri.EscapeDataString(jobId));
             _url = _url.Replace("{taskId}", System.Uri.EscapeDataString(taskId));
             List<string> _queryParameters = new List<string>();
@@ -2003,6 +2038,10 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </return>
         public async Task<AzureOperationResponse<IPage<NodeFile>,FileListFromComputeNodeHeaders>> ListFromComputeNodeWithHttpMessagesAsync(string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.BatchUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BatchUrl");
+            }
             if (poolId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "poolId");
@@ -2065,8 +2104,9 @@ namespace Microsoft.Azure.Batch.Protocol
                 ServiceClientTracing.Enter(_invocationId, this, "ListFromComputeNode", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "pools/{poolId}/nodes/{nodeId}/files").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "pools/{poolId}/nodes/{nodeId}/files";
+            _url = _url.Replace("{batchUrl}", Client.BatchUrl);
             _url = _url.Replace("{poolId}", System.Uri.EscapeDataString(poolId));
             _url = _url.Replace("{nodeId}", System.Uri.EscapeDataString(nodeId));
             List<string> _queryParameters = new List<string>();

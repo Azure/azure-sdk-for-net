@@ -21,10 +21,20 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AddressValidationStatus
     {
+        /// <summary>
+        /// Address provided is valid.
+        /// </summary>
         [EnumMember(Value = "Valid")]
         Valid,
+        /// <summary>
+        /// Address provided is invalid or not supported.
+        /// </summary>
         [EnumMember(Value = "Invalid")]
         Invalid,
+        /// <summary>
+        /// Address provided is ambiguous, please choose one of the alternate
+        /// addresses returned.
+        /// </summary>
         [EnumMember(Value = "Ambiguous")]
         Ambiguous
     }

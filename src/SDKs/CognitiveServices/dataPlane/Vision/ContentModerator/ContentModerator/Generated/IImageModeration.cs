@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.CognitiveServices.ContentModerator
+namespace Microsoft.Azure.CognitiveServices.ContentModerator
 {
     using Microsoft.Rest;
     using Models;

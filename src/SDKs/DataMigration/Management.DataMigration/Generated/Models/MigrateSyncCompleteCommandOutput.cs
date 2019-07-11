@@ -33,10 +33,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Initializes a new instance of the MigrateSyncCompleteCommandOutput
         /// class.
         /// </summary>
+        /// <param name="id">Result identifier</param>
         /// <param name="errors">List of errors that happened during the
         /// command execution</param>
-        public MigrateSyncCompleteCommandOutput(IList<ReportableException> errors = default(IList<ReportableException>))
+        public MigrateSyncCompleteCommandOutput(string id = default(string), IList<ReportableException> errors = default(IList<ReportableException>))
         {
+            Id = id;
             Errors = errors;
             CustomInit();
         }
@@ -47,11 +49,16 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of errors that happened during the command
-        /// execution
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets list of errors that happened during the command execution
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
-        public IList<ReportableException> Errors { get; set; }
+        public IList<ReportableException> Errors { get; private set; }
 
     }
 }

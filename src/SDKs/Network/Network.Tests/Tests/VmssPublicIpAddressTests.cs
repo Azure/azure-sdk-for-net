@@ -79,7 +79,7 @@ namespace Networks.Tests
                     resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName);
                 var vmssListResult = vmssListPageResult.ToList();
 
-                Assert.Equal(1, vmssListResult.Count);
+                Assert.Single(vmssListResult);
 
                 var vmssGetResult = networkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddress(
                     resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName, ipConfigName, ipName);

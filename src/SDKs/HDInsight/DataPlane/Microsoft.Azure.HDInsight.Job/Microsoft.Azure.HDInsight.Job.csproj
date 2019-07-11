@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.HDInsight.Job</PackageId>
+        <Description>Azure HDInsight Job SDK Library</Description>
+        <AssemblyName>Microsoft.Azure.HDInsight.Job</AssemblyName>
+        <Version>3.0.0-preview</Version>
+        <PackageTags>Microsoft Azure HDInsight Job;HDInsight;HDInsight Job</PackageTags>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
+    </ItemGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

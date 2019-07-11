@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using Microsoft.Rest.Serialization;
-using Microsoft.CognitiveServices.ContentModerator.Models;
-using Microsoft.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;

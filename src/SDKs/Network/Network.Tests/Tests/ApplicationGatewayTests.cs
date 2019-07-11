@@ -610,7 +610,7 @@ namespace Networks.Tests
                 Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
                 Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
                 Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
-                Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
+                // Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
 
                 // Get availalbe SSL options
                 var sslOptions = networkManagementClient.ApplicationGateways.ListAvailableSslOptions();

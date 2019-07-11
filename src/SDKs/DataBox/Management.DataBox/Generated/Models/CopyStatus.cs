@@ -21,16 +21,36 @@ namespace Microsoft.Azure.Management.DataBox.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CopyStatus
     {
+        /// <summary>
+        /// Data copy hasnt started yet.
+        /// </summary>
         [EnumMember(Value = "NotStarted")]
         NotStarted,
+        /// <summary>
+        /// Data copy is in progress.
+        /// </summary>
         [EnumMember(Value = "InProgress")]
         InProgress,
+        /// <summary>
+        /// Data copy completed.
+        /// </summary>
         [EnumMember(Value = "Completed")]
         Completed,
+        /// <summary>
+        /// Data copy completed with errors.
+        /// </summary>
         [EnumMember(Value = "CompletedWithErrors")]
         CompletedWithErrors,
+        /// <summary>
+        /// Data copy failed. No data was copied.
+        /// </summary>
         [EnumMember(Value = "Failed")]
-        Failed
+        Failed,
+        /// <summary>
+        /// No copy triggered as device was not returned.
+        /// </summary>
+        [EnumMember(Value = "NotReturned")]
+        NotReturned
     }
     internal static class CopyStatusEnumExtension
     {
@@ -53,6 +73,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "CompletedWithErrors";
                 case CopyStatus.Failed:
                     return "Failed";
+                case CopyStatus.NotReturned:
+                    return "NotReturned";
             }
             return null;
         }
@@ -71,6 +93,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return CopyStatus.CompletedWithErrors;
                 case "Failed":
                     return CopyStatus.Failed;
+                case "NotReturned":
+                    return CopyStatus.NotReturned;
             }
             return null;
         }

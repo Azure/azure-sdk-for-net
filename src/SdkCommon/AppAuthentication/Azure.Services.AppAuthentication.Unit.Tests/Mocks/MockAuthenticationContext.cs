@@ -41,50 +41,56 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// Returns an access token depending on the type requested for testing. 
         /// </summary>
         /// <returns></returns>
-        private Task<string> AcquireTokenAsync()
+        private Task<AppAuthenticationResult> AcquireTokenAsync()
         {
+            AppAuthenticationResult authResult;
+
             switch (_mockAuthenticationContextTestType)
             {
                 case MockAuthenticationContextTestType.AcquireTokenSilentAsyncFail:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateFail:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncClientCredentialFail:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncUserCredentialFail:
-                    return Task.FromResult<string>(null);
+                    return Task.FromResult<AppAuthenticationResult>(null);
 
                 case MockAuthenticationContextTestType.AcquireInvalidTokenAsyncFail:
-                    return Task.FromResult(TokenHelper.GetInvalidAppToken());
+                    authResult = AppAuthenticationResult.Create(TokenHelper.GetInvalidAppToken());
+                    return Task.FromResult(authResult);
 
                 case MockAuthenticationContextTestType.AcquireTokenAsyncException:
                     throw new Exception(Constants.AdalException);
 
                 case MockAuthenticationContextTestType.AcquireTokenSilentAsyncSuccess:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncUserCredentialSuccess:
-                    return Task.FromResult(TokenHelper.GetUserToken());
+                    authResult = AppAuthenticationResult.Create(TokenHelper.GetUserToken());
+                    return Task.FromResult(authResult);
 
                 case MockAuthenticationContextTestType.AcquireTokenAsyncClientCertificateSuccess:
                 case MockAuthenticationContextTestType.AcquireTokenAsyncClientCredentialSuccess:
-                    return Task.FromResult(TokenHelper.GetAppToken());
-                
+                    authResult = AppAuthenticationResult.Create(TokenHelper.GetAppToken());
+                    return Task.FromResult(authResult);
+
             }
 
             return null;
         }
-        public Task<string> AcquireTokenSilentAsync(string authority, string resource, string clientId)
+
+        public Task<AppAuthenticationResult> AcquireTokenSilentAsync(string authority, string resource, string clientId)
         {
             return AcquireTokenAsync();
         }
 
-        public Task<string> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential)
+        public Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential)
         {
             return AcquireTokenAsync();
         }
 
-        public Task<string> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential)
+        public Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential)
         {
             return AcquireTokenAsync();
         }
 
-        public Task<string> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate)
+        public Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate)
         {
             return AcquireTokenAsync();
         }

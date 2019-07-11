@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.ApplicationInsights.Tests", "DataPlane\Data.ApplicationInsights.Tests\Data.ApplicationInsights.Tests.csproj", "{FA06A27D-4D07-4157-9C61-36BEBD67970D}"
 EndProject
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationInsights.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ApplicationInsights", "Management\Management.ApplicationInsights\Microsoft.Azure.Management.ApplicationInsights.csproj", "{218115E9-B94C-4CBE-9FE4-485DCA96C2FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights", "DataPlane\ApplicationInsights\Microsoft.Azure.ApplicationInsights.csproj", "{69672630-2C7C-401F-B923-1D507BD63383}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ApplicationInsights.Query", "DataPlane\ApplicationInsights\Microsoft.Azure.ApplicationInsights.Query.csproj", "{69672630-2C7C-401F-B923-1D507BD63383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <summary>
         /// Gets or sets the app password of the bot
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "msaAppPassword")]
         public string MsaAppPassword { get; set; }
     }
 }

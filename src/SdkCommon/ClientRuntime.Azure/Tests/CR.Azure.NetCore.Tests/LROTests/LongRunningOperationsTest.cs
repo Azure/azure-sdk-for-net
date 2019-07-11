@@ -835,7 +835,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Avoid running during CI. Manually run to verify")]
         public void TestCreateWithRetryAfterDefaultMax()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");

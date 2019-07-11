@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "request");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2018-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

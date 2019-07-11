@@ -12,7 +12,7 @@
         [Fact]
         public void CanGetRunById()
         {
-            var runId = Guid.Parse("595159c7-64cb-436f-892d-b44b31970f7a");
+            var runId = Guid.Parse("6ff49ee2-092a-48bf-841a-c3d645611689");
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
@@ -32,7 +32,7 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(15, runs.Value.Count);
+                Assert.Equal(7, runs.Value.Count);
             }
         }
 
@@ -46,7 +46,7 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByConfigurationName(ResourceGroupName, AutomationAccountName, configName);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(6, runs.Value.Count);
+                Assert.Equal(2, runs.Value.Count);
             }
         }
 
@@ -60,7 +60,7 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByOsType(ResourceGroupName, AutomationAccountName, os);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(17, runs.Value.Count);
+                Assert.Equal(7, runs.Value.Count);
             }
         }
 
@@ -74,21 +74,21 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStatus(ResourceGroupName, AutomationAccountName, status);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(2, runs.Value.Count);
+                Assert.Equal(0, runs.Value.Count);
             }
         }
 
         [Fact]
         public void CanGetAllRunsByStartTime()
         {
-            var startTime = DateTime.Parse("2017-12-03T22:01:00-8").ToUniversalTime();
+            var startTime = DateTime.Parse("2018-10-23T11:02:00-8").ToUniversalTime();
             using (var context = MockContext.Start(GetType().FullName))
             {
                 this.CreateAutomationClient(context);
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStartTime(ResourceGroupName, AutomationAccountName, startTime);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(3, runs.Value.Count);
+                Assert.Equal(1, runs.Value.Count);
             }
         }
     }

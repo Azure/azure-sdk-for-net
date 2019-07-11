@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Hubspot Serivce linked service.
+    /// Hubspot Service linked service.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Hubspot")]
     [Rest.Serialization.JsonTransformation]

@@ -60,6 +60,26 @@ namespace Fabric.Tests
             });
         }
 
+        protected void OverScaleUnits(FabricAdminClient client, Action<string, string> act) {
+            OverFabricLocations(client, (fabricLocationName) => {
+                var scaleUnits = client.ScaleUnits.List(ResourceGroupName, fabricLocationName);
+                Common.MapOverIPage(scaleUnits, client.ScaleUnits.ListNext, (scaleUnit) => {
+                    var scaleUnitsName = ExtractName(scaleUnit.Name);
+                    act(fabricLocationName, scaleUnitsName);
+                });
+            });
+        }
+
+        protected void OverStorageSubSystems(FabricAdminClient client, Action<string, string, string> act) {
+            OverScaleUnits(client, (fabricLocationName, scaleUnitsName) => {
+                var storageSubSystems = client.StorageSubSystems.List(ResourceGroupName, fabricLocationName, scaleUnitsName);
+                Common.MapOverIPage(storageSubSystems, client.StorageSubSystems.ListNext, (storageSubSystem) => {
+                    var storageSubSystemName = ExtractName(storageSubSystem.Name);
+                    act(fabricLocationName, scaleUnitsName, storageSubSystemName);
+                });
+            });
+        }
+
         public string GetLocation(FabricAdminClient client) {
             return ExtractName(client.FabricLocations.List(ResourceGroupName).GetFirst().Name);
         }
@@ -74,6 +94,14 @@ namespace Fabric.Tests
 
         public string GetStoragePool(FabricAdminClient client, string fabricLocationName, string storageSystemName) {
             return ExtractName(client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName).GetFirst().Name);
+        }
+
+        public string GetScaleUnit(FabricAdminClient client, string fabricLocationName) {
+            return ExtractName(client.ScaleUnits.List(ResourceGroupName, fabricLocationName).GetFirst().Name);
+        }
+
+        public string GetStorageSubSystem(FabricAdminClient client, string fabricLocationName, string scaleUnitName) {
+            return ExtractName(client.StorageSubSystems.List(ResourceGroupName, fabricLocationName, scaleUnitName).GetFirst().Name);
         }
 
         protected override void ValidateClient(FabricAdminClient client) {
@@ -97,6 +125,7 @@ namespace Fabric.Tests
 
             Assert.NotNull(client.StoragePools);
             Assert.NotNull(client.StorageSystems);
+            Assert.NotNull(client.StorageSubSystems);
             Assert.NotNull(client.Volumes);
 
             // validate properties

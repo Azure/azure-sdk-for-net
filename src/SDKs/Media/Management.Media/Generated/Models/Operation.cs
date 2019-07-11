@@ -32,10 +32,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="name">The operation name.</param>
         /// <param name="display">The operation display name.</param>
-        public Operation(string name, OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">Origin of the operation.</param>
+        /// <param name="properties">Operation properties format.</param>
+        public Operation(string name, OperationDisplay display = default(OperationDisplay), string origin = default(string), MetricProperties properties = default(MetricProperties))
         {
             Name = name;
             Display = display;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -55,6 +59,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets origin of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets operation properties format.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public MetricProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.

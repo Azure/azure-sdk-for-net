@@ -147,6 +147,52 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Updates an application security group's tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationSecurityGroupName'>
+            /// The name of the application security group.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update application security group tags.
+            /// </param>
+            public static ApplicationSecurityGroup UpdateTags(this IApplicationSecurityGroupsOperations operations, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters)
+            {
+                return operations.UpdateTagsAsync(resourceGroupName, applicationSecurityGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an application security group's tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationSecurityGroupName'>
+            /// The name of the application security group.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update application security group tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationSecurityGroup> UpdateTagsAsync(this IApplicationSecurityGroupsOperations operations, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, applicationSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all application security groups in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -288,6 +334,52 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<ApplicationSecurityGroup> BeginCreateOrUpdateAsync(this IApplicationSecurityGroupsOperations operations, string resourceGroupName, string applicationSecurityGroupName, ApplicationSecurityGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, applicationSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an application security group's tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationSecurityGroupName'>
+            /// The name of the application security group.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update application security group tags.
+            /// </param>
+            public static ApplicationSecurityGroup BeginUpdateTags(this IApplicationSecurityGroupsOperations operations, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters)
+            {
+                return operations.BeginUpdateTagsAsync(resourceGroupName, applicationSecurityGroupName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an application security group's tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationSecurityGroupName'>
+            /// The name of the application security group.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update application security group tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationSecurityGroup> BeginUpdateTagsAsync(this IApplicationSecurityGroupsOperations operations, string resourceGroupName, string applicationSecurityGroupName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, applicationSecurityGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -87,7 +87,7 @@ namespace Networks.Tests
 				// Verify nics on a vm level
 				var listNicPerVm = networkManagementClient.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName, virtualMachineScaleSetName, vmIndex).ToList();
 				Assert.NotNull(listNicPerVm);
-				Assert.Equal(1, listNicPerVm.Count);
+				Assert.Single(listNicPerVm);
 
 				foreach (var nic in listNicPerVm)
 				{

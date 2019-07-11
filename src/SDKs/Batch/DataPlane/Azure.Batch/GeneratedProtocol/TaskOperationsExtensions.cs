@@ -27,9 +27,10 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Adds a task to the specified job.
             /// </summary>
             /// <remarks>
-            /// The maximum lifetime of a task from addition to completion is 7 days. If a
-            /// task has not completed within 7 days of being added it will be terminated
-            /// by the Batch service and left in whatever state it was in at that time.
+            /// The maximum lifetime of a task from addition to completion is 180 days. If
+            /// a task has not completed within 180 days of being added it will be
+            /// terminated by the Batch service and left in whatever state it was in at
+            /// that time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -52,9 +53,10 @@ namespace Microsoft.Azure.Batch.Protocol
             /// Adds a task to the specified job.
             /// </summary>
             /// <remarks>
-            /// The maximum lifetime of a task from addition to completion is 7 days. If a
-            /// task has not completed within 7 days of being added it will be terminated
-            /// by the Batch service and left in whatever state it was in at that time.
+            /// The maximum lifetime of a task from addition to completion is 180 days. If
+            /// a task has not completed within 180 days of being added it will be
+            /// terminated by the Batch service and left in whatever state it was in at
+            /// that time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,9 +147,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// client can retry the request. In a retry, it is most efficient to resubmit
             /// only tasks that failed to add, and to omit tasks that were successfully
             /// added on the first attempt. The maximum lifetime of a task from addition to
-            /// completion is 7 days. If a task has not completed within 7 days of being
-            /// added it will be terminated by the Batch service and left in whatever state
-            /// it was in at that time.
+            /// completion is 180 days. If a task has not completed within 180 days of
+            /// being added it will be terminated by the Batch service and left in whatever
+            /// state it was in at that time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,9 +188,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// client can retry the request. In a retry, it is most efficient to resubmit
             /// only tasks that failed to add, and to omit tasks that were successfully
             /// added on the first attempt. The maximum lifetime of a task from addition to
-            /// completion is 7 days. If a task has not completed within 7 days of being
-            /// added it will be terminated by the Batch service and left in whatever state
-            /// it was in at that time.
+            /// completion is 180 days. If a task has not completed within 180 days of
+            /// being added it will be terminated by the Batch service and left in whatever
+            /// state it was in at that time.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

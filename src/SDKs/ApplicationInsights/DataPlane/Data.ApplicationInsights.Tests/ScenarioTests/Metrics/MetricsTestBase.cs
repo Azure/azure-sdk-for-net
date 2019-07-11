@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.Azure.ApplicationInsights.Models;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Xunit;
 
 namespace Data.ApplicationInsights.Tests.Metrics
@@ -12,8 +13,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 Parameters = new MetricsPostBodySchemaParameters
                 {
                     MetricId = "requests/duration",
-                    Aggregation = new[] { "avg" },
-                    Timespan = new System.TimeSpan(12, 0, 0)
+                    Aggregation = new List<string> { MetricsAggregation.Avg },
+                    Timespan = "PT12H"
                 }
             },
             false,
@@ -27,9 +28,9 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 Parameters = new MetricsPostBodySchemaParameters
                 {
                     MetricId = "requests/duration",
-                    Aggregation = new[] { "avg" },
-                    Timespan = new System.TimeSpan(12, 0, 0),
-                    Interval = new System.TimeSpan(3, 0, 0)
+                    Aggregation = new List<string> { MetricsAggregation.Avg },
+                    Timespan = "PT12H",
+                    Interval = new TimeSpan(3, 0, 0)
                 }
             },
             true,
@@ -43,8 +44,8 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 Parameters = new MetricsPostBodySchemaParameters
                 {
                     MetricId = "requests/duration",
-                    Aggregation = new[] { "avg" },
-                    Timespan = new System.TimeSpan(12, 0, 0),
+                    Aggregation = new List<string> { MetricsAggregation.Avg },
+                    Timespan = "PT12H",
                     Segment = new[] { "request/name" }
                 }
             },
@@ -59,9 +60,9 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 Parameters = new MetricsPostBodySchemaParameters
                 {
                     MetricId = "requests/duration",
-                    Aggregation = new[] { "avg" },
-                    Timespan = new System.TimeSpan(12, 0, 0),
-                    Interval = new System.TimeSpan(3, 0, 0),
+                    Aggregation = new List<string> { MetricsAggregation.Avg },
+                    Timespan = "PT12H",
+                    Interval = new TimeSpan(3, 0, 0),
                     Segment = new[] { "request/name" }
                 }
             },
@@ -76,9 +77,9 @@ namespace Data.ApplicationInsights.Tests.Metrics
                 Parameters = new MetricsPostBodySchemaParameters
                 {
                     MetricId = "requests/duration",
-                    Aggregation = new[] { "avg" },
-                    Timespan = new System.TimeSpan(12, 0, 0),
-                    Interval = new System.TimeSpan(3, 0, 0),
+                    Aggregation = new List<string> { MetricsAggregation.Avg },
+                    Timespan = "PT12H",
+                    Interval = new TimeSpan(3, 0, 0),
                     Segment = new[] { "request/name", "request/success" }
                 }
             },

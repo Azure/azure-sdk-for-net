@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="endpoint">The endpoint of the Amazon MWS server, (i.e.
         /// mws.amazonservices.com)</param>
         /// <param name="marketplaceID">The Amazon Marketplace ID you want to
-        /// retrieve data from. To retrive data from multiple Marketplace IDs,
-        /// seperate them with a comma (,). (i.e. A2EUQ1WTGCTBG2)</param>
+        /// retrieve data from. To retrieve data from multiple Marketplace IDs,
+        /// separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2)</param>
         /// <param name="sellerID">The Amazon seller ID.</param>
         /// <param name="accessKeyId">The access key id used to access
         /// data.</param>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the Amazon Marketplace ID you want to retrieve data
-        /// from. To retrive data from multiple Marketplace IDs, seperate them
+        /// from. To retrieve data from multiple Marketplace IDs, separate them
         /// with a comma (,). (i.e. A2EUQ1WTGCTBG2)
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.marketplaceID")]

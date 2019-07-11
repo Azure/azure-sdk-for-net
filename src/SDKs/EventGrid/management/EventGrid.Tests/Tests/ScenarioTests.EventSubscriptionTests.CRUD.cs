@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -13,8 +13,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        // TODO: Replace with a valid Azure Function URL that supports subscription validation handshake before recording tests.
-        const string AzureFunctionEndpointUrl = "https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1?code=hidden";
+        const string AzureFunctionEndpointUrl = "https://eventgridrunnerfunction.azurewebsites.net/api/HttpTriggerCSharp1?code=<HIDDEN>";
 
         [Fact]
         public void EventSubscriptionCreateGetUpdateDelete()
@@ -338,7 +337,6 @@ namespace EventGrid.Tests.ScenarioTests
                         ResourceId = "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.Storage/storageAccounts/kalsdemo",
                         BlobContainerName = "dlq"
                     },
-                    EventDeliverySchema = EventDeliverySchema.CloudEventV01Schema,
                     RetryPolicy = new RetryPolicy()
                     {
                         EventTimeToLiveInMinutes = 20,
@@ -364,7 +362,6 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(EventDeliverySchema.CloudEventV01Schema, eventSubscriptionResponse.EventDeliverySchema, StringComparer.CurrentCultureIgnoreCase);
 
                 // Delete the event subscription
                 EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();

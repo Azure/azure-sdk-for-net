@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// availability. For more information about availability sets, see [Manage
     /// the availability of virtual
     /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).
-    /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-    /// maintainance, see [Planned maintenance for virtual machines in
+    /// &lt;br&gt;&lt;br&gt; For more information on Azure planned maintenance,
+    /// see [Planned maintenance for virtual machines in
     /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
     /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to availability
     /// set at creation time. An existing VM cannot be added to an availability
@@ -56,7 +56,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="virtualMachines">A list of references to all virtual
         /// machines in the availability set.</param>
         /// <param name="statuses">The resource status information.</param>
-        /// <param name="sku">Sku of the availability set</param>
+        /// <param name="sku">Sku of the availability set, only name is
+        /// required to be set. See AvailabilitySetSkuTypes for possible set of
+        /// values. Use 'Aligned' for virtual machines with managed disks and
+        /// 'Classic' for virtual machines with unmanaged disks. Default value
+        /// is 'Classic'.</param>
         public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
             : base(location, id, name, type, tags)
         {
@@ -99,7 +103,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<InstanceViewStatus> Statuses { get; private set; }
 
         /// <summary>
-        /// Gets or sets sku of the availability set
+        /// Gets or sets sku of the availability set, only name is required to
+        /// be set. See AvailabilitySetSkuTypes for possible set of values. Use
+        /// 'Aligned' for virtual machines with managed disks and 'Classic' for
+        /// virtual machines with unmanaged disks. Default value is 'Classic'.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

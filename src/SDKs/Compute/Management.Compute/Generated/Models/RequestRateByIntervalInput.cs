@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'ThreeMins', 'FiveMins', 'ThirtyMins', 'SixtyMins'</param>
         /// <param name="groupByThrottlePolicy">Group query result by Throttle
         /// Policy applied.</param>
-        /// <param name="groupByOperationName">Group query result by  by
-        /// Operation Name.</param>
+        /// <param name="groupByOperationName">Group query result by Operation
+        /// Name.</param>
         /// <param name="groupByResourceName">Group query result by Resource
         /// Name.</param>
         public RequestRateByIntervalInput(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, IntervalInMins intervalLength, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?))

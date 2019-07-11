@@ -10,6 +10,9 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <PackageTags>Http Recorder tests $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
 	<ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />

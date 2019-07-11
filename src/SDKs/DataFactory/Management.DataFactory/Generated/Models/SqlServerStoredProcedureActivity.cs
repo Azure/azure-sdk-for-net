@@ -90,16 +90,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StoredProcedureName");
             }
-            if (StoredProcedureParameters != null)
-            {
-                foreach (var valueElement in StoredProcedureParameters.Values)
-                {
-                    if (valueElement != null)
-                    {
-                        valueElement.Validate();
-                    }
-                }
-            }
         }
     }
 }

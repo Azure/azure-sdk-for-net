@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="singlePlacementGroup">When true this limits the scale
         /// set to a single placement group, of max size 100 virtual
         /// machines.</param>
-        /// <param name="zoneBalance">Whether to force stictly even Virtual
+        /// <param name="zoneBalance">Whether to force strictly even Virtual
         /// Machine distribution cross x-zones in case there is zone
         /// outage.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? SinglePlacementGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to force stictly even Virtual Machine
+        /// Gets or sets whether to force strictly even Virtual Machine
         /// distribution cross x-zones in case there is zone outage.
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneBalance")]

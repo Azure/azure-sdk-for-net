@@ -93,11 +93,11 @@ namespace Test.Azure.Management.Logic
         },
         'parameters':{
             'parameter1':{
-                'type': 'string',
+                'type': 'String',
                 'value': 'abc'
             },
             'parameter2':{
-                'type': 'array',
+                'type': 'Array',
                 'value': [1, 2, 3]
             }
         }
@@ -151,6 +151,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListBySubscription());
         }
 
+        [Fact]
         public void Workflows_ListBySubscription_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -162,7 +163,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.WorkflowList
             };
 
-            var result = client.Workflows.ListByResourceGroup("rgName");
+            var result = client.Workflows.ListBySubscription();
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -192,6 +193,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListBySubscriptionNext("http://management.azure.com/nextLink"));
         }
 
+        [Fact]
         public void Workflows_ListBySubscriptionNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -215,7 +217,7 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
-        #region Workflows_ListByResourceGroup
+        #region Workflows_List
 
         [Fact]
         public void Workflows_ListByResourceGroup_Exception()
@@ -257,7 +259,7 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
-        #region Workflows_ListByResourceGroupNext
+        #region Workflows_ListNext
 
         [Fact]
         public void Workflows_ListByResourceGroupNext_Exception()
@@ -275,6 +277,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<CloudException>(() => client.Workflows.ListByResourceGroupNext("http://management.azure.com/nextLink"));
         }
 
+        [Fact]
         public void Workflows_ListByResourceGroupNext_Success()
         {
             var handler = new RecordedDelegatingHandler();
@@ -374,7 +377,8 @@ namespace Test.Azure.Management.Logic
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.NotFound
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.Delete(null, "wfName"));
@@ -522,7 +526,8 @@ namespace Test.Azure.Management.Logic
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.Disable(null, "wfName"));
@@ -560,7 +565,8 @@ namespace Test.Azure.Management.Logic
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.Enable(null, "wfName"));
@@ -598,7 +604,8 @@ namespace Test.Azure.Management.Logic
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.RegenerateAccessKey(null, "wfName", new RegenerateActionParameter()));
@@ -637,7 +644,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             Assert.Throws<ValidationException>(() => client.Workflows.ListSwagger(null, "wfName"));
@@ -654,7 +661,7 @@ namespace Test.Azure.Management.Logic
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = this.Empty
+                Content = new StringContent(string.Empty)
             };
 
             client.Workflows.ListSwagger("rgName", "wfName");
@@ -676,14 +683,15 @@ namespace Test.Azure.Management.Logic
 
             handler.Response = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.Workflows.Validate(null, "wfName", "westus", new Workflow()));
-            Assert.Throws<ValidationException>(() => client.Workflows.Validate("rgName", null, "westus", new Workflow()));
-            Assert.Throws<ValidationException>(() => client.Workflows.Validate("rgName", "wfName", null, new Workflow()));
-            Assert.Throws<ValidationException>(() => client.Workflows.Validate("rgName", "wfName", "westus", null));
-            Assert.Throws<CloudException>(() => client.Workflows.Validate("rgName", "wfName", "westus", new Workflow()));
+            Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation(null, "wfName", "westus", new Workflow()));
+            Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", null, "westus", new Workflow()));
+            Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", null, new Workflow()));
+            Assert.Throws<ValidationException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", "westus", null));
+            Assert.Throws<CloudException>(() => client.Workflows.ValidateByLocation("rgName", "wfName", "westus", new Workflow()));
         }
 
         [Fact]
@@ -697,7 +705,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.Workflows.Validate("rgName", "wfName", "westus", new Workflow());
+            client.Workflows.ValidateByLocation("rgName", "wfName", "westus", new Workflow());
 
             // Validates requests.
             handler.Request.ValidateAuthorizationHeader();
@@ -790,7 +798,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateWorkflowList1(IPage<Workflow> result)
         {
-            Assert.Equal(1, result.Count());
+            Assert.Single(result);
             this.ValidateWorkflow1(result.First());
             Assert.Equal("http://workflowlist1nextlink", result.NextPageLink);
         }

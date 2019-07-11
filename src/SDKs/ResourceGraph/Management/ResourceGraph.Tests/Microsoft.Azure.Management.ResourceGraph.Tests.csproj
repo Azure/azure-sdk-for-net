@@ -6,6 +6,7 @@
     <Description>ResourceGraph.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>Microsoft.Azure.Management.ResourceGraph.Tests</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="SessionRecords\ResourceGraph.Tests.ScenarioTests.ScenarioTests\**" />

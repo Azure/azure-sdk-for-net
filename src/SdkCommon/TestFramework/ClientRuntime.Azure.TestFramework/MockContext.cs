@@ -27,6 +27,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private List<ResourceGroupCleaner> undoHandlers = new List<ResourceGroupCleaner>();
         private TestEnvironment _testFxEnvironment;
 
+
         static MockContext()
         {
         }
@@ -39,11 +40,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 {
                     string envStr = Environment.GetEnvironmentVariable(TestEnvironmentFactory.TestCSMOrgIdConnectionStringKey);
                     _testFxEnvironment = new TestEnvironment(envStr);
+                    OptimizeTestRecordingFile = _testFxEnvironment.OptimizeRecordedFile;
                 }
 
                 return _testFxEnvironment;
             }
         }
+
+        internal bool OptimizeTestRecordingFile { get; set; } = false;
+        
         
         /// <summary>
         /// Return a new UndoContext
@@ -304,7 +309,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                if(TestFxEnvironment.OptimizeRecordedFile == true)
+                // this check should be removed once we make the optimizatoin default
+                if(OptimizeTestRecordingFile)
                 {
                     ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(recordedFilePath);
                     procRecFile.CompactLroPolling();

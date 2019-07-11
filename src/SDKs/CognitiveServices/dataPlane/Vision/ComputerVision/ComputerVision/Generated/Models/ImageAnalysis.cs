@@ -33,12 +33,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="categories">An array indicating identified
         /// categories.</param>
+        /// <param name="adult">An object describing whether the image contains
+        /// adult-oriented content and/or is racy.</param>
+        /// <param name="color">An object providing additional metadata
+        /// describing color attributes.</param>
+        /// <param name="imageType">An object providing possible image types
+        /// and matching confidence levels.</param>
         /// <param name="tags">A list of tags with confidence level.</param>
+        /// <param name="description">A collection of content tags, along with
+        /// a list of captions sorted by confidence level, and image
+        /// metadata.</param>
         /// <param name="faces">An array of possible faces within the
         /// image.</param>
-        /// <param name="requestId">Id of the request for tracking
-        /// purposes.</param>
-        public ImageAnalysis(IList<Category> categories = default(IList<Category>), AdultInfo adult = default(AdultInfo), ColorInfo color = default(ColorInfo), ImageType imageType = default(ImageType), IList<ImageTag> tags = default(IList<ImageTag>), ImageDescriptionDetails description = default(ImageDescriptionDetails), IList<FaceDescription> faces = default(IList<FaceDescription>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        /// <param name="objects">Array of objects describing what was detected
+        /// in the image.</param>
+        /// <param name="requestId">Id of the REST API request.</param>
+        public ImageAnalysis(IList<Category> categories = default(IList<Category>), AdultInfo adult = default(AdultInfo), ColorInfo color = default(ColorInfo), ImageType imageType = default(ImageType), IList<ImageTag> tags = default(IList<ImageTag>), ImageDescriptionDetails description = default(ImageDescriptionDetails), IList<FaceDescription> faces = default(IList<FaceDescription>), IList<DetectedObject> objects = default(IList<DetectedObject>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Categories = categories;
             Adult = adult;
@@ -47,6 +57,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             Tags = tags;
             Description = description;
             Faces = faces;
+            Objects = objects;
             RequestId = requestId;
             Metadata = metadata;
             CustomInit();
@@ -64,16 +75,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public IList<Category> Categories { get; set; }
 
         /// <summary>
+        /// Gets or sets an object describing whether the image contains
+        /// adult-oriented content and/or is racy.
         /// </summary>
         [JsonProperty(PropertyName = "adult")]
         public AdultInfo Adult { get; set; }
 
         /// <summary>
+        /// Gets or sets an object providing additional metadata describing
+        /// color attributes.
         /// </summary>
         [JsonProperty(PropertyName = "color")]
         public ColorInfo Color { get; set; }
 
         /// <summary>
+        /// Gets or sets an object providing possible image types and matching
+        /// confidence levels.
         /// </summary>
         [JsonProperty(PropertyName = "imageType")]
         public ImageType ImageType { get; set; }
@@ -85,6 +102,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public IList<ImageTag> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets a collection of content tags, along with a list of
+        /// captions sorted by confidence level, and image metadata.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public ImageDescriptionDetails Description { get; set; }
@@ -96,7 +115,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public IList<FaceDescription> Faces { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the request for tracking purposes.
+        /// Gets or sets array of objects describing what was detected in the
+        /// image.
+        /// </summary>
+        [JsonProperty(PropertyName = "objects")]
+        public IList<DetectedObject> Objects { get; set; }
+
+        /// <summary>
+        /// Gets or sets id of the REST API request.
         /// </summary>
         [JsonProperty(PropertyName = "requestId")]
         public string RequestId { get; set; }

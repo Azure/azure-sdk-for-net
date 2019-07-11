@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// Initializes a new instance of the QueryOptions class.
         /// </summary>
         /// <param name="top">Maximum number of records to return.</param>
+        /// <param name="filter">OData filter expression.</param>
         /// <param name="orderBy">Ordering expression using OData notation. One
         /// or more comma-separated column names with an optional "desc" (the
         /// default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId
@@ -43,17 +44,16 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="to">ISO 8601 formatted timestamp specifying the end
         /// time of the interval to query. When not specified, the service uses
         /// request time.</param>
-        /// <param name="filter">OData filter expression.</param>
         /// <param name="apply">OData apply expression for
         /// aggregations.</param>
-        public QueryOptions(int? top = default(int?), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string filter = default(string), string apply = default(string))
+        public QueryOptions(int? top = default(int?), string filter = default(string), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string apply = default(string))
         {
             Top = top;
+            Filter = filter;
             OrderBy = orderBy;
             Select = select;
             FromProperty = fromProperty;
             To = to;
-            Filter = filter;
             Apply = apply;
             CustomInit();
         }
@@ -68,6 +68,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public int? Top { get; set; }
+
+        /// <summary>
+        /// Gets or sets oData filter expression.
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets ordering expression using OData notation. One or more
@@ -100,12 +106,6 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? To { get; set; }
-
-        /// <summary>
-        /// Gets or sets oData filter expression.
-        /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets oData apply expression for aggregations.

@@ -765,7 +765,7 @@
                             Assert.Null(jm.ResourceFiles);
                             Assert.Null(jm.EnvironmentSettings);
 
-                            jm.ResourceFiles = new List<ResourceFile> { new ResourceFile("http://test", "test") };
+                            jm.ResourceFiles = new List<ResourceFile> { ResourceFile.FromUrl("http://test", "test") };
                             jm.EnvironmentSettings = new List<EnvironmentSetting> { new EnvironmentSetting("test", "Test") };
 
                             //StartTask
@@ -775,7 +775,7 @@
                             Assert.Null(startTask.EnvironmentSettings);
 
                             startTask.EnvironmentSettings = new List<EnvironmentSetting>() { new EnvironmentSetting("test", "test") };
-                            startTask.ResourceFiles = new List<ResourceFile>() { new ResourceFile("http://test", "Test") };
+                            startTask.ResourceFiles = new List<ResourceFile>() { ResourceFile.FromUrl("http://test", "Test") };
 
                             //Pool Specification
                             PoolSpecification poolSpecification = new PoolSpecification()
@@ -826,11 +826,11 @@
 
                             //Testing addition to existing lists now
                             boundJobSchedule.Metadata.Add(new MetadataItem("abc", "abc"));
-                            boundJobSchedule.JobSpecification.JobManagerTask.ResourceFiles.Add(new ResourceFile("http://abc", "abc"));
+                            boundJobSchedule.JobSpecification.JobManagerTask.ResourceFiles.Add(ResourceFile.FromUrl("http://abc", "abc"));
                             boundJobSchedule.JobSpecification.JobManagerTask.EnvironmentSettings.Add(new EnvironmentSetting("abc", "abc"));
                             boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.Metadata.Add(new MetadataItem("abc", "abc"));
                             boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.StartTask.EnvironmentSettings.Add(new EnvironmentSetting("abc", "abc"));
-                            boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.StartTask.ResourceFiles.Add(new ResourceFile("http://abc", "abc"));
+                            boundJobSchedule.JobSpecification.PoolInformation.AutoPoolSpecification.PoolSpecification.StartTask.ResourceFiles.Add(ResourceFile.FromUrl("http://abc", "abc"));
 
                             this.testOutputHelper.WriteLine("Commiting updated Job Schedule with more IList stuff added");
                             boundJobSchedule.Commit();
@@ -919,7 +919,7 @@
                             unboundTask.EnvironmentSettings.Add(new EnvironmentSetting("foo", "baz"));
 
                             unboundTask.ResourceFiles = new List<ResourceFile>();
-                            unboundTask.ResourceFiles.Add(new ResourceFile("http://foo", "baz"));
+                            unboundTask.ResourceFiles.Add(ResourceFile.FromUrl("http://foo", "baz"));
 
                             job.AddTask(unboundTask);
 
@@ -934,7 +934,7 @@
                             Assert.Equal(1, boundTask.ResourceFiles.Count);
 
                             TestUtilities.AssertThrows<InvalidOperationException>(() => boundTask.EnvironmentSettings.Add(new EnvironmentSetting("test", "test")));
-                            TestUtilities.AssertThrows<InvalidOperationException>(() => boundTask.ResourceFiles.Add(new ResourceFile("http://test", "test")));
+                            TestUtilities.AssertThrows<InvalidOperationException>(() => boundTask.ResourceFiles.Add(ResourceFile.FromUrl("http://test", "test")));
                             TestUtilities.AssertThrows<InvalidOperationException>(() => { IList<IFileStagingProvider> filesToStage = boundTask.FilesToStage; });
                         }
                         finally

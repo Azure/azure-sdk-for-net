@@ -7,101 +7,148 @@ namespace Test.Azure.Management.Logic
     using System.Linq;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Newtonsoft.Json.Linq;
     using Xunit;
 
     [Collection("WorkflowTriggersScenarioTests")]
     public class WorkflowTriggersScenarioTests : ScenarioTestsBase
     {
-        [Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        public void ListNoTrigger()
+        [Fact]
+        public void WorkflowTriggers_Get_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.definition)
-                    });
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // List the triggers
-                var triggers = client.WorkflowTriggers.List(this.resourceGroupName, workflowName);
+                var retrievedTrigger = client.WorkflowTriggers.Get(Constants.DefaultResourceGroup,
+                    workflowName,
+                    Constants.DefaultTriggerName);
 
-                Assert.Equal(0, triggers.Count());
+                this.ValidateTrigger(retrievedTrigger);
 
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 
         [Fact]
-        public void GetAndListTriggers()
+        public void WorkflowTriggers_List_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.simpleTriggerDefinition)
-                    });
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // List the triggers
-                var triggers = client.WorkflowTriggers.List(this.resourceGroupName, workflowName);
+                var triggers = client.WorkflowTriggers.List(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
 
-                Assert.Equal(1, triggers.Count());
+                this.ValidateTrigger(triggers.First());
 
-                var trigger = client.WorkflowTriggers.Get(this.resourceGroupName, workflowName, "httpTrigger");
-
-                Assert.NotNull(trigger.CreatedTime);
-                Assert.NotNull(trigger.ChangedTime);
-
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
         }
 
         [Fact]
-        public void RunTrigger()
+        public void WorkflowTriggers_GetJsonSchema_OK()
         {
-            using (MockContext context = MockContext.Start(className: this.testClassName))
+            using (var context = MockContext.Start(this.TestClassName))
             {
-                string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetWorkflowClient(context);
-                
-                // Create a workflow
-                var workflow = client.Workflows.CreateOrUpdate(
-                    resourceGroupName: this.resourceGroupName,
-                    workflowName: workflowName,
-                    workflow: new Workflow
-                    {
-                        Location = this.location,
-                        Sku = this.Sku,
-                        Definition = JToken.Parse(this.simpleTriggerDefinition)
-                    });
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
 
-                // Run the trigger
-                client.WorkflowTriggers.Run(this.resourceGroupName, workflowName, "httpTrigger");
+                var jsonSchema = client.WorkflowTriggers.GetSchemaJson(Constants.DefaultResourceGroup,
+                    workflowName,
+                    Constants.DefaultTriggerName);
 
-                // Delete the workflow
-                client.Workflows.Delete(this.resourceGroupName, workflowName);
+                Assert.NotNull(jsonSchema);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
+        }
+
+        [Fact]
+        public void WorkflowTriggers_ListCallbackUrl_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                var callbackUrl = client.WorkflowTriggers.ListCallbackUrl(Constants.DefaultResourceGroup,
+                    workflowName,
+                    Constants.DefaultTriggerName);
+
+                Assert.NotEmpty(callbackUrl.BasePath);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void WorkflowTriggers_Run_OK()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                client.WorkflowTriggers.Run(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName);
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        [Fact]
+        public void WorkflowTriggers_Reset_Exception()
+        {
+            using (var context = MockContext.Start(this.TestClassName))
+            {
+                var client = this.GetClient(context);
+                this.CleanResourceGroup(client);
+                var workflowName = TestUtilities.GenerateName(Constants.WorkflowPrefix);
+                var workflow = this.CreateWorkflow(workflowName);
+                var createdWorkflow = client.Workflows.CreateOrUpdate(Constants.DefaultResourceGroup,
+                    workflowName,
+                    workflow);
+
+                Assert.Throws<CloudException>(() => client.WorkflowTriggers.Reset(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName));
+
+                client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
+            }
+        }
+
+        private void ValidateTrigger(WorkflowTrigger actual)
+        {
+            Assert.Equal(Constants.DefaultTriggerName, actual.Name);
+            Assert.Equal("Succeeded", actual.ProvisioningState);
+            Assert.Equal("Enabled", actual.State);
+            Assert.NotNull(actual.CreatedTime);
+            Assert.NotNull(actual.ChangedTime);
         }
     }
 }

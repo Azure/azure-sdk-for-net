@@ -263,8 +263,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='validateAddress'>
+        /// <param name='shippingAddress'>
         /// Shipping address of the customer.
+        /// </param>
+        /// <param name='deviceType'>
+        /// Device type to be used for the job. Possible values include: 'DataBox',
+        /// 'DataBoxDisk', 'DataBoxHeavy'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -287,7 +291,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ValidateAddress validateAddress, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ShippingAddress shippingAddress, SkuName deviceType, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -301,13 +305,19 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (validateAddress == null)
+            if (shippingAddress == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "validateAddress");
+                throw new ValidationException(ValidationRules.CannotBeNull, "shippingAddress");
             }
-            if (validateAddress != null)
+            if (shippingAddress != null)
             {
-                validateAddress.Validate();
+                shippingAddress.Validate();
+            }
+            ValidateAddress validateAddress = new ValidateAddress();
+            if (shippingAddress != null)
+            {
+                validateAddress.ShippingAddress = shippingAddress;
+                validateAddress.DeviceType = deviceType;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

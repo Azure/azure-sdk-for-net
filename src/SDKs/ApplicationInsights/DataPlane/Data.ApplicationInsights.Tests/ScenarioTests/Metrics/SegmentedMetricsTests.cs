@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-using System;
+
 
 namespace Data.ApplicationInsights.Tests.Metrics
 {
@@ -15,12 +17,12 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
-                var aggregation = new[] { "avg" };
+                var timespan = "PT12H";
+                var aggregation = new List<string> { MetricsAggregation.Avg };
                 var segments = new[] { "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetSegmentedMetricAsync(metricId, timespan, aggregation, segments);
+                var metric = await client.Metrics.GetSegmentedMetricAsync(DefaultAppId, metricId, timespan, aggregation, segments);
 
                 Assert.True(metric.Segments.Count > 0);
 
@@ -42,12 +44,18 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
-                var aggregation = new[] { "avg", "count", "max", "min", "sum" };
+                var timespan = "PT12H";
+                var aggregation = new List<string> { 
+                    MetricsAggregation.Avg,
+                    MetricsAggregation.Count,
+                    MetricsAggregation.Min,
+                    MetricsAggregation.Max,
+                    MetricsAggregation.Sum 
+                };
                 var segments = new[] { "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetSegmentedMetricAsync(metricId, timespan, aggregation, segments);
+                var metric = await client.Metrics.GetSegmentedMetricAsync(DefaultAppId, metricId, timespan, aggregation, segments);
 
                 Assert.True(metric.Segments.Count > 0);
 
@@ -69,12 +77,12 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
-                var aggregation = new[] { "avg" };
+                var timespan = "PT12H";
+                var aggregation = new List<string> { MetricsAggregation.Avg };
                 var segments = new[] { "request/name", "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetSegmentedMetricAsync(metricId, timespan, aggregation, segments);
+                var metric = await client.Metrics.GetSegmentedMetricAsync(DefaultAppId, metricId, timespan, aggregation, segments);
 
                 Assert.True(metric.Segments.Count > 0);
 
@@ -105,12 +113,18 @@ namespace Data.ApplicationInsights.Tests.Metrics
             using (var ctx = MockContext.Start(GetType().FullName))
             {
                 var metricId = "requests/duration";
-                var timespan = new TimeSpan(12, 0, 0);
-                var aggregation = new[] { "avg", "count", "max", "min", "sum" };
+                var timespan = "PT12H";
+                var aggregation = new List<string> { 
+                    MetricsAggregation.Avg,
+                    MetricsAggregation.Count,
+                    MetricsAggregation.Min,
+                    MetricsAggregation.Max,
+                    MetricsAggregation.Sum 
+                };
                 var segments = new[] { "request/name", "request/resultCode" };
 
                 var client = GetClient(ctx);
-                var metric = await client.GetSegmentedMetricAsync(metricId, timespan, aggregation, segments);
+                var metric = await client.Metrics.GetSegmentedMetricAsync(DefaultAppId, metricId, timespan, aggregation, segments);
 
                 Assert.True(metric.Segments.Count > 0);
 

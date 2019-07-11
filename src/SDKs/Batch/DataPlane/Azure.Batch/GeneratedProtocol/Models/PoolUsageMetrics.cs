@@ -39,19 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// VMs in a pool are the same size.</param>
         /// <param name="totalCoreHours">The total core hours used in the pool
         /// during this aggregation interval.</param>
-        /// <param name="dataIngressGiB">The cross data center network ingress
-        /// to the pool during this interval, in GiB.</param>
-        /// <param name="dataEgressGiB">The cross data center network egress
-        /// from the pool during this interval, in GiB.</param>
-        public PoolUsageMetrics(string poolId, System.DateTime startTime, System.DateTime endTime, string vmSize, double totalCoreHours, double dataIngressGiB, double dataEgressGiB)
+        public PoolUsageMetrics(string poolId, System.DateTime startTime, System.DateTime endTime, string vmSize, double totalCoreHours)
         {
             PoolId = poolId;
             StartTime = startTime;
             EndTime = endTime;
             VmSize = vmSize;
             TotalCoreHours = totalCoreHours;
-            DataIngressGiB = dataIngressGiB;
-            DataEgressGiB = dataEgressGiB;
             CustomInit();
         }
 
@@ -99,20 +93,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "totalCoreHours")]
         public double TotalCoreHours { get; set; }
-
-        /// <summary>
-        /// Gets or sets the cross data center network ingress to the pool
-        /// during this interval, in GiB.
-        /// </summary>
-        [JsonProperty(PropertyName = "dataIngressGiB")]
-        public double DataIngressGiB { get; set; }
-
-        /// <summary>
-        /// Gets or sets the cross data center network egress from the pool
-        /// during this interval, in GiB.
-        /// </summary>
-        [JsonProperty(PropertyName = "dataEgressGiB")]
-        public double DataEgressGiB { get; set; }
 
     }
 }

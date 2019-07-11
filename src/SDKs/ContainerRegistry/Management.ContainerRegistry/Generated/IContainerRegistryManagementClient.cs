@@ -84,19 +84,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IWebhooksOperations Webhooks { get; }
 
         /// <summary>
-        /// Gets the IBuildsOperations.
+        /// Gets the IRunsOperations.
         /// </summary>
-        IBuildsOperations Builds { get; }
+        IRunsOperations Runs { get; }
 
         /// <summary>
-        /// Gets the IBuildStepsOperations.
+        /// Gets the ITasksOperations.
         /// </summary>
-        IBuildStepsOperations BuildSteps { get; }
-
-        /// <summary>
-        /// Gets the IBuildTasksOperations.
-        /// </summary>
-        IBuildTasksOperations BuildTasks { get; }
+        ITasksOperations Tasks { get; }
 
     }
 }

@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                 // 2. List protected items
                 var items = testHelper.ListProtectedItems();
                 Assert.NotNull(items);
-                Assert.True(items.Any(item => itemName.ToLower().Contains(item.Name.ToLower())));
+                Assert.Contains(items, item => itemName.ToLower().Contains(item.Name.ToLower()));
 
                 // 3. Trigger backup
                 var backupJobId = testHelper.Backup(containerName, itemName);
 
                 IPage<JobResource> backupJobs = testHelper.ListBackupJobs();
-                Assert.True(backupJobs.Any(backupJob => backupJob.Name == backupJobId));
+                Assert.Contains(backupJobs, backupJob => backupJob.Name == backupJobId);
 
                 testHelper.WaitForJobCompletion(backupJobId);
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                 var restoreJobId = testHelper.Restore(containerName, itemName, recoveryPoint.Name, sourceResourceId, storageAccountId);
 
                 backupJobs = testHelper.ListBackupJobs();
-                Assert.True(backupJobs.Any(backupJob => backupJob.Name == restoreJobId));
+                Assert.Contains(backupJobs, backupJob => backupJob.Name == restoreJobId);
 
                 testHelper.WaitForJobCompletion(restoreJobId);
 

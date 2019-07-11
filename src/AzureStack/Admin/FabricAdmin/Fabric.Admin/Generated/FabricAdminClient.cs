@@ -54,11 +54,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -132,11 +127,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public virtual IStorageSystemsOperations StorageSystems { get; private set; }
 
         /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        public virtual IVolumesOperations Volumes { get; private set; }
-
-        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         public virtual ILogicalSubnetsOperations LogicalSubnets { get; private set; }
@@ -160,6 +150,21 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         public virtual ISlbMuxInstancesOperations SlbMuxInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the IDrivesOperations.
+        /// </summary>
+        public virtual IDrivesOperations Drives { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageSubSystemsOperations.
+        /// </summary>
+        public virtual IStorageSubSystemsOperations StorageSubSystems { get; private set; }
+
+        /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        public virtual IVolumesOperations Volumes { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FabricAdminClient class.
@@ -413,14 +418,15 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             LogicalNetworks = new LogicalNetworksOperations(this);
             StoragePools = new StoragePoolsOperations(this);
             StorageSystems = new StorageSystemsOperations(this);
-            Volumes = new VolumesOperations(this);
             LogicalSubnets = new LogicalSubnetsOperations(this);
             MacAddressPools = new MacAddressPoolsOperations(this);
             ScaleUnits = new ScaleUnitsOperations(this);
             ScaleUnitNodes = new ScaleUnitNodesOperations(this);
             SlbMuxInstances = new SlbMuxInstancesOperations(this);
+            Drives = new DrivesOperations(this);
+            StorageSubSystems = new StorageSubSystemsOperations(this);
+            Volumes = new VolumesOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
-            ApiVersion = "2016-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

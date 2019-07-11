@@ -94,10 +94,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of a virtual machine.
+        /// Gets the reference of a virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachine")]
-        public SubResource VirtualMachine { get; set; }
+        public SubResource VirtualMachine { get; private set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource.

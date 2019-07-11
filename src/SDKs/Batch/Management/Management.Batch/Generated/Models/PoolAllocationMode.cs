@@ -21,8 +21,15 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PoolAllocationMode
     {
+        /// <summary>
+        /// Pools will be allocated in subscriptions owned by the Batch
+        /// service.
+        /// </summary>
         [EnumMember(Value = "BatchService")]
         BatchService,
+        /// <summary>
+        /// Pools will be allocated in a subscription owned by the user.
+        /// </summary>
         [EnumMember(Value = "UserSubscription")]
         UserSubscription
     }

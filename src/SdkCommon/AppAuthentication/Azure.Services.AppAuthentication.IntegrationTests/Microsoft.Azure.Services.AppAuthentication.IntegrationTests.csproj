@@ -1,8 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
     <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
+        <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
     </PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
+		<DefineConstants>net472;FullNetFx</DefineConstants>		
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.2" />
     </ItemGroup>

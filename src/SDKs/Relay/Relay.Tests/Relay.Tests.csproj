@@ -4,12 +4,9 @@
     <PackageId>Relay.Tests</PackageId>
     <Description>Relay.Tests Class Library</Description>
     <AssemblyName>Relay.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-
-  <!--<PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>-->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.Relay" Version="0.0.1-preview" />-->
     

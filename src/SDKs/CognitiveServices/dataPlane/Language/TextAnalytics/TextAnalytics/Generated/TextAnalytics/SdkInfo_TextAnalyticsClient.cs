@@ -19,12 +19,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("TextAnalyticsClient", "Detect Language", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsClient", "Entities", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsClient", "Key Phrases", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsClient", "Sentiment", "v2.0"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Detect Language", "v2.1-preview"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Entities", "v2.1-preview"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Key Phrases", "v2.1-preview"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Sentiment", "v2.1-preview"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TextAnalytics/readme.md --csharp --version=latest --reflect-api-versions --tag=release_2_1 --csharp.output-folder=C:\\mygitrepo\\azure-sdk-for-net\\src\\SDKs\\CognitiveServices\\dataPlane\\Language\\TextAnalytics\\TextAnalytics\\Generated\\TextAnalytics";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "9c1fe12b46cd05f44ed40a9e4bc25205cc343667";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

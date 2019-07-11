@@ -25,8 +25,8 @@ namespace CognitiveServices.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? null : "westus";
-        public const string DefaultSkuName = SkuName.S1;
-        public const string DefaultKind = Kind.TextAnalytics;
+        public const string DefaultSkuName = "S1";
+        public const string DefaultKind = "TextAnalytics";
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
             {
                 {"key1","value1"},
@@ -111,7 +111,7 @@ namespace CognitiveServices.Tests.Helpers
             return accountName;
         }
 
-        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.TextAnalytics, string location = null)
+        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = "TextAnalytics", string location = null)
         {
             // Create account with only required params
             var accountName = TestUtilities.GenerateName("csa");

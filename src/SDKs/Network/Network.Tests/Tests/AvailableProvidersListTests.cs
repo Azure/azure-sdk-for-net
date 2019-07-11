@@ -36,7 +36,7 @@ namespace Network.Tests.Tests
 
                 var providersList = networkManagementClient.NetworkWatchers.ListAvailableProviders("NetworkWatcherRG", "NetworkWatcher", parameters);
 
-                Assert.Equal(providersList.Countries[0].CountryName, "United States");
+                Assert.Equal("United States", providersList.Countries[0].CountryName);
             }
         }
 
@@ -60,8 +60,8 @@ namespace Network.Tests.Tests
 
                 var providersList = networkManagementClient.NetworkWatchers.ListAvailableProviders("NetworkWatcherRG", "NetworkWatcher", parameters);
 
-                Assert.Equal(providersList.Countries[0].CountryName, "United States");
-                Assert.Equal(providersList.Countries[0].States[0].StateName, "washington");
+                Assert.Equal("United States", providersList.Countries[0].CountryName);
+                Assert.Equal("washington", providersList.Countries[0].States[0].StateName);
             }
         }
 
@@ -86,9 +86,9 @@ namespace Network.Tests.Tests
 
                 var providersList = networkManagementClient.NetworkWatchers.ListAvailableProviders("NetworkWatcherRG", "NetworkWatcher", parameters);
 
-                Assert.Equal(providersList.Countries[0].CountryName, "United States");
-                Assert.Equal(providersList.Countries[0].States[0].StateName, "washington");
-                Assert.Equal(providersList.Countries[0].States[0].Cities[0].CityName, "seattle");
+                Assert.Equal("United States", providersList.Countries[0].CountryName);
+                Assert.Equal("washington", providersList.Countries[0].States[0].StateName);
+                Assert.Equal("seattle", providersList.Countries[0].States[0].Cities[0].CityName);
             }
         }
     }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="type">Stored procedure parameter type. Possible values
         /// include: 'String', 'Int', 'Decimal', 'Guid', 'Boolean',
         /// 'Date'</param>
-        public StoredProcedureParameter(object value, string type = default(string))
+        public StoredProcedureParameter(object value = default(object), string type = default(string))
         {
             Value = value;
             Type = type;
@@ -61,18 +60,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-        }
     }
 }

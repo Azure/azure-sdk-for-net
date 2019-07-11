@@ -44,7 +44,7 @@ namespace Batch.Tests.ScenarioTests
                         }
                     };
                     var resources = new List<ResourceFile>();
-                    resources.Add(new ResourceFile("https://blobsource.com", "filename.txt"));
+                    resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt"));
                     var environments = new List<EnvironmentSetting>();
                     environments.Add(new EnvironmentSetting("ENV_VAR", "env_value"));
                     paasPool.StartTask = new StartTask()

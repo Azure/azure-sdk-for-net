@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data.ApplicationInsights.Tests.Events;
-using Microsoft.Azure.ApplicationInsights;
-using Microsoft.Azure.ApplicationInsights.Models;
+using Microsoft.Azure.ApplicationInsights.Query;
+using Microsoft.Azure.ApplicationInsights.Query.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using Xunit;
@@ -13,30 +13,29 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
     public class EventsExtensionTests : EventsTestBase
     {
         [Theory]
-        [MemberData(nameof(TraceData))]
-        [MemberData(nameof(CustomEventsData))]
-        [MemberData(nameof(PageViewsData))]
-        [MemberData(nameof(BrowserTimingsData))]
-        [MemberData(nameof(RequestsData))]
-        [MemberData(nameof(DependenciesData))]
-        [MemberData(nameof(ExceptionsData))]
-        [MemberData(nameof(AvailabilityResultsData))]
-        [MemberData(nameof(PerformanceCountersData))]
-        [MemberData(nameof(CustomMetricsData))]
-        public async Task GetEventsAsync<T>(EventType eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync,
-            object unused1, object unused2) where T : EventsResultData
+        [MemberData(nameof(TraceDataAsync))]
+        [MemberData(nameof(CustomEventsDataAsync))]
+        [MemberData(nameof(PageViewsDataAsync))]
+        [MemberData(nameof(BrowserTimingsDataAsync))]
+        [MemberData(nameof(RequestsDataAsync))]
+        [MemberData(nameof(DependenciesDataAsync))]
+        [MemberData(nameof(ExceptionsDataAsync))]
+        [MemberData(nameof(AvailabilityResultsDataAsync))]
+        [MemberData(nameof(PerformanceCountersDataAsync))]
+        [MemberData(nameof(CustomMetricsDataAsync))]
+        public async Task GetEventsAsync<T>(string eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByTypeAsync.{eventType}"))
             {
-                var timespan = new TimeSpan(12, 0, 0);
-                var top = 10;
+                var timespan = "P1D";
+                var top = 1;
 
                 var client = GetClient(ctx);
                 var events = await multiQueryAsync(client, timespan, top);
 
                 Assert.NotNull(events);
                 Assert.NotNull(events.Value);
-                Assert.True(events.Value.Count > 0);
+                Assert.True(events.Value.Count >= 0);
                 Assert.True(events.Value.Count <= top);
 
                 foreach (var e in events.Value)
@@ -68,12 +67,11 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(AvailabilityResultsData))]
         [MemberData(nameof(PerformanceCountersData))]
         [MemberData(nameof(CustomMetricsData))]
-        public void GetEvents<T>(EventType eventType, object unused1, object unused2,
-            MultiQuery<T> multiQuery, SingleQuery<T> singleQuery) where T : EventsResultData
+        public void GetByType<T>(string eventType, MultiQuery<T> multiQuery, SingleQuery<T> singleQuery) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetEvents.{eventType}"))
+            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
             {
-                var timespan = new TimeSpan(12, 0, 0);
+                var timespan = "P1D";
                 var top = 10;
 
                 var client = GetClient(ctx);
@@ -81,7 +79,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
 
                 Assert.NotNull(events);
                 Assert.NotNull(events.Value);
-                Assert.True(events.Value.Count > 0);
+                Assert.True(events.Value.Count >= 0);
                 Assert.True(events.Value.Count <= top);
 
                 foreach (var e in events.Value)
@@ -102,101 +100,171 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
             }
         }
 
-        public delegate Task<EventsResults<T>> MultiQueryAsync<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
-        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, string id, System.TimeSpan? timespan) where T : EventsResultData;
+        public delegate Task<EventsResults<T>> MultiQueryAsync<T>(ApplicationInsightsDataClient client, string timespan, int top) where T : EventsResultData;
+        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, string id, string timespan) where T : EventsResultData;
 
-        public delegate EventsResults<T> MultiQuery<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
-        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, string id, System.TimeSpan? timespan) where T : EventsResultData;
+        public delegate EventsResults<T> MultiQuery<T>(ApplicationInsightsDataClient client, string timespan, int top) where T : EventsResultData;
+        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, string id, string timespan) where T : EventsResultData;
 
+        private static readonly object[] TraceParamsAsync = new object[]
+        {
+            EventType.Traces,
+            new MultiQueryAsync<EventsTraceResult>(async (client, timespan, top) => await client.Events.GetTraceEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsTraceResult>(async (client, id, timespan) => await client.Events.GetTraceEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] CustomEventsParamsAsync = new object[]
+        {
+            EventType.CustomEvents,
+            new MultiQueryAsync<EventsCustomEventResult>(async (client, timespan, top) => await client.Events.GetCustomEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsCustomEventResult>(async (client, id, timespan) => await client.Events.GetCustomEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] PageViewsParamsAsync = new object[]
+        {
+            EventType.PageViews,
+            new MultiQueryAsync<EventsPageViewResult>(async (client, timespan, top) => await client.Events.GetPageViewEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsPageViewResult>(async (client, id, timespan) => await client.Events.GetPageViewEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] BrowserTimingsParamsAsync = new object[]
+        {
+            EventType.BrowserTimings,
+            new MultiQueryAsync<EventsBrowserTimingResult>(async (client, timespan, top) => await client.Events.GetBrowserTimingEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsBrowserTimingResult>(async (client, id, timespan) => await client.Events.GetBrowserTimingEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] RequestsParamsAsync = new object[]
+        {
+            EventType.Requests,
+            new MultiQueryAsync<EventsRequestResult>(async (client, timespan, top) => await client.Events.GetRequestEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsRequestResult>(async (client, id, timespan) => await client.Events.GetRequestEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] DependenciesParamsAsync = new object[]
+        {
+            EventType.Dependencies,
+            new MultiQueryAsync<EventsDependencyResult>(async (client, timespan, top) => await client.Events.GetDependencyEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsDependencyResult>(async (client, id, timespan) => await client.Events.GetDependencyEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] ExceptionsParamsAsync = new object[]
+        {
+            EventType.Exceptions,
+            new MultiQueryAsync<EventsExceptionResult>(async (client, timespan, top) => await client.Events.GetExceptionEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsExceptionResult>(async (client, id, timespan) => await client.Events.GetExceptionEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] AvailabilityResultsParamsAsync = new object[]
+        {
+            EventType.AvailabilityResults,
+            new MultiQueryAsync<EventsAvailabilityResultResult>(async (client, timespan, top) => await client.Events.GetAvailabilityResultEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsAvailabilityResultResult>(async (client, id, timespan) => await client.Events.GetAvailabilityResultEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] PerformanceCountersParamsAsync = new object[]
+        {
+            EventType.PerformanceCounters,
+            new MultiQueryAsync<EventsPerformanceCounterResult>(async (client, timespan, top) => await client.Events.GetPerformanceCounterEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsPerformanceCounterResult>(async (client, id, timespan) => await client.Events.GetPerformanceCounterEventAsync(DefaultAppId, id, timespan)),
+        };
+
+        private static readonly object[] CustomMetricsParamsAsync = new object[]
+        {
+            EventType.CustomMetrics,
+            new MultiQueryAsync<EventsCustomMetricResult>(async (client, timespan, top) => await client.Events.GetCustomMetricEventsAsync(DefaultAppId, timespan, top: top)),
+            new SingleQueryAsync<EventsCustomMetricResult>(async (client, id, timespan) => await client.Events.GetCustomMetricEventAsync(DefaultAppId, id, timespan)),
+        };
+        
         private static readonly object[] TraceParams = new object[]
         {
             EventType.Traces,
-            new MultiQueryAsync<EventsTraceResult>(async (client, timespan, top) => await client.GetTraceEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsTraceResult>(async (client, id, timespan) => await client.GetTraceEventAsync(id, timespan)),
-            new MultiQuery<EventsTraceResult>((client, timespan, top) => client.GetTraceEvents(timespan, top: top)),
-            new SingleQuery<EventsTraceResult>((client, id, timespan) => client.GetTraceEvent(id, timespan)),
+            new MultiQuery<EventsTraceResult>((client, timespan, top) => client.Events.GetTraceEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsTraceResult>((client, id, timespan) => client.Events.GetTraceEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] CustomEventsParams = new object[]
         {
             EventType.CustomEvents,
-            new MultiQueryAsync<EventsCustomEventResult>(async (client, timespan, top) => await client.GetCustomEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsCustomEventResult>(async (client, id, timespan) => await client.GetCustomEventAsync(id, timespan)),
-            new MultiQuery<EventsCustomEventResult>((client, timespan, top) => client.GetCustomEvents(timespan, top: top)),
-            new SingleQuery<EventsCustomEventResult>((client, id, timespan) => client.GetCustomEvent(id, timespan)),
+            new MultiQuery<EventsCustomEventResult>((client, timespan, top) => client.Events.GetCustomEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsCustomEventResult>((client, id, timespan) => client.Events.GetCustomEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] PageViewsParams = new object[]
         {
             EventType.PageViews,
-            new MultiQueryAsync<EventsPageViewResult>(async (client, timespan, top) => await client.GetPageViewEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsPageViewResult>(async (client, id, timespan) => await client.GetPageViewEventAsync(id, timespan)),
-            new MultiQuery<EventsPageViewResult>((client, timespan, top) => client.GetPageViewEvents(timespan, top: top)),
-            new SingleQuery<EventsPageViewResult>((client, id, timespan) => client.GetPageViewEvent(id, timespan)),
+            new MultiQuery<EventsPageViewResult>((client, timespan, top) => client.Events.GetPageViewEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsPageViewResult>((client, id, timespan) => client.Events.GetPageViewEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] BrowserTimingsParams = new object[]
         {
             EventType.BrowserTimings,
-            new MultiQueryAsync<EventsBrowserTimingResult>(async (client, timespan, top) => await client.GetBrowserTimingEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsBrowserTimingResult>(async (client, id, timespan) => await client.GetBrowserTimingEventAsync(id, timespan)),
-            new MultiQuery<EventsBrowserTimingResult>((client, timespan, top) => client.GetBrowserTimingEvents(timespan, top: top)),
-            new SingleQuery<EventsBrowserTimingResult>((client, id, timespan) => client.GetBrowserTimingEvent(id, timespan)),
+            new MultiQuery<EventsBrowserTimingResult>((client, timespan, top) => client.Events.GetBrowserTimingEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsBrowserTimingResult>((client, id, timespan) => client.Events.GetBrowserTimingEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] RequestsParams = new object[]
         {
             EventType.Requests,
-            new MultiQueryAsync<EventsRequestResult>(async (client, timespan, top) => await client.GetRequestEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsRequestResult>(async (client, id, timespan) => await client.GetRequestEventAsync(id, timespan)),
-            new MultiQuery<EventsRequestResult>((client, timespan, top) => client.GetRequestEvents(timespan, top: top)),
-            new SingleQuery<EventsRequestResult>((client, id, timespan) => client.GetRequestEvent(id, timespan)),
+            new MultiQuery<EventsRequestResult>((client, timespan, top) => client.Events.GetRequestEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsRequestResult>((client, id, timespan) => client.Events.GetRequestEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] DependenciesParams = new object[]
         {
             EventType.Dependencies,
-            new MultiQueryAsync<EventsDependencyResult>(async (client, timespan, top) => await client.GetDependencyEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsDependencyResult>(async (client, id, timespan) => await client.GetDependencyEventAsync(id, timespan)),
-            new MultiQuery<EventsDependencyResult>((client, timespan, top) => client.GetDependencyEvents(timespan, top: top)),
-            new SingleQuery<EventsDependencyResult>((client, id, timespan) => client.GetDependencyEvent(id, timespan)),
+            new MultiQuery<EventsDependencyResult>((client, timespan, top) => client.Events.GetDependencyEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsDependencyResult>((client, id, timespan) => client.Events.GetDependencyEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] ExceptionsParams = new object[]
         {
             EventType.Exceptions,
-            new MultiQueryAsync<EventsExceptionResult>(async (client, timespan, top) => await client.GetExceptionEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsExceptionResult>(async (client, id, timespan) => await client.GetExceptionEventAsync(id, timespan)),
-            new MultiQuery<EventsExceptionResult>((client, timespan, top) => client.GetExceptionEvents(timespan, top: top)),
-            new SingleQuery<EventsExceptionResult>((client, id, timespan) => client.GetExceptionEvent(id, timespan)),
+            new MultiQuery<EventsExceptionResult>((client, timespan, top) => client.Events.GetExceptionEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsExceptionResult>((client, id, timespan) => client.Events.GetExceptionEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] AvailabilityResultsParams = new object[]
         {
             EventType.AvailabilityResults,
-            new MultiQueryAsync<EventsAvailabilityResultResult>(async (client, timespan, top) => await client.GetAvailabilityResultEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsAvailabilityResultResult>(async (client, id, timespan) => await client.GetAvailabilityResultEventAsync(id, timespan)),
-            new MultiQuery<EventsAvailabilityResultResult>((client, timespan, top) => client.GetAvailabilityResultEvents(timespan, top: top)),
-            new SingleQuery<EventsAvailabilityResultResult>((client, id, timespan) => client.GetAvailabilityResultEvent(id, timespan)),
+            new MultiQuery<EventsAvailabilityResultResult>((client, timespan, top) => client.Events.GetAvailabilityResultEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsAvailabilityResultResult>((client, id, timespan) => client.Events.GetAvailabilityResultEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] PerformanceCountersParams = new object[]
         {
             EventType.PerformanceCounters,
-            new MultiQueryAsync<EventsPerformanceCounterResult>(async (client, timespan, top) => await client.GetPerformanceCounterEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsPerformanceCounterResult>(async (client, id, timespan) => await client.GetPerformanceCounterEventAsync(id, timespan)),
-            new MultiQuery<EventsPerformanceCounterResult>((client, timespan, top) => client.GetPerformanceCounterEvents(timespan, top: top)),
-            new SingleQuery<EventsPerformanceCounterResult>((client, id, timespan) => client.GetPerformanceCounterEvent(id, timespan)),
+            new MultiQuery<EventsPerformanceCounterResult>((client, timespan, top) => client.Events.GetPerformanceCounterEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsPerformanceCounterResult>((client, id, timespan) => client.Events.GetPerformanceCounterEvent(DefaultAppId, id, timespan)),
         };
 
         private static readonly object[] CustomMetricsParams = new object[]
         {
             EventType.CustomMetrics,
-            new MultiQueryAsync<EventsCustomMetricResult>(async (client, timespan, top) => await client.GetCustomMetricEventsAsync(timespan, top: top)),
-            new SingleQueryAsync<EventsCustomMetricResult>(async (client, id, timespan) => await client.GetCustomMetricEventAsync(id, timespan)),
-            new MultiQuery<EventsCustomMetricResult>((client, timespan, top) => client.GetCustomMetricEvents(timespan, top: top)),
-            new SingleQuery<EventsCustomMetricResult>((client, id, timespan) => client.GetCustomMetricEvent(id, timespan)),
+            new MultiQuery<EventsCustomMetricResult>((client, timespan, top) => client.Events.GetCustomMetricEvents(DefaultAppId, timespan, top: top)),
+            new SingleQuery<EventsCustomMetricResult>((client, id, timespan) => client.Events.GetCustomMetricEvent(DefaultAppId, id, timespan)),
         };
+
+        public static IEnumerable<object[]> TraceDataAsync { get { yield return TraceParamsAsync; } }
+
+        public static IEnumerable<object[]> CustomEventsDataAsync { get { yield return CustomEventsParamsAsync; } }
+
+        public static IEnumerable<object[]> PageViewsDataAsync { get { yield return PageViewsParamsAsync; } }
+
+        public static IEnumerable<object[]> BrowserTimingsDataAsync { get { yield return BrowserTimingsParamsAsync; } }
+
+        public static IEnumerable<object[]> RequestsDataAsync { get { yield return RequestsParamsAsync; } }
+
+        public static IEnumerable<object[]> DependenciesDataAsync { get { yield return DependenciesParamsAsync; } }
+
+        public static IEnumerable<object[]> ExceptionsDataAsync { get { yield return ExceptionsParamsAsync; } }
+
+        public static IEnumerable<object[]> AvailabilityResultsDataAsync { get { yield return AvailabilityResultsParamsAsync; } }
+
+        public static IEnumerable<object[]> PerformanceCountersDataAsync { get { yield return PerformanceCountersParamsAsync; } }
+
+        public static IEnumerable<object[]> CustomMetricsDataAsync { get { yield return CustomMetricsParamsAsync; } }
 
         public static IEnumerable<object[]> TraceData { get { yield return TraceParams; } }
 

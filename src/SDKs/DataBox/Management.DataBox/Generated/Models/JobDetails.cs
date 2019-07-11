@@ -36,19 +36,38 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// shipping.</param>
         /// <param name="shippingAddress">Shipping address of the
         /// customer.</param>
+        /// <param name="destinationAccountDetails">Destination account
+        /// details.</param>
         /// <param name="expectedDataSizeInTeraBytes">The expected size of the
         /// data, which needs to be transfered in this job, in tera
         /// bytes.</param>
         /// <param name="jobStages">List of stages that run in the job.</param>
+        /// <param name="deliveryPackage">Delivery package shipping
+        /// details.</param>
+        /// <param name="returnPackage">Return package shipping
+        /// details.</param>
         /// <param name="errorDetails">Error details for failure. This is
         /// optional.</param>
-        public JobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, int? expectedDataSizeInTeraBytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>))
+        /// <param name="preferences">Preferences for the order.</param>
+        /// <param name="copyLogDetails">List of copy log details.</param>
+        /// <param name="reverseShipmentLabelSasKey">Shared access key to
+        /// download the return shipment label</param>
+        /// <param name="chainOfCustodySasKey">Shared access key to download
+        /// the chain of custody logs</param>
+        public JobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTeraBytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string))
         {
             ExpectedDataSizeInTeraBytes = expectedDataSizeInTeraBytes;
             JobStages = jobStages;
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
+            DeliveryPackage = deliveryPackage;
+            ReturnPackage = returnPackage;
+            DestinationAccountDetails = destinationAccountDetails;
             ErrorDetails = errorDetails;
+            Preferences = preferences;
+            CopyLogDetails = copyLogDetails;
+            ReverseShipmentLabelSasKey = reverseShipmentLabelSasKey;
+            ChainOfCustodySasKey = chainOfCustodySasKey;
             CustomInit();
         }
 
@@ -65,10 +84,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public int? ExpectedDataSizeInTeraBytes { get; set; }
 
         /// <summary>
-        /// Gets or sets list of stages that run in the job.
+        /// Gets list of stages that run in the job.
         /// </summary>
         [JsonProperty(PropertyName = "jobStages")]
-        public IList<JobStages> JobStages { get; set; }
+        public IList<JobStages> JobStages { get; private set; }
 
         /// <summary>
         /// Gets or sets contact details for notification and shipping.
@@ -83,10 +102,52 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public ShippingAddress ShippingAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets error details for failure. This is optional.
+        /// Gets delivery package shipping details.
+        /// </summary>
+        [JsonProperty(PropertyName = "deliveryPackage")]
+        public PackageShippingDetails DeliveryPackage { get; private set; }
+
+        /// <summary>
+        /// Gets return package shipping details.
+        /// </summary>
+        [JsonProperty(PropertyName = "returnPackage")]
+        public PackageShippingDetails ReturnPackage { get; private set; }
+
+        /// <summary>
+        /// Gets or sets destination account details.
+        /// </summary>
+        [JsonProperty(PropertyName = "destinationAccountDetails")]
+        public IList<DestinationAccountDetails> DestinationAccountDetails { get; set; }
+
+        /// <summary>
+        /// Gets error details for failure. This is optional.
         /// </summary>
         [JsonProperty(PropertyName = "errorDetails")]
-        public IList<JobErrorDetails> ErrorDetails { get; set; }
+        public IList<JobErrorDetails> ErrorDetails { get; private set; }
+
+        /// <summary>
+        /// Gets or sets preferences for the order.
+        /// </summary>
+        [JsonProperty(PropertyName = "preferences")]
+        public Preferences Preferences { get; set; }
+
+        /// <summary>
+        /// Gets list of copy log details.
+        /// </summary>
+        [JsonProperty(PropertyName = "copyLogDetails")]
+        public IList<CopyLogDetails> CopyLogDetails { get; private set; }
+
+        /// <summary>
+        /// Gets shared access key to download the return shipment label
+        /// </summary>
+        [JsonProperty(PropertyName = "reverseShipmentLabelSasKey")]
+        public string ReverseShipmentLabelSasKey { get; private set; }
+
+        /// <summary>
+        /// Gets shared access key to download the chain of custody logs
+        /// </summary>
+        [JsonProperty(PropertyName = "chainOfCustodySasKey")]
+        public string ChainOfCustodySasKey { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -104,15 +165,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ShippingAddress");
             }
-            if (JobStages != null)
+            if (DestinationAccountDetails == null)
             {
-                foreach (var element in JobStages)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAccountDetails");
             }
             if (ContactDetails != null)
             {
@@ -121,6 +176,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ShippingAddress != null)
             {
                 ShippingAddress.Validate();
+            }
+            if (DestinationAccountDetails != null)
+            {
+                foreach (var element in DestinationAccountDetails)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

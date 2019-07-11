@@ -13,6 +13,8 @@ namespace EventGrid.Tests.TestHelper
     public static class EventGridManagementHelper
     {
         internal const string TopicPrefix = "sdk-Topic-";
+        internal const string DomainPrefix = "sdk-Domain-";
+        internal const string DomainTopicPrefix = "sdk-DomainTopic-";
         internal const string EventSubscriptionPrefix = "sdk-EventSubscription-";
         internal const string EventGridPrefix = "sdk-EventGrid-";
         internal const string ResourceGroupPrefix = "sdk-EventGrid-RG-";
