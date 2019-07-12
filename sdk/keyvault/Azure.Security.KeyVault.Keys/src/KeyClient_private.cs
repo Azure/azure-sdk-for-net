@@ -11,7 +11,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         private const string KeysPath = "/keys/";
         private const string DeletedKeysPath = "/deletedkeys/";
-        private readonly string ApiVersion = "7.0";
+        private readonly string ApiVersion;
 
         private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TContent : Model
