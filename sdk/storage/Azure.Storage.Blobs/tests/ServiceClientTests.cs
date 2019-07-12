@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs.Test
             // "-secondary" is required by the server
             var service = this.InstrumentClient(
                 new BlobServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
+                    new Uri(this.TestConfigDefault.BlobServiceSecondaryEndpoint),
                     this.GetNewSharedKeyCredentials(),
                     this.GetOptions()));
 

@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0?restype=container",
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-c2141dc7-b40e-0465-b955-10eff7c7b99a?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "b40b018614b3cc1b9a2ad9bdfbc8bb83",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
+        "x-ms-client-request-id": "eace7033723e64e99a18c53232a9564a",
+        "x-ms-date": "Fri, 12 Jul 2019 17:52:53 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,29 +19,29 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "ETag": "\u00220x8D6F3663C43B87F\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:56:14 GMT",
+        "Date": "Fri, 12 Jul 2019 17:52:52 GMT",
+        "ETag": "\u00220x8D706F1C356AA3F\u0022",
+        "Last-Modified": "Fri, 12 Jul 2019 17:52:53 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "6ac7f052-201e-007b-364f-250f92000000",
+        "x-ms-request-id": "69353913-701e-0066-11da-38022e000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-c2141dc7-b40e-0465-b955-10eff7c7b99a/test-blob-081f4967-5a60-b89d-c148-527a10defe94",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "f4098d6e82a679a9ab2d763e3862cf5c",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
+        "x-ms-client-request-id": "108e309ed06c55fd33af28f5ef33d110",
+        "x-ms-date": "Fri, 12 Jul 2019 17:52:53 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -50,202 +50,32 @@
       "ResponseHeaders": {
         "Content-Length": "215",
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
+        "Date": "Fri, 12 Jul 2019 17:52:52 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f058-201e-007b-3b4f-250f92000000",
+        "x-ms-request-id": "69353925-701e-0066-21da-38022e000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f058-201e-007b-3b4f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.2978914Z\u003c/Message\u003e\u003c/Error\u003e"
+        "RequestId:69353925-701e-0066-21da-38022e000000\n",
+        "Time:2019-07-12T17:52:53.0486462Z\u003c/Message\u003e\u003c/Error\u003e"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
+      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-c2141dc7-b40e-0465-b955-10eff7c7b99a?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "d61687fd3cb5c18a3ad5c022cecadf05",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "215",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f060-201e-007b-414f-250f92000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f060-201e-007b-414f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.3109038Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "6e4eb95fc7beeedc724cc8f84e89fd91",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "215",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f064-201e-007b-444f-250f92000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f064-201e-007b-444f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.3239156Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "6553e9c0f47e326b0348b9d1c286aae0",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "215",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f06d-201e-007b-4d4f-250f92000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f06d-201e-007b-4d4f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.3389303Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "7fde704d6113369eab276468749173b1",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "215",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f075-201e-007b-544f-250f92000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f075-201e-007b-544f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.3519421Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0/test-blob-73c61b71-c526-36c7-f490-4651ed94ca20",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "e5622ed77a766b874d1c6a760d0a2cec",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": null,
-      "StatusCode": 404,
-      "ResponseHeaders": {
-        "Content-Length": "215",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "6ac7f07f-201e-007b-5e4f-250f92000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eBlobNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified blob does not exist.\n",
-        "RequestId:6ac7f07f-201e-007b-5e4f-250f92000000\n",
-        "Time:2019-06-17T20:56:14.3659580Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-10f9c68e-1268-ca1f-24b9-0b87f27bb0b0?restype=container",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "ddaae7a27daa5f7e4b1cba568f03be71",
-        "x-ms-date": "Mon, 17 Jun 2019 20:56:14 GMT",
+        "x-ms-client-request-id": "ae87c6ffb1a8d939d31528f61f6e54bb",
+        "x-ms-date": "Fri, 12 Jul 2019 17:52:53 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -253,18 +83,19 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:56:13 GMT",
+        "Date": "Fri, 12 Jul 2019 17:52:52 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "6ac7f0be-201e-007b-134f-250f92000000",
+        "x-ms-request-id": "69353935-701e-0066-31da-38022e000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1485813259"
+    "RandomSeed": "308933064",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

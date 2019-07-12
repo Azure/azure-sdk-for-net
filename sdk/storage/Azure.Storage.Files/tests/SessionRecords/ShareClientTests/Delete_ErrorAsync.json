@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-cfe944d0-101c-f221-206e-fb52280de990?restype=share",
+      "RequestUri": "http://storageteglazatesting.file.core.windows.net/test-share-3c52d3a7-b778-ad77-e65b-1818dd6eba84?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files/1.0.0.0",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "46ee4953a006e56bdd90027839be0be7",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:39 GMT",
+        "x-ms-client-request-id": "8e44ad89550f4d7e0df41c1b920dd103",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:02 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,24 +19,25 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Sun, 30 Jun 2019 17:34:41 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:02 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "b9809e4d-301a-0083-3d6a-2f536c000000",
+        "x-ms-request-id": "ec5612a9-401a-0030-2adb-38f3c1000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eShareNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified share does not exist.\n",
-        "RequestId:b9809e4d-301a-0083-3d6a-2f536c000000\n",
-        "Time:2019-06-30T17:34:42.2089500Z\u003c/Message\u003e\u003c/Error\u003e"
+        "RequestId:ec5612a9-401a-0030-2adb-38f3c1000000\n",
+        "Time:2019-07-12T17:59:02.8401213Z\u003c/Message\u003e\u003c/Error\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-30T10:34:39.2488751-07:00",
-    "RandomSeed": "1446282240"
+    "DateTimeOffsetNow": "2019-07-12T10:59:02.8566107-07:00",
+    "RandomSeed": "580116827",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

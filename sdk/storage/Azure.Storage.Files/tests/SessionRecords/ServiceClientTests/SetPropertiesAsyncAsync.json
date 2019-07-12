@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files/1.0.0.0",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "7a8c5e3837eea834c7b6697b75d67e08",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:36 GMT",
+        "x-ms-client-request-id": "ab37a8b3b8b78d67c64a95ba9d3a3b0f",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:01 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,13 +19,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/xml",
-        "Date": "Sun, 30 Jun 2019 17:34:38 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:00 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "b9809df4-301a-0083-7a6a-2f536c000000",
+        "x-ms-request-id": "ec561242-401a-0030-5edb-38f3c1000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c/Version\u003e\u003cEnabled\u003etrue\u003c/Enabled\u003e\u003cIncludeAPIs\u003etrue\u003c/IncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c/Enabled\u003e\u003cDays\u003e7\u003c/Days\u003e\u003c/RetentionPolicy\u003e\u003c/HourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c/Version\u003e\u003cEnabled\u003efalse\u003c/Enabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c/Enabled\u003e\u003c/RetentionPolicy\u003e\u003c/MinuteMetrics\u003e\u003cCors\u003e\u003cCorsRule\u003e\u003cAllowedMethods\u003ePUT,GET\u003c/AllowedMethods\u003e\u003cAllowedOrigins\u003e*\u003c/AllowedOrigins\u003e\u003cAllowedHeaders\u003ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003c/AllowedHeaders\u003e\u003cExposedHeaders\u003ex-ms-meta-*\u003c/ExposedHeaders\u003e\u003cMaxAgeInSeconds\u003e1000\u003c/MaxAgeInSeconds\u003e\u003c/CorsRule\u003e\u003c/Cors\u003e\u003c/StorageServiceProperties\u003e"
@@ -38,11 +38,11 @@
         "Content-Length": "791",
         "Content-Type": "application/xml",
         "User-Agent": [
-          "azsdk-net-Storage.Files/1.0.0.0",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "a5628d4a3f5554ffcc4f082878ec8236",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:36 GMT",
+        "x-ms-client-request-id": "a24e1267dcccaf901e2b7b5f86c3f0d5",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:01 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -78,12 +78,12 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Sun, 30 Jun 2019 17:34:39 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:00 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "b9809df5-301a-0083-7b6a-2f536c000000",
+        "x-ms-request-id": "ec561243-401a-0030-5fdb-38f3c1000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
@@ -94,11 +94,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files/1.0.0.0",
+          "azsdk-net-Storage.Files/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "64fe464e0063d0d0ef79f59800b6e5b6",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:36 GMT",
+        "x-ms-client-request-id": "8cf5183cbb3c6c0d156a53a554b731ff",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:01 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -107,19 +107,20 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/xml",
-        "Date": "Sun, 30 Jun 2019 17:34:39 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:00 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "b9809df6-301a-0083-7c6a-2f536c000000",
+        "x-ms-request-id": "ec561244-401a-0030-60db-38f3c1000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceProperties\u003e\u003cHourMetrics\u003e\u003cVersion\u003e1.0\u003c/Version\u003e\u003cEnabled\u003etrue\u003c/Enabled\u003e\u003cIncludeAPIs\u003etrue\u003c/IncludeAPIs\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003etrue\u003c/Enabled\u003e\u003cDays\u003e7\u003c/Days\u003e\u003c/RetentionPolicy\u003e\u003c/HourMetrics\u003e\u003cMinuteMetrics\u003e\u003cVersion\u003e1.0\u003c/Version\u003e\u003cEnabled\u003efalse\u003c/Enabled\u003e\u003cRetentionPolicy\u003e\u003cEnabled\u003efalse\u003c/Enabled\u003e\u003c/RetentionPolicy\u003e\u003c/MinuteMetrics\u003e\u003cCors\u003e\u003cCorsRule\u003e\u003cAllowedMethods\u003ePUT,GET\u003c/AllowedMethods\u003e\u003cAllowedOrigins\u003e*\u003c/AllowedOrigins\u003e\u003cAllowedHeaders\u003ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003c/AllowedHeaders\u003e\u003cExposedHeaders\u003ex-ms-meta-*\u003c/ExposedHeaders\u003e\u003cMaxAgeInSeconds\u003e1000\u003c/MaxAgeInSeconds\u003e\u003c/CorsRule\u003e\u003c/Cors\u003e\u003c/StorageServiceProperties\u003e"
     }
   ],
   "Variables": {
-    "RandomSeed": "601845790"
+    "RandomSeed": "1623936533",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

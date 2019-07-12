@@ -403,8 +403,8 @@ namespace Azure.Storage.Blobs.Test
                     new BlobContainerClient(
                         container.Uri,
                         new StorageSharedKeyCredential(
-                            TestConfigurations.DefaultTargetTenant.AccountName,
-                            TestConfigurations.DefaultTargetTenant.AccountKey),
+                            this.TestConfigDefault.AccountName,
+                            this.TestConfigDefault.AccountKey),
                         this.GetFaultyBlobConnectionOptions()));
 
                 // Arrange

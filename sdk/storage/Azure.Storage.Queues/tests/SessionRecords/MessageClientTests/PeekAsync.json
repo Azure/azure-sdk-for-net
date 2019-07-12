@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "dfeab9d4cbee3a6c7cab711387468c67",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "2837601266c59d24b0c3334eca1b65dd",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -18,132 +18,132 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "a189e69a-e003-0039-774f-25b612000000",
+        "x-ms-request-id": "54d36e55-e003-005b-07db-387435000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246/messages",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785/messages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "82",
         "Content-Type": "application/xml",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "10cc09ff6ade27d6dedd52c7eda99c07",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "06ddc8a95635ae61412c02f24e0a6a65",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
       "RequestBody": [
         "\u003cQueueMessage\u003e\r\n",
-        "  \u003cMessageText\u003evbrsmsgtemchysegcqqu\u003c/MessageText\u003e\r\n",
+        "  \u003cMessageText\u003ervwgghrtfvcwtniadpxf\u003c/MessageText\u003e\r\n",
         "\u003c/QueueMessage\u003e"
       ],
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a189e6a1-e003-0039-7d4f-25b612000000",
+        "x-ms-request-id": "54d36e5c-e003-005b-0ddb-387435000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e35dc26e6-356d-4833-853d-083e9ea82b14\u003c/MessageId\u003e\u003cInsertionTime\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eMon, 24 Jun 2019 20:59:47 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAAgay4mE8l1QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003ec004210a-62d4-4dc7-b387-e927251ff9be\u003c/MessageId\u003e\u003cInsertionTime\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eFri, 19 Jul 2019 17:59:16 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAA49Emhds41QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
     },
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246/messages",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785/messages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "82",
         "Content-Type": "application/xml",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "27fa9d9f8d6bebacaca794531c5c9352",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "11c1eb18936d33ed84243ddd54e031e1",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
       "RequestBody": [
         "\u003cQueueMessage\u003e\r\n",
-        "  \u003cMessageText\u003ejxjxbhxmffjtirihsvyl\u003c/MessageText\u003e\r\n",
+        "  \u003cMessageText\u003elsoyeqpcoriqtfumljii\u003c/MessageText\u003e\r\n",
         "\u003c/QueueMessage\u003e"
       ],
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a189e6a2-e003-0039-7e4f-25b612000000",
+        "x-ms-request-id": "54d36e5f-e003-005b-10db-387435000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e8e595657-22be-4f35-98e1-bbbcaee76a62\u003c/MessageId\u003e\u003cInsertionTime\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eMon, 24 Jun 2019 20:59:47 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAACPe6mE8l1QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e84ba165a-424d-46d6-a5e6-0775cf8aa92e\u003c/MessageId\u003e\u003cInsertionTime\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eFri, 19 Jul 2019 17:59:16 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAAe0Mphds41QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
     },
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246/messages",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785/messages",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "82",
         "Content-Type": "application/xml",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "77278e5f2ab2b44255eaa5ecad15ba1a",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "8bd50bde951a2aba5bd89b9b47ec1a0a",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
       "RequestBody": [
         "\u003cQueueMessage\u003e\r\n",
-        "  \u003cMessageText\u003ehrtlmvngastsgmtqwijl\u003c/MessageText\u003e\r\n",
+        "  \u003cMessageText\u003ebyawrdhudwludsxtcmvk\u003c/MessageText\u003e\r\n",
         "\u003c/QueueMessage\u003e"
       ],
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a189e6a3-e003-0039-7f4f-25b612000000",
+        "x-ms-request-id": "54d36e65-e003-005b-15db-387435000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e162059dc-df38-4fb2-b70d-c367c0e29824\u003c/MessageId\u003e\u003cInsertionTime\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eMon, 24 Jun 2019 20:59:47 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAAAwW\u002bmE8l1QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e2c70973e-7132-454b-8b1c-96c58ba5e383\u003c/MessageId\u003e\u003cInsertionTime\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eFri, 19 Jul 2019 17:59:16 GMT\u003c/ExpirationTime\u003e\u003cPopReceipt\u003eAgAAAAMAAAAAAAAArRgrhds41QE=\u003c/PopReceipt\u003e\u003cTimeNextVisible\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/TimeNextVisible\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
     },
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246/messages?peekonly=true\u0026numofmessages=2",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785/messages?peekonly=true\u0026numofmessages=2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "c208c79006e957faae0f75a0c633117c",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "7a7593402433fc706225d4e52332075f",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -153,28 +153,28 @@
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "no-cache",
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "a189e6a5-e003-0039-014f-25b612000000",
+        "x-ms-request-id": "54d36e71-e003-005b-20db-387435000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e35dc26e6-356d-4833-853d-083e9ea82b14\u003c/MessageId\u003e\u003cInsertionTime\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eMon, 24 Jun 2019 20:59:47 GMT\u003c/ExpirationTime\u003e\u003cDequeueCount\u003e0\u003c/DequeueCount\u003e\u003cMessageText\u003evbrsmsgtemchysegcqqu\u003c/MessageText\u003e\u003c/QueueMessage\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e8e595657-22be-4f35-98e1-bbbcaee76a62\u003c/MessageId\u003e\u003cInsertionTime\u003eMon, 17 Jun 2019 20:59:47 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eMon, 24 Jun 2019 20:59:47 GMT\u003c/ExpirationTime\u003e\u003cDequeueCount\u003e0\u003c/DequeueCount\u003e\u003cMessageText\u003ejxjxbhxmffjtirihsvyl\u003c/MessageText\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cQueueMessagesList\u003e\u003cQueueMessage\u003e\u003cMessageId\u003ec004210a-62d4-4dc7-b387-e927251ff9be\u003c/MessageId\u003e\u003cInsertionTime\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eFri, 19 Jul 2019 17:59:16 GMT\u003c/ExpirationTime\u003e\u003cDequeueCount\u003e0\u003c/DequeueCount\u003e\u003cMessageText\u003ervwgghrtfvcwtniadpxf\u003c/MessageText\u003e\u003c/QueueMessage\u003e\u003cQueueMessage\u003e\u003cMessageId\u003e84ba165a-424d-46d6-a5e6-0775cf8aa92e\u003c/MessageId\u003e\u003cInsertionTime\u003eFri, 12 Jul 2019 17:59:16 GMT\u003c/InsertionTime\u003e\u003cExpirationTime\u003eFri, 19 Jul 2019 17:59:16 GMT\u003c/ExpirationTime\u003e\u003cDequeueCount\u003e0\u003c/DequeueCount\u003e\u003cMessageText\u003elsoyeqpcoriqtfumljii\u003c/MessageText\u003e\u003c/QueueMessage\u003e\u003c/QueueMessagesList\u003e"
     },
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-53a44adc-50d2-daf1-0d7a-11a2734b3246",
+      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-11f35a6d-7471-cc7b-0db3-e8a85b7a9785",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "fdf295f483a4c9ed9aff9e426df2ee61",
-        "x-ms-date": "Mon, 17 Jun 2019 20:59:47 GMT",
+        "x-ms-client-request-id": "3d03949377116a85e38c41c9d4958072",
+        "x-ms-date": "Fri, 12 Jul 2019 17:59:16 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -182,18 +182,19 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:59:46 GMT",
+        "Date": "Fri, 12 Jul 2019 17:59:15 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "a189e6a6-e003-0039-024f-25b612000000",
+        "x-ms-request-id": "54d36e73-e003-005b-22db-387435000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "1886489861"
+    "RandomSeed": "1137418815",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

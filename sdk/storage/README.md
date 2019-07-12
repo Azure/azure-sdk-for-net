@@ -14,6 +14,9 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 ## Contributing
 
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to these libraries.
+
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
@@ -32,6 +35,7 @@ additional questions or comments.
 [files]: ./Azure.Storage.Files/README.md
 [common]: ./Azure.Storage.Common/README.md
 [management]: ./Microsoft.Azure.Management.Storage/
+[storage_contrib]: ./CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

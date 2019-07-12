@@ -22,6 +22,114 @@ namespace Azure.Storage.Test.Shared
             this.Matcher = new RecordMatcher(this.Sanitizer);
         }
 
+        /// <summary>
+        /// Gets the tenant to use by default for our tests.
+        /// </summary>
+        public TenantConfiguration TestConfigDefault => this.GetTestConfig(
+                "Storage_TestConfigDefault",
+                () => TestConfigurations.DefaultTargetTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require Read Access
+        /// Geo-Redundant Storage to be setup.
+        /// </summary>
+        public TenantConfiguration TestConfigSecondary => this.GetTestConfig(
+                "Storage_TestConfigSecondary",
+                () => TestConfigurations.DefaultSecondaryTargetTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require Premium SSDs.
+        /// </summary>
+        public TenantConfiguration TestConfigPremiumBlob => this.GetTestConfig(
+                "Storage_TestConfigPremiumBlob",
+                () => TestConfigurations.DefaultTargetPremiumBlobTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require preview features.
+        /// </summary>
+        public TenantConfiguration TestConfigPreviewBlob => this.GetTestConfig(
+                "Storage_TestConfigPreviewBlob",
+                () => TestConfigurations.DefaultTargetPreviewBlobTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigOAuth => this.GetTestConfig(
+                "Storage_TestConfigOAuth",
+                () => TestConfigurations.DefaultTargetOAuthTenant);
+
+        /// <summary>
+        /// Gets a cache used for storing serialized tenant configurations.  Do
+        /// not get values from this directly; use GetTestConfig.
+        /// </summary>
+        private readonly Dictionary<string, string> _recordingConfigCache =
+            new Dictionary<string, string>();
+
+        /// <summary>
+        /// Gets a cache used for storing deserialized tenant configurations.
+        /// Do not get values from this directly; use GetTestConfig.
+        private readonly Dictionary<string, TenantConfiguration> _playbackConfigCache =
+            new Dictionary<string, TenantConfiguration>();
+
+        /// <summary>
+        /// We need to clear the playback cache before every test because
+        /// different recordings might have used different tenant
+        /// configurations.
+        /// </summary>
+        [SetUp]
+        public virtual void ClearCaches() =>
+            this._playbackConfigCache.Clear();
+
+        /// <summary>
+        /// Get or create a test configuration tenant to use with our tests.
+        ///
+        /// If we're recording, we'll save a sanitized version of the test
+        /// configuarion.  If we're playing recorded tests, we'll use the
+        /// serialized test configuration.  If we're running the tests live,
+        /// we'll just return the value.
+        ///
+        /// While we cache things internally, DO NOT cache them elsewhere
+        /// because we need each test to have its configuration recorded.
+        /// </summary>
+        /// <param name="name">The name of the session record variable.</param>
+        /// <param name="getTenant">
+        /// A function to get the tenant.  This is wrapped in a Func becuase
+        /// we'll throw Assert.Inconclusive if you try to access a tenant with
+        /// an invalid config file.
+        /// </param>
+        /// <returns>A test tenant to use with our tests.</returns>
+        private TenantConfiguration GetTestConfig(string name, Func<TenantConfiguration> getTenant)
+        {
+            TenantConfiguration config = null;
+            string text = null;
+            switch (this.Mode)
+            {
+                case RecordedTestMode.Playback:
+                    if (!this._playbackConfigCache.TryGetValue(name, out config))
+                    {
+                        text = this.Recording.GetVariable(name, null);
+                        config = TenantConfiguration.Parse(text);
+                        this._playbackConfigCache[name] = config;
+                    }
+                    break;
+                case RecordedTestMode.Record:
+                    config = getTenant();
+                    if (!this._recordingConfigCache.TryGetValue(name, out text))
+                    {
+                        text = TenantConfiguration.Serialize(config, true);
+                        this._recordingConfigCache[name] = text;
+                    }
+                    this.Recording.GetVariable(name, text);
+                    break;
+                case RecordedTestMode.Live:
+                default:
+                    config = getTenant();
+                    break;
+            }
+            return config;
+        }
+
         public DateTimeOffset GetUtcNow() => this.Recording.UtcNow;
 
         public byte[] GetRandomBuffer(long size)
@@ -57,7 +165,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         public TokenCredential GetOAuthCredential() =>
-            this.GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant);
+            this.GetOAuthCredential(this.TestConfigOAuth);
 
         public TokenCredential GetOAuthCredential(TenantConfiguration config) =>
             this.GetOAuthCredential(

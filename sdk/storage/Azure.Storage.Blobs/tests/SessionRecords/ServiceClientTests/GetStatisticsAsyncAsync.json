@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "5d4fac5d08d9216b59f06b7163b7831d",
-        "x-ms-date": "Mon, 01 Jul 2019 21:58:03 GMT",
+        "x-ms-client-request-id": "4ed25bef77a03032073fda97f9d9d30b",
+        "x-ms-date": "Fri, 12 Jul 2019 17:57:50 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -18,19 +18,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Mon, 01 Jul 2019 21:58:02 GMT",
+        "Date": "Fri, 12 Jul 2019 17:57:49 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "5c7f73fa-e01e-003b-1858-30705e000000",
+        "x-ms-request-id": "182ad059-701e-0071-10db-384039000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c/Status\u003e\u003cLastSyncTime\u003eMon, 01 Jul 2019 21:55:55 GMT\u003c/LastSyncTime\u003e\u003c/GeoReplication\u003e\u003c/StorageServiceStats\u003e"
+      "ResponseBody": "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cStorageServiceStats\u003e\u003cGeoReplication\u003e\u003cStatus\u003elive\u003c/Status\u003e\u003cLastSyncTime\u003eFri, 12 Jul 2019 17:54:48 GMT\u003c/LastSyncTime\u003e\u003c/GeoReplication\u003e\u003c/StorageServiceStats\u003e"
     }
   ],
   "Variables": {
-    "RandomSeed": "708868856"
+    "RandomSeed": "1818549083",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

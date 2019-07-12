@@ -8,41 +8,42 @@
         "Content-Length": "62",
         "Content-Type": "application/xml",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/1.0.0.0",
+          "azsdk-net-Storage.Blobs/12.0.0-dev.20190712.1\u002b449c23cd1e82894613a14e163bc0fe3e0583c3ec",
           "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "8db3f6257a08dd57f21c6c4555ab67db",
-        "x-ms-date": "Mon, 01 Jul 2019 03:37:01 GMT",
+        "x-ms-client-request-id": "d800ac7029d72aeda0962017d558fbff",
+        "x-ms-date": "Fri, 12 Jul 2019 17:57:49 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
       "RequestBody": [
         "\u003cKeyInfo\u003e\r\n",
-        "  \u003cExpiry\u003e2019-07-01T04:37:01Z\u003c/Expiry\u003e\r\n",
+        "  \u003cExpiry\u003e2019-07-12T18:57:49Z\u003c/Expiry\u003e\r\n",
         "\u003c/KeyInfo\u003e"
       ],
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Length": "421",
         "Content-Type": "application/xml",
-        "Date": "Mon, 01 Jul 2019 03:37:04 GMT",
+        "Date": "Fri, 12 Jul 2019 17:57:48 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-error-code": "AuthenticationFailed",
-        "x-ms-request-id": "10ab6750-a01e-0075-42be-2f2622000000",
+        "x-ms-request-id": "2e5ad1cd-c01e-004c-7fdb-38dd3e000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
         "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthenticationFailed\u003c/Code\u003e\u003cMessage\u003eServer failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
-        "RequestId:10ab6750-a01e-0075-42be-2f2622000000\n",
-        "Time:2019-07-01T03:37:04.7414049Z\u003c/Message\u003e\u003cAuthenticationErrorDetail\u003eOnly authentication scheme Bearer is supported\u003c/AuthenticationErrorDetail\u003e\u003c/Error\u003e"
+        "RequestId:2e5ad1cd-c01e-004c-7fdb-38dd3e000000\n",
+        "Time:2019-07-12T17:57:49.6177485Z\u003c/Message\u003e\u003cAuthenticationErrorDetail\u003eOnly authentication scheme Bearer is supported\u003c/AuthenticationErrorDetail\u003e\u003c/Error\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-30T20:37:01.9681122-07:00",
-    "RandomSeed": "1593718502"
+    "DateTimeOffsetNow": "2019-07-12T10:57:49.6336315-07:00",
+    "RandomSeed": "432019779",
+    "Storage_TestConfigDefault": "ProductionTenant\nstorageteglazatesting\nU2FuaXRpemVk\nhttp://storageteglazatesting.blob.core.windows.net\nhttp://storageteglazatesting.file.core.windows.net\nhttp://storageteglazatesting.queue.core.windows.net\nhttp://storageteglazatesting.table.core.windows.net\n\n\n\n\nhttp://storageteglazatesting-secondary.blob.core.windows.net\n\nhttp://storageteglazatesting-secondary.queue.core.windows.net\nhttp://storageteglazatesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storageteglazatesting.blob.core.windows.net/;QueueEndpoint=http://storageteglazatesting.queue.core.windows.net/;TableEndpoint=http://storageteglazatesting.table.core.windows.net/;FileEndpoint=http://storageteglazatesting.file.core.windows.net/;BlobSecondaryEndpoint=http://storageteglazatesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://storageteglazatesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://storageteglazatesting-secondary.table.core.windows.net/;AccountName=storageteglazatesting;AccountKey=Sanitized"
   }
 }

@@ -186,7 +186,7 @@ namespace Azure.Storage.Blobs.Test
 
             using (this.GetNewContainer(out var container))
             {
-                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
@@ -1144,7 +1144,7 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,

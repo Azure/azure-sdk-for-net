@@ -407,8 +407,8 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container))
             {
                 var credentials = new StorageSharedKeyCredential(
-                    TestConfigurations.DefaultTargetTenant.AccountName,
-                    TestConfigurations.DefaultTargetTenant.AccountKey);
+                    this.TestConfigDefault.AccountName,
+                    this.TestConfigDefault.AccountKey);
                 var containerClientFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,

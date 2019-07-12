@@ -64,8 +64,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     InvalidUri,
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -112,8 +112,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
@@ -152,8 +152,8 @@ namespace Azure.Storage.Files.Test
                 new FileServiceClient(
                     new Uri("https://error.file.core.windows.net"),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
             // Act
