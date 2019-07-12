@@ -10,9 +10,14 @@
 # Catch all
 # /sdk/ @AlexGhiondea
 
+# Core
+# /sdk/core/
+
 # Service teams
 # /sdk/eventhub/
 # /sdk/keyvault/
+# /sdk/identity/
+# /sdk/storage/
 
 ###########
 # Eng Sys
