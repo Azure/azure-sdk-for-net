@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
+    <AssemblyTitle>Doc generation Packages</AssemblyTitle>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DocAsCode.ECMA2Yaml" Version="1.0.644-alpha" />
+    <PackageReference Include="PopImport" Version="1.0.0" />
+  </ItemGroup>
+</Project>
