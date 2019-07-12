@@ -16,7 +16,6 @@ namespace SmokeTest
         /// <summary>
         /// Test the Storage Blobs SDK
         /// </summary>
-        /// <returns>true if passes, false if fails</returns>
         public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
@@ -40,11 +39,6 @@ namespace SmokeTest
         {
             Console.Write("Uploading blob... ");
 
-            //This is going to create stream to upload, for uploading an existing file use:
-            //  using (FileStream data = File.OpenRead(<File_path>))
-            //  {
-            //      await blobClient.UploadAsync(data);
-            //  }
             const string content = "This is the content for the sample blob";
             byte[] byteArray = Encoding.UTF8.GetBytes(content);
             MemoryStream stream = new MemoryStream(byteArray);

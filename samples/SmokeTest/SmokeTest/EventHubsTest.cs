@@ -23,7 +23,6 @@ namespace SmokeTest
         /// <summary>
         /// Test the Event Hubs SDK by sending and receiving events
         /// </summary>
-        /// <returns>true if pases, false if fails</returns>
         public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
@@ -82,14 +81,14 @@ namespace SmokeTest
             }
             index = 0;
 
-            //Check if at least one event was received in roder to start validation
+            //Check if at least one event was received in order to start validation
             if (receivedEvents.Count == 0)
             {
                 throw new Exception(String.Format("Error, No events received."));
             }
             Console.Write(receivedEvents.Count() + " events received.\n");
 
-            Console.WriteLine("Beggining validation...");
+            Console.WriteLine("Beginning validation...");
             foreach (var receivedEvent in receivedEvents)
             {
                 var receivedEventMessage = Encoding.UTF8.GetString(receivedEvent.Body.ToArray());

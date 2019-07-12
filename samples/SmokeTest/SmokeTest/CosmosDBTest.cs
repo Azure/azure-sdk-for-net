@@ -41,7 +41,6 @@ namespace SmokeTest
         /// <summary>
         /// Test the Cosmos DB SDK by creating an example Database called {DataBaseName} and a PlanetsCollection with planets on it.
         /// </summary>
-        /// <returns></returns>
         public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
@@ -57,6 +56,14 @@ namespace SmokeTest
             string endpoint = Environment.GetEnvironmentVariable("COSMOS_URI");
             string authKey = Environment.GetEnvironmentVariable("COSMOS_AUTH_KEY");
             client = new DocumentClient(new Uri(endpoint), authKey);
+
+            //Delete the database to ensure that the test environment is clean.
+            try
+            {
+                await DeleteDatabase();
+            }
+            catch
+            { }
 
             await CreateDatabase();
             await CreateCollection();
@@ -121,26 +128,32 @@ namespace SmokeTest
             }
         }
 
+        /// <summary>
+        /// The query retrieve all planets, this is going to verify that planets match
+        /// </summary>
         private static async Task ExecuteSimpleQuery(){
             Console.Write("Querying... ");
             IQueryable<Planet> planetarySqlQuery = client.CreateDocumentQuery<Planet>(UriFactory.CreateDocumentCollectionUri(DataBaseName, CollectionName), "SELECT * FROM c");
 
+            var planetsSet = new HashSet<string>(planets.Count);
+            foreach(Planet planet in planets)
+            {
+                planetsSet.Add(planet.ToString());
+            }
+
             int i = 0;
             foreach (Planet planet in planetarySqlQuery)
             {
-                foreach (Planet planetInArray in planets)
+                var serializedPlanet = planet.ToString();
+                if (planetsSet.Contains(serializedPlanet))
                 {
-                    if (planet.ToString() == planetInArray.ToString())
-                    {
-                        i++;
-                    }
+                    i++;
                 }
             }
 
-            //The query should retrieve all the planets, this is going to verify that all planets were retreived
             if(i != planets.Count)
             {
-                throw new Exception(String.Format("Error, the values does not match."));
+                throw new Exception("Error, values do not match.");
             }
             Console.WriteLine("\tdone");
         }

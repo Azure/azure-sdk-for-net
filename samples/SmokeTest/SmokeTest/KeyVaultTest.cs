@@ -14,7 +14,6 @@ namespace SmokeTest
         /// <summary>
         /// Validates the Key Vault SDK
         /// </summary>
-        /// <returns>true if passes, false if fails</returns>
         public static async Task RunTests()
         {
             Console.WriteLine("\n---------------------------------");
