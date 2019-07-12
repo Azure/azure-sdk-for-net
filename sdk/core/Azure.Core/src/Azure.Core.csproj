@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Buffers" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
