@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             using var testListener = new TestDiagnosticListener("Azure");
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
 
-            ClientDiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
             using var testListener = new TestDiagnosticListener("Azure");
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
 
-            ClientDiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
@@ -78,7 +78,7 @@ namespace Azure.Core.Tests
         public void NoopsWhenDisabled()
         {
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(false);
-            ClientDiagnosticScope scope = clientDiagnostics.CreateScope("");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("");
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());

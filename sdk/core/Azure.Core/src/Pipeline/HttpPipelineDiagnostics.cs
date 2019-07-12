@@ -16,13 +16,13 @@ namespace Azure.Core.Pipeline
 
         private static readonly DiagnosticListener s_source = new DiagnosticListener("Azure");
 
-        public ClientDiagnosticScope CreateScope(string name)
+        public DiagnosticScope CreateScope(string name)
         {
             if (!_isActivityEnabled)
             {
                 return default;
             }
-            return new ClientDiagnosticScope(name, s_source);
+            return new DiagnosticScope(name, s_source);
         }
     }
 }

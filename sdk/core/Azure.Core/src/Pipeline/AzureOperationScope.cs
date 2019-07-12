@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    public struct ClientDiagnosticScope: IDisposable
+    public struct DiagnosticScope: IDisposable
     {
         private Activity _activity;
 
@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
 
         private readonly DiagnosticListener _source;
 
-        internal ClientDiagnosticScope(string name, DiagnosticListener source)
+        internal DiagnosticScope(string name, DiagnosticListener source)
         {
             _name = name;
             _source = source;
