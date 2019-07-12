@@ -36,6 +36,8 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     ProcessNext(message, pipeline);
                 }
+
+                return;
             }
 
             var activity = new Activity("Azure.Core.Http.Request");
