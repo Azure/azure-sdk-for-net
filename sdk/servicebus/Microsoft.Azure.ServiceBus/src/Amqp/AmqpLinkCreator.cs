@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public async Task<Tuple<AmqpObject, DateTime>> CreateAndOpenAmqpLinkAsync()
         {
-            var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout);
+            var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout, true);
 
             MessagingEventSource.Log.AmqpGetOrCreateConnectionStart();
             var amqpConnection = await this.serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);

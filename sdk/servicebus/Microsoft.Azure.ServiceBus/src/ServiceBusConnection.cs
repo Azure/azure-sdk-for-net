@@ -244,7 +244,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             var hostName = this.Endpoint.Host;
 
-            var timeoutHelper = new TimeoutHelper(timeout);
+            var timeoutHelper = new TimeoutHelper(timeout, true);
             var amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
                 amqpVersion: AmqpVersion,
                 useSslStreamSecurity: true,
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.ServiceBus
 
         async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
-            var timeoutHelper = new TimeoutHelper(timeout);
+            var timeoutHelper = new TimeoutHelper(timeout, true);
             var connection = await this.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
