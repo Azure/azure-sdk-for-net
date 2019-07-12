@@ -28,6 +28,14 @@ namespace Azure.Core.Pipeline
             _activity?.AddTag(name, value);
         }
 
+        public void AddAttribute<T>(string name, T value)
+        {
+            if (_activity != null)
+            {
+                AddAttribute<T>(name, value, t => t.ToString());
+            }
+        }
+
         public void AddAttribute<T>(string name, T value, Func<T, string> format)
         {
             if (_activity != null)
