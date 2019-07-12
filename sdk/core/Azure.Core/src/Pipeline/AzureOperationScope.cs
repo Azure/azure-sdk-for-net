@@ -63,6 +63,11 @@ namespace Azure.Core.Pipeline
 
         public void Failed(Exception e)
         {
+            if (_activity == null)
+            {
+                return;
+            }
+
             _source?.Write(_activity.OperationName + ".Exception", e);
             _activity?.Stop();
 
