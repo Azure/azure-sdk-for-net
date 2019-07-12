@@ -54,12 +54,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// {\"source\":{\"path\":\"$.CustomerAddress\",\"type\":\"String\"},\"sink\":
         /// {\"name\":\"ClientAddress\",\"type\":\"String\"}}]. Type: object 
         /// (or Expression with resultType object).</param>
-        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mapping = default(object))
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object), object mappings = default(object))
             : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
             SchemaMapping = schemaMapping;
             CollectionReference = collectionReference;
+            Mappings = mappings;
             CustomInit();
         }
 
