@@ -32,7 +32,7 @@ namespace Azure.Core.Pipeline
         {
             if (_activity != null)
             {
-                AddAttribute<T>(name, value, t => t.ToString());
+                AddAttribute(name, value.ToString());
             }
         }
 
