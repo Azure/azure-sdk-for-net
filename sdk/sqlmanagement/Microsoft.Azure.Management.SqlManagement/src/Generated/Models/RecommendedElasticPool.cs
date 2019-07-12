@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="databaseEdition">The edition of the recommended
         /// elastic pool. The ElasticPoolEdition enumeration contains all the
         /// valid editions. Possible values include: 'Basic', 'Standard',
-        /// 'Premium'</param>
+        /// 'Premium', 'GeneralPurpose', 'BusinessCritical'</param>
         /// <param name="dtu">The DTU for the recommended elastic pool.</param>
         /// <param name="databaseDtuMin">The minimum DTU for the
         /// database.</param>
@@ -83,7 +83,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets the edition of the recommended elastic pool. The
         /// ElasticPoolEdition enumeration contains all the valid editions.
-        /// Possible values include: 'Basic', 'Standard', 'Premium'
+        /// Possible values include: 'Basic', 'Standard', 'Premium',
+        /// 'GeneralPurpose', 'BusinessCritical'
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseEdition")]
         public string DatabaseEdition { get; private set; }

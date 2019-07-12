@@ -27,5 +27,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string DataWarehouse = "DataWarehouse";
         public const string System = "System";
         public const string System2 = "System2";
+        public const string GeneralPurpose = "GeneralPurpose";
+        public const string BusinessCritical = "BusinessCritical";
+        public const string Hyperscale = "Hyperscale";
     }
 }
