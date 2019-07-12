@@ -77,7 +77,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Check if two <see cref="GetQueuesOptions"/> instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetQueuesOptions other) =>
             this.IncludeMetadata == other.IncludeMetadata &&
@@ -105,7 +105,7 @@ namespace Azure.Storage.Queues.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetQueuesAsync(
+            var task = this._client.GetQueuesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,

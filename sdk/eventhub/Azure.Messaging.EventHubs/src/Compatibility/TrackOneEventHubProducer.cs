@@ -59,9 +59,9 @@ namespace Azure.Messaging.EventHubs.Compatibility
         /// <param name="sendOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public override Task SendAsync(IEnumerable<EventData> events,
-                                       SendOptions sendOptions,
-                                       CancellationToken cancellationToken)
+        public override async Task SendAsync(IEnumerable<EventData> events,
+                                             SendOptions sendOptions,
+                                             CancellationToken cancellationToken)
         {
             static TrackOne.EventData TransformEvent(EventData eventData) =>
                 new TrackOne.EventData(eventData.Body.ToArray())
@@ -69,7 +69,14 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     Properties = eventData.Properties
                 };
 
-            return TrackOneSender.SendAsync(events.Select(TransformEvent), sendOptions?.PartitionKey);
+            try
+            {
+                await TrackOneSender.SendAsync(events.Select(TransformEvent), sendOptions?.PartitionKey);
+            }
+            catch (TrackOne.EventHubsException ex)
+            {
+                throw ex.MapToTrackTwoException();
+            }
         }
 
         /// <summary>

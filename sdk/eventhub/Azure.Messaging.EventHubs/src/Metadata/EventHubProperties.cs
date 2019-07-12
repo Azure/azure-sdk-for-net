@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Metadata
         ///   The date and time, in UTC, at which the Event Hub was created.
         /// </summary>
         ///
-        public DateTime CreatedAtUtc { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <summary>
         ///   The set of unique identifiers for each partition in the Event Hub.
@@ -35,15 +35,15 @@ namespace Azure.Messaging.EventHubs.Metadata
         /// </summary>
         ///
         /// <param name="path">The path of the Event Hub.</param>
-        /// <param name="createdUtc">The date and time at which the Event Hub was created.</param>
+        /// <param name="createdAt">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
         internal EventHubProperties(string path,
-                                    DateTime createdUtc,
+                                    DateTimeOffset createdAt,
                                     string[] partitionIds)
         {
             Path = path;
-            CreatedAtUtc = createdUtc;
+            CreatedAt = createdAt;
             PartitionIds = partitionIds;
         }
     }

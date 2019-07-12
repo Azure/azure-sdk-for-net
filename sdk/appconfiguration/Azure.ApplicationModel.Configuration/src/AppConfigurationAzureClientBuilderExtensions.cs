@@ -6,6 +6,9 @@ using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// App Configuration client builder
+    /// </summary>
     public static class AppConfigurationAzureClientBuilderExtensions
     {
         public static TBuilder AddAppConfiguration<TBuilder>(this TBuilder builder,

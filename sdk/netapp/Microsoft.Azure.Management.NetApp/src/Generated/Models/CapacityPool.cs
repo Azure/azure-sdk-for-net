@@ -34,15 +34,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the CapacityPool class.
         /// </summary>
         /// <param name="location">Resource location</param>
+        /// <param name="size">size</param>
+        /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="poolId">poolId</param>
-        /// <param name="size">size</param>
-        /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public CapacityPool(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string poolId = default(string), long? size = default(long?), string serviceLevel = default(string), string provisioningState = default(string))
+        public CapacityPool(string location, long size, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string poolId = default(string), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// chunks (value must be multiply of 4398046511104).
         /// </remarks>
         [JsonProperty(PropertyName = "properties.size")]
-        public long? Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// Gets or sets serviceLevel
@@ -137,6 +137,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (ServiceLevel == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceLevel");
             }
             if (PoolId != null)
             {

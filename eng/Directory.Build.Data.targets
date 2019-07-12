@@ -29,6 +29,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <!-- Enable SourceLink  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
   <PropertyGroup>
     <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>

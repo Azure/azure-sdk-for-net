@@ -76,10 +76,6 @@ namespace Azure
         /// Enumerate the values in the collection synchronously.  This may
         /// make mutliple service requests.
         /// </summary>
-        /// <param name="cancellationToken">
-        /// The <see cref="CancellationToken"/> used for requests made while
-        /// enumerating.
-        /// </param>
         /// <returns>A sequence of values.</returns>
         protected abstract IEnumerator<Response<T>> GetEnumerator();
 

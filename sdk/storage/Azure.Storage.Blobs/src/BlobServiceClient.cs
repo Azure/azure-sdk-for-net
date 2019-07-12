@@ -45,6 +45,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         protected virtual HttpPipeline Pipeline => this._pipeline;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobServiceClient"/>
         /// class for mocking.
@@ -185,6 +186,7 @@ namespace Azure.Storage.Blobs
             this._uri = serviceUri;
             this._pipeline = pipeline;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> object by appending
@@ -201,6 +203,7 @@ namespace Azure.Storage.Blobs
         public virtual BlobContainerClient GetBlobContainerClient(string containerName) =>
             new BlobContainerClient(this.Uri.AppendToPath(containerName), this.Pipeline);
 
+        #region GetContainers
         /// <summary>
         /// The <see cref="GetContainers"/> operation returns an async
         /// sequence of containers in the storage account.  Enumerating the
@@ -218,8 +221,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="IEnumerable{Response{ContainerItem}}"/> describing the
-        /// containers in the storage account.
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{ContainerItem}"/>
+        /// describing the containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -231,14 +234,10 @@ namespace Azure.Storage.Blobs
             new GetContainersAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetContainersAsync"/> operation returns a
-        /// single segment of containers in the storage account, starting
-        /// from the specified <paramref name="marker"/>.  Use an empty
-        /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="ListContainersSegmentAsync"/>
-        /// to continue enumerating the containers segment by segment.
-        /// Containers are ordered lexicographically by name.
+        /// The <see cref="GetContainersAsync"/> operation returns an async
+        /// sequence of containers in the storage account.  Enumerating the
+        /// containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
@@ -264,7 +263,7 @@ namespace Azure.Storage.Blobs
             new GetContainersAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetContainersAsync"/> operation returns a
+        /// The <see cref="GetContainersInternal"/> operation returns a
         /// single segment of containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
@@ -300,14 +299,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainersSegment}}"/> describing a
+        /// A <see cref="Response{ContainersSegment}"/> describing a
         /// segment of the containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<ContainersSegment>> GetContainersAsync(
+        internal async Task<Response<ContainersSegment>> GetContainersInternal(
             string continuationToken,
             GetContainersOptions? options,
             int? pageSizeHint,
@@ -346,7 +345,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetContainers
 
+        #region GetAccountInfo
         /// <summary>
         /// The <see cref="GetAccountInfo"/> operation returns the sku
         /// name and account kind for the specified account.
@@ -366,7 +367,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<AccountInfo> GetAccountInfo(
             CancellationToken cancellationToken = default) =>
-            this.GetAccountInfoAsync(
+            this.GetAccountInfoInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -382,7 +383,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{AccountInfo}}"/> describing the account.
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -390,13 +391,13 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetAccountInfoAsync(
+            await this.GetAccountInfoInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
+        /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
         /// name and account kind for the specified account.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information" />.
@@ -409,13 +410,13 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{AccountInfo}}"/> describing the account.
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<AccountInfo>> GetAccountInfoAsync(
+        private async Task<Response<AccountInfo>> GetAccountInfoInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -442,7 +443,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetAccountInfo
 
+        #region GetProperties
         /// <summary>
         /// The <see cref="GetProperties"/> operation gets the properties
         /// of a storage account’s blob service, including properties for
@@ -455,7 +458,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceProperties}}"/> describing
+        /// A <see cref="Response{BlobServiceProperties}"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
@@ -464,7 +467,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 false, //async
                 cancellationToken)
                 .EnsureCompleted();
@@ -481,7 +484,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceProperties}}"/> describing
+        /// A <see cref="Response{BlobServiceProperties}"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
@@ -490,13 +493,13 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 true, //async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation gets the properties
+        /// The <see cref="GetPropertiesInternal"/> operation gets the properties
         /// of a storage account’s blob service, including properties for
         /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
         /// 
@@ -510,14 +513,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceProperties}}"/> describing
+        /// A <see cref="Response{BlobServiceProperties}"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
+        private async Task<Response<BlobServiceProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -544,7 +547,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetProperties
         /// <summary>
         /// The <see cref="SetProperties"/> operation sets properties for
         /// a storage account’s Blob service endpoint, including properties
@@ -571,7 +576,7 @@ namespace Azure.Storage.Blobs
         public virtual Response SetProperties(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            this.SetPropertiesAsync(
+            this.SetPropertiesInternal(
                 properties,
                 false, // async
                 cancellationToken)
@@ -593,7 +598,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> describing
+        /// A <see cref="Response"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
@@ -603,14 +608,14 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response> SetPropertiesAsync(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await this.SetPropertiesAsync(
+            await this.SetPropertiesInternal(
                 properties,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetPropertiesAsync"/> operation sets properties for
+        /// The <see cref="SetPropertiesInternal"/> operation sets properties for
         /// a storage account’s Blob service endpoint, including properties
         /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
         /// and soft delete settings.  You can also use this operation to set
@@ -628,14 +633,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> describing
+        /// A <see cref="Response"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> SetPropertiesAsync(
+        private async Task<Response> SetPropertiesInternal(
             BlobServiceProperties properties,
             bool async,
             CancellationToken cancellationToken)
@@ -668,7 +673,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion SetProperties
 
+        #region GetStatistics
         /// <summary>
         /// The <see cref="GetStatistics"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
@@ -676,14 +683,14 @@ namespace Azure.Storage.Blobs
         /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         /// 
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
@@ -692,7 +699,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobServiceStatistics> GetStatistics(
             CancellationToken cancellationToken = default) =>
-            this.GetStatisticsAsync(
+            this.GetStatisticsInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -704,14 +711,14 @@ namespace Azure.Storage.Blobs
         /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         /// 
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
@@ -720,19 +727,19 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetStatisticsAsync(
+            await this.GetStatisticsInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetStatisticsAsync"/> operation retrieves
+        /// The <see cref="GetStatisticsInternal"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
         /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         /// 
-        /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -742,14 +749,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
+        private async Task<Response<BlobServiceStatistics>> GetStatisticsInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -776,11 +783,13 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetStatistics
 
+        #region GetUserDelegationKey
         /// <summary>
         /// The <see cref="GetUserDelegationKey"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
-        /// shared access signatures created with <see cref="BlobSasBuilder"/>.
+        /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
         /// <param name="start">
         /// Start time for the key's validity, with null indicating an
@@ -795,7 +804,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
@@ -806,7 +815,7 @@ namespace Azure.Storage.Blobs
             DateTimeOffset? start,
             DateTimeOffset expiry,
             CancellationToken cancellationToken = default) =>
-            this.GetUserDelegationKeyAsync(
+            this.GetUserDelegationKeyInternal(
                 start,
                 expiry,
                 false, // async
@@ -816,7 +825,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
-        /// shared access signatures created with <see cref="BlobSasBuilder"/>.
+        /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
         /// <param name="start">
         /// Start time for the key's validity, with null indicating an
@@ -831,7 +840,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
@@ -842,7 +851,7 @@ namespace Azure.Storage.Blobs
             DateTimeOffset? start,
             DateTimeOffset expiry,
             CancellationToken cancellationToken = default) =>
-            await this.GetUserDelegationKeyAsync(
+            await this.GetUserDelegationKeyInternal(
                 start,
                 expiry,
                 true, // async
@@ -850,9 +859,9 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyInternal"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
-        /// shared access signatures created with <see cref="BlobSasBuilder"/>.
+        /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
         /// <param name="start">
         /// Start time for the key's validity, with null indicating an
@@ -866,15 +875,16 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="async"/>
         /// <returns>
-        /// A <see cref="Task{Response{BlobServiceStatistics}}"/> describing
+        /// A <see cref="Response{BlobServiceStatistics}"/> describing
         /// the service replication statistics.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+        private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? start,
             DateTimeOffset expiry,
             bool async,
@@ -916,7 +926,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetUserDelegationKey
 
+        #region CreateBlobContainer
         /// <summary>
         /// The <see cref="CreateBlobContainer"/> operation creates a new
         /// container under the specified account. If the container with the
@@ -948,7 +960,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContainerClient}}"/> referencing the
+        /// A <see cref="Response{BlobContainerClient}"/> referencing the
         /// newly created container.
         /// </returns>
         /// <remarks>
@@ -997,7 +1009,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContainerClient}}"/> referencing the
+        /// A <see cref="Response{BlobContainerClient}"/> referencing the
         /// newly created container.
         /// </returns>
         /// <remarks>
@@ -1014,7 +1026,9 @@ namespace Azure.Storage.Blobs
             var response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
             return new Response<BlobContainerClient>(response.GetRawResponse(), container);
         }
+        #endregion CreateBlobContainer
 
+        #region DeleteBlobContainer
         /// <summary>
         /// The <see cref="DeleteBlobContainer"/> operation marks the
         /// specified container for deletion. The container and any blobs
@@ -1034,7 +1048,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}}"/> if successful.
+        /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1068,7 +1082,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}}"/> if successful.
+        /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1084,5 +1098,6 @@ namespace Azure.Storage.Blobs
                     accessConditions,
                     cancellationToken)
                     .ConfigureAwait(false);
+        #endregion DeleteBlobContainer
     }
 }

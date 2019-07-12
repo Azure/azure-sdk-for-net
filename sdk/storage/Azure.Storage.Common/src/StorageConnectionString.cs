@@ -230,7 +230,7 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and service endpoints.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="blobEndpoint">A <see cref="System.Uri"/> specifying the primary Blob service endpoint.</param>
         /// <param name="queueEndpoint">A <see cref="System.Uri"/> specifying the primary Queue service endpoint.</param>
         /// <param name="tableEndpoint">A <see cref="System.Uri"/> specifying the primary Table service endpoint.</param>
@@ -244,11 +244,11 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// account credentials and service endpoints.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
-        /// <param name="blobStorageUri">A <see cref="StorageUri"/> specifying the Blob service endpoint or endpoints.</param>
-        /// <param name="queueStorageUri">A <see cref="StorageUri"/> specifying the Queue service endpoint or endpoints.</param>
-        /// <param name="tableStorageUri">A <see cref="StorageUri"/> specifying the Table service endpoint or endpoints.</param>
-        /// <param name="fileStorageUri">A <see cref="StorageUri"/> specifying the File service endpoint or endpoints.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
+        /// <param name="blobStorageUri">A <see cref="System.Uri"/> specifying the Blob service endpoint or endpoints.</param>
+        /// <param name="queueStorageUri">A <see cref="System.Uri"/> specifying the Queue service endpoint or endpoints.</param>
+        /// <param name="tableStorageUri">A <see cref="System.Uri"/> specifying the Table service endpoint or endpoints.</param>
+        /// <param name="fileStorageUri">A <see cref="System.Uri"/> specifying the File service endpoint or endpoints.</param>
         public StorageConnectionString(object storageCredentials, (Uri, Uri) blobStorageUri, (Uri, Uri) queueStorageUri, (Uri, Uri) tableStorageUri, (Uri, Uri) fileStorageUri)
         {
             this.Credentials = storageCredentials;
@@ -263,7 +263,7 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services. 
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
         public StorageConnectionString(object storageCredentials, bool useHttps)
@@ -275,7 +275,7 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
         /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
@@ -288,7 +288,7 @@ namespace Azure.Storage.Common
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
         /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
-        /// <param name="storageCredentials">A <see cref="StorageCredentials"/> object.</param>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="accountName">The name of the account.</param>
         /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
@@ -394,31 +394,31 @@ namespace Azure.Storage.Common
         /// <summary>
         /// Gets the endpoints for the Blob service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Blob service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Blob service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) BlobStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the Queue service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Queue service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Queue service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) QueueStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the Table service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the Table service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the Table service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) TableStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the endpoints for the File service at the primary and secondary location, as configured for the storage account.
         /// </summary>
-        /// <value>A <see cref="StorageUri"/> containing the File service endpoints.</value>
+        /// <value>A <see cref="System.Uri"/> containing the File service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) FileStorageUri { get; private set; }
 
         /// <summary>
         /// Gets the credentials used to create this <see cref="StorageConnectionString"/> object.
         /// </summary>
-        /// <value>A <see cref="StorageCredentials"/> object.</value>
+        /// <value>A StorageCredentials object.</value>
         public object Credentials { get; private set; }
 
         /// <summary>
