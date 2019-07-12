@@ -198,11 +198,6 @@ namespace Microsoft.Azure.Management.Sql
         IFailoverGroupsOperations FailoverGroups { get; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
-        /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -466,6 +461,21 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IInstancePoolsOperations.
+        /// </summary>
+        IInstancePoolsOperations InstancePools { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
 
     }
 }

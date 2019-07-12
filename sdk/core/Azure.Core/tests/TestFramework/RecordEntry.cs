@@ -13,7 +13,7 @@ namespace Azure.Core.Testing
     {
         public string RequestUri { get; set; }
 
-        public HttpPipelineMethod RequestMethod { get; set; }
+        public RequestMethod RequestMethod { get; set; }
 
         public byte[] RequestBody { get; set; }
 
@@ -31,7 +31,7 @@ namespace Azure.Core.Testing
 
             if (element.TryGetProperty(nameof(RequestMethod), out JsonElement property))
             {
-                record.RequestMethod = HttpPipelineMethodConverter.Parse(property.GetString());
+                record.RequestMethod = RequestMethod.Parse(property.GetString());
             }
 
             if (element.TryGetProperty(nameof(RequestUri), out property))
@@ -131,7 +131,7 @@ namespace Azure.Core.Testing
             jsonWriter.WriteStartObject();
 
             jsonWriter.WriteString(nameof(RequestUri), RequestUri);
-            jsonWriter.WriteString(nameof(RequestMethod), HttpPipelineMethodConverter.ToString(RequestMethod));
+            jsonWriter.WriteString(nameof(RequestMethod), RequestMethod.Method);
             jsonWriter.WriteStartObject(nameof(RequestHeaders));
             SerializeHeaders(jsonWriter, RequestHeaders);
             jsonWriter.WriteEndObject();

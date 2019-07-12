@@ -276,6 +276,10 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 // data copied within an account, so copy should be instantaneous
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
                 await operation.WaitCompletionAsync();
                 Assert.IsTrue(operation.HasCompleted);
                 Assert.IsTrue(operation.HasValue);

@@ -1052,6 +1052,10 @@ namespace Azure.Storage.Blobs.Test
                 var operation = await destinationBlob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
+                if (this.Mode == RecordedTestMode.Playback)
+                {
+                    operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                }
                 await operation.WaitCompletionAsync();
 
                 // Assert
@@ -1117,6 +1121,10 @@ namespace Azure.Storage.Blobs.Test
                     var operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
+                    if (this.Mode == RecordedTestMode.Playback)
+                    {
+                        operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    }
                     await operation.WaitCompletionAsync();
 
                     parameters.Match = await this.SetupBlobMatchCondition(blob, parameters.Match);
@@ -1171,7 +1179,10 @@ namespace Azure.Storage.Blobs.Test
                     var operation = await blob.StartCopyIncrementalAsync(
                         sourceUri: sourceBlob.Uri,
                         snapshot: snapshot);
-
+                    if (this.Mode == RecordedTestMode.Playback)
+                    {
+                        operation.PollingInterval = TimeSpan.FromMilliseconds(10);
+                    }
                     await operation.WaitCompletionAsync();
 
                     parameters.NoneMatch = await this.SetupBlobMatchCondition(blob, parameters.NoneMatch);

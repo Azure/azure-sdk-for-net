@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azure.Core.Pipeline;
 
-namespace Azure
+namespace Azure.Core.Http
 {
     public readonly struct RequestHeaders: IEnumerable<HttpHeader>
     {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Azure.Core
 {
-    public class HttpPipelineUriBuilder
+    public class RequestUriBuilder
     {
         private const char QuerySeparator = '?';
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Identity
 {
@@ -276,7 +277,7 @@ namespace Azure.Identity
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -308,7 +309,7 @@ namespace Azure.Identity
             // if we don't get a response we assume the imds endpoint is not available
             using (Request request = _pipeline.CreateRequest())
             {
-                request.Method = HttpPipelineMethod.Get;
+                request.Method = RequestMethod.Get;
 
                 request.UriBuilder.Uri = ImdsEndpoint;
 
@@ -340,7 +341,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("Metadata", "true");
 
@@ -365,7 +366,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Get;
+            request.Method = RequestMethod.Get;
 
             request.Headers.Add("secret", Environment.GetEnvironmentVariable(MsiSecretEnvironemntVariable));
 
@@ -390,7 +391,7 @@ namespace Azure.Identity
 
             Request request = _pipeline.CreateRequest();
 
-            request.Method = HttpPipelineMethod.Post;
+            request.Method = RequestMethod.Post;
 
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
 
@@ -459,7 +460,7 @@ namespace Azure.Identity
             {
                 // the seconds from epoch may be returned as a Json number or a Json string which is a number
                 // depending on the environment.  If neither of these are the case we throw an AuthException.
-                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) && 
+                if (!(expiresOnProp.Type == JsonValueType.Number && expiresOnProp.TryGetInt64(out long expiresOnSec)) &&
                     !(expiresOnProp.Type == JsonValueType.String && long.TryParse(expiresOnProp.GetString(), out expiresOnSec)))
                 {
                     throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);

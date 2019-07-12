@@ -12,11 +12,12 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
   </PropertyGroup>
-  
+
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-    
+
   <ItemGroup>
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
@@ -28,5 +29,5 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponse.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
   </ItemGroup>
-  
+
 </Project>

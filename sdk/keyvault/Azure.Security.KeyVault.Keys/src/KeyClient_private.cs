@@ -3,6 +3,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -12,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string KeysPath = "/keys/";
         private const string DeletedKeysPath = "/deletedkeys/";
 
-        private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(HttpPipelineMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        private async Task<Response<TResult>> SendRequestAsync<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TContent : Model
             where TResult : Model
         {
@@ -26,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private async Task<Response<TResult>> SendRequestAsync<TResult>(HttpPipelineMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        private async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : Model
         {
             using (Request request = CreateRequest(method, path))
@@ -37,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private async Task<Response> SendRequestAsync(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
+        private async Task<Response> SendRequestAsync(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
             using (Request request = CreateRequest(method, path))
             {
@@ -60,7 +61,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private Response<TResult> SendRequest<TContent, TResult>(HttpPipelineMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        private Response<TResult> SendRequest<TContent, TResult>(RequestMethod method, TContent content, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TContent : Model
             where TResult : Model
         {
@@ -74,7 +75,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private Response<TResult> SendRequest<TResult>(HttpPipelineMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
+        private Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, CancellationToken cancellationToken, params string[] path)
             where TResult : Model
         {
             using (Request request = CreateRequest(method, path))
@@ -85,7 +86,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private Response SendRequest(HttpPipelineMethod method, CancellationToken cancellationToken, params string[] path)
+        private Response SendRequest(RequestMethod method, CancellationToken cancellationToken, params string[] path)
         {
             using (Request request = CreateRequest(method, path))
             {
@@ -108,7 +109,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        private Request CreateRequest(HttpPipelineMethod method, params string[] path)
+        private Request CreateRequest(RequestMethod method, params string[] path)
         {
             Request request = _pipeline.CreateRequest();
 
@@ -130,7 +131,7 @@ namespace Azure.Security.KeyVault.Keys
             return request;
         }
 
-        private Request CreateRequest(HttpPipelineMethod method, Uri uri)
+        private Request CreateRequest(RequestMethod method, Uri uri)
         {
             Request request = _pipeline.CreateRequest();
 
@@ -144,7 +145,7 @@ namespace Azure.Security.KeyVault.Keys
 
         private Uri CreateFirstPageUri(string path)
         {
-            var firstPage = new HttpPipelineUriBuilder();
+            var firstPage = new RequestUriBuilder();
             firstPage.Uri = _vaultUri;
             firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
@@ -169,7 +170,7 @@ namespace Azure.Security.KeyVault.Keys
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
+            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
             {
                 Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -191,7 +192,7 @@ namespace Azure.Security.KeyVault.Keys
                 firstPageUri = new Uri(nextLink);
             }
 
-            using (Request request = CreateRequest(HttpPipelineMethod.Get, firstPageUri))
+            using (Request request = CreateRequest(RequestMethod.Get, firstPageUri))
             {
                 Response response = SendRequest(request, cancellationToken);
 

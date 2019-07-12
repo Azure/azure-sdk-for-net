@@ -44,6 +44,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public const int AppendBlobMaxBlocks = 50000;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
         /// class for mocking.
@@ -180,6 +181,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, pipeline)
         {
         }
+        #endregion ctors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
@@ -200,6 +202,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new AppendBlobClient(builder.ToUri(), this.Pipeline);
         }
 
+        #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new 0-length
         /// append blob.  The content of any existing blob is overwritten with
@@ -236,7 +239,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
+            this.CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
@@ -268,7 +271,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// newly created append blob.
         /// </returns>
         /// <remarks>
@@ -280,7 +283,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata = default,
             AppendBlobAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateAsync(
+            await this.CreateInternal(
                 httpHeaders,
                 metadata,
                 accessConditions,
@@ -289,7 +292,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new 0-length
+        /// The <see cref="CreateInternal"/> operation creates a new 0-length
         /// append blob.  The content of any existing blob is overwritten with
         /// the newly initialized append blob.  To add content to the append
         /// blob, call the <see cref="AppendBlockAsync"/> operation.
@@ -315,14 +318,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// newly created append blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobContentInfo>> CreateAsync(
+        private async Task<Response<BlobContentInfo>> CreateInternal(
             BlobHttpHeaders? httpHeaders,
             Metadata metadata,
             AppendBlobAccessConditions? accessConditions,
@@ -370,7 +373,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion Create
 
+        #region AppendBlock
         /// <summary>
         /// The <see cref="AppendBlock"/> operation commits a new block
         /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
@@ -418,7 +423,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            this.AppendBlockAsync(
+            this.AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
@@ -461,7 +466,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
@@ -474,7 +479,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             CancellationToken cancellationToken = default) =>
-            await this.AppendBlockAsync(
+            await this.AppendBlockInternal(
                 content,
                 transactionalContentHash,
                 accessConditions,
@@ -484,9 +489,9 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="AppendBlockAsync"/> operation commits a new block
+        /// The <see cref="AppendBlockInternal"/> operation commits a new block
         /// of data, represented by the <paramref name="content"/> <see cref="Stream"/>,
-        /// to the end of the existing append blob.  The <see cref="AppendBlockAsync"/>
+        /// to the end of the existing append blob.  The <see cref="AppendBlockInternal"/>
         /// operation is only permitted if the blob was created as an append
         /// blob.
         /// 
@@ -520,14 +525,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+        private async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
             byte[] transactionalContentHash, 
             AppendBlobAccessConditions? accessConditions, 
@@ -585,7 +590,9 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion AppendBlock
 
+        #region AppendBlockFromUri
         /// <summary>
         /// The <see cref="AppendBlockFromUri"/> operation commits a new
         /// block of data, represented by the <paramref name="sourceUri"/>,
@@ -645,7 +652,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.AppendBlockFromUriAsync(
+            this.AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
                 sourceContentHash,
@@ -700,7 +707,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
@@ -714,7 +721,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobAccessConditions? accessConditions = default,
             AppendBlobAccessConditions? sourceAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.AppendBlockFromUriAsync(
+            await this.AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
                 sourceContentHash,
@@ -725,10 +732,10 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="AppendBlockFromUriAsync"/> operation commits a new
+        /// The <see cref="AppendBlockFromUriInternal"/> operation commits a new
         /// block of data, represented by the <paramref name="sourceUri"/>,
         /// to the end of the existing append blob.  The
-        /// <see cref="AppendBlockFromUriAsync"/> operation is only permitted
+        /// <see cref="AppendBlockFromUriInternal"/> operation is only permitted
         /// if the blob was created as an append blob.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/append-block-from-url" />.
@@ -772,14 +779,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobAppendInfo}}"/> describing the
+        /// A <see cref="Response{BlobAppendInfo}"/> describing the
         /// state of the updated append blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+        private async Task<Response<BlobAppendInfo>> AppendBlockFromUriInternal(
             Uri sourceUri,
             HttpRange sourceRange,
             byte[] sourceContentHash,
@@ -831,6 +838,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
+        #endregion AppendBlockFromUri
     }
 
     /// <summary>

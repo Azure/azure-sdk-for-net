@@ -101,7 +101,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Check if two FileHttpHeaders instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         public bool Equals(FileHttpHeaders other)
             => this.CacheControl == other.CacheControl
             && this.ContentDisposition == other.ContentDisposition
