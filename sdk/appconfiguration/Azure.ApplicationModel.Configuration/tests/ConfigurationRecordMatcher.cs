@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             ExcludeResponseHeaders.Add("Sync-Token");
         }
 
-        protected override bool IsBodyEquivalent(byte[] body, byte[] otherBody)
+        protected override bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
         {
+            byte[] body = record.ResponseBody ?? Array.Empty<byte>();
+            byte[] otherBody = record.ResponseBody ?? Array.Empty<byte>();
+
             if (body.SequenceEqual(otherBody)) return true;
 
             var bodyJson = JObject.Parse(Encoding.UTF8.GetString(body));

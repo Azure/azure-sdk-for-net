@@ -94,14 +94,13 @@ namespace Azure.Core.Testing
             return
                 entry.StatusCode == otherEntry.StatusCode &&
                 entryHeaders.SequenceEqual(otherEntryHeaders, new HeaderComparer()) &&
-                IsBodyEquivalent(
-                    entry.ResponseBody ?? Array.Empty<byte>(),
-                    otherEntry.ResponseBody ?? Array.Empty<byte>());
+                IsBodyEquivalent(entry, otherEntry);
         }
 
-        protected virtual bool IsBodyEquivalent(byte[] body, byte[] otherBody)
+        protected virtual bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
         {
-            return body.AsSpan().SequenceEqual(otherBody);
+            return (record.ResponseBody ?? Array.Empty<byte>()).AsSpan()
+                .SequenceEqual((otherRecord.ResponseBody ?? Array.Empty<byte>()));
         }
 
         private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
