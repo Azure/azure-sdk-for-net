@@ -10,7 +10,7 @@ namespace Azure.Storage.Queues
 {
     /// <summary>
     /// Constructs a Queue URI.
-    /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
     /// </summary>
     internal struct QueueUriBuilder : IEquatable<QueueUriBuilder>
     {

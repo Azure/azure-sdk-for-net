@@ -73,7 +73,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// 'Succeeded', 'Failed', 'Canceled'</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled or not.</param>
-        public Run(string id = default(string), string name = default(string), string type = default(string), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string runErrorMessage = default(string), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?))
+        /// <param name="timerTrigger">The timer trigger that caused the
+        /// run.</param>
+        public Run(string id = default(string), string name = default(string), string type = default(string), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string runErrorMessage = default(string), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?), TimerTriggerDescriptor timerTrigger = default(TimerTriggerDescriptor))
             : base(id, name, type)
         {
             RunId = runId;
@@ -94,6 +96,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             RunErrorMessage = runErrorMessage;
             ProvisioningState = provisioningState;
             IsArchiveEnabled = isArchiveEnabled;
+            TimerTrigger = timerTrigger;
             CustomInit();
         }
 
@@ -222,6 +225,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isArchiveEnabled")]
         public bool? IsArchiveEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timer trigger that caused the run.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timerTrigger")]
+        public TimerTriggerDescriptor TimerTrigger { get; set; }
 
         /// <summary>
         /// Validate the object.

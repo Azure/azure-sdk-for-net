@@ -143,6 +143,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// ${operation.description || regionName}`);
     w.line(`/// </summary>`);
+    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
         if (desc)
@@ -154,7 +155,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
-    w.line(`/// <returns>${operation.response.model.description || returnType}</returns>`);
+    w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
@@ -208,6 +209,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} request.`);
     w.line(`/// </summary>`);
+    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
         if (desc)
@@ -232,7 +234,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             const constant = isEnumType(param.model) && param.model.constant;
             const nullable = !constant && !param.required;
             const name = naming.variable(param.clientName);
-            if (nullable) { w.write(`if (${name} != null) { `); }
+            if (nullable) { w.write(`if (${name} != null) {`); }
             if (constant) {
                 use(`"${((<IEnumType>param.model).values[0].value || '').toString()}"`);
             } else if (param.model.type === 'dictionary') {
@@ -256,14 +258,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning disable CA1308 // Normalize strings to uppercase`);
-                }
+                } else if (nullable) { w.write(` `); }
                 use(types.convertToString(name, param.model, service, param.required));
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning restore CA1308 // Normalize strings to uppercase`);
-                }
+                } else if (nullable) { w.write(` `); }
             }
-            if (nullable) { w.write(` }`); }
+            if (nullable) { w.write(`}`); }
             w.line();
         };        
 
@@ -276,7 +278,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         }
 
         w.line(`// Create the request`);
-        w.line(`Azure.Core.Http.HttpRequest ${requestName} = ${pipelineName}.CreateRequest();`);
+        w.line(`Azure.Core.Http.Request ${requestName} = ${pipelineName}.CreateRequest();`);
         w.line();
 
         w.line(`// Set the endpoint`);
@@ -309,7 +311,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         name = `"${header.model.dictionaryPrefix || 'x-ms-meta-'}" + ${value}.Key`;
                         value = `${value}.Value`;
                     }
-                    w.write(`${requestName}.Headers.SetValue(${name}, ${value}); `);
+                    w.write(`${requestName}.Headers.SetValue(${name}, ${value});`);
                 });
             }
             w.line();
@@ -360,7 +362,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 
                 w.line(`string ${textName} = ${bodyName}.ToString();`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
-                w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)); `);
+                w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
                 w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
@@ -379,7 +381,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// Create the ${regionName} response or throw a failure exception.`);
     w.line(`/// </summary>`);
     w.line(`/// <param name="response">The raw Response.</param>`);
-    w.line(`/// <returns>The ${regionName} ${returnType}.</returns>`);
+    w.line(`/// <returns>The ${regionName} ${returnType.replace(/</g, '{').replace(/>/g, '}')}.</returns>`);
     w.write(`internal static ${returnType} ${methodName}_CreateResponse(`);
     w.scope(() => {
         w.write(`Azure.Response ${responseName})`);
@@ -595,12 +597,10 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
         const separator = IndentWriter.createFenceposter();
         w.scope(`{`, `}`, () => {
             for (const value of type.values) {
-                if (separator()) { w.line(','); }
-                if (value.description) {
-                    w.line(`/// <summary>`)
-                    w.line(`/// ${value.description}`);
-                    w.line(`/// </summary>`)    
-                }
+                if (separator()) { w.line(','); w.line(); }
+                w.line(`/// <summary>`);
+                w.line(`/// ${value.description || value.value || value.name}`);
+                w.line(`/// </summary>`);
                 w.write(naming.enumField(value.name || value.value));
             }
         });
@@ -673,29 +673,82 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
                 if (separator()) { w.line(); }
                 const name = naming.property((value.name || value.value) || '').toString();
                 const text = (value.value || '').toString();
-                if (value.description) {
-                    w.line(`/// <summary>`)
-                    w.line(`/// ${value.description}`);
-                    w.line(`/// </summary>`)    
-                }
-                
+                w.line(`/// <summary>`);
+                w.line(`/// ${value.description || text}`);
+                w.line(`/// </summary>`);
                 w.line(`public static ${enumFullName} ${name} = @"${text}";`)
             }
             w.line(`#pragma warning restore CA2211 // Non-constant fields should not be visible`);
             if (separator()) { w.line(); }
 
             // Dump out the infrastructure
+            w.line(`/// <summary>`);
+            w.line(`/// The ${enumName} value.`);
+            w.line(`/// </summary>`);
             w.line(`private readonly string _value;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Creates a new ${enumName} instance.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The ${enumName} value.</param>`);
             w.line(`private ${enumName}(string value) { this._value = value; }`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two ${enumName} instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="other">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
             w.line(`public bool Equals(${enumFullName} other) => this._value.Equals(other._value, System.StringComparison.InvariantCulture);`)
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two ${enumName} instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="o">The instance to compare to.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
             w.line(`public override bool Equals(object o) => o is ${enumFullName} other && this.Equals(other);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Get a hash code for the ${enumName}.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>Hash code for the ${enumName}.</returns>`);
             w.line(`public override int GetHashCode() => this._value.GetHashCode();`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Convert the ${enumName} to a string.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <returns>String representation of the ${enumName}.</returns>`);
             w.line(`public override string ToString() => this._value;`);
+            w.line(``);
             w.line(`#pragma warning disable CA2225 // Operator overloads have named alternates`);
+            w.line(`/// <summary>`);
+            w.line(`/// Convert a string a ${enumName}.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="value">The string to convert.</param>`);
+            w.line(`/// <returns>The ${enumName} value.</returns>`);
             w.line(`public static implicit operator ${enumName}(string value) => new ${enumFullName}(value);`);
             w.line(`#pragma warning restore CA2225 // Operator overloads have named alternates`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Convert an ${enumName} to a string.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="o">The ${enumName} value.</param>`);
+            w.line(`/// <returns>String representation of the ${enumName} value.</returns>`);
             w.line(`public static implicit operator string(${enumFullName} o) => o._value;`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two ${enumName} instances are equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="a">The first instance to compare.</param>`);
+            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <returns>True if they're equal, false otherwise.</returns>`);
             w.line(`public static bool operator ==(${enumFullName} a, ${enumFullName} b) => a.Equals(b);`);
+            w.line(``);
+            w.line(`/// <summary>`);
+            w.line(`/// Check if two ${enumName} instances are not equal.`);
+            w.line(`/// </summary>`);
+            w.line(`/// <param name="a">The first instance to compare.</param>`);
+            w.line(`/// <param name="b">The second instance to compare.</param>`);
+            w.line(`/// <returns>True if they're not equal, false otherwise.</returns>`);
             w.line(`public static bool operator !=(${enumFullName} a, ${enumFullName} b) => !a.Equals(b);`);
         });
     });

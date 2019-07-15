@@ -42,6 +42,7 @@ namespace Azure.Storage.Files
         /// </summary>
         protected virtual HttpPipeline Pipeline => this._pipeline;
 
+        #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="FileServiceClient"/>
         /// class for mocking.
@@ -162,6 +163,7 @@ namespace Azure.Storage.Files
             this._uri = serviceUri;
             this._pipeline = pipeline;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="ShareClient"/> object by appending
@@ -177,6 +179,7 @@ namespace Azure.Storage.Files
         /// </returns>
         public virtual ShareClient GetShareClient(string shareName) => new ShareClient(this.Uri.AppendToPath(shareName), this.Pipeline);
 
+        #region GetShares
         /// <summary>
         /// The <see cref="GetShares"/> operation returns an async sequence
         /// of the shares in the storage account.  Enumerating the shares may
@@ -194,8 +197,8 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="IEnumerable{Response{ShareItem}}"/> describing the
-        /// shares in the storage account.
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{ShareItem}"/>
+        /// describing the shares in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -236,7 +239,7 @@ namespace Azure.Storage.Files
             new GetSharesAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetSharesAsync"/> operation returns a
+        /// The <see cref="GetSharesInternal"/> operation returns a
         /// single segment of shares in the storage account, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
@@ -271,14 +274,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{SharesSegment}}"/> describing a
+        /// A <see cref="Response{SharesSegment}"/> describing a
         /// segment of the shares in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<SharesSegment>> GetSharesAsync(
+        internal async Task<Response<SharesSegment>> GetSharesInternal(
             string marker,
             GetSharesOptions? options,
             int? pageSizeHint,
@@ -317,7 +320,9 @@ namespace Azure.Storage.Files
                 }
             }
         }
+        #endregion GetShares
 
+        #region GetProperties
         /// <summary>
         /// The <see cref="GetProperties"/> operation gets the properties
         /// of a storage account’s file service, including properties for
@@ -339,7 +344,7 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<FileServiceProperties> GetProperties(
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -356,7 +361,7 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{FileServiceProperties}}"/> describing
+        /// A <see cref="Response{FileServiceProperties}"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
@@ -365,13 +370,13 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<FileServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation gets the properties
+        /// The <see cref="GetPropertiesInternal"/> operation gets the properties
         /// of a storage account’s file service, including properties for
         /// Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
         /// 
@@ -385,14 +390,14 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{FileServiceProperties}}"/> describing
+        /// A <see cref="Response{FileServiceProperties}"/> describing
         /// the service properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileServiceProperties>> GetPropertiesAsync(
+        private async Task<Response<FileServiceProperties>> GetPropertiesInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -421,7 +426,9 @@ namespace Azure.Storage.Files
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetProperties
         /// <summary>
         /// The <see cref="SetProperties"/> operation sets properties for
         /// a storage account’s File service endpoint, including properties
@@ -447,7 +454,7 @@ namespace Azure.Storage.Files
         public virtual Response SetProperties(
             FileServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            this.SetPropertiesAsync(
+            this.SetPropertiesInternal(
                 properties,
                 false, // async
                 cancellationToken)
@@ -469,7 +476,7 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> if the operation was successful.
+        /// A <see cref="Response"/> if the operation was successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -478,14 +485,14 @@ namespace Azure.Storage.Files
         public virtual async Task<Response> SetPropertiesAsync(
             FileServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await this.SetPropertiesAsync(
+            await this.SetPropertiesInternal(
                 properties,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetPropertiesAsync"/> operation sets properties for
+        /// The <see cref="SetPropertiesInternal"/> operation sets properties for
         /// a storage account’s File service endpoint, including properties
         /// for Storage Analytics, CORS (Cross-Origin Resource Sharing) rules
         /// and soft delete settings.  You can also use this operation to set
@@ -503,13 +510,13 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> if the operation was successful.
+        /// A <see cref="Response"/> if the operation was successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> SetPropertiesAsync(
+        private async Task<Response> SetPropertiesInternal(
             FileServiceProperties properties,
             bool async,
             CancellationToken cancellationToken)
@@ -540,13 +547,15 @@ namespace Azure.Storage.Files
                 }
             }
         }
+        #endregion SetProperties
 
+        #region CreateShare
         /// <summary>
         /// The <see cref="CreateShare"/> operation creates a new share
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         /// 
-        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to create.
@@ -585,7 +594,7 @@ namespace Azure.Storage.Files
         /// under the specified account. If a share with the same name
         /// already exists, the operation fails.
         /// 
-        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to create.
@@ -601,7 +610,7 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ShareClient}}"/> referencing the newly
+        /// A <see cref="Response{ShareClient}"/> referencing the newly
         /// created share.
         /// </returns>
         /// <remarks>
@@ -618,14 +627,16 @@ namespace Azure.Storage.Files
             var response = await share.CreateAsync(metadata, quotaInBytes, cancellationToken).ConfigureAwait(false);
             return new Response<ShareClient>(response.GetRawResponse(), share);
         }
+        #endregion CreateShare
 
+        #region DeleteShare
         /// <summary>
         /// Marks the specified share or share snapshot for deletion.
         /// The share or share snapshot and any files contained within it are later deleted during garbage collection.
         /// 
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
-        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.
@@ -652,7 +663,7 @@ namespace Azure.Storage.Files
         /// 
         /// Currently, this method will always delete snapshots.  There's no way to specify a separate value for x-ms-delete-snapshots.
         ///
-        /// For more information, see <see cref="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
         /// </summary>
         /// <param name="shareName">
         /// The name of the share to delete.
@@ -662,7 +673,7 @@ namespace Azure.Storage.Files
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -673,6 +684,7 @@ namespace Azure.Storage.Files
             CancellationToken cancellationToken = default) =>
             await this.GetShareClient(shareName)
                 .DeleteAsync(cancellationToken: cancellationToken)
-                .ConfigureAwait(false);        
+                .ConfigureAwait(false);
+        #endregion DeleteShare
     }
 }

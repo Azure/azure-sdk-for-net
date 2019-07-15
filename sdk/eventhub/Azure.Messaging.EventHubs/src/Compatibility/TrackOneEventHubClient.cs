@@ -172,14 +172,21 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///
         public override async Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken)
         {
-            var runtimeInformation = await TrackOneClient.GetRuntimeInformationAsync().ConfigureAwait(false);
+            try
+            {
+                var runtimeInformation = await TrackOneClient.GetRuntimeInformationAsync().ConfigureAwait(false);
 
-            return new EventHubProperties
-            (
-                TrackOneClient.EventHubName,
-                runtimeInformation.CreatedAt,
-                runtimeInformation.PartitionIds
-            );
+                return new EventHubProperties
+                (
+                    TrackOneClient.EventHubName,
+                    runtimeInformation.CreatedAt,
+                    runtimeInformation.PartitionIds
+                );
+            }
+            catch (TrackOne.EventHubsException ex)
+            {
+                throw ex.MapToTrackTwoException();
+            }
         }
 
         /// <summary>
@@ -195,10 +202,15 @@ namespace Azure.Messaging.EventHubs.Compatibility
         public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                                     CancellationToken cancellationToken)
         {
-            var runtimeInformation = await TrackOneClient.GetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
-
-            if (long.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
+            try
             {
+                var runtimeInformation = await TrackOneClient.GetPartitionRuntimeInformationAsync(partitionId).ConfigureAwait(false);
+
+                if (!Int64.TryParse(runtimeInformation.LastEnqueuedOffset, out var lastEnqueuedOffset))
+                {
+                    throw new FormatException(String.Format(CultureInfo.CurrentCulture, Resources.CannotParseIntegerType, nameof(runtimeInformation.LastEnqueuedOffset), 64, runtimeInformation.LastEnqueuedOffset));
+                }
+
                 return new PartitionProperties
                 (
                     runtimeInformation.Path,
@@ -210,8 +222,10 @@ namespace Azure.Messaging.EventHubs.Compatibility
                     runtimeInformation.IsEmpty
                 );
             }
-
-            throw new ArgumentException($"The { nameof(runtimeInformation.LastEnqueuedOffset) } argument is expected to be a 64-byte signed integer. Actual value: '{ runtimeInformation.LastEnqueuedOffset }'.");
+            catch (TrackOne.EventHubsException ex)
+            {
+                throw ex.MapToTrackTwoException();
+            }
         }
 
         /// <summary>

@@ -105,7 +105,7 @@ namespace Azure.Storage.Queues.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetQueuesAsync(
+            var task = this._client.GetQueuesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,
