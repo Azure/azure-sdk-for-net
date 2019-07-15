@@ -41,8 +41,12 @@ namespace Azure.Core.Pipeline.Policies
             }
 
             var activity = new Activity("Azure.Core.Http.Request");
-            activity.AddTag("method", message.Request.Method.Method);
-            activity.AddTag("uri", message.Request.UriBuilder.ToString());
+            activity.AddTag("http.method", message.Request.Method.Method);
+            activity.AddTag("http.url", message.Request.UriBuilder.ToString());
+            if (message.Request.Headers.TryGetValue("User-Agent", out string userAgent))
+            {
+                activity.AddTag("http.user_agent", userAgent);
+            }
 
             var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName);
 
@@ -64,7 +68,7 @@ namespace Azure.Core.Pipeline.Policies
                 ProcessNext(message, pipeline);
             }
 
-            activity.AddTag("status", message.Response.Status.ToString(CultureInfo.InvariantCulture));
+            activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
 
             if (diagnosticSourceActivityEnabled)
             {

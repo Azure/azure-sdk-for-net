@@ -23,17 +23,22 @@ namespace Azure.Core.Testing
             return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
         }
 
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Request request, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        {
+            await Task.Yield();
+
+            var pipeline = new HttpPipeline(transport, new [] { policy });
+            return await SendRequestAsync(pipeline, request, CancellationToken.None);
+        }
+
         protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest())
-            {
-                request.Method = RequestMethod.Get;
-                request.UriBuilder.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
-                return await SendRequestAsync(pipeline, request, CancellationToken.None);
-            }
+            using Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.UriBuilder.Uri = new Uri("http://example.com");
+            return await SendRequestAsync(transport, request, policy, responseClassifier);
         }
     }
 }
