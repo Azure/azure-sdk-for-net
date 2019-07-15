@@ -88,11 +88,12 @@ namespace Azure.Core.Testing
 
         public virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
         {
-            var headeders1 = entry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key)).ToArray();
-            var headers2 = otherEntry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key)).ToArray();
+            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
+
             return
                 entry.StatusCode == otherEntry.StatusCode &&
-                headeders1.SequenceEqual(headers2, new HeaderComparer()) &&
+                entryHeaders.SequenceEqual(otherEntryHeaders, new HeaderComparer()) &&
                 IsBodyEquivalent(
                     entry.ResponseBody ?? Array.Empty<byte>(),
                     otherEntry.ResponseBody ?? Array.Empty<byte>());

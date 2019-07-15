@@ -14,7 +14,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 {
     public class ConfigurationLiveTests: RecordedTestBase
     {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
             Matcher = new ConfigurationRecordMatcher(Sanitizer);
