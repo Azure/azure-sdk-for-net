@@ -15,6 +15,8 @@ namespace Azure.Core.Tests
 
         public Queue<KeyValuePair<string, object>> Events { get; } = new Queue<KeyValuePair<string, object>>();
 
+        public Queue<(string, object,  object)> IsEnabledCalls { get; } = new Queue<(string, object,  object)>();
+
         public TestDiagnosticListener(string diagnosticSourceName)
         {
             _diagnosticSourceName = diagnosticSourceName;
@@ -38,8 +40,14 @@ namespace Azure.Core.Tests
         {
             if (value.Name == _diagnosticSourceName)
             {
-                _subscriptions.Add(value.Subscribe(this));
+                _subscriptions.Add(value.Subscribe(this, IsEnabled));
             }
+        }
+
+        private bool IsEnabled(string arg1, object arg2, object arg3)
+        {
+            IsEnabledCalls.Enqueue((arg1, arg2, arg3));
+            return true;
         }
 
         public void Dispose()

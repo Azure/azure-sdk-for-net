@@ -10,6 +10,10 @@ namespace Azure.Core.Pipeline.Policies
 {
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
+        private const string TraceParentHeaderName = "traceparent";
+        private const string TraceStateHeaderName = "tracestate";
+        private const string RequestIdHeaderName = "Request-Id";
+
         public static RequestActivityPolicy Shared { get; } = new RequestActivityPolicy();
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Pipeline");
@@ -28,14 +32,7 @@ namespace Azure.Core.Pipeline.Policies
         {
             if (!s_diagnosticSource.IsEnabled())
             {
-                if (isAsync)
-                {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNext(message, pipeline);
-                }
+                await ProcessNextAsync(message, pipeline, isAsync).ConfigureAwait(false);
 
                 return;
             }
@@ -48,7 +45,7 @@ namespace Azure.Core.Pipeline.Policies
                 activity.AddTag("http.user_agent", userAgent);
             }
 
-            var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName);
+            var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName, message.Request);
 
             if (diagnosticSourceActivityEnabled)
             {
@@ -58,6 +55,7 @@ namespace Azure.Core.Pipeline.Policies
             {
                 activity.Start();
             }
+
 
             if (isAsync)
             {
@@ -77,6 +75,42 @@ namespace Azure.Core.Pipeline.Policies
             else
             {
                 activity.Stop();
+            }
+        }
+
+        private static async Task ProcessNextAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        {
+            var currentActivity = Activity.Current;
+
+            if (currentActivity != null)
+            {
+                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+                {
+                    if (!message.Request.Headers.Contains(TraceParentHeaderName))
+                    {
+                        message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
+                        if (currentActivity.TraceStateString != null)
+                        {
+                            message.Request.Headers.Add(TraceStateHeaderName, currentActivity.TraceStateString);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!message.Request.Headers.Contains(RequestIdHeaderName))
+                    {
+                        message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
+                    }
+                }
+            }
+
+            if (isAsync)
+            {
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline);
             }
         }
     }

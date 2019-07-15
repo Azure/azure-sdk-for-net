@@ -49,10 +49,60 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
 
             Assert.AreEqual("Azure.Core.Http.Request", activity.OperationName);
+
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CurrentActivityIsInjectedIntoRequest()
+        {
+            var transport = new MockTransport(new MockResponse(200));
+
+            var activity = new Activity("Dummy");
+
+            activity.Start();
+
+            await SendGetRequest(transport, RequestActivityPolicy.Shared);
+
+            activity.Stop();
+
+            Assert.True(transport.SingleRequest.TryGetHeader("Request-Id", out string requestId));
+            Assert.AreEqual(activity.Id, requestId);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task CurrentActivityIsInjectedIntoRequestW3C()
+        {
+            var previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            try
+            {
+                var transport = new MockTransport(new MockResponse(200));
+
+                var activity = new Activity("Dummy");
+
+                activity.Start();
+                activity.TraceStateString = "trace";
+
+                await SendGetRequest(transport, RequestActivityPolicy.Shared);
+
+                activity.Stop();
+
+                Assert.True(transport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+                Assert.AreEqual(activity.Id, requestId);
+
+                Assert.True(transport.SingleRequest.TryGetHeader("tracestate", out string traceState));
+                Assert.AreEqual("trace", traceState);
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = previousFormat;
+            }
         }
     }
 }

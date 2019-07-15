@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
             _isActivityEnabled = isActivityEnabled;
         }
 
-        private static readonly DiagnosticListener s_source = new DiagnosticListener("Azure");
+        private static readonly DiagnosticListener s_source = new DiagnosticListener("Azure.Clients");
 
         public DiagnosticScope CreateScope(string name)
         {

@@ -15,7 +15,7 @@ namespace Azure.Core.Tests
         public void CreatesActivityWithNameAndTags()
         {
 
-            using var testListener = new TestDiagnosticListener("Azure");
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
@@ -46,7 +46,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
-            using var testListener = new TestDiagnosticListener("Azure");
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
             ClientDiagnostics clientDiagnostics = new ClientDiagnostics(true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
