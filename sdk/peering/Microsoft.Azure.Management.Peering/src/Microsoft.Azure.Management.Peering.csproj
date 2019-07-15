@@ -9,8 +9,10 @@
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
 		<Version>1.0.1-preview</Version>
 		<Version>1.0.0-preview</Version>
+		<Version>0.10.0-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Connection Identifier for BGP Session]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
