@@ -195,14 +195,7 @@ namespace Azure.Core.Testing
 
             public int GetHashCode(KeyValuePair<string, string[]> obj)
             {
-                var builder = new HashCodeBuilder();
-                builder.Add(obj.Key, StringComparer.OrdinalIgnoreCase);
-                foreach (var value in obj.Value)
-                {
-                    builder.Add(value);
-                }
-
-                return builder.ToHashCode();
+                return obj.GetHashCode();
             }
         }
     }
