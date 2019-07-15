@@ -33,8 +33,6 @@ namespace Azure.Core.Testing
 
         protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
-            await Task.Yield();
-
             using Request request = transport.CreateRequest();
             request.Method = RequestMethod.Get;
             request.UriBuilder.Uri = new Uri("http://example.com");
