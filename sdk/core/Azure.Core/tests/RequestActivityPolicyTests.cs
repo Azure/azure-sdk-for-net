@@ -104,5 +104,30 @@ namespace Azure.Core.Tests
                 Activity.DefaultIdFormat = previousFormat;
             }
         }
+
+        [Test]
+        [NonParallelizable]
+        public async Task PassesMessageIntoIsEnabledStartAndStopEvents()
+        {
+            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+
+            var transport = new MockTransport(new MockResponse(200));
+
+            await SendGetRequest(transport, RequestActivityPolicy.Shared);
+
+            KeyValuePair<string, object> startEvent = testListener.Events.Dequeue();
+            KeyValuePair<string, object> stopEvent = testListener.Events.Dequeue();
+            var isEnabledCall = testListener.IsEnabledCalls.Dequeue();
+
+            Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
+            Assert.IsInstanceOf<HttpPipelineMessage>(startEvent.Value);
+
+            Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
+            Assert.IsInstanceOf<HttpPipelineMessage>(stopEvent.Value);
+
+            Assert.AreEqual("Azure.Core.Http.Request", isEnabledCall.Item1);
+            Assert.IsInstanceOf<HttpPipelineMessage>(isEnabledCall.Item2);
+        }
+
     }
 }

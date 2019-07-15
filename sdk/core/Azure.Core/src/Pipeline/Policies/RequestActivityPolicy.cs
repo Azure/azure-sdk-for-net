@@ -45,11 +45,11 @@ namespace Azure.Core.Pipeline.Policies
                 activity.AddTag("http.user_agent", userAgent);
             }
 
-            var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName, message.Request);
+            var diagnosticSourceActivityEnabled = s_diagnosticSource.IsEnabled(activity.OperationName, message);
 
             if (diagnosticSourceActivityEnabled)
             {
-                s_diagnosticSource.StartActivity(activity, null);
+                s_diagnosticSource.StartActivity(activity, message);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace Azure.Core.Pipeline.Policies
 
             if (diagnosticSourceActivityEnabled)
             {
-                s_diagnosticSource.StopActivity(activity, null);
+                s_diagnosticSource.StopActivity(activity, message);
             }
             else
             {
