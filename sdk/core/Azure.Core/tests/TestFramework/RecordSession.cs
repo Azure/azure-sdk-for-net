@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Http;
 
@@ -82,6 +83,37 @@ namespace Azure.Core.Testing
                 {
                     entry.Sanitize(sanitizer);
                 }
+            }
+        }
+
+        public bool IsEquivalent(RecordSession session, RecordMatcher matcher)
+        {
+            if (session == null)
+            {
+                return false;
+            }
+
+            return session.Variables.SequenceEqual(Variables) &&
+                   session.Entries.SequenceEqual(Entries, new EntryEquivalentComparer(matcher));
+        }
+
+        private class EntryEquivalentComparer : IEqualityComparer<RecordEntry>
+        {
+            private readonly RecordMatcher _matcher;
+
+            public EntryEquivalentComparer(RecordMatcher matcher)
+            {
+                _matcher = matcher;
+            }
+
+            public bool Equals(RecordEntry x, RecordEntry y)
+            {
+                return _matcher.IsEquivalentResponse(x, y);
+            }
+
+            public int GetHashCode(RecordEntry obj)
+            {
+                return obj.GetHashCode();
             }
         }
     }
