@@ -10,6 +10,7 @@
 		<Version>0.10.0-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
+	<![CDATA[New features:   Adding Connection Identifier for BGP Session]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
