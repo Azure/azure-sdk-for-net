@@ -5,7 +5,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Storage.Common;
 
 namespace Azure.Storage

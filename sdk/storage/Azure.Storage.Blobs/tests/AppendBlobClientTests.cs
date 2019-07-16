@@ -521,7 +521,7 @@ namespace Azure.Storage.Blobs.Test
 
                     // Act
                     await destBlob.AppendBlockFromUriAsync(
-                        sourceUri: sourceBlob.Uri, 
+                        sourceUri: sourceBlob.Uri,
                         sourceContentHash: MD5.Create().ComputeHash(data));
                 }
             }

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure
+namespace Azure.Core.Http
 {
     public readonly struct ETag : IEquatable<ETag>
     {
