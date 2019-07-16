@@ -17,10 +17,19 @@ namespace Azure.Identity
     {
         private readonly AadIdentityClient _client;
 
+        /// <summary>
+        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// </summary>
         public string TenantId { get; }
 
+        /// <summary>
+        /// Gets the client (application) ID of the service principal
+        /// </summary>
         public string ClientId { get; }
 
+        /// <summary>
+        /// Gets the client secret that was generated for the App Registration used to authenticate the client.
+        /// </summary>
         public string ClientSecret { get; }
 
         /// <summary>

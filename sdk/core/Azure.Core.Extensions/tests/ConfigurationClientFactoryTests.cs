@@ -70,7 +70,7 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
             );
 
-            var credential = ClientFactory.CreateCredentials(configuration);
+            var credential = ClientFactory.CreateCredential(configuration);
 
             Assert.IsInstanceOf<ClientCertificateCredential>(credential);
             var clientCertificateCredential = (ClientCertificateCredential)credential;
@@ -89,7 +89,7 @@ namespace Azure.Core.Extensions.Tests
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
             );
 
-            var credential = ClientFactory.CreateCredentials(configuration);
+            var credential = ClientFactory.CreateCredential(configuration);
 
             Assert.IsInstanceOf<ClientSecretCredential>(credential);
             var clientSecretCredential = (ClientSecretCredential)credential;

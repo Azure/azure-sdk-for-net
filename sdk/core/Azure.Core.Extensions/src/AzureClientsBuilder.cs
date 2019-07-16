@@ -33,7 +33,7 @@ namespace Azure.Core.Extensions
             return ((IAzureClientsBuilderWithCredential)this).RegisterClient<TClient, TOptions>(
                 (options, credentials) => (TClient)ClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration, credentials))
                 .ConfigureOptions(configuration)
-                .WithCredential(ClientFactory.CreateCredentials(configuration));
+                .WithCredential(ClientFactory.CreateCredential(configuration));
         }
 
         public AzureClientsBuilder ConfigureDefaults(Action<ClientOptions> configureOptions)
@@ -53,7 +53,7 @@ namespace Azure.Core.Extensions
         {
             ConfigureDefaults(options => configuration.Bind(options));
 
-            var credentialsFromConfig = ClientFactory.CreateCredentials(configuration);
+            var credentialsFromConfig = ClientFactory.CreateCredential(configuration);
 
             if (credentialsFromConfig != null)
             {

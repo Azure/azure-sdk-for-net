@@ -62,7 +62,7 @@ namespace Azure.Core.Extensions
             throw new InvalidOperationException(BuildErrorMessage(clientType, optionsType));
         }
 
-        internal static TokenCredential CreateCredentials(IConfiguration configuration, IdentityClientOptions identityClientOptions = null)
+        internal static TokenCredential CreateCredential(IConfiguration configuration, IdentityClientOptions identityClientOptions = null)
         {
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];

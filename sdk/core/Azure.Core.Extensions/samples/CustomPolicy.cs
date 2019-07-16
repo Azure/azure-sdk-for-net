@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace Azure.Core.Extensions.Samples
 {
-    internal class DIEnabledPolicy : SynchronousHttpPipelinePolicy
+    internal class DependencyInjectionEnabledPolicy : SynchronousHttpPipelinePolicy
     {
         private readonly IHostingEnvironment _environment;
 
-        public DIEnabledPolicy(IHostingEnvironment environment)
+        public DependencyInjectionEnabledPolicy(IHostingEnvironment environment)
         {
             this._environment = environment;
         }

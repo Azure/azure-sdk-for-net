@@ -5,14 +5,23 @@ using Azure.Core.Extensions;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder
+    /// </summary>
     public static class ConfigurationClientBuilderExtensions
     {
+        /// <summary>
+        /// Registers a <see cref="ConfigurationClient"/> instance with the provided <paramref name="connectionString"/>
+        /// </summary>
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder: IAzureClientsBuilder
         {
             return builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(options => new ConfigurationClient(connectionString, options));
         }
 
+        /// <summary>
+        /// Registers a <see cref="ConfigurationClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
+        /// </summary>
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
