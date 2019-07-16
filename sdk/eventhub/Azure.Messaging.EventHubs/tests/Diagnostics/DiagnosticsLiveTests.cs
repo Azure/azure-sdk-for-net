@@ -24,6 +24,9 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     class DiagnosticsLiveTests
     {
+        /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
+        private const int ReceiveRetryLimit = 10;
+
         private static ConcurrentQueue<(string eventName, object payload, Activity activity)> CreateEventQueue() =>
             new ConcurrentQueue<(string eventName, object payload, Activity activity)>();
 
@@ -204,6 +207,94 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        [Test]
+        [Ignore("Injection step not working")]
+        public async Task ReceiveFiresEvents()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    var eventQueue = CreateEventQueue();
+                    var partition = (await client.GetPartitionIdsAsync()).First();
+
+                    using (var listener = CreateEventListener(eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
+                    await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
+                    {
+                        var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
+                        var sendEvent = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
+                        var partitionKey = "AmIaGoodPartitionKey";
+
+                        // Enable Send & Receive .Start & .Stop events.
+
+                        listener.Enable((name, queueName, arg) => !name.EndsWith(".Exception"));
+
+                        // Initiate an operation to force the consumer to connect and set its position at the
+                        // end of the event stream.
+
+                        await consumer.ReceiveAsync(1, TimeSpan.Zero);
+
+                        // Send the batch of events.
+
+                        Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
+                        Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
+
+                        await producer.SendAsync(sendEvent, new SendOptions { PartitionKey = partitionKey });
+
+                        // Receive and the event; because there is some non-determinism in the messaging flow, the
+                        // sent event may not be immediately available.  Allow for a small number of attempts to receive, in order
+                        // to account for availability delays.
+
+                        var expectedEventsCount = 1;
+                        var receivedEvents = new List<EventData>();
+                        var index = 0;
+
+                        parentActivity.Start();
+
+                        while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
+                        {
+                            receivedEvents.AddRange(await consumer.ReceiveAsync(10, TimeSpan.FromMilliseconds(25)));
+                        }
+
+                        parentActivity.Stop();
+
+                        var receivedEvent = receivedEvents.Single();
+                        // TODO: check payload string?
+
+                        // Check Diagnostic-Id injection.
+
+                        Assert.That(receivedEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
+                        // TODO: check if key is present in sendEvent?
+                        Assert.That(receivedEvent.Properties[TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName], Is.EqualTo(sendEvent.Properties[TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName]));
+
+                        // Check Correlation-Context injection.
+
+                        Assert.That(receivedEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
+                        // TODO: change order
+                        Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(receivedEvent.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
+
+                        Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
+                        Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
+
+                        // TODO: isParentActivity necessary?
+                        Assert.That(eventQueue.TryDequeue(out var receiveStart), Is.True);
+                        AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, partitionKey, connectionString);
+
+                        Assert.That(eventQueue.TryDequeue(out var receiveStop), Is.True);
+                        AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, partitionKey, connectionString, relatedId: sendStop.activity.Id);
+
+                        // There should be no more events to dequeue.
+
+                        Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
+                    }
+                }
+            }
+        }
+
         private static void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, string connectionString, int eventCount = 1)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
@@ -265,6 +356,51 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
+        }
+
+        private static void AssertReceiveStart(string name, object payload, Activity activity, string partitionKey, string connectionString)
+        {
+            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+
+            Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Receive.Start"));
+            AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
+
+            Assert.That(activity, Is.Not.Null);
+
+            AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
+            AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
+
+            if (partitionKey != null)
+            {
+                AssertTagMatches(activity, "eh.partition_key", partitionKey);
+            }
+
+            AssertTagExists(activity, "eh.event_count");
+            AssertTagExists(activity, "eh.client_id");
+            AssertTagExists(activity, "eh.consumer_group");
+            AssertTagExists(activity, "eh.start_offset");
+        }
+
+        private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string partitionKey, string connectionString, bool isFaulted = false, string relatedId = null)
+        {
+            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+
+            Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Receive.Stop"));
+            AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+
+            if (receiveActivity != null)
+            {
+                Assert.That(activity, Is.EqualTo(receiveActivity));
+            }
+
+            if (!string.IsNullOrEmpty(relatedId))
+            {
+                var relatedToTag = activity.Tags.FirstOrDefault(tag => tag.Key == TrackOne.EventHubsDiagnosticSource.RelatedToTagName);
+
+                Assert.That(relatedToTag, Is.Not.Null);
+                Assert.That(relatedToTag.Value, Is.Not.Null);
+                Assert.That(relatedToTag.Value.Contains(relatedId), Is.True);
+            }
         }
 
         private static void AssertTagExists(Activity activity, string tagName)
