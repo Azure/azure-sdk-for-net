@@ -211,6 +211,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 case TimeoutException _:
                     return new ServiceBusTimeoutException(message, aggregateException);
+
+                case InvalidOperationException _ when connectionError:
+                    return new ServiceBusCommunicationException(message, aggregateException);
             }
 
             return aggregateException;
