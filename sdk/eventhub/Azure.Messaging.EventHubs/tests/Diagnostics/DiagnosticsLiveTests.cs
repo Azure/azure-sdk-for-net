@@ -57,55 +57,70 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
-        public async Task SendFiresEvents()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SendFiresEvents(bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var producer = client.CreateProducer())
                 {
-                    var eventQueue = CreateEventQueue();
+                    string partitionId = null;
+                    string partitionKey = null;
 
-                    using (var listener = CreateEventListener(eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    if (usePartitionId)
                     {
-                        var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                        var eventData = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
-                        var partitionKey = "AmIaGoodPartitionKey";
+                        partitionId = (await client.GetPartitionIdsAsync()).First();
+                    }
+                    else
+                    {
+                        partitionKey = "AmIaGoodPartitionKey";
+                    }
 
-                        // Enable Send .Start & .Stop events.
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
+                    {
+                        var eventQueue = CreateEventQueue();
 
-                        listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Exception"));
+                        using (var listener = CreateEventListener(eventQueue))
+                        using (var subscription = SubscribeToEvents(listener))
+                        {
+                            var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
+                            var eventData = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
 
-                        Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
-                        Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
+                            // Enable Send .Start & .Stop events.
 
-                        parentActivity.Start();
+                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Exception"));
 
-                        await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey });
+                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
+                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
 
-                        parentActivity.Stop();
+                            parentActivity.Start();
 
-                        // Check Diagnostic-Id injection.
+                            await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey });
 
-                        Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
+                            parentActivity.Stop();
 
-                        // Check Correlation-Context injection.
+                            // Check Diagnostic-Id injection.
 
-                        Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
-                        Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(eventData.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
+                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
 
-                        Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
-                        AssertSendStart(sendStart.eventName, sendStart.payload, sendStart.activity, parentActivity, partitionKey, connectionString);
+                            // Check Correlation-Context injection.
 
-                        Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
-                        AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, sendStart.activity, partitionKey, connectionString);
+                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
+                            Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(eventData.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
 
-                        // There should be no more events to dequeue.
+                            Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
+                            AssertSendStart(sendStart.eventName, sendStart.payload, sendStart.activity, parentActivity, partitionKey ?? partitionId, connectionString);
 
-                        Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
+                            Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
+                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, sendStart.activity, partitionKey ?? partitionId, connectionString);
+
+                            // There should be no more events to dequeue.
+
+                            Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
+                        }
                     }
                 }
             }
@@ -160,47 +175,62 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
-        public async Task SendFiresExceptionEvents()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SendFiresExceptionEvents(bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var client = new EventHubClient(connectionString))
-                await using (var producer = client.CreateProducer())
                 {
-                    var eventQueue = CreateEventQueue();
+                    string partitionId = null;
+                    string partitionKey = null;
 
-                    using (var listener = CreateEventListener(eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    if (usePartitionId)
                     {
-                        var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                        var eventData = new EventData(new byte[300 * 1024 * 1024]);
-                        var partitionKey = "AmIaGoodPartitionKey";
+                        partitionId = (await client.GetPartitionIdsAsync()).First();
+                    }
+                    else
+                    {
+                        partitionKey = "AmIaGoodPartitionKey";
+                    }
 
-                        // Enable Send .Exception & .Stop events.
+                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partitionId }))
+                    {
+                        var eventQueue = CreateEventQueue();
 
-                        listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Start"));
+                        using (var listener = CreateEventListener(eventQueue))
+                        using (var subscription = SubscribeToEvents(listener))
+                        {
+                            var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
+                            var eventData = new EventData(new byte[1500000]);
 
-                        parentActivity.Start();
+                            // Enable Send .Exception & .Stop events.
 
-                        // Try sending a large message. A SizeLimitException is expected.
+                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Start"));
 
-                        Assert.That(async () => await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey }), Throws.InstanceOf<MessageSizeExceededException>());
+                            parentActivity.Start();
 
-                        parentActivity.Stop();
+                            // Try sending a large message. A SizeLimitException is expected.
 
-                        Assert.That(eventQueue.TryDequeue(out var exception), Is.True);
-                        AssertSendException(exception.eventName, exception.payload, exception.activity, null, partitionKey, connectionString);
+                            Assert.That(async () => await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey }), Throws.InstanceOf<MessageSizeExceededException>());
 
-                        Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
-                        AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partitionKey, connectionString);
+                            parentActivity.Stop();
 
-                        Assert.That(sendStop.activity, Is.EqualTo(exception.activity));
+                            Assert.That(eventQueue.TryDequeue(out var exception), Is.True);
+                            AssertSendException(exception.eventName, exception.payload, exception.activity, null, partitionKey ?? partitionId, connectionString);
 
-                        // There should be no more events to dequeue.
+                            Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
+                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partitionKey ?? partitionId, connectionString);
 
-                        Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
+                            Assert.That(sendStop.activity, Is.EqualTo(exception.activity));
+
+                            // There should be no more events to dequeue.
+
+                            Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
+                        }
                     }
                 }
             }

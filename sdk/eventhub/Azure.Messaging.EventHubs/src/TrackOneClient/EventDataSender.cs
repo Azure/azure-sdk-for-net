@@ -26,9 +26,12 @@ namespace TrackOne
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
             int count = ValidateEvents(eventDatas);
+            var diagnosticPartitionKey = String.IsNullOrEmpty(partitionKey) ?
+                this.PartitionId :
+                partitionKey;
 
             EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, count);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, count);
 
             Task sendTask = null;
             try
@@ -41,13 +44,13 @@ namespace TrackOne
             catch (Exception exception)
             {
                 EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, exception);
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, exception);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, partitionKey, eventDatas, sendTask);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, sendTask);
             }
         }
 
