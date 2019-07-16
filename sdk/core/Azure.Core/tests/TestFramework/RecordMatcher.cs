@@ -28,6 +28,15 @@ namespace Azure.Core.Testing
             "User-Agent"
         };
 
+        public HashSet<string> ExcludeResponseHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Date",
+            "ETag",
+            "Last-Modified",
+            "x-ms-request-id",
+            "x-ms-correlation-request-id"
+        };
+
         public virtual RecordEntry FindMatch(Request request, IList<RecordEntry> entries)
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
@@ -75,6 +84,23 @@ namespace Azure.Core.Testing
 
 
             throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
+        }
+
+        public virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
+        {
+            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !ExcludeResponseHeaders.Contains(h.Key));
+
+            return
+                entry.StatusCode == otherEntry.StatusCode &&
+                entryHeaders.SequenceEqual(otherEntryHeaders, new HeaderComparer()) &&
+                IsBodyEquivalent(entry, otherEntry);
+        }
+
+        protected virtual bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
+        {
+            return (record.ResponseBody ?? Array.Empty<byte>()).AsSpan()
+                .SequenceEqual((otherRecord.ResponseBody ?? Array.Empty<byte>()));
         }
 
         private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
@@ -157,6 +183,20 @@ namespace Azure.Core.Testing
             }
             difference += remaining.Count;
             return difference;
+        }
+
+        private class HeaderComparer : IEqualityComparer<KeyValuePair<string, string[]>>
+        {
+            public bool Equals(KeyValuePair<string, string[]> x, KeyValuePair<string, string[]> y)
+            {
+                return x.Key.Equals(y.Key, StringComparison.OrdinalIgnoreCase) &&
+                       x.Value.SequenceEqual(y.Value);
+            }
+
+            public int GetHashCode(KeyValuePair<string, string[]> obj)
+            {
+                return obj.GetHashCode();
+            }
         }
     }
 }

@@ -102,6 +102,11 @@ namespace Azure.Core.Testing
                 }
             }
 
+            if (property.Type == JsonValueType.Array)
+            {
+                return Array.Empty<byte>();
+            }
+
             return Convert.FromBase64String(property.GetString());
         }
 
@@ -150,9 +155,14 @@ namespace Azure.Core.Testing
 
         private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers)
         {
-            if (requestBody == null || requestBody.Length == 0)
+            if (requestBody == null)
             {
                 jsonWriter.WriteNull(name);
+            }
+            else if (requestBody.Length == 0)
+            {
+                jsonWriter.WriteStartArray(name);
+                jsonWriter.WriteEndArray();
             }
             else if (IsTextContentType(headers, out Encoding encoding))
             {

@@ -19,6 +19,7 @@ namespace Azure.Core.Tests
         [TestCase("multi\rline", "application/xml")]
         [TestCase("multi\r\nline", "application/xml")]
         [TestCase("multi\n\rline\n", "application/xml")]
+        [TestCase("", "")]
         public void CanRoundtripSessionRecord(string body, string contentType)
         {
             byte[] bodyBytes = Encoding.UTF8.GetBytes(body);

@@ -230,6 +230,8 @@ namespace Azure.Security.KeyVault.Test
             DeletedSecret deletedSecret = await Client.DeleteAsync(secretName);
 
             AssertSecretsEqual(secret, deletedSecret);
+            Assert.NotNull(deletedSecret.DeletedDate);
+            Assert.NotNull(deletedSecret.ScheduledPurgeDate);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetAsync(secretName));
         }

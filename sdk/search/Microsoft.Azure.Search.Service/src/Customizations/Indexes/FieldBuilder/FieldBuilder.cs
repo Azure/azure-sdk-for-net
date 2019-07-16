@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Spatial;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+
 namespace Microsoft.Azure.Search
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Spatial;
-    using Newtonsoft.Json.Serialization;
-    using Newtonsoft.Json;
-    using System.Collections.ObjectModel;
-
     /// <summary>
     /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
     /// </summary>
@@ -92,37 +92,61 @@ namespace Microsoft.Azure.Search
         /// consistent with the way the model will be serialized.
         /// </param>
         /// <returns>A collection of fields.</returns>
-        public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver) =>
-            BuildForTypeRecursive(modelType, contractResolver, new Stack<Type>(new[] { modelType }));   // Avoiding dependency on ImmutableStack for now.
-
-        private static IList<Field> BuildForTypeRecursive(Type modelType, IContractResolver contractResolver, Stack<Type> processedTypes)
+        public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver)
         {
-            var contract = (JsonObjectContract)contractResolver.ResolveContract(modelType);
-            var fields = new List<Field>();
-            foreach (JsonProperty prop in contract.Properties)
+            ArgumentException FailOnNonObjectDataType()
             {
+                string errorMessage =
+                    $"Type '{modelType}' does not have properties which map to fields of an Azure Search index. Please use a " +
+                    "class or struct with public properties.";
+
+                throw new ArgumentException(errorMessage, nameof(modelType));
+            }
+
+            if (contractResolver.ResolveContract(modelType) is JsonObjectContract contract)
+            {
+                if (contract.Properties.Count == 0)
+                {
+                    throw FailOnNonObjectDataType();
+                }
+
+                // Use Stack to avoid a dependency on ImmutableStack for now.
+                return BuildForTypeRecursive(modelType, contract, contractResolver, new Stack<Type>(new[] { modelType }));
+            }
+
+            throw FailOnNonObjectDataType();
+        }
+
+        private static IList<Field> BuildForTypeRecursive(
+            Type modelType,
+            JsonObjectContract contract,
+            IContractResolver contractResolver,
+            Stack<Type> processedTypes)
+        {
+            Field BuildField(JsonProperty prop)
+            {
+                bool ShouldIgnore(Attribute attribute) =>
+                    attribute is JsonIgnoreAttribute || attribute is FieldBuilderIgnoreAttribute;
+
                 IList<Attribute> attributes = prop.AttributeProvider.GetAttributes(true);
-                if (attributes.Any(attr => attr is JsonIgnoreAttribute))
+                if (attributes.Any(ShouldIgnore))
                 {
-                    continue;
+                    return null;
                 }
 
-                DataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
-                DataType dataType = dataTypeInfo.DataType;
-                Type underlyingClrType = dataTypeInfo.UnderlyingClrType;
-
-                if (processedTypes.Contains(underlyingClrType))
-                {
-                    // Skip recursive types.
-                    continue;
-                }
-
-                Field CreateComplexField()
+                Field CreateComplexField(DataType dataType, Type underlyingClrType, JsonObjectContract jsonObjectContract)
                 {
                     try
                     {
+                        if (processedTypes.Contains(underlyingClrType))
+                        {
+                            // Skip recursive types.
+                            return null;
+                        }
+
                         processedTypes.Push(underlyingClrType);
-                        IList<Field> subFields = BuildForTypeRecursive(underlyingClrType, contractResolver, processedTypes);
+                        IList<Field> subFields =
+                            BuildForTypeRecursive(underlyingClrType, jsonObjectContract, contractResolver, processedTypes);
                         return new Field(prop.PropertyName, dataType, subFields);
                     }
                     finally
@@ -131,7 +155,7 @@ namespace Microsoft.Azure.Search
                     }
                 }
 
-                Field CreateSimpleField()
+                Field CreateSimpleField(DataType dataType)
                 {
                     var field = new Field(prop.PropertyName, dataType);
 
@@ -176,10 +200,14 @@ namespace Microsoft.Azure.Search
                                 break;
 
                             default:
+                                Type attributeType = attribute.GetType();
+
                                 // Match on name to avoid dependency - don't want to force people not using
                                 // this feature to bring in the annotations component.
-                                Type attributeType = attribute.GetType();
-                                if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
+                                //
+                                // Also, ignore key attributes on sub-fields.
+                                if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute" &&
+                                    processedTypes.Count <= 1)
                                 {
                                     field.IsKey = true;
                                 }
@@ -190,33 +218,52 @@ namespace Microsoft.Azure.Search
                     return field;
                 }
 
-                fields.Add(dataType.IsComplex() ? CreateComplexField() : CreateSimpleField());
+                ArgumentException FailOnUnknownDataType()
+                {
+                    string errorMessage =
+                        $"Property '{prop.PropertyName}' is of type '{prop.PropertyType}', which does not map to an " +
+                        "Azure Search data type. Please use a supported data type or mark the property with [JsonIgnore] or " +
+                        "[FieldBuilderIgnore] and define the field by creating a Field object.";
+
+                    return new ArgumentException(errorMessage, nameof(modelType));
+                }
+
+                IDataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType, contractResolver);
+
+                return dataTypeInfo.Match(
+                    onUnknownDataType: () => throw FailOnUnknownDataType(),
+                    onSimpleDataType: CreateSimpleField,
+                    onComplexDataType: CreateComplexField);
             }
 
-            return fields;
+            return contract.Properties.Select(BuildField).Where(field => field != null).ToArray();
         }
 
-        private static DataTypeInfo GetDataTypeInfo(Type propertyType)
+        private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IContractResolver contractResolver)
         {
             bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             if (PrimitiveTypeMap.TryGetValue(propertyType, out DataType dataType))
             {
-                return new DataTypeInfo(dataType, propertyType);
+                return DataTypeInfo.Simple(dataType);
             }
             else if (IsNullableType(propertyType))
             {
-                return GetDataTypeInfo(propertyType.GenericTypeArguments[0]);
+                return GetDataTypeInfo(propertyType.GenericTypeArguments[0], contractResolver);
             }
             else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
-                DataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType);
-                return new DataTypeInfo(DataType.Collection(elementTypeInfo.DataType), elementTypeInfo.UnderlyingClrType);
+                IDataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType, contractResolver);
+                return DataTypeInfo.AsCollection(elementTypeInfo);
+            }
+            else if (contractResolver.ResolveContract(propertyType) is JsonObjectContract jsonContract)
+            {
+                return DataTypeInfo.Complex(DataType.Complex, propertyType, jsonContract);
             }
             else
             {
-                return new DataTypeInfo(DataType.Complex, propertyType);
+                return DataTypeInfo.Unknown;
             }
         }
 
@@ -253,18 +300,78 @@ namespace Microsoft.Azure.Search
             }
         }
 
-        // Avoid dependency on ValueTuple for now.
-        private struct DataTypeInfo
+        private interface IDataTypeInfo
         {
-            public DataTypeInfo(DataType dataType, Type underlyingClrType)
+            T Match<T>(
+                Func<T> onUnknownDataType,
+                Func<DataType, T> onSimpleDataType,
+                Func<DataType, Type, JsonObjectContract, T> onComplexDataType);
+        }
+
+        private static class DataTypeInfo
+        {
+            public static IDataTypeInfo Unknown { get; } = new UnknownDataTypeInfo();
+
+            public static IDataTypeInfo Simple(DataType dataType) => new SimpleDataTypeInfo(dataType);
+
+            public static IDataTypeInfo Complex(DataType dataType, Type underlyingClrType, JsonObjectContract jsonContract) =>
+                new ComplexDataTypeInfo(dataType, underlyingClrType, jsonContract);
+
+            public static IDataTypeInfo AsCollection(IDataTypeInfo dataTypeInfo) =>
+                dataTypeInfo.Match(
+                    onUnknownDataType: () => Unknown,
+                    onSimpleDataType: dataType => Simple(DataType.Collection(dataType)),
+                    onComplexDataType: (dataType, underlyingClrType, jsonContract) =>
+                        Complex(DataType.Collection(dataType), underlyingClrType, jsonContract));
+
+            private sealed class UnknownDataTypeInfo : IDataTypeInfo
             {
-                DataType = dataType;
-                UnderlyingClrType = underlyingClrType;
+                public UnknownDataTypeInfo()
+                {
+                }
+
+                public T Match<T>(
+                    Func<T> onUnknownDataType,
+                    Func<DataType, T> onSimpleDataType,
+                    Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
+                    => onUnknownDataType();
             }
 
-            public DataType DataType { get; }
+            private sealed class SimpleDataTypeInfo : IDataTypeInfo
+            {
+                private readonly DataType _dataType;
 
-            public Type UnderlyingClrType { get; }
+                public SimpleDataTypeInfo(DataType dataType)
+                {
+                    _dataType = dataType;
+                }
+
+                public T Match<T>(
+                    Func<T> onUnknownDataType,
+                    Func<DataType, T> onSimpleDataType,
+                    Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
+                    => onSimpleDataType(_dataType);
+            }
+
+            private sealed class ComplexDataTypeInfo : IDataTypeInfo
+            {
+                private readonly DataType _dataType;
+                private readonly Type _underlyingClrType;
+                private readonly JsonObjectContract _jsonContract;
+
+                public ComplexDataTypeInfo(DataType dataType, Type underlyingClrType, JsonObjectContract jsonContract)
+                {
+                    _dataType = dataType;
+                    _underlyingClrType = underlyingClrType;
+                    _jsonContract = jsonContract;
+                }
+
+                public T Match<T>(
+                    Func<T> onUnknownDataType,
+                    Func<DataType, T> onSimpleDataType,
+                    Func<DataType, Type, JsonObjectContract, T> onComplexDataType)
+                    => onComplexDataType(_dataType, _underlyingClrType, _jsonContract);
+            }
         }
     }
 }

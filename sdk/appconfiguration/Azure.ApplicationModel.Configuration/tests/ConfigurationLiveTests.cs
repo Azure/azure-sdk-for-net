@@ -17,7 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
+            Matcher = new ConfigurationRecordMatcher(Sanitizer);
         }
 
         private string GenerateKeyId(string prefix = null)
