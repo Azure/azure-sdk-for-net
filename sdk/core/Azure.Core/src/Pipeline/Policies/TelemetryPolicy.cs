@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.InteropServices;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline.Policies
 {
