@@ -15,7 +15,7 @@ namespace Sql.Tests
     public class FailoverTests
     {
         [Fact]
-        public async void FailoverDatabase()
+        public void FailoverDatabase()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
@@ -33,17 +33,15 @@ namespace Sql.Tests
                 Assert.NotNull(db);
 
                 // Failover database
-                AzureOperationResponse failoverResponse = await sqlClient.Databases.BeginFailoverWithHttpMessagesAsync(
+                sqlClient.Databases.Failover(
                     resourceGroup.Name,
                     server.Name,
                     dbName);
-
-                Assert.Equal(HttpStatusCode.Accepted, failoverResponse.Response.StatusCode);
             }
         }
 
         [Fact]
-        public async void FailoverElasticPool()
+        public void FailoverElasticPool()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
@@ -70,12 +68,10 @@ namespace Sql.Tests
                 Assert.NotNull(db);
 
                 // Failover elastic pool
-                AzureOperationResponse failoverResponse = await sqlClient.ElasticPools.BeginFailoverWithHttpMessagesAsync(
+                sqlClient.ElasticPools.Failover(
                     resourceGroup.Name,
                     server.Name,
                     epName);
-
-                Assert.Equal(HttpStatusCode.Accepted, failoverResponse.Response.StatusCode);
             }
         }
     }
