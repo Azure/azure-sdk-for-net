@@ -21,7 +21,6 @@ namespace Azure.ApplicationModel.Configuration
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
-
         /// <summary>
         /// Protected constructor to allow mocking
         /// </summary>
@@ -303,7 +302,6 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException($"{nameof(key)}");
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
-
 
         /// <summary>
         /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.

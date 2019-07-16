@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190711.4" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190716.1" />
     <PackageReference Update="Azure.Core" Version="1.0.0-preview.6" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
