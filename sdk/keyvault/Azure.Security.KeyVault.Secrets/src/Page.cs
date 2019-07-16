@@ -52,7 +52,6 @@ namespace Azure.Security.KeyVault.Secrets
                         i++;
                     }
                 }
-               
             }
 
             if (json.TryGetProperty("nextLink", out JsonElement nextLink))
@@ -68,7 +67,7 @@ namespace Azure.Security.KeyVault.Secrets
 
         internal override void WriteProperties(ref Utf8JsonWriter json)
         {
-            // serialization is not needed this type is only in responses 
+            // serialization is not needed this type is only in responses
             throw new NotImplementedException();
         }
     }

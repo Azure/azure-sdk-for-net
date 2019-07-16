@@ -14,9 +14,15 @@
 
     <!--
     The Client SDK Analyzers are based on Design Guidelines that haven't been
-    fully formalized so we won't enable them just yet.
+    disable some of them
      -->
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <NoWarn>
+      $(NoWarn);
+      AZC0001;
+      AZC0002;
+      AZC0007;
+      AZC0006;
+    </NoWarn>
 
     <!--
     Storage used to point to its main documentation page, but the rest of the

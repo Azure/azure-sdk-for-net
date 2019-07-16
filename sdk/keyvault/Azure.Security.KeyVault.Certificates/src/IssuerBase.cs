@@ -14,6 +14,5 @@ namespace Azure.Security.KeyVault.Certificates
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset Updated { get; set; }
         public bool Enabled { get; set; }
-        
     }
 }
