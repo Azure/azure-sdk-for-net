@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
+using Azure.Messaging.EventHubs.Diagnostics;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -129,20 +129,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Assert.That(baggage, Is.Empty);
-        }
-    }
-
-    internal static class EventDataDiagnosticExtensions
-    {
-        public static Activity ExtractActivity(this EventData eventData, string activityName = null)
-        {
-            static TrackOne.EventData TransformEvent(EventData eventData) =>
-                new TrackOne.EventData(eventData.Body.ToArray())
-                {
-                    Properties = eventData.Properties
-                };
-
-            return TrackOne.EventDataDiagnosticExtensions.ExtractActivity(TransformEvent(eventData), activityName);
         }
     }
 }
