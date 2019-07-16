@@ -66,7 +66,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 MessagingEventSource.Log.AmqpSessionCreationException(this.entityPath, amqpConnection, exception);
                 session?.Abort();
-                throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException());
+                throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException(), amqpConnection.IsClosing());
             }
 
             AmqpObject link = null;
