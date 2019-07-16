@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetSharesAsync(
+            var task = this._client.GetSharesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,

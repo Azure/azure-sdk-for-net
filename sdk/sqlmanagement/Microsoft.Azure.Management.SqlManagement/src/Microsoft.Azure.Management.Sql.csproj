@@ -13,6 +13,9 @@
 			<![CDATA[
 New features:
 - Added support for failover databases and elastic pools.
+- Added support for instance pools.
+- Added support for instance pool usages.
+- Added support for managed instances in instance pools.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

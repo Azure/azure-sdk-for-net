@@ -199,7 +199,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>

@@ -43,9 +43,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="databaseName">The name of the database to
         /// import.</param>
         /// <param name="edition">The edition for the database being created.
-        /// Possible values include: 'Web', 'Business', 'Basic', 'Standard',
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or one of
+        /// the following commands:
+        ///
+        /// ```azurecli
+        /// az sql db list-editions -l &lt;location&gt; -o table
+        /// ````
+        ///
+        /// ```powershell
+        /// Get-AzSqlServerServiceObjective -Location &lt;location&gt;
+        /// ````
+        /// . Possible values include: 'Web', 'Business', 'Basic', 'Standard',
         /// 'Premium', 'PremiumRS', 'Free', 'Stretch', 'DataWarehouse',
-        /// 'System', 'System2'</param>
+        /// 'System', 'System2', 'GeneralPurpose', 'BusinessCritical',
+        /// 'Hyperscale'</param>
         /// <param name="serviceObjectiveName">The name of the service
         /// objective to assign to the database. Possible values include:
         /// 'System', 'System0', 'System1', 'System2', 'System3', 'System4',
@@ -84,10 +99,25 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets the edition for the database being created. Possible
-        /// values include: 'Web', 'Business', 'Basic', 'Standard', 'Premium',
-        /// 'PremiumRS', 'Free', 'Stretch', 'DataWarehouse', 'System',
-        /// 'System2'
+        /// Gets or sets the edition for the database being created.
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or one of
+        /// the following commands:
+        ///
+        /// ```azurecli
+        /// az sql db list-editions -l &amp;lt;location&amp;gt; -o table
+        /// ````
+        ///
+        /// ```powershell
+        /// Get-AzSqlServerServiceObjective -Location &amp;lt;location&amp;gt;
+        /// ````
+        /// . Possible values include: 'Web', 'Business', 'Basic', 'Standard',
+        /// 'Premium', 'PremiumRS', 'Free', 'Stretch', 'DataWarehouse',
+        /// 'System', 'System2', 'GeneralPurpose', 'BusinessCritical',
+        /// 'Hyperscale'
         /// </summary>
         [JsonProperty(PropertyName = "edition")]
         public string Edition { get; set; }

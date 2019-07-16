@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string))
+        /// <param name="locations">Primary and secondary location for iot
+        /// hub</param>
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>))
         {
             AuthorizationPolicies = authorizationPolicies;
             IpFilterRules = ipFilterRules;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
             Comments = comments;
             DeviceStreams = deviceStreams;
             Features = features;
+            Locations = locations;
             CustomInit();
         }
 
@@ -175,6 +178,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "features")]
         public string Features { get; set; }
+
+        /// <summary>
+        /// Gets primary and secondary location for iot hub
+        /// </summary>
+        [JsonProperty(PropertyName = "locations")]
+        public IList<IotHubLocationDescription> Locations { get; private set; }
 
         /// <summary>
         /// Validate the object.

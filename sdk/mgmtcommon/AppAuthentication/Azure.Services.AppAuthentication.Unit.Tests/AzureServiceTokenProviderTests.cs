@@ -21,8 +21,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Clear the cache after running each test.
             AppAuthResultCache.Clear();
 
-            // Delete environment variable
+            // Delete environment variables
             Environment.SetEnvironmentVariable(Constants.TestCertUrlEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
 
         /// <summary>
@@ -91,7 +93,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // In a real scenario, the token will expire after some time. 
             // AppAuthResultCache should not return this, since it is about to expire. 
             var tokenResponse = TokenResponse.Parse(TokenHelper.GetUserTokenResponse(5 * 60 - 2));
-            var authResult = AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.DateTimeString);
+            var authResult = AppAuthenticationResult.Create(tokenResponse);
             AppAuthResultCache.AddOrUpdate("ConnectionString:;Authority:;Resource:https://vault.azure.net/", 
                 new Tuple<AppAuthenticationResult, Principal>(authResult, null));
             
@@ -196,6 +198,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.NotNull(provider);
             Assert.IsType<AzureServiceTokenProvider>(provider);
+
+            Environment.SetEnvironmentVariable(Constants.ConnectionStringEnvironmentVariableName, null);
         }
 
         [Fact]
@@ -209,6 +213,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase> { azureCliAccessTokenProvider, msiAccessTokenProvider };
@@ -233,9 +241,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             AzureCliAccessTokenProvider azureCliAccessTokenProvider = new AzureCliAccessTokenProvider(mockProcessManager);
 
             // Mock MSI is being asked to act like MSI was able to get token. 
-            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmSuccess);
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAppServicesSuccess);
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            // set env vars so MsiAccessTokenProvider assumes App Service environment and not VM environment
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, Constants.MsiEndpoint);
+            Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, Constants.ClientSecret);
 
             // AzureServiceTokenProvider is being asked to use two providers, and return token from the first that succeeds.  
             var providers = new List<NonInteractiveAzureServiceTokenProviderBase>{azureCliAccessTokenProvider, msiAccessTokenProvider};
@@ -246,8 +258,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Mock process manager will be hit first, and so hit count will be 1. 
             Assert.Equal(1, mockProcessManager.HitCount);
 
-            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 2 here (1 for probe request, 1 for token request).
-            Assert.Equal(2, mockMsi.HitCount);
+            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
+            Assert.Equal(1, mockMsi.HitCount);
 
             // MsiAccessTokenProvider should succeed, and we should get a valid token. 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);

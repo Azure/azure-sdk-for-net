@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -260,8 +261,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var singleEvent = new EventData(new byte[1500000]);
                     var eventBatch = new[] { new EventData(new byte[1500000]) };
 
-                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
-                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.TypeOf<MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.TypeOf<MessageSizeExceededException>());
                 }
             }
         }
@@ -371,7 +372,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         new EventData(new byte[1500000 / 3])
                     };
 
-                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<TrackOne.MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<MessageSizeExceededException>());
                 }
             }
         }
