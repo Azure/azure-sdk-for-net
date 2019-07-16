@@ -206,6 +206,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
                     return amqpException.Error.ToMessagingContractException(connectionError);
 
+                case OperationCanceledException _ when connectionError:
+                    return new ServiceBusCommunicationException(message, aggregateException);
+
                 case OperationCanceledException _:
                     return new ServiceBusException(true, message, aggregateException);
 
@@ -214,6 +217,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 case InvalidOperationException _ when connectionError:
                     return new ServiceBusCommunicationException(message, aggregateException);
+            }
+
+            if (connectionError)
+            {
+                return new ServiceBusCommunicationException(message, aggregateException);
             }
 
             return aggregateException;
