@@ -1774,7 +1774,7 @@
       "type": "integer",
       "minimum": 0,
       "x-ms-parameter-location": "method",
-      "description": "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service Operations.</a>"
+      "description": "The The timeout parameter is expressed in seconds. For more information, see <a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations\">Setting Timeouts for Queue Service Operations.</a>"
     },
     "VisibilityTimeout": {
       "name": "visibilitytimeout",

@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.Equal(ServiceBusAudience, audience);
                     return Task.FromResult(TestToken);
                 },
-                null);
+                "https://servicebus.azure.net/MyTenantId");
 
             var token = await aadTokenProvider.GetTokenAsync(ServiceBusAudience, TimeSpan.FromSeconds(60));
             Assert.Equal(TestToken, token.TokenValue);

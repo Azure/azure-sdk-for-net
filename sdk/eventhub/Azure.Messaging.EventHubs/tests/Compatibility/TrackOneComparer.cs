@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="trackOneEvent">The track one event to consider.</param>
         /// <param name="trackTwoEvent">The track two event to consider.</param>
         ///
-        /// <returns><c>true</c>, if the two events are structurally equivilent; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c>, if the two events are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEventDataEquivalent(TrackOne.EventData trackOneEvent,
                                                 EventData trackTwoEvent)
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            // Verify the system properties are equivilent, unless they're the same reference.
+            // Verify the system properties are equivalent, unless they're the same reference.
 
             if (!Object.ReferenceEquals(trackOneEvent.SystemProperties, trackTwoEvent.SystemProperties))
             {
@@ -75,9 +75,35 @@ namespace Azure.Messaging.EventHubs.Tests
                     return false;
                 }
 
-                if (!trackOneEvent.SystemProperties.OrderBy(kvp => kvp.Key).SequenceEqual(trackTwoEvent.SystemProperties.OrderBy(kvp => kvp.Key)))
+                foreach (var property in trackOneEvent.SystemProperties)
                 {
-                    return false;
+                    if (property.Key == TrackOne.ClientConstants.EnqueuedTimeUtcName)
+                    {
+                        // It's necessary to be extra careful with EnqueuedTime property because its type
+                        // differs between Track One and Track Two.
+
+                        var trackOneDate = (DateTime)trackOneEvent.SystemProperties[property.Key];
+                        var trackTwoDate = (DateTimeOffset)trackTwoEvent.SystemProperties[property.Key];
+
+                        if (trackOneDate != trackTwoDate.UtcDateTime)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        // Other properties have the same type in Track One and Track Two.
+
+                        if (!trackTwoEvent.SystemProperties.ContainsKey(property.Key))
+                        {
+                            return false;
+                        }
+
+                        if (!Equals(trackTwoEvent.SystemProperties[property.Key], property.Value))
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
 
@@ -97,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            // The only meaningful comparison left is to ensure that the property sets are equivilent,
+            // The only meaningful comparison left is to ensure that the property sets are equivalent,
             // the outcome of this check is the final word on equality.
 
             if (trackOneEvent.Properties.Count != trackTwoEvent.Properties.Count)
@@ -116,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="trackOnePosition">The track one event position to consider.</param>
         /// <param name="trackTwoPosition">The track two event position to consider.</param>
         ///
-        /// <returns><c>true</c>, if the two events are structurally equivilent; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c>, if the two events are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEventPositionEquivalent(TrackOne.EventPosition trackOnePosition,
                                                     EventPosition trackTwoPosition)
@@ -144,7 +170,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (String.Equals(trackOnePosition.Offset, trackTwoPosition.Offset, StringComparison.Ordinal))
                  && (trackOnePosition.SequenceNumber == trackTwoPosition.SequenceNumber)
                  && (trackOnePosition.IsInclusive == trackTwoPosition.IsInclusive)
-                 && (trackOnePosition.EnqueuedTimeUtc == trackTwoPosition.EnqueuedTimeUtc)
+                 && (trackOnePosition.EnqueuedTimeUtc == trackTwoPosition.EnqueuedTime?.UtcDateTime)
             );
         }
     }

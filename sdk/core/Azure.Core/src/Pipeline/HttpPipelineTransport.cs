@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {

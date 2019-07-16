@@ -56,6 +56,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         protected internal virtual HttpPipeline Pipeline => this._pipeline;
 
+        #region ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
         /// class for mocking.
@@ -190,6 +191,7 @@ namespace Azure.Storage.Blobs
             this._uri = containerUri;
             this._pipeline = pipeline;
         }
+        #endregion ctor
 
         /// <summary>
         /// Create a new <see cref="BlobClient"/> object by appending
@@ -201,6 +203,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) => new BlobClient(this.Uri.AppendToPath(blobName), this._pipeline);
 
+        #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new container
         /// under the specified account. If the container with the same name
@@ -240,7 +243,7 @@ namespace Azure.Storage.Blobs
             PublicAccessType? publicAccessType = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            this.CreateAsync(
+            this.CreateInternal(
                 publicAccessType,
                 metadata,
                 false, // async
@@ -275,7 +278,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}"/> describing the newly
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
         /// created container.
         /// </returns>
         /// <remarks>
@@ -286,7 +289,7 @@ namespace Azure.Storage.Blobs
             PublicAccessType? publicAccessType = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await this.CreateAsync(
+            await this.CreateInternal(
                 publicAccessType,
                 metadata,
                 true, // async
@@ -324,14 +327,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}"/> describing the newly
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
         /// created container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainerInfo>> CreateAsync(
+        private async Task<Response<ContainerInfo>> CreateInternal(
             PublicAccessType? publicAccessType,
             Metadata metadata,
             bool async,
@@ -366,7 +369,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion Create
 
+        #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
         /// container for deletion. The container and any blobs contained
@@ -392,7 +397,7 @@ namespace Azure.Storage.Blobs
         public virtual Response Delete(
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.DeleteAsync(
+            this.DeleteInternal(
                 accessConditions,
                 false, // async
                 cancellationToken)
@@ -414,7 +419,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}}"/> if successful.
+        /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -423,7 +428,7 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response> DeleteAsync(
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.DeleteAsync(
+            await this.DeleteInternal(
                 accessConditions,
                 true, // async
                 cancellationToken)
@@ -448,13 +453,13 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}}"/> if successful.
+        /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> DeleteAsync(
+        private async Task<Response> DeleteInternal(
             ContainerAccessConditions? accessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -495,7 +500,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion Delete
 
+        #region GetProperties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
         /// user-defined metadata and system properties for the specified
@@ -523,7 +530,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<ContainerItem> GetProperties(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetPropertiesAsync(
+            this.GetPropertiesInternal(
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
@@ -546,7 +553,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerItem}}"/> describing the
+        /// A <see cref="Response{ContainerItem}"/> describing the
         /// container and its properties.
         /// </returns>
         /// <remarks>
@@ -556,7 +563,7 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<ContainerItem>> GetPropertiesAsync(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetPropertiesAsync(
+            await this.GetPropertiesInternal(
                 leaseAccessConditions,
                 true, // async
                 cancellationToken)
@@ -582,14 +589,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerItem}}"/> describing the
+        /// A <see cref="Response{ContainerItem}"/> describing the
         /// container and its properties.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainerItem>> GetPropertiesAsync(
+        private async Task<Response<ContainerItem>> GetPropertiesInternal(
             LeaseAccessConditions? leaseAccessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -645,7 +652,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetProperties
 
+        #region SetMetadata
         /// <summary>
         /// The <see cref="SetMetadata"/> operation sets one or more
         /// user-defined name-value pairs for the specified container.
@@ -664,7 +673,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}}"/> if successful.
+        /// A <see cref="Response{ContainerInfo}"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -674,7 +683,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.SetMetadataAsync(
+            this.SetMetadataInternal(
                 metadata,
                 accessConditions,
                 false, // async
@@ -699,7 +708,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}}"/> if successful.
+        /// A <see cref="Response{ContainerInfo}"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -709,7 +718,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetMetadataAsync(
+            await this.SetMetadataInternal(
                 metadata,
                 accessConditions,
                 true, // async
@@ -717,7 +726,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets one or more
+        /// The <see cref="SetMetadataInternal"/> operation sets one or more
         /// user-defined name-value pairs for the specified container.
         /// 
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata" />.
@@ -737,13 +746,13 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}}"/> if successful.
+        /// A <see cref="Response{ContainerInfo}"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainerInfo>> SetMetadataAsync(
+        private async Task<Response<ContainerInfo>> SetMetadataInternal(
             Metadata metadata,
             ContainerAccessConditions? accessConditions,
             bool async,
@@ -789,7 +798,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion SetMetadata
 
+        #region GetAccessPolicy
         /// <summary>
         /// The <see cref="GetAccessPolicy"/> operation gets the
         /// permissions for this container. The permissions indicate whether
@@ -816,7 +827,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<ContainerAccessPolicy> GetAccessPolicy(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.GetAccessPolicyAsync(
+            this.GetAccessPolicyInternal(
                 leaseAccessConditions,
                 false, // async
                 cancellationToken)
@@ -838,7 +849,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerAccessPolicy}}"/> describing
+        /// A <see cref="Response{ContainerAccessPolicy}"/> describing
         /// the container's access policy.
         /// </returns>
         /// <remarks>
@@ -848,7 +859,7 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<ContainerAccessPolicy>> GetAccessPolicyAsync(
             LeaseAccessConditions? leaseAccessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.GetAccessPolicyAsync(
+            await this.GetAccessPolicyInternal(
                 leaseAccessConditions,
                 true, // async
                 cancellationToken)
@@ -873,14 +884,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerAccessPolicy}}"/> describing
+        /// A <see cref="Response{ContainerAccessPolicy}"/> describing
         /// the container's access policy.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainerAccessPolicy>> GetAccessPolicyAsync(
+        private async Task<Response<ContainerAccessPolicy>> GetAccessPolicyInternal(
             LeaseAccessConditions? leaseAccessConditions,
             bool async,
             CancellationToken cancellationToken)
@@ -913,7 +924,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetAccessPolicy
 
+        #region SetAccessPolicy
         /// <summary>
         /// The <see cref="SetAccessPolicy"/> operation sets the
         /// permissions for the specified container. The permissions indicate
@@ -959,7 +972,7 @@ namespace Azure.Storage.Blobs
             IEnumerable<SignedIdentifier> permissions = default,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            this.SetAccessPolicyAsync(
+            this.SetAccessPolicyInternal(
                 accessType,
                 permissions,
                 accessConditions,
@@ -1000,7 +1013,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}"/> describing the
+        /// A <see cref="Response{ContainerInfo}"/> describing the
         /// updated container.
         /// </returns>
         /// <remarks>
@@ -1012,7 +1025,7 @@ namespace Azure.Storage.Blobs
             IEnumerable<SignedIdentifier> permissions = default,
             ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            await this.SetAccessPolicyAsync(
+            await this.SetAccessPolicyInternal(
                 accessType,
                 permissions,
                 accessConditions,
@@ -1056,14 +1069,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{ContainerInfo}}"/> describing the
+        /// A <see cref="Response{ContainerInfo}"/> describing the
         /// updated container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ContainerInfo>> SetAccessPolicyAsync(
+        private async Task<Response<ContainerInfo>> SetAccessPolicyInternal(
             PublicAccessType? accessType,
             IEnumerable<SignedIdentifier> permissions,
             ContainerAccessConditions? accessConditions,
@@ -1108,7 +1121,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion SetAccessPolicy
 
+        #region GetBlobs
         /// <summary>
         /// The <see cref="GetBlobs"/> operation returns an async sequence
         /// of blobs in this container.  Enumerating the blobs may make
@@ -1126,8 +1141,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="IEnumerable{Response{BlobItem}}"/> describing the
-        /// blobs in the container.
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobItem}"/>
+        /// describing the blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1155,7 +1170,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{BlobItem}"/> describing the
+        /// An <see cref="AsyncCollection{BlobItem}"/> describing the
         /// blobs in the container.
         /// </returns>
         /// <remarks>
@@ -1168,7 +1183,7 @@ namespace Azure.Storage.Blobs
             new GetBlobsAsyncCollection(this, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobsAsync"/> operation returns a
+        /// The <see cref="GetBlobsInternal"/> operation returns a
         /// single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
@@ -1204,14 +1219,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobsFlatSegment}}"/> describing a
+        /// A <see cref="Response{BlobsFlatSegment}"/> describing a
         /// segment of the blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobsFlatSegment>> GetBlobsAsync(
+        internal async Task<Response<BlobsFlatSegment>> GetBlobsInternal(
             string marker,
             GetBlobsOptions? options,
             int? pageSizeHint,
@@ -1250,7 +1265,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetBlobs
 
+        #region GetBlobsByHierarchy
         /// <summary>
         /// The <see cref="GetBlobsByHierarchy"/> operation returns
         /// an async collection of blobs in this container.  Enumerating the
@@ -1287,8 +1304,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="IEnumerable{Response{BlobHierarchyItem}}"/> describing
-        /// the blobs in the container.
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobHierarchyItem}"/>
+        /// describing the blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1336,7 +1353,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="AsyncCollection{BlobHierarchyItem}"/> describing the
+        /// An <see cref="AsyncCollection{BlobHierarchyItem}"/> describing the
         /// blobs in the container.
         /// </returns>
         /// <remarks>
@@ -1350,7 +1367,7 @@ namespace Azure.Storage.Blobs
             new GetBlobsByHierarchyAsyncCollection(this, delimiter, options, cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
+        /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
         /// a single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
@@ -1405,14 +1422,14 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobsHierarchySegment}}"/> describing a
+        /// A <see cref="Response{BlobsHierarchySegment}"/> describing a
         /// segment of the blobs in the container.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobsHierarchySegment>> GetBlobsByHierarchyAsync(
+        internal async Task<Response<BlobsHierarchySegment>> GetBlobsByHierarchyInternal(
             string marker,
             string delimiter,
             GetBlobsOptions? options,
@@ -1454,7 +1471,9 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
+        #endregion GetBlobsByHierarchy
 
+        #region UploadBlob
         /// <summary>
         /// The <see cref="UploadBlob"/> operation creates a new block
         /// blob or updates the content of an existing block blob in this
@@ -1477,7 +1496,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
@@ -1515,7 +1534,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response{BlobContentInfo}}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
@@ -1531,7 +1550,9 @@ namespace Azure.Storage.Blobs
                     content,
                     cancellationToken)
                     .ConfigureAwait(false);
+        #endregion UploadBlob
 
+        #region DeleteBlob
         /// <summary>
         /// The <see cref="DeleteBlob"/> operation marks the specified
         /// blob or snapshot for deletion. The blob is later deleted during
@@ -1556,7 +1577,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1597,7 +1618,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Task{Response}"/> on successfully deleting.
+        /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
@@ -1614,6 +1635,6 @@ namespace Azure.Storage.Blobs
                     accessConditions,
                     cancellationToken)
                     .ConfigureAwait(false);
+        #endregion DeleteBlob
     }
 }
-

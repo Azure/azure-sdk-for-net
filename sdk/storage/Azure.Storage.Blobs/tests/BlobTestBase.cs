@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Blobs;

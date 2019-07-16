@@ -67,6 +67,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
+        /// </summary>
+        internal static string MessageSizeExceeded 
+        {
+            get 
+            {
+                return ResourceManager.GetString("MessageSizeExceeded", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; may not be null or empty..
         /// </summary>
         internal static string ArgumentNullOrEmpty
@@ -327,6 +338,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'..
+        /// </summary>
+        internal static string CannotParseIntegerType
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotParseIntegerType", resourceCulture);
             }
         }
     }

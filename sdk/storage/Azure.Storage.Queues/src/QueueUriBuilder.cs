@@ -10,7 +10,7 @@ namespace Azure.Storage.Queues
 {
     /// <summary>
     /// Constructs a Queue URI.
-    /// For more information, see <see cref="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/addressing-queue-service-resources"/>
     /// </summary>
     internal struct QueueUriBuilder : IEquatable<QueueUriBuilder>
     {
@@ -212,7 +212,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Check if two QueueUriBuilder instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(QueueUriBuilder other)
             => this.Scheme == other.Scheme
@@ -251,8 +251,6 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// Check if two QueueUriBuilder instances are not equal.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
         /// <param name="left">The first instance to compare.</param>
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>

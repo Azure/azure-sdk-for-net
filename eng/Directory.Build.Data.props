@@ -107,6 +107,7 @@
     <ImportDefaultReferences>false</ImportDefaultReferences>
     <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
     <LangVersion>preview</LangVersion>
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
@@ -114,6 +115,8 @@
     <PublicSign>false</PublicSign>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
+    <!-- Disable doc comments for test projects -->
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <Import Project="Versioning.props" />

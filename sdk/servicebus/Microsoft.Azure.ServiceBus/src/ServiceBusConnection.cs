@@ -218,7 +218,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
-            else if (String.Equals(builder.Authentication, ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity, StringComparison.OrdinalIgnoreCase))
+            else if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity))
             {
                 this.TokenProvider = new ManagedIdentityTokenProvider();
             }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -18,6 +19,7 @@ namespace Azure.Core.Tests
         [TestCase("multi\rline", "application/xml")]
         [TestCase("multi\r\nline", "application/xml")]
         [TestCase("multi\n\rline\n", "application/xml")]
+        [TestCase("", "")]
         public void CanRoundtripSessionRecord(string body, string contentType)
         {
             byte[] bodyBytes = Encoding.UTF8.GetBytes(body);
@@ -68,6 +70,65 @@ namespace Azure.Core.Tests
 
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.RequestBody);
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.ResponseBody);
+        }
+
+        [Test]
+        public void RecordMatcherThrowsExceptionsWithDetails()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Head;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Headers.Add("Some-Header", "Random value");
+            mockRequest.Headers.Add("Some-Other-Header", "V");
+
+            RecordEntry[] entries = new []
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://remote-host",
+                    RequestMethod = RequestMethod.Put,
+                    RequestHeaders =
+                    {
+                        { "Some-Header", new[] { "Non-Random value"}},
+                        { "Extra-Header", new [] { "Extra-Value" }}
+                    }
+                }
+            };
+
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            Assert.AreEqual(
+                "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
+                "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
+                "Uri doesn't match:" + Environment.NewLine +
+                "    request <http://localhost/>" + Environment.NewLine +
+                "    record  <http://remote-host>" + Environment.NewLine +
+                "Header differences:" + Environment.NewLine +
+                "    <Some-Header> values differ, request <Random value>, record <Non-Random value>" + Environment.NewLine +
+                "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
+                "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine,
+                exception.Message);
+        }
+
+        [Test]
+        public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Head;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+            mockRequest.Headers.Add("Some-Header", "Random value");
+            mockRequest.Headers.Add("Some-Other-Header", "V");
+
+            RecordEntry[] entries = {};
+
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            Assert.AreEqual(
+                "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
+                "No records to match." + Environment.NewLine,
+                exception.Message);
         }
     }
 }

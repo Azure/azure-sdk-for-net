@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(properties, Is.Not.Null, "A set of properties should have been returned.");
                     Assert.That(properties.Path, Is.EqualTo(scope.EventHubName), "The property Event Hub name should match the scope.");
                     Assert.That(properties.PartitionIds.Length, Is.EqualTo(partitionCount), "The properties should have the requested number of partitions.");
-                    Assert.That(properties.CreatedAtUtc, Is.EqualTo(DateTime.UtcNow).Within(TimeSpan.FromSeconds(10)), "The Event Hub should have been created just about now.");
+                    Assert.That(properties.CreatedAt, Is.EqualTo(DateTimeOffset.UtcNow).Within(TimeSpan.FromSeconds(10)), "The Event Hub should have been created just about now.");
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.EventHubPath, Is.EqualTo(connectionProperties.EventHubPath).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(Int64)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(Int64)), "The last sequance number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.Null.Or.Empty, "The last offset should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(Int64)), "The last offset should have been populated.");
                 }
             }
         }

@@ -99,6 +99,8 @@ namespace Microsoft.Azure.Search.Tests
 
         public IEnumerable<string> StringIEnumerable { get; set; }
 
+        public ICollection<string> StringICollection { get; set; }
+
         public int? NullableInt { get; set; }
 
         public GeographyPoint GeographyPoint { get; set; }
@@ -111,6 +113,8 @@ namespace Microsoft.Azure.Search.Tests
 
         public IEnumerable<int> IntIEnumerable { get; set; }
 
+        public ICollection<int> IntICollection { get; set; }
+
         public long[] LongArray { get; set; }
 
         public IList<long> LongIList { get; set; }
@@ -118,6 +122,8 @@ namespace Microsoft.Azure.Search.Tests
         public List<long> LongList { get; set; }
 
         public IEnumerable<long> LongIEnumerable { get; set; }
+
+        public ICollection<long> LongICollection { get; set; }
 
         public double[] DoubleArray { get; set; }
 
@@ -127,6 +133,8 @@ namespace Microsoft.Azure.Search.Tests
 
         public IEnumerable<double> DoubleIEnumerable { get; set; }
 
+        public ICollection<double> DoubleICollection { get; set; }
+
         public bool[] BoolArray { get; set; }
 
         public IList<bool> BoolIList { get; set; }
@@ -134,6 +142,8 @@ namespace Microsoft.Azure.Search.Tests
         public List<bool> BoolList { get; set; }
 
         public IEnumerable<bool> BoolIEnumerable { get; set; }
+
+        public ICollection<bool> BoolICollection { get; set; }
 
         public DateTime[] DateTimeArray { get; set; }
 
@@ -143,6 +153,8 @@ namespace Microsoft.Azure.Search.Tests
 
         public IEnumerable<DateTime> DateTimeIEnumerable { get; set; }
 
+        public ICollection<DateTime> DateTimeICollection { get; set; }
+
         public DateTimeOffset[] DateTimeOffsetArray { get; set; }
 
         public IList<DateTimeOffset> DateTimeOffsetIList { get; set; }
@@ -151,6 +163,8 @@ namespace Microsoft.Azure.Search.Tests
 
         public IEnumerable<DateTimeOffset> DateTimeOffsetIEnumerable { get; set; }
 
+        public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
+
         public GeographyPoint[] GeographyPointArray { get; set; }
 
         public IList<GeographyPoint> GeographyPointIList { get; set; }
@@ -158,6 +172,8 @@ namespace Microsoft.Azure.Search.Tests
         public List<GeographyPoint> GeographyPointList { get; set; }
 
         public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
+
+        public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
 
         public ReflectableComplexStruct? Complex { get; set; }
 
@@ -168,6 +184,8 @@ namespace Microsoft.Azure.Search.Tests
         public List<ReflectableComplexStruct> ComplexList { get; set; }
 
         public IEnumerable<ReflectableComplexStruct> ComplexIEnumerable { get; set; }
+
+        public ICollection<ReflectableComplexStruct> ComplexICollection { get; set; }
 
         [JsonIgnore]
         [IsRetrievable(false)]
