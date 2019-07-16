@@ -29,11 +29,11 @@ namespace Microsoft.Azure.ServiceBus
         const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-        AuthenticationType authType = AuthenticationType.None;
+        AuthenticationType authType = AuthenticationType.Other;
 
         public enum AuthenticationType
         {
-            None,
+            Other,
             ManagedIdentity
         }
 
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.ServiceBus
             get => this.sasKeyName;
             set
             {
-                if (this.Authentication != AuthenticationType.None)
+                if (this.Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
                 }
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.ServiceBus
             get => this.sasToken;
             set
             {
-                if (this.Authentication != AuthenticationType.None)
+                if (this.Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
                 }
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.ServiceBus
                     value = value.Replace(" ", string.Empty);
                     if (!Enum.TryParse(value, true, out this.authType))
                     {
-                        this.authType = AuthenticationType.None;
+                        this.authType = AuthenticationType.Other;
                     }
                 }
                 else
