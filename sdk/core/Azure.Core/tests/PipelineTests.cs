@@ -26,7 +26,7 @@ namespace Azure.Core.Tests
             }, responseClassifier: new CustomResponseClassifier());
 
             var request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
+            request.SetRequestLine(RequestMethod.Get, new Uri("https://contoso.a.io"));
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);

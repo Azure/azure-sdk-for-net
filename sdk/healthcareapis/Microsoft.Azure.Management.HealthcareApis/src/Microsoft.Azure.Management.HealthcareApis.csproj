@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.HealthcareApis</PackageId>
+    <Description>Provides management capabilities for Microsoft Azure Healthcare Apis.</Description>
+    <AssemblyTitle>Microsoft Azure Healthcare Apis Management</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Management.HealthcareApis</AssemblyName>
+    <Version>1.0.0-preview</Version>
+    <RootNamespace>Microsoft.Azure.Management.HealthcareApis</RootNamespace>
+    <PackageTags>Microsoft Azure Healthcare Apis;HealthcareApis management;HealthcareApis;</PackageTags>
+    <PackageReleaseNotes>Management SDK for Healthcare APIs.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+  <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->	
+  <Import Condition="Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

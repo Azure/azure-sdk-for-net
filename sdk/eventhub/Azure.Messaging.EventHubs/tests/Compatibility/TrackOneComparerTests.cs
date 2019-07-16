@@ -13,6 +13,7 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class TrackOneComparerTests
     {
         /// <summary>
@@ -194,8 +195,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEventPositionEquivalentDetectsDifferentEnqueueTime()
         {
-            var enqueueTime = DateTime.Parse("2015-10-27T12:00:00Z");
-            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime);
+            var enqueueTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime.UtcDateTime);
             var trackTwoPosition = EventPosition.FromEnqueuedTime(enqueueTime.AddDays(1));
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.False);
@@ -209,8 +210,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void IsEventPositionEquivalentRecognizesSameEnqueueTime()
         {
-            var enqueueTime = DateTime.Parse("2015-10-27T12:00:00Z");
-            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime);
+            var enqueueTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var trackOnePosition = TrackOne.EventPosition.FromEnqueuedTime(enqueueTime.UtcDateTime);
             var trackTwoPosition = EventPosition.FromEnqueuedTime(enqueueTime);
 
             Assert.That(TrackOneComparer.IsEventPositionEquivalent(trackOnePosition, trackTwoPosition), Is.True);

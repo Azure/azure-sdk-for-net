@@ -40,23 +40,35 @@ namespace Azure.Core.Pipeline
                 policies.Add(BufferResponsePolicy.Shared);
             }
 
+            policies.Add(new RequestActivityPolicy());
+
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, new ClientDiagnostics(options.Diagnostics.IsLoggingEnabled));
         }
 
         // internal for testing
         internal static TelemetryPolicy CreateTelemetryPolicy(ClientOptions options)
         {
+            const string PackagePrefix = "Azure.";
+
             Assembly clientAssembly = options.GetType().Assembly;
-            AzureSdkClientLibraryAttribute componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
+
+            AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
             {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+                throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
             }
 
-            return new TelemetryPolicy(componentAttribute.ComponentName, clientAssembly.GetName().Version.ToString(), options.Diagnostics.ApplicationId);
+            string version = versionAttribute.InformationalVersion;
+
+            string assemblyName = clientAssembly.GetName().Name;
+            if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
+            {
+                assemblyName = assemblyName.Substring(PackagePrefix.Length);
+            }
+
+            return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);
         }
     }
 }

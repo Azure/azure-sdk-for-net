@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.Models
         /// <summary>
         /// Check if two GetSharesOptions instances are equal.
         /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
+        /// <param name="other">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         public bool Equals(GetSharesOptions other) =>
             this.Prefix == other.Prefix &&
@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Models
             bool isAsync,
             CancellationToken cancellationToken)
         {
-            var task = this._client.GetSharesAsync(
+            var task = this._client.GetSharesInternal(
                 continuationToken,
                 this._options,
                 pageSizeHint,

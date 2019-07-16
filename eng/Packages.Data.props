@@ -16,7 +16,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
     <PackageReference Update="Microsoft.Azure.Amqp" Version="[2.4.2, 3.0.0)" />
-    <PackageReference Update="Microsoft.Azure.Batch" Version="[10.0.0, 11.0.0)" />
+    <PackageReference Update="Microsoft.Azure.Batch" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageReference Update="Microsoft.Azure.Management.Batch" Version="4.2.0" />
@@ -31,7 +31,6 @@
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.1, 2.0.0)" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
@@ -47,7 +46,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.2, 4.5.1]" />
+    <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" />
@@ -57,7 +56,7 @@
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19351-01" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Microsoft.VisualStudio.TextTemplating.14.0" Version="14.3.25407" />
     <PackageReference Update="Moq" Version="4.10.1" />
@@ -69,7 +68,7 @@
     <PackageReference Update="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.8.5" />
-    <PackageReference Update="PublicApiGenerator" Version="8.1.0" />
+    <PackageReference Update="PublicApiGenerator" Version="9.1.0" />
     <PackageReference Update="System.Buffers" Version="4.5.0" />
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
@@ -81,7 +80,6 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
-    <PackageReference Update="System.Memory" Version="4.5.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
@@ -95,12 +93,19 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19259.10" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
+  </ItemGroup>
+  <!-- Track 2 specific versions -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0-preview6.19259.10" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview6.19259.10" />
+    <PackageReference Update="System.Runtime.CompilerServices.Unsafe" Version="4.6.0-preview6.19259.10" />
   </ItemGroup>
 </Project>

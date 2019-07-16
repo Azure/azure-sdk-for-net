@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <remarks>
         /// Maximum storage quota allowed for a file system in bytes. This is a
         /// soft quota used for alerting only. Minimum size is 100 GiB. Upper
-        /// limit is 100TiB.
+        /// limit is 100TiB. Specified in bytes.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
         public long? UsageThreshold { get; set; }

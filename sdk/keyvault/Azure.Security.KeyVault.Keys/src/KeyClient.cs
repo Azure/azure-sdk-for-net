@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            return SendRequest(HttpPipelineMethod.Post, parameters, () => new Key(name), cancellationToken, KeysPath, name, "/create");
+            return SendRequest(RequestMethod.Post, parameters, () => new Key(name), cancellationToken, KeysPath, name, "/create");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, parameters, () => new Key(name), cancellationToken, KeysPath, name, "/create").ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Post, parameters, () => new Key(name), cancellationToken, KeysPath, name, "/create").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKey);
 
-            return SendRequest(HttpPipelineMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create");
+            return SendRequest(RequestMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create");
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKey);
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create").ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Post, parameters, () => new Key(ecKey.Name), cancellationToken, KeysPath, ecKey.Name, "/create").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKey);
 
-            return SendRequest(HttpPipelineMethod.Post, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "/create");
+            return SendRequest(RequestMethod.Post, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "/create");
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKey);
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "/create").ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Post, parameters, () => new Key(rsaKey.Name), cancellationToken, KeysPath, rsaKey.Name, "/create").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
-            return SendRequest(HttpPipelineMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version);
+            return SendRequest(RequestMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(key, keyOperations);
 
-            return await SendRequestAsync(HttpPipelineMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Patch, parameters, () => new Key(key.Name), cancellationToken, KeysPath, key.Name, "/", key.Version).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return SendRequest(HttpPipelineMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, "/", version);
+            return SendRequest(RequestMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, "/", version);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return await SendRequestAsync(HttpPipelineMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, "/", version).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Get, () => new Key(name), cancellationToken, KeysPath, name, "/", version).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return SendRequest(HttpPipelineMethod.Get, () => new DeletedKey(name), cancellationToken, DeletedKeysPath, name);
+            return SendRequest(RequestMethod.Get, () => new DeletedKey(name), cancellationToken, DeletedKeysPath, name);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return await SendRequestAsync(HttpPipelineMethod.Get, () => new DeletedKey(name), cancellationToken, DeletedKeysPath, name).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Get, () => new DeletedKey(name), cancellationToken, DeletedKeysPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return SendRequest(HttpPipelineMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
+            return SendRequest(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return await SendRequestAsync(HttpPipelineMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return SendRequest(HttpPipelineMethod.Delete, cancellationToken, DeletedKeysPath, name);
+            return SendRequest(RequestMethod.Delete, cancellationToken, DeletedKeysPath, name);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return await SendRequestAsync(HttpPipelineMethod.Delete, cancellationToken, DeletedKeysPath, name).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Delete, cancellationToken, DeletedKeysPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -491,7 +491,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return SendRequest(HttpPipelineMethod.Post, () => new Key(name), cancellationToken, DeletedKeysPath, name, "/recover");
+            return SendRequest(RequestMethod.Post, () => new Key(name), cancellationToken, DeletedKeysPath, name, "/recover");
         }
 
         /// <summary>
@@ -510,7 +510,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, () => new Key(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Post, () => new Key(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            var backup = SendRequest(HttpPipelineMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup");
+            var backup = SendRequest(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup");
 
             return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
@@ -566,7 +566,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} can't be empty or null");
 
-            var backup = await SendRequestAsync(HttpPipelineMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup").ConfigureAwait(false);
+            var backup = await SendRequestAsync(RequestMethod.Post, () => new KeyBackup(), cancellationToken, KeysPath, name, "/backup").ConfigureAwait(false);
 
             return new Response<byte[]>(backup.GetRawResponse(), backup.Value.Value);
         }
@@ -595,7 +595,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return SendRequest(HttpPipelineMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "/restore");
+            return SendRequest(RequestMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "/restore");
         }
 
         /// <summary>
@@ -622,7 +622,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (backup == null) throw new ArgumentNullException(nameof(backup));
 
-            return await SendRequestAsync(HttpPipelineMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "/restore").ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Post, new KeyBackup { Value = backup }, () => new Key(), cancellationToken, KeysPath, "/restore").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -644,7 +644,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var keyImportOptions = new KeyImportOptions(name, keyMaterial);
 
-            return SendRequest(HttpPipelineMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name);
+            return SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name);
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var keyImportOptions = new KeyImportOptions(name, keyMaterial);
 
-            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -684,7 +684,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (keyImportOptions == default) throw new ArgumentNullException(nameof(keyImportOptions));
 
-            return SendRequest(HttpPipelineMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
+            return SendRequest(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name);
         }
 
         /// <summary>
@@ -702,7 +702,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (keyImportOptions == default) throw new ArgumentNullException(nameof(keyImportOptions));
 
-            return await SendRequestAsync(HttpPipelineMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name).ConfigureAwait(false);
+            return await SendRequestAsync(RequestMethod.Put, keyImportOptions, () => new Key(keyImportOptions.Name), cancellationToken, KeysPath, keyImportOptions.Name).ConfigureAwait(false);
         }
     }
 }

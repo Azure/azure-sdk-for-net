@@ -13,7 +13,7 @@ namespace Azure.Core.Testing
     {
         public string RequestUri { get; set; }
 
-        public HttpPipelineMethod RequestMethod { get; set; }
+        public RequestMethod RequestMethod { get; set; }
 
         public byte[] RequestBody { get; set; }
 
@@ -31,7 +31,7 @@ namespace Azure.Core.Testing
 
             if (element.TryGetProperty(nameof(RequestMethod), out JsonElement property))
             {
-                record.RequestMethod = HttpPipelineMethodConverter.Parse(property.GetString());
+                record.RequestMethod = RequestMethod.Parse(property.GetString());
             }
 
             if (element.TryGetProperty(nameof(RequestUri), out property))
@@ -102,6 +102,11 @@ namespace Azure.Core.Testing
                 }
             }
 
+            if (property.Type == JsonValueType.Array)
+            {
+                return Array.Empty<byte>();
+            }
+
             return Convert.FromBase64String(property.GetString());
         }
 
@@ -131,7 +136,7 @@ namespace Azure.Core.Testing
             jsonWriter.WriteStartObject();
 
             jsonWriter.WriteString(nameof(RequestUri), RequestUri);
-            jsonWriter.WriteString(nameof(RequestMethod), HttpPipelineMethodConverter.ToString(RequestMethod));
+            jsonWriter.WriteString(nameof(RequestMethod), RequestMethod.Method);
             jsonWriter.WriteStartObject(nameof(RequestHeaders));
             SerializeHeaders(jsonWriter, RequestHeaders);
             jsonWriter.WriteEndObject();
@@ -150,9 +155,14 @@ namespace Azure.Core.Testing
 
         private void SerializeBody(Utf8JsonWriter jsonWriter, string name, byte[] requestBody, IDictionary<string, string[]> headers)
         {
-            if (requestBody == null || requestBody.Length == 0)
+            if (requestBody == null)
             {
                 jsonWriter.WriteNull(name);
+            }
+            else if (requestBody.Length == 0)
+            {
+                jsonWriter.WriteStartArray(name);
+                jsonWriter.WriteEndArray();
             }
             else if (IsTextContentType(headers, out Encoding encoding))
             {

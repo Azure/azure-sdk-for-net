@@ -2,6 +2,7 @@
 
 ## Current version
 ###  Feature Additions
+    - Added CopyTranslator.cs and TabularTranslator.cs to Extensions folder.
 
 ## Version 4.0.0
 ###  Feature Additions
