@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     internal class BufferResponsePolicy: HttpPipelinePolicy
     {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core.Pipeline
 {

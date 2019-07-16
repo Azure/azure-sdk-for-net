@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     internal class RetryPolicy : HttpPipelinePolicy
     {

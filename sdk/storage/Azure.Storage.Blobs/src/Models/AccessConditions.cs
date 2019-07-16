@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Models
 {
