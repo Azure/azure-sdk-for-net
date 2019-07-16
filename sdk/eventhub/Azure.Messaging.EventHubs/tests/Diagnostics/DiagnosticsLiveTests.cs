@@ -208,7 +208,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
-        [Ignore("Injection step not working")]
         public async Task ReceiveFiresEvents()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -227,23 +226,24 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
                         var sendEvent = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
-                        var partitionKey = "AmIaGoodPartitionKey";
-
-                        // Enable Send & Receive .Start & .Stop events.
-
-                        listener.Enable((name, queueName, arg) => !name.EndsWith(".Exception"));
 
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
 
                         await consumer.ReceiveAsync(1, TimeSpan.Zero);
 
+                        // Enable Send & Receive .Start & .Stop events.
+
+                        listener.Enable((name, queueName, arg) => !name.EndsWith(".Exception"));
+
                         // Send the batch of events.
 
                         Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
                         Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
 
-                        await producer.SendAsync(sendEvent, new SendOptions { PartitionKey = partitionKey });
+                        parentActivity.Start();
+
+                        await producer.SendAsync(sendEvent);
 
                         // Receive and the event; because there is some non-determinism in the messaging flow, the
                         // sent event may not be immediately available.  Allow for a small number of attempts to receive, in order
@@ -252,8 +252,6 @@ namespace Azure.Messaging.EventHubs.Tests
                         var expectedEventsCount = 1;
                         var receivedEvents = new List<EventData>();
                         var index = 0;
-
-                        parentActivity.Start();
 
                         while ((receivedEvents.Count < expectedEventsCount) && (++index < ReceiveRetryLimit))
                         {
@@ -282,10 +280,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // TODO: isParentActivity necessary?
                         Assert.That(eventQueue.TryDequeue(out var receiveStart), Is.True);
-                        AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, partitionKey, connectionString);
+                        AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, partition, connectionString);
 
                         Assert.That(eventQueue.TryDequeue(out var receiveStop), Is.True);
-                        AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, partitionKey, connectionString, relatedId: sendStop.activity.Id);
+                        AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, partition, connectionString, relatedId: sendStop.activity.Id);
 
                         // There should be no more events to dequeue.
 
