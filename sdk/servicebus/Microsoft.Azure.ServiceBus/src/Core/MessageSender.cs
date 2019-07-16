@@ -178,7 +178,6 @@ namespace Microsoft.Azure.ServiceBus.Core
                 this.isViaSender = true;
                 this.TransferDestinationPath = transferDestinationPath;
                 this.ViaEntityPath = entityPath;
-                this.Path = transferDestinationPath;
             }
 
             MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
@@ -191,7 +190,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
         /// <summary>
-        /// Gets the entity path of the MessageSender.
+        /// Gets the entity path of the MessageSender. 
+        /// In the case of a via-sender, this returns the path of the via entity.
         /// </summary>
         public override string Path { get; }
 

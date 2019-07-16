@@ -21,15 +21,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        public void Path_should_not_change()
+        public void Path_reflects_actual_link_destination()
         {
-            Assert.Equal("path", viaSender.Path);
+            Assert.Equal("via", viaSender.Path);
             Assert.Equal("path", nonViaSender.Path);
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public void TransferDestinationPath_should_not_change()
+        public void TransferDestinationPath_should_be_final_destination_name()
         {
             Assert.Equal("path", viaSender.TransferDestinationPath);
             Assert.Null(nonViaSender.TransferDestinationPath);
