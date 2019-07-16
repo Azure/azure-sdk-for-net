@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Http;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
     internal class LoggingPolicy : HttpPipelinePolicy
     {

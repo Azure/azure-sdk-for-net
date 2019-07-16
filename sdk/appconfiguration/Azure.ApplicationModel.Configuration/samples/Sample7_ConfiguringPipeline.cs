@@ -3,7 +3,6 @@
 // license information.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;

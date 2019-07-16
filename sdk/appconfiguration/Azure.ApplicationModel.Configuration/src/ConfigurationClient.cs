@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Http;
 using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {

@@ -4,9 +4,9 @@
 using System.Runtime.InteropServices;
 using Azure.Core.Http;
 
-namespace Azure.Core.Pipeline.Policies
+namespace Azure.Core.Pipeline
 {
-    public class TelemetryPolicy : SynchronousHttpPipelinePolicy
+    internal class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
         private readonly string _header;
 
