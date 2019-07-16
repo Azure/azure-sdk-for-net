@@ -149,7 +149,6 @@ namespace Azure.Storage.Sas
         public static bool operator !=(AccountSasPermissions left, AccountSasPermissions right) =>
             !(left == right);
 
-
         /// <summary>
         /// Parse a string representing which permissions are granted by a
         /// shared access signature.

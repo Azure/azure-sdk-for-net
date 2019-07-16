@@ -261,7 +261,7 @@ namespace Azure.Storage.Common
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
-        /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services. 
+        /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services.
         /// </summary>
         /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
@@ -660,7 +660,7 @@ namespace Azure.Storage.Common
                 return false;
             }
 
-            // helper method 
+            // helper method
 
             string settingOrDefault(string key)
             {
@@ -840,7 +840,7 @@ namespace Azure.Storage.Common
         /// <param name="name">The name of the setting.</param>
         /// <param name="validValues">A list of valid values for the setting.</param>
         /// <returns>An <see cref="AccountSetting"/> representing the enumeration constraint.</returns>
-        private static AccountSetting Setting(string name, params string[] validValues) => 
+        private static AccountSetting Setting(string name, params string[] validValues) =>
             new AccountSetting(
                 name,
                 (settingValue) => validValues.Length == 0 ? true : validValues.Contains(settingValue)
@@ -939,7 +939,7 @@ namespace Azure.Storage.Common
         /// <param name="atLeastOneSettings">A list of settings of which one must be present.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
-        private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) => 
+        private static ConnectionStringFilter AtLeastOne(params AccountSetting[] atLeastOneSettings) =>
             (settings) =>
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
@@ -985,7 +985,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filters">A list of filters of which all must match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) => 
+        private static ConnectionStringFilter MatchesAll(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
                 IDictionary<string, string> result = new Dictionary<string, string>(settings);
@@ -1008,7 +1008,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filters">A list of filters of which exactly one must match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesOne(params ConnectionStringFilter[] filters) => 
+        private static ConnectionStringFilter MatchesOne(params ConnectionStringFilter[] filters) =>
             (settings) =>
             {
                 var results =
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.Common
         /// </summary>
         /// <param name="filter">A list of filters of which ensures that the specified filter is an exact match.</param>
         /// <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
-        private static ConnectionStringFilter MatchesExactly(ConnectionStringFilter filter) => 
+        private static ConnectionStringFilter MatchesExactly(ConnectionStringFilter filter) =>
             (settings) =>
             {
                 var results = filter(settings);
