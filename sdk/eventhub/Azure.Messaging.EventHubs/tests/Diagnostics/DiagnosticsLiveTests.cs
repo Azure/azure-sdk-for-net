@@ -57,7 +57,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
-        [Ignore("Injection step not working")]
         public async Task SendFiresEvents()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -265,8 +264,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Check Diagnostic-Id injection.
 
+                        Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
                         Assert.That(receivedEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
-                        // TODO: check if key is present in sendEvent?
                         Assert.That(receivedEvent.Properties[TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName], Is.EqualTo(sendEvent.Properties[TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName]));
 
                         // Check Correlation-Context injection.
