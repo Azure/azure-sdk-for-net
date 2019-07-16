@@ -11,7 +11,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <AzureApiTag>2018-08-10-preview</AzureApiTag>
+    <AzureApiTag>2019-07-15-preview</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" VersionOverride="[5.1.2]"/>
+  </ItemGroup>
 </Project>

@@ -14,26 +14,25 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of unstructured historical data for v1 compatibility
+    /// Defines headers for GetTagList operation.
     /// </summary>
-    public partial class ImageHistory
+    public partial class GetTagListHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the ImageHistory class.
+        /// Initializes a new instance of the GetTagListHeaders class.
         /// </summary>
-        public ImageHistory()
+        public GetTagListHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageHistory class.
+        /// Initializes a new instance of the GetTagListHeaders class.
         /// </summary>
-        /// <param name="v1Compatibility">The raw v1 compatibility
-        /// information</param>
-        public ImageHistory(string v1Compatibility = default(string))
+        /// <param name="link">next paginated result</param>
+        public GetTagListHeaders(string link = default(string))
         {
-            V1Compatibility = v1Compatibility;
+            Link = link;
             CustomInit();
         }
 
@@ -43,10 +42,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the raw v1 compatibility information
+        /// Gets or sets next paginated result
         /// </summary>
-        [JsonProperty(PropertyName = "v1Compatibility")]
-        public string V1Compatibility { get; set; }
+        [JsonProperty(PropertyName = "Link")]
+        public string Link { get; set; }
 
     }
 }

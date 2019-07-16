@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// Fetch the tags under the repository identified by 'name'
+            /// Fetch the tags under the repository identified by name
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,25 +69,78 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='reference'>
             /// A tag or a digest, pointing to a specific image
             /// </param>
+            /// <param name='accept'>
+            /// Accept header string delimited by comma. For example,
+            /// application/vnd.docker.distribution.manifest.v2+json
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Manifest> GetManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Manifest> GetManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, string accept = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetManifestWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetManifestWithHttpMessagesAsync(name, reference, accept, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List respositories
+            /// Put the manifest identified by `name` and `reference` where `reference` can
+            /// be a tag or digest.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='reference'>
+            /// A tag or a digest, pointing to a specific image
+            /// </param>
+            /// <param name='payload'>
+            /// Manifest body, can take v1 or v2 values depending on accept header
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> CreateManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, Manifest payload, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateManifestWithHttpMessagesAsync(name, reference, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete the manifest identified by `name` and `reference`. Note that a
+            /// manifest can _only_ be deleted by `digest`.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the image (including the namespace)
+            /// </param>
+            /// <param name='reference'>
+            /// A tag or a digest, pointing to a specific image
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteManifestAsync(this IAzureContainerRegistryClient operations, string name, string reference, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteManifestWithHttpMessagesAsync(name, reference, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List repositories
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='last'>
-            /// query parameter for the last item in previou query
+            /// Query parameter for the last item in previous query. Result set will
+            /// include values lexically after last.
             /// </param>
             /// <param name='n'>
             /// query parameter for max number of items
@@ -95,7 +148,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Repositories> GetRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), string n = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Repositories> GetRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), int? n = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetRepositoriesWithHttpMessagesAsync(last, n, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -104,13 +157,14 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// List respositories
+            /// List repositories
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='last'>
-            /// query parameter for the last item in previou query
+            /// Query parameter for the last item in previous query. Result set will
+            /// include values lexically after last.
             /// </param>
             /// <param name='n'>
             /// query parameter for max number of items
@@ -118,7 +172,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Repositories> GetAcrRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), string n = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Repositories> GetAcrRepositoriesAsync(this IAzureContainerRegistryClient operations, string last = default(string), int? n = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAcrRepositoriesWithHttpMessagesAsync(last, n, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -127,7 +181,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// Get respository attributes
+            /// Get repository attributes
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,7 +201,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// Delete a respository
+            /// Delete the repository identified by `name`
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -167,7 +221,8 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// Update attributes of a repository
+            /// Update the attribute identified by `name` where `reference` is the name of
+            /// the repository.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -196,7 +251,8 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='last'>
-            /// query parameter for the last item in previou query
+            /// Query parameter for the last item in previous query. Result set will
+            /// include values lexically after last.
             /// </param>
             /// <param name='n'>
             /// query parameter for max number of items
@@ -210,7 +266,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrRepositoryTags> GetAcrTagsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), string n = default(string), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AcrRepositoryTags> GetAcrTagsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAcrTagsWithHttpMessagesAsync(name, last, n, orderby, digest, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -219,7 +275,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
 
             /// <summary>
-            /// Get manifest attributes by tag
+            /// Get tag attributes by tag
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -228,7 +284,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='reference'>
-            /// A tag name of the image
+            /// Tag or digest of the target manifest
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -251,10 +307,10 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='reference'>
-            /// A tag name of the image
+            /// Tag or digest of the target manifest
             /// </param>
             /// <param name='value'>
-            /// Changeable attribute value
+            /// Repository attribute value
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -274,7 +330,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='reference'>
-            /// A tag name of the image
+            /// Tag or digest of the target manifest
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -294,7 +350,8 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='last'>
-            /// query parameter for the last item in previou query
+            /// Query parameter for the last item in previous query. Result set will
+            /// include values lexically after last.
             /// </param>
             /// <param name='n'>
             /// query parameter for max number of items
@@ -305,7 +362,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AcrManifests> GetAcrManifestsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), string n = default(string), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AcrManifests> GetAcrManifestsAsync(this IAzureContainerRegistryClient operations, string name, string last = default(string), int? n = default(int?), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAcrManifestsWithHttpMessagesAsync(name, last, n, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -323,7 +380,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// Name of the image (including the namespace)
             /// </param>
             /// <param name='reference'>
-            /// A digest pointing to a specific image
+            /// A tag or a digest, pointing to a specific image
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -349,7 +406,7 @@ namespace Microsoft.Azure.ContainerRegistry
             /// A tag or a digest, pointing to a specific image
             /// </param>
             /// <param name='value'>
-            /// Changeable attribute value
+            /// Repository attribute value
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -357,6 +414,95 @@ namespace Microsoft.Azure.ContainerRegistry
             public static async Task UpdateAcrManifestAttributesAsync(this IAzureContainerRegistryClient operations, string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateAcrManifestAttributesWithHttpMessagesAsync(name, reference, value, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Exchange AAD tokens for an ACR refresh Token
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='grantType'>
+            /// Can take a value of access_token_refresh_token, or access_token, or
+            /// refresh_token. Possible values include: 'access_token_refresh_token',
+            /// 'access_token', 'refresh_token'
+            /// </param>
+            /// <param name='service'>
+            /// Indicates the name of your Azure container registry.
+            /// </param>
+            /// <param name='tenant'>
+            /// AAD tenant associated to the AAD credentials.
+            /// </param>
+            /// <param name='refreshToken'>
+            /// AAD refresh token, mandatory when grant_type is access_token_refresh_token
+            /// or refresh_token
+            /// </param>
+            /// <param name='accessToken'>
+            /// AAD access token, mandatory when grant_type is access_token_refresh_token
+            /// or access_token.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RefreshToken> GetAcrRefreshTokenFromExchangeAsync(this IAzureContainerRegistryClient operations, string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAcrRefreshTokenFromExchangeWithHttpMessagesAsync(grantType, service, tenant, refreshToken, accessToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exchange ACR Refresh token for an ACR Access Token
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='service'>
+            /// Indicates the name of your Azure container registry.
+            /// </param>
+            /// <param name='scope'>
+            /// Which is expected to be a valid scope, and can be specified more than once
+            /// for multiple scope requests. You obtained this from the Www-Authenticate
+            /// response header from the challenge.
+            /// </param>
+            /// <param name='refreshToken'>
+            /// Must be a valid ACR refresh token
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessToken> GetAcrAccessTokenAsync(this IAzureContainerRegistryClient operations, string service, string scope, string refreshToken, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAcrAccessTokenWithHttpMessagesAsync(service, scope, refreshToken, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exchange Username, Password and Scope an ACR Access Token
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='service'>
+            /// Indicates the name of your Azure container registry.
+            /// </param>
+            /// <param name='scope'>
+            /// Expected to be a valid scope, and can be specified more than once for
+            /// multiple scope requests. You can obtain this from the Www-Authenticate
+            /// response header from the challenge.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessToken> GetAcrAccessTokenFromLoginAsync(this IAzureContainerRegistryClient operations, string service, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAcrAccessTokenFromLoginWithHttpMessagesAsync(service, scope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

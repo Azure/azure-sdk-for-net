@@ -32,20 +32,28 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Initializes a new instance of the Manifest class.
         /// </summary>
         /// <param name="schemaVersion">Schema version</param>
+        /// <param name="mediaType">Media type usually
+        /// application/vnd.docker.distribution.manifest.v2+json if this is in
+        /// the accept header</param>
+        /// <param name="config">V2 image config descriptor</param>
+        /// <param name="layers">List of V2 image layer information</param>
         /// <param name="architecture">CPU architecture</param>
         /// <param name="name">Image name</param>
         /// <param name="tag">Image tag</param>
         /// <param name="fsLayers">List of layer information</param>
-        /// <param name="imageHistories">Image history</param>
+        /// <param name="history">Image history</param>
         /// <param name="signatures">Image signature</param>
-        public Manifest(double? schemaVersion = default(double?), string architecture = default(string), string name = default(string), string tag = default(string), IList<ImageLayer> fsLayers = default(IList<ImageLayer>), IList<ImageHistory> imageHistories = default(IList<ImageHistory>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
+        public Manifest(int? schemaVersion = default(int?), string mediaType = default(string), V2Descriptor config = default(V2Descriptor), IList<V2Descriptor> layers = default(IList<V2Descriptor>), string architecture = default(string), string name = default(string), string tag = default(string), IList<FsLayer> fsLayers = default(IList<FsLayer>), IList<History> history = default(IList<History>), IList<ImageSignature> signatures = default(IList<ImageSignature>))
         {
             SchemaVersion = schemaVersion;
+            MediaType = mediaType;
+            Config = config;
+            Layers = layers;
             Architecture = architecture;
             Name = name;
             Tag = tag;
             FsLayers = fsLayers;
-            ImageHistories = imageHistories;
+            History = history;
             Signatures = signatures;
             CustomInit();
         }
@@ -59,7 +67,27 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets schema version
         /// </summary>
         [JsonProperty(PropertyName = "schemaVersion")]
-        public double? SchemaVersion { get; set; }
+        public int? SchemaVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets media type usually
+        /// application/vnd.docker.distribution.manifest.v2+json if this is in
+        /// the accept header
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaType { get; set; }
+
+        /// <summary>
+        /// Gets or sets V2 image config descriptor
+        /// </summary>
+        [JsonProperty(PropertyName = "config")]
+        public V2Descriptor Config { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of V2 image layer information
+        /// </summary>
+        [JsonProperty(PropertyName = "layers")]
+        public IList<V2Descriptor> Layers { get; set; }
 
         /// <summary>
         /// Gets or sets CPU architecture
@@ -83,13 +111,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets list of layer information
         /// </summary>
         [JsonProperty(PropertyName = "fsLayers")]
-        public IList<ImageLayer> FsLayers { get; set; }
+        public IList<FsLayer> FsLayers { get; set; }
 
         /// <summary>
         /// Gets or sets image history
         /// </summary>
         [JsonProperty(PropertyName = "history")]
-        public IList<ImageHistory> ImageHistories { get; set; }
+        public IList<History> History { get; set; }
 
         /// <summary>
         /// Gets or sets image signature

@@ -13,26 +13,24 @@ namespace Microsoft.Azure.ContainerRegistry.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Image layer information
-    /// </summary>
-    public partial class ImageLayer
+    public partial class AccessToken
     {
         /// <summary>
-        /// Initializes a new instance of the ImageLayer class.
+        /// Initializes a new instance of the AccessToken class.
         /// </summary>
-        public ImageLayer()
+        public AccessToken()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageLayer class.
+        /// Initializes a new instance of the AccessToken class.
         /// </summary>
-        /// <param name="blobSum">SHA of an image layer</param>
-        public ImageLayer(string blobSum = default(string))
+        /// <param name="accessTokenProperty">The access token for performing
+        /// authenticated requests</param>
+        public AccessToken(string accessTokenProperty = default(string))
         {
-            BlobSum = blobSum;
+            AccessTokenProperty = accessTokenProperty;
             CustomInit();
         }
 
@@ -42,10 +40,10 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SHA of an image layer
+        /// Gets or sets the access token for performing authenticated requests
         /// </summary>
-        [JsonProperty(PropertyName = "blobSum")]
-        public string BlobSum { get; set; }
+        [JsonProperty(PropertyName = "access_token")]
+        public string AccessTokenProperty { get; set; }
 
     }
 }

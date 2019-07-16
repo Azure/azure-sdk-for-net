@@ -24,14 +24,14 @@ namespace Microsoft.Azure.ContainerRegistry
     using System.Threading.Tasks;
 
     /// <summary>
-    /// V2 API definition for the Azure Container Registry runtime
+    /// Metadata API definition for the Azure Container Registry runtime
     /// </summary>
     public partial class AzureContainerRegistryClient : ServiceClient<AzureContainerRegistryClient>, IAzureContainerRegistryClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -47,6 +47,11 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// Registry login URL
+        /// </summary>
+        public string LoginUri { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -102,51 +107,6 @@ namespace Microsoft.Azure.ContainerRegistry
         protected AzureContainerRegistryClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected AzureContainerRegistryClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected AzureContainerRegistryClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -230,75 +190,6 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public AzureContainerRegistryClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the AzureContainerRegistryClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Credentials needed for the client to connect to Azure.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public AzureContainerRegistryClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
         /// An optional partial-method to perform custom initialization.
         /// </summary>
         partial void CustomInitialize();
@@ -307,7 +198,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://acrapi.azurecr-test.io");
+            BaseUri = "{url}";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -352,11 +243,21 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <exception cref="AcrErrorsException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<AzureOperationResponse> GetDockerRegistryV2SupportWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -368,8 +269,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetDockerRegistryV2Support", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "v2/").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/";
+            _url = _url.Replace("{url}", LoginUri);
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
             {
@@ -474,7 +376,7 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Fetch the tags under the repository identified by 'name'
+        /// Fetch the tags under the repository identified by name
         /// </summary>
         /// <param name='name'>
         /// Name of the image (including the namespace)
@@ -500,8 +402,12 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RepositoryTags>> GetTagListWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RepositoryTags,GetTagListHeaders>> GetTagListWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -518,8 +424,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetTagList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "v2/{name}/tags/list").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/{name}/tags/list";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
@@ -580,7 +487,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -610,7 +517,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RepositoryTags>();
+            var _result = new AzureOperationResponse<RepositoryTags,GetTagListHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -635,6 +542,19 @@ namespace Microsoft.Azure.ContainerRegistry
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetTagListHeaders>(JsonSerializer.Create(DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -651,6 +571,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </param>
         /// <param name='reference'>
         /// A tag or a digest, pointing to a specific image
+        /// </param>
+        /// <param name='accept'>
+        /// Accept header string delimited by comma. For example,
+        /// application/vnd.docker.distribution.manifest.v2+json
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -673,8 +597,12 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Manifest>> GetManifestWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Manifest>> GetManifestWithHttpMessagesAsync(string name, string reference, string accept = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -692,12 +620,14 @@ namespace Microsoft.Azure.ContainerRegistry
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("reference", reference);
+                tracingParameters.Add("accept", accept);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetManifest", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "v2/{name}/manifests/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/{name}/manifests/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -714,6 +644,14 @@ namespace Microsoft.Azure.ContainerRegistry
             if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (accept != null)
+            {
+                if (_httpRequest.Headers.Contains("accept"))
+                {
+                    _httpRequest.Headers.Remove("accept");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept", accept);
             }
             if (AcceptLanguage != null)
             {
@@ -759,7 +697,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -822,10 +760,385 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// List respositories
+        /// Put the manifest identified by `name` and `reference` where `reference` can
+        /// be a tag or digest.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='reference'>
+        /// A tag or a digest, pointing to a specific image
+        /// </param>
+        /// <param name='payload'>
+        /// Manifest body, can take v1 or v2 values depending on accept header
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<object,CreateManifestHeaders>> CreateManifestWithHttpMessagesAsync(string name, string reference, Manifest payload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (reference == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "reference");
+            }
+            if (payload == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "payload");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("reference", reference);
+                tracingParameters.Add("payload", payload);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateManifest", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/{name}/manifests/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(payload != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(payload, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/vnd.docker.distribution.manifest.v2+json");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 201)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object,CreateManifestHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<CreateManifestHeaders>(JsonSerializer.Create(DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Delete the manifest identified by `name` and `reference`. Note that a
+        /// manifest can _only_ be deleted by `digest`.
+        /// </summary>
+        /// <param name='name'>
+        /// Name of the image (including the namespace)
+        /// </param>
+        /// <param name='reference'>
+        /// A tag or a digest, pointing to a specific image
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteManifestWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (reference == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "reference");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("reference", reference);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteManifest", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/{name}/manifests/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 202)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List repositories
         /// </summary>
         /// <param name='last'>
-        /// query parameter for the last item in previou query
+        /// Query parameter for the last item in previous query. Result set will
+        /// include values lexically after last.
         /// </param>
         /// <param name='n'>
         /// query parameter for max number of items
@@ -842,11 +1155,21 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Repositories>> GetRepositoriesWithHttpMessagesAsync(string last = default(string), string n = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Repositories,GetRepositoriesHeaders>> GetRepositoriesWithHttpMessagesAsync(string last = default(string), int? n = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -860,8 +1183,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetRepositories", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "v2/_catalog").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "v2/_catalog";
+            _url = _url.Replace("{url}", LoginUri);
             List<string> _queryParameters = new List<string>();
             if (last != null)
             {
@@ -869,7 +1193,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             if (n != null)
             {
-                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(n)));
+                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(n, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -959,7 +1283,7 @@ namespace Microsoft.Azure.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Repositories>();
+            var _result = new AzureOperationResponse<Repositories,GetRepositoriesHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -984,6 +1308,19 @@ namespace Microsoft.Azure.ContainerRegistry
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<GetRepositoriesHeaders>(JsonSerializer.Create(DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -992,10 +1329,11 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// List respositories
+        /// List repositories
         /// </summary>
         /// <param name='last'>
-        /// query parameter for the last item in previou query
+        /// Query parameter for the last item in previous query. Result set will
+        /// include values lexically after last.
         /// </param>
         /// <param name='n'>
         /// query parameter for max number of items
@@ -1012,11 +1350,21 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Repositories>> GetAcrRepositoriesWithHttpMessagesAsync(string last = default(string), string n = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Repositories>> GetAcrRepositoriesWithHttpMessagesAsync(string last = default(string), int? n = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1030,8 +1378,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrRepositories", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/_catalog").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/_catalog";
+            _url = _url.Replace("{url}", LoginUri);
             List<string> _queryParameters = new List<string>();
             if (last != null)
             {
@@ -1039,7 +1388,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             if (n != null)
             {
-                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(n)));
+                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(n, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1162,7 +1511,7 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Get respository attributes
+        /// Get repository attributes
         /// </summary>
         /// <param name='name'>
         /// Name of the image (including the namespace)
@@ -1190,6 +1539,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse<RepositoryAttributes>> GetAcrRepositoryAttributesWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1206,8 +1559,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrRepositoryAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
@@ -1268,7 +1622,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1331,7 +1685,7 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Delete a respository
+        /// Delete the repository identified by `name`
         /// </summary>
         /// <param name='name'>
         /// Name of the image (including the namespace)
@@ -1359,6 +1713,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse<DeletedRepository>> DeleteAcrRepositoryWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1375,8 +1733,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAcrRepository", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
@@ -1437,7 +1796,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 404)
+            if ((int)_statusCode != 202)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1500,7 +1859,8 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Update attributes of a repository
+        /// Update the attribute identified by `name` where `reference` is the name of
+        /// the repository.
         /// </summary>
         /// <param name='name'>
         /// Name of the image (including the namespace)
@@ -1528,6 +1888,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse> UpdateAcrRepositoryAttributesWithHttpMessagesAsync(string name, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1545,8 +1909,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateAcrRepositoryAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)
@@ -1613,7 +1978,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1664,7 +2029,8 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='last'>
-        /// query parameter for the last item in previou query
+        /// Query parameter for the last item in previous query. Result set will
+        /// include values lexically after last.
         /// </param>
         /// <param name='n'>
         /// query parameter for max number of items
@@ -1696,8 +2062,12 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AcrRepositoryTags>> GetAcrTagsWithHttpMessagesAsync(string name, string last = default(string), string n = default(string), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AcrRepositoryTags>> GetAcrTagsWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), string digest = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1718,8 +2088,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrTags", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_tags").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_tags";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (last != null)
@@ -1728,7 +2099,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             if (n != null)
             {
-                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(n)));
+                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(n, SerializationSettings).Trim('"'))));
             }
             if (orderby != null)
             {
@@ -1796,7 +2167,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1859,13 +2230,13 @@ namespace Microsoft.Azure.ContainerRegistry
         }
 
         /// <summary>
-        /// Get manifest attributes by tag
+        /// Get tag attributes by tag
         /// </summary>
         /// <param name='name'>
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// A tag name of the image
+        /// Tag or digest of the target manifest
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1890,6 +2261,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse<AcrTagAttributes>> GetAcrTagAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1911,8 +2286,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrTagAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_tags/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_tags/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -1974,7 +2350,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2043,10 +2419,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// A tag name of the image
+        /// Tag or digest of the target manifest
         /// </param>
         /// <param name='value'>
-        /// Changeable attribute value
+        /// Repository attribute value
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2068,6 +2444,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse> UpdateAcrTagAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -2090,8 +2470,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateAcrTagAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_tags/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_tags/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -2159,7 +2540,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2210,7 +2591,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// A tag name of the image
+        /// Tag or digest of the target manifest
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2232,6 +2613,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse> DeleteAcrTagWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -2253,8 +2638,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAcrTag", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_tags/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_tags/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -2316,7 +2702,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 202)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2367,7 +2753,8 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='last'>
-        /// query parameter for the last item in previou query
+        /// Query parameter for the last item in previous query. Result set will
+        /// include values lexically after last.
         /// </param>
         /// <param name='n'>
         /// query parameter for max number of items
@@ -2396,8 +2783,12 @@ namespace Microsoft.Azure.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AcrManifests>> GetAcrManifestsWithHttpMessagesAsync(string name, string last = default(string), string n = default(string), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AcrManifests>> GetAcrManifestsWithHttpMessagesAsync(string name, string last = default(string), int? n = default(int?), string orderby = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -2417,8 +2808,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrManifests", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_manifests").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_manifests";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (last != null)
@@ -2427,7 +2819,7 @@ namespace Microsoft.Azure.ContainerRegistry
             }
             if (n != null)
             {
-                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(n)));
+                _queryParameters.Add(string.Format("n={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(n, SerializationSettings).Trim('"'))));
             }
             if (orderby != null)
             {
@@ -2491,7 +2883,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2560,7 +2952,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// Name of the image (including the namespace)
         /// </param>
         /// <param name='reference'>
-        /// A digest pointing to a specific image
+        /// A tag or a digest, pointing to a specific image
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2585,6 +2977,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse<AcrManifestAttributes>> GetAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -2606,8 +3002,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "GetAcrManifestAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_manifests/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_manifests/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -2669,7 +3066,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2741,7 +3138,7 @@ namespace Microsoft.Azure.ContainerRegistry
         /// A tag or a digest, pointing to a specific image
         /// </param>
         /// <param name='value'>
-        /// Changeable attribute value
+        /// Repository attribute value
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2763,6 +3160,10 @@ namespace Microsoft.Azure.ContainerRegistry
         /// </return>
         public async Task<AzureOperationResponse> UpdateAcrManifestAttributesWithHttpMessagesAsync(string name, string reference, ChangeableAttributes value = default(ChangeableAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -2785,8 +3186,9 @@ namespace Microsoft.Azure.ContainerRegistry
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateAcrManifestAttributes", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "acr/v1/{name}/_manifests/{reference}").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "acr/v1/{name}/_manifests/{reference}";
+            _url = _url.Replace("{url}", LoginUri);
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{reference}", System.Uri.EscapeDataString(reference));
             List<string> _queryParameters = new List<string>();
@@ -2854,7 +3256,7 @@ namespace Microsoft.Azure.ContainerRegistry
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -2890,6 +3292,629 @@ namespace Microsoft.Azure.ContainerRegistry
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Exchange AAD tokens for an ACR refresh Token
+        /// </summary>
+        /// <param name='grantType'>
+        /// Can take a value of access_token_refresh_token, or access_token, or
+        /// refresh_token. Possible values include: 'access_token_refresh_token',
+        /// 'access_token', 'refresh_token'
+        /// </param>
+        /// <param name='service'>
+        /// Indicates the name of your Azure container registry.
+        /// </param>
+        /// <param name='tenant'>
+        /// AAD tenant associated to the AAD credentials.
+        /// </param>
+        /// <param name='refreshToken'>
+        /// AAD refresh token, mandatory when grant_type is access_token_refresh_token
+        /// or refresh_token
+        /// </param>
+        /// <param name='accessToken'>
+        /// AAD access token, mandatory when grant_type is access_token_refresh_token
+        /// or access_token.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<RefreshToken>> GetAcrRefreshTokenFromExchangeWithHttpMessagesAsync(string grantType, string service, string tenant = default(string), string refreshToken = default(string), string accessToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (grantType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "grantType");
+            }
+            if (service == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "service");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("grantType", grantType);
+                tracingParameters.Add("service", service);
+                tracingParameters.Add("tenant", tenant);
+                tracingParameters.Add("refreshToken", refreshToken);
+                tracingParameters.Add("accessToken", accessToken);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAcrRefreshTokenFromExchange", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "oauth2/exchange";
+            _url = _url.Replace("{url}", LoginUri);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            var values = new List<KeyValuePair<string, string>>();
+            if(grantType != null)
+            {
+                values.Add(new KeyValuePair<string,string>("grant_type", grantType));
+            }
+            if(service != null)
+            {
+                values.Add(new KeyValuePair<string,string>("service", service));
+            }
+            if(tenant != null)
+            {
+                values.Add(new KeyValuePair<string,string>("tenant", tenant));
+            }
+            if(refreshToken != null)
+            {
+                values.Add(new KeyValuePair<string,string>("refresh_token", refreshToken));
+            }
+            if(accessToken != null)
+            {
+                values.Add(new KeyValuePair<string,string>("access_token", accessToken));
+            }
+            var _formContent = new FormUrlEncodedContent(values);
+            _httpRequest.Content = _formContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RefreshToken>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RefreshToken>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Exchange ACR Refresh token for an ACR Access Token
+        /// </summary>
+        /// <param name='service'>
+        /// Indicates the name of your Azure container registry.
+        /// </param>
+        /// <param name='scope'>
+        /// Which is expected to be a valid scope, and can be specified more than once
+        /// for multiple scope requests. You obtained this from the Www-Authenticate
+        /// response header from the challenge.
+        /// </param>
+        /// <param name='refreshToken'>
+        /// Must be a valid ACR refresh token
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<AccessToken>> GetAcrAccessTokenWithHttpMessagesAsync(string service, string scope, string refreshToken, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (service == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "service");
+            }
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+            }
+            if (refreshToken == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "refreshToken");
+            }
+            string grantType = "refresh_token";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("grantType", grantType);
+                tracingParameters.Add("service", service);
+                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("refreshToken", refreshToken);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAcrAccessToken", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "oauth2/token";
+            _url = _url.Replace("{url}", LoginUri);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            var values = new List<KeyValuePair<string, string>>();
+            if(grantType != null)
+            {
+                values.Add(new KeyValuePair<string,string>("grant_type", grantType));
+            }
+            if(service != null)
+            {
+                values.Add(new KeyValuePair<string,string>("service", service));
+            }
+            if(scope != null)
+            {
+                values.Add(new KeyValuePair<string,string>("scope", scope));
+            }
+            if(refreshToken != null)
+            {
+                values.Add(new KeyValuePair<string,string>("refresh_token", refreshToken));
+            }
+            var _formContent = new FormUrlEncodedContent(values);
+            _httpRequest.Content = _formContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<AccessToken>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<AccessToken>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Exchange Username, Password and Scope an ACR Access Token
+        /// </summary>
+        /// <param name='service'>
+        /// Indicates the name of your Azure container registry.
+        /// </param>
+        /// <param name='scope'>
+        /// Expected to be a valid scope, and can be specified more than once for
+        /// multiple scope requests. You can obtain this from the Www-Authenticate
+        /// response header from the challenge.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AcrErrorsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<AccessToken>> GetAcrAccessTokenFromLoginWithHttpMessagesAsync(string service, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (LoginUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.LoginUri");
+            }
+            if (service == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "service");
+            }
+            if (scope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("service", service);
+                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetAcrAccessTokenFromLogin", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "oauth2/token";
+            _url = _url.Replace("{url}", LoginUri);
+            List<string> _queryParameters = new List<string>();
+            if (service != null)
+            {
+                _queryParameters.Add(string.Format("service={0}", System.Uri.EscapeDataString(service)));
+            }
+            if (scope != null)
+            {
+                _queryParameters.Add(string.Format("scope={0}", System.Uri.EscapeDataString(scope)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AcrErrorsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AcrErrors _errorBody =  SafeJsonConvert.DeserializeObject<AcrErrors>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<AccessToken>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<AccessToken>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

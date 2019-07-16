@@ -31,22 +31,26 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the AcrManifestAttributesBase class.
         /// </summary>
-        /// <param name="digest">Manifest digest</param>
+        /// <param name="digest">Manifest</param>
+        /// <param name="imageSize">Image size</param>
         /// <param name="createdTime">Created time</param>
         /// <param name="lastUpdateTime">Last update time</param>
         /// <param name="architecture">CPU architecture</param>
         /// <param name="os">Operating system</param>
         /// <param name="mediaType">Media type</param>
+        /// <param name="configMediaType">Config blob media type</param>
         /// <param name="tags">List of tags</param>
         /// <param name="changeableAttributes">Changeable attributes</param>
-        public AcrManifestAttributesBase(string digest = default(string), string createdTime = default(string), string lastUpdateTime = default(string), string architecture = default(string), string os = default(string), string mediaType = default(string), IList<string> tags = default(IList<string>), ChangeableAttributes changeableAttributes = default(ChangeableAttributes))
+        public AcrManifestAttributesBase(string digest = default(string), int? imageSize = default(int?), string createdTime = default(string), string lastUpdateTime = default(string), string architecture = default(string), string os = default(string), string mediaType = default(string), string configMediaType = default(string), IList<string> tags = default(IList<string>), ChangeableAttributes changeableAttributes = default(ChangeableAttributes))
         {
             Digest = digest;
+            ImageSize = imageSize;
             CreatedTime = createdTime;
             LastUpdateTime = lastUpdateTime;
             Architecture = architecture;
             Os = os;
             MediaType = mediaType;
+            ConfigMediaType = configMediaType;
             Tags = tags;
             ChangeableAttributes = changeableAttributes;
             CustomInit();
@@ -58,10 +62,16 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets manifest digest
+        /// Gets or sets manifest
         /// </summary>
         [JsonProperty(PropertyName = "digest")]
         public string Digest { get; set; }
+
+        /// <summary>
+        /// Gets or sets image size
+        /// </summary>
+        [JsonProperty(PropertyName = "imageSize")]
+        public int? ImageSize { get; set; }
 
         /// <summary>
         /// Gets or sets created time
@@ -92,6 +102,12 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "mediaType")]
         public string MediaType { get; set; }
+
+        /// <summary>
+        /// Gets or sets config blob media type
+        /// </summary>
+        [JsonProperty(PropertyName = "configMediaType")]
+        public string ConfigMediaType { get; set; }
 
         /// <summary>
         /// Gets or sets list of tags
