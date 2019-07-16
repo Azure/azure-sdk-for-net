@@ -51,6 +51,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             _vaultUri = vaultUri ?? throw new ArgumentNullException(nameof(credential));
             options = options ?? new KeyClientOptions();
+            this.ApiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     bufferResponse: true,
