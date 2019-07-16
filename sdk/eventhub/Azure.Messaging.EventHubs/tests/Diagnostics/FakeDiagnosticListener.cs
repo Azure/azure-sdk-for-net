@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
         public void OnNext(DiagnosticListener value)
         {
-            if (value.Name.Equals("Microsoft.Azure.EventHubs"))
+            if (value.Name.Equals("Azure.Messaging.EventHubs"))
             {
                 this.subscription = value.Subscribe(new FakeDiagnosticSourceWriteObserver(this.writeCallback), this.IsEnabled);
             }

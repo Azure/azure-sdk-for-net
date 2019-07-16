@@ -14,7 +14,7 @@ namespace TrackOne
     /// </summary>
     internal static class EventHubsDiagnosticSource
     {
-        public const string DiagnosticSourceName = "TrackOne";
+        public const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
 
         public const string ActivityIdPropertyName = "Diagnostic-Id";
         public const string CorrelationContextPropertyName = "Correlation-Context";

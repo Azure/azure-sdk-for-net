@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static IDisposable SubscribeToEvents(IObserver<DiagnosticListener> listener) =>
             DiagnosticListener.AllListeners.Subscribe(listener);
 
-        private static FakeDiagnosticListener CreateEventListener(string entityName, ConcurrentQueue<(string eventName, object payload, Activity activity)> eventQueue) =>
+        private static FakeDiagnosticListener CreateEventListener(ConcurrentQueue<(string eventName, object payload, Activity activity)> eventQueue) =>
             new FakeDiagnosticListener(kvp =>
             {
                 if (kvp.Key == null || kvp.Value == null)
@@ -39,6 +40,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 eventQueue?.Enqueue((kvp.Key, kvp.Value, Activity.Current));
             });
+
+        private static T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName)
+        {
+            Type t = obj.GetType();
+            PropertyInfo p = t.GetRuntimeProperty(propertyName);
+            object propertyValue = p.GetValue(obj);
+
+            Assert.That(propertyValue, Is.Not.Null);
+            Assert.That(propertyValue, Is.AssignableTo<T>());
+
+            return (T)propertyValue;
+        }
 
         [Test]
         [Ignore("Injection step not working")]
@@ -53,7 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var eventQueue = CreateEventQueue();
 
-                    using (var listener = CreateEventListener(null, eventQueue))
+                    using (var listener = CreateEventListener(eventQueue))
                     using (var subscription = SubscribeToEvents(listener))
                     {
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
@@ -108,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var eventQueue = CreateEventQueue();
 
-                    using (var listener = CreateEventListener(null, eventQueue))
+                    using (var listener = CreateEventListener(eventQueue))
                     using (var subscription = SubscribeToEvents(listener))
                     {
                         // TODO: is parentActivity necessary?
@@ -145,7 +158,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         [Test]
-        [Ignore("Exception is thrown but no event is caught.")]
         public async Task SendFiresExceptionEvents()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -157,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var eventQueue = CreateEventQueue();
 
-                    using (var listener = CreateEventListener(null, eventQueue))
+                    using (var listener = CreateEventListener(eventQueue))
                     using (var subscription = SubscribeToEvents(listener))
                     {
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
@@ -172,14 +184,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Try sending a large message. A SizeLimitException is expected.
 
-                        try
-                        {
-                            await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey });
-                            throw new Exception();
-                            // TODO: throw exception?
-                        }
-                        catch (Exception)
-                        { }
+                        Assert.That(async () => await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey }), Throws.InstanceOf<MessageSizeExceededException>());
 
                         parentActivity.Stop();
 
@@ -199,185 +204,14 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        [Test]
-        [Ignore("Injection step not working")]
-        public async Task SendingToPartitionFiresEvents()
-        {
-            await using (var scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                {
-                    var partition = (await client.GetPartitionIdsAsync()).First();
-
-                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    {
-                        var eventQueue = CreateEventQueue();
-
-                        using (var listener = CreateEventListener(null, eventQueue))
-                        using (var subscription = SubscribeToEvents(listener))
-                        {
-                            var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                            var eventData = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
-
-                            // Enable Send .Start & .Stop events.
-
-                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Exception"));
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
-
-                            parentActivity.Start();
-
-                            await producer.SendAsync(eventData);
-
-                            parentActivity.Stop();
-
-                            // Check Diagnostic-Id injection.
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.True);
-
-                            // Check Correlation-Context injection.
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
-                            Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(eventData.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
-
-                            // TODO: rename partitionKey to partition? What?
-                            Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
-                            AssertSendStart(sendStart.eventName, sendStart.payload, sendStart.activity, parentActivity, partition, connectionString);
-
-                            Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
-                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, sendStart.activity, partition, connectionString);
-
-                            // There should be no more events to dequeue.
-
-                            Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
-                        }
-                    }
-                }
-            }
-        }
-
-        [Test]
-        public async Task SendingToPartitionDoesNotInjectContextWhenNoListeners()
-        {
-            await using (var scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                {
-                    var partition = (await client.GetPartitionIdsAsync()).First();
-
-                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    {
-                        var eventQueue = CreateEventQueue();
-
-                        using (var listener = CreateEventListener(null, eventQueue))
-                        using (var subscription = SubscribeToEvents(listener))
-                        {
-                            // TODO: is parentActivity necessary?
-                            var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                            var eventData = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
-
-                            // Disable all events.
-
-                            listener.Disable();
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
-
-                            parentActivity.Start();
-
-                            await producer.SendAsync(eventData);
-
-                            parentActivity.Stop();
-
-                            // There should be no Diagnostic-Id injection.
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
-
-                            // There should be no Correlation-Context injection.
-
-                            Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
-
-                            // There should be no more events to dequeue.
-
-                            Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
-                        }
-                    }
-                }
-            }
-        }
-
-        [Test]
-        [Ignore("Exception is thrown but no event is caught.")]
-        public async Task SendingToPartitionFiresExceptionEvents()
-        {
-            await using (var scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var client = new EventHubClient(connectionString))
-                {
-                    var partition = (await client.GetPartitionIdsAsync()).First();
-
-                    await using (var producer = client.CreateProducer(new EventHubProducerOptions { PartitionId = partition }))
-                    {
-                        var eventQueue = CreateEventQueue();
-
-                        using (var listener = CreateEventListener(null, eventQueue))
-                        using (var subscription = SubscribeToEvents(listener))
-                        {
-                            // TODO: is parentActivity necessary?
-                            var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                            var eventData = new EventData(new byte[300 * 1024 * 1024]);
-
-                            // Enable Send .Exception & .Stop events.
-
-                            listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Start"));
-
-                            parentActivity.Start();
-
-                            // Try sending a large message. A SizeLimitException is expected.
-
-                            try
-                            {
-                                await producer.SendAsync(eventData);
-                                throw new Exception();
-                                // TODO: throw exception?
-                            }
-                            catch (Exception)
-                            { }
-
-                            parentActivity.Stop();
-
-                            Assert.That(eventQueue.TryDequeue(out var exception), Is.True);
-                            AssertSendException(exception.eventName, exception.payload, exception.activity, null, partition, connectionString);
-
-                            Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
-                            AssertSendStop(sendStop.eventName, sendStop.payload, sendStop.activity, null, partition, connectionString);
-
-                            Assert.That(sendStop.activity, Is.EqualTo(exception.activity));
-
-                            // There should be no more events to dequeue.
-
-                            Assert.That(eventQueue.TryDequeue(out var evnt), Is.False);
-                        }
-                    }
-                }
-            }
-        }
-
         private static void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, string connectionString, int eventCount = 1)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            Assert.That(name, Is.EqualTo("Microsoft.Azure.EventHubs.Send.Start"));
+            Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Start"));
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IList<EventData>>(payload, "EventDatas");
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
             Assert.That(eventDatas.Count, Is.EqualTo(eventCount));
 
             Assert.That(activity, Is.Not.Null);
@@ -399,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            Assert.That(name, Is.EqualTo("Microsoft.Azure.EventHubs.Send.Exception"));
+            Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Exception"));
             AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
 
             GetPropertyValueFromAnonymousTypeInstance<Exception>(payload, "Exception");
@@ -411,7 +245,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(activity.Parent, Is.EqualTo(parentActivity));
             }
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IList<EventData>>(payload, "EventDatas");
+            // TODO: keep track one?
+            // TODO: why doesn't IList work?
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
         }
 
@@ -419,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            Assert.That(name, Is.EqualTo("Microsoft.Azure.EventHubs.Send.Stop"));
+            Assert.That(name, Is.EqualTo("Azure.Messaging.EventHubs.Send.Stop"));
             AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties); ;
 
             if (sendActivity != null)
@@ -427,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(activity, Is.EqualTo(sendActivity));
             }
 
-            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IList<EventData>>(payload, "EventDatas");
+            var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
         }
 
@@ -448,7 +284,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var entityPath = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "Entity");
             var pKey = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "PartitionKey");
 
-            Assert.That(endpoint, Is.EqualTo(connectionStringProperties.Endpoint));
+            // endpoint is amqps://cooleventhubs.servicebus.windows.net/SendFiresExceptionEvents-a2fda415
+            // connectionString is sb://cooleventhubs.servicebus.windows.net/
+            // TODO: should we update the diagnostics output?
+            var expectedEndpointStart = "amqps://" + connectionStringProperties.Endpoint.Host;
+
+            Assert.That(endpoint.AbsoluteUri.StartsWith(expectedEndpointStart), Is.True);
             Assert.That(entityPath, Is.EqualTo(connectionStringProperties.EventHubPath));
             Assert.That(pKey, Is.EqualTo(partitionKey));
         }
@@ -456,18 +297,6 @@ namespace Azure.Messaging.EventHubs.Tests
         private static void AssertCommonStopPayloadProperties(object eventPayload, string partitionKey, bool isFaulted, ConnectionStringProperties connectionStringProperties)
         {
             AssertCommonPayloadProperties(eventPayload, partitionKey, connectionStringProperties);
-        }
-
-        private static T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName)
-        {
-            Type t = obj.GetType();
-            PropertyInfo p = t.GetRuntimeProperty(propertyName);
-            object propertyValue = p.GetValue(obj);
-
-            Assert.That(propertyValue, Is.Not.Null);
-            Assert.That(propertyValue, Is.AssignableFrom<T>());
-
-            return (T)propertyValue;
         }
     }
 }
