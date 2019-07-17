@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Extensions
 {
-    public interface IAzureClientsBuilder
+    public interface IAzureClientFactoryBuilder
     {
         IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TClient> clientFactory) where TOptions : ClientOptions;
     }
