@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs
 
             set
             {
-                Guard.ArgumentInRange(nameof(Delay), value, TimeSpan.Zero, TimeSpan.FromMinutes(5));
+                Guard.ArgumentInRange(nameof(Delay), value, TimeSpan.FromMilliseconds(1), TimeSpan.FromMinutes(5));
                 _delay = value;
             }
         }

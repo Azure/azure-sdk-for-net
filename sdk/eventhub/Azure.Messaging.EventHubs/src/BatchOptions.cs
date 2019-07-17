@@ -2,34 +2,56 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The set of options that can be specified to influence the way in which events
-    ///   are sent to the Event Hubs service.
+    ///   The set of options that can be specified to influence the way in which an event batch
+    ///   behaves and is sent to the Event Hubs service.
     /// </summary>
     ///
-    public class SendOptions
+    public class BatchOptions : SendOptions
     {
+        /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
+        private long? _maximumSizeInBytes = null;
+
         /// <summary>
-        ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
-        ///   service map this key to a specific partition but allowing the service to choose an arbitrary,
-        ///   partition for this batch of events and any other batches using the same partition hashing key.
-        ///
-        ///   The selection of a partition is stable for a given partition hashing key.  Should any other
-        ///   batches of events be sent using the same exact partition hashing key, the Event Hubs service will
-        ///   route them all to the same partition.
-        ///
-        ///   This should be specified only when there is a need to group events by partition, but there is
-        ///   flexibility into which partition they are routed. If ensuring that a batch of events is sent
-        ///   only to a specific partition, it is recommended that the identifier of the position be
-        ///   specified directly when sending the batch.
+        ///   The maximum size to allow for a single batch of events, in bytes.
         /// </summary>
         ///
-        /// <value>The partition hashing key to associate with the event or batch of events.</value>
+        /// <value>
+        ///   The desired limit, in bytes, for the size of the associated event batch.  If <c>null</c>,
+        ///   the maximum size allowed by the active transport will be used.
+        /// </value>
         ///
-        public string PartitionKey { get; set; }
+        public long? MaximumizeInBytes
+        {
+            get => _maximumSizeInBytes;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Guard.ArgumentAtLeast(nameof(MaximumizeInBytes), value.Value, EventHubProducer.MinimumBatchSizeLimit);
+                }
+
+                _maximumSizeInBytes = value;
+            }
+        }
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="BatchOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="BatchOptions" />.</returns>
+        ///
+        internal BatchOptions Clone() =>
+            new BatchOptions
+            {
+                PartitionKey = this.PartitionKey,
+                _maximumSizeInBytes = this.MaximumizeInBytes
+            };
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

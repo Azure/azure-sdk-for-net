@@ -8,7 +8,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Compatibility;
+using Azure.Messaging.EventHubs.Core;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
 using TrackOne;
@@ -164,6 +168,81 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.SendAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendAsyncTransformsEventBatches()
+        {
+            var messages = new[]
+            {
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x11 }) }),
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x22 }) }),
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x33 }) }),
+            };
+
+            var options = new BatchOptions { MaximumizeInBytes = 30 };
+            var transportBatch = new TransportBatchMock { Messages = messages };
+            var batch = new EventDataBatch(transportBatch, options);
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            await producer.SendAsync(batch, CancellationToken.None);
+            Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
+
+            var sentEvents = mock.SendCalledWithParameters.Events.ToArray();
+            Assert.That(sentEvents.Length, Is.EqualTo(messages.Length), "The number of events sent should match the number of source events.");
+            Assert.That(sentEvents.Where(evt => evt.AmqpMessage == null).Any(), Is.False, "The events should have had an AMQP message populated at transform.");
+
+            var sentMessages = sentEvents.Select(evt => evt.AmqpMessage).ToList();
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                Assert.That(sentMessages.Contains(messages[index]), $"The message at index: { index } was not part of the set that was sent.");
+            }
+
+            foreach (var message in messages)
+            {
+                message.Dispose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.SendAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendAsyncForwardsThePartitionHashKeyForBatches()
+        {
+            var messages = new[]
+            {
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x11 }) }),
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x22 }) }),
+                AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x33 }) }),
+            };
+
+            var expectedHashKey = "TestKEy";
+            var options = new BatchOptions { MaximumizeInBytes = 30, PartitionKey = expectedHashKey };
+            var transportBatch = new TransportBatchMock { Messages = messages };
+            var batch = new EventDataBatch(transportBatch, options);
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            await producer.SendAsync(batch, CancellationToken.None);
+            Assert.That(mock.SendCalledWithParameters, Is.Not.Null, "The Send request should have been delegated.");
+
+            (_, var actualHashKey) = mock.SendCalledWithParameters;
+            Assert.That(actualHashKey, Is.EqualTo(expectedHashKey), "The partition hash key should have been forwarded.");
+
+            foreach (var message in messages)
+            {
+                message.Dispose();
+            }
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CloseAsync" />
         ///   method.
         /// </summary>
@@ -242,6 +321,104 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchAsyncValidatesTheOptions()
+        {
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.CreateBatchAsync(null, CancellationToken.None), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncEnsuresLinkCreation()
+        {
+            var options = new BatchOptions();
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync(options, default);
+            Assert.That(mock.WasEnsureLinkInvoked, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncDefaultsTheMaximumSizeWhenNotProvided()
+        {
+            var expectedMaximumSize = 512;
+            var options = new BatchOptions { MaximumizeInBytes = null };
+            var mock = new ObservableSenderMock(new ClientMock(), null, expectedMaximumSize);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync(options, default);
+            Assert.That(options.MaximumizeInBytes, Is.EqualTo(expectedMaximumSize));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncRespectsTheMaximumSizeWhenProvided()
+        {
+            var expectedMaximumSize = 512;
+            var options = new BatchOptions { MaximumizeInBytes = 512 };
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            await producer.CreateBatchAsync(options, default);
+            Assert.That(options.MaximumizeInBytes, Is.EqualTo(expectedMaximumSize));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchAsyncVerifiesTheMaximumSize()
+        {
+            var linkMaximumSize = 512;
+            var options = new BatchOptions { MaximumizeInBytes = 1024 };
+            var mock = new ObservableSenderMock(new ClientMock(), null, linkMaximumSize);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+
+            Assert.That(async () => await producer.CreateBatchAsync(options, default), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TrackOneEventHubProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncBuildsAnAmqpEventBatchWithTheOptions()
+        {
+            var options = new BatchOptions { MaximumizeInBytes = 512 };
+            var mock = new ObservableSenderMock(new ClientMock(), null);
+            var producer = new TrackOneEventHubProducer(_ => mock, Mock.Of<EventHubRetryPolicy>());
+            var batch = await producer.CreateBatchAsync(options, default);
+
+            Assert.That(batch, Is.Not.Null, "The created batch should be populated.");
+            Assert.That(batch, Is.InstanceOf<AmqpEventBatch>(), $"The created batch should be an { nameof(AmqpEventBatch) }.");
+            Assert.That(GetEventBatchOptions((AmqpEventBatch)batch), Is.SameAs(options), "the provided options should have been used.");
+        }
+
+        /// <summary>
         ///   Gets the retry policy from a <see cref="TrackOneEventHubProducer" />
         ///   by accessing its private field.
         /// </summary>
@@ -261,7 +438,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   by accessing its private field.
         /// </summary>
         ///
-        /// <param name="policy">The ploicy to retrieve the source policy from.</param>
+        /// <param name="policy">The policy to retrieve the source policy from.</param>
         ///
         /// <returns>The retry policy</returns>
         ///
@@ -272,18 +449,70 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(policy);
 
         /// <summary>
+        ///   Gets set of batch options that a <see cref="AmqpEventBatch" /> is using
+        ///   by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="batch">The batch to retrieve the source policy from.</param>
+        ///
+        /// <returns>The batch options</returns>
+        ///
+        private static BatchOptions GetEventBatchOptions(AmqpEventBatch batch) =>
+            (BatchOptions)
+                typeof(AmqpEventBatch)
+                    .GetProperty("Options", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(batch);
+
+        /// <summary>
+        ///   Allows for the transport event Batch created the client to be injected for testing purposes.
+        /// </summary>
+        ///
+        private class TransportBatchMock : TransportEventBatch
+        {
+            public bool DisposeInvoked = false;
+            public Type AsEnumerableCalledWith = null;
+            public EventData TryAddCalledWith = null;
+            public IEnumerable<AmqpMessage> Messages = null;
+
+            public override long MaximumSizeInBytes { get; } = 200;
+            public override long SizeInBytes { get; } = 100;
+            public override int Count { get; } = 300;
+
+            public override void Dispose()
+            {
+                DisposeInvoked = true;
+            }
+
+            public override bool TryAdd(EventData eventData)
+            {
+                TryAddCalledWith = eventData;
+                return true;
+            }
+
+            public override IEnumerable<T> AsEnumerable<T>()
+            {
+                AsEnumerableCalledWith = typeof(T);
+                return (IEnumerable<T>)Messages;
+            }
+        }
+
+        /// <summary>
         ///   Allows for observation of operations performed by the producer for testing purposes.
         /// </summary>
         ///
         private class ObservableSenderMock : TrackOne.EventDataSender
         {
             public bool WasCloseAsyncInvoked;
+            public bool WasEnsureLinkInvoked;
             public string ConstructedWithPartition;
             public (IEnumerable<TrackOne.EventData> Events, string PartitionKey) SendCalledWithParameters;
 
-            public ObservableSenderMock(TrackOne.EventHubClient eventHubClient, string partitionId) : base(eventHubClient, partitionId)
+            private long maxMessageOverride;
+
+            public ObservableSenderMock(TrackOne.EventHubClient eventHubClient, string partitionId, long maximumMessageSize = Int32.MaxValue) : base(eventHubClient, partitionId)
             {
                 ConstructedWithPartition = partitionId;
+                maxMessageOverride = maximumMessageSize;
             }
 
             public override Task CloseAsync()
@@ -296,6 +525,13 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 SendCalledWithParameters = (eventDatas, partitionKey);
                 return Task.CompletedTask;
+            }
+
+            internal override ValueTask EnsureLinkAsync()
+            {
+                WasEnsureLinkInvoked = true;
+                this.MaxMessageSize = maxMessageOverride;
+                return new ValueTask();
             }
         }
 

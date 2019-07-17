@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendEventsUsingAPartitionHashHey()
+        public async Task ProducerCanSendEventsUsingAPartitionHashKey()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -170,7 +170,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendMultipleBatchesOfEventsUsingAPartitionHashHey()
+        public async Task ProducerCanSendMultipleSetsOfEventsUsingAPartitionHashKey()
         {
             await using (var scope = await EventHubScope.CreateAsync(4))
             {
@@ -199,6 +199,38 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCanSendAnEventBatchUsingAPartitionHashKey()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var events = Enumerable
+                    .Range(0, 25)
+                    .Select(index => new EventData(Encoding.UTF8.GetBytes(new String('X', index + 5))));
+
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var batchOptions = new BatchOptions { PartitionKey = "some123key-!d" };
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    using var batch = await producer.CreateBatchAsync(batchOptions);
+
+                    foreach (var eventData in events)
+                    {
+                        Assert.That(() => batch.TryAdd(eventData), Is.True, "An event was rejected by the batch; all eveny should be accepted.");
+                    }
+
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ProducerCanSendSingleZeroLengthEvent()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
@@ -209,10 +241,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = client.CreateProducer())
                 {
                     var singleEvent = new EventData(new byte[0]);
-                    var eventBatch = new[] { new EventData(new byte[0]) };
+                    var eventSet = new[] { new EventData(new byte[0]) };
 
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
-                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.Nothing);
+                    Assert.That(async () => await producer.SendAsync(eventSet), Throws.Nothing);
                 }
             }
         }
@@ -229,12 +261,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event.
-                    var singleEvent = new EventData(new byte[1000000]);
-                    var eventBatch = new[] { new EventData(new byte[1000000]) };
+                    var singleEvent = new EventData(new byte[100000]);
+                    var eventBatch = new[] { new EventData(new byte[100000]) };
 
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
                     Assert.That(async () => await producer.SendAsync(eventBatch), Throws.Nothing);
@@ -273,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendBatch()
+        public async Task ProducerCanSendASetOfEvents()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -300,7 +332,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendZeroLengthBatch()
+        public async Task ProducerCanSendZeroLengthSet()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -327,21 +359,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendLargeBatch()
+        public async Task ProducerCanSendLargeSet()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) }}))
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
                 await using (var producer = client.CreateProducer())
                 {
                     // Actual limit is 1046520 for a single event.
                     var events = new[]
                     {
-                        new EventData(new byte[1000000 / 3]),
-                        new EventData(new byte[1000000 / 3]),
-                        new EventData(new byte[1000000 / 3])
+                        new EventData(new byte[100000 / 3]),
+                        new EventData(new byte[100000 / 3]),
+                        new EventData(new byte[100000 / 3])
                     };
 
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
@@ -355,7 +387,86 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCannotSendBatchLargerThanMaximumSize()
+        public async Task ProducerCanSendAnEventBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    using var batch = await producer.CreateBatchAsync();
+
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is a message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("This is another message")));
+                    batch.TryAdd(new EventData(Encoding.UTF8.GetBytes("So many messages")));
+
+                    Assert.That(batch.Count, Is.EqualTo(3), "The batch should contain all 3 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendZeroLengthEventBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString))
+                await using (var producer = client.CreateProducer())
+                {
+                    using var batch = await producer.CreateBatchAsync();
+                    batch.TryAdd(new EventData(new byte[0]));
+
+                    Assert.That(batch.Count, Is.EqualTo(1), "The batch should contain a single event.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendLargeEventBatch()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using (var client = new EventHubClient(connectionString, new EventHubClientOptions { RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
+                await using (var producer = client.CreateProducer())
+                {
+                    using var batch = await producer.CreateBatchAsync();
+
+                    // Actual limit is 1046520 for a single event.
+                    batch.TryAdd(new EventData(new byte[100000 / 3]));
+                    batch.TryAdd(new EventData(new byte[100000 / 3]));
+                    batch.TryAdd(new EventData(new byte[100000 / 3]));
+
+                    Assert.That(batch.Count, Is.EqualTo(3), "The batch should contain all 3 events.");
+                    Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducer" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCannotSendSetLargerThanMaximumSize()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -383,7 +494,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCanSendBatchToASpecificPartition()
+        public async Task ProducerCanSendSetToASpecificPartition()
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -678,7 +789,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerSendsEventsInTheSameBatchToTheSamePartition()
+        public async Task ProducerSendsEventsInTheSameSetToTheSamePartition()
         {
             var partitions = 10;
 
@@ -873,13 +984,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 var clientOptions = new EventHubClientOptions
                 {
                     Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = TransportType.AmqpWebSockets
+                    TransportType = TransportType.AmqpWebSockets,
+                    RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(2) }
                 };
 
                 await using (var invalidProxyClient = new EventHubClient(connectionString, clientOptions))
                 await using (var invalidProxyProducer = invalidProxyClient.CreateProducer())
                 {
-                    Assert.That(async () => await invalidProxyProducer.SendAsync(new EventData(new byte[1])), Throws.InstanceOf<WebSocketException>());
+                    Assert.That(async () => await invalidProxyProducer.SendAsync(new EventData(new byte[1])), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                 }
             }
         }

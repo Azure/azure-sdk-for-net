@@ -1,19 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.EventHubs.Core
+namespace Azure.Messaging.EventHubs.Amqp
 {
     /// <summary>
-    ///   Defines the set of names used for system properties associated with messages exchanged
-    ///   with the Event Hubs service.
+    ///   The set of well-known annotations associated with an AMQP messages and
+    ///   entities.
     /// </summary>
     ///
-    /// <remarks>
-    ///   Many of these properties may be associated with event data as well; the nomenclature used
-    ///   herein is intended to align with the terminology of the service communication.
-    /// </remarks>
-    ///
-    internal static class MessagePropertyName
+    internal static class AmqpAnnotation
     {
         /// <summary>The date and time, in UTC, that a message was enqueued.</summary>
         public const string EnqueuedTime = "x-opt-enqueued-time";
