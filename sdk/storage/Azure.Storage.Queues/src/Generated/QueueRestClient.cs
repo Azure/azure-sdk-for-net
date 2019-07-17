@@ -39,21 +39,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    properties,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.SetProperties");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        properties,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -153,20 +168,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.GetProperties");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -263,20 +293,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.GetStatistics");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetStatisticsAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetStatisticsAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetStatisticsAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -381,24 +426,39 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ListQueuesSegmentAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    prefix,
-                    marker,
-                    maxresults,
-                    include,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.ListQueuesSegment");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ListQueuesSegmentAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ListQueuesSegmentAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        prefix,
+                        marker,
+                        maxresults,
+                        include,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ListQueuesSegmentAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -516,21 +576,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Create");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return CreateAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = CreateAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return CreateAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -627,20 +702,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Delete");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DeleteAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DeleteAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -725,20 +815,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.GetProperties");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetPropertiesAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetPropertiesAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetPropertiesAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -850,21 +955,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    metadata,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.SetMetadata");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetMetadataAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetMetadataAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        metadata,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetMetadataAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -958,20 +1078,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.GetAccessPolicy");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return GetAccessPolicyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = GetAccessPolicyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetAccessPolicyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1073,21 +1208,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    permissions,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.SetAccessPolicy");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return SetAccessPolicyAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = SetAccessPolicyAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        permissions,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetAccessPolicyAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1201,22 +1351,37 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DequeueAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    numberOfMessages,
-                    visibilitytimeout,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Dequeue");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DequeueAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DequeueAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        numberOfMessages,
+                        visibilitytimeout,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DequeueAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1321,20 +1486,35 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = ClearAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Clear");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return ClearAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = ClearAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return ClearAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1425,23 +1605,38 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = EnqueueAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    message,
-                    visibilitytimeout,
-                    messageTimeToLive,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Enqueue");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return EnqueueAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = EnqueueAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        message,
+                        visibilitytimeout,
+                        messageTimeToLive,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return EnqueueAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1561,21 +1756,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = PeekAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    numberOfMessages,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Peek");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return PeekAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = PeekAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        numberOfMessages,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return PeekAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1692,23 +1902,38 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = UpdateAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    message,
-                    popReceipt,
-                    visibilitytimeout,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Update");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return UpdateAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = UpdateAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        message,
+                        popReceipt,
+                        visibilitytimeout,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return UpdateAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 
@@ -1838,21 +2063,36 @@ namespace Azure.Storage.Queues
                 bool async = true,
                 System.Threading.CancellationToken cancellationToken = default)
             {
-                using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
-                    pipeline,
-                    resourceUri,
-                    popReceipt,
-                    timeout,
-                    requestId))
+                Azure.Core.Pipeline.DiagnosticScope _scope = pipeline.Diagnostics.CreateScope("QueueRestClient.Delete");
+                try
                 {
-                    Azure.Response _response = async ?
-                        // Send the request asynchronously if we're being called via an async path
-                        await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
-                        // Send the request synchronously through the API that blocks if we're being called via a sync path
-                        // (this is safe because the Task will complete before the user can call Wait)
-                        pipeline.SendRequest(_request, cancellationToken);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return DeleteAsync_CreateResponse(_response);
+                    _scope.AddAttribute("resourceUri", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.Http.Request _request = DeleteAsync_CreateRequest(
+                        pipeline,
+                        resourceUri,
+                        popReceipt,
+                        timeout,
+                        requestId))
+                    {
+                        Azure.Response _response = async ?
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendRequestAsync(_request, cancellationToken).ConfigureAwait(false) :
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.SendRequest(_request, cancellationToken);
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return DeleteAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
                 }
             }
 

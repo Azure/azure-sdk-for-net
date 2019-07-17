@@ -217,7 +217,8 @@ export interface IParameter {
     location: string,
     skipUrlEncoding: boolean,
     parameterGroup?: string,
-    model: IModelType
+    model: IModelType,
+    trace: boolean
 }
 
 export interface IResponses {

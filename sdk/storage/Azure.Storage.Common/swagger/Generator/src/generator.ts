@@ -130,6 +130,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const resultName = "_result";
+    const scopeName = "_scope";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
@@ -173,32 +174,52 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
-        w.scope(() => {
-            const separateParams = IndentWriter.createFenceposter();
-            for (const arg of operation.request.arguments) {
-                if (separateParams()) { w.line(`,`); }
-                w.write(`${naming.parameter(arg.clientName)}`);
-            }
-            w.write(`))`);
-        });
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope("${naming.type(service.name)}.${operation.name}");`)
+        w.line(`try`);
         w.scope('{', '}', () => {
-            w.write(`Azure.Response ${responseName} = `);
-            const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
-            if (sync) {
-                w.write('async ?');
-                w.scope(() => {
-                    w.line(`// Send the request asynchronously if we're being called via an async path`);
-                    w.line(`${asyncCall} :`);
-                    w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
-                    w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                    w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
-                });
-            } else {
-                w.line(`${asyncCall};`);
+            for (const arg of operation.request.arguments) {
+                if (arg.trace)
+                {
+                    w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.clientName)}", ${naming.parameter(arg.clientName)});`);
+                }
             }
-            w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
-            w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            w.line(`${scopeName}.Start();`);
+            w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
+            w.scope(() => {
+                const separateParams = IndentWriter.createFenceposter();
+                for (const arg of operation.request.arguments) {
+                    if (separateParams()) { w.line(`,`); }
+                    w.write(`${naming.parameter(arg.clientName)}`);
+                }
+                w.write(`))`);
+            });
+            w.scope('{', '}', () => {
+                w.write(`Azure.Response ${responseName} = `);
+                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
+                if (sync) {
+                    w.write('async ?');
+                    w.scope(() => {
+                        w.line(`// Send the request asynchronously if we're being called via an async path`);
+                        w.line(`${asyncCall} :`);
+                        w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
+                        w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
+                        w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
+                    });
+                } else {
+                    w.line(`${asyncCall};`);
+                }
+                w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
+                w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            });
+        });
+        w.line(`catch (System.Exception ex)`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Failed(ex);`);
+            w.line(`throw;`);
+        });
+        w.line(`finally`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Dispose();`);
         });
     });
     w.line();
