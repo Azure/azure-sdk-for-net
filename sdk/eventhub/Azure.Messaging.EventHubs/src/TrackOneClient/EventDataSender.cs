@@ -26,12 +26,12 @@ namespace TrackOne
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
             int count = ValidateEvents(eventDatas);
-            var diagnosticPartitionKey = String.IsNullOrEmpty(partitionKey) ?
+            var activePartitionRouting = String.IsNullOrEmpty(partitionKey) ?
                 this.PartitionId :
                 partitionKey;
 
             EventHubsEventSource.Log.EventSendStart(this.ClientId, count, partitionKey);
-            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, count);
+            Activity activity = EventHubsDiagnosticSource.StartSendActivity(this.ClientId, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, count);
 
             Task sendTask = null;
             try
@@ -44,13 +44,13 @@ namespace TrackOne
             catch (Exception exception)
             {
                 EventHubsEventSource.Log.EventSendException(this.ClientId, exception.ToString());
-                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, exception);
+                EventHubsDiagnosticSource.FailSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, exception);
                 throw;
             }
             finally
             {
                 EventHubsEventSource.Log.EventSendStop(this.ClientId);
-                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, diagnosticPartitionKey, eventDatas, sendTask);
+                EventHubsDiagnosticSource.StopSendActivity(activity, this.EventHubClient.ConnectionStringBuilder, activePartitionRouting, eventDatas, sendTask);
             }
         }
 

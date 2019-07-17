@@ -65,7 +65,7 @@ namespace TrackOne
         /// 
         /// </example>
 
-        internal static Activity ExtractActivity(this EventData eventData, string activityName = null)
+        public static Activity ExtractActivity(this EventData eventData, string activityName = null)
         {
             Guard.ArgumentNotNull(nameof(eventData), eventData);
 

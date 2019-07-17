@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
     [NonParallelizable]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    class DiagnosticsLiveTests
+    public class DiagnosticsLiveTests
     {
         /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
         private const int ReceiveRetryLimit = 10;
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
             object propertyValue = p.GetValue(obj);
 
             // If a null string property was found, return it.  This is necessary for testing
-            // the PartitionKey property when no Partition Key or Partition Id was set.
+            // the ActivePartitionRouting property when no Partition Key or Partition Id was set.
 
             if (typeof(T) == typeof(string) && propertyValue == null)
             {
@@ -82,7 +82,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null, false)]
         [TestCase(null, true)]
         [TestCase("AmIaGoodPartitionKey", false)]
-        public async Task SendFiresEvents(string partitionKey, bool usePartitionId)
+        public async Task SendFiresEvents(string partitionKey,
+                                          bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -215,7 +216,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(null, false)]
         [TestCase(null, true)]
         [TestCase("AmIaGoodPartitionKey", false)]
-        public async Task SendFiresExceptionEvents(string partitionKey, bool usePartitionId)
+        public async Task SendFiresExceptionEvents(string partitionKey,
+                                                   bool usePartitionId)
         {
             await using (var scope = await EventHubScope.CreateAsync(1))
             {
@@ -369,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        private static void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, string connectionString, int eventCount = 1)
+        private static void AssertSendStart(string name, object payload, Activity activity, Activity parentActivity, string activePartitionRouting, string connectionString, int eventCount = 1)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -379,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Check payload.
 
-            AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
+            AssertCommonPayloadProperties(payload, activePartitionRouting, connectionStringProperties);
 
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas.Count, Is.EqualTo(eventCount));
@@ -395,12 +397,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
             AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
-            AssertTagMatches(activity, "eh.partition_key", partitionKey);
+            AssertTagMatches(activity, "eh.active_partition_routing", activePartitionRouting);
             AssertTagMatches(activity, "eh.event_count", eventCount.ToString());
             AssertTagExists(activity, "eh.client_id");
         }
 
-        private void AssertSendException(string name, object payload, Activity activity, Activity parentActivity, string partitionKey, string connectionString)
+        private void AssertSendException(string name, object payload, Activity activity, Activity parentActivity, string activePartitionRouting, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -410,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Check payload.
 
-            AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
+            AssertCommonPayloadProperties(payload, activePartitionRouting, connectionStringProperties);
 
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
@@ -427,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        private static void AssertSendStop(string name, object payload, Activity activity, Activity sendActivity, string partitionKey, string connectionString, bool isFaulted = false)
+        private static void AssertSendStop(string name, object payload, Activity activity, Activity sendActivity, string activePartitionRouting, string connectionString, bool isFaulted = false)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -437,7 +439,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Check payload.
 
-            AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+            AssertCommonStopPayloadProperties(payload, activePartitionRouting, isFaulted, connectionStringProperties);
 
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
@@ -450,7 +452,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-        private static void AssertReceiveStart(string name, object payload, Activity activity, Activity parentActivity, string consumerGroup, EventPosition position, string partitionKey, string connectionString)
+        private static void AssertReceiveStart(string name, object payload, Activity activity, Activity parentActivity, string consumerGroup, EventPosition position, string activePartitionRouting, string connectionString)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -460,7 +462,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Check payload.
 
-            AssertCommonPayloadProperties(payload, partitionKey, connectionStringProperties);
+            AssertCommonPayloadProperties(payload, activePartitionRouting, connectionStringProperties);
 
             // Check Activity and its tags.
 
@@ -473,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             AssertTagMatches(activity, "peer.hostname", connectionStringProperties.Endpoint.Host);
             AssertTagMatches(activity, "eh.event_hub_name", connectionStringProperties.EventHubPath);
-            AssertTagMatches(activity, "eh.partition_key", partitionKey);
+            AssertTagMatches(activity, "eh.active_partition_routing", activePartitionRouting);
             AssertTagMatches(activity, "eh.consumer_group", consumerGroup);
             AssertTagMatches(activity, "eh.start_offset", position.Offset);
             AssertTagMatches(activity, "eh.start_sequence_number", position.SequenceNumber?.ToString());
@@ -481,7 +483,7 @@ namespace Azure.Messaging.EventHubs.Tests
             AssertTagExists(activity, "eh.client_id");
         }
 
-        private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string consumerGroup, string partitionKey, string connectionString, int eventCount = 1, bool isFaulted = false, string relatedId = null)
+        private static void AssertReceiveStop(string name, object payload, Activity activity, Activity receiveActivity, string consumerGroup, string activePartitionRouting, string connectionString, int eventCount = 1, bool isFaulted = false, string relatedId = null)
         {
             var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
@@ -491,7 +493,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Check payload.
 
-            AssertCommonStopPayloadProperties(payload, partitionKey, isFaulted, connectionStringProperties);
+            AssertCommonStopPayloadProperties(payload, activePartitionRouting, isFaulted, connectionStringProperties);
 
             var payloadConsumerGroup = GetPropertyValueFromAnonymousTypeInstance<string>(payload, "ConsumerGroup");
             Assert.That(payloadConsumerGroup, Is.EqualTo(consumerGroup));
@@ -529,24 +531,24 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activity.Tags.Single(t => t.Key == tagName).Value, Is.EqualTo(tagValue));
         }
 
-        private static void AssertCommonPayloadProperties(object eventPayload, string partitionKey, ConnectionStringProperties connectionStringProperties)
+        private static void AssertCommonPayloadProperties(object eventPayload, string activePartitionRouting, ConnectionStringProperties connectionStringProperties)
         {
             var endpoint = GetPropertyValueFromAnonymousTypeInstance<Uri>(eventPayload, "Endpoint");
             var entityPath = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "Entity");
-            var pKey = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "PartitionKey");
+            var pRouting = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "ActivePartitionRouting");
 
             var expectedEndpointStart = "amqps://" + connectionStringProperties.Endpoint.Host;
 
             Assert.That(endpoint.AbsoluteUri.StartsWith(expectedEndpointStart), Is.True);
             Assert.That(entityPath, Is.EqualTo(connectionStringProperties.EventHubPath));
-            Assert.That(pKey, Is.EqualTo(partitionKey));
+            Assert.That(pRouting, Is.EqualTo(activePartitionRouting));
         }
 
-        private static void AssertCommonStopPayloadProperties(object eventPayload, string partitionKey, bool isFaulted, ConnectionStringProperties connectionStringProperties)
+        private static void AssertCommonStopPayloadProperties(object eventPayload, string activePartitionRouting, bool isFaulted, ConnectionStringProperties connectionStringProperties)
         {
             var expectedStatus = isFaulted ? TaskStatus.Faulted : TaskStatus.RanToCompletion;
 
-            AssertCommonPayloadProperties(eventPayload, partitionKey, connectionStringProperties);
+            AssertCommonPayloadProperties(eventPayload, activePartitionRouting, connectionStringProperties);
 
             var status = GetPropertyValueFromAnonymousTypeInstance<TaskStatus>(eventPayload, "Status");
             Assert.That(status, Is.EqualTo(expectedStatus));

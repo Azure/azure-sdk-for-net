@@ -14,8 +14,8 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
-    class DiagnosticsTests
+    [Parallelizable(ParallelScope.All)]
+    public class DiagnosticsTests
     {
         /// <summary>
         ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
