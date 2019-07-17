@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(SameConfigurationCases))]
-        public void HaveSameConfigurationRecognizesEquivilentConfiguration(ExponentialRetry first,
+        public void HaveSameConfigurationRecognizesEquivalentConfiguration(ExponentialRetry first,
                                                                            ExponentialRetry second,
                                                                            string description)
         {

@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
     internal static class TrackOneExceptionExtensions
     {
         /// <summary>
-        ///   Maps a <see cref="TrackOne.EventHubsException" /> or a child of it to the equivilent
+        ///   Maps a <see cref="TrackOne.EventHubsException" /> or a child of it to the equivalent
         ///   exception for the new API surface.
         /// </summary>
         ///

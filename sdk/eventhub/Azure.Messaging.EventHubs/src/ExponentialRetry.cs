@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of properties for the retry policy.</returns>
         ///
         /// <remarks>
-        ///   This method is intended to allow for compatibility shims to create the equivilent retry
+        ///   This method is intended to allow for compatibility shims to create the equivalent retry
         ///   policy within the track one code;  it will be removed after the first preview and should
         ///   not be depended upon outside of that context.
         /// </remarks>

@@ -98,8 +98,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var sentEvents = mock.SendCalledWithParameters.Events.ToArray();
             Assert.That(sentEvents.Length, Is.EqualTo(sourceEvents.Length), "The number of events sent should match the number of source events.");
 
-            // The events should not only be structurally equivilent, the ordering of them should be preserved.  Compare the
-            // sequence in order and validate that the events in each position are equivilent.
+            // The events should not only be structurally equivalent, the ordering of them should be preserved.  Compare the
+            // sequence in order and validate that the events in each position are equivalent.
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {
@@ -138,8 +138,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var sentEvents = mock.SendCalledWithParameters.Events.ToArray();
             Assert.That(sentEvents.Length, Is.EqualTo(sourceEvents.Length), "The number of events sent should match the number of source events.");
 
-            // The events should not only be structurally equivilent, the ordering of them should be preserved.  Compare the
-            // sequence in order and validate that the events in each position are equivilent.
+            // The events should not only be structurally equivalent, the ordering of them should be preserved.  Compare the
+            // sequence in order and validate that the events in each position are equivalent.
 
             for (var index = 0; index < sentEvents.Length; ++index)
             {

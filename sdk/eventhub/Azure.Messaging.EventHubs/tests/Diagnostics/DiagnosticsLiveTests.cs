@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,8 +18,14 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   Dummy.
+    ///   The suite of live tests for the <see cref="TrackOne.EventHubsDiagnosticSource" />
+    ///   class.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   These tests have a depenency on live Azure services and may
+    ///   incur costs for the associated Azure subscription.
+    /// </remarks>
     ///
     [TestFixture]
     [NonParallelizable]
@@ -56,6 +65,11 @@ namespace Azure.Messaging.EventHubs.Tests
             return (T)propertyValue;
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="TrackOne.EventHubsDiagnosticSource" /> fires
+        ///   events as expected.
+        /// </summary>
+        ///
         [Test]
         [TestCase(true)]
         [TestCase(false)]
@@ -93,8 +107,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Exception"));
 
+                            // Assert that the properties we want to inject are not already included.
+
                             Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
                             Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
+
+                            // Send the event.
 
                             parentActivity.Start();
 
@@ -111,6 +129,8 @@ namespace Azure.Messaging.EventHubs.Tests
                             Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
                             Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(eventData.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
 
+                            // Check diagnostics information.
+
                             Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
                             AssertSendStart(sendStart.eventName, sendStart.payload, sendStart.activity, parentActivity, partitionKey ?? partitionId, connectionString);
 
@@ -126,6 +146,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="TrackOne.EventHubsDiagnosticSource" /> fires
+        ///   events as expected.
+        /// </summary>
+        ///
         [Test]
         public async Task SendDoesNotInjectContextWhenNoListeners()
         {
@@ -141,7 +166,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     using (var listener = CreateEventListener(eventQueue))
                     using (var subscription = SubscribeToEvents(listener))
                     {
-                        // TODO: is parentActivity necessary?
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
                         var eventData = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
 
@@ -149,8 +173,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         listener.Disable();
 
+                        // Assert that the properties we will check are not already included.
+
                         Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
                         Assert.That(eventData.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
+
+                        // Send the event.
 
                         parentActivity.Start();
 
@@ -174,6 +202,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="TrackOne.EventHubsDiagnosticSource" /> fires
+        ///   events as expected.
+        /// </summary>
+        ///
         [Test]
         [TestCase(true)]
         [TestCase(false)]
@@ -211,13 +244,15 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             listener.Enable((name, queueName, arg) => name.Contains("Send") && !name.EndsWith(".Start"));
 
-                            parentActivity.Start();
-
                             // Try sending a large message. A SizeLimitException is expected.
+
+                            parentActivity.Start();
 
                             Assert.That(async () => await producer.SendAsync(eventData, new SendOptions { PartitionKey = partitionKey }), Throws.InstanceOf<MessageSizeExceededException>());
 
                             parentActivity.Stop();
+
+                            // Check diagnostics information.
 
                             Assert.That(eventQueue.TryDequeue(out var exception), Is.True);
                             AssertSendException(exception.eventName, exception.payload, exception.activity, null, partitionKey ?? partitionId, connectionString);
@@ -236,6 +271,11 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Verifies that the <see cref="TrackOne.EventHubsDiagnosticSource" /> fires
+        ///   events as expected.
+        /// </summary>
+        ///
         [Test]
         public async Task ReceiveFiresEvents()
         {
@@ -253,8 +293,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     using (var subscription = SubscribeToEvents(listener))
                     await using (var consumer = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest))
                     {
+                        var payloadString = "Easter Egg";
                         var parentActivity = new Activity("RandomName").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                        var sendEvent = new EventData(Encoding.UTF8.GetBytes("I hope it works!"));
+                        var sendEvent = new EventData(Encoding.UTF8.GetBytes(payloadString));
 
                         // Initiate an operation to force the consumer to connect and set its position at the
                         // end of the event stream.
@@ -265,16 +306,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         listener.Enable((name, queueName, arg) => !name.EndsWith(".Exception"));
 
-                        // Send the batch of events.
+                        // Assert that the properties we want to inject are not already included.
 
                         Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.ActivityIdPropertyName), Is.False);
                         Assert.That(sendEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.False);
+
+                        // Send the event.
 
                         parentActivity.Start();
 
                         await producer.SendAsync(sendEvent);
 
-                        // Receive and the event; because there is some non-determinism in the messaging flow, the
+                        // Receive the event; because there is some non-determinism in the messaging flow, the
                         // sent event may not be immediately available.  Allow for a small number of attempts to receive, in order
                         // to account for availability delays.
 
@@ -289,8 +332,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         parentActivity.Stop();
 
+                        // Validate the received event body.
+
                         var receivedEvent = receivedEvents.Single();
-                        // TODO: check payload string?
+                        Assert.That(Encoding.UTF8.GetString(receivedEvent.Body.ToArray()), Is.EqualTo(payloadString));
 
                         // Check Diagnostic-Id injection.
 
@@ -301,13 +346,13 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Check Correlation-Context injection.
 
                         Assert.That(receivedEvent.Properties.ContainsKey(TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName), Is.True);
-                        // TODO: change order
-                        Assert.That(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList()), Is.EqualTo(receivedEvent.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName]));
+                        Assert.That(receivedEvent.Properties[TrackOne.EventHubsDiagnosticSource.CorrelationContextPropertyName], Is.EqualTo(TrackOne.EventHubsDiagnosticSource.SerializeCorrelationContext(parentActivity.Baggage.ToList())));
+
+                        // Check diagnostics information.
 
                         Assert.That(eventQueue.TryDequeue(out var sendStart), Is.True);
                         Assert.That(eventQueue.TryDequeue(out var sendStop), Is.True);
 
-                        // TODO: isParentActivity necessary?
                         Assert.That(eventQueue.TryDequeue(out var receiveStart), Is.True);
                         AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity, partition, connectionString);
 
@@ -363,8 +408,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(activity.Parent, Is.EqualTo(parentActivity));
             }
 
-            // TODO: keep track one?
-            // TODO: why doesn't IList work?
             var eventDatas = GetPropertyValueFromAnonymousTypeInstance<IEnumerable<TrackOne.EventData>>(payload, "EventDatas");
             Assert.That(eventDatas, Is.Not.Null);
         }
@@ -447,9 +490,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var entityPath = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "Entity");
             var pKey = GetPropertyValueFromAnonymousTypeInstance<string>(eventPayload, "PartitionKey");
 
-            // endpoint is amqps://cooleventhubs.servicebus.windows.net/SendFiresExceptionEvents-a2fda415
-            // connectionString is sb://cooleventhubs.servicebus.windows.net/
-            // TODO: should we update the diagnostics output?
             var expectedEndpointStart = "amqps://" + connectionStringProperties.Endpoint.Host;
 
             Assert.That(endpoint.AbsoluteUri.StartsWith(expectedEndpointStart), Is.True);

@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Linq;
 using System.Text;
 using Azure.Messaging.EventHubs.Diagnostics;
 using NUnit.Framework;
@@ -6,13 +9,19 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   Dummy.
+    ///   The suite of tests for the <see cref="EventDataDiagnosticsExtensions" />
+    ///   class.
     /// </summary>
     ///
     [TestFixture]
     [Parallelizable(ParallelScope.Children)]
     class DiagnosticsTests
     {
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         public void ExtractsActivityWithIdAndNoContext()
         {
@@ -30,6 +39,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(baggage, Is.Empty);
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         public void ExtractsActivityWithIdAndSingleContext()
         {
@@ -51,6 +65,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(baggage["k1"], Is.EqualTo("v1"));
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         public void ExtractsActivityWithIdAndMultiContext()
         {
@@ -76,6 +95,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(baggage["k3"], Is.EqualTo("v3"));
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         public void ExtractActivityWithAlternateName()
         {
@@ -87,6 +111,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(activity.OperationName, Is.EqualTo("My activity"));
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         [TestCase(null)]
         [TestCase("")]
@@ -109,6 +138,11 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(baggage, Is.Empty);
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataDiagnosticsExtensions.ExtractActivity" /> extension
+        ///   method.
+        /// </summary>
+        ///
         [Test]
         [TestCase(null)]
         [TestCase("")]
