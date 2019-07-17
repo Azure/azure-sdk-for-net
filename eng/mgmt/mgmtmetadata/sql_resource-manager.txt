@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/emgu-ms/azure-rest-api-specs/blob/failoverSwaggerChanges/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\GitCode\azure-sdk-for-net\sdk
-2019-07-12 23:19:41 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.
+2019-07-16 23:22:54 UTC
 Azure-rest-api-specs repository information
-GitHub fork: emgu-ms
-Branch:      failoverSwaggerChanges
-Commit:      23564ccc16eb8eb3cc8acf94bb43bfcc01c44f30
+GitHub fork: Azure
+Branch:      master
+Commit:      6203666516223e8de80552d70c7157806a50f78b
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
