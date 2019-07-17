@@ -8,6 +8,6 @@ namespace Azure.Core.Extensions
 {
     public interface IAzureClientsBuilderWithCredential
     {
-        IAzureClientBuilder<TClient, TOptions> RegisterClient<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory) where TOptions : ClientOptions;
+        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, TClient> clientFactory) where TOptions : ClientOptions;
     }
 }

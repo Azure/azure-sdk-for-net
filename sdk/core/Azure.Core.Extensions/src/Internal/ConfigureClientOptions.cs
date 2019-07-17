@@ -12,9 +12,7 @@ namespace Azure.Core.Extensions
         private readonly ClientRegistration<TClient, TOptions> _registration;
         private readonly Action<TOptions, IServiceProvider> _configureOptions;
 
-        public ConfigureClientOptions(
-            IServiceProvider serviceProvider,
-            ClientRegistration<TClient, TOptions> registration, Action<TOptions, IServiceProvider> configureOptions)
+        public ConfigureClientOptions(IServiceProvider serviceProvider, ClientRegistration<TClient, TOptions> registration, Action<TOptions, IServiceProvider> configureOptions)
         {
             _serviceProvider = serviceProvider;
             _registration = registration;

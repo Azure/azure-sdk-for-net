@@ -10,31 +10,31 @@ namespace Azure.Core.Extensions.Tests
         public static IAzureClientBuilder<TestClient, TestClientOptions> AddTestClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder: IAzureClientsBuilder
         {
-            return builder.RegisterClient<TestClient, TestClientOptions>(options => new TestClient(connectionString, options));
+            return builder.RegisterClientFactory<TestClient, TestClientOptions>(options => new TestClient(connectionString, options));
         }
 
         public static IAzureClientBuilder<TestClient, TestClientOptions> AddTestClient<TBuilder>(this TBuilder builder, Uri uri)
             where TBuilder: IAzureClientsBuilder
         {
-            return builder.RegisterClient<TestClient, TestClientOptions>(options => new TestClient(uri, options));
+            return builder.RegisterClientFactory<TestClient, TestClientOptions>(options => new TestClient(uri, options));
         }
 
         public static IAzureClientBuilder<TestClient, TestClientOptions> AddTestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClient<TestClient, TestClientOptions>(configuration);
+            return builder.RegisterClientFactory<TestClient, TestClientOptions>(configuration);
         }
 
         public static IAzureClientBuilder<TestClientWithCredentials, TestClientOptions> AddTestClientWithCredentials<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClient<TestClientWithCredentials, TestClientOptions>(configuration);
+            return builder.RegisterClientFactory<TestClientWithCredentials, TestClientOptions>(configuration);
         }
 
         public static IAzureClientBuilder<TestClientWithCredentials, TestClientOptions> AddTestClientWithCredentials<TBuilder>(this TBuilder builder, Uri uri)
             where TBuilder: IAzureClientsBuilderWithCredential
         {
-            return builder.RegisterClient<TestClientWithCredentials, TestClientOptions>((options, cred) => new TestClientWithCredentials(uri, cred, options));
+            return builder.RegisterClientFactory<TestClientWithCredentials, TestClientOptions>((options, cred) => new TestClientWithCredentials(uri, cred, options));
         }
 
     }

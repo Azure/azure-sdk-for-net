@@ -8,7 +8,7 @@ namespace Azure.ApplicationModel.Configuration
     /// <summary>
     /// Extension methods to add <see cref="ConfigurationClient"/> client to clients builder
     /// </summary>
-    public static class ConfigurationClientBuilderExtensions
+    public static class AzureClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="ConfigurationClient"/> instance with the provided <paramref name="connectionString"/>
@@ -16,7 +16,7 @@ namespace Azure.ApplicationModel.Configuration
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder: IAzureClientsBuilder
         {
-            return builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(options => new ConfigurationClient(connectionString, options));
+            return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(options => new ConfigurationClient(connectionString, options));
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Azure.ApplicationModel.Configuration
         public static IAzureClientBuilder<ConfigurationClient, ConfigurationClientOptions> AddConfigurationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClient<ConfigurationClient, ConfigurationClientOptions>(configuration);
+            return builder.RegisterClientFactory<ConfigurationClient, ConfigurationClientOptions>(configuration);
         }
     }
 }

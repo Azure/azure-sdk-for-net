@@ -10,7 +10,7 @@ namespace Azure.Core.Extensions
 {
     internal class AzureClientsGlobalOptions
     {
-        public Func<IServiceProvider, TokenCredential> Credential { get; set; } = _ => new DefaultAzureCredential();
-        public List<Action<ClientOptions, IServiceProvider>> ConfigureOptions { get; } = new List<Action<ClientOptions, IServiceProvider>>();
+        public Func<IServiceProvider, TokenCredential> CredentialFactory { get; set; } = _ => new DefaultAzureCredential();
+        public List<Action<ClientOptions, IServiceProvider>> ConfigureOptionDelegates { get; } = new List<Action<ClientOptions, IServiceProvider>>();
     }
 }

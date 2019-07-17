@@ -12,7 +12,7 @@ namespace Azure.Core.Extensions
     {
         public static IAzureClientBuilder<TClient, TOptions> WithName<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, string name) where TOptions : class
         {
-            builder.ToBuilderImpl().Registration.Name = name;
+            builder.ToBuilder().Registration.Name = name;
             return builder;
         }
 
@@ -23,7 +23,7 @@ namespace Azure.Core.Extensions
 
         public static IAzureClientBuilder<TClient, TOptions> WithCredential<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, Func<IServiceProvider, TokenCredential> credentialFactory) where TOptions : class
         {
-            var impl = builder.ToBuilderImpl();
+            var impl = builder.ToBuilder();
             impl.ServiceCollection.AddSingleton<IConfigureOptions<AzureClientCredentialOptions<TClient>>>(new ConfigureClientCredentials<TClient,TOptions>(impl.Registration, credentialFactory));
             return builder;
         }
@@ -40,12 +40,12 @@ namespace Azure.Core.Extensions
 
         public static IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, Action<TOptions, IServiceProvider> configureOptions) where TOptions : class
         {
-            var impl = builder.ToBuilderImpl();
+            var impl = builder.ToBuilder();
             impl.ServiceCollection.AddSingleton<IConfigureOptions<TOptions>>(provider => new ConfigureClientOptions<TClient,TOptions>(provider, impl.Registration, configureOptions));;
             return builder;
         }
 
-        private static AzureClientBuilder<TClient, TOptions> ToBuilderImpl<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder) where TOptions : class
+        private static AzureClientBuilder<TClient, TOptions> ToBuilder<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder) where TOptions : class
         {
             return (AzureClientBuilder<TClient, TOptions>)builder;
         }

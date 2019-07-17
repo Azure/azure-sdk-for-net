@@ -8,6 +8,6 @@ namespace Azure.Core.Extensions
 
     public interface IAzureClientsBuilderWithConfiguration<in TConfiguration>: IAzureClientsBuilder
     {
-        IAzureClientBuilder<TClient, TOptions> RegisterClient<TClient, TOptions>(TConfiguration configuration) where TOptions : ClientOptions;
+        IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(TConfiguration configuration) where TOptions : ClientOptions;
     }
 }

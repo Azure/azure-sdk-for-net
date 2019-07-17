@@ -20,7 +20,7 @@ namespace Azure.Core.Extensions
 
         public void Configure(T options)
         {
-            foreach (var globalConfigureOption in _defaultOptions.Value.ConfigureOptions)
+            foreach (var globalConfigureOption in _defaultOptions.Value.ConfigureOptionDelegates)
             {
                 globalConfigureOption(options, _serviceProvider);
             }

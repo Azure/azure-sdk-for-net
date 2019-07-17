@@ -27,6 +27,7 @@ namespace Azure.Core.Extensions.Samples
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Registering policy to use in ConfigureDefaults later
             services.AddSingleton<DependencyInjectionEnabledPolicy>();
 
             services.AddAzureClients(builder => {
@@ -48,9 +49,6 @@ namespace Azure.Core.Extensions.Samples
 
                 // Advanced configure global defaults
                 builder.ConfigureDefaults((options, provider) =>  options.AddPolicy(HttpPipelinePosition.PerCall, provider.GetService<DependencyInjectionEnabledPolicy>()));
-
-                // Configure default credential
-                // builder.UseDefaultCredential(new ClientSecretCredential("tenantId","clientId","clientSecret"));
             });
         }
 

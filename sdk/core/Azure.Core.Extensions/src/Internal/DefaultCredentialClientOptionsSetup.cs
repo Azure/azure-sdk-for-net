@@ -18,7 +18,7 @@ namespace Azure.Core.Extensions
         {
             if (options.CredentialFactory == null)
             {
-                options.CredentialFactory = _defaultOptions.Value.Credential;
+                options.CredentialFactory = _defaultOptions.Value.CredentialFactory;
             }
         }
 

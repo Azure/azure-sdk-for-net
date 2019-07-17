@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// <summary>
     /// Extension methods to add secret client to clients builder
     /// </summary>
-    public static class SecretClientBuilderExtensions
+    public static class AzureClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="SecretClient"/> instance with the provided <paramref name="vaultUri"/>
@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Secrets
         public static IAzureClientBuilder<SecretClient, SecretClientOptions> AddSecretClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder: IAzureClientsBuilderWithCredential
         {
-            return builder.RegisterClient<SecretClient, SecretClientOptions>((options, cred) => new SecretClient(vaultUri, cred, options));
+            return builder.RegisterClientFactory<SecretClient, SecretClientOptions>((options, cred) => new SecretClient(vaultUri, cred, options));
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Secrets
         public static IAzureClientBuilder<SecretClient, SecretClientOptions> AddSecretClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder: IAzureClientsBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClient<SecretClient, SecretClientOptions>(configuration);
+            return builder.RegisterClientFactory<SecretClient, SecretClientOptions>(configuration);
         }
     }
 }
