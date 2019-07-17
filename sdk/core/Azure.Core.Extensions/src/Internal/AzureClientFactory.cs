@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Options;
 
 namespace Azure.Core.Extensions
@@ -12,11 +11,19 @@ namespace Azure.Core.Extensions
     {
         private readonly Dictionary<string, ClientRegistration<TClient, TOptions>> _clientRegistrations;
 
+        private readonly IServiceProvider _serviceProvider;
+
+        private readonly IOptionsMonitor<AzureClientCredentialOptions<TClient>> _clientsOptions;
+
         private readonly IOptionsMonitor<TOptions> _monitor;
 
         private readonly EventSourceLogForwarder _logForwarder;
 
-        public AzureClientFactory(IEnumerable<ClientRegistration<TClient, TOptions>> clientRegistrations, IOptionsMonitor<TOptions> monitor, EventSourceLogForwarder logForwarder)
+        public AzureClientFactory(
+            IServiceProvider serviceProvider,
+            IOptionsMonitor<AzureClientCredentialOptions<TClient>> clientsOptions,
+            IEnumerable<ClientRegistration<TClient, TOptions>> clientRegistrations, IOptionsMonitor<TOptions> monitor,
+            EventSourceLogForwarder logForwarder)
         {
             _clientRegistrations = new Dictionary<string, ClientRegistration<TClient, TOptions>>();
             foreach (var registration in clientRegistrations)
@@ -24,6 +31,8 @@ namespace Azure.Core.Extensions
                 _clientRegistrations[registration.Name] = registration;
             }
 
+            _serviceProvider = serviceProvider;
+            _clientsOptions = clientsOptions;
             _monitor = monitor;
             _logForwarder = logForwarder;
         }
@@ -35,7 +44,7 @@ namespace Azure.Core.Extensions
                 throw new InvalidOperationException($"Unable to find client registration with type '{typeof(TClient).Name}' and name '{name}'.");
             }
 
-            return registration.GetClient(_monitor.Get(name));
+            return registration.GetClient(_monitor.Get(name), _clientsOptions.Get(name).CredentialFactory(_serviceProvider));
         }
     }
 }

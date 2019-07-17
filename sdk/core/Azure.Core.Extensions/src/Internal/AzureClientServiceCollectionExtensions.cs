@@ -8,9 +8,9 @@ namespace Azure.Core.Extensions
 {
     public static class AzureClientServiceCollectionExtensions
     {
-        public static void AddAzureClients(this IServiceCollection collection, Action<AzureClientsBuilder> configureClients)
+        public static void AddAzureClients(this IServiceCollection collection, Action<AzureClientFactoryBuilder> configureClients)
         {
-            configureClients(new AzureClientsBuilder(collection));
+            configureClients(new AzureClientFactoryBuilder(collection));
         }
     }
 }

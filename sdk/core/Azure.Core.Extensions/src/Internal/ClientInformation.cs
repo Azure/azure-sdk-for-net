@@ -8,9 +8,9 @@ namespace Azure.Core.Extensions
 {
     internal class ClientRegistration<TClient, TOptions>
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
-        private readonly Func<TOptions, TClient> _factory;
+        private readonly Func<TOptions, TokenCredential, TClient> _factory;
 
         private readonly object _cacheLock = new object();
 
@@ -18,13 +18,13 @@ namespace Azure.Core.Extensions
 
         private ExceptionDispatchInfo _cachedException;
 
-        public ClientRegistration(string name, Func<TOptions, TClient> factory)
+        public ClientRegistration(string name, Func<TOptions, TokenCredential, TClient> factory)
         {
             Name = name;
             _factory = factory;
         }
 
-        public TClient GetClient(TOptions options)
+        public TClient GetClient(TOptions options, TokenCredential tokenCredential)
         {
             _cachedException?.Throw();
 
@@ -44,7 +44,7 @@ namespace Azure.Core.Extensions
 
                 try
                 {
-                    _cachedClient = _factory(options);
+                    _cachedClient = _factory(options, tokenCredential);
                 }
                 catch (Exception e)
                 {
